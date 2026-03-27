@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dance With Dixon</title>
+  <script>
+    // GitHub Pages SPA redirect — preserves hash routing
+    var path = window.location.pathname;
+    var repo = '/dwd-website';
+    if (path.startsWith(repo)) {
+      path = path.slice(repo.length);
+    }
+    window.location.replace(repo + '/#home');
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>

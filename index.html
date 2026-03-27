@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dance With Dixon | Orlando Dance Company</title>
+  <meta name="description" content="DWD is an Orlando-based dance collective — adult modern dance company and elite youth training program. Founded by choreographer Dixon Bowles.">
+  <meta name="keywords" content="dance, Orlando, modern dance, contemporary, adult dance class, youth dance training, competition dance, Dixon Bowles, DWD, DWDC">
+  <meta name="author" content="Dance With Dixon LLC">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Dance With Dixon">
+  <meta property="og:description" content="An Orlando-based dance collective. Adult company. Youth elite training. Real stages. Real work.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dancewithdixon.com">
+  <meta property="og:image" content="images/logos/DWD-green.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/logos/DWD-green.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/additions.css">
+
+  <!-- Supabase Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+  <!-- Skip to content -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+    <div class="sidebar-brand">
+      <img src="images/logos/DWD-green.png" alt="DWD Logo" width="100" height="100">
+      <h3>Dance with<br>Dixon</h3>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Pages</div>
+    <nav>
+      <a href="#home" class="active" data-page="home">Home</a>
+      <a href="#about" data-page="about">About Dixon</a>
+      <a href="#adult-company" data-page="adult-company">Adult Company</a>
+      <a href="#proseries" data-page="proseries">ProSeries Youth</a>
+      <a href="#classes-events" data-page="classes-events">Classes &amp; Events</a>
+      <a href="#gallery" data-page="gallery">Gallery</a>
+      <a href="#shop" data-page="shop">Shop</a>
+      <a href="#contact" data-page="contact">Contact</a>
+    </nav>
+    <div class="sidebar-footer">
+      dancewithdixon.com<br>
+      &copy; 2026 Dance With Dixon LLC
+    </div>
+  </aside>
+
+  <!-- MOBILE HEADER -->
+  <header class="mobile-header" id="mobile-header">
+    <img src="images/logos/DWD-green.png" alt="DWD" class="mobile-logo" width="36" height="36">
+    <span class="mobile-brand">DWD</span>
+    <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <!-- MOBILE OVERLAY -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="main-content">
+
+    <!-- ══════════ HOME ══════════ -->
+    <section class="page active" id="page-home" aria-label="Home">
+      <div class="hero" style="background-image: linear-gradient(rgba(15,35,24,0.97) 0%, rgba(15,35,24,0.85) 30%, rgba(15,35,24,0.45) 65%, rgba(15,35,24,0.3) 100%), url('images/photos/high res pose.jpeg'); background-size: cover; background-position: center 95%;">
+        <img src="images/logos/DWD-green.png" alt="DWD Logo" class="hero-logo" width="120" height="120" loading="lazy">
+        <h1>Challenge. Create. Inspire.</h1>
+        <p class="subtitle">An Orlando-based dance collective building a home for artists of every age. Adult company. Youth elite training. Real stages. Real work.</p>
+        <div class="hero-btns">
+          <a href="#adult-company" class="btn btn-primary">Adult Company</a>
+          <a href="#proseries" class="btn btn-outline">ProSeries Youth</a>
+        </div>
+      </div>
+
+      <div class="program-cards">
+        <div class="program-card reveal">
+          <div class="label">Now Enrolling</div>
+          <h3>Adult Company</h3>
+          <p>A modern/contemporary company for adults of all levels. No audition. No experience required. Weekly classes + real performances.</p>
+          <div class="price-hint">Drop-in from $15 / class</div>
+          <a href="#adult-company" class="btn btn-outline">Learn More</a>
+        </div>
+        <div class="program-card reveal" data-delay="1">
+          <div class="label">Launching Summer 2026</div>
+          <h3>ProSeries Youth</h3>
+          <p>Elite competitive training for dancers ages 5 and up. Three tracks: Prep, Elite, and Pro. Competition and convention circuit.</p>
+          <div class="price-hint">From $185 / month</div>
+          <a href="#proseries" class="btn btn-outline">View Program</a>
+        </div>
+        <div class="program-card reveal" data-delay="2">
+          <div class="label">Coming June 2026</div>
+          <h3>Amusing Spaces Showcase</h3>
+          <p>DWDC's first performance as a company. An evening of original choreography on a real stage at Orlando Ballet School.</p>
+          <a href="#classes-events" class="btn btn-outline">Get Details</a>
+        </div>
+      </div>
+
+      <div class="photo-grid">
+        <img src="images/photos/IMG_6849_Original.JPG" alt="Dixon teaching a modern dance class" loading="lazy">
+        <img src="images/photos/IMG_6803_Original.JPG" alt="Dancers in technique class" loading="lazy">
+        <img src="images/photos/IMG_1859.jpeg" alt="DWD company members" loading="lazy">
+        <img src="images/photos/IMG_6820_Original.JPG" alt="Technique work in the studio" loading="lazy">
+        <img src="images/photos/IMG_6811_Original.JPG" alt="Studio movement session" loading="lazy">
+        <img src="images/photos/IMG_6836_Original.JPG" alt="Contemporary movement exploration" loading="lazy">
+      </div>
+
+      <div class="ticker-bar">
+        <div class="ticker-item">NOW ENROLLING</div>
+        <div class="ticker-item">PROSERIES LAUNCHING SUMMER 2026</div>
+        <div class="ticker-item">AMUSING SPACES JUNE 2026</div>
+      </div>
+
+      <div class="email-signup reveal">
+        <h3>Stay Updated</h3>
+        <p>Get class dates, performance announcements, and DWD news.</p>
+        <form class="email-row" data-form="signup-home">
+          <input type="email" placeholder="Your email address" required aria-label="Email address">
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="form-success" aria-live="polite">You're in! We'll keep you posted.</div>
+      </div>
+    </section>
+
+    <!-- ══════════ ABOUT DIXON ══════════ -->
+    <section class="page" id="page-about" aria-label="About Dixon">
+      <div class="about-hero">
+        <div class="about-photo">
+          <img src="images/photos/IMG_6849_Original.JPG" alt="Dixon Bowles teaching a dance class" loading="lazy">
+        </div>
+        <div class="about-content">
+          <div class="label">Director &amp; Choreographer</div>
+          <h1>Dixon Bowles</h1>
+          <div class="title">Teacher. Choreographer. Director.</div>
+          <div class="tagline">Building a new home for dance in Orlando.</div>
+          <p class="bio">Dixon Van Hoozer-Bowles is an Orlando-based choreographer, educator, and creative director known for bold storytelling, high standards, and a deep commitment to young artists.</p>
+          <p class="bio">Trained at Utah Valley University and hired by Disney Jr. Live while still completing his studies, Dixon has taught and choreographed for studios, high schools, universities, and national competitions across the country.</p>
+          <p class="bio">Since relocating to Florida in 2016, he has worked as a studio director, musical theatre choreographer, competition judge, and masterclass instructor. Over the past five years, Dixon has built a competitive dance program from the ground up — leading it to major regional and national success across four seasons and growing it into one of the most recognized programs in Central Florida. His role as director and lead choreographer has been defined by energy, empathy, and an unwavering commitment to his dancers.</p>
+          <p class="bio">Dixon also toured nationally as a Tour Director with Fly Dance Competition, bringing strong leadership, efficiency, and heart to every event. He's known for giving honest, actionable feedback and always putting the dancers first.</p>
+        </div>
+      </div>
+
+      <div class="what-i-bring reveal">
+        <h2>What I Bring</h2>
+        <div class="bring-grid">
+          <div class="bring-item">
+            <h4>Teaching Philosophy</h4>
+            <p>I believe in rigor with heart. Every class should challenge you, every rehearsal should push you, and every performance should mean something. I don't do filler. I don't do lazy. But I also don't do fear-based teaching. My dancers work hard because they want to — because they feel invested, not intimidated.</p>
+          </div>
+          <div class="bring-item">
+            <h4>What Sets DWD Apart</h4>
+            <ul>
+              <li>No audition required — the Adult Company is open to all levels</li>
+              <li>Technique-first approach — we build real dancers, not just performers</li>
+              <li>Choreography that tells stories — every piece has a purpose</li>
+              <li>Community over competition — we push each other up</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-banner">
+        <h3>Ready to dance?</h3>
+        <p>Spring classes are happening now. ProSeries launches August 2026.</p>
+        <a href="#adult-company" class="btn btn-primary">Join Adult Company</a>
+        <a href="#proseries" class="btn btn-outline">Explore ProSeries</a>
+      </div>
+    </section>
+
+    <!-- ══════════ ADULT COMPANY ══════════ -->
+    <section class="page" id="page-adult-company" aria-label="Adult Company">
+      <div class="ac-hero" style="background-image: linear-gradient(rgba(15,35,24,0.85), rgba(15,35,24,0.92)), url('images/photos/IMG_6820_Original.JPG'); background-size: cover; background-position: center;">
+        <img src="images/logos/DWDC-green.png" alt="DWDC Logo" class="hero-logo-section" width="100" height="100" loading="lazy" style="margin-bottom: 24px;">
+        <div class="label">Orlando, Florida</div>
+        <h1>DWDC Adult Company</h1>
+        <div class="sub">Modern / Contemporary Dance for Adults</div>
+        <div class="tagline">This is a space where adults come home to dance.</div>
+      </div>
+
+      <div class="content-section reveal">
+        <h2>What We Are</h2>
+        <p>DWDC's Adult Company is a modern/contemporary dance company for adults of all levels. Whether you danced growing up and stepped away, or you're discovering movement for the first time — there's a place for you here.</p>
+        <p>We train together weekly, building technique and artistry through modern dance fundamentals. And we perform together — taking real choreography to real stages.</p>
+        <p class="highlight">No audition. No experience required. Just show up ready to move.</p>
+      </div>
+
+      <div class="content-section alt reveal">
+        <h2>The Experience</h2>
+        <div class="class-breakdown">
+          <div class="class-block">
+            <div class="time">6:00 – 7:30 PM</div>
+            <h4>Modern Technique / Movement</h4>
+            <p>Floor work, alignment, weight shifts, phrase work. This is where we build the foundation — how you move, how you connect to the floor, how you use your body as an instrument. Open to drop-ins.</p>
+          </div>
+          <div class="class-block">
+            <div class="time">7:30 – 8:30 PM</div>
+            <h4>Choreography Rehearsal</h4>
+            <p>We learn and refine original choreography for upcoming performances. This is where the technique meets the storytelling. For company members and those preparing for shows.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section reveal">
+        <h2>Current Season</h2>
+        <p>Building toward our first performance at the Amusing Spaces showcase in June 2026 at Orlando Ballet School.</p>
+        <p>Rehearsal dates resuming soon — sign up to stay in the loop.</p>
+        <div class="pricing-row">
+          <div class="price-tag">
+            <div class="amount">$15</div>
+            <div class="desc">Drop-in<br>Technique class only</div>
+          </div>
+          <div class="price-tag">
+            <div class="amount">$25</div>
+            <div class="desc">Full session<br>Class + Rehearsal</div>
+          </div>
+        </div>
+        <p class="payment-label">We accept:</p>
+        <div class="payment-methods">
+          <span class="payment-chip">Square</span>
+          <span class="payment-chip">Zelle</span>
+          <span class="payment-chip">Venmo</span>
+          <span class="payment-chip">Cash App</span>
+          <span class="payment-chip">Cash</span>
+        </div>
+        <a href="#contact" class="btn btn-primary" style="margin-top: 24px;">Get in Touch</a>
+      </div>
+
+      <div class="content-section alt reveal">
+        <h2>Studio Locations</h2>
+        <p>Classes rotate between studios across Orlando. Current spring season is at Exchange Dance Studio.</p>
+        <div class="class-breakdown">
+          <div class="class-block">
+            <h4>Exchange Dance Studio</h4>
+            <p>Current home base. Saturday classes + rehearsals.</p>
+          </div>
+          <div class="class-block">
+            <h4>Next Level Dance Studio</h4>
+            <p>Additional class location for future seasons.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section reveal">
+        <h2>Who This Is For</h2>
+        <ul class="audience-list">
+          <li>Adults who danced growing up and want to get back into it</li>
+          <li>Adults who never danced but have always wanted to</li>
+          <li>Movers, yogis, athletes looking for a new creative outlet</li>
+          <li>Anyone who wants to perform on stage (yes, really)</li>
+          <li class="emphasis">You don't need to be "good enough." You just need to show up.</li>
+        </ul>
+      </div>
+
+      <div class="cta-banner">
+        <h3>Spring classes are happening now.</h3>
+        <a href="#contact" class="btn btn-primary">RSVP</a>
+        <a href="#classes-events" class="btn btn-outline">View Full Schedule</a>
+      </div>
+    </section>
+
+    <!-- ══════════ PROSERIES YOUTH ══════════ -->
+    <section class="page" id="page-proseries" aria-label="ProSeries Youth">
+      <div class="ps-hero">
+        <img src="images/logos/DWDPS-green.png" alt="DWDPS Logo" class="hero-logo-section" width="100" height="100" loading="lazy" style="margin-bottom: 24px;">
+        <div class="label">Ages 5+ | Competitive Training</div>
+        <h1>ProSeries Youth</h1>
+        <div class="sub">Elite dance training for the convention and competition circuit</div>
+        <div class="tagline">Season 1 begins August 2026.</div>
+        <a href="#proseries-interest" class="btn btn-blush">Express Interest</a>
+      </div>
+
+      <div class="content-section reveal">
+        <h2>The Program</h2>
+        <p>ProSeries is DWD's competitive training program for dancers ages 5 and up, operating as a company. Three tracks — Prep, Elite, and Pro — give every dancer a path that matches their experience and goals.</p>
+        <p>This isn't a recreational program. ProSeries dancers train seriously, perform at regional and national competitions, and build toward an end-of-season showcase. Dixon's technique-first approach means we build real dancers, not just competitors.</p>
+      </div>
+
+      <div class="track-cards">
+        <div class="track-card featured reveal">
+          <div class="track-letter">P</div>
+          <div class="track-name">Pro</div>
+          <div class="track-level">Ages 12+ | Competitive</div>
+          <p class="track-desc">The highest level. Maximum training, maximum competition, maximum artistry. Ten hours per week of technique, choreography, and performance training.</p>
+          <ul class="track-stats">
+            <li><span class="stat-label">Hours / Week</span><span class="stat-value">10</span></li>
+            <li><span class="stat-label">Routines</span><span class="stat-value">4–8</span></li>
+            <li><span class="stat-label">Season</span><span class="stat-value">Aug 2026 – May 2027</span></li>
+          </ul>
+          <div class="track-price">$325 <span>/ month</span></div>
+        </div>
+        <div class="track-card reveal" data-delay="1">
+          <div class="track-letter">E</div>
+          <div class="track-name">Elite</div>
+          <div class="track-level">Ages 8–12 | Competitive</div>
+          <p class="track-desc">Serious training. Serious competition. The national circuit starts here. Six hours per week of focused training.</p>
+          <ul class="track-stats">
+            <li><span class="stat-label">Hours / Week</span><span class="stat-value">6</span></li>
+            <li><span class="stat-label">Routines</span><span class="stat-value">4–6</span></li>
+            <li><span class="stat-label">Season</span><span class="stat-value">Aug 2026 – May 2027</span></li>
+          </ul>
+          <div class="track-price">$250 <span>/ month</span></div>
+        </div>
+        <div class="track-card reveal" data-delay="2">
+          <div class="track-letter">Pr</div>
+          <div class="track-name">Prep</div>
+          <div class="track-level">Ages 5–8 | Foundation</div>
+          <p class="track-desc">The starting point. Young dancers building their foundation in a structured, focused environment. Four hours per week.</p>
+          <ul class="track-stats">
+            <li><span class="stat-label">Hours / Week</span><span class="stat-value">4</span></li>
+            <li><span class="stat-label">Routines</span><span class="stat-value">1–2</span></li>
+            <li><span class="stat-label">Season</span><span class="stat-value">Aug 2026 – May 2027</span></li>
+          </ul>
+          <div class="track-price">$185 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="content-section alt reveal">
+        <h2>Fee Schedule</h2>
+        <p>All fees are per dancer. Tuition varies by track. Production, costume, and competition fees apply to all tracks.</p>
+        <div class="table-wrap">
+          <table class="fee-table">
+            <thead><tr><th>Fee</th><th>Amount</th><th>When</th></tr></thead>
+            <tbody>
+              <tr><td>Tuition</td><td>$185–$325 / month</td><td>Monthly, Aug–May (10 months)</td></tr>
+              <tr><td>Production Fee</td><td>$25 / month</td><td>Monthly, Aug–May (10 months)</td></tr>
+              <tr><td>Costume Fee</td><td>$15 / routine / month</td><td>Monthly, Aug–Nov (4 months)</td></tr>
+              <tr><td>Competition Fee</td><td>$25 / routine / month</td><td>Monthly, Aug–Feb (7 months)</td></tr>
+              <tr><td>Registration</td><td>$25</td><td>One-time</td></tr>
+              <tr><td>Audition</td><td>$25</td><td>One-time</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="content-section reveal">
+        <h2>Season 1 Timeline</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot">1</div>
+            <div class="timeline-content">
+              <h4>Interest &amp; Info</h4>
+              <div class="when">Now</div>
+              <p>Learn about the program, submit your interest form, ask questions. No commitment yet.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">2</div>
+            <div class="timeline-content">
+              <h4>Summer Intensives</h4>
+              <div class="when">June – August 2026</div>
+              <p>Summer training camps and technique intensives to prepare for Season 1.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">3</div>
+            <div class="timeline-content">
+              <h4>Season 1 Begins</h4>
+              <div class="when">August 11, 2026</div>
+              <p>Weekly classes, rehearsals, and training start. The work begins.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">4</div>
+            <div class="timeline-content">
+              <h4>Competition Season</h4>
+              <div class="when">Fall 2026 – Spring 2027</div>
+              <p>Regional and national competitions. This is where the training meets the stage.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">5</div>
+            <div class="timeline-content">
+              <h4>Season 1 Showcase</h4>
+              <div class="when">May 2027</div>
+              <p>End-of-season showcase performance celebrating everything we built.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section alt reveal" id="proseries-interest">
+        <h2>Interest Form</h2>
+        <p>Not ready to register yet? No problem. Submit your interest and we'll keep you in the loop as details finalize.</p>
+        <form class="interest-form" data-form="proseries-interest">
+          <div class="form-group">
+            <label for="ps-parent-name">Parent / Guardian Name</label>
+            <input type="text" id="ps-parent-name" placeholder="Your full name" required>
+          </div>
+          <div class="form-group">
+            <label for="ps-email">Email</label>
+            <input type="email" id="ps-email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="ps-phone">Phone</label>
+            <input type="tel" id="ps-phone" placeholder="(555) 123-4567">
+          </div>
+          <div class="dancer-info-box">
+            <div class="dancer-info-label">Dancer Information</div>
+            <div class="form-group">
+              <label for="ps-dancer-name">Child's Name</label>
+              <input type="text" id="ps-dancer-name" placeholder="Dancer's name" required>
+            </div>
+            <div class="form-group">
+              <label for="ps-age">Age</label>
+              <input type="number" id="ps-age" placeholder="5+" min="5" max="18">
+            </div>
+            <div class="form-group">
+              <label for="ps-experience">Dance Experience</label>
+              <select id="ps-experience">
+                <option value="">Select experience level</option>
+                <option>0–2 years</option>
+                <option>3–5 years</option>
+                <option>6–8 years</option>
+                <option>9+ years</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ps-track">Preferred Track</label>
+              <select id="ps-track">
+                <option value="">Select a track</option>
+                <option>Pro (Ages 12+, 10 hrs/wk)</option>
+                <option>Elite (Ages 8–12, 6 hrs/wk)</option>
+                <option>Prep (Ages 5–8, 4 hrs/wk)</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ps-heard">How did you hear about ProSeries?</label>
+            <select id="ps-heard">
+              <option value="">Select one</option>
+              <option>Instagram</option>
+              <option>Facebook</option>
+              <option>Word of Mouth</option>
+              <option>Dance Studio</option>
+              <option>Web Search</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="ps-questions">Questions or anything else?</label>
+            <textarea id="ps-questions" placeholder="Tell us about your dancer, ask questions, or share anything we should know..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-blush">Submit Interest</button>
+          <div class="form-success" aria-live="polite">Thank you! We've received your interest form and will be in touch soon.</div>
+        </form>
+      </div>
+
+      <div class="cta-banner">
+        <h3>Questions? We'd love to hear from you.</h3>
+        <p>Reach out anytime — we're happy to talk through the program.</p>
+        <a href="#contact" class="btn btn-primary">Contact Us</a>
+      </div>
+    </section>
+
+    <!-- ══════════ CLASSES & EVENTS ══════════ -->
+    <section class="page" id="page-classes-events" aria-label="Classes and Events">
+      <div class="ce-hero">
+        <div class="eyebrow">DWDC Adult Company</div>
+        <h1>Upcoming Performances</h1>
+        <div class="date">Amusing Spaces Showcase — June 2026</div>
+        <p>Our first time on stage as a company. Details coming soon.</p>
+      </div>
+
+      <div class="content-section reveal">
+        <h2>Adult Company — Rehearsal Schedule</h2>
+        <p><span class="highlight">Exchange Dance Studio</span> | Resuming mid-April</p>
+        <p>Rehearsal dates for the current season will be posted here as they're confirmed. Classes are held at Exchange Dance Studio on Saturdays.</p>
+        <div class="pricing-row">
+          <div class="price-tag"><div class="amount">$15</div><div class="desc">Drop-in<br>Technique only</div></div>
+          <div class="price-tag"><div class="amount">$25</div><div class="desc">Full session<br>Class + Rehearsal</div></div>
+        </div>
+        <a href="#contact" class="btn btn-primary" style="margin-top: 12px;">RSVP</a>
+      </div>
+
+      <div class="content-section alt reveal">
+        <h2>ProSeries Youth — Season 1</h2>
+        <p><span class="highlight">Launching August 11, 2026</span> | 10-month season</p>
+        <p>Weekly training across three tracks for dancers ages 5+. Summer intensives begin June 2026. Full schedule will be published once tracks are finalized.</p>
+        <div class="class-breakdown">
+          <div class="class-block">
+            <div class="time">Pro</div>
+            <h4>10 hours / week</h4>
+            <p>4–8 competition routines. For experienced dancers ages 12+.</p>
+          </div>
+          <div class="class-block">
+            <div class="time">Elite</div>
+            <h4>6 hours / week</h4>
+            <p>4–6 competition routines. Competitive dancers ages 8–12.</p>
+          </div>
+          <div class="class-block">
+            <div class="time">Prep</div>
+            <h4>4 hours / week</h4>
+            <p>1–2 competition routines. Foundation dancers ages 5–8.</p>
+          </div>
+        </div>
+        <a href="#proseries" class="btn btn-outline" style="margin-top: 24px;">View Full ProSeries Details</a>
+      </div>
+
+      <div class="coming-up three-up">
+        <div class="coming-up-card reveal">
+          <div class="label">Performance</div>
+          <h3>Amusing Spaces Showcase</h3>
+          <div class="meta">June 2026 — Orlando Ballet School</div>
+          <p>DWDC's first performance. An evening of original choreography on a real stage.</p>
+        </div>
+        <div class="coming-up-card reveal" data-delay="1">
+          <div class="label">Summer 2026</div>
+          <h3>ProSeries Intensives</h3>
+          <div class="meta">June – August 2026</div>
+          <p>Summer training camps and technique intensives leading into Season 1.</p>
+        </div>
+        <div class="coming-up-card reveal" data-delay="2">
+          <div class="label">Fall 2026 – Spring 2027</div>
+          <h3>Competition Season</h3>
+          <div class="meta">Regional &amp; National Events</div>
+          <p>ProSeries dancers compete at regional and national competitions throughout the season.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ GALLERY ══════════ -->
+    <section class="page" id="page-gallery" aria-label="Gallery">
+      <div class="gallery-hero">
+        <h1>Gallery</h1>
+        <p>Movement captured. Community in action.</p>
+      </div>
+
+      <div class="gallery-section-label">Performances &amp; Competition</div>
+      <div class="gallery-grid">
+        <img src="images/photos/116_Kingdom_28.JPG" alt="Performance — Kingdom piece" class="wide" loading="lazy" data-lightbox>
+        <img src="images/photos/116_Kingdom_114.JPG" alt="Performance moment from Kingdom" loading="lazy" data-lightbox>
+        <img src="images/photos/297_Shania_98.JPG" alt="Competition performance" loading="lazy" data-lightbox>
+        <img src="images/photos/201_Prelude in C Minor_84.JPG" alt="Prelude in C Minor performance" loading="lazy" data-lightbox>
+        <img src="images/photos/70_Show Some Emotion_35.JPG" alt="Show Some Emotion performance" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_6850_Original.JPG" alt="Performance moment on stage" class="wide" loading="lazy" data-lightbox>
+      </div>
+
+      <div class="gallery-section-label">Professional</div>
+      <div class="gallery-grid">
+        <img src="images/photos/A-06-06-25~4927-Enhanced-NR.jpg" alt="Professional headshot one" class="wide" loading="lazy" data-lightbox>
+        <img src="images/photos/A-06-06-25~4930-Enhanced-NR.jpg" alt="Professional headshot two" loading="lazy" data-lightbox>
+        <img src="images/photos/A-06-06-25~4935-Enhanced-NR.jpg" alt="Professional headshot three" loading="lazy" data-lightbox>
+        <img src="images/photos/A-06-06-25~4993-Enhanced-NR.jpg" alt="Professional headshot four" loading="lazy" data-lightbox>
+        <img src="images/photos/A-06-06-25~5086-Enhanced-NR.jpg" alt="Professional headshot five" class="wide" loading="lazy" data-lightbox>
+      </div>
+
+      <div class="gallery-section-label">Rehearsals &amp; Classes</div>
+      <div class="gallery-grid">
+        <img src="images/photos/IMG_6820_Original.JPG" alt="Rehearsal — dancers working through choreography" class="wide" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_6803_Original.JPG" alt="Technique class in progress" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_6811_Original.JPG" alt="Studio movement session" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_6836_Original.JPG" alt="Contemporary movement exploration" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_6849_Original.JPG" alt="Dixon teaching a technique class" class="wide" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_6842_Original.JPG" alt="Dancers in rehearsal" loading="lazy" data-lightbox>
+      </div>
+
+      <div class="gallery-section-label">The Company</div>
+      <div class="gallery-grid">
+        <img src="images/photos/IMG_1859.jpeg" alt="DWD company photo" class="wide" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_1862.jpeg" alt="Company members together" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_6797_Original.JPG" alt="Dancers warming up" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_6805_Original.JPG" alt="Class in progress" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_6808_Original.JPG" alt="Movement phrase work" loading="lazy" data-lightbox>
+        <img src="images/photos/IMG_6810_Original.JPG" alt="Full company rehearsal" class="wide" loading="lazy" data-lightbox>
+      </div>
+
+      <div class="content-section reveal" style="text-align: center; padding: 52px;">
+        <p style="font-style: italic; color: var(--cream-faint); margin: 0 auto;">Gallery will grow as the company grows. After our first performance, this page will really come alive.</p>
+      </div>
+    </section>
+
+    <!-- ══════════ SHOP ══════════ -->
+    <section class="page" id="page-shop" aria-label="Shop">
+      <div class="shop-hero">
+        <h1>DWD Shop</h1>
+        <div class="sub">Rep the brand.</div>
+        <div class="coming-box">
+          <div class="coming-soon-tag">Coming Soon</div>
+          <h3>Merch Is Coming.</h3>
+          <p>DWD apparel and gear — dropping soon. Sign up below to be the first to know.</p>
+          <form class="email-row" data-form="signup-shop" style="max-width: 380px; margin: 0 auto;">
+            <input type="email" placeholder="Your email" required aria-label="Email for merch notification">
+            <button type="submit">Notify Me</button>
+          </form>
+          <div class="form-success" aria-live="polite">You're on the list!</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ CONTACT ══════════ -->
+    <section class="page" id="page-contact" aria-label="Contact">
+      <div class="contact-section">
+        <div class="contact-form-side">
+          <h1>Get in Touch</h1>
+          <div class="sub">Whether you want to join a class, enroll in ProSeries, book Dixon for choreography, or just say hey.</div>
+          <form data-form="contact">
+            <div class="form-group">
+              <label for="contact-name">Name</label>
+              <input type="text" id="contact-name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email</label>
+              <input type="email" id="contact-email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-phone">Phone</label>
+              <input type="tel" id="contact-phone" placeholder="(555) 123-4567">
+            </div>
+            <div class="form-group">
+              <label for="contact-reason">What Brings You Here?</label>
+              <select id="contact-reason">
+                <option value="">Select a reason</option>
+                <option>Join Adult Company</option>
+                <option>ProSeries Youth Interest</option>
+                <option>ProSeries Registration Question</option>
+                <option>Private Lessons</option>
+                <option>Choreography Booking</option>
+                <option>Workshop / Masterclass</option>
+                <option>Amusing Spaces Inquiry</option>
+                <option>Collaboration</option>
+                <option>General Inquiry</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="contact-heard">How did you hear about us?</label>
+              <select id="contact-heard">
+                <option value="">Select one</option>
+                <option>Instagram</option>
+                <option>Facebook</option>
+                <option>Word of Mouth</option>
+                <option>Dance Studio</option>
+                <option>Web Search</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Message</label>
+              <textarea id="contact-message" placeholder="Tell us what's on your mind..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <div class="form-success" aria-live="polite">Message sent! We'll get back to you soon.</div>
+          </form>
+        </div>
+        <div class="contact-info-side">
+          <img src="images/logos/DWD-green.png" alt="DWD Logo" width="80" height="80" style="margin-bottom: 24px;">
+          <h3>Connect with DWD</h3>
+          <div class="contact-detail">
+            <div class="dlabel">Email</div>
+            <div class="value"><a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a></div>
+          </div>
+          <div class="contact-detail">
+            <div class="dlabel">Location</div>
+            <div class="value">Orlando, Florida</div>
+          </div>
+          <div class="contact-detail">
+            <div class="dlabel">Instagram</div>
+            <div class="value">
+              <a href="https://instagram.com/dancewithdixon" target="_blank" rel="noopener">@dancewithdixon</a>
+              <div style="font-size: 0.85rem; margin-top: 8px;">
+                Also follow: <a href="https://instagram.com/DWDCollective" target="_blank" rel="noopener">@DWDCollective</a> (Adult Company) &amp; <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> (ProSeries)
+              </div>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="dlabel">YouTube</div>
+            <div class="value"><a href="https://youtube.com/@dancewithdixon" target="_blank" rel="noopener">Dance with Dixon</a></div>
+          </div>
+          <div class="contact-booking">
+            <p>Interested in booking Dixon for choreography, workshops, guest teaching, or competition judging? Drop a line — he'd love to hear from you.</p>
+          </div>
+          <div class="contact-quick-links">
+            <div class="dlabel">Quick Links</div>
+            <a href="#adult-company">RSVP for Adult Classes</a>
+            <a href="#proseries">ProSeries Interest Form</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SHARED FOOTER -->
+  <footer class="site-footer" id="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/logos/DWD-pink.png" alt="DWD" width="60" height="60" loading="lazy">
+        <h4>Dance With Dixon</h4>
+        <div class="location">Orlando, Florida</div>
+        <div class="sub-brands">DWDC · DWD ProSeries</div>
+      </div>
+      <div class="footer-links">
+        <h5>Navigate</h5>
+        <a href="#home">Home</a>
+        <a href="#about">About Dixon</a>
+        <a href="#adult-company">Adult Company</a>
+        <a href="#proseries">ProSeries Youth</a>
+        <a href="#classes-events">Classes &amp; Events</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#shop">Shop</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-links">
+        <h5>Connect</h5>
+        <a href="https://instagram.com/dancewithdixon" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Instagram
+        </a>
+        <a href="https://youtube.com/@dancewithdixon" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          YouTube
+        </a>
+        <a href="mailto:dancewithdixon@gmail.com">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          dancewithdixon@gmail.com
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Dance With Dixon LLC. All rights reserved.</div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Image viewer" aria-hidden="true">
+    <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
+    <button class="lightbox-prev" aria-label="Previous image">&#8249;</button>
+    <button class="lightbox-next" aria-label="Next image">&#8250;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
