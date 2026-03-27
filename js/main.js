@@ -60,7 +60,7 @@
       'home': 'Dance With Dixon | Orlando Dance Company',
       'about': 'About Dixon Bowles | DWD',
       'adult-company': 'Adult Company | DWD',
-      'proseries': 'ProSeries Youth | DWD',
+      'proseries': 'ProSeries | DWD',
       'classes-events': 'Classes & Events | DWD',
 
       'gallery': 'Gallery | DWD',
