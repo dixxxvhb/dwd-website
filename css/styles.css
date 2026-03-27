@@ -460,6 +460,57 @@ a:hover {
   transform: translateY(-2px);
 }
 
+/* BRAND ARMS (HOME — DWD UMBRELLA) */
+
+.brand-arms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.brand-arm {
+  background: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  padding: 2.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brand-arm:hover {
+  background: var(--forest-mid);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(248, 215, 200, 0.1);
+}
+
+.brand-arm img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.5rem;
+}
+
+.brand-arm h3 {
+  color: var(--accent);
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.brand-arm p {
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  flex: 1;
+}
+
 /* PROGRAM CARDS (HOME) */
 
 .program-cards {
@@ -1516,6 +1567,11 @@ a:hover {
 /* RESPONSIVE DESIGN */
 
 @media (max-width: 768px) {
+  .brand-arms {
+    grid-template-columns: 1fr;
+    padding: 2rem 1.5rem;
+  }
+
   .sidebar {
     position: fixed;
     left: -240px;
