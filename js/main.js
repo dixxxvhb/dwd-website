@@ -92,14 +92,31 @@
     showPage('home');
   });
 
-  // ── SCROLL ANIMATIONS ──
+  // ── SCROLL ANIMATIONS (staggered reveals) ──
+  var revealQueue = [];
+  var revealTimer = null;
+
+  function processRevealQueue() {
+    if (!revealQueue.length) {
+      revealTimer = null;
+      return;
+    }
+    var el = revealQueue.shift();
+    el.classList.add('visible');
+    revealTimer = setTimeout(processRevealQueue, 120);
+  }
+
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) {
-        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+        revealQueue.push(e.target);
+        if (!revealTimer) {
+          revealTimer = setTimeout(processRevealQueue, 50);
+        }
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
 
   document.querySelectorAll('.reveal').forEach(function (el) {
     observer.observe(el);
@@ -174,16 +191,24 @@
     document.body.style.overflow = '';
   }
 
+  function swapLightboxImage(newIndex) {
+    lightboxImg.style.opacity = '0';
+    lightboxImg.style.transform = 'scale(0.97)';
+    setTimeout(function () {
+      lightboxIndex = newIndex;
+      lightboxImg.src = lightboxImages[lightboxIndex].src;
+      lightboxImg.alt = lightboxImages[lightboxIndex].alt;
+      lightboxImg.style.opacity = '1';
+      lightboxImg.style.transform = 'scale(1)';
+    }, 180);
+  }
+
   function nextImage() {
-    lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
-    lightboxImg.src = lightboxImages[lightboxIndex].src;
-    lightboxImg.alt = lightboxImages[lightboxIndex].alt;
+    swapLightboxImage((lightboxIndex + 1) % lightboxImages.length);
   }
 
   function prevImage() {
-    lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
-    lightboxImg.src = lightboxImages[lightboxIndex].src;
-    lightboxImg.alt = lightboxImages[lightboxIndex].alt;
+    swapLightboxImage((lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length);
   }
 
   // Bind gallery image clicks
