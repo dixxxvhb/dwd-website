@@ -230,6 +230,8 @@ a:hover {
   flex-direction: column;
 }
 
+/* Centering rules moved to additions.css (loads last, wins cascade) */
+
 /* MOBILE HEADER */
 
 .mobile-header {
@@ -419,13 +421,13 @@ a:hover {
 
 /* Ken Burns slow zoom on hero background images */
 .hero[style*="background-image"] {
-  background-size: 110% auto !important;
+  background-size: cover !important;
   animation: kenBurns 25s ease-in-out infinite alternate;
 }
 
 @keyframes kenBurns {
-  0% { background-size: 110% auto; background-position: center 95%; }
-  100% { background-size: 120% auto; background-position: center 90%; }
+  0% { background-position: center 95%; transform: scale(1); }
+  100% { background-position: center 90%; transform: scale(1.06); }
 }
 
 .hero::before {

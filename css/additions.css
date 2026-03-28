@@ -352,14 +352,14 @@
 .shop-hero { text-align: center; }
 
 /* Content containment - add padding to sections inside pages */
-.program-cards { padding: 0 3rem; }
+.program-cards { padding: 0 3rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
 .photo-grid { padding: 0 3rem; }
-.email-signup { margin-left: 3rem; margin-right: 3rem; }
+.email-signup { padding-left: 3rem; padding-right: 3rem; }
 .gallery-section-label { padding-left: 3rem; }
 .gallery-grid { padding: 0 3rem; }
 .track-cards { padding: 0 3rem; }
 .coming-up { padding: 3rem; }
-.audience-list { margin-left: 3rem; margin-right: 3rem; list-style: none; }
+.audience-list { list-style: none; }
 .audience-list li { margin-bottom: 0.8rem; }
 .audience-list li::before { content: "\25B8 "; color: var(--accent); }
 .audience-list .emphasis { list-style: none; }
@@ -389,4 +389,51 @@ button[type="submit"]:disabled {
   .about-hero { grid-template-columns: 1fr; }
   .bring-grid { grid-template-columns: 1fr; }
   .gallery-grid img.wide { grid-column: span 1; }
+}
+
+/* ═══════════════════════════════════════
+   CENTERING — loads last, wins cascade
+   ═══════════════════════════════════════ */
+.content-section,
+.coming-up,
+.gallery-section,
+.shop-content,
+.about-content,
+.what-i-bring {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.brand-arms {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.photo-grid,
+.track-cards,
+.interest-form,
+.email-signup,
+.audience-list,
+.about-teaching,
+.locations,
+.cta-banner {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-section {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Footer stays full-width but content inside is centered */
+.footer-grid {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
 }
