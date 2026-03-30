@@ -139,7 +139,7 @@
 
 /* About page layout */
 .about-hero {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 500px; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 500px;
 }
 .about-photo { overflow: hidden; position: relative; }
 .about-photo img {
@@ -231,6 +231,76 @@
 }
 .track-price span {
   font-size: 1rem; font-weight: 400; color: rgba(245,241,235,0.6);
+}
+.track-genres {
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 500;
+  color: var(--gold); letter-spacing: 0.5px;
+  margin-bottom: 0.5rem; padding-top: 0.75rem;
+  border-top: 1px solid var(--forest-mid);
+}
+.track-includes {
+  font-family: var(--font-body); font-size: 0.8rem;
+  color: rgba(245,241,235,0.55); line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* Why ProSeries grid */
+.why-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;
+}
+.why-item {
+  background-color: var(--forest-light); padding: 2rem;
+  border: 1px solid var(--forest-mid);
+}
+.why-item h4 { color: var(--accent); margin-bottom: 0.75rem; font-family: var(--font-display); }
+.why-item p { color: var(--cream); line-height: 1.7; font-size: 0.9rem; }
+.section-lead {
+  color: var(--cream); font-size: 1.05rem; line-height: 1.7;
+  max-width: 720px; margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) {
+  .why-grid { grid-template-columns: 1fr; }
+}
+
+/* Comparison table */
+.comparison-table { margin-top: 2rem; }
+.comparison-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;
+  border-bottom: 1px solid var(--forest-mid);
+}
+.comparison-header {
+  border-bottom: 2px solid var(--accent);
+}
+.comparison-label {
+  padding: 1rem; font-family: var(--font-display); font-weight: 600;
+  color: var(--cream); font-size: 0.9rem;
+  display: flex; align-items: center;
+}
+.comparison-col {
+  padding: 1rem; font-size: 0.85rem; line-height: 1.5;
+  color: var(--cream);
+}
+.comparison-header .comparison-col {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 0.9rem; color: var(--accent);
+}
+.comparison-them {
+  background-color: rgba(0,0,0,0.15);
+  color: rgba(245,241,235,0.5);
+}
+.comparison-us {
+  background-color: rgba(248,215,200,0.05);
+}
+@media (max-width: 600px) {
+  .comparison-row { grid-template-columns: 1fr; gap: 0; }
+  .comparison-label {
+    background-color: var(--forest-light); padding: 0.75rem 1rem 0.25rem;
+    font-size: 0.8rem; color: var(--gold);
+  }
+  .comparison-col { padding: 0.5rem 1rem; }
+  .comparison-header { display: none; }
+  .comparison-them::before { content: "Traditional Studio: "; font-weight: 600; color: rgba(245,241,235,0.4); }
+  .comparison-us::before { content: "ProSeries: "; font-weight: 600; color: var(--accent); }
 }
 
 /* Classes & Events extras */
@@ -405,7 +475,9 @@ button[type="submit"]:disabled {
 
 /* Responsive override for about grid */
 @media (max-width: 768px) {
-  .about-hero { grid-template-columns: 1fr; }
+  .about-hero { grid-template-columns: 1fr; min-height: auto; }
+  .about-photo { height: 350px; }
+  .about-content { padding: 1.5rem; }
   .bring-grid { grid-template-columns: 1fr; }
   .gallery-grid img.wide { grid-column: span 1; }
 }
@@ -449,6 +521,20 @@ button[type="submit"]:disabled {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* Footer legal links */
+.footer-sep { margin: 0 0.5rem; opacity: 0.3; }
+.footer-legal-link {
+  color: rgba(245,241,235,0.5); text-decoration: none;
+  font-size: inherit; transition: color 0.2s;
+}
+.footer-legal-link:hover { color: var(--accent); }
+
+/* Privacy page */
+.privacy-date { color: rgba(245,241,235,0.5); font-size: 0.85rem; margin-bottom: 2rem; }
+#page-privacy h3 { color: var(--accent); margin-top: 2rem; margin-bottom: 0.5rem; }
+#page-privacy p { color: var(--cream); line-height: 1.7; margin-bottom: 0.75rem; }
+#page-privacy a { color: var(--accent); }
 
 /* Footer stays full-width but content inside is centered */
 .footer-grid {
