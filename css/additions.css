@@ -101,8 +101,22 @@
 .btn-blush {
   background-color: var(--blush); color: var(--black); font-weight: 600;
 }
-.btn-blush:hover {
+.btn-blush:hover:not(.btn-disabled) {
   background-color: var(--accent-light); transform: translateY(-2px);
+}
+.btn-disabled {
+  opacity: 0.4; cursor: not-allowed; pointer-events: none;
+  position: relative;
+}
+.btn-disabled::after {
+  content: 'Coming Soon';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--accent);
+  background: var(--forest-dark); padding: 2px 8px; border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 .label {
   font-family: var(--font-body); font-size: 0.75rem; font-weight: 600;
