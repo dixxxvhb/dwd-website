@@ -269,7 +269,7 @@
         <h1>ProSeries</h1>
         <div class="sub">Elite dance training for the convention and competition circuit</div>
         <div class="tagline">Season 1 begins August 2026.</div>
-        <a href="#proseries-interest" class="btn btn-blush">Express Interest</a>
+        <a href="#proseries-interest" class="btn btn-blush" id="ps-hero-cta">Express Interest</a>
       </div>
 
       <div class="content-section reveal">
@@ -278,7 +278,24 @@
         <p>This isn't a recreational program. ProSeries dancers train seriously, perform at regional and national competitions, and build toward an end-of-season showcase. Dixon's technique-first approach means we build real dancers, not just competitors.</p>
       </div>
 
-      <div class="track-cards">
+      <!-- Coming Soon Banner: Tracks + Pricing (shows before Apr 15) -->
+      <div class="coming-soon-banner" id="cs-tracks">
+        <div class="coming-soon-inner">
+          <div class="coming-soon-eyebrow">Coming April 2026</div>
+          <h2>We're building something different.</h2>
+          <p>Three tracks. Real training. Details dropping soon.</p>
+          <p class="coming-soon-cta">Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for first access.</p>
+          <div class="coming-soon-signup">
+            <form data-form="signup-proseries-teaser" style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+              <input type="email" placeholder="Your email for early access" required style="max-width:300px;">
+              <button type="submit" class="btn btn-blush">Notify Me</button>
+            </form>
+            <div class="form-success" aria-live="polite">You're on the list. We'll be in touch.</div>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal-after="2026-04-15" class="track-cards">
         <div class="track-card featured reveal">
           <div class="track-letter">P</div>
           <div class="track-name">Pro</div>
@@ -317,7 +334,16 @@
         </div>
       </div>
 
-      <div class="content-section alt reveal">
+      <!-- Coming Soon Banner: Fees + Timeline (shows before Apr 28) -->
+      <div class="coming-soon-banner" id="cs-fees">
+        <div class="coming-soon-inner">
+          <div class="coming-soon-eyebrow">Details Coming Soon</div>
+          <h2>Fee schedule and timeline dropping soon.</h2>
+          <p>Everything you need to know before registration opens May 1.</p>
+        </div>
+      </div>
+
+      <div data-reveal-after="2026-04-28" class="content-section alt reveal">
         <h2>Fee Schedule</h2>
         <p>All fees are per dancer. Tuition varies by track. Production, costume, and competition fees apply to all tracks.</p>
         <div class="table-wrap">
@@ -335,7 +361,7 @@
         </div>
       </div>
 
-      <div class="content-section reveal">
+      <div data-reveal-after="2026-04-28" class="content-section reveal">
         <h2>Season 1 Timeline</h2>
         <div class="timeline">
           <div class="timeline-item">
@@ -381,7 +407,16 @@
         </div>
       </div>
 
-      <div class="content-section alt reveal" id="proseries-interest">
+      <!-- Coming Soon Banner: Interest Form (shows before May 1) -->
+      <div class="coming-soon-banner" id="cs-form">
+        <div class="coming-soon-inner">
+          <div class="coming-soon-eyebrow">May 1, 2026</div>
+          <h2>Registration opens soon.</h2>
+          <p>The interest form goes live May 1. In the meantime, follow along on Instagram.</p>
+        </div>
+      </div>
+
+      <div data-reveal-after="2026-05-01" class="content-section alt reveal" id="proseries-interest">
         <h2>Interest Form</h2>
         <p>Not ready to register yet? No problem. Submit your interest and we'll keep you in the loop as details finalize.</p>
         <form class="interest-form" data-form="proseries-interest">
@@ -681,6 +716,37 @@
       </div>
     </section>
 
+    <!-- ══════════ CAMPAIGN COMMAND CENTER ══════════ -->
+    <section class="page" id="page-campaign" aria-label="Campaign Command Center">
+      <!-- Access Code Gate -->
+      <div class="campaign-gate" id="campaign-gate">
+        <div class="campaign-gate-inner">
+          <img src="images/logos/DWDPS-green.png" alt="DWDPS" width="80" height="80" style="margin-bottom: 1.5rem;">
+          <h2>Campaign Command Center</h2>
+          <p>Enter access code to view the ProSeries launch campaign.</p>
+          <form id="campaign-auth-form" class="campaign-auth-form">
+            <input type="password" id="campaign-code-input" placeholder="Access code" autocomplete="off" required>
+            <button type="submit" class="btn btn-blush">Enter</button>
+          </form>
+          <div id="campaign-auth-error" class="campaign-auth-error" style="display:none;">Wrong code. Try again.</div>
+        </div>
+      </div>
+
+      <!-- Dashboard (hidden until authenticated) -->
+      <div id="campaign-dashboard" style="display:none;">
+        <div class="campaign-header">
+          <div>
+            <h1>ProSeries Launch Campaign</h1>
+            <p class="sub">April 1 &ndash; May 1, 2026 &middot; 31-day rollout across @dwdproseries, @dancewithdixon, @DWDCollective</p>
+          </div>
+        </div>
+
+        <div id="campaign-progress"></div>
+        <div id="campaign-highlights"></div>
+        <div id="campaign-weeks"></div>
+      </div>
+    </section>
+
   </main>
 
   <!-- SHARED FOOTER -->
@@ -731,5 +797,6 @@
   </div>
 
   <script src="js/main.js"></script>
+  <script src="js/campaign.js"></script>
 </body>
 </html>

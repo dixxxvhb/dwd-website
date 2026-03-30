@@ -5,12 +5,14 @@
   <title>Dance With Dixon</title>
   <script>
     // GitHub Pages SPA redirect — preserves hash routing
+    // Works with both custom domain and /dwd-website repo path
     var path = window.location.pathname;
     var repo = '/dwd-website';
     if (path.startsWith(repo)) {
-      path = path.slice(repo.length);
+      window.location.replace(repo + '/#home');
+    } else {
+      window.location.replace('/#home');
     }
-    window.location.replace(repo + '/#home');
   </script>
 </head>
 <body>

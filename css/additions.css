@@ -438,3 +438,392 @@ button[type="submit"]:disabled {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* ═══════════════════════════════════════
+   COMING SOON BANNERS (ProSeries reveal)
+   ═══════════════════════════════════════ */
+.coming-soon-banner {
+  padding: 4rem 3rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-light) 100%);
+  border-top: 1px solid var(--forest-mid);
+  border-bottom: 1px solid var(--forest-mid);
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.coming-soon-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.coming-soon-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+.coming-soon-banner h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+.coming-soon-banner p {
+  color: var(--cream);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.coming-soon-cta a {
+  color: var(--accent);
+  font-weight: 600;
+}
+.coming-soon-signup {
+  margin-top: 1.5rem;
+}
+
+/* ═══════════════════════════════════════
+   CAMPAIGN COMMAND CENTER
+   ═══════════════════════════════════════ */
+
+/* Access gate */
+.campaign-gate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 2rem;
+}
+.campaign-gate-inner {
+  text-align: center;
+  max-width: 400px;
+}
+.campaign-gate-inner h2 {
+  font-family: var(--font-display);
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  font-size: 1.8rem;
+}
+.campaign-gate-inner p {
+  color: rgba(245,241,235,0.7);
+  margin-bottom: 1.5rem;
+}
+.campaign-auth-form {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+.campaign-auth-form input {
+  background: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  color: var(--cream);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  width: 200px;
+  outline: none;
+}
+.campaign-auth-form input:focus {
+  border-color: var(--accent);
+}
+.campaign-auth-error {
+  color: #c86a6a;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* Dashboard header */
+.campaign-header {
+  padding: 3rem 3rem 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.campaign-header h1 {
+  font-family: var(--font-display);
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+/* Progress bar */
+.campaign-progress {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem 2rem;
+}
+.campaign-progress-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.campaign-progress-bar {
+  height: 6px;
+  background: var(--forest-mid);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.campaign-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--accent));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* Highlights section */
+#campaign-highlights {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem 2rem;
+}
+.campaign-section-title {
+  font-family: var(--font-display);
+  color: var(--accent);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.campaign-highlights-grid {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.campaign-highlight-item {
+  text-align: center;
+}
+.campaign-highlight-item img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--forest-mid);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.campaign-highlight-item span {
+  font-size: 0.75rem;
+  color: rgba(245,241,235,0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Week sections */
+#campaign-weeks {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem 3rem;
+}
+.campaign-week {
+  margin-bottom: 2rem;
+  border: 1px solid var(--forest-mid);
+  background: var(--forest);
+}
+.campaign-week-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  background: var(--forest-light);
+  cursor: pointer;
+  user-select: none;
+  gap: 1rem;
+}
+.campaign-week-title h3 {
+  font-family: var(--font-display);
+  color: var(--accent);
+  font-size: 1.3rem;
+  margin: 0;
+}
+.campaign-week-dates {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--gold);
+}
+.campaign-week-status {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: rgba(245,241,235,0.6);
+  white-space: nowrap;
+}
+.campaign-week-toggle {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+}
+.campaign-week.collapsed .campaign-week-body {
+  display: none;
+}
+.campaign-week-body {
+  padding: 0;
+}
+
+/* Individual post */
+.campaign-post {
+  padding: 1.5rem;
+  border-top: 1px solid var(--forest-mid);
+  transition: opacity 0.3s ease;
+}
+.campaign-post.posted {
+  opacity: 0.4;
+}
+.campaign-post.posted:hover {
+  opacity: 0.7;
+}
+.campaign-post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+.campaign-post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+.campaign-post-date {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.campaign-post-type {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--cream);
+  background: var(--forest-mid);
+  padding: 0.25rem 0.75rem;
+  border-radius: 2px;
+}
+.campaign-post-account {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--gold);
+}
+.campaign-badge-video {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--black);
+  background: #e8a54b;
+  padding: 0.2rem 0.6rem;
+}
+.campaign-badge-crosspost {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--cream);
+  background: var(--forest-mid);
+  border: 1px solid var(--gold);
+  padding: 0.2rem 0.6rem;
+}
+
+/* Posted toggle */
+.campaign-posted-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.campaign-posted-toggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.campaign-posted-label {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: rgba(245,241,235,0.6);
+}
+
+/* Post description */
+.campaign-post-desc {
+  color: var(--cream);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Thumbnail strip */
+.campaign-post-images {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+.campaign-thumb {
+  flex-shrink: 0;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+.campaign-thumb:hover {
+  transform: scale(1.05);
+}
+.campaign-thumb img {
+  width: 120px;
+  height: 150px;
+  object-fit: cover;
+  border: 1px solid var(--forest-mid);
+  display: block;
+}
+.campaign-thumb-label {
+  font-size: 0.65rem;
+  color: rgba(245,241,235,0.5);
+  margin-top: 0.35rem;
+  display: block;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Notes */
+.campaign-post-notes textarea {
+  width: 100%;
+  background: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  padding: 0.75rem;
+  resize: vertical;
+  outline: none;
+  min-height: 40px;
+}
+.campaign-post-notes textarea:focus {
+  border-color: var(--accent);
+}
+.campaign-post-notes textarea::placeholder {
+  color: rgba(245,241,235,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .campaign-header { padding: 2rem 1.5rem 1rem; }
+  .campaign-progress { padding: 0 1.5rem 1.5rem; }
+  #campaign-highlights { padding: 0 1.5rem 1.5rem; }
+  #campaign-weeks { padding: 0 1.5rem 2rem; }
+  .campaign-post { padding: 1rem; }
+  .campaign-post-header { flex-direction: column; }
+  .campaign-thumb img { width: 90px; height: 112px; }
+  .campaign-week-header { padding: 1rem; }
+  .coming-soon-banner { padding: 3rem 1.5rem; }
+}

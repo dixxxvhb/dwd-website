@@ -9,7 +9,7 @@
   // ── HASH ROUTING ──
   const validPages = [
     'home', 'about', 'adult-company', 'proseries',
-    'classes-events', 'gallery', 'shop', 'contact'
+    'classes-events', 'gallery', 'shop', 'contact', 'campaign'
   ];
 
   function getPageFromHash() {
@@ -65,7 +65,8 @@
 
       'gallery': 'Gallery | DWD',
       'shop': 'Shop | DWD',
-      'contact': 'Contact | DWD'
+      'contact': 'Contact | DWD',
+      'campaign': 'Campaign HQ | DWD'
     };
     document.title = titles[name] || titles['home'];
   }
