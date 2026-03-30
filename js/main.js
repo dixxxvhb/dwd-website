@@ -429,6 +429,17 @@
     });
   });
 
+  // ── ABOUT PAGE PHOTO SLIDESHOW ──
+  var aboutSlides = document.querySelectorAll('.about-slide');
+  if (aboutSlides.length > 1) {
+    var currentSlide = 0;
+    setInterval(function () {
+      aboutSlides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % aboutSlides.length;
+      aboutSlides[currentSlide].classList.add('active');
+    }, 4000);
+  }
+
   // ── INIT: Load correct page from hash ──
   var initialPage = getPageFromHash();
   if (initialPage !== 'home') {
