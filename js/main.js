@@ -9,7 +9,7 @@
   // ── HASH ROUTING ──
   const validPages = [
     'home', 'about', 'adult-company', 'proseries',
-    'classes-events', 'gallery', 'shop', 'contact', 'campaign'
+    'classes-events', 'gallery', 'shop', 'contact', 'campaign', 'privacy'
   ];
 
   function getPageFromHash() {
@@ -437,7 +437,7 @@
       aboutSlides[currentSlide].classList.remove('active');
       currentSlide = (currentSlide + 1) % aboutSlides.length;
       aboutSlides[currentSlide].classList.add('active');
-    }, 4000);
+    }, 5000);
   }
 
   // ── INIT: Load correct page from hash ──
