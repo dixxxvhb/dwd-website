@@ -18,7 +18,7 @@
       date: '2026-04-01', week: 1, label: 'Apr 1',
       type: 'Static Post + Story Carousel',
       account: '@dwdproseries',
-      description: '"I\'m done building for someone else" — personal journey to "Something is coming"',
+      description: '"I\'m done building for someone else" — personal journey to "Something is coming". Feed static should lead with a photo, not text. Caption stays cryptic — no hashtags, no program name. Close with "Stay close." or similar.',
       images: [
         { file: 'week1/Apr1_Static_dwdproseries.png', label: 'Feed Static' },
         { file: 'week1/Apr1_Story_S1_ImDone_dwdproseries.png', label: 'Story 1: I\'m Done' },
@@ -27,6 +27,20 @@
         { file: 'week1/Apr1_Story_S4_BuildMyOwn_dwdproseries.png', label: 'Story 4: Build My Own' },
         { file: 'week1/Apr1_Story_S5_SomethingIsComing_dwdproseries.png', label: 'Story 5: Something Is Coming' }
       ]
+    },
+    {
+      date: '2026-04-01', week: 1, label: 'Apr 1',
+      type: 'Story Post',
+      account: '@dancewithdixon',
+      description: 'Same day as the @dwdproseries opener. Dixon posts a simple story on his main account: a dark/moody photo or 15-second clip with "Something\'s coming." and a "follow @dwdproseries" tag. This funnels existing followers to the new account from day one.',
+      images: []
+    },
+    {
+      date: '2026-04-03', week: 1, label: 'Apr 3',
+      type: 'Story Post',
+      account: '@dwdproseries',
+      description: 'Tension hold — black screen or 2-second rehearsal clip, no context. Just "..." or a single question mark. Keeps mystery alive between opener and poll.',
+      images: []
     },
     {
       date: '2026-04-04', week: 1, label: 'Apr 4',
@@ -41,7 +55,7 @@
       date: '2026-04-05', week: 1, label: 'Apr 5',
       type: 'Countdown Carousel',
       account: '@dwdproseries',
-      description: 'Building anticipation — 4-slide countdown',
+      description: 'Building anticipation — 4-slide countdown. Keep each slide visual-first with minimal text. One image, one short phrase per slide. Don\'t explain yet — still in mystery phase.',
       images: [
         { file: 'week1/Apr5_Countdown_p1of4_dwdproseries.png', label: 'Slide 1' },
         { file: 'week1/Apr5_Countdown_p2of4_dwdproseries.png', label: 'Slide 2' },
@@ -64,11 +78,11 @@
       date: '2026-04-07', week: 1, label: 'Apr 7',
       type: 'Story Series',
       account: '@dwdproseries',
-      description: '"Built by Director", "This is Personal", "Details Dropping"',
+      description: '"Built by Director", "This is Personal", "Tomorrow You\'ll Know"',
       images: [
         { file: 'week1/Apr7_S1_BuiltByDirector_dwdproseries.png', label: 'Story 1: Built By Director' },
         { file: 'week1/Apr7_S2_ThisIsPersonal_dwdproseries.png', label: 'Story 2: This Is Personal' },
-        { file: 'week1/Apr7_S3_DetailsDropping_dwdproseries.png', label: 'Story 3: Details Dropping' }
+        { file: 'week1/Apr7_S3_DetailsDropping_dwdproseries.png', label: 'Story 3: Tomorrow You\'ll Know' }
       ]
     },
 
@@ -77,7 +91,7 @@
       date: '2026-04-08', week: 2, label: 'Apr 8',
       type: 'Carousel (5 slides)',
       account: '@dwdproseries',
-      description: 'Director Reveal — Dixon\'s portrait, 15-year background, identity',
+      description: 'Director Reveal — Slide 1 MUST be a portrait of Dixon (not text, not a logo). Face stops the scroll. Slides 2\u20135 tell the story: 15-year background, Disney + NYC, 9 years building a program from 9 to 23 dancers, now building his own. End with "This is Dance With Dixon."',
       images: [
         { file: 'week2/Apr8_DirectorReveal_p1of5_dwdproseries.png', label: 'Slide 1' },
         { file: 'week2/Apr8_DirectorReveal_p2of5_dwdproseries.png', label: 'Slide 2' },
@@ -90,15 +104,22 @@
       date: '2026-04-09', week: 2, label: 'Apr 9',
       type: 'Reel (60-90 sec)',
       account: '@dancewithdixon + @dwdproseries',
-      description: 'Philosophy video — Dixon speaks to camera about what\'s broken in youth dance training',
+      description: 'Philosophy video — Dixon speaks directly to camera about what\'s broken in youth dance training. Raw, unscripted energy. Don\'t overproduce this — the authenticity IS the content. Post to @dancewithdixon first, share to @dwdproseries.',
       images: [],
       isVideo: true
+    },
+    {
+      date: '2026-04-10', week: 2, label: 'Apr 10',
+      type: 'Feed Post',
+      account: '@dancewithdixon',
+      description: 'Personal account funnel post — Dixon posts on his main account directing followers to @dwdproseries. "I\'ve been building something. If you\'ve been watching the @dwdproseries account, now you know who\'s behind it. Go follow. This is just the beginning." This is how the existing audience finds the new account.',
+      images: []
     },
     {
       date: '2026-04-11', week: 2, label: 'Apr 11',
       type: 'Carousel (6 slides)',
       account: '@dwdproseries',
-      description: '"What If?" — benefits of ProSeries approach',
+      description: '"What If?" — Cut to 4\u20135 slides max. Each slide = one direct question to the parent over a strong image. "What if your dancer\'s choreography was created by a working director — not pulled from a syllabus?" "What if the person running rehearsal was the same person who built the program?" Last slide: "That\'s ProSeries." + @dwdproseries',
       images: [
         { file: 'week2/Apr11_WhatIf_p1of6_dwdproseries.png', label: 'Slide 1' },
         { file: 'week2/Apr11_WhatIf_p2of6_dwdproseries.png', label: 'Slide 2' },
@@ -120,7 +141,7 @@
       date: '2026-04-13', week: 2, label: 'Apr 13',
       type: 'Story Poll (3 slides)',
       account: '@dwdproseries + @DWDCollective',
-      description: '"What matters most in training?" audience engagement poll',
+      description: '"What matters most in training?" — Make poll options feel like genuine choices, not leading questions. Example options: "Technique" / "Artistry" / "Stage presence" / "The teacher." Let answers be real — no obvious "right" answer.',
       images: [
         { file: 'week2/Apr13_StoryPoll_S1_dwdproseries.png', label: 'Poll Slide 1' },
         { file: 'week2/Apr13_StoryPoll_S2_dwdproseries.png', label: 'Poll Slide 2' },
@@ -133,7 +154,7 @@
       date: '2026-04-15', week: 3, label: 'Apr 15',
       type: 'Carousel (7 slides)',
       account: '@dwdproseries',
-      description: 'PROGRAM OVERVIEW — Three tracks, pricing, ages. Most important post of campaign.',
+      description: 'PROGRAM OVERVIEW — Most important post of campaign. 7 slides. Every slide must earn its spot. Last slide = crystal clear CTA: "Registration opens May 1. Link in bio." Don\'t bury the action in other info. This post needs to be saved and shared by parents.',
       images: [
         { file: 'week3/Apr15_ProgramOverview_p1of7_dwdproseries.png', label: 'Slide 1' },
         { file: 'week3/Apr15_ProgramOverview_p2of7_dwdproseries.png', label: 'Slide 2' },
@@ -148,7 +169,7 @@
       date: '2026-04-17', week: 3, label: 'Apr 17',
       type: 'Carousel (5 slides)',
       account: '@dwdproseries',
-      description: '"Not Your Average Program" — comparison of recital factory vs. performance-driven',
+      description: '"Not Your Average Program" — Reframe from comparison to aspiration. Don\'t name or trash other studios — parents\' kids are currently AT those studios. Instead: "What if training looked like this?" Show what ProSeries does without directly calling out what others don\'t. Same message, no bridge-burning. Frame it as an upgrade, not an insult.',
       images: [
         { file: 'week3/Apr17_NotAverage_p1of5_dwdproseries.png', label: 'Slide 1' },
         { file: 'week3/Apr17_NotAverage_p2of5_dwdproseries.png', label: 'Slide 2' },
@@ -182,7 +203,7 @@
       date: '2026-04-20', week: 3, label: 'Apr 20',
       type: 'Cross-post',
       account: '@DWDCollective',
-      description: 'Share Apr 15 Program Overview carousel to @DWDCollective — positions Dixon as multi-faceted',
+      description: 'Share Apr 15 Program Overview carousel to @DWDCollective with a DWDC-specific caption: "The same director building your adult company is now launching something for the next generation. Two programs. One standard. One choreographer." Make the cross-post feel intentional — not a lazy reshare.',
       images: [],
       isCrossPost: true
     },
@@ -192,7 +213,7 @@
       date: '2026-04-22', week: 4, label: 'Apr 22',
       type: 'Countdown Carousel (4 slides)',
       account: '@dwdproseries',
-      description: '"9 days. Registration May 1. Three tracks. Limited spots." — urgency',
+      description: '"9 days. Registration May 1." — Let urgency breathe. Don\'t cram everything into slide 1. Slide 1: the number (9). Slide 2: "Registration opens May 1." Slide 3: "Three tracks. Limited spots. One director\'s vision." Slide 4: strong photo of Dixon teaching + "Link in bio."',
       images: [
         { file: 'week4/Apr22_Countdown_p1of4_dwdproseries.png', label: 'Slide 1' },
         { file: 'week4/Apr22_Countdown_p2of4_dwdproseries.png', label: 'Slide 2' },
@@ -212,7 +233,7 @@
       date: '2026-04-25', week: 4, label: 'Apr 25',
       type: 'Testimonial Carousel (5 slides)',
       account: '@dwdproseries',
-      description: 'Social proof — parent + student quotes. Requires collecting quotes beforehand.',
+      description: 'Social proof — parent + student quotes with REAL NAMES and attribution. "Sarah M., dance parent" hits harder than anonymous. If possible, pair quotes with photos of the parent or dancer. Slide 1: "What dancers and parents are saying." Slides 2\u20134: individual quotes. Slide 5: "Registration opens May 1."',
       images: [
         { file: 'week4/Apr25_Testimonial_p1of5_dwdproseries.png', label: 'Slide 1' },
         { file: 'week4/Apr25_Testimonial_p2of5_dwdproseries.png', label: 'Slide 2' },
@@ -244,7 +265,7 @@
       date: '2026-04-30', week: 4, label: 'Apr 30',
       type: 'Recap Carousel (8 slides) + Stories',
       account: 'All accounts',
-      description: 'Month recap "In case you missed it" + countdown sticker. Drumroll for May 1.',
+      description: 'Month recap — trim to 5\u20136 strongest moments, not all 8. "In case you missed it." Last slide must be the LOUDEST thing in the entire campaign: "TOMORROW. Registration opens. Link in bio." Full stop. Post across all three accounts with countdown sticker on stories.',
       images: [
         { file: 'week4/Apr30_Recap_p1of8_dwdproseries.png', label: 'Slide 1' },
         { file: 'week4/Apr30_Recap_p2of8_dwdproseries.png', label: 'Slide 2' },
@@ -255,6 +276,13 @@
         { file: 'week4/Apr30_Recap_p7of8_dwdproseries.png', label: 'Slide 7' },
         { file: 'week4/Apr30_Recap_p8of8_dwdproseries.png', label: 'Slide 8' }
       ]
+    },
+    {
+      date: '2026-05-01', week: 4, label: 'May 1',
+      type: 'Feed Post + Stories',
+      account: 'All accounts (@dwdproseries + @dancewithdixon + @DWDCollective)',
+      description: 'LAUNCH DAY. Registration is live. Clean graphic + link. "DWD ProSeries. Season 1. Registration is open. Three tracks. Limited spots. Link in bio." Stories on all accounts with link sticker. This is the post the entire campaign has been building toward — do not skip it.',
+      images: []
     }
   ];
 
@@ -269,7 +297,7 @@
     1: 'Apr 1 \u2013 7',
     2: 'Apr 8 \u2013 14',
     3: 'Apr 15 \u2013 21',
-    4: 'Apr 22 \u2013 30'
+    4: 'Apr 22 \u2013 May 1'
   };
 
   // ── STORAGE HELPERS ──
@@ -324,10 +352,22 @@
     var progressEl = document.getElementById('campaign-progress');
     renderProgressBar(progressEl);
 
+    // Brand notes section (below progress bar)
+    var brandNotesHTML =
+      '<div class="campaign-brand-notes">' +
+        '<h3 class="campaign-section-title">Campaign Notes</h3>' +
+        '<ul>' +
+          '<li><strong>DWDPS brand palette:</strong> Electric green (#00D68F) + soft pink (#FF8FAB) on dark/black backgrounds. Week 1 stays moody/dark (mystery phase). Starting Week 2, begin introducing the ProSeries colors to signal "something new" in the feed.</li>' +
+          '<li><strong>Photo-first slides outperform text-first slides.</strong> Lead with faces and movement. Save text-heavy slides for mid-carousel, never slide 1.</li>' +
+        '</ul>' +
+      '</div>';
+    progressEl.insertAdjacentHTML('afterend', brandNotesHTML);
+
     // Highlight covers section
     var highlightsEl = document.getElementById('campaign-highlights');
     highlightsEl.innerHTML =
       '<h3 class="campaign-section-title">Highlight Covers</h3>' +
+      '<div class="campaign-highlight-warning" style="background:rgba(255,143,171,0.15);border:1px solid rgba(255,143,171,0.4);border-radius:8px;padding:10px 16px;margin-bottom:16px;color:#FF8FAB;font-size:0.9rem;font-weight:500;">Covers need final designs before Apr 1 launch.</div>' +
       '<div class="campaign-highlights-grid">' +
         '<div class="campaign-highlight-item"><img src="images/campaign/highlights/highlight-about.png" alt="About Highlight" loading="lazy"><span>About</span></div>' +
         '<div class="campaign-highlight-item"><img src="images/campaign/highlights/highlight-auditions.png" alt="Auditions Highlight" loading="lazy"><span>Auditions</span></div>' +
