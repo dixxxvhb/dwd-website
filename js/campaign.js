@@ -140,7 +140,7 @@
     {
       date: '2026-04-13', week: 2, label: 'Apr 13',
       type: 'Story Poll (3 slides)',
-      account: '@dwdproseries + @DWDCollective',
+      account: '@dwdproseries + @dwd_collective',
       description: '"What matters most in training?" — Make poll options feel like genuine choices, not leading questions. Example options: "Technique" / "Artistry" / "Stage presence" / "The teacher." Let answers be real — no obvious "right" answer.',
       images: [
         { file: 'week2/Apr13_StoryPoll_S1_dwdproseries.png', label: 'Poll Slide 1' },
@@ -202,8 +202,8 @@
     {
       date: '2026-04-20', week: 3, label: 'Apr 20',
       type: 'Cross-post',
-      account: '@DWDCollective',
-      description: 'Share Apr 15 Program Overview carousel to @DWDCollective with a DWDC-specific caption: "The same director building your adult company is now launching something for the next generation. Two programs. One standard. One choreographer." Make the cross-post feel intentional — not a lazy reshare.',
+      account: '@dwd_collective',
+      description: 'Share Apr 15 Program Overview carousel to @dwd_collective with a DWDC-specific caption: "The same director building your adult company is now launching something for the next generation. Two programs. One standard. One choreographer." Make the cross-post feel intentional — not a lazy reshare.',
       images: [],
       isCrossPost: true
     },
@@ -280,7 +280,7 @@
     {
       date: '2026-05-01', week: 4, label: 'May 1',
       type: 'Feed Post + Stories',
-      account: 'All accounts (@dwdproseries + @dancewithdixon + @DWDCollective)',
+      account: 'All accounts (@dwdproseries + @dancewithdixon + @dwd_collective)',
       description: 'LAUNCH DAY. Registration is live. Clean graphic + link. "DWD ProSeries. Season 1. Registration is open. Three tracks. Limited spots. Link in bio." Stories on all accounts with link sticker. This is the post the entire campaign has been building toward — do not skip it.',
       images: []
     }
