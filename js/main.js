@@ -321,7 +321,7 @@
       var trackVal = document.getElementById('ps-track').value;
       var trackMap = {
         'Pro (Ages 12+, 10 hrs/wk)': 'pro',
-        'Elite (Ages 8\u201312, 6 hrs/wk)': 'elite',
+        'Elite (Ages 8\u201312, 6.5\u20137 hrs/wk)': 'elite',
         'Prep (Ages 5\u20138, 4 hrs/wk)': 'prep',
         'Not sure yet': 'unsure'
       };

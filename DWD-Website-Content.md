@@ -1,7 +1,7 @@
 # DWD Website Content — All Pages
 ## Ready for Wix Implementation
 
-> **NOTE (March 21, 2026):** The HTML mockup (`index.html`) is the authoritative source for all website content. It has been fully updated with the DWD rebrand, new ProSeries 3-track structure (Prep/Elite/Pro, ages 5+), updated pricing ($185-$325/mo), Amusing Spaces showcase replacing iDance, and current rehearsal schedule. This markdown file may be outdated — refer to `index.html` for current copy.
+> **NOTE (March 21, 2026):** The HTML mockup (`index.html`) is the authoritative source for all website content. It has been fully updated with the DWD rebrand, new ProSeries 3-track structure (Prep/Elite/Pro, ages 5+), updated pricing ($210–$350/mo), Amusing Spaces showcase replacing iDance, and current rehearsal schedule. This markdown file may be outdated — refer to `index.html` for current copy.
 
 ---
 
