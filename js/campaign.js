@@ -36,11 +36,23 @@
       images: []
     },
     {
-      date: '2026-04-03', week: 1, label: 'Apr 3',
-      type: 'Story Post',
+      date: '2026-04-02', week: 1, label: 'Apr 2',
+      type: 'Photo Carousel (8 slides)',
       account: '@dwdproseries',
-      description: 'Tension hold — black screen or 2-second rehearsal clip, no context. Just "..." or a single question mark. Keeps mystery alive between opener and poll.',
-      images: []
+      category: 'MEET DIXON',
+      description: '"Meet Your Director" — 8-slide narrative: Dixon\'s headshot, teaching credentials, guest teaching, Disney/NYC/national stages, "Now building something new." Every slide branded with DWDPS logo, color-graded, lower-third text bars.',
+      images: [
+        { file: 'week1/Apr2_MeetDixon_cover.jpg', label: 'Cover: Meet Your Director' }
+      ]
+    },
+    {
+      date: '2026-04-03', week: 1, label: 'Apr 3',
+      type: 'Reel + Landscape (22s / 20s)',
+      account: '@dwdproseries',
+      category: 'THROWBACK',
+      description: '"The Room" — Rapid-fire montage of 14 clips across 10+ studios Dixon has taught in. Flash frames in brand pink between sections. Hook text at 0.5s, closing text "10 years. Countless rooms. One standard." DWDPS logo watermark throughout. End card with handle + CTA. Reel (9:16) + landscape (16:9) use different source clips.',
+      images: [],
+      isVideo: true
     },
     {
       date: '2026-04-04', week: 1, label: 'Apr 4',
@@ -110,6 +122,16 @@
     },
     {
       date: '2026-04-10', week: 2, label: 'Apr 10',
+      type: 'Photo Carousel (8 slides)',
+      account: '@dwdproseries',
+      category: 'MEET DIXON',
+      description: '"This Is Where I\'ve Been" — 8-slide guest teaching journey. Photo-led cover, branded lower-thirds on every slide, color-graded. Shows Dixon\'s range across studios and classes. Ends with "Now I\'m bringing it all home" + CTA.',
+      images: [
+        { file: 'week2/Apr10_GuestTeaching_cover.jpg', label: 'Cover: Guest Teaching' }
+      ]
+    },
+    {
+      date: '2026-04-10', week: 2, label: 'Apr 10',
       type: 'Feed Post',
       account: '@dancewithdixon',
       description: 'Personal account funnel post — Dixon posts on his main account directing followers to @dwdproseries. "I\'ve been building something. If you\'ve been watching the @dwdproseries account, now you know who\'s behind it. Go follow. This is just the beginning." This is how the existing audience finds the new account.',
@@ -131,9 +153,10 @@
     },
     {
       date: '2026-04-12', week: 2, label: 'Apr 12',
-      type: 'Reel/Story (15-30 sec)',
-      account: '@dancewithdixon',
-      description: 'Behind-the-scenes clip of teaching/rehearsing',
+      type: 'Reel + Landscape (24s / 23s)',
+      account: '@dwdproseries',
+      category: 'STUDIO ENERGY',
+      description: '"This Is The Work" — 15-clip rapid-fire training montage. Uses all 8 pre-cut teaching clips + 7 fresh studio clips. Hook text: "This is what training looks like." Flash frames in brand pink between sections. Slower closing section for focus moments. End card with DWDPS logo + CTA. Reel (9:16) uses teaching clips; landscape (16:9) uses competition + b-roll clips.',
       images: [],
       isVideo: true
     },
@@ -146,6 +169,17 @@
         { file: 'week2/Apr13_StoryPoll_S1_dwdproseries.png', label: 'Poll Slide 1' },
         { file: 'week2/Apr13_StoryPoll_S2_dwdproseries.png', label: 'Poll Slide 2' },
         { file: 'week2/Apr13_StoryPoll_S3_dwdproseries.png', label: 'Poll Slide 3' }
+      ]
+    },
+
+    {
+      date: '2026-04-14', week: 2, label: 'Apr 14',
+      type: 'Text Carousel (8 slides)',
+      account: '@dwdproseries',
+      category: 'PHILOSOPHY',
+      description: '"Training vs. Taking Class" — Editorial magazine-style text carousel. 8 slides with photo underlays, gradient backgrounds, noise texture. Defines the difference: taking class is a transaction, training is a curriculum with accountability. 3 numbered differences (Structure, Feedback, Standards). Closes with "ProSeries is training. That\'s the whole point." + CTA.',
+      images: [
+        { file: 'week2/Apr14_TrainingVsClass_cover.jpg', label: 'Cover: Training vs Taking Class' }
       ]
     },
 
@@ -163,6 +197,16 @@
         { file: 'week3/Apr15_ProgramOverview_p5of7_dwdproseries.png', label: 'Slide 5' },
         { file: 'week3/Apr15_ProgramOverview_p6of7_dwdproseries.png', label: 'Slide 6' },
         { file: 'week3/Apr15_ProgramOverview_p7of7_dwdproseries.png', label: 'Slide 7' }
+      ]
+    },
+    {
+      date: '2026-04-16', week: 3, label: 'Apr 16',
+      type: 'Photo Carousel (8 slides)',
+      account: '@dwdproseries',
+      category: 'THROWBACK',
+      description: '"Then & Now" — Split-image B&W/color cover (young Dixon vs now). 8-slide transformation timeline showing progression from early training through to building ProSeries. Branded throughout.',
+      images: [
+        { file: 'week3/Apr16_ThenAndNow_cover.jpg', label: 'Cover: Then & Now' }
       ]
     },
     {
@@ -201,11 +245,29 @@
     },
     {
       date: '2026-04-20', week: 3, label: 'Apr 20',
+      type: 'Reel + Landscape (21s / 18s)',
+      account: '@dwdproseries',
+      category: 'STUDIO ENERGY',
+      description: '"Solo Prep" — Multi-clip montage of solo work + competition solos. 12 clips: 5 from IMG_4841, 3 from IMG_4842, River solo, Fallin\' solo, vertical clips. Alternates between studio prep and competition moments. Fade-from-black hook: "Before the spotlight..." Closing: "The work happens here." DWDPS logo watermark + branded end card.',
+      images: [],
+      isVideo: true
+    },
+    {
+      date: '2026-04-20', week: 3, label: 'Apr 20',
       type: 'Cross-post',
       account: '@dwd_collective',
       description: 'Share Apr 15 Program Overview carousel to @dwd_collective with a DWDC-specific caption: "The same director building your adult company is now launching something for the next generation. Two programs. One standard. One choreographer." Make the cross-post feel intentional — not a lazy reshare.',
       images: [],
       isCrossPost: true
+    },
+
+    {
+      date: '2026-04-21', week: 3, label: 'Apr 21',
+      type: 'This or That Stories',
+      account: '@dwdproseries',
+      category: 'ENGAGEMENT',
+      description: '"This or That" interactive stories — create directly in Instagram (no pre-built assets). Dance-themed choices: "Ballet barre vs. Center floor?", "Competition vs. Showcase?", "Lyrical vs. Contemporary?", "Morning class vs. Evening class?" Use the IG poll sticker on each story. Fun, light engagement between heavier content days.',
+      images: []
     },
 
     // ── WEEK 4: THE PUSH (Apr 22-30) ──
@@ -230,6 +292,16 @@
       isVideo: true
     },
     {
+      date: '2026-04-24', week: 4, label: 'Apr 24',
+      type: 'Photo Carousel (10 slides)',
+      account: '@dwdproseries',
+      category: 'MEET DIXON',
+      description: '"Behind the Choreography" — Photo dump with purpose. 10 slides: branded pink-bordered frames, photo grid layout, candid moments from teaching and backstage. Cover: photo-led "Behind the Choreography". Mix of headshots, teaching shots, group energy, and fun candids. DWDPS logo on every slide.',
+      images: [
+        { file: 'week4/Apr24_Backstage_cover.jpg', label: 'Cover: Behind the Choreography' }
+      ]
+    },
+    {
       date: '2026-04-25', week: 4, label: 'Apr 25',
       type: 'Testimonial Carousel (5 slides)',
       account: '@dwdproseries',
@@ -251,6 +323,16 @@
       isVideo: true
     },
     {
+      date: '2026-04-27', week: 4, label: 'Apr 27',
+      type: 'Text Carousel (10 slides)',
+      account: '@dwdproseries',
+      category: 'PHILOSOPHY',
+      description: '"What I Look For in an Audition" — 10-slide editorial text carousel. Cover with photo underlay. 6 qualities (Presence, Work Ethic, Coachability, Artistry, Consistency, Heart) each on its own slide with large faded numbers. "What doesn\'t matter" flip slide in different color palette. "What really matters" closer with photo. CTA with DWDPS logo.',
+      images: [
+        { file: 'week4/Apr27_Audition_cover.jpg', label: 'Cover: What I Look For' }
+      ]
+    },
+    {
       date: '2026-04-28', week: 4, label: 'Apr 28',
       type: 'Carousel (3 slides)',
       account: '@dwdproseries',
@@ -260,6 +342,15 @@
         { file: 'week4/Apr28_FinalDetails_p2of3_dwdproseries.png', label: 'Slide 2' },
         { file: 'week4/Apr28_FinalDetails_p3of3_dwdproseries.png', label: 'Slide 3' }
       ]
+    },
+    {
+      date: '2026-04-29', week: 4, label: 'Apr 29',
+      type: 'Reel (45s)',
+      account: '@dwdproseries + @dancewithdixon',
+      category: 'THROWBACK',
+      description: 'Evolution Reel v2 — B&W-to-color timeline 2016-2026. 45 seconds, 9:16. Uses approved clips + brand fonts (Cormorant Garamond + Outfit) + DWD colors. BUILT, awaiting Dixon review. File at ~/Desktop/DWD/Reel Builds/evolution_reel_v2.mp4',
+      images: [],
+      isVideo: true
     },
     {
       date: '2026-04-30', week: 4, label: 'Apr 30',
