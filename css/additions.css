@@ -536,6 +536,34 @@ button[type="submit"]:disabled {
   margin-right: auto;
 }
 
+/* ═══════════════════════════════════════
+   TOGGLE GROUP — contact form reason selector
+   ═══════════════════════════════════════ */
+.toggle-group {
+  display: flex;
+  gap: 8px;
+}
+.toggle-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid var(--gold, #c9a96e);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--cream, #f5f0e8);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.toggle-btn:hover {
+  background: rgba(201, 169, 110, 0.15);
+}
+.toggle-btn.active {
+  background: var(--gold, #c9a96e);
+  color: var(--forest, #0c1f17);
+  font-weight: 600;
+}
+
 /* Footer legal links */
 .footer-sep { margin: 0 0.5rem; opacity: 0.3; }
 .footer-legal-link {

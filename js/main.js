@@ -358,6 +358,16 @@
     });
   }
 
+  // ── TOGGLE GROUPS ──
+  document.querySelectorAll('.toggle-group').forEach(function (group) {
+    group.querySelectorAll('.toggle-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        group.querySelectorAll('.toggle-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+    });
+  });
+
   // ── CONTACT FORM ──
   var contactForm = document.querySelector('[data-form="contact"]');
   if (contactForm) {
@@ -365,12 +375,13 @@
       e.preventDefault();
       if (!validateForm(contactForm)) return;
 
+      var activeToggle = contactForm.querySelector('.toggle-group .toggle-btn.active');
       var payload = {
         name: document.getElementById('contact-name').value.trim(),
         email: document.getElementById('contact-email').value.trim(),
-        phone: document.getElementById('contact-phone').value.trim() || '',
-        reason: document.getElementById('contact-reason').value || '',
-        how_heard: document.getElementById('contact-heard').value || '',
+        phone: '',
+        reason: activeToggle ? activeToggle.dataset.value : 'general',
+        how_heard: '',
         message: document.getElementById('contact-message').value.trim() || ''
       };
 
