@@ -251,6 +251,43 @@
   var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwdWxydmhpdXZnYnZyYWx5Ynh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2ODI0MzAsImV4cCI6MjA4NjI1ODQzMH0.O7MDYxkfqhQGNI58xyDq3HhsIm12OmgZRkJlyTXL0ug';
   var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+  // ── LIVE PRICING FROM PROSERIES CONFIG ──
+  // Fetches active config from proseries_config table (anon RLS allows read)
+  // Updates pricing on the page. Falls back silently to hardcoded HTML values on error.
+  (function loadLivePricing() {
+    supabase
+      .from('proseries_config')
+      .select('track_prep_price_cents, track_elite_price_cents, track_pro_price_cents, track_prep_ages, track_elite_ages, track_pro_ages')
+      .eq('is_active', true)
+      .single()
+      .then(function (result) {
+        if (result.error || !result.data) return; // silent fallback to hardcoded HTML
+        var c = result.data;
+        var proDollars = Math.round(c.track_pro_price_cents / 100);
+        var eliteDollars = Math.round(c.track_elite_price_cents / 100);
+        var prepDollars = Math.round(c.track_prep_price_cents / 100);
+
+        // Update track card prices (order: Pro, Elite, Prep)
+        var priceEls = document.querySelectorAll('.track-price');
+        if (priceEls[0]) priceEls[0].innerHTML = '$' + proDollars + ' <span>/ month</span>';
+        if (priceEls[1]) priceEls[1].innerHTML = '$' + eliteDollars + ' <span>/ month</span>';
+        if (priceEls[2]) priceEls[2].innerHTML = '$' + prepDollars + ' <span>/ month</span>';
+
+        // Update track card age labels
+        var levelEls = document.querySelectorAll('.track-level');
+        if (levelEls[0] && c.track_pro_ages) levelEls[0].textContent = 'Ages ' + c.track_pro_ages + ' | Competitive';
+        if (levelEls[1] && c.track_elite_ages) levelEls[1].textContent = 'Ages ' + c.track_elite_ages + ' | Competitive';
+        if (levelEls[2] && c.track_prep_ages) levelEls[2].textContent = 'Ages ' + c.track_prep_ages + ' | Foundation';
+
+        // Update fee table tuition range row
+        var feeRows = document.querySelectorAll('.fee-table tbody tr');
+        if (feeRows[0]) {
+          var cells = feeRows[0].querySelectorAll('td');
+          if (cells[1]) cells[1].textContent = '$' + prepDollars + '–$' + proDollars + ' / month';
+        }
+      });
+  })();
+
   // ── FORM HELPERS ──
   function validateForm(form) {
     var valid = true;
