@@ -1002,3 +1002,19 @@ button[type="submit"]:disabled {
   .campaign-week-header { padding: 1rem; }
   .coming-soon-banner { padding: 3rem 1.5rem; }
 }
+
+/* Tamara Mark — memorial easter egg */
+.tamara-mark {
+  display: block;
+  margin-top: 10px;
+  opacity: 0.3;
+  transition: opacity 0.6s ease;
+}
+.tamara-mark:hover {
+  opacity: 0.55;
+}
+.tamara-mark--about {
+  display: inline-block;
+  margin: 4px 0 2px;
+  opacity: 0.25;
+}
