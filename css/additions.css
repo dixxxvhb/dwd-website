@@ -1018,6 +1018,7 @@ button[type="submit"]:disabled {
 }
 .tamara-mark--about {
   display: inline-block;
-  margin: 4px 0 2px;
-  opacity: 0.4;
+  vertical-align: super;
+  margin: 0 0 0 2px;
+  opacity: 0.45;
 }
