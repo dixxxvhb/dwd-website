@@ -9,7 +9,7 @@
   // ── HASH ROUTING ──
   const validPages = [
     'home', 'about', 'adult-company', 'proseries',
-    'classes-events', 'gallery', 'shop', 'contact', 'campaign', 'privacy'
+    'classes-events', 'gallery', 'shop', 'contact', 'campaign', 'analytics', 'privacy'
   ];
 
   function getPageFromHash() {
@@ -66,7 +66,8 @@
       'gallery': 'Gallery | DWD',
       'shop': 'Shop | DWD',
       'contact': 'Contact | DWD',
-      'campaign': 'Campaign HQ | DWD'
+      'campaign': 'Campaign HQ | DWD',
+      'analytics': 'Analytics | DWD'
     };
     document.title = titles[name] || titles['home'];
   }
@@ -250,6 +251,7 @@
   var supabaseUrl = 'https://ipulrvhiuvgbvralybxx.supabase.co';
   var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwdWxydmhpdXZnYnZyYWx5Ynh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2ODI0MzAsImV4cCI6MjA4NjI1ODQzMH0.O7MDYxkfqhQGNI58xyDq3HhsIm12OmgZRkJlyTXL0ug';
   var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  window.__dwd_sb = supabase; // expose for analytics.js / analytics-dashboard.js
 
   // ── LIVE PRICING FROM PROSERIES CONFIG ──
   // Fetches active config from proseries_config table (anon RLS allows read)
