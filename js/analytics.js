@@ -9,6 +9,9 @@
   // Skip tracking in dev / localhost
   if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
 
+  // Skip tracking for admin (anyone who's entered the access code)
+  if (localStorage.getItem('dwd_analytics_auth') || localStorage.getItem('dwd_campaign_auth')) return;
+
   // Reuse the Supabase client exposed by main.js
   var sb = window.__dwd_sb;
   if (!sb) return;
