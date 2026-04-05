@@ -1016,6 +1016,13 @@ button[type="submit"]:disabled {
 .tamara-mark--footer {
   margin-left: 8px;
 }
+
+/* Fix footer hidden behind fixed sidebar on desktop */
+@media (min-width: 769px) {
+  .site-footer {
+    margin-left: 240px;
+  }
+}
 .tamara-mark--about {
   display: inline-block;
   vertical-align: super;
