@@ -65,7 +65,7 @@
       'classes-events': 'Classes & Events | DWD',
 
       'gallery': 'Gallery | DWD',
-      'shop': 'Shop | DWD',
+      'shop': 'Merch | DWD',
       'contact': 'Contact | DWD',
       'campaign': 'Campaign HQ | DWD',
       'analytics': 'Analytics | DWD',

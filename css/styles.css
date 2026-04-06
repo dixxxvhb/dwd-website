@@ -12,6 +12,8 @@
   --gold: #e2b955;
   --gold-light: #f0d080;
   --gold-dark: #c9a040;
+  --forest-dark: #0c1f17;
+  --cream-faint: #d4cfc0;
   --footer-bg: #060a08;
   --black: #0a0a0a;
   
@@ -543,7 +545,7 @@ a:hover {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--accent-light) 0%, #fff0ea 100%);
+  background: linear-gradient(135deg, var(--accent-light) 0%, #fbe8df 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(248, 215, 200, 0.25);
   letter-spacing: 1.2px;
@@ -574,7 +576,7 @@ a:hover {
 }
 
 .btn-accent:hover {
-  background-color: #d4b89a;
+  background-color: var(--gold-dark);
   transform: translateY(-2px);
 }
 
