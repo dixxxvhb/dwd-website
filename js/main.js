@@ -317,6 +317,13 @@
   }
 
   function showFormSuccess(form) {
+    // Show modal for email signup forms, fall back to inline for contact/other
+    var isEmailForm = form.dataset.form && form.dataset.form.indexOf('signup') !== -1;
+    var isPSInterest = form.dataset.form === 'proseries-interest';
+    if (isEmailForm || isPSInterest) {
+      showSuccessModal();
+      return;
+    }
     var successEl = form.parentElement.querySelector('.form-success') ||
                     form.querySelector('.form-success') ||
                     form.nextElementSibling;
@@ -324,6 +331,39 @@
       successEl.classList.add('show');
       setTimeout(function () { successEl.classList.remove('show'); }, 5000);
     }
+  }
+
+  function showSuccessModal() {
+    // Don't create duplicates
+    if (document.getElementById('dwd-success-modal')) {
+      document.getElementById('dwd-success-modal').classList.add('open');
+      return;
+    }
+
+    var modal = document.createElement('div');
+    modal.id = 'dwd-success-modal';
+    modal.className = 'dwd-success-modal';
+    modal.innerHTML = '<div class="dwd-success-backdrop"></div>' +
+      '<div class="dwd-success-card">' +
+        '<button class="dwd-success-close" aria-label="Close">&times;</button>' +
+        '<img src="images/logos/DWDPS-pink.png" alt="DWDPS" class="dwd-success-logo">' +
+        '<h2 class="dwd-success-title">You\'re on the list.</h2>' +
+        '<p class="dwd-success-sub">We\'ll reach out when it\'s time. In the meantime, follow along.</p>' +
+        '<a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="dwd-success-btn">Follow @dwdproseries</a>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    // Animate in
+    requestAnimationFrame(function () { modal.classList.add('open'); });
+
+    // Close handlers
+    modal.querySelector('.dwd-success-close').addEventListener('click', function () {
+      modal.classList.remove('open');
+    });
+    modal.querySelector('.dwd-success-backdrop').addEventListener('click', function () {
+      modal.classList.remove('open');
+    });
   }
 
   function showFormError(form, msg) {

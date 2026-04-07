@@ -487,6 +487,99 @@
 .form-success { display: none; }
 .form-success.visible { display: block; }
 
+/* ── Success Modal ── */
+.dwd-success-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.dwd-success-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.dwd-success-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.dwd-success-card {
+  position: relative;
+  background: var(--forest-light, #1a3d2e);
+  border: 1px solid var(--gold, #e2b955);
+  border-radius: 2px;
+  padding: 3rem 2.5rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dwd-success-modal.open .dwd-success-card {
+  transform: scale(1) translateY(0);
+}
+.dwd-success-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: rgba(245, 240, 232, 0.4);
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.dwd-success-close:hover {
+  color: var(--cream, #f5f0e8);
+}
+.dwd-success-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 1.2rem;
+}
+.dwd-success-title {
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--gold, #e2b955);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.5px;
+}
+.dwd-success-sub {
+  font-family: var(--font-body, 'Outfit', sans-serif);
+  font-size: 0.95rem;
+  color: rgba(245, 240, 232, 0.6);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+.dwd-success-btn {
+  display: inline-block;
+  font-family: var(--font-body, 'Outfit', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--forest-light, #1a3d2e);
+  background: var(--gold, #e2b955);
+  padding: 0.7rem 2rem;
+  text-decoration: none;
+  border-radius: 1px;
+  transition: background 0.2s, transform 0.2s;
+}
+.dwd-success-btn:hover {
+  background: var(--gold-light, #f0d080);
+  transform: translateY(-1px);
+}
+
 /* Content section alt variant */
 .content-section.alt {
   background-color: var(--forest);
