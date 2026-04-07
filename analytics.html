@@ -18,9 +18,50 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/icons/analytics-icon-192.png">
 
-  <script>window.location.replace('/#page-analytics');</script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/additions.css">
+
+  <!-- Supabase Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
-  <p>Loading analytics...</p>
+  <section class="page" id="page-analytics" aria-label="Site Analytics" style="display:block; min-height:100vh; padding-top:2rem;">
+    <div class="campaign-gate" id="analytics-gate">
+      <div class="campaign-gate-inner">
+        <img src="images/icons/analytics-icon-192.png" alt="DWD" width="80" height="80" style="margin-bottom: 1.5rem; border-radius: 50%;">
+        <h2>Site Analytics</h2>
+        <p>Enter access code to view website analytics.</p>
+        <form id="analytics-auth-form" class="campaign-auth-form">
+          <input type="password" id="analytics-code-input" placeholder="Access code" autocomplete="off" required>
+          <button type="submit" class="btn btn-blush">Enter</button>
+        </form>
+        <div id="analytics-auth-error" class="campaign-auth-error" style="display:none;">Wrong code. Try again.</div>
+      </div>
+    </div>
+    <div id="analytics-dashboard" style="display:none;">
+      <!-- Rendered by analytics-dashboard.js -->
+    </div>
+  </section>
+
+  <script>
+    // Init Supabase for analytics
+    var supabaseUrl = 'https://ipulrvhiuvgbvralybxx.supabase.co';
+    var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwdWxydmhpdXZnYnZyYWx5Ynh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2ODI0MzAsImV4cCI6MjA4NjI1ODQzMH0.O7MDYxkfqhQGNI58xyDq3HhsIm12OmgZRkJlyTXL0ug';
+    window.__dwd_sb = window.supabase.createClient(supabaseUrl, supabaseKey);
+  </script>
+  <script src="js/analytics-dashboard.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
 </body>
 </html>

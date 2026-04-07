@@ -2,7 +2,7 @@
   "name": "DWD Analytics",
   "short_name": "DWD Data",
   "description": "Dance With Dixon — Website analytics dashboard.",
-  "start_url": "/#page-analytics",
+  "start_url": "/analytics.html",
   "scope": "/",
   "display": "standalone",
   "background_color": "#1a1a2e",
