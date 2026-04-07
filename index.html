@@ -15,7 +15,18 @@
   <meta property="og:url" content="https://dancewithdixon.com">
   <meta property="og:image" content="images/logos/DWD-green.png">
 
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#113c2e">
+
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DWD">
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+
   <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="192x192" href="images/icons/icon-192.png">
   <link rel="icon" type="image/png" href="images/logos/DWD-green.png">
 
   <!-- Fonts -->
@@ -1034,5 +1045,12 @@
   <script src="js/campaign.js"></script>
   <script src="js/analytics.js"></script>
   <script src="js/analytics-dashboard.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
 </body>
 </html>
