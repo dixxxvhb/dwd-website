@@ -234,7 +234,7 @@
 
         html += '<div class="a-activity">';
         html += '<div class="a-activity-top">';
-        html += '<div><span class="a-badge ' + badgeCls + '">' + badgeText + '</span><span class="a-activity-email">' + s.masked_email + '</span></div>';
+        html += '<div><span class="a-badge ' + badgeCls + '">' + badgeText + '</span><span class="a-activity-email">' + (s.email || s.masked_email || '') + '</span></div>';
         html += '<span class="a-activity-time">' + timeAgo(s.created_at) + '</span>';
         html += '</div>';
         if (s.source && s.signup_type !== 'early-access') {
