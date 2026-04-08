@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v2';
+const CACHE_NAME = 'dwd-site-v3';
 const ASSETS = [
   '/',
   '/index.html',
