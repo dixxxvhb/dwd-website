@@ -513,8 +513,7 @@
 /* ── YouTube Video Embeds ── */
 .video-featured {
   width: 100%;
-  max-width: 900px;
-  margin: 2rem auto;
+  margin: 2rem 0;
   padding: 0 3rem;
   box-sizing: border-box;
 }
