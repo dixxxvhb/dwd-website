@@ -354,15 +354,55 @@
   background-color: rgba(248,215,200,0.05);
 }
 @media (max-width: 600px) {
-  .comparison-row { grid-template-columns: 1fr; gap: 0; }
-  .comparison-label {
-    background-color: var(--forest-light); padding: 0.75rem 1rem 0.25rem;
-    font-size: 0.8rem; color: var(--gold);
+  .comparison-table {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
   }
-  .comparison-col { padding: 0.5rem 1rem; }
+  .comparison-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-bottom: none;
+    background: var(--forest-light);
+    border: 1px solid var(--forest-mid);
+    overflow: hidden;
+  }
   .comparison-header { display: none; }
-  .comparison-them::before { content: "Traditional Studio: "; font-weight: 600; color: rgba(245,241,235,0.4); }
-  .comparison-us::before { content: "ProSeries: "; font-weight: 600; color: var(--accent); }
+  .comparison-label {
+    padding: 0.75rem 1rem;
+    font-size: 0.7rem;
+    font-family: var(--font-body);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    background: var(--forest-dark);
+    border-bottom: 1px solid var(--forest-mid);
+  }
+  .comparison-col {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .comparison-them {
+    background: transparent;
+    color: rgba(245, 241, 235, 0.35);
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    text-decoration: line-through;
+    text-decoration-color: rgba(245, 241, 235, 0.15);
+  }
+  .comparison-us {
+    background: rgba(248, 215, 200, 0.06);
+    color: var(--cream);
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--accent);
+  }
+  .comparison-them::before,
+  .comparison-us::before { display: none; }
 }
 
 /* Classes & Events extras */
@@ -469,6 +509,72 @@
   display: flex; align-items: center; gap: 0.5rem;
 }
 .footer-links a:hover { color: var(--accent); }
+
+/* ── YouTube Video Embeds ── */
+.video-featured {
+  padding: 0 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.video-featured .video-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.video-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  background: var(--forest-dark);
+  border: 1px solid var(--forest-mid);
+}
+.video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.video-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 0 3rem;
+}
+.video-grid .video-card {
+  background: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+.video-grid .video-card:hover {
+  border-color: rgba(226, 185, 85, 0.3);
+}
+.video-card-info {
+  padding: 1rem 1.25rem;
+}
+.video-card-info h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--cream);
+  margin-bottom: 0.25rem;
+}
+.video-card-info p {
+  font-size: 0.85rem;
+  color: rgba(245, 241, 235, 0.55);
+  line-height: 1.5;
+}
+@media (max-width: 768px) {
+  .video-featured { padding: 0 1.5rem; }
+  .video-grid { grid-template-columns: 1fr; padding: 0 1.5rem; }
+}
 
 /* Gallery images direct (not .gallery-item wrapper) */
 .gallery-grid img {
