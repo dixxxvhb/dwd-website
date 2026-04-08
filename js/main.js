@@ -392,53 +392,6 @@
     }
   }
 
-  // ── PROSERIES INTEREST FORM ──
-  var psForm = document.querySelector('[data-form="proseries-interest"]');
-  if (psForm) {
-    psForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (!validateForm(psForm)) return;
-
-      var trackVal = document.getElementById('ps-track').value;
-      var trackMap = {
-        'Pro (Ages 12+, 10 hrs/wk)': 'pro',
-        'Elite (Ages 8\u201312, 6.5\u20137 hrs/wk)': 'elite',
-        'Prep (Ages 5\u20138, 4 hrs/wk)': 'prep',
-        'Not sure yet': 'unsure'
-      };
-
-      var child = {
-        name: document.getElementById('ps-dancer-name').value.trim(),
-        age: document.getElementById('ps-age').value ? parseInt(document.getElementById('ps-age').value, 10) : null,
-        dance_experience: document.getElementById('ps-experience').value || '',
-        preferred_track: trackMap[trackVal] || 'unsure',
-        notes: ''
-      };
-
-      var payload = {
-        parent_name: document.getElementById('ps-parent-name').value.trim(),
-        parent_email: document.getElementById('ps-email').value.trim() || null,
-        parent_phone: document.getElementById('ps-phone').value.trim() || null,
-        children: [child],
-        how_heard: document.getElementById('ps-heard').value || '',
-        general_notes: document.getElementById('ps-questions').value.trim() || ''
-      };
-
-      setSubmitLoading(psForm, true);
-      supabase.from('proseries_interests').insert(payload)
-        .then(function (res) {
-          setSubmitLoading(psForm, false);
-          if (res.error) {
-            console.error('Interest form error:', res.error);
-            showFormError(psForm, 'Something went wrong. Please try again.');
-          } else {
-            psForm.reset();
-            showFormSuccess(psForm);
-          }
-        });
-    });
-  }
-
   // ── TOGGLE GROUPS ──
   document.querySelectorAll('.toggle-group').forEach(function (group) {
     group.querySelectorAll('.toggle-btn').forEach(function (btn) {
