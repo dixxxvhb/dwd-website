@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v1';
+const CACHE_NAME = 'dwd-site-v2';
 const ASSETS = [
   '/',
   '/index.html',
@@ -26,12 +26,20 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Network-first for navigation, cache-first for assets
-  if (e.request.mode === 'navigate') {
+  var url = e.request.url;
+  var isCodeFile = url.endsWith('.js') || url.endsWith('.css') || url.endsWith('.html');
+
+  if (e.request.mode === 'navigate' || isCodeFile) {
+    // Network-first for navigation + code files (always get latest)
     e.respondWith(
-      fetch(e.request).catch(() => caches.match('/index.html'))
+      fetch(e.request).then((res) => {
+        var clone = res.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+        return res;
+      }).catch(() => caches.match(e.request) || caches.match('/index.html'))
     );
   } else {
+    // Cache-first for images/fonts (rarely change)
     e.respondWith(
       caches.match(e.request).then((cached) => cached || fetch(e.request))
     );
