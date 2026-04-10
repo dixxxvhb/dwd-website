@@ -1,7 +1,7 @@
 # DWD Website Content — All Pages
-## Ready for Wix Implementation
+## DEPRECATED — DO NOT USE AS SOURCE OF TRUTH
 
-> **NOTE (March 21, 2026):** The HTML mockup (`index.html`) is the authoritative source for all website content. It has been fully updated with the DWD rebrand, new ProSeries 3-track structure (Prep/Elite/Pro, ages 5+), updated pricing ($210–$350/mo), Amusing Spaces showcase replacing iDance, and current rehearsal schedule. This markdown file may be outdated — refer to `index.html` for current copy.
+> **WARNING (April 9, 2026):** This file is a historical planning document from the Wix migration era. It contains OUTDATED information including references to iDance Orlando (CANCELLED), old class schedules, and Wix-era site structure. **`index.html` is the only authoritative source for website content.** Do not reference this markdown file for current copy, dates, events, or pricing.
 
 ---
 

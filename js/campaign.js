@@ -31,7 +31,7 @@
     {
       date: '2026-04-01', week: 1, label: 'Apr 1',
       type: 'Story Post',
-      account: '@dancewithdixon',
+      account: '@dixonbowles',
       description: 'Same day as the @dwdproseries opener. Dixon posts a simple story on his main account: a dark/moody photo or 15-second clip with "Something\'s coming." and a "follow @dwdproseries" tag. This funnels existing followers to the new account from day one.',
       images: []
     },
@@ -115,8 +115,8 @@
     {
       date: '2026-04-09', week: 2, label: 'Apr 9',
       type: 'Reel (60-90 sec)',
-      account: '@dancewithdixon + @dwdproseries',
-      description: 'Philosophy video — Dixon speaks directly to camera about what\'s broken in youth dance training. Raw, unscripted energy. Don\'t overproduce this — the authenticity IS the content. Post to @dancewithdixon first, share to @dwdproseries.',
+      account: '@dixonbowles + @dwdproseries',
+      description: 'Philosophy video — Dixon speaks directly to camera about what\'s broken in youth dance training. Raw, unscripted energy. Don\'t overproduce this — the authenticity IS the content. Post to @dixonbowles first, share to @dwdproseries.',
       images: [],
       isVideo: true
     },
@@ -133,7 +133,7 @@
     {
       date: '2026-04-10', week: 2, label: 'Apr 10',
       type: 'Feed Post',
-      account: '@dancewithdixon',
+      account: '@dixonbowles',
       description: 'Personal account funnel post — Dixon posts on his main account directing followers to @dwdproseries. "I\'ve been building something. If you\'ve been watching the @dwdproseries account, now you know who\'s behind it. Go follow. This is just the beginning." This is how the existing audience finds the new account.',
       images: []
     },
@@ -225,7 +225,7 @@
     {
       date: '2026-04-18', week: 3, label: 'Apr 18',
       type: 'Reel (15-30 sec)',
-      account: '@dwdproseries + @dancewithdixon',
+      account: '@dwdproseries + @dixonbowles',
       description: 'Competition highlight clip — shows artistry standard',
       images: [],
       isVideo: true
@@ -286,7 +286,7 @@
     {
       date: '2026-04-23', week: 4, label: 'Apr 23',
       type: 'Reel (60-90 sec)',
-      account: '@dancewithdixon + @dwdproseries',
+      account: '@dixonbowles + @dwdproseries',
       description: 'Dixon speaks personally — "Why this matters to me" — emotional hook',
       images: [],
       isVideo: true
@@ -346,7 +346,7 @@
     {
       date: '2026-04-29', week: 4, label: 'Apr 29',
       type: 'Reel (45s)',
-      account: '@dwdproseries + @dancewithdixon',
+      account: '@dwdproseries + @dixonbowles',
       category: 'THROWBACK',
       description: 'Evolution Reel v2 — B&W-to-color timeline 2016-2026. 45 seconds, 9:16. Uses approved clips + brand fonts (Cormorant Garamond + Outfit) + DWD colors. BUILT, awaiting Dixon review. File at ~/Desktop/DWD/Reel Builds/evolution_reel_v2.mp4',
       images: [],
@@ -371,7 +371,7 @@
     {
       date: '2026-05-01', week: 4, label: 'May 1',
       type: 'Feed Post + Stories',
-      account: 'All accounts (@dwdproseries + @dancewithdixon + @dwd_collective)',
+      account: 'All accounts (@dwdproseries + @dixonbowles + @dwd_collective)',
       description: 'LAUNCH DAY. Registration is live. Clean graphic + link. "DWD ProSeries. Season 1. Registration is open. Three tracks. Limited spots. Link in bio." Stories on all accounts with link sticker. This is the post the entire campaign has been building toward — do not skip it.',
       images: []
     }
