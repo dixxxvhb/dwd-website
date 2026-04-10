@@ -212,11 +212,11 @@
   function renderSignups(d) {
     var html = '<div class="a-content">';
 
-    // 3-column counts
-    html += '<div class="a-grid a-grid-3">';
-    html += '<div class="a-stat a-stat-green"><div class="a-stat-val a-val-green">' + (d.email_signups || 0) + '</div><div class="a-stat-label">Email</div></div>';
+    // 2-column counts: early access (combined) + contacts
+    var allEarlyAccess = (d.email_signups || 0) + (d.early_access_signups || 0);
+    html += '<div class="a-grid">';
+    html += '<div class="a-stat a-stat-green"><div class="a-stat-val a-val-green">' + allEarlyAccess + '</div><div class="a-stat-label">Early Access</div></div>';
     html += '<div class="a-stat a-stat-green"><div class="a-stat-val a-val-green">' + (d.contact_submissions || 0) + '</div><div class="a-stat-label">Contact</div></div>';
-    html += '<div class="a-stat a-stat-green"><div class="a-stat-val a-val-green">' + (d.early_access_signups || 0) + '</div><div class="a-stat-label">Early Access</div></div>';
     html += '</div>';
 
     // Recent activity
@@ -229,16 +229,15 @@
       signups.forEach(function (s) {
         var badgeCls = 'a-badge-gray';
         var badgeText = 'CONTACT';
-        if (s.signup_type === 'email') { badgeCls = 'a-badge-green'; badgeText = 'EMAIL'; }
-        else if (s.signup_type === 'early-access') { badgeCls = 'a-badge-gold'; badgeText = 'EARLY ACCESS'; }
+        if (s.signup_type === 'email' || s.signup_type === 'early-access') { badgeCls = 'a-badge-gold'; badgeText = 'EARLY ACCESS'; }
 
         html += '<div class="a-activity">';
         html += '<div class="a-activity-top">';
         html += '<div><span class="a-badge ' + badgeCls + '">' + badgeText + '</span><span class="a-activity-email">' + (s.email || s.masked_email || '') + '</span></div>';
         html += '<span class="a-activity-time">' + timeAgo(s.created_at) + '</span>';
         html += '</div>';
-        if (s.source && s.signup_type !== 'early-access') {
-          html += '<div class="a-activity-source">via ' + formatPage(s.source) + '</div>';
+        if (s.signup_type === 'contact' && s.source) {
+          html += '<div class="a-activity-source">re: ' + formatPage(s.source) + '</div>';
         }
         html += '</div>';
       });
@@ -268,9 +267,21 @@
   }
 
   // ── Sources Tab ──
+  function mergeSources(sources) {
+    var merged = {};
+    var aliases = { ig: 'instagram', instagram: 'instagram' };
+    sources.forEach(function (s) {
+      var key = aliases[s.source.toLowerCase()] || s.source.toLowerCase();
+      if (!merged[key]) merged[key] = { source: key, visits: 0 };
+      merged[key].visits += s.visits;
+    });
+    return Object.keys(merged).map(function (k) { return merged[k]; })
+      .sort(function (a, b) { return b.visits - a.visits; });
+  }
+
   function renderSources(d) {
     var html = '<div class="a-content">';
-    var sources = d.traffic_sources || [];
+    var sources = mergeSources(d.traffic_sources || []);
     var totalVisits = 0;
     sources.forEach(function (s) { totalVisits += s.visits; });
 
