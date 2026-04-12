@@ -1547,7 +1547,7 @@ a:hover {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: rgba(245, 240, 232, 0.35);
+  color: rgba(245, 240, 232, 0.5);
   transition: color 0.3s ease;
 }
 

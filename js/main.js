@@ -174,6 +174,7 @@
   var lightboxImg = document.getElementById('lightbox-img');
   var lightboxImages = [];
   var lightboxIndex = 0;
+  var lightboxPrevFocus = null; // store focus before opening
 
   function collectLightboxImages() {
     lightboxImages = Array.from(document.querySelectorAll('[data-lightbox]'));
@@ -181,18 +182,27 @@
 
   function openLightbox(index) {
     if (!lightboxImages.length) return;
+    lightboxPrevFocus = document.activeElement; // remember where focus was
     lightboxIndex = index;
     lightboxImg.src = lightboxImages[lightboxIndex].src;
     lightboxImg.alt = lightboxImages[lightboxIndex].alt;
     lightbox.classList.add('open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    // Move focus into lightbox
+    var closeBtn = lightbox.querySelector('.lightbox-close');
+    if (closeBtn) closeBtn.focus();
   }
 
   function closeLightbox() {
     lightbox.classList.remove('open');
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    // Restore focus to trigger element
+    if (lightboxPrevFocus) {
+      lightboxPrevFocus.focus();
+      lightboxPrevFocus = null;
+    }
   }
 
   function swapLightboxImage(newIndex) {
@@ -215,11 +225,20 @@
     swapLightboxImage((lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length);
   }
 
-  // Bind gallery image clicks
+  // Bind gallery image clicks + keyboard
   collectLightboxImages();
   lightboxImages.forEach(function (img, i) {
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', 'View larger: ' + (img.alt || 'image'));
     img.addEventListener('click', function () {
       openLightbox(i);
+    });
+    img.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(i);
+      }
     });
   });
 
@@ -242,11 +261,28 @@
     });
   }
 
-  // Lightbox keyboard nav
+  // Lightbox keyboard nav + focus trap
   document.addEventListener('keydown', function (e) {
     if (!lightbox.classList.contains('open')) return;
     if (e.key === 'ArrowRight') nextImage();
     if (e.key === 'ArrowLeft') prevImage();
+    // Focus trap — keep Tab within lightbox
+    if (e.key === 'Tab') {
+      var focusable = lightbox.querySelectorAll('button');
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
   });
 
   // ── SUPABASE CLIENT ──
@@ -396,8 +432,12 @@
   document.querySelectorAll('.toggle-group').forEach(function (group) {
     group.querySelectorAll('.toggle-btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        group.querySelectorAll('.toggle-btn').forEach(function (b) { b.classList.remove('active'); });
+        group.querySelectorAll('.toggle-btn').forEach(function (b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
         btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
       });
     });
   });

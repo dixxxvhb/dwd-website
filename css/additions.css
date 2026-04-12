@@ -1631,3 +1631,48 @@ button[type="submit"]:disabled {
     width: 100%;
   }
 }
+
+/* ═══════════════════════════════════════
+   ACCESSIBILITY — WCAG 2.1 AA
+   ═══════════════════════════════════════ */
+
+/* Focus styles for all interactive elements */
+.btn:focus-visible,
+a:focus-visible,
+.hamburger:focus-visible,
+.toggle-btn:focus-visible,
+.lightbox-close:focus-visible,
+.lightbox-prev:focus-visible,
+.lightbox-next:focus-visible,
+.gallery-grid img[data-lightbox]:focus-visible,
+.footer-links a:focus-visible,
+.sidebar nav a:focus-visible {
+  outline: 2px solid var(--gold, #e2b955);
+  outline-offset: 2px;
+}
+
+/* Form inputs already have focus styles — add visible outline too */
+.form-group input:focus-visible,
+.form-group textarea:focus-visible,
+.form-group select:focus-visible {
+  outline: 2px solid var(--accent, #f8d7c8);
+  outline-offset: 1px;
+}
+
+/* Gallery images as interactive elements */
+.gallery-grid img[data-lightbox] {
+  cursor: pointer;
+}
+
+/* Reduced motion for vestibular disorders */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+}
