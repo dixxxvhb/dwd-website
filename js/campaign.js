@@ -670,13 +670,11 @@
   }
 
   // ── PROSERIES PROGRESSIVE REVEAL ──
-  // Date thresholds for what to show on the public ProSeries page
-  var revealDates = {
-    tracks: '2026-04-15',    // Track cards + pricing revealed with Program Overview post
-    fees: '2026-04-28',      // Fee schedule revealed with Final Details post
-    timeline: '2026-04-28',  // Timeline revealed with Final Details post
-    form: '2026-05-01'       // Interest form goes live when registration opens
-  };
+  // Elements with `data-reveal-after` are hidden until the given moment.
+  // Format accepts either:
+  //   - "YYYY-MM-DD"            → fires at midnight local time (legacy)
+  //   - Full ISO with offset    → fires at that exact global moment
+  //     e.g. "2026-04-15T12:00:00-04:00" for noon Eastern Daylight Time
 
   function getTodayStr() {
     var d = new Date();
@@ -685,13 +683,24 @@
     return d.getFullYear() + '-' + m + '-' + day;
   }
 
+  function shouldReveal(attr) {
+    if (!attr) return true;
+    // Full ISO datetime — compare timestamps
+    if (attr.indexOf('T') !== -1) {
+      var revealMs = new Date(attr).getTime();
+      if (isNaN(revealMs)) return false;
+      return Date.now() >= revealMs;
+    }
+    // Legacy date-only — compare local-date string
+    return getTodayStr() >= attr;
+  }
+
   window.applyProSeriesReveal = function () {
-    var today = getTodayStr();
     var unlocked = window.dwdCampaignUnlocked || isAuthenticated();
 
     document.querySelectorAll('[data-reveal-after]').forEach(function (el) {
-      var revealDate = el.dataset.revealAfter;
-      if (unlocked || today >= revealDate) {
+      var revealAttr = el.dataset.revealAfter;
+      if (unlocked || shouldReveal(revealAttr)) {
         el.style.display = '';
         // Hide the corresponding coming-soon banner
         var banner = el.previousElementSibling;
