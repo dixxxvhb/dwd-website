@@ -448,7 +448,7 @@
       '<div class="campaign-brand-notes">' +
         '<h3 class="campaign-section-title">Campaign Notes</h3>' +
         '<ul>' +
-          '<li><strong>DWDPS brand palette:</strong> Electric green (#00D68F) + soft pink (#FF8FAB) on dark/black backgrounds. Week 1 stays moody/dark (mystery phase). Starting Week 2, begin introducing the ProSeries colors to signal "something new" in the feed.</li>' +
+          '<li><strong>DWDPS brand palette:</strong> Seafoam (#6BAF8A) + soft pink (#FF8FAB) on dark/black backgrounds. Week 1 stays moody/dark (mystery phase). Starting Week 2, begin introducing the ProSeries colors to signal "something new" in the feed.</li>' +
           '<li><strong>Photo-first slides outperform text-first slides.</strong> Lead with faces and movement. Save text-heavy slides for mid-carousel, never slide 1.</li>' +
         '</ul>' +
       '</div>';

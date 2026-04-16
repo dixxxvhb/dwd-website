@@ -286,7 +286,7 @@
     sources.forEach(function (s) { totalVisits += s.visits; });
 
     // Color map
-    var colorMap = { instagram: '#e2b955', ig: '#e2b955', direct: '#00D68F', google: '#FF8FAB', facebook: '#7C8CF8', tiktok: '#69C9D0', linktree: '#43e660' };
+    var colorMap = { instagram: '#C8614B', ig: '#C8614B', direct: '#6BAF8A', google: '#FF8FAB', facebook: '#7C8CF8', tiktok: '#69C9D0', linktree: '#43e660' };
     var defaultColor = 'rgba(255,255,255,0.15)';
 
     // Stacked bar
