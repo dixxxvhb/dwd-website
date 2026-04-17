@@ -1,22 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
+  /* Core palette — see ~/Desktop/DWD/Brand/palette.md */
   --forest: #0c1f17;
   --forest-light: #1a3d2e;
   --forest-mid: #1e4432;
-  --sidebar-bg: #080e0b;
-  --cream: #f5f0e8;
-  --accent: #f8d7c8;
-  --accent-light: #fbe8df;
-  --blush: #f8d7c8;
-  --gold: #C8614B;
-  --gold-light: #d4775f;
-  --gold-dark: #a8503e;
   --forest-dark: #0c1f17;
-  --cream-faint: #d4cfc0;
+  --sidebar-bg: #080e0b;
   --footer-bg: #060a08;
   --black: #0a0a0a;
-  
+
+  --cream: #f5f0e8;
+  --cream-faint: #d4cfc0;
+  --ivory: #FAF3E8;
+
+  --blush: #f8d7c8;
+  --blush-light: #fbe8df;
+
+  /* Terracotta — PRIMARY ACCENT (Apr 15, 2026) */
+  --terra: #C8614B;
+  --terra-light: #d4775f;
+  --terra-dark: #a8503e;
+
+  --seafoam: #6BAF8A;
+
+  /* Tamara Mark gold — MEMORIAL USE ONLY. Do not use for UI accents. */
+  --gold-tamara: #e2b955;
+
+  /* Legacy aliases — deprecated, kept for compatibility. Migrate over time. */
+  --accent: var(--blush);
+  --accent-light: var(--blush-light);
+
   --font-display: 'Cormorant Garamond', serif;
   --font-body: 'Outfit', sans-serif;
 }
@@ -571,12 +585,12 @@ a:hover {
 }
 
 .btn-accent {
-  background-color: var(--gold);
+  background-color: var(--terra);
   color: var(--black);
 }
 
 .btn-accent:hover {
-  background-color: var(--gold-dark);
+  background-color: var(--terra-dark);
   transform: translateY(-2px);
 }
 
@@ -624,7 +638,7 @@ a:hover {
   left: 0;
   right: 100%;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--gold), transparent);
+  background: linear-gradient(90deg, var(--accent), var(--terra), transparent);
   transition: right 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -689,7 +703,7 @@ a:hover {
   left: 0;
   right: 100%;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--gold), transparent);
+  background: linear-gradient(90deg, var(--accent), var(--terra), transparent);
   transition: right 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -960,7 +974,7 @@ a:hover {
   left: 0;
   right: 100%;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--gold), transparent);
+  background: linear-gradient(90deg, var(--accent), var(--terra), transparent);
   transition: right 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -981,7 +995,7 @@ a:hover {
 }
 
 .class-block .time {
-  color: var(--gold);
+  color: var(--terra);
   font-weight: 600;
   margin-bottom: 0.5rem;
   font-size: 0.95rem;
@@ -1203,7 +1217,7 @@ a:hover {
 }
 
 .timeline-date {
-  color: var(--gold);
+  color: var(--terra);
   font-weight: 700;
   min-width: 100px;
   text-transform: uppercase;
@@ -1280,7 +1294,7 @@ a:hover {
   left: 0;
   right: 100%;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--gold), transparent);
+  background: linear-gradient(90deg, var(--accent), var(--terra), transparent);
   transition: right 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -1301,7 +1315,7 @@ a:hover {
 }
 
 .event-date {
-  color: var(--gold);
+  color: var(--terra);
   font-size: 0.9rem;
   font-weight: 600;
   text-transform: uppercase;
