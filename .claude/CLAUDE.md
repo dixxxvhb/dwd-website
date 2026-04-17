@@ -38,7 +38,7 @@ Home, About, ProSeries, DWDC (Adult Company), Merch, Contact, Gallery, FAQ, Earl
 - Analytics tracking: page views, events (no cookies, no PII)
 
 ## Brand Rules
-- Brand colors defined as CSS variables (forest green, gold #e2b955, pink)
+- Brand colors defined as CSS variables (forest green #0c1f17, terracotta #C8614B, pink #f8d7c8, ivory #FAF3E8, seafoam #6BAF8A). Gold (#e2b955) is Tamara Mark memorial only.
 - Animated WebM logo on hero (1050px desktop, 420px mobile) with `mix-blend-mode: screen` for iOS transparency
 - Tamara Mark included
 - No emojis ever
