@@ -124,11 +124,12 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/additions.css">
+  <link rel="stylesheet" href="css/editorial.css">
 
   <!-- Supabase Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
-<body>
+<body class="has-topnav">
 
   <!-- Skip to content -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -158,7 +159,26 @@
     </div>
   </aside>
 
-  <!-- MOBILE HEADER -->
+  <!-- TOP NAV (new — replaces sidebar + mobile header visually) -->
+  <header class="topnav" id="topnav">
+    <a href="#home" class="brand" data-page="home">
+      <video src="images/logos/DWD-animated.webm" autoplay muted loop playsinline disablePictureInPicture aria-hidden="true"></video>
+      <span class="wordmark">Dance <em>With</em> Dixon</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#home" class="active" data-page="home">Home</a>
+      <a href="#about" data-page="about">About</a>
+      <a href="#proseries" data-page="proseries">ProSeries</a>
+      <a href="#adult-company" data-page="adult-company">Collective</a>
+      <a href="#classes-events" data-page="classes-events">Performances</a>
+      <a href="#gallery" data-page="gallery">Gallery</a>
+      <a href="#contact" data-page="contact">Contact</a>
+    </nav>
+    <a href="#early-access" class="nav-cta" data-page="early-access">Join the List &rarr;</a>
+    <button class="topnav-toggle" id="topnav-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
+  </header>
+
+  <!-- MOBILE HEADER (hidden — kept for legacy JS) -->
   <header class="mobile-header" id="mobile-header">
     <img src="images/logos/DWD-green.png" alt="DWD" class="mobile-logo" width="36" height="36">
     <span class="mobile-brand">DWD</span>
@@ -179,8 +199,15 @@
     <section class="page active" id="page-home" aria-label="Home">
       <div class="hero" style="background-image: linear-gradient(rgba(15,35,24,0.97) 0%, rgba(15,35,24,0.85) 30%, rgba(15,35,24,0.45) 65%, rgba(15,35,24,0.3) 100%), url('images/photos/high res pose.jpeg'); background-size: cover; background-position: center 95%;">
         <video src="images/logos/DWD-animated.webm" class="hero-logo" width="1050" height="1050" autoplay muted loop playsinline disablePictureInPicture aria-label="DWD Logo animation"></video>
+        <div class="hero-eyebrow"><span class="bar"></span>Est. 2025 <span class="sep">·</span> Orlando, FL</div>
         <h1>Dance With Dixon</h1>
         <p class="subtitle">Elite youth training program (ages 5&ndash;19). Adult modern dance company (18+).<br>Built from scratch in Orlando.</p>
+        <a href="#early-access" class="audition-chip" data-track="home-audition-chip">
+          <span class="dot"></span>
+          <span class="label">Audition</span>
+          <span class="date">June 6, 2026</span>
+          <span class="meta">10 spots per track &middot; 30 total</span>
+        </a>
         <!-- Tamara Mark — For Mom -->
         <svg class="tamara-mark tamara-mark--hero" viewBox="20 10 200 190" width="32" height="30" aria-label="Tamara Mark — in memory of Tamara S. Bowles">
           <title>In memory of Tamara S. Bowles</title>
@@ -202,25 +229,50 @@
         <span class="ea-banner-arrow">&rarr;</span>
       </a>
 
+      <div class="entries reveal">
+        <a class="entry" href="#proseries" data-track="home-entry-proseries">
+          <div class="thumb">
+            <div class="bg" style="background-image: url('images/photos/287_Lime in the Coconut_40.JPG');"></div>
+          </div>
+          <div class="body">
+            <div class="tag">Ages 5&ndash;19 &middot; Competitive</div>
+            <h3>Pro<em>Series.</em></h3>
+            <div class="entry-hl">The training program <em>I wish existed.</em></div>
+            <div class="entry-desc">Three tracks &mdash; Prep, Elite, Pro. Audition-based. Every class designed by a working director.</div>
+            <div class="foot">
+              <div class="facts">
+                <div class="f"><div class="k">Tracks</div><div class="v">Prep &middot; Elite &middot; Pro</div></div>
+                <div class="f"><div class="k">Audition</div><div class="v"><em>June 6</em></div></div>
+              </div>
+              <span class="enter-arrow">Enter<span class="a">&rarr;</span></span>
+            </div>
+          </div>
+        </a>
+
+        <a class="entry" href="#adult-company" data-track="home-entry-collective">
+          <div class="thumb">
+            <div class="bg" style="background-image: url('images/photos/A-06-06-25~4927-Enhanced-NR.jpg');"></div>
+          </div>
+          <div class="body">
+            <div class="tag">Adults 18+ &middot; Modern Company</div>
+            <h3>The <em>Collective.</em></h3>
+            <div class="entry-hl">More than a drop-in class.</div>
+            <div class="entry-desc">Real technique, real choreography, real stage time. No audition &mdash; just show up ready to move.</div>
+            <div class="foot">
+              <div class="facts">
+                <div class="f"><div class="k">Audition</div><div class="v"><em>None</em></div></div>
+                <div class="f"><div class="k">Next show</div><div class="v">June <em>2026</em></div></div>
+              </div>
+              <span class="enter-arrow">Enter<span class="a">&rarr;</span></span>
+            </div>
+          </div>
+        </a>
+      </div>
+
       <div class="video-featured reveal">
         <div class="video-label">See the Work</div>
         <div class="video-embed">
           <iframe src="https://www.youtube.com/embed/13yTeXaUc9U" title="Dixon Bowles choreography — Tokyo Sunrise" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        </div>
-      </div>
-
-      <div class="brand-arms reveal">
-        <div class="brand-arm">
-          <img src="images/logos/DWDPS-green.png" alt="DWD ProSeries Logo" width="80" height="80" loading="lazy">
-          <h3>DWD ProSeries</h3>
-          <p>The competitive training program I wish existed when I was directing. Ages 5&ndash;19, three tracks, audition-based, every class designed by a working director. Registration opens May 1.</p>
-          <a href="#proseries" class="btn btn-primary" data-track="home-view-proseries">View Program</a>
-        </div>
-        <div class="brand-arm">
-          <img src="images/logos/DWDC-green.png" alt="DWDC Logo" width="80" height="80" loading="lazy">
-          <h3>DWD Collective</h3>
-          <p>I started this company because adults deserve more than a drop-in class. Ages 18+. Real technique, real choreography, real stage time. No audition, no experience required. Just show up ready to move.</p>
-          <a href="#adult-company" class="btn btn-outline" data-track="home-learn-more-collective">Learn More</a>
         </div>
       </div>
 
@@ -239,9 +291,17 @@
         <div class="ticker-item">ADULT CLASSES NOW ENROLLING</div>
       </div>
 
-      <div class="email-signup reveal">
-        <h3>Get Early Access</h3>
-        <p>Be first in line for ProSeries registration and DWD updates.</p>
+      <div class="pull-quote reveal">
+        <blockquote>
+          This isn't a studio. It's a <span class="hl">company</span> — built for youth dancers and adults who want the real thing.
+        </blockquote>
+        <cite>Dixon Bowles <span>— Director &amp; Choreographer</span></cite>
+      </div>
+
+      <div class="email-signup email-signup--editorial reveal">
+        <div class="kicker">Get Early Access</div>
+        <h3>Join <em>the List.</em></h3>
+        <p>Be first in line for ProSeries registration and DWD updates. Spots are limited.</p>
         <a href="#early-access" class="btn btn-blush">Join the List</a>
       </div>
     </section>
@@ -272,6 +332,10 @@
       </div>
 
       <div class="what-i-bring reveal">
+        <div class="chapter">
+          <span class="no"><sup>No.</sup>01</span>
+          <span class="lbl">About — The Director</span>
+        </div>
         <h2>What I Bring</h2>
         <div class="bring-grid">
           <div class="bring-item">
@@ -309,6 +373,10 @@
       </div>
 
       <div class="content-section reveal">
+        <div class="chapter">
+          <span class="no"><sup>No.</sup>02</span>
+          <span class="lbl">Collective — Adult Company</span>
+        </div>
         <h2>What We Are</h2>
         <p>I didn't start DWDC to run a drop-in class. I started it because adults 18 and up deserve what competitive dancers get — real training, real choreography, a real stage. Whether you danced your whole life or you've never set foot in a studio, this is your company.</p>
         <p>We train together weekly, building technique and artistry through modern dance fundamentals. And we perform together — taking real choreography to real stages.</p>
@@ -405,6 +473,10 @@
       </div>
 
       <div class="content-section reveal">
+        <div class="chapter">
+          <span class="no"><sup>No.</sup>03</span>
+          <span class="lbl">ProSeries — Youth Training</span>
+        </div>
         <h2>The Program</h2>
         <p>ProSeries is a full-spectrum competitive training program for dancers ages 5 to 19. Three tracks — Prep, Elite, and Pro — each built around serious technique, artistry, and performance. This is your dancer's home for training, not an add-on.</p>
         <p>Dancers train across all styles — jazz technique, ballet, contemporary, lyrical, hip hop, tap, acro, musical theatre — with an emphasis on jazz and ballet technique as the foundation for everything else. Every class is designed by a working choreographer and director, not pulled from a syllabus.</p>
@@ -580,6 +652,10 @@
       </div>
 
       <div class="content-section reveal">
+        <div class="chapter">
+          <span class="no"><sup>No.</sup>04</span>
+          <span class="lbl">Performances — Live On Stage</span>
+        </div>
         <h2>DWD Collective — Rehearsal Schedule</h2>
         <p><span class="highlight">Exchange Dance Studio</span> | Resuming mid-April</p>
         <p>Rehearsal dates for the current season will be posted here as they're confirmed. Classes are held at Exchange Dance Studio on Saturdays.</p>

@@ -1,0 +1,695 @@
+/* ============================================
+   DWD · Editorial system
+   Additive treatments ported from the redesign preview.
+   Uses existing styles.css tokens only.
+   Safe: no changes to buttons, forms, heroes, or JS.
+   ============================================ */
+
+/* ── Chapter marker ──
+   Renders above major <h2> section intros as:
+       No.  ⁰¹  — ABOUT ──────────────────────
+   Big italic terracotta numeral, tiny blush superscript,
+   tracked-out label on a hairline rule extending to the edge. */
+.chapter {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  margin: 2.5rem 0 1.5rem;
+  padding-top: 0.25rem;
+}
+
+.chapter .no {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 2.75rem;
+  line-height: 0.9;
+  letter-spacing: -0.5px;
+  color: var(--terra);
+  flex-shrink: 0;
+}
+
+.chapter .no sup {
+  font-size: 0.9rem;
+  vertical-align: super;
+  margin-right: 2px;
+  color: var(--blush);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.chapter .lbl {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(30, 68, 50, 0.8);
+  align-self: flex-end;
+}
+
+/* ── Kicker eyebrow ──
+   Small tracked-out terracotta label. Drop above any h2/h3
+   for an editorial "section intro" feel. */
+.kicker {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 0.75rem;
+}
+
+/* ── Pull quote ──
+   Big italic Cormorant quote with side hairline rules in terracotta.
+   Used sparingly — one per page max, as an editorial statement. */
+.pull-quote {
+  position: relative;
+  padding: 5rem 3rem;
+  text-align: center;
+  background: var(--forest);
+  border-top: 1px solid var(--forest-mid);
+  border-bottom: 1px solid var(--forest-mid);
+  margin: 3rem 0;
+}
+
+.pull-quote::before,
+.pull-quote::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 64px;
+  height: 1px;
+  background: var(--terra);
+}
+
+.pull-quote::before { left: 3rem; }
+.pull-quote::after  { right: 3rem; }
+
+.pull-quote blockquote {
+  max-width: 880px;
+  margin: 0 auto;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 2.75rem;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  color: var(--cream);
+}
+
+.pull-quote blockquote .hl {
+  color: var(--blush);
+  background: linear-gradient(180deg, transparent 65%, rgba(200, 97, 75, 0.3) 65%);
+  padding: 0 4px;
+}
+
+.pull-quote cite {
+  display: block;
+  margin-top: 1.75rem;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--terra);
+}
+
+.pull-quote cite span {
+  color: var(--cream-faint);
+  font-weight: 400;
+}
+
+/* ── Top nav bar ──
+   Horizontal sticky bar replacing the old sidebar.
+   Old .sidebar + .mobile-header stay in DOM but are hidden via CSS. */
+.sidebar,
+.mobile-header,
+.sidebar-overlay { display: none !important; }
+
+body.has-topnav .main {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  background: rgba(10, 20, 15, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(30, 68, 50, 0.6);
+}
+
+.topnav .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.topnav .brand img,
+.topnav .brand video {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.topnav .brand .wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  color: var(--cream);
+}
+
+.topnav .brand .wordmark em {
+  font-style: italic;
+  color: var(--terra);
+  font-weight: 400;
+}
+
+.topnav nav {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.topnav nav a {
+  position: relative;
+  padding: 0.4rem 0;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.topnav nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--blush);
+  transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.topnav nav a:hover { color: var(--blush); }
+.topnav nav a:hover::after { right: 0; }
+
+.topnav nav a.active {
+  color: var(--blush);
+}
+
+.topnav nav a.active::after {
+  right: 0;
+  background: var(--terra);
+}
+
+.topnav .nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.25rem;
+  background: var(--terra);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.topnav .nav-cta:hover {
+  background: var(--blush);
+  color: var(--forest);
+  letter-spacing: 1.7px;
+}
+
+.topnav .topnav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(240, 235, 227, 0.3);
+  color: var(--cream);
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .topnav {
+    grid-template-columns: auto 1fr auto;
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+  }
+  .topnav nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 1rem 1rem;
+    background: rgba(10, 20, 15, 0.96);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(30, 68, 50, 0.8);
+  }
+  .topnav.is-open nav { display: flex; }
+  .topnav nav a {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(30, 68, 50, 0.4);
+  }
+  .topnav nav a::after { display: none; }
+  .topnav .nav-cta { display: none; }
+  .topnav .topnav-toggle { display: inline-block; }
+}
+
+/* ── Entry-door cards ──
+   Two-column home cards replacing .brand-arms, with photo thumb + body. */
+.entries {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--forest-mid);
+  border-bottom: 1px solid var(--forest-mid);
+  background: var(--forest-dark);
+}
+
+.entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  background: var(--forest-dark);
+  border-right: 1px solid var(--forest-mid);
+  transition: background 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.entry:last-child { border-right: none; }
+.entry:hover { background: var(--forest-light); }
+
+.entry .thumb {
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+  min-height: 260px;
+}
+
+.entry .thumb .bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(0.3) brightness(0.75);
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s;
+}
+
+.entry:hover .thumb .bg {
+  transform: scale(1.08);
+  filter: grayscale(0) brightness(0.9);
+}
+
+.entry .thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(12, 31, 23, 0) 0%, rgba(12, 31, 23, 0.35) 100%);
+}
+
+.entry .body {
+  padding: 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.875rem;
+  min-width: 0;
+}
+
+.entry .tag {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+}
+
+.entry h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 0.95;
+  letter-spacing: -1.5px;
+  color: var(--cream);
+  margin: 0;
+}
+
+.entry h3 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--blush);
+}
+
+.entry .entry-hl {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  color: var(--blush);
+}
+
+.entry .entry-hl em {
+  color: var(--cream);
+  font-style: italic;
+}
+
+.entry .entry-desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--cream);
+  max-width: 420px;
+}
+
+.entry .foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.875rem;
+  border-top: 1px solid rgba(30, 68, 50, 0.8);
+  gap: 1rem;
+  margin-top: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.entry .facts { display: flex; gap: 1.25rem; }
+
+.entry .facts .k {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.entry .facts .v {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--cream);
+  font-weight: 600;
+}
+
+.entry .facts .v em {
+  font-style: italic;
+  color: var(--blush);
+  font-weight: 400;
+}
+
+.entry .enter-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--blush);
+  transition: gap 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+}
+
+.entry:hover .enter-arrow {
+  gap: 1.25rem;
+  color: var(--cream);
+}
+
+.entry .enter-arrow .a {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+@media (max-width: 900px) {
+  .entries { grid-template-columns: 1fr; }
+  .entry {
+    grid-template-columns: 120px 1fr;
+    border-right: none;
+    border-bottom: 1px solid var(--forest-mid);
+  }
+  .entry:last-child { border-bottom: none; }
+  .entry .thumb { min-height: 160px; }
+  .entry .body { padding: 1.25rem 1.25rem; gap: 0.65rem; }
+  .entry h3 { font-size: 1.75rem; letter-spacing: -0.5px; }
+  .entry .entry-hl { font-size: 0.95rem; }
+  .entry .entry-desc { font-size: 0.8rem; }
+  .entry .foot { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+}
+
+/* ── Hero meta eyebrow ──
+   Small tracked-out line above the main headline: "— Est. 2025 · Orlando, FL" */
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 1.75rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--terra);
+}
+
+.hero-eyebrow .bar {
+  display: inline-block;
+  width: 52px;
+  height: 1px;
+  background: var(--terra);
+}
+
+.hero-eyebrow .sep {
+  color: var(--cream-faint);
+  font-weight: 400;
+}
+
+/* ── Audition chip ──
+   Pulsing terra dot + label + date + meta. Links to the early-access page. */
+.audition-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 22px;
+  margin-top: 1.5rem;
+  background: rgba(12, 31, 23, 0.82);
+  border: 1px solid rgba(200, 97, 75, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.audition-chip:hover {
+  background: rgba(12, 31, 23, 0.92);
+  border-color: var(--terra);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(200, 97, 75, 0.18);
+}
+
+.audition-chip .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--terra);
+  box-shadow: 0 0 0 4px rgba(200, 97, 75, 0.25);
+  flex-shrink: 0;
+  animation: aud-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes aud-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(200, 97, 75, 0.25); }
+  50%      { box-shadow: 0 0 0 7px rgba(200, 97, 75, 0.12); }
+}
+
+.audition-chip .label { color: var(--terra); font-weight: 700; }
+
+.audition-chip .date {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--blush);
+}
+
+.audition-chip .meta {
+  color: var(--cream-faint);
+  font-size: 0.62rem;
+  border-left: 1px solid rgba(240, 235, 227, 0.2);
+  padding-left: 14px;
+}
+
+/* ── Brand-arm editorial layer ──
+   Additive classes that live on top of the existing .brand-arm card. */
+.brand-arm .arm-tag {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+  margin-bottom: 0.75rem;
+}
+
+.brand-arm .arm-hl {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  color: var(--blush);
+  margin-bottom: 1rem;
+  max-width: 28ch;
+}
+
+.brand-arm .arm-hl em {
+  color: var(--cream);
+  font-style: italic;
+}
+
+/* ── Email signup editorial upgrade ──
+   Opt-in class .email-signup--editorial layered onto the existing block. */
+.email-signup.email-signup--editorial {
+  position: relative;
+  padding: 4.5rem 3rem;
+  text-align: center;
+  background: var(--forest-dark);
+  border: none;
+  border-top: 1px solid var(--forest-mid);
+  border-bottom: 1px solid var(--forest-mid);
+  overflow: hidden;
+}
+
+.email-signup.email-signup--editorial::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 60%, rgba(200, 97, 75, 0.22), transparent 65%);
+  pointer-events: none;
+}
+
+.email-signup.email-signup--editorial > * {
+  position: relative;
+}
+
+.email-signup.email-signup--editorial .kicker {
+  margin-bottom: 1rem;
+}
+
+.email-signup.email-signup--editorial h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3.75rem;
+  line-height: 0.98;
+  letter-spacing: -0.5px;
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+
+.email-signup.email-signup--editorial h3 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--blush);
+}
+
+.email-signup.email-signup--editorial p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--cream);
+  max-width: 540px;
+  margin: 0 auto 1.75rem;
+  line-height: 1.5;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .chapter { gap: 0.9rem; margin: 2rem 0 1.25rem; }
+  .chapter .no { font-size: 2rem; }
+  .chapter .no sup { font-size: 0.7rem; }
+  .chapter .lbl { font-size: 0.6rem; letter-spacing: 2.5px; }
+
+  .pull-quote { padding: 3rem 1.5rem; margin: 2rem 0; }
+  .pull-quote::before,
+  .pull-quote::after { width: 32px; }
+  .pull-quote::before { left: 1.5rem; }
+  .pull-quote::after  { right: 1.5rem; }
+  .pull-quote blockquote { font-size: 1.75rem; }
+
+  .hero-eyebrow { font-size: 0.6rem; gap: 10px; letter-spacing: 2px; }
+  .hero-eyebrow .bar { width: 32px; }
+
+  .audition-chip {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 18px;
+    font-size: 0.6rem;
+    letter-spacing: 1.2px;
+    text-align: center;
+  }
+  .audition-chip .dot { margin-bottom: 4px; }
+  .audition-chip .date { font-size: 1rem; letter-spacing: 0.3px; }
+  .audition-chip .meta {
+    border-left: none;
+    padding-left: 0;
+    font-size: 0.58rem;
+    margin-top: 4px;
+  }
+
+  .brand-arm .arm-hl { font-size: 1rem; }
+
+  .email-signup.email-signup--editorial {
+    padding: 3rem 1.5rem;
+  }
+  .email-signup.email-signup--editorial h3 { font-size: 2.25rem; }
+  .email-signup.email-signup--editorial p { font-size: 1rem; }
+}
