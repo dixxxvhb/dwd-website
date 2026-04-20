@@ -404,7 +404,7 @@
     modal.innerHTML = '<div class="dwd-success-backdrop"></div>' +
       '<div class="dwd-success-card">' +
         '<button class="dwd-success-close" aria-label="Close">&times;</button>' +
-        '<img src="images/logos/DWDPS-pink.png" alt="DWDPS" class="dwd-success-logo">' +
+        '<img src="images/logos/DWDPS-pink.png" alt="dwdPS" class="dwd-success-logo">' +
         '<h2 class="dwd-success-title">You\'re on the list.</h2>' +
         '<p class="dwd-success-sub">We\'ll reach out when it\'s time. In the meantime, follow along.</p>' +
         '<a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="dwd-success-btn">Follow @dwdproseries</a>' +
