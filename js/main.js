@@ -529,30 +529,26 @@
   // ── MERCH POLL FORM ──
   var merchForm = document.querySelector('[data-form="merch-poll"]');
   if (merchForm) {
-    // Radio selection → toggle .is-selected on the parent label
-    merchForm.querySelectorAll('input[name="category"]').forEach(function (radio) {
-      radio.addEventListener('change', function () {
-        merchForm.querySelectorAll('.merch-category-card').forEach(function (c) {
-          c.classList.remove('is-selected');
-        });
-        if (radio.checked) {
-          var card = radio.closest('.merch-category-card');
-          if (card) card.classList.add('is-selected');
-        }
+    // Checkbox toggle → .is-selected on parent label (independent per card)
+    merchForm.querySelectorAll('input[name="category"]').forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        var card = cb.closest('.merch-category-card');
+        if (!card) return;
+        card.classList.toggle('is-selected', cb.checked);
       });
     });
 
     merchForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      var selected = merchForm.querySelector('input[name="category"]:checked');
-      if (!selected) {
-        showFormError(merchForm, 'Pick a category to vote.');
+      var checked = merchForm.querySelectorAll('input[name="category"]:checked');
+      if (!checked.length) {
+        showFormError(merchForm, 'Pick at least one category to vote.');
         return;
       }
-      var payload = { category: selected.value };
+      var rows = Array.prototype.map.call(checked, function (cb) { return { category: cb.value }; });
 
       setSubmitLoading(merchForm, true);
-      supabase.from('merch_poll_responses').insert(payload)
+      supabase.from('merch_poll_responses').insert(rows)
         .then(function (res) {
           setSubmitLoading(merchForm, false);
           if (res.error) {

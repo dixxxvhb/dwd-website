@@ -844,7 +844,7 @@ button[type="submit"]:disabled {
   box-shadow: 0 14px 36px rgba(12, 31, 23, 0.1);
   border-color: #C8614B;
 }
-.merch-category-card input[type="radio"] {
+.merch-category-card input[name="category"] {
   position: absolute;
   opacity: 0;
   width: 0;
