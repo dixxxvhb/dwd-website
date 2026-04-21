@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- High-waisted leggings, forest green -->
+  <g>
+    <!-- Waistband -->
+    <rect x="140" y="60" width="120" height="24" rx="2" fill="#14362a" stroke="#0c1f17" stroke-width="2"/>
+    <!-- Left leg -->
+    <path d="M140 84 L135 355 Q135 365 145 365 L176 365 Q186 365 186 355 L196 84 Z"
+          fill="#1a3d2e" stroke="#0c1f17" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M204 84 L214 355 Q214 365 224 365 L255 365 Q265 365 265 355 L260 84 Z"
+          fill="#1a3d2e" stroke="#0c1f17" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Side seams -->
+    <line x1="143" y1="90" x2="138" y2="355" stroke="#0c1f17" stroke-width="1" opacity="0.3"/>
+    <line x1="257" y1="90" x2="262" y2="355" stroke="#0c1f17" stroke-width="1" opacity="0.3"/>
+    <!-- Waistband seam -->
+    <line x1="140" y1="84" x2="260" y2="84" stroke="#0c1f17" stroke-width="1" opacity="0.4"/>
+    <!-- Crotch point -->
+    <path d="M196 84 L200 120 L204 84" fill="none" stroke="#0c1f17" stroke-width="1" opacity="0.4"/>
+  </g>
+</svg>

@@ -797,6 +797,189 @@ button[type="submit"]:disabled {
   margin-right: auto;
 }
 
+/* ═══════════════════════════════════════
+   MERCH POLL
+   ═══════════════════════════════════════ */
+.merch-poll {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+.merch-poll-hero {
+  text-align: center;
+  padding-bottom: 2rem;
+}
+.merch-poll-hero h1 {
+  margin-top: 0.25rem;
+}
+.merch-poll-hero .sub {
+  max-width: 560px;
+  margin: 0.75rem auto 0;
+  font-style: italic;
+}
+.merch-poll-form {
+  margin-top: 1rem;
+}
+.merch-categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+@media (max-width: 860px) {
+  .merch-categories { grid-template-columns: 1fr; }
+}
+.merch-category-card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  background: #f5ede0;
+  border: 2px solid #e8dcc8;
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+}
+.merch-category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(12, 31, 23, 0.1);
+  border-color: #C8614B;
+}
+.merch-category-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.merch-category-card.is-selected {
+  border-color: #0c1f17;
+  background: #FAF3E8;
+  box-shadow: 0 14px 36px rgba(12, 31, 23, 0.12);
+}
+.merch-category-card.is-selected .merch-select-dot {
+  background: #0c1f17;
+  border-color: #0c1f17;
+}
+.merch-category-card.is-selected .merch-select-dot::after {
+  opacity: 1;
+}
+.merch-select-dot {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #d4c5a9;
+  background: #fff;
+  transition: all 0.2s;
+  z-index: 2;
+}
+.merch-select-dot::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 5px;
+  height: 10px;
+  border: solid #FAF3E8;
+  border-width: 0 2px 2px 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.merch-mini-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+.mini-item {
+  position: relative;
+  aspect-ratio: 1;
+  background: #FAF3E8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.merch-category-card.is-selected .mini-item {
+  background: #f5ede0;
+}
+.mini-item .garment {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.mini-item .logo {
+  position: absolute;
+  object-fit: contain;
+  pointer-events: none;
+}
+/* Mini-item logo positioning (mirrors preview) */
+.mini-item.tshirt .logo        { width: 26%; top: 36%; left: 37%; }
+.mini-item.hoodie .logo        { width: 26%; top: 38%; left: 37%; }
+.mini-item.crewneck .logo      { width: 26%; top: 40%; left: 37%; }
+.mini-item.joggers .logo       { width: 14%; top: 30%; left: 32%; }
+.mini-item.booty-shorts .logo  { width: 14%; top: 42%; left: 33%; }
+.mini-item.crop-top .logo      { width: 18%; top: 46%; left: 41%; }
+.mini-item.leggings .logo      { width: 13%; top: 22%; left: 36%; }
+.mini-item.warmup-jacket .logo { width: 20%; top: 38%; left: 26%; }
+.mini-item.hat .logo           { width: 24%; top: 43%; left: 38%; }
+.mini-item.tote .logo          { width: 32%; top: 42%; left: 34%; }
+.merch-cat-info {
+  text-align: left;
+  padding-right: 2.5rem;
+}
+.merch-cat-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #0c1f17;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
+}
+.merch-cat-items {
+  font-size: 0.82rem;
+  color: #6a6a6a;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+.merch-extras {
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
+.merch-extras .form-group { margin-bottom: 1rem; }
+.merch-extras input[type="email"] {
+  width: 100%;
+}
+.merch-extras .btn { min-width: 220px; }
+.merch-vote-success {
+  max-width: 520px;
+  margin: 2rem auto;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  background: #f5ede0;
+  border: 1px solid #e8dcc8;
+  border-radius: 12px;
+}
+.merch-vote-success h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #0c1f17;
+}
+.merch-vote-success p {
+  color: #5a5a5a;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+.merch-vote-success p.small { font-size: 0.85rem; color: #888; margin-top: 1rem; }
+.merch-vote-success a { color: #C8614B; text-decoration: underline; }
+
 .photo-grid,
 .track-cards,
 .interest-form,

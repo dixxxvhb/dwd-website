@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Dad hat (side 3/4 view), ivory -->
+  <g>
+    <!-- Brim (curved) -->
+    <path d="M100 255 Q200 290 310 245 Q305 260 295 270 Q200 305 105 275 Q98 265 100 255 Z"
+          fill="#e8dcc8" stroke="#d4c5a9" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Crown -->
+    <path d="M115 255 Q115 155 200 140 Q295 150 300 255 L100 255 Q105 255 115 255 Z"
+          fill="#F5EDE0" stroke="#d4c5a9" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Crown panels (6-panel) -->
+    <path d="M200 140 L200 255" fill="none" stroke="#d4c5a9" stroke-width="1" opacity="0.5"/>
+    <path d="M170 143 Q165 200 155 255" fill="none" stroke="#d4c5a9" stroke-width="1" opacity="0.4"/>
+    <path d="M230 143 Q235 200 245 255" fill="none" stroke="#d4c5a9" stroke-width="1" opacity="0.4"/>
+    <!-- Button on top -->
+    <circle cx="200" cy="140" r="5" fill="#d4c5a9"/>
+    <!-- Brim seam -->
+    <path d="M105 262 Q200 295 295 258" fill="none" stroke="#d4c5a9" stroke-width="1" opacity="0.5"/>
+  </g>
+</svg>

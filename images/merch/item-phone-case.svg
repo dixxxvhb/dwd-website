@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Phone case, soft pink -->
+  <g>
+    <!-- Case body -->
+    <rect x="135" y="50" width="130" height="300" rx="24" fill="#f5b5c4" stroke="#d88a9a" stroke-width="2"/>
+    <!-- Inner lip (case edge) -->
+    <rect x="144" y="59" width="112" height="282" rx="18" fill="none" stroke="#d88a9a" stroke-width="1.2" opacity="0.55"/>
+    <!-- Camera module (3 lenses on a rounded square) -->
+    <rect x="160" y="75" width="70" height="70" rx="14" fill="#d88a9a" opacity="0.55"/>
+    <circle cx="178" cy="95" r="10" fill="#0c1f17"/>
+    <circle cx="178" cy="95" r="5" fill="#1a3d2e"/>
+    <circle cx="212" cy="95" r="10" fill="#0c1f17"/>
+    <circle cx="212" cy="95" r="5" fill="#1a3d2e"/>
+    <circle cx="195" cy="125" r="10" fill="#0c1f17"/>
+    <circle cx="195" cy="125" r="5" fill="#1a3d2e"/>
+    <!-- Flash/sensor -->
+    <circle cx="215" cy="125" r="4" fill="#e8dcc8"/>
+    <!-- Side buttons (visible on left edge) -->
+    <rect x="131" y="120" width="4" height="18" rx="1.5" fill="#d88a9a"/>
+    <rect x="131" y="150" width="4" height="32" rx="1.5" fill="#d88a9a"/>
+    <rect x="131" y="190" width="4" height="32" rx="1.5" fill="#d88a9a"/>
+    <!-- Subtle gloss highlight -->
+    <path d="M150 70 Q148 180 165 320" fill="none" stroke="#fce4e9" stroke-width="2" opacity="0.5"/>
+  </g>
+</svg>

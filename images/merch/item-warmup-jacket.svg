@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Zip-up warm-up jacket, forest green -->
+  <g>
+    <!-- Body + sleeves -->
+    <path d="M150 110 L195 115 L200 115 L205 115 L250 110 L300 140 L320 190 L290 210 L285 205 L285 335 Q285 345 275 345 L125 345 Q115 345 115 335 L115 205 L110 210 L80 190 L100 140 Z"
+          fill="#1a3d2e" stroke="#0c1f17" stroke-width="2" stroke-linejoin="round"/>
+    <!-- High collar -->
+    <path d="M180 92 Q200 82 220 92 L225 118 L175 118 Z"
+          fill="#14362a" stroke="#0c1f17" stroke-width="2"/>
+    <!-- Center zipper line -->
+    <line x1="200" y1="118" x2="200" y2="338" stroke="#e8dcc8" stroke-width="2" stroke-dasharray="3 3"/>
+    <!-- Zipper pull -->
+    <rect x="196" y="122" width="8" height="12" rx="1.5" fill="#c9956c"/>
+    <!-- Cuffs (ribbed) -->
+    <rect x="78" y="188" width="42" height="14" fill="#0c1f17" opacity="0.45" transform="rotate(-22 99 195)"/>
+    <rect x="280" y="188" width="42" height="14" fill="#0c1f17" opacity="0.45" transform="rotate(22 301 195)"/>
+    <!-- Hem -->
+    <rect x="115" y="325" width="170" height="14" fill="#0c1f17" opacity="0.45"/>
+    <!-- Subtle side panels -->
+    <line x1="160" y1="140" x2="160" y2="330" stroke="#0c1f17" stroke-width="1" opacity="0.2"/>
+    <line x1="240" y1="140" x2="240" y2="330" stroke="#0c1f17" stroke-width="1" opacity="0.2"/>
+  </g>
+</svg>

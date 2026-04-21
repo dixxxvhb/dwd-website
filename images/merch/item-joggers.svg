@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Joggers, forest green -->
+  <g>
+    <!-- Waistband -->
+    <rect x="130" y="80" width="140" height="22" rx="2" fill="#14362a" stroke="#0c1f17" stroke-width="2"/>
+    <!-- Left leg -->
+    <path d="M130 102 L120 330 Q120 342 132 342 L175 342 Q186 342 185 330 L195 102 Z"
+          fill="#1a3d2e" stroke="#0c1f17" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Right leg -->
+    <path d="M205 102 L215 330 Q215 342 225 342 L268 342 Q280 342 280 330 L270 102 Z"
+          fill="#1a3d2e" stroke="#0c1f17" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Ankle cuffs (ribbed) -->
+    <rect x="118" y="320" width="68" height="14" fill="#0c1f17" opacity="0.45"/>
+    <rect x="214" y="320" width="68" height="14" fill="#0c1f17" opacity="0.45"/>
+    <!-- Drawstrings -->
+    <line x1="192" y1="85" x2="188" y2="105" stroke="#e8dcc8" stroke-width="2" stroke-linecap="round"/>
+    <line x1="208" y1="85" x2="212" y2="105" stroke="#e8dcc8" stroke-width="2" stroke-linecap="round"/>
+    <!-- Side seams -->
+    <line x1="125" y1="110" x2="121" y2="320" stroke="#0c1f17" stroke-width="1" opacity="0.3"/>
+    <line x1="275" y1="110" x2="279" y2="320" stroke="#0c1f17" stroke-width="1" opacity="0.3"/>
+  </g>
+</svg>

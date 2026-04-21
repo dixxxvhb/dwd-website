@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dwdPROSERIES Merch — Mockup Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #0c1f17;
+      --forest-soft: #1a3d2e;
+      --pink: #f8d7c8;
+      --pink-bold: #FF8FAB;
+      --terracotta: #C8614B;
+      --ivory: #FAF3E8;
+      --cream: #f5ede0;
+      --sand: #e8dcc8;
+      --seafoam: #6BAF8A;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--cream);
+      color: var(--forest);
+      padding: 48px 24px 96px;
+      min-height: 100vh;
+    }
+    .container { max-width: 1280px; margin: 0 auto; }
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--sand);
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+    .sub {
+      font-size: 0.95rem;
+      color: #6a6a6a;
+      font-weight: 300;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .category {
+      margin-top: 56px;
+    }
+    .category:first-of-type { margin-top: 32px; }
+    .category-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--terracotta);
+      margin-bottom: 24px;
+      padding-left: 8px;
+      letter-spacing: 0.02em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--ivory);
+      border: 1px solid var(--sand);
+      border-radius: 8px;
+      padding: 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(12, 31, 23, 0.08);
+    }
+    .visual {
+      position: relative;
+      aspect-ratio: 1;
+      background: var(--cream);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .visual .garment {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .visual .logo-overlay {
+      position: absolute;
+      object-fit: contain;
+      pointer-events: none;
+    }
+    /* Per-item logo positioning */
+    .tshirt .logo-overlay        { width: 26%; top: 36%; left: 37%; }
+    .hoodie .logo-overlay        { width: 26%; top: 38%; left: 37%; }
+    .crewneck .logo-overlay      { width: 26%; top: 40%; left: 37%; }
+    .joggers .logo-overlay       { width: 14%; top: 30%; left: 32%; }
+    .booty-shorts .logo-overlay  { width: 14%; top: 42%; left: 33%; }
+    .crop-top .logo-overlay      { width: 18%; top: 46%; left: 41%; }
+    .leggings .logo-overlay      { width: 13%; top: 22%; left: 36%; }
+    .warmup-jacket .logo-overlay { width: 20%; top: 38%; left: 26%; }
+    .hat .logo-overlay           { width: 24%; top: 43%; left: 38%; }
+    .baseball-cap .logo-overlay  { width: 26%; top: 40%; left: 37%; }
+    .tote .logo-overlay          { width: 32%; top: 42%; left: 34%; }
+    .phone-case .logo-overlay    { width: 22%; top: 58%; left: 39%; }
+    .label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0 4px;
+    }
+    .label .name {
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+    .label .note {
+      font-size: 0.72rem;
+      color: #888;
+      font-weight: 300;
+      text-transform: lowercase;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    .control-btn {
+      background: var(--ivory);
+      border: 1px solid var(--sand);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      color: var(--forest);
+      transition: all 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .control-btn:hover { border-color: var(--forest); }
+    .control-btn.active {
+      background: var(--forest);
+      color: var(--ivory);
+      border-color: var(--forest);
+    }
+    .control-btn .swatch {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
+    .sw-forest { background: var(--forest); }
+    .sw-pink   { background: var(--pink-bold); }
+    .note-card {
+      background: var(--ivory);
+      border: 1px dashed var(--terracotta);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-top: 40px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #5a5a5a;
+    }
+    .note-card strong { color: var(--forest); }
+    .note-card ul { margin: 8px 0 0 18px; }
+    .note-card li { margin-bottom: 4px; }
+    .note-card code {
+      background: var(--cream);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.82rem;
+      color: var(--forest);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>dwdPROSERIES Merch — Draft Mockups</h1>
+      <p class="sub">15 items across 3 categories. Original multi-color DWDPS logo. Toggle to see all items in the same variant or the default mix.</p>
+      <div class="controls">
+        <button class="control-btn active" data-mode="mixed">Mixed (default)</button>
+        <button class="control-btn" data-mode="green"><span class="swatch sw-forest"></span>All green logo</button>
+        <button class="control-btn" data-mode="pink"><span class="swatch sw-pink"></span>All pink logo</button>
+      </div>
+    </header>
+
+    <!-- EVERYDAY -->
+    <section class="category">
+      <div class="category-title">Everyday</div>
+      <div class="grid">
+        <div class="card tshirt" data-logo="green">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-tshirt.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-green-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">T-Shirt</span><span class="note">ivory · green logo</span></div>
+        </div>
+        <div class="card hoodie" data-logo="pink">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-hoodie.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-pink-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Hoodie</span><span class="note">forest · pink logo</span></div>
+        </div>
+        <div class="card crewneck" data-logo="green">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-crewneck.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-green-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Crewneck</span><span class="note">pink · green logo</span></div>
+        </div>
+        <div class="card joggers" data-logo="pink">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-joggers.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-pink-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Joggers</span><span class="note">forest · pink logo</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DANCE-SPECIFIC -->
+    <section class="category">
+      <div class="category-title">Dance-specific</div>
+      <div class="grid">
+        <div class="card booty-shorts" data-logo="pink">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-booty-shorts.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-pink-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Booty Shorts</span><span class="note">forest · pink logo (hip)</span></div>
+        </div>
+        <div class="card crop-top" data-logo="green">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-crop-top.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-green-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Crop Top</span><span class="note">ivory · green logo</span></div>
+        </div>
+        <div class="card leggings" data-logo="pink">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-leggings.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-pink-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Leggings</span><span class="note">forest · pink logo (hip)</span></div>
+        </div>
+        <div class="card warmup-jacket" data-logo="pink">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-warmup-jacket.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-pink-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Warm-Up Jacket</span><span class="note">forest · pink logo</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCESSORIES -->
+    <section class="category">
+      <div class="category-title">Accessories</div>
+      <div class="grid">
+        <div class="card hat" data-logo="green">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-hat.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-green-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Dad Hat</span><span class="note">ivory · green logo</span></div>
+        </div>
+        <div class="card baseball-cap" data-logo="pink">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-baseball-cap.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-pink-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Baseball Cap</span><span class="note">forest · pink logo</span></div>
+        </div>
+        <div class="card tote" data-logo="green">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-tote.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-green-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Tote Bag</span><span class="note">ivory · green logo</span></div>
+        </div>
+        <div class="card phone-case" data-logo="green">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-phone-case.svg" alt="">
+            <img class="logo-overlay" src="images/logos/DWDPS-green-transparent.png" alt="">
+          </div>
+          <div class="label"><span class="name">Phone Case</span><span class="note">pink · green logo</span></div>
+        </div>
+        <div class="card stickers">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-stickers.svg" alt="">
+          </div>
+          <div class="label"><span class="name">Sticker Pack</span><span class="note">4 designs</span></div>
+        </div>
+        <div class="card pins">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-pins.svg" alt="">
+          </div>
+          <div class="label"><span class="name">Enamel Pins</span><span class="note">4 designs</span></div>
+        </div>
+        <div class="card pens">
+          <div class="visual">
+            <img class="garment" src="images/merch/item-pens.svg" alt="">
+          </div>
+          <div class="label"><span class="name">Pens (for writing!)</span><span class="note">2 colorways</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note-card">
+      <strong>How to tweak:</strong>
+      <ul>
+        <li>Using the original multi-color <code>DWDPS-green-transparent.png</code> and <code>DWDPS-pink-transparent.png</code> logos on the apparel</li>
+        <li>Each garment SVG lives at <code>images/merch/item-*.svg</code> — edit shapes/colors directly</li>
+        <li>Logo position per item is set in CSS above (e.g., <code>.booty-shorts .logo-overlay { width: 14%; top: 38%; left: 25%; }</code> — now on the hip)</li>
+        <li>Stickers, pins, pens have their designs baked in (no logo overlay) — edit the SVGs directly to change</li>
+        <li>Once you approve, I'll port the look into the live <code>/shop</code> page with checkboxes + Supabase submission</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.control-btn');
+    const greenSrc = 'images/logos/DWDPS-green-transparent.png';
+    const pinkSrc  = 'images/logos/DWDPS-pink-transparent.png';
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const mode = btn.dataset.mode;
+
+        document.querySelectorAll('.card').forEach(card => {
+          const overlay = card.querySelector('.logo-overlay');
+          if (!overlay) return;
+          const itemDefault = card.dataset.logo;
+          if (mode === 'mixed') overlay.src = itemDefault === 'pink' ? pinkSrc : greenSrc;
+          else if (mode === 'green') overlay.src = greenSrc;
+          else if (mode === 'pink') overlay.src = pinkSrc;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

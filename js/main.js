@@ -526,6 +526,47 @@
     });
   });
 
+  // ── MERCH POLL FORM ──
+  var merchForm = document.querySelector('[data-form="merch-poll"]');
+  if (merchForm) {
+    // Radio selection → toggle .is-selected on the parent label
+    merchForm.querySelectorAll('input[name="category"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        merchForm.querySelectorAll('.merch-category-card').forEach(function (c) {
+          c.classList.remove('is-selected');
+        });
+        if (radio.checked) {
+          var card = radio.closest('.merch-category-card');
+          if (card) card.classList.add('is-selected');
+        }
+      });
+    });
+
+    merchForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var selected = merchForm.querySelector('input[name="category"]:checked');
+      if (!selected) {
+        showFormError(merchForm, 'Pick a category to vote.');
+        return;
+      }
+      var payload = { category: selected.value };
+
+      setSubmitLoading(merchForm, true);
+      supabase.from('merch_poll_responses').insert(payload)
+        .then(function (res) {
+          setSubmitLoading(merchForm, false);
+          if (res.error) {
+            console.error('Merch vote error:', res.error);
+            showFormError(merchForm, 'Something went wrong. Please try again.');
+            return;
+          }
+          merchForm.style.display = 'none';
+          var success = document.querySelector('.merch-vote-success');
+          if (success) success.style.display = 'block';
+        });
+    });
+  }
+
   // Clear invalid state on input
   document.querySelectorAll('.form-group input, .form-group select, .form-group textarea').forEach(function (field) {
     field.addEventListener('input', function () {

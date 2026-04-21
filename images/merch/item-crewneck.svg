@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Crewneck sweatshirt, soft pink -->
+  <g>
+    <!-- Body + sleeves -->
+    <path d="M155 115 Q175 125 200 125 Q225 125 245 115 L295 140 L320 185 L285 205 L280 200 L280 325 Q280 335 270 335 L130 335 Q120 335 120 325 L120 200 L115 205 L80 185 L105 140 Z"
+          fill="#f5b5c4" stroke="#d88a9a" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Ribbed collar -->
+    <path d="M158 117 Q180 140 200 140 Q220 140 242 117 L250 128 Q225 152 200 152 Q175 152 150 128 Z"
+          fill="#d88a9a" opacity="0.5"/>
+    <!-- Ribbed cuffs -->
+    <rect x="75" y="182" width="45" height="18" fill="#d88a9a" opacity="0.5" transform="rotate(-22 97 191)"/>
+    <rect x="280" y="182" width="45" height="18" fill="#d88a9a" opacity="0.5" transform="rotate(22 302 191)"/>
+    <!-- Ribbed hem -->
+    <rect x="120" y="320" width="160" height="16" fill="#d88a9a" opacity="0.5"/>
+  </g>
+</svg>

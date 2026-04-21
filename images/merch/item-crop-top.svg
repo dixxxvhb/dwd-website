@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Fitted dance crop top, ivory -->
+  <g>
+    <!-- Spaghetti straps -->
+    <path d="M172 102 Q170 135 170 165" fill="none" stroke="#d4c5a9" stroke-width="4" stroke-linecap="round"/>
+    <path d="M228 102 Q230 135 230 165" fill="none" stroke="#d4c5a9" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Body: fitted crop silhouette with subtle scoop neckline -->
+    <path d="M155 165
+             Q180 180 200 183
+             Q220 180 245 165
+             L243 262
+             Q243 272 233 272
+             L167 272
+             Q157 272 157 262 Z"
+          fill="#F5EDE0" stroke="#d4c5a9" stroke-width="2" stroke-linejoin="round"/>
+
+    <!-- Built-in bra / bust-support seam -->
+    <path d="M160 205 Q200 218 240 205" fill="none" stroke="#d4c5a9" stroke-width="1.2" opacity="0.5"/>
+
+    <!-- Subtle princess seam down the center -->
+    <line x1="200" y1="205" x2="200" y2="265" stroke="#d4c5a9" stroke-width="0.8" opacity="0.3" stroke-dasharray="1 3"/>
+
+    <!-- Hem stitch -->
+    <line x1="160" y1="268" x2="240" y2="268" stroke="#d4c5a9" stroke-width="1.5" opacity="0.55"/>
+  </g>
+</svg>

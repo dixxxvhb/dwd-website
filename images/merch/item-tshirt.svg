@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- T-shirt, ivory -->
+  <g>
+    <!-- Body + sleeves -->
+    <path d="M155 110 Q175 120 200 120 Q225 120 245 110 L295 135 L320 180 L285 200 L280 195 L280 325 Q280 335 270 335 L130 335 Q120 335 120 325 L120 195 L115 200 L80 180 L105 135 Z"
+          fill="#F5EDE0" stroke="#d4c5a9" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Neckline -->
+    <path d="M155 110 Q175 138 200 138 Q225 138 245 110" fill="none" stroke="#d4c5a9" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Hem -->
+    <line x1="120" y1="320" x2="280" y2="320" stroke="#d4c5a9" stroke-width="1.5" opacity="0.6"/>
+    <!-- Sleeve cuffs -->
+    <line x1="85" y1="180" x2="120" y2="195" stroke="#d4c5a9" stroke-width="1.5" opacity="0.6"/>
+    <line x1="280" y1="195" x2="315" y2="180" stroke="#d4c5a9" stroke-width="1.5" opacity="0.6"/>
+  </g>
+</svg>

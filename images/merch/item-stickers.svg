@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Sticker pack: abstract shapes in brand colors -->
+  <g>
+    <!-- Sticker 1: rounded square, forest green with dancer curve -->
+    <g transform="translate(70 85) rotate(-6)">
+      <rect x="0" y="0" width="105" height="105" rx="14" fill="#1a3d2e" stroke="#ffffff" stroke-width="4"/>
+      <path d="M25 75 Q40 35 55 50 Q70 65 80 30" fill="none" stroke="#f5b5c4" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <!-- Sticker 2: circle, pink with forest arc -->
+    <g transform="translate(220 70) rotate(8)">
+      <circle cx="55" cy="55" r="55" fill="#f5b5c4" stroke="#ffffff" stroke-width="4"/>
+      <path d="M25 70 Q55 30 85 70" fill="none" stroke="#0c1f17" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="55" cy="80" r="5" fill="#0c1f17"/>
+    </g>
+    <!-- Sticker 3: starburst, terracotta -->
+    <g transform="translate(60 215) rotate(12)">
+      <path d="M55 0 L67 38 L105 40 L75 65 L88 105 L55 82 L22 105 L35 65 L5 40 L43 38 Z" fill="#C8614B" stroke="#ffffff" stroke-width="4" stroke-linejoin="round"/>
+    </g>
+    <!-- Sticker 4: asymmetric blob, ivory with pink text-feel lines -->
+    <g transform="translate(205 220) rotate(-5)">
+      <path d="M15 40 Q10 10 45 8 Q90 5 100 35 Q110 70 85 95 Q50 110 25 90 Q5 72 15 40 Z" fill="#F5EDE0" stroke="#1a3d2e" stroke-width="4"/>
+      <line x1="30" y1="45" x2="75" y2="45" stroke="#f5b5c4" stroke-width="4" stroke-linecap="round"/>
+      <line x1="30" y1="60" x2="85" y2="60" stroke="#f5b5c4" stroke-width="4" stroke-linecap="round"/>
+      <line x1="30" y1="75" x2="65" y2="75" stroke="#f5b5c4" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

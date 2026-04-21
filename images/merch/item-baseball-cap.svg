@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Structured baseball cap (6-panel fitted), forest green -->
+  <g>
+    <!-- Flat brim (less curved) -->
+    <path d="M95 255 L310 245 Q318 248 318 258 Q318 268 310 270 L95 282 Q85 280 85 270 Q85 260 95 255 Z"
+          fill="#0c1f17" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/>
+    <!-- Structured crown (firmer, more domed) -->
+    <path d="M105 255 Q105 130 200 120 Q300 128 305 255 Z"
+          fill="#1a3d2e" stroke="#0c1f17" stroke-width="2" stroke-linejoin="round"/>
+    <!-- 6-panel seams -->
+    <path d="M200 120 L200 255" fill="none" stroke="#0c1f17" stroke-width="1.2" opacity="0.7"/>
+    <path d="M163 124 Q158 190 152 255" fill="none" stroke="#0c1f17" stroke-width="1.2" opacity="0.55"/>
+    <path d="M237 124 Q242 190 248 255" fill="none" stroke="#0c1f17" stroke-width="1.2" opacity="0.55"/>
+    <path d="M125 150 L113 250" fill="none" stroke="#0c1f17" stroke-width="1.2" opacity="0.4"/>
+    <path d="M275 150 L287 250" fill="none" stroke="#0c1f17" stroke-width="1.2" opacity="0.4"/>
+    <!-- Button on top -->
+    <circle cx="200" cy="120" r="6" fill="#0c1f17"/>
+    <!-- Sweatband peek -->
+    <path d="M105 255 Q200 265 305 255 L305 262 Q200 274 105 262 Z" fill="#0c1f17" opacity="0.55"/>
+    <!-- Brim top highlight -->
+    <path d="M95 252 Q200 240 310 242" fill="none" stroke="#1a3d2e" stroke-width="1.2" opacity="0.7"/>
+  </g>
+</svg>

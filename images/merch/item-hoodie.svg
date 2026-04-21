@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Hoodie, forest green -->
+  <g>
+    <!-- Hood -->
+    <path d="M165 95 Q200 70 235 95 Q255 110 250 135 L150 135 Q145 110 165 95 Z"
+          fill="#14362a" stroke="#0c1f17" stroke-width="2"/>
+    <!-- Body + sleeves -->
+    <path d="M150 135 Q175 145 200 145 Q225 145 250 135 L300 160 L325 205 L290 225 L285 220 L285 335 Q285 345 275 345 L125 345 Q115 345 115 335 L115 220 L110 225 L75 205 L100 160 Z"
+          fill="#1a3d2e" stroke="#0c1f17" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Neck opening (V) -->
+    <path d="M175 135 L200 160 L225 135" fill="none" stroke="#0c1f17" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Drawstrings -->
+    <line x1="188" y1="150" x2="185" y2="200" stroke="#e8dcc8" stroke-width="2" stroke-linecap="round"/>
+    <line x1="212" y1="150" x2="215" y2="200" stroke="#e8dcc8" stroke-width="2" stroke-linecap="round"/>
+    <!-- Kangaroo pocket -->
+    <path d="M140 255 L150 245 L250 245 L260 255 L260 305 L140 305 Z" fill="none" stroke="#0c1f17" stroke-width="1.8" opacity="0.6"/>
+    <!-- Cuffs (ribbed) -->
+    <rect x="75" y="205" width="45" height="12" fill="#0c1f17" opacity="0.4" transform="rotate(-25 97 211)"/>
+    <rect x="280" y="205" width="45" height="12" fill="#0c1f17" opacity="0.4" transform="rotate(25 302 211)"/>
+    <!-- Hem -->
+    <rect x="115" y="325" width="170" height="14" fill="#0c1f17" opacity="0.4"/>
+  </g>
+</svg>

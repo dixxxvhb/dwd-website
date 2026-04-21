@@ -172,6 +172,7 @@
       <a href="#adult-company" data-page="adult-company">Collective</a>
       <a href="#classes-events" data-page="classes-events">Performances</a>
       <a href="#gallery" data-page="gallery">Gallery</a>
+      <a href="#shop" data-page="shop">Merch</a>
       <a href="#contact" data-page="contact">Contact</a>
     </nav>
     <a href="#early-access" class="nav-cta" data-page="early-access">Join the List &rarr;</a>
@@ -793,16 +794,105 @@
     </section>
 
     <!-- ══════════ SHOP ══════════ -->
-    <section class="page" id="page-shop" aria-label="Shop">
-      <div class="shop-hero">
-        <img src="images/logos/DWD-green.png" alt="DWD Logo" class="hero-logo-section" width="100" height="100" loading="lazy" style="margin-bottom: 24px;">
-        <h1>DWD Merch</h1>
-        <div class="sub">Wear the work.</div>
-        <div class="coming-box">
-          <div class="coming-soon-tag">Coming Soon</div>
-          <h3>Merch Is Coming.</h3>
-          <p>I'm designing pieces you'll actually want to wear outside the studio. Dropping soon.</p>
-          <p style="margin-top: 1rem;">Follow <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a> to know when merch drops.</p>
+    <section class="page" id="page-shop" aria-label="Merch">
+      <div class="merch-poll">
+        <div class="merch-poll-hero">
+          <img src="images/logos/DWDPS-green.png" alt="dwdPROSERIES" class="hero-logo-section" width="100" height="100" loading="lazy" style="margin-bottom: 24px;">
+          <h1>dwdPROSERIES Merch</h1>
+          <div class="sub">Help shape the first drop. Which category would you rock?</div>
+        </div>
+
+        <form id="merch-vote-form" data-form="merch-poll" class="merch-poll-form">
+          <div class="merch-categories">
+            <label class="merch-category-card" data-cat="everyday">
+              <input type="radio" name="category" value="everyday" required>
+              <div class="merch-mini-grid">
+                <div class="mini-item tshirt">
+                  <img class="garment" src="images/merch/item-tshirt.svg" alt="">
+                  <img class="logo" src="images/logos/DWDPS-green-transparent.png" alt="">
+                </div>
+                <div class="mini-item hoodie">
+                  <img class="garment" src="images/merch/item-hoodie.svg" alt="">
+                  <img class="logo" src="images/logos/DWDPS-pink-transparent.png" alt="">
+                </div>
+                <div class="mini-item crewneck">
+                  <img class="garment" src="images/merch/item-crewneck.svg" alt="">
+                  <img class="logo" src="images/logos/DWDPS-green-transparent.png" alt="">
+                </div>
+                <div class="mini-item joggers">
+                  <img class="garment" src="images/merch/item-joggers.svg" alt="">
+                  <img class="logo" src="images/logos/DWDPS-pink-transparent.png" alt="">
+                </div>
+              </div>
+              <div class="merch-cat-info">
+                <div class="merch-cat-name">Everyday</div>
+                <div class="merch-cat-items">Tees · Hoodies · Crewnecks · Joggers</div>
+              </div>
+              <div class="merch-select-dot" aria-hidden="true"></div>
+            </label>
+
+            <label class="merch-category-card" data-cat="dance">
+              <input type="radio" name="category" value="dance" required>
+              <div class="merch-mini-grid">
+                <div class="mini-item booty-shorts">
+                  <img class="garment" src="images/merch/item-booty-shorts.svg" alt="">
+                  <img class="logo" src="images/logos/DWDPS-pink-transparent.png" alt="">
+                </div>
+                <div class="mini-item crop-top">
+                  <img class="garment" src="images/merch/item-crop-top.svg" alt="">
+                  <img class="logo" src="images/logos/DWDPS-green-transparent.png" alt="">
+                </div>
+                <div class="mini-item leggings">
+                  <img class="garment" src="images/merch/item-leggings.svg" alt="">
+                  <img class="logo" src="images/logos/DWDPS-pink-transparent.png" alt="">
+                </div>
+                <div class="mini-item warmup-jacket">
+                  <img class="garment" src="images/merch/item-warmup-jacket.svg" alt="">
+                  <img class="logo" src="images/logos/DWDPS-pink-transparent.png" alt="">
+                </div>
+              </div>
+              <div class="merch-cat-info">
+                <div class="merch-cat-name">Dance Wear</div>
+                <div class="merch-cat-items">Booty Shorts · Crop Tops · Leggings · Warm-Ups</div>
+              </div>
+              <div class="merch-select-dot" aria-hidden="true"></div>
+            </label>
+
+            <label class="merch-category-card" data-cat="accessories">
+              <input type="radio" name="category" value="accessories" required>
+              <div class="merch-mini-grid">
+                <div class="mini-item hat">
+                  <img class="garment" src="images/merch/item-hat.svg" alt="">
+                  <img class="logo" src="images/logos/DWDPS-green-transparent.png" alt="">
+                </div>
+                <div class="mini-item tote">
+                  <img class="garment" src="images/merch/item-tote.svg" alt="">
+                  <img class="logo" src="images/logos/DWDPS-green-transparent.png" alt="">
+                </div>
+                <div class="mini-item stickers">
+                  <img class="garment" src="images/merch/item-stickers.svg" alt="">
+                </div>
+                <div class="mini-item pins">
+                  <img class="garment" src="images/merch/item-pins.svg" alt="">
+                </div>
+              </div>
+              <div class="merch-cat-info">
+                <div class="merch-cat-name">Accessories</div>
+                <div class="merch-cat-items">Hats · Totes · Stickers · Pins · Pens · Phone Cases</div>
+              </div>
+              <div class="merch-select-dot" aria-hidden="true"></div>
+            </label>
+          </div>
+
+          <div class="merch-extras">
+            <button type="submit" class="btn btn-blush">Cast my vote</button>
+          </div>
+        </form>
+
+        <div class="merch-vote-success" style="display:none;">
+          <h2>Vote counted.</h2>
+          <p>Thanks for shaping what we drop first.</p>
+          <p class="small">Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for the release.</p>
         </div>
       </div>
     </section>

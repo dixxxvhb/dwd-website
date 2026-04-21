@@ -45,6 +45,7 @@
   var currentPeriod = 30;
   var currentTab = 'overview';
   var cachedData = null;
+  var cachedMerchData = null;
 
   function getSb() { return window.__dwd_sb || null; }
 
@@ -57,13 +58,19 @@
       dashboard.innerHTML = '<div class="a-loading">Supabase not available.</div>';
       return;
     }
-    client.rpc('get_analytics_summary', { days_back: days }).then(function (res) {
-      if (res.error) {
-        dashboard.innerHTML = '<div class="a-loading">Error: ' + res.error.message + '</div>';
+    Promise.all([
+      client.rpc('get_analytics_summary', { days_back: days }),
+      client.rpc('get_merch_poll_stats', { days_back: days })
+    ]).then(function (results) {
+      var summary = results[0];
+      var merch = results[1];
+      if (summary.error) {
+        dashboard.innerHTML = '<div class="a-loading">Error: ' + summary.error.message + '</div>';
         return;
       }
-      cachedData = res.data;
-      render(res.data);
+      cachedData = summary.data;
+      cachedMerchData = (merch && !merch.error) ? merch.data : null;
+      render(summary.data);
     });
   }
 
@@ -161,6 +168,49 @@
     html += '<div class="a-card-label">Top Pages</div>';
     html += pageList(d.page_views || []);
     html += '</div>';
+
+    // Merch poll summary
+    if (cachedMerchData) {
+      html += renderMerchCard(cachedMerchData, d);
+    }
+
+    html += '</div>';
+    return html;
+  }
+
+  function renderMerchCard(m, d) {
+    var shopViews = 0;
+    (d.page_views || []).forEach(function (r) { if (r.page === 'shop') shopViews = r.views; });
+    var totalVotes = m.total_votes || 0;
+    var conversionPct = shopViews > 0 ? Math.round((totalVotes / shopViews) * 100) : 0;
+    var voteChange = pctChange(totalVotes, m.prior_period_votes || 0);
+    var catLabels = { everyday: 'Everyday', dance: 'Dance Wear', accessories: 'Accessories' };
+    var cats = m.votes_by_category || [];
+
+    var html = '<div class="a-card">';
+    html += '<div class="a-card-label">Merch Poll</div>';
+
+    // Stats grid: votes + conversion rate
+    html += '<div class="a-grid">';
+    html += statCard(totalVotes, 'Votes (' + currentPeriod + 'd)', voteChange, true);
+    html += statCard(conversionPct + '%', 'Vote Rate', { text: shopViews + ' shop views', cls: 'a-change-flat' });
+    html += '</div>';
+
+    // Secondary stats
+    html += '<div class="a-row"><span class="a-row-label">All-time votes</span><span class="a-row-val">' + (m.votes_all_time || 0) + '</span></div>';
+
+    // Category breakdown
+    if (cats.length) {
+      html += '<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);">';
+      html += '<div class="a-card-label" style="margin-bottom:8px;">By category</div>';
+      cats.forEach(function (c) {
+        var pct = totalVotes > 0 ? Math.round((c.count / totalVotes) * 100) : 0;
+        html += '<div class="a-row"><span class="a-row-label">' + (catLabels[c.category] || c.category) + '</span><span class="a-row-val">' + c.count + ' (' + pct + '%)</span></div>';
+      });
+      html += '</div>';
+    } else {
+      html += '<div class="a-empty" style="margin-top:12px;">No votes yet</div>';
+    }
 
     html += '</div>';
     return html;
