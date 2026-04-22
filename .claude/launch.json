@@ -4,7 +4,7 @@
     {
       "name": "dwd-website",
       "runtimeExecutable": "/usr/bin/python3",
-      "runtimeArgs": ["-m", "http.server", "8790", "-d", "/Users/dixxx/Desktop/DWD/Website"],
+      "runtimeArgs": ["-m", "http.server", "8790", "-d", "/Users/dixxx/Desktop/DWD/_website"],
       "port": 8790
     }
   ]

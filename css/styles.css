@@ -2019,3 +2019,249 @@ a:hover {
     right: 0.5rem;
   }
 }
+
+/* ══════════ PROSERIES WEEKLY SCHEDULE ══════════ */
+.schedule-section {
+  margin: 4rem 0 3rem;
+}
+
+.schedule-section .schedule-intro {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.schedule-section .schedule-intro h2 {
+  color: var(--cream);
+  margin-bottom: 0.75rem;
+}
+
+.schedule-section .schedule-intro p {
+  color: var(--cream-faint);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.schedule-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 960px) {
+  .schedule-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.schedule-card {
+  background-color: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  border-top: 4px solid var(--sc-accent, var(--terra));
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.schedule-card[data-track="prep"]  { --sc-accent: var(--blush); }
+.schedule-card[data-track="elite"] { --sc-accent: var(--terra); }
+.schedule-card[data-track="pro"]   { --sc-accent: var(--seafoam); }
+
+.schedule-card .sc-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--sc-accent);
+  font-weight: 600;
+}
+
+.schedule-card .sc-name {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--cream);
+  font-style: italic;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.schedule-card .sc-meta {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+}
+
+.schedule-card .sc-meta strong {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+.schedule-card .sc-day {
+  border-top: 1px solid var(--forest-mid);
+  padding-top: 1.25rem;
+}
+
+.schedule-card .sc-day-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.85rem;
+}
+
+.schedule-card .sc-day-name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 1.5px;
+  color: var(--cream);
+}
+
+.schedule-card .sc-day-hours {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--sc-accent);
+  font-weight: 600;
+}
+
+.schedule-card .sc-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.55rem 0;
+}
+
+.schedule-card .sc-slot + .sc-slot {
+  border-top: 1px dashed rgba(245, 240, 232, 0.08);
+}
+
+.schedule-card .sc-slot-time {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  color: var(--sc-accent);
+  font-weight: 600;
+}
+
+.schedule-card .sc-slot-name {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.schedule-card .sc-tag {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  color: var(--forest);
+  background: var(--sc-accent);
+  border-radius: 2px;
+}
+
+.schedule-card .sc-tag.tag-all {
+  background: var(--cream);
+  color: var(--forest);
+}
+
+.schedule-card .sc-note {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--cream-faint);
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+/* At-a-glance strip */
+.schedule-glance {
+  margin-top: 3rem;
+  background-color: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  padding: 1.75rem 2rem;
+}
+
+.schedule-glance h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--cream);
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+}
+
+.schedule-glance-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--forest-mid);
+  flex-wrap: wrap;
+}
+
+.schedule-glance-row:first-of-type {
+  border-top: none;
+}
+
+.schedule-glance-row[data-track="prep"]  { --sc-accent: var(--blush); }
+.schedule-glance-row[data-track="elite"] { --sc-accent: var(--terra); }
+.schedule-glance-row[data-track="pro"]   { --sc-accent: var(--seafoam); }
+
+.schedule-glance-row .g-track {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--cream);
+  min-width: 6rem;
+}
+
+.schedule-glance-row .g-hours {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--sc-accent);
+  font-weight: 600;
+  min-width: 7rem;
+}
+
+.schedule-glance-row .g-days {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.schedule-glance-row .g-day {
+  border: 1px solid var(--sc-accent);
+  color: var(--cream);
+  padding: 0.35rem 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-align: center;
+  min-width: 4.25rem;
+}
+
+.schedule-glance-row .g-day strong {
+  display: block;
+  color: var(--sc-accent);
+  font-weight: 700;
+}
+
+.schedule-glance-row .g-day span {
+  display: block;
+  font-size: 0.62rem;
+  color: var(--cream-faint);
+  margin-top: 0.1rem;
+}
