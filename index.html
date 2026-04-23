@@ -104,7 +104,7 @@
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#113c2e">
+  <meta name="theme-color" content="#0c1f17">
 
   <!-- iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -125,6 +125,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/additions.css">
   <link rel="stylesheet" href="css/editorial.css">
+  <link rel="stylesheet" href="css/rebrand.css">
 
   <!-- Supabase Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -198,58 +199,74 @@
 
     <!-- ══════════ HOME ══════════ -->
     <section class="page active" id="page-home" aria-label="Home">
-      <div class="hero" style="background-image: linear-gradient(rgba(15,35,24,0.97) 0%, rgba(15,35,24,0.85) 30%, rgba(15,35,24,0.45) 65%, rgba(15,35,24,0.3) 100%), url('images/photos/high res pose.jpeg'); background-size: cover; background-position: center 95%;">
-        <video src="images/logos/DWD-animated.webm" class="hero-logo" width="1050" height="1050" autoplay muted loop playsinline disablePictureInPicture aria-label="DWD Logo animation"></video>
-        <div class="hero-eyebrow"><span class="bar"></span>Est. 2025 <span class="sep">·</span> Orlando, FL</div>
-        <h1>Dance With Dixon</h1>
-        <p class="subtitle">Elite youth training program (ages 5&ndash;19). Adult modern dance company (18+).<br>Built from scratch in Orlando.</p>
-        <a href="#early-access" class="audition-chip" data-track="home-audition-chip">
-          <span class="dot"></span>
-          <span class="label">Registration to Audition</span>
-          <span class="date">Opens May 1, 2026</span>
-          <span class="meta">10 spots per track &middot; 30 total</span>
-        </a>
-        <!-- Tamara Mark — For Mom -->
-        <svg class="tamara-mark tamara-mark--hero" viewBox="20 10 200 190" width="32" height="30" aria-label="Tamara Mark — in memory of Tamara S. Bowles">
-          <title>In memory of Tamara S. Bowles</title>
-          <circle cx="100" cy="115" r="65" fill="none" stroke="url(#tm-gold-h)" stroke-width="1.8" stroke-linecap="round" opacity="0.75"/>
-          <circle cx="152" cy="70" r="49" fill="none" stroke="url(#tm-gold-h)" stroke-width="2.5" stroke-linecap="round" opacity="0.95"/>
-          <circle cx="107" cy="50" r="10" fill="url(#tm-glow-h)" opacity="0.25"/>
-          <defs>
-            <linearGradient id="tm-gold-h" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#c9956c"/><stop offset="40%" stop-color="#e8c49a"/><stop offset="100%" stop-color="#d4a574"/>
-            </linearGradient>
-            <radialGradient id="tm-glow-h"><stop offset="0%" stop-color="#e8c49a"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-          </defs>
-        </svg>
+      <!-- HERO — DUAL SPLIT -->
+      <div class="hero">
+        <div class="hero-photo">
+          <img src="images/photos/high res pose — hero crop.jpeg" alt="DWD dancer on stage" loading="eager">
+          <div class="caption">John Nuzzi · Solo Work · 2024</div>
+        </div>
+        <div class="hero-text">
+          <!-- Tamara Mark — For Mom -->
+          <svg class="tamara-mark tamara-mark--hero" viewBox="20 10 200 190" width="46" height="42" aria-label="Tamara Mark — in memory of Tamara S. Bowles">
+            <title>In memory of Tamara S. Bowles</title>
+            <circle cx="100" cy="115" r="65" fill="none" stroke="url(#tm-gold-h)" stroke-width="1.8" stroke-linecap="round" opacity="0.75"/>
+            <circle cx="152" cy="70" r="49" fill="none" stroke="url(#tm-gold-h)" stroke-width="2.5" stroke-linecap="round" opacity="0.95"/>
+            <circle cx="107" cy="50" r="10" fill="url(#tm-glow-h)" opacity="0.25"/>
+            <defs>
+              <linearGradient id="tm-gold-h" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#c9956c"/><stop offset="40%" stop-color="#e8c49a"/><stop offset="100%" stop-color="#d4a574"/>
+              </linearGradient>
+              <radialGradient id="tm-glow-h"><stop offset="0%" stop-color="#e8c49a"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            </defs>
+          </svg>
+          <div class="hero-eyebrow"><span class="bar"></span>Est. 2025 <span class="sep">·</span> Orlando, FL</div>
+          <h1>
+            <span class="line">Dance</span>
+            <span class="line">With</span>
+            <span class="line">Dixon.</span>
+          </h1>
+          <p class="subtitle">Elite youth training program (ages 5&ndash;19). Adult modern dance company (18+). Built from scratch in Orlando.</p>
+          <a href="#early-access" class="audition-chip" data-track="home-audition-chip">
+            <span class="dot"></span>
+            <span class="label">Registration to Audition</span>
+            <span class="date">Opens May 1, 2026</span>
+            <span class="meta">10 spots per track &middot; 30 total</span>
+          </a>
+          <div class="hero-foot">
+            <span>Season One · 2026 / 2027</span>
+            <span class="scroll">Scroll to begin →</span>
+          </div>
+        </div>
       </div>
 
+      <!-- EARLY ACCESS BANNER -->
       <a href="#early-access" class="ea-banner reveal" data-track="home-early-access-banner">
         <span class="ea-banner-tag">NEW</span>
-        <span class="ea-banner-text">Get early access to register for the audition — spots are limited</span>
+        <span class="ea-banner-text">Get early access to register for the audition &mdash; spots are limited.</span>
         <span class="ea-banner-arrow">&rarr;</span>
       </a>
 
+      <!-- TWO ENTRIES -->
       <div class="entries reveal">
-        <a class="entry" href="#proseries" data-track="home-entry-proseries">
+        <a class="entry proseries" href="#proseries" data-track="home-entry-proseries">
           <div class="thumb">
-            <div class="bg" style="background-image: url('images/photos/287_Lime in the Coconut_40.JPG');"></div>
+            <img class="bg-img" src="images/photos/287_Lime in the Coconut_88.JPG" alt="ProSeries dancer" loading="lazy">
           </div>
           <div class="body">
             <div class="tag">Ages 5&ndash;19 &middot; Competitive</div>
             <h3>Pro<em>Series.</em></h3>
             <div class="entry-desc">Three tracks &mdash; Prep, Elite, Pro. Audition-based. Every class designed by a working director.</div>
-            <div class="foot">
-              <div class="facts">
-                <div class="f"><div class="k">Tracks</div><div class="v">Prep &middot; Elite &middot; Pro</div></div>
-                <div class="f"><div class="k">Register to Audition</div><div class="v">Opens <em>May 1</em></div></div>
-              </div>
-              <span class="enter-arrow">Enter<span class="a">&rarr;</span></span>
+          </div>
+          <div class="foot">
+            <div class="facts">
+              <div class="f"><div class="k">Tracks</div><div class="v">Prep &middot; Elite &middot; Pro</div></div>
+              <div class="f"><div class="k">Register to Audition</div><div class="v">Opens <em>May 1</em></div></div>
             </div>
+            <span class="enter-arrow">Enter<span class="a"> &rarr;</span></span>
           </div>
         </a>
 
-        <a class="entry" href="#adult-company" data-track="home-entry-collective">
+        <a class="entry collective" href="#adult-company" data-track="home-entry-collective">
           <div class="thumb">
             <div class="bg" style="background-image: url('images/photos/A-06-06-25~4927-Enhanced-NR.jpg');"></div>
           </div>
@@ -258,51 +275,75 @@
             <h3>The <em>Collective.</em></h3>
             <div class="entry-hl">More than a drop-in class.</div>
             <div class="entry-desc">Real technique, real choreography, real stage time. No audition &mdash; just show up ready to move.</div>
-            <div class="foot">
-              <div class="facts">
-                <div class="f"><div class="k">Audition</div><div class="v"><em>None</em></div></div>
-                <div class="f"><div class="k">Next show</div><div class="v">June <em>2026</em></div></div>
-              </div>
-              <span class="enter-arrow">Enter<span class="a">&rarr;</span></span>
+          </div>
+          <div class="foot">
+            <div class="facts">
+              <div class="f"><div class="k">Audition</div><div class="v"><em>None</em></div></div>
+              <div class="f"><div class="k">Next show</div><div class="v">June <em>2026</em></div></div>
             </div>
+            <span class="enter-arrow">Enter<span class="a"> &rarr;</span></span>
           </div>
         </a>
       </div>
 
+      <!-- FEATURED VIDEO -->
       <div class="video-featured reveal">
-        <div class="video-label">See the Work</div>
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/13yTeXaUc9U" title="Dixon Bowles choreography — Tokyo Sunrise" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="wrap">
+          <div class="row">
+            <div>
+              <div class="video-label">See the Work</div>
+              <h2>Tokyo <em>Sunrise.</em></h2>
+            </div>
+            <div class="meta">Original choreography by Dixon Bowles · 2024 season.</div>
+          </div>
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/13yTeXaUc9U" title="Dixon Bowles choreography — Tokyo Sunrise" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
         </div>
       </div>
 
-      <div class="photo-grid">
-        <img src="images/photos/dixon-award-groove-solo.jpg" alt="Dixon on stage receiving award at competition" loading="lazy">
-        <img src="images/photos/dwdc-7I6A3760.jpg" alt="DWD Collective — adult company photoshoot" loading="lazy">
-        <img src="images/photos/IMG_1859.jpeg" alt="DWD company members" loading="lazy">
-        <img src="images/photos/121_Sisters_30.JPG" alt="Competition performance moment" loading="lazy">
-        <img src="images/photos/IMG_2908.jpeg" alt="Dixon — career moment" loading="lazy">
-        <img src="images/photos/dwdc-7I6A3724.jpg" alt="DWD Collective rehearsal" loading="lazy">
+      <!-- PHOTO GRID -->
+      <div class="photo-grid-section reveal">
+        <div class="photo-grid">
+          <figure class="ph g1"><img src="images/photos/dixon-award-groove-solo.jpg" alt="Dixon on stage receiving award at competition" loading="lazy"></figure>
+          <figure class="ph g2"><img src="images/photos/dwdc-7I6A3760.jpg" alt="DWD Collective — adult company photoshoot" loading="lazy"></figure>
+          <figure class="ph g3"><img src="images/photos/IMG_1859.jpeg" alt="DWD company members" loading="lazy"></figure>
+          <figure class="ph g4"><img src="images/photos/121_Sisters_30.JPG" alt="Competition performance moment" loading="lazy"></figure>
+          <figure class="ph g5"><img src="images/photos/IMG_2908.jpeg" alt="Dixon — career moment" loading="lazy"></figure>
+          <figure class="ph g6"><img src="images/photos/dwdc-7I6A3724.jpg" alt="DWD Collective rehearsal" loading="lazy"></figure>
+        </div>
       </div>
 
-      <div class="ticker-bar">
-        <div class="ticker-item">PROSERIES AUDITION REGISTRATION OPENS MAY 1</div>
-        <div class="ticker-item">AMUSING SPACES JUNE 2026</div>
-        <div class="ticker-item">ADULT CLASSES NOW ENROLLING</div>
+      <!-- TICKER -->
+      <div class="ticker-bar" aria-hidden="true">
+        <div class="ticker-track">
+          <span>ProSeries Audition Registration Opens May 1</span>
+          <span>Amusing Spaces June 2026</span>
+          <span>Adult Classes Now Enrolling</span>
+          <span>ProSeries Audition Registration Opens May 1</span>
+          <span>Amusing Spaces June 2026</span>
+          <span>Adult Classes Now Enrolling</span>
+        </div>
       </div>
 
+      <!-- PULL QUOTE — IVORY LANDMARK -->
       <div class="pull-quote reveal">
-        <blockquote>
-          This isn't a studio. It's a <span class="hl">company</span> — built for youth dancers and adults who want the real thing.
-        </blockquote>
-        <cite>Dixon Bowles <span>— Director &amp; Choreographer</span></cite>
+        <div class="bg-tamara"></div>
+        <div class="content">
+          <div class="dot"></div>
+          <blockquote>
+            This isn't a studio. It's a <span class="hl">company</span> &mdash; built for youth dancers and adults who want the real thing.
+          </blockquote>
+          <cite>Dixon Bowles <span>— Director &amp; Choreographer</span></cite>
+        </div>
       </div>
 
-      <div class="email-signup email-signup--editorial reveal">
+      <!-- EMAIL SIGNUP -->
+      <div class="email-signup reveal">
         <div class="kicker">Get Early Access</div>
         <h3>Join <em>the List.</em></h3>
         <p>Be first in line for ProSeries registration and DWD updates. Spots are limited.</p>
-        <a href="#early-access" class="btn btn-blush">Join the List</a>
+        <a href="#early-access" class="btn btn-blush" data-track="home-early-access-join">Join the List</a>
       </div>
     </section>
 

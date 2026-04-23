@@ -1,0 +1,631 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * DWD — Rebrand stylesheet
+ * Loaded AFTER styles.css, additions.css, editorial.css
+ * Home-page-specific rules scoped under #page-home to keep other pages
+ * untouched until their own rebrand commit.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Forest greens — brand-official dark tones */
+  --rb-bg-base: #0c1f17;
+  --rb-bg-elevated: #102b1f;
+  --rb-bg-deep: #091a13;
+
+  /* Warm accents */
+  --rb-ivory: #FAF3E8;
+  --rb-ivory-dim: #ebe2d2;
+  --rb-ivory-low: #a9a196;
+  --rb-pink: #f8d7c8;
+  --rb-terracotta: #C8614B;
+  --rb-terracotta-deep: #9c4a39;
+  --rb-seafoam: #6BAF8A;
+  --rb-gold: #e2b955;
+
+  /* Rules */
+  --rb-rule: rgba(250,243,232,0.16);
+  --rb-rule-soft: rgba(250,243,232,0.08);
+}
+
+/* ═══ GLOBAL — BODY & LEGACY NAV CONTROL ═══ */
+body.has-topnav {
+  background: var(--rb-bg-base);
+  color: var(--rb-ivory);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hide legacy sidebar & mobile header — topnav is the only visible nav */
+body.has-topnav .sidebar,
+body.has-topnav .mobile-header,
+body.has-topnav .sidebar-overlay { display: none !important; }
+
+/* Only the active .page shows (mirrors main.js behavior, keeps preview clean) */
+main.main .page:not(.active) { display: none; }
+
+/* Non-home pages: offset content to clear fixed topnav (their -hero paddings assume
+   sticky topnav flow, so without this the top ~6px of h1 would be covered by the
+   70px-tall fixed topnav at scrollY=0. Home's #page-home .hero has its own padding-top). */
+body.has-topnav main.main > .page.active:not(#page-home) {
+  padding-top: 16px;
+}
+
+/* ═══ GLOBAL — TOP NAV ═══ */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px;
+  background: rgba(12,31,23,0.82);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rb-rule);
+  transition: padding 0.3s ease, background 0.3s ease;
+}
+.topnav.scrolled { padding: 10px 32px; background: rgba(12,31,23,0.96); }
+.topnav .brand {
+  display: flex; align-items: center; gap: 14px; margin-right: auto;
+  text-decoration: none;
+}
+.topnav .brand video { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+.topnav .brand .wordmark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; letter-spacing: 0.02em; color: var(--rb-ivory);
+}
+.topnav .brand .wordmark em { font-style: italic; color: var(--rb-pink); font-weight: 400; }
+.topnav nav { display: flex; gap: 28px; }
+.topnav nav a {
+  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--rb-ivory-dim); padding: 6px 0; position: relative;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.topnav nav a::after {
+  content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: var(--rb-pink); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.topnav nav a:hover, .topnav nav a.active { color: var(--rb-pink); }
+.topnav nav a:hover::after, .topnav nav a.active::after { transform: scaleX(1); }
+.topnav .nav-cta {
+  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  padding: 12px 22px; background: var(--rb-pink); color: var(--rb-bg-base);
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+.topnav .nav-cta:hover { transform: translateY(-1px); }
+.topnav .topnav-toggle { display: none; }
+
+/* ═══ HOME PAGE — HERO (dual split) ═══ */
+#page-home .hero {
+  padding-top: 72px;
+  display: grid;
+  grid-template-columns: 11fr 9fr;
+  min-height: 92vh;
+  max-height: 960px;
+  position: relative;
+  background: var(--rb-bg-base);
+}
+#page-home .hero-photo {
+  position: relative; overflow: hidden;
+  background: #000;
+}
+#page-home .hero-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  /* Anchor to John's face (~65% horizontal, ~67% vertical of the 4608×2092 image).
+     This keeps his face in frame at all container aspect ratios — desktop dual-split,
+     tall-narrow resized windows, and mobile portrait alike. Default `center 62%` was
+     cutting off the face at narrow widths. */
+  object-position: 65% 60%;
+  animation: rb-kenburns 22s ease-in-out infinite alternate;
+}
+@keyframes rb-kenburns {
+  0% { transform: scale(1.04); }
+  100% { transform: scale(1.14) translate(-2%, -1.5%); }
+}
+#page-home .hero-photo .caption {
+  position: absolute; bottom: 24px; left: 24px;
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 14px; color: var(--rb-ivory-dim);
+  background: rgba(12,31,23,0.78); padding: 8px 14px;
+  backdrop-filter: blur(6px);
+}
+#page-home .hero-text {
+  padding: 72px 72px 72px 88px;
+  display: flex; flex-direction: column; justify-content: center; gap: 32px;
+  position: relative;
+  background: var(--rb-bg-base);
+}
+#page-home .hero-text::before {
+  content: ""; position: absolute;
+  top: 96px; bottom: 96px; left: 0; width: 1px;
+  background: linear-gradient(180deg, transparent, var(--rb-pink) 30%, var(--rb-pink) 70%, transparent);
+  opacity: 0.5;
+}
+#page-home .hero-text .tamara-mark--hero {
+  position: absolute; top: 48px; right: 48px;
+  width: 46px; height: 42px;
+  opacity: 0.65;
+}
+#page-home .hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 16px;
+  font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--rb-pink);
+}
+#page-home .hero-eyebrow .bar { width: 48px; height: 1px; background: var(--rb-pink); display: inline-block; }
+#page-home .hero-eyebrow .sep { margin: 0 4px; }
+#page-home .hero h1 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(64px, 7.5vw, 140px);
+  line-height: 0.88; letter-spacing: -0.025em;
+  color: var(--rb-ivory);
+  margin: 0;
+}
+#page-home .hero h1 .line {
+  display: block;
+  opacity: 0; transform: translateY(30px);
+  animation: rb-rise 1.2s cubic-bezier(.2,.8,.2,1) forwards;
+}
+#page-home .hero h1 .line:nth-child(1) { animation-delay: 0.1s; }
+#page-home .hero h1 .line:nth-child(2) {
+  animation-delay: 0.28s;
+  font-style: italic; color: var(--rb-pink); padding-left: 0.4em;
+}
+#page-home .hero h1 .line:nth-child(3) { animation-delay: 0.46s; }
+@keyframes rb-rise { to { opacity: 1; transform: translateY(0); } }
+
+#page-home .hero .subtitle {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: clamp(16px, 1.2vw, 20px); line-height: 1.5;
+  color: var(--rb-ivory-dim); max-width: 520px;
+  margin: 0;
+}
+
+/* ═══ HOME — AUDITION CHIP ═══ */
+#page-home .audition-chip {
+  display: inline-flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding: 16px 24px;
+  background: rgba(250,243,232,0.05);
+  border: 1px solid var(--rb-pink);
+  align-self: flex-start;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+#page-home .audition-chip:hover { background: rgba(248,215,200,0.12); }
+#page-home .audition-chip .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--rb-pink);
+  animation: rb-pulse 2.4s ease-in-out infinite;
+}
+@keyframes rb-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+#page-home .audition-chip .label {
+  font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--rb-pink);
+}
+#page-home .audition-chip .date {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 17px; color: var(--rb-ivory);
+}
+#page-home .audition-chip .meta {
+  font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--rb-ivory-dim);
+  padding-left: 16px; border-left: 1px solid var(--rb-rule);
+}
+
+/* ═══ HOME — HERO FOOT ═══ */
+#page-home .hero-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 16px; padding-top: 20px;
+  border-top: 1px solid var(--rb-rule);
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--rb-ivory-dim);
+}
+#page-home .hero-foot .scroll {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  letter-spacing: 0; text-transform: none; font-size: 14px;
+}
+
+/* ═══ HOME — EARLY ACCESS BANNER ═══ */
+#page-home .ea-banner {
+  display: flex; align-items: center; gap: 20px;
+  padding: 24px 32px;
+  background: var(--rb-terracotta); color: var(--rb-ivory);
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+#page-home .ea-banner:hover { background: var(--rb-terracotta-deep); }
+#page-home .ea-banner .ea-banner-tag {
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  padding: 6px 12px; background: rgba(250,243,232,0.18);
+}
+#page-home .ea-banner .ea-banner-text {
+  flex: 1;
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: clamp(16px, 1.4vw, 20px);
+}
+#page-home .ea-banner .ea-banner-arrow { font-size: 22px; }
+
+/* ═══ HOME — TWO ENTRIES ═══ */
+#page-home .entries {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 90vh; position: relative;
+}
+#page-home .entries .entry {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 88px 56px 72px; min-height: 90vh;
+  color: var(--rb-ivory);
+  text-decoration: none;
+}
+#page-home .entries .entry .thumb,
+#page-home .entries .entry .thumb .bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transition: transform 1.4s ease;
+}
+#page-home .entries .entry:hover .thumb .bg { transform: scale(1.06); }
+
+/* Per-entry crop tuning — lift ProSeries dancer so her face clears the foot bar */
+#page-home .entries .entry .thumb .bg { background-repeat: no-repeat !important; }
+#page-home .entries .entry[href="#adult-company"] .thumb .bg {
+  background-position: center 40% !important;
+}
+
+/* <img> variant for ProSeries — full pixel control with object-position */
+#page-home .entries .entry .thumb .bg-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 22% 28%;
+  transition: transform 1.4s ease;
+}
+#page-home .entries .entry:hover .thumb .bg-img { transform: scale(1.06); }
+#page-home .entries .entry::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(12,31,23,0.5) 0%, rgba(12,31,23,0.35) 40%, rgba(12,31,23,0.94) 100%);
+  transition: background 0.6s ease;
+}
+#page-home .entries .entry:hover::after {
+  background: linear-gradient(180deg, rgba(12,31,23,0.3) 0%, rgba(12,31,23,0.22) 40%, rgba(12,31,23,0.8) 100%);
+}
+#page-home .entries .entry > .body,
+#page-home .entries .entry > .foot { position: relative; z-index: 2; }
+#page-home .entries .entry .tag {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+}
+#page-home .entries .entry h3 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(64px, 8vw, 128px);
+  line-height: 0.9; letter-spacing: -0.015em;
+  margin: 24px 0 0; color: var(--rb-ivory);
+}
+#page-home .entries .entry h3 em { font-style: italic; }
+#page-home .entries .entry .entry-hl {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 22px; margin-top: 16px; color: var(--rb-pink);
+}
+#page-home .entries .entry .entry-desc {
+  font-size: 15px; line-height: 1.65; color: var(--rb-ivory-dim);
+  max-width: 480px; margin-top: 20px;
+}
+#page-home .entries .entry .foot {
+  margin-top: 48px;
+  display: flex; justify-content: space-between; align-items: end;
+  flex-wrap: wrap; gap: 24px;
+  padding-top: 24px; border-top: 1px solid rgba(250,243,232,0.18);
+}
+#page-home .entries .entry .facts { display: flex; gap: 32px; flex-wrap: wrap; }
+#page-home .entries .entry .f .k {
+  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--rb-ivory-dim); margin-bottom: 4px;
+}
+#page-home .entries .entry .f .v {
+  font-family: 'Cormorant Garamond', serif; font-size: 18px;
+  color: var(--rb-ivory);
+}
+#page-home .entries .entry .f .v em { font-style: italic; color: var(--rb-pink); }
+#page-home .entries .entry .enter-arrow {
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 14px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--rb-ivory);
+  color: var(--rb-ivory);
+}
+#page-home .entries .entry:hover .enter-arrow .a { transform: translateX(8px); }
+#page-home .entries .entry .enter-arrow .a {
+  display: inline-block; transition: transform 0.3s ease;
+}
+#page-home .entries .entry.proseries .tag,
+#page-home .entries .entry[href="#proseries"] .tag { color: var(--rb-seafoam); }
+#page-home .entries .entry.proseries h3 em,
+#page-home .entries .entry[href="#proseries"] h3 em { color: var(--rb-seafoam); }
+#page-home .entries .entry.collective .tag,
+#page-home .entries .entry[href="#adult-company"] .tag { color: var(--rb-terracotta); }
+#page-home .entries .entry.collective h3 em,
+#page-home .entries .entry[href="#adult-company"] h3 em { color: var(--rb-terracotta); }
+
+/* ═══ HOME — FEATURED VIDEO ═══ */
+#page-home .video-featured {
+  padding: 140px 32px;
+  background: var(--rb-bg-base);
+  border-top: 1px solid var(--rb-rule);
+}
+#page-home .video-featured .wrap { max-width: 1280px; margin: 0 auto; }
+#page-home .video-featured .row {
+  display: flex; justify-content: space-between; align-items: end;
+  margin-bottom: 48px; gap: 48px; flex-wrap: wrap;
+}
+#page-home .video-featured .video-label {
+  display: inline-flex; align-items: center; gap: 18px;
+  font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--rb-pink); margin-bottom: 16px;
+}
+#page-home .video-featured .video-label::before {
+  content: ""; width: 40px; height: 1px; background: var(--rb-pink);
+}
+#page-home .video-featured h2 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(48px, 6vw, 88px); line-height: 0.95;
+  margin: 0; color: var(--rb-ivory);
+}
+#page-home .video-featured h2 em { font-style: italic; color: var(--rb-pink); }
+#page-home .video-featured .meta {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 18px; color: var(--rb-ivory-dim);
+  max-width: 300px; text-align: right; line-height: 1.5;
+}
+#page-home .video-featured .video-embed {
+  position: relative; aspect-ratio: 16/9; overflow: hidden;
+  border: 1px solid var(--rb-rule);
+}
+#page-home .video-featured .video-embed iframe {
+  width: 100%; height: 100%; border: 0;
+}
+
+/* ═══ HOME — PHOTO GRID ═══ */
+#page-home .photo-grid-section {
+  padding: 140px 32px;
+  background: var(--rb-bg-base);
+  border-top: 1px solid var(--rb-rule);
+}
+#page-home .photo-grid {
+  display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px;
+  max-width: 1400px; margin: 0 auto;
+}
+#page-home .photo-grid .ph { position: relative; overflow: hidden; margin: 0; }
+#page-home .photo-grid .ph img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.2s ease;
+  filter: contrast(1.04);
+  display: block;
+}
+#page-home .photo-grid .ph:hover img { transform: scale(1.05); }
+#page-home .photo-grid .g1 { grid-column: span 7; aspect-ratio: 3/2; }
+#page-home .photo-grid .g2 { grid-column: span 5; aspect-ratio: 4/5; margin-top: 48px; }
+#page-home .photo-grid .g3 { grid-column: span 4; aspect-ratio: 3/4; }
+#page-home .photo-grid .g4 { grid-column: span 4; aspect-ratio: 3/4; }
+#page-home .photo-grid .g5 { grid-column: span 4; aspect-ratio: 3/4; }
+#page-home .photo-grid .g6 { grid-column: span 12; aspect-ratio: 21/9; margin-top: 24px; }
+
+/* ═══ HOME — TICKER ═══ */
+#page-home .ticker-bar {
+  overflow: hidden; white-space: nowrap;
+  padding: 22px 0;
+  background: var(--rb-pink); color: var(--rb-bg-base);
+}
+#page-home .ticker-track {
+  display: inline-flex; gap: 56px;
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 22px; animation: rb-slide 50s linear infinite;
+}
+#page-home .ticker-track span::before {
+  content: "✦"; margin-right: 56px; color: var(--rb-terracotta);
+}
+@keyframes rb-slide { to { transform: translateX(-50%); } }
+
+/* ═══ HOME — PULL QUOTE (ivory landmark) ═══ */
+#page-home .pull-quote {
+  padding: 180px 32px;
+  background: var(--rb-ivory);
+  color: var(--rb-bg-base);
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+#page-home .pull-quote .bg-tamara {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 440px; height: 220px; opacity: 0.12;
+  pointer-events: none;
+}
+#page-home .pull-quote .bg-tamara::before,
+#page-home .pull-quote .bg-tamara::after {
+  content: ""; position: absolute; top: 0;
+  width: 220px; height: 220px;
+  border: 2px solid var(--rb-gold); border-radius: 50%;
+}
+#page-home .pull-quote .bg-tamara::before { left: 0; }
+#page-home .pull-quote .bg-tamara::after { left: 140px; }
+#page-home .pull-quote > .content { position: relative; z-index: 2; }
+#page-home .pull-quote .dot {
+  width: 6px; height: 6px; background: var(--rb-terracotta);
+  border-radius: 50%; margin: 0 auto 40px;
+}
+#page-home .pull-quote blockquote {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(32px, 4.5vw, 72px);
+  line-height: 1.15; letter-spacing: -0.01em;
+  max-width: 1100px; margin: 0 auto;
+  color: var(--rb-bg-base);
+}
+#page-home .pull-quote blockquote .hl {
+  font-style: italic; color: var(--rb-terracotta);
+}
+#page-home .pull-quote cite {
+  display: block; margin-top: 48px;
+  font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+  font-style: normal;
+  color: rgba(12,31,23,0.6);
+}
+#page-home .pull-quote cite span { color: var(--rb-terracotta); }
+
+/* ═══ HOME — EMAIL SIGNUP ═══ */
+#page-home .email-signup {
+  padding: 160px 32px;
+  background: url('../images/photos/201_Prelude in C Minor_84.JPG') center/cover;
+  position: relative; text-align: center;
+}
+#page-home .email-signup::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(200,97,75,0.78) 0%, rgba(12,31,23,0.88) 100%);
+}
+#page-home .email-signup > * { position: relative; z-index: 2; }
+#page-home .email-signup .kicker {
+  font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--rb-pink); margin-bottom: 24px;
+}
+#page-home .email-signup h3 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(56px, 7vw, 112px); line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--rb-ivory);
+  margin: 0;
+}
+#page-home .email-signup h3 em { font-style: italic; color: var(--rb-pink); }
+#page-home .email-signup p {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 22px; color: var(--rb-ivory-dim);
+  margin: 28px auto 0; max-width: 640px;
+}
+#page-home .email-signup .btn,
+#page-home .email-signup .btn-blush {
+  display: inline-block; margin-top: 48px;
+  padding: 20px 44px;
+  background: var(--rb-pink); color: var(--rb-bg-base);
+  font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+#page-home .email-signup .btn:hover,
+#page-home .email-signup .btn-blush:hover { transform: translateY(-2px); }
+
+/* ═══ GLOBAL — FOOTER (targets live markup: .site-footer > .footer-grid > .footer-brand + .footer-links × 2, .footer-bottom) ═══ */
+footer.site-footer {
+  padding: 96px 32px 48px;
+  background: var(--rb-bg-deep);
+  border-top: 1px solid var(--rb-rule);
+  color: var(--rb-ivory);
+}
+footer.site-footer .footer-grid {
+  max-width: 1400px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 56px;
+}
+/* Brand column */
+footer.site-footer .footer-brand img {
+  display: block; margin-bottom: 20px;
+  width: 60px; height: 60px;
+}
+footer.site-footer .footer-brand h4 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: 28px; letter-spacing: 0.02em;
+  margin: 0 0 12px; color: var(--rb-ivory);
+}
+footer.site-footer .footer-brand .location {
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--rb-ivory-dim); margin-bottom: 20px;
+}
+footer.site-footer .footer-brand .sub-brands {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 15px; color: var(--rb-pink);
+  padding-top: 20px; border-top: 1px solid var(--rb-rule-soft);
+  max-width: 360px;
+}
+/* Link columns */
+footer.site-footer .footer-links h5 {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--rb-pink); margin: 0 0 24px;
+  font-weight: 500;
+}
+footer.site-footer .footer-links a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 0;
+  color: var(--rb-ivory-dim); font-size: 14px;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+footer.site-footer .footer-links a:hover { color: var(--rb-pink); }
+footer.site-footer .footer-links a svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 0.25s ease;
+}
+footer.site-footer .footer-links a:hover svg { opacity: 1; }
+/* Footer bottom — copyright + privacy + tamara mark */
+footer.site-footer .footer-bottom {
+  max-width: 1400px; margin: 72px auto 0;
+  padding-top: 32px; border-top: 1px solid var(--rb-rule);
+  display: flex; justify-content: center; align-items: center;
+  gap: 16px; flex-wrap: wrap;
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--rb-ivory-dim);
+}
+footer.site-footer .footer-bottom .footer-sep {
+  color: var(--rb-rule); opacity: 0.8;
+}
+footer.site-footer .footer-bottom .footer-legal-link {
+  color: var(--rb-ivory-dim); text-decoration: none;
+  transition: color 0.25s ease;
+}
+footer.site-footer .footer-bottom .footer-legal-link:hover { color: var(--rb-pink); }
+footer.site-footer .footer-bottom .tamara-mark--footer {
+  margin-left: 8px; opacity: 0.7;
+}
+
+/* ═══ GLOBAL — SCROLL REVEAL ═══
+   main.js adds .visible when a .reveal crosses into the viewport.
+   Match that class name; also keep .in as a fallback for the preview-only
+   inline script in index-rebrand-preview.html. */
+#page-home .reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: all 1s cubic-bezier(.2,.8,.2,1);
+}
+#page-home .reveal.visible,
+#page-home .reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ═══ HOME — RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .topnav { padding: 12px 20px; }
+  .topnav nav { display: none; }
+  /* Show hamburger toggle on mobile (rebrand's global `display: none` would
+     otherwise win over editorial.css's mobile `display: inline-block` on tie
+     because rebrand.css loads last). Without this, mobile users can't open
+     the nav menu. editorial.css handles `.topnav.is-open nav { display: flex }`. */
+  .topnav .topnav-toggle { display: inline-block; }
+  .topnav .brand .wordmark { font-size: 18px; }
+
+  #page-home .hero {
+    grid-template-columns: 1fr; max-height: none; padding-top: 64px;
+  }
+  #page-home .hero-photo { height: 55vh; order: 1; }
+  #page-home .hero-text {
+    padding: 48px 24px; order: 2; gap: 24px;
+  }
+  #page-home .hero-text::before { display: none; }
+  #page-home .hero-text .tamara-mark--hero { top: 24px; right: 24px; }
+  #page-home .hero h1 { font-size: clamp(56px, 15vw, 120px); }
+
+  #page-home .entries { grid-template-columns: 1fr; min-height: auto; }
+  #page-home .entries .entry { min-height: 70vh; padding: 56px 24px 48px; }
+  #page-home .photo-grid .ph {
+    grid-column: span 12 !important;
+    aspect-ratio: 3/2 !important;
+    margin-top: 0 !important;
+  }
+
+  footer.site-footer { padding: 64px 20px 32px; }
+  footer.site-footer .footer-grid {
+    grid-template-columns: 1fr 1fr; gap: 40px;
+  }
+  footer.site-footer .footer-brand { grid-column: 1 / -1; }
+  footer.site-footer .footer-bottom {
+    margin-top: 48px; padding-top: 24px;
+    font-size: 10px; gap: 10px;
+  }
+}

@@ -1,2 +1,14 @@
 .DS_Store
 .superpowers/
+.claude/
+.remember/
+
+# Migration / audit / planning artifacts — keep local only
+MIGRATION-PLAN.md
+_backups/
+_patch/
+_previews/
+
+# Preview + dry-run files used during rebrand migration
+index-rebrand-preview.html
+index-rebrand-test.html

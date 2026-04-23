@@ -1,9 +1,11 @@
-const CACHE_NAME = 'dwd-site-v6';
+const CACHE_NAME = 'dwd-site-v7';
 const ASSETS = [
   '/',
   '/index.html',
   '/css/styles.css',
   '/css/additions.css',
+  '/css/editorial.css',
+  '/css/rebrand.css',
   '/images/logos/DWD-green.png',
   '/images/icons/icon-192.png',
   '/images/icons/icon-512.png'
