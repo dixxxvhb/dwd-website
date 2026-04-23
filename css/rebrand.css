@@ -628,4 +628,40 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
     margin-top: 48px; padding-top: 24px;
     font-size: 10px; gap: 10px;
   }
+
+  /* ─── CONTACT PAGE — grid blowout + headline clearance ─── */
+  /* Fix 1: styles.css mobile override uses `1fr` = minmax(auto, 1fr). A form
+     child with min-content wider than the viewport then pushes the grid track
+     past 100vw. Force `minmax(0, 1fr)` so children stay shrinkable.
+     Fix 2: contact-form-side top padding is smaller than other pages' hero
+     padding, so the H1 ended up behind the 67px fixed topnav. Bump side
+     top padding to clear it. */
+  #page-contact .contact-section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #page-contact .contact-form-side {
+    padding: 64px 1.25rem 2rem;
+    min-width: 0;
+  }
+  #page-contact .contact-info-side {
+    padding: 2rem 1.25rem;
+    min-width: 0;
+  }
+
+  /* ─── TAP TARGETS — bump inline links to ≥ 40px hit areas ─── */
+  /* Applies on mobile only. Visual size stays the same — we inflate via
+     padding + keep the rendered text flush (no underline shift). */
+  #page-contact .contact-info-item a,
+  #page-privacy p a[href^="mailto:"],
+  #page-early-access a[href*="instagram.com"],
+  #page-early-access a[href="#privacy"],
+  .site-footer .footer-legal-link {
+    display: inline-block;
+    padding: 8px 0;
+    min-height: 40px;
+    line-height: 1.5;
+  }
+
+  /* Contact info stacked list: give each row breathing room, bigger hit */
+  #page-contact .contact-info-item { padding: 4px 0; }
 }
