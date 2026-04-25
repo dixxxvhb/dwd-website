@@ -2905,3 +2905,265 @@ a:hover {
   font-weight: 500;
   margin-left: 0.2rem;
 }
+
+/* ============ Classes & Events teaser cards ============ */
+.ce-teasers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .ce-teasers { grid-template-columns: 1fr 1fr; }
+}
+
+.ce-teaser {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem 1.75rem;
+  background-color: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  border-left: 4px solid var(--terra);
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.ce-teaser:hover {
+  transform: translateY(-2px);
+  border-left-color: var(--blush);
+}
+
+.ce-teaser:nth-child(2) { border-left-color: var(--seafoam); }
+.ce-teaser:nth-child(2):hover { border-left-color: var(--terra); }
+
+.ce-teaser-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--terra);
+  font-weight: 600;
+}
+
+.ce-teaser:nth-child(2) .ce-teaser-eyebrow { color: var(--seafoam); }
+
+.ce-teaser h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2rem;
+  color: var(--cream);
+  font-weight: 500;
+  margin: 0;
+}
+
+.ce-teaser p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--cream-faint);
+  margin: 0.4rem 0 0.8rem;
+}
+
+.ce-teaser-arrow {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cream);
+  font-weight: 600;
+  margin-top: auto;
+}
+
+/* ============ Adult Company — consolidated card ============ */
+.collective-card {
+  max-width: 1100px;
+  margin: 2rem auto 3rem;
+  padding: 0 1rem;
+}
+
+.cc-intro {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 2.5rem;
+}
+
+.cc-intro h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2.6rem;
+  color: var(--cream);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.cc-intro p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--cream);
+  margin-bottom: 0.85rem;
+}
+
+.cc-intro p:last-child { margin-bottom: 0; }
+
+.cc-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .cc-grid { grid-template-columns: 1.2fr 1fr; gap: 2rem; }
+}
+
+.cc-section {
+  background-color: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  border-top: 4px solid var(--terra);
+  padding: 2rem 1.75rem;
+}
+
+.cc-section h3 {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--terra);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.cc-day-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.6rem;
+  color: var(--cream);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.cc-slots {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+}
+
+.cc-slots li {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-top: 1px dashed rgba(245, 240, 232, 0.1);
+}
+
+.cc-slots li:first-child { border-top: none; padding-top: 0; }
+
+.cc-slot-time {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  color: var(--terra);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.cc-slot-name {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--cream);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.cc-slot-desc {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--cream-faint);
+  margin: 0;
+}
+
+.cc-meta {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  color: var(--cream-faint);
+  font-style: italic;
+  margin: 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--forest-mid);
+}
+
+.cc-pricing-block {
+  border-top-color: var(--seafoam);
+}
+
+.cc-pricing-block h3 { color: var(--seafoam); }
+
+.cc-prices {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.cc-prices li {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 1.25rem;
+  padding: 0.85rem 0;
+  border-top: 1px dashed rgba(245, 240, 232, 0.1);
+  align-items: baseline;
+}
+
+.cc-prices li:first-child { border-top: none; padding-top: 0; }
+
+.cc-price-amount {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.8rem;
+  color: var(--cream);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.cc-price-label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--cream);
+  display: block;
+}
+
+.cc-price-desc {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--cream-faint);
+  display: block;
+  margin-top: 0.15rem;
+}
+
+.cc-payment {
+  margin-bottom: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--forest-mid);
+}
+
+.cc-payment-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+  margin-bottom: 0.5rem;
+}
+
+.cc-cta {
+  width: 100%;
+  text-align: center;
+}
