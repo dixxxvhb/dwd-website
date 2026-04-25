@@ -1,0 +1,576 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Parent brand for Dance With Dixon (DWD) — theatrical, modern, warm. Forest-green + terracotta + ivory on a Cormorant/Outfit/Bebas type stack. Est. 2025.",
+  "color": {
+    "$type": "color",
+    "forest": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.047,
+          0.122,
+          0.09
+        ],
+        "hex": "#0c1f17"
+      }
+    },
+    "forest-light": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.102,
+          0.239,
+          0.18
+        ],
+        "hex": "#1a3d2e"
+      }
+    },
+    "forest-mid": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.118,
+          0.267,
+          0.196
+        ],
+        "hex": "#1e4432"
+      }
+    },
+    "terra-light": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.831,
+          0.467,
+          0.373
+        ],
+        "hex": "#d4775f"
+      }
+    },
+    "terra": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.784,
+          0.38,
+          0.294
+        ],
+        "hex": "#c8614b"
+      }
+    },
+    "terra-dark": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.659,
+          0.314,
+          0.243
+        ],
+        "hex": "#a8503e"
+      }
+    },
+    "pink": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.973,
+          0.843,
+          0.784
+        ],
+        "hex": "#f8d7c8"
+      }
+    },
+    "pink-light": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.996,
+          0.941,
+          0.941
+        ],
+        "hex": "#fef0f0"
+      }
+    },
+    "ivory": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.98,
+          0.953,
+          0.91
+        ],
+        "hex": "#faf3e8"
+      }
+    },
+    "ivory-dim": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.91,
+          0.867,
+          0.816
+        ],
+        "hex": "#e8ddd0"
+      }
+    },
+    "seafoam": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.42,
+          0.686,
+          0.541
+        ],
+        "hex": "#6baf8a"
+      }
+    },
+    "cream": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.961,
+          0.941,
+          0.91
+        ],
+        "hex": "#f5f0e8"
+      }
+    },
+    "black": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.039,
+          0.039,
+          0.039
+        ],
+        "hex": "#0a0a0a"
+      }
+    },
+    "white": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "hex": "#ffffff"
+      }
+    },
+    "error": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.757,
+          0.271,
+          0.271
+        ],
+        "hex": "#c14545"
+      }
+    },
+    "tamara-gold": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.886,
+          0.725,
+          0.333
+        ],
+        "hex": "#e2b955"
+      }
+    },
+    "tamara-rose-start": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.788,
+          0.584,
+          0.424
+        ],
+        "hex": "#c9956c"
+      }
+    },
+    "tamara-rose-mid": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.91,
+          0.769,
+          0.604
+        ],
+        "hex": "#e8c49a"
+      }
+    },
+    "tamara-rose-end": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.831,
+          0.647,
+          0.455
+        ],
+        "hex": "#d4a574"
+      }
+    },
+    "primary": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.047,
+          0.122,
+          0.09
+        ],
+        "hex": "#0c1f17"
+      }
+    },
+    "secondary": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.973,
+          0.843,
+          0.784
+        ],
+        "hex": "#f8d7c8"
+      }
+    },
+    "tertiary": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.784,
+          0.38,
+          0.294
+        ],
+        "hex": "#c8614b"
+      }
+    },
+    "neutral": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.98,
+          0.953,
+          0.91
+        ],
+        "hex": "#faf3e8"
+      }
+    },
+    "surface": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.047,
+          0.122,
+          0.09
+        ],
+        "hex": "#0c1f17"
+      }
+    },
+    "surface-elevated": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.102,
+          0.239,
+          0.18
+        ],
+        "hex": "#1a3d2e"
+      }
+    },
+    "on-surface": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.98,
+          0.953,
+          0.91
+        ],
+        "hex": "#faf3e8"
+      }
+    },
+    "on-surface-muted": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.91,
+          0.867,
+          0.816
+        ],
+        "hex": "#e8ddd0"
+      }
+    },
+    "accent": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.784,
+          0.38,
+          0.294
+        ],
+        "hex": "#c8614b"
+      }
+    },
+    "on-accent": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.98,
+          0.953,
+          0.91
+        ],
+        "hex": "#faf3e8"
+      }
+    },
+    "on-error": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.98,
+          0.953,
+          0.91
+        ],
+        "hex": "#faf3e8"
+      }
+    }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "xs": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "sm": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    },
+    "xxl": {
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      }
+    },
+    "xxxl": {
+      "$value": {
+        "value": 96,
+        "unit": "px"
+      }
+    },
+    "gutter": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "margin": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    }
+  },
+  "rounded": {
+    "$type": "dimension",
+    "none": {
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      }
+    },
+    "sm": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "full": {
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      }
+    }
+  },
+  "typography": {
+    "headline-display": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Cormorant Garamond",
+        "fontSize": {
+          "value": 4,
+          "unit": "rem"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": -0.02,
+          "unit": "em"
+        }
+      }
+    },
+    "headline-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Cormorant Garamond",
+        "fontSize": {
+          "value": 3,
+          "unit": "rem"
+        },
+        "fontWeight": 600
+      }
+    },
+    "headline-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Cormorant Garamond",
+        "fontSize": {
+          "value": 2.25,
+          "unit": "rem"
+        },
+        "fontWeight": 600
+      }
+    },
+    "headline-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontSize": {
+          "value": 1.5,
+          "unit": "rem"
+        },
+        "fontWeight": 600
+      }
+    },
+    "body-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontSize": {
+          "value": 1.125,
+          "unit": "rem"
+        },
+        "fontWeight": 400
+      }
+    },
+    "body-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontSize": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "fontWeight": 400
+      }
+    },
+    "body-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontSize": {
+          "value": 0.875,
+          "unit": "rem"
+        },
+        "fontWeight": 400
+      }
+    },
+    "label-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontSize": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.02,
+          "unit": "em"
+        }
+      }
+    },
+    "label-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontSize": {
+          "value": 0.875,
+          "unit": "rem"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.02,
+          "unit": "em"
+        }
+      }
+    },
+    "label-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontSize": {
+          "value": 0.75,
+          "unit": "rem"
+        },
+        "fontWeight": 600,
+        "letterSpacing": {
+          "value": 0.08,
+          "unit": "em"
+        }
+      }
+    },
+    "impact": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Bebas Neue",
+        "fontSize": {
+          "value": 2.5,
+          "unit": "rem"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.04,
+          "unit": "em"
+        }
+      }
+    }
+  }
+}

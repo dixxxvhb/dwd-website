@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>dwdPROSERIES Merch Vote — IG Post</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: #f5ede0;
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      padding: 0;
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+    }
+    .label { display: none; }
+    .ig-card {
+      width: 1080px;
+      height: 1080px;
+      background: #f5ede0;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
+      color: #0c1f17;
+    }
+
+    /* Decorative background shapes */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.55;
+      z-index: 0;
+    }
+    .blob-green  { width: 560px; height: 560px; background: #6BAF8A; top: -180px; left: -180px; }
+    .blob-pink   { width: 520px; height: 520px; background: #FF8FAB; bottom: -160px; right: -140px; opacity: 0.4; }
+    .blob-terra  { width: 320px; height: 320px; background: #C8614B; top: 380px; right: -80px; opacity: 0.25; }
+
+    .inner { position: relative; z-index: 1; height: 100%; padding: 70px 80px; display: flex; flex-direction: column; }
+
+    /* Top row */
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+    .logo-chip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-chip img {
+      width: 72px;
+      height: 72px;
+    }
+    .logo-chip .wm {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.02em;
+      color: #0c1f17;
+    }
+    .logo-chip .wm em {
+      font-style: italic;
+      color: #C8614B;
+      font-weight: 500;
+    }
+    .new-badge {
+      background: #0c1f17;
+      color: #FAF3E8;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .new-badge span { color: #FF8FAB; margin-right: 6px; }
+
+    /* Headline */
+    .headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 96px;
+      line-height: 0.98;
+      letter-spacing: -0.015em;
+      color: #0c1f17;
+      margin-bottom: 18px;
+    }
+    .headline .accent {
+      color: #C8614B;
+      font-style: italic;
+    }
+    .sub {
+      font-size: 22px;
+      color: #5a5a5a;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      line-height: 1.35;
+      max-width: 640px;
+    }
+
+    /* Mockup collage */
+    .collage {
+      position: relative;
+      flex: 1;
+      margin-top: 16px;
+    }
+    .m-card {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      background: #FAF3E8;
+      border-radius: 16px;
+      box-shadow: 0 18px 40px rgba(12, 31, 23, 0.14), 0 4px 10px rgba(12, 31, 23, 0.08);
+      overflow: hidden;
+      border: 1px solid #e8dcc8;
+    }
+    .m-card .garment,
+    .m-card .logo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .m-card .logo { pointer-events: none; }
+
+    /* Positioned like polaroids scattered — with logo overlay positioning matching the shop page */
+    .m-hoodie   { top: 0; left: 40px; transform: rotate(-7deg); }
+    .m-crop     { top: 40px; right: 40px; transform: rotate(6deg); }
+    .m-tote     { bottom: 0; left: 150px; transform: rotate(4deg); }
+    .m-stickers { bottom: 30px; right: 80px; transform: rotate(-5deg); }
+
+    /* Logo overlay positioning per item */
+    .m-hoodie .logo   { transform: translate(11%, 4%) scale(0.26); transform-origin: top left; width: 100%; height: 100%; }
+    .m-crop .logo     { transform: translate(17%, 22%) scale(0.24); transform-origin: top left; width: 100%; height: 100%; }
+    .m-tote .logo     { transform: translate(4%, 10%) scale(0.32); transform-origin: top left; width: 100%; height: 100%; }
+
+    /* CTA block */
+    .cta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+    }
+    .cta {
+      background: #0c1f17;
+      color: #FAF3E8;
+      padding: 22px 36px;
+      border-radius: 999px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 34px;
+      letter-spacing: 0.01em;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .cta .arrow { color: #FF8FAB; font-size: 42px; font-style: normal; }
+    .url {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      color: #0c1f17;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .url .path { color: #C8614B; }
+
+    /* Caption outside the card */
+    .label {
+      color: #888;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: -16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="label">Instagram Post — 1080×1080</div>
+  <script>
+    if (new URLSearchParams(location.search).has('export')) {
+      document.body.classList.add('export');
+    }
+  </script>
+  <div class="ig-card" id="ig-card">
+    <div class="blob blob-green"></div>
+    <div class="blob blob-pink"></div>
+    <div class="blob blob-terra"></div>
+
+    <div class="inner">
+      <div class="top-row">
+        <div class="logo-chip">
+          <img src="images/logos/DWDPS-green-transparent.png" alt="dwdPROSERIES">
+          <div class="wm">dwd<em>PROSERIES</em></div>
+        </div>
+        <div class="new-badge"><span>●</span>Now Voting</div>
+      </div>
+
+      <div class="headline">
+        Help me design<br>
+        the <span class="accent">first drop.</span>
+      </div>
+      <div class="sub">
+        What do you wanna see us make? Vote on the category<br>
+        and shape the first dwdPROSERIES merch drop.
+      </div>
+
+      <div class="collage">
+        <div class="m-card m-hoodie">
+          <img class="garment" src="images/merch/item-hoodie.svg" alt="">
+          <img class="logo" src="images/logos/DWDPS-pink-transparent.png" alt="" style="width:26%;height:26%;inset:auto;top:38%;left:37%;transform:none;">
+        </div>
+        <div class="m-card m-crop">
+          <img class="garment" src="images/merch/item-crop-top.svg" alt="">
+          <img class="logo" src="images/logos/DWDPS-green-transparent.png" alt="" style="width:18%;height:18%;inset:auto;top:46%;left:41%;transform:none;">
+        </div>
+        <div class="m-card m-tote">
+          <img class="garment" src="images/merch/item-tote.svg" alt="">
+          <img class="logo" src="images/logos/DWDPS-green-transparent.png" alt="" style="width:32%;height:32%;inset:auto;top:42%;left:34%;transform:none;">
+        </div>
+        <div class="m-card m-stickers">
+          <img class="garment" src="images/merch/item-stickers.svg" alt="">
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <div class="cta">Vote now <span class="arrow">→</span></div>
+        <div class="url">dancewithdixon.com<span class="path">/#shop</span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
