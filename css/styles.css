@@ -2265,3 +2265,319 @@ a:hover {
   color: var(--cream-faint);
   margin-top: 0.1rem;
 }
+
+/* ============ PRICING SECTION ============ */
+.pricing-section {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.pricing-intro {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pricing-intro h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2.6rem;
+  color: var(--cream);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.pricing-intro p {
+  font-family: var(--font-body);
+  color: var(--cream-faint);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.pricing-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 960px) {
+  .pricing-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.pricing-card {
+  background-color: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  border-top: 4px solid var(--pc-accent, var(--terra));
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pricing-card[data-track="prep"]  { --pc-accent: var(--blush); }
+.pricing-card[data-track="elite"] { --pc-accent: var(--terra); }
+.pricing-card[data-track="pro"]   { --pc-accent: var(--seafoam); }
+
+.pricing-card .pc-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--pc-accent);
+  font-weight: 600;
+}
+
+.pricing-card .pc-name {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--cream);
+  font-style: italic;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.pricing-card .pc-meta {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+}
+
+.pricing-card .pc-meta strong {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+.pricing-card .pc-tuition {
+  border-top: 1px solid var(--forest-mid);
+  padding-top: 1.5rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.pricing-card .pc-tuition-amount {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--cream);
+  font-weight: 500;
+}
+
+.pricing-card .pc-tuition-amount span {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  color: var(--cream-faint);
+  font-weight: 400;
+  margin-left: 0.25rem;
+}
+
+.pricing-card .pc-tuition-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--pc-accent);
+  font-weight: 600;
+}
+
+.pricing-card .pc-fees {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--forest-mid);
+  padding-top: 1.25rem;
+}
+
+.pricing-card .pc-fees li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--cream);
+}
+
+.pricing-card .pc-fees li + li {
+  border-top: 1px dashed rgba(245, 240, 232, 0.08);
+}
+
+.pricing-card .pc-fees li span:first-child {
+  color: var(--cream-faint);
+  font-size: 0.85rem;
+}
+
+.pricing-card .pc-fees li span:last-child {
+  color: var(--cream);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pricing-card .pc-allin {
+  background: var(--pc-accent);
+  color: var(--forest);
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: auto;
+}
+
+.pricing-card .pc-allin-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--forest);
+}
+
+.pricing-card .pc-allin-amount {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.pricing-card .pc-allin-amount span {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  font-weight: 500;
+  margin-left: 0.2rem;
+}
+
+/* One-time fees */
+.pricing-onetime {
+  margin-top: 3rem;
+  background-color: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  padding: 1.75rem 2rem;
+}
+
+.pricing-onetime h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--cream);
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+}
+
+.pricing-onetime-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.pot-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--forest-mid);
+  flex-wrap: wrap;
+}
+
+.pot-row:first-of-type {
+  border-top: none;
+}
+
+.pot-row .pot-name {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--cream);
+  letter-spacing: 0.5px;
+  flex: 1 1 14rem;
+}
+
+.pot-row .pot-meta {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+  flex: 1 1 16rem;
+}
+
+.pot-row .pot-amount {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--terra);
+  font-weight: 500;
+  margin-left: auto;
+}
+
+/* Deposit framing notes */
+.pricing-notes {
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 1px dashed var(--forest-mid);
+  background: transparent;
+}
+
+.pricing-notes h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--cream);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.pricing-notes p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--cream);
+  line-height: 1.65;
+  margin-bottom: 0.85rem;
+}
+
+.pricing-notes p strong {
+  color: var(--cream);
+  font-weight: 700;
+}
+
+.pricing-notes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.85rem;
+}
+
+.pricing-notes ul li {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--cream-faint);
+  padding: 0.4rem 0 0.4rem 1rem;
+  border-left: 2px solid var(--terra);
+  margin-bottom: 0.4rem;
+}
+
+.pricing-notes ul li strong {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+.pricing-notes-fine {
+  font-size: 0.82rem !important;
+  color: var(--cream-faint) !important;
+  font-style: italic;
+  margin-top: 0.5rem;
+  margin-bottom: 0 !important;
+}
