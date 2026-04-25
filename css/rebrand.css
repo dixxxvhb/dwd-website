@@ -65,7 +65,7 @@ body.has-topnav main.main > .page.active:not(#page-home) {
   display: flex; align-items: center; gap: 14px; margin-right: auto;
   text-decoration: none;
 }
-.topnav .brand video { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+.topnav .brand video { width: 42px; height: 42px; object-fit: contain; }
 .topnav .brand .wordmark {
   font-family: 'Cormorant Garamond', serif;
   font-size: 22px; letter-spacing: 0.02em; color: var(--rb-ivory);
@@ -598,6 +598,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
      because rebrand.css loads last). Without this, mobile users can't open
      the nav menu. editorial.css handles `.topnav.is-open nav { display: flex }`. */
   .topnav .topnav-toggle { display: inline-block; }
+  .topnav .brand video { width: 52px; height: 52px; }
   .topnav .brand .wordmark { font-size: 18px; }
 
   #page-home .hero {

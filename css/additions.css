@@ -770,7 +770,9 @@ button[type="submit"]:disabled {
 /* Responsive override for about grid */
 @media (max-width: 768px) {
   .about-hero { grid-template-columns: 1fr; min-height: auto; }
-  .about-photo { height: 350px; }
+  .about-photo { height: 420px; }
+  .about-photo img,
+  .about-slide { object-position: center 20%; }
   .about-content { padding: 1.5rem; }
   .bring-grid { grid-template-columns: 1fr; }
   .gallery-grid img.wide { grid-column: span 1; }
@@ -1008,13 +1010,19 @@ button[type="submit"]:disabled {
 }
 .toggle-btn {
   flex: 1;
+  min-height: 56px;
   padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   border: 1px solid var(--terra);
   border-radius: 8px;
   background: transparent;
   color: var(--cream, #f5f0e8);
   font-family: 'Outfit', sans-serif;
   font-size: 0.85rem;
+  line-height: 1.25;
   cursor: pointer;
   transition: all 0.2s;
 }
