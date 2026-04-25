@@ -2581,3 +2581,327 @@ a:hover {
   margin-top: 0.5rem;
   margin-bottom: 0 !important;
 }
+
+/* ============ TRACK DETAIL — consolidated cards ============ */
+.track-detail-section {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.td-intro {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.td-intro h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2.6rem;
+  color: var(--cream);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.td-intro p {
+  font-family: var(--font-body);
+  color: var(--cream-faint);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.track-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .track-detail-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+  }
+}
+
+.track-detail {
+  background-color: var(--forest-light);
+  border: 1px solid var(--forest-mid);
+  border-top: 4px solid var(--td-accent, var(--terra));
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.track-detail[data-track="prep"]  { --td-accent: var(--blush); }
+.track-detail[data-track="elite"] { --td-accent: var(--terra); }
+.track-detail[data-track="pro"]   { --td-accent: var(--seafoam); }
+
+.td-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.td-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--td-accent);
+  font-weight: 600;
+}
+
+.td-name-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.td-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--cream);
+  font-weight: 500;
+  margin: 0;
+}
+
+.td-price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.1rem;
+}
+
+.td-price-amount {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--cream);
+  font-weight: 500;
+}
+
+.td-price-unit {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: var(--cream-faint);
+}
+
+.td-meta {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+  font-weight: 500;
+}
+
+.td-description {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--cream);
+  margin: 0;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--forest-mid);
+}
+
+.td-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.td-section h4 {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--td-accent);
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.td-day-block {
+  margin-bottom: 0.5rem;
+}
+
+.td-day-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+}
+
+.td-day-name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  color: var(--cream);
+}
+
+.td-day-hours {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--td-accent);
+  font-weight: 600;
+}
+
+.td-slots {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.td-slots li {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  border-top: 1px dashed rgba(245, 240, 232, 0.08);
+  align-items: baseline;
+}
+
+.td-slots li:first-child { border-top: none; }
+
+.td-slot-time {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  color: var(--td-accent);
+  font-weight: 600;
+}
+
+.td-slot-name {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--cream);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.td-tag {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  color: var(--forest);
+  background: var(--td-accent);
+  border-radius: 2px;
+}
+
+.td-tag.td-tag-all {
+  background: var(--cream);
+  color: var(--forest);
+}
+
+.td-genres {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--cream-faint);
+  letter-spacing: 0.3px;
+  padding-bottom: 0.5rem;
+}
+
+.td-included {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.td-included li {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--cream);
+  padding: 0.3rem 0 0.3rem 1rem;
+  position: relative;
+  line-height: 1.45;
+}
+
+.td-included li::before {
+  content: "·";
+  position: absolute;
+  left: 0.25rem;
+  color: var(--td-accent);
+  font-weight: 700;
+}
+
+.td-fees {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.td-fees li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.45rem 0;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  border-top: 1px dashed rgba(245, 240, 232, 0.08);
+}
+
+.td-fees li:first-child { border-top: none; }
+
+.td-fees li span:first-child {
+  color: var(--cream-faint);
+}
+
+.td-fees li span:last-child {
+  color: var(--cream);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.td-allin {
+  background: var(--td-accent);
+  color: var(--forest);
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: auto;
+}
+
+.td-allin-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--forest);
+}
+
+.td-allin-amount {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.td-allin-amount span {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  font-weight: 500;
+  margin-left: 0.2rem;
+}

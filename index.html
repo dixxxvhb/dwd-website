@@ -604,344 +604,202 @@
         </div>
       </div>
 
-      <div data-reveal-after="2026-04-15T12:00:00-04:00" class="track-cards">
-        <div class="track-card featured reveal">
-          <div class="track-letter">P</div>
-          <div class="track-name">Pro</div>
-          <div class="track-level">Ages 12+ | Competitive</div>
-          <p class="track-desc">The company. Exclusive Pro-only Rotation and Choreography blocks plus mandatory Solo Hour for guaranteed individual artistry development. For serious dancers ready to represent DWD on every stage.</p>
-          <ul class="track-stats">
-            <li><span class="stat-label">Hours / Week</span><span class="stat-value">10</span></li>
-            <li><span class="stat-label">Routines</span><span class="stat-value">6</span></li>
-            <li><span class="stat-label">Competitions</span><span class="stat-value">4–6 per season</span></li>
-            <li><span class="stat-label">Season</span><span class="stat-value">Aug 2026 – May 2027</span></li>
-          </ul>
-          <div class="track-genres">Jazz Technique, Ballet, Contemporary, Lyrical, Hip Hop, Tap, Acro, Musical Theatre</div>
-          <div class="track-includes">4 group routines + solo + duo/trio (6 total), mandatory Solo Hour, conventions, competition prep</div>
-        </div>
-        <div class="track-card reveal" data-delay="1">
-          <div class="track-letter">E</div>
-          <div class="track-name">Elite</div>
-          <div class="track-level">Ages 8–12 | Competitive</div>
-          <p class="track-desc">Serious competitive training. Eight hours per week with an exclusive Elite-only Choreography block. The developmental competitive track for dancers building toward Pro-level performance.</p>
-          <ul class="track-stats">
-            <li><span class="stat-label">Hours / Week</span><span class="stat-value">8</span></li>
-            <li><span class="stat-label">Routines</span><span class="stat-value">5</span></li>
-            <li><span class="stat-label">Competitions</span><span class="stat-value">4–6 per season</span></li>
-            <li><span class="stat-label">Season</span><span class="stat-value">Aug 2026 – May 2027</span></li>
-          </ul>
-          <div class="track-genres">Jazz Technique, Ballet, Contemporary, Lyrical, Hip Hop, Tap, Acro, Musical Theatre</div>
-          <div class="track-includes">3 group routines + solo + duo/trio (5 total), conventions, competition prep</div>
-        </div>
-        <div class="track-card reveal" data-delay="2">
-          <div class="track-letter">Pr</div>
-          <div class="track-name">Prep</div>
-          <div class="track-level">Ages 5–8 | Foundation</div>
-          <p class="track-desc">The foundation. Monday and Thursday classes covering Ballet, Jazz, Rotation/Choreography, and Company Choreography with the full program. Real technique in a structured, focused environment — not a glorified rec class.</p>
-          <ul class="track-stats">
-            <li><span class="stat-label">Hours / Week</span><span class="stat-value">4</span></li>
-            <li><span class="stat-label">Routines</span><span class="stat-value">3</span></li>
-            <li><span class="stat-label">Competitions</span><span class="stat-value">1–2 per season</span></li>
-            <li><span class="stat-label">Season</span><span class="stat-value">Aug 2026 – May 2027</span></li>
-          </ul>
-          <div class="track-genres">Jazz Technique, Ballet, Contemporary, Hip Hop, Tap, Acro</div>
-          <div class="track-includes">2 group routines + solo or duo/trio (3 total), intro choreography, performance experience</div>
-        </div>
-      </div>
-
-      <!-- Weekly Schedule (Season 1 — Aug 2026 → May 2027) -->
-      <section class="schedule-section reveal" id="proseries-schedule" aria-label="ProSeries weekly schedule">
-        <div class="schedule-intro">
-          <h2>The Weekly Schedule</h2>
-          <p>Three tracks. Four training days. One company moving in sync. Season 1 runs August 2026 &ndash; May 2027.</p>
+      <!-- Three Tracks — full detail per card -->
+      <section class="track-detail-section reveal" id="proseries-tracks-full" aria-label="ProSeries tracks — full detail">
+        <div class="td-intro">
+          <h2>The Three Tracks</h2>
+          <p>Everything in one place &mdash; schedule, training, and pricing for each track. Season runs August 2026 &ndash; May 2027.</p>
         </div>
 
-        <div class="schedule-cards">
+        <div class="track-detail-grid">
 
           <!-- PREP -->
-          <article class="schedule-card" data-track="prep">
-            <header>
-              <div class="sc-eyebrow">Track One</div>
-              <div class="sc-name">Prep</div>
-              <div class="sc-meta">Ages 5&ndash;8 &nbsp;/&nbsp; <strong>4 hrs per week</strong></div>
+          <article class="track-detail" data-track="prep">
+            <header class="td-header">
+              <div class="td-eyebrow">Track One</div>
+              <div class="td-name-row">
+                <h3 class="td-name">Prep</h3>
+                <div class="td-price"><span class="td-price-amount">$195</span><span class="td-price-unit">/mo</span></div>
+              </div>
+              <div class="td-meta">Ages 5&ndash;8 &middot; 4 hrs/week &middot; 3 routines</div>
             </header>
 
-            <div class="sc-day">
-              <div class="sc-day-head">
-                <div class="sc-day-name">Monday</div>
-                <div class="sc-day-hours">2 Studio Hrs</div>
+            <p class="td-description">The foundation. Real technique in a structured, focused environment &mdash; not a glorified rec class. Two days a week of ballet, jazz, choreography, and company work alongside the older tracks.</p>
+
+            <div class="td-section">
+              <h4>Weekly Schedule</h4>
+              <div class="td-day-block">
+                <div class="td-day-head"><span class="td-day-name">Monday</span><span class="td-day-hours">2 hrs</span></div>
+                <ul class="td-slots">
+                  <li><span class="td-slot-time">4:00 &ndash; 5:00</span><span class="td-slot-name">Ballet</span></li>
+                  <li><span class="td-slot-time">5:00 &ndash; 6:00</span><span class="td-slot-name">Jazz</span></li>
+                </ul>
               </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">4:00 &ndash; 5:00</div>
-                <div class="sc-slot-name">Ballet</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">5:00 &ndash; 6:00</div>
-                <div class="sc-slot-name">Jazz</div>
+              <div class="td-day-block">
+                <div class="td-day-head"><span class="td-day-name">Thursday</span><span class="td-day-hours">2 hrs</span></div>
+                <ul class="td-slots">
+                  <li><span class="td-slot-time">4:00 &ndash; 5:00</span><span class="td-slot-name">Rotation / Choreography</span></li>
+                  <li><span class="td-slot-time">5:00 &ndash; 6:00</span><span class="td-slot-name">Company Choreography <span class="td-tag td-tag-all">All</span></span></li>
+                </ul>
               </div>
             </div>
 
-            <div class="sc-day">
-              <div class="sc-day-head">
-                <div class="sc-day-name">Thursday</div>
-                <div class="sc-day-hours">2 Studio Hrs</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">4:00 &ndash; 5:00</div>
-                <div class="sc-slot-name">Rotation / Choreography</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">5:00 &ndash; 6:00</div>
-                <div class="sc-slot-name">Company Choreography <span class="sc-tag tag-all">All</span></div>
-              </div>
+            <div class="td-section">
+              <h4>Training &amp; Performance</h4>
+              <div class="td-genres">Jazz Technique &middot; Ballet &middot; Contemporary &middot; Hip Hop &middot; Tap &middot; Acro</div>
+              <ul class="td-included">
+                <li>2 group routines + solo or duo/trio (3 total)</li>
+                <li>Intro choreography &amp; performance experience</li>
+                <li>1&ndash;2 competitions per season</li>
+              </ul>
+            </div>
+
+            <div class="td-section">
+              <h4>Pricing</h4>
+              <ul class="td-fees">
+                <li><span>Tuition</span><span>$195/mo</span></li>
+                <li><span>Admin (Aug&ndash;May)</span><span>$25/mo</span></li>
+                <li><span>Costume deposit (Aug&ndash;Oct)</span><span>$75/mo</span></li>
+                <li><span>Competition deposit (Aug&ndash;Feb)</span><span>$75/mo</span></li>
+              </ul>
+            </div>
+
+            <div class="td-allin">
+              <div class="td-allin-label">Peak months (Aug&ndash;Oct), all-in</div>
+              <div class="td-allin-amount">$370<span>/mo</span></div>
             </div>
           </article>
 
           <!-- ELITE -->
-          <article class="schedule-card" data-track="elite">
-            <header>
-              <div class="sc-eyebrow">Track Two</div>
-              <div class="sc-name">Elite</div>
-              <div class="sc-meta">Ages 8&ndash;12 &nbsp;/&nbsp; <strong>8 hrs per week</strong></div>
+          <article class="track-detail" data-track="elite">
+            <header class="td-header">
+              <div class="td-eyebrow">Track Two</div>
+              <div class="td-name-row">
+                <h3 class="td-name">Elite</h3>
+                <div class="td-price"><span class="td-price-amount">$310</span><span class="td-price-unit">/mo</span></div>
+              </div>
+              <div class="td-meta">Ages 8&ndash;12 &middot; 8 hrs/week &middot; 5 routines</div>
             </header>
 
-            <div class="sc-day">
-              <div class="sc-day-head">
-                <div class="sc-day-name">Tuesday</div>
-                <div class="sc-day-hours">2.5 Studio Hrs</div>
+            <p class="td-description">Serious competitive training. Eight hours per week with an Elite-only Choreography block. The developmental competitive track for dancers building toward Pro-level performance.</p>
+
+            <div class="td-section">
+              <h4>Weekly Schedule</h4>
+              <div class="td-day-block">
+                <div class="td-day-head"><span class="td-day-name">Tuesday</span><span class="td-day-hours">2.5 hrs</span></div>
+                <ul class="td-slots">
+                  <li><span class="td-slot-time">4:00 &ndash; 5:30</span><span class="td-slot-name">Ballet</span></li>
+                  <li><span class="td-slot-time">5:30 &ndash; 6:30</span><span class="td-slot-name">Rotation</span></li>
+                </ul>
               </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">4:00 &ndash; 5:30</div>
-                <div class="sc-slot-name">Ballet</div>
+              <div class="td-day-block">
+                <div class="td-day-head"><span class="td-day-name">Wednesday</span><span class="td-day-hours">3.5 hrs</span></div>
+                <ul class="td-slots">
+                  <li><span class="td-slot-time">4:00 &ndash; 5:30</span><span class="td-slot-name">Jazz Technique</span></li>
+                  <li><span class="td-slot-time">5:30 &ndash; 6:30</span><span class="td-slot-name">Choreography</span></li>
+                  <li><span class="td-slot-time">6:30 &ndash; 7:30</span><span class="td-slot-name">Choreography <span class="td-tag">Elite Only</span></span></li>
+                </ul>
               </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">5:30 &ndash; 6:30</div>
-                <div class="sc-slot-name">Rotation</div>
+              <div class="td-day-block">
+                <div class="td-day-head"><span class="td-day-name">Thursday</span><span class="td-day-hours">2 hrs</span></div>
+                <ul class="td-slots">
+                  <li><span class="td-slot-time">5:00 &ndash; 6:00</span><span class="td-slot-name">Company Choreography <span class="td-tag td-tag-all">All</span></span></li>
+                  <li><span class="td-slot-time">6:00 &ndash; 7:00</span><span class="td-slot-name">Choreography</span></li>
+                </ul>
               </div>
             </div>
 
-            <div class="sc-day">
-              <div class="sc-day-head">
-                <div class="sc-day-name">Wednesday</div>
-                <div class="sc-day-hours">3.5 Studio Hrs</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">4:00 &ndash; 5:30</div>
-                <div class="sc-slot-name">Jazz Technique</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">5:30 &ndash; 6:30</div>
-                <div class="sc-slot-name">Choreography</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">6:30 &ndash; 7:30</div>
-                <div class="sc-slot-name">Choreography <span class="sc-tag">Elite Only</span></div>
-              </div>
+            <div class="td-section">
+              <h4>Training &amp; Performance</h4>
+              <div class="td-genres">Jazz Technique &middot; Ballet &middot; Contemporary &middot; Lyrical &middot; Hip Hop &middot; Tap &middot; Acro &middot; Musical Theatre</div>
+              <ul class="td-included">
+                <li>3 group routines + solo + duo/trio (5 total)</li>
+                <li>Conventions &amp; competition prep</li>
+                <li>4&ndash;6 competitions per season</li>
+              </ul>
             </div>
 
-            <div class="sc-day">
-              <div class="sc-day-head">
-                <div class="sc-day-name">Thursday</div>
-                <div class="sc-day-hours">2 Studio Hrs</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">5:00 &ndash; 6:00</div>
-                <div class="sc-slot-name">Company Choreography <span class="sc-tag tag-all">All</span></div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">6:00 &ndash; 7:00</div>
-                <div class="sc-slot-name">Choreography</div>
-              </div>
+            <div class="td-section">
+              <h4>Pricing</h4>
+              <ul class="td-fees">
+                <li><span>Tuition</span><span>$310/mo</span></li>
+                <li><span>Admin (Aug&ndash;May)</span><span>$25/mo</span></li>
+                <li><span>Costume deposit (Aug&ndash;Oct)</span><span>$125/mo</span></li>
+                <li><span>Competition deposit (Aug&ndash;Feb)</span><span>$125/mo</span></li>
+              </ul>
+            </div>
+
+            <div class="td-allin">
+              <div class="td-allin-label">Peak months (Aug&ndash;Oct), all-in</div>
+              <div class="td-allin-amount">$585<span>/mo</span></div>
             </div>
           </article>
 
           <!-- PRO -->
-          <article class="schedule-card" data-track="pro">
-            <header>
-              <div class="sc-eyebrow">Track Three</div>
-              <div class="sc-name">Pro</div>
-              <div class="sc-meta">Ages 12+ &nbsp;/&nbsp; <strong>10 hrs per week</strong></div>
+          <article class="track-detail" data-track="pro">
+            <header class="td-header">
+              <div class="td-eyebrow">Track Three</div>
+              <div class="td-name-row">
+                <h3 class="td-name">Pro</h3>
+                <div class="td-price"><span class="td-price-amount">$360</span><span class="td-price-unit">/mo</span></div>
+              </div>
+              <div class="td-meta">Ages 12+ &middot; 10 hrs/week &middot; 6 routines</div>
             </header>
 
-            <div class="sc-day">
-              <div class="sc-day-head">
-                <div class="sc-day-name">Tuesday</div>
-                <div class="sc-day-hours">3.5 Studio Hrs</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">4:00 &ndash; 5:30</div>
-                <div class="sc-slot-name">Ballet</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">5:30 &ndash; 6:30</div>
-                <div class="sc-slot-name">Rotation</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">6:30 &ndash; 7:30</div>
-                <div class="sc-slot-name">Rotation <span class="sc-tag">Pro Only</span></div>
-              </div>
-            </div>
+            <p class="td-description">The company. Exclusive Pro-only Rotation and Choreography blocks plus mandatory Solo Hour for guaranteed individual artistry development. For serious dancers ready to represent DWD on every stage.</p>
 
-            <div class="sc-day">
-              <div class="sc-day-head">
-                <div class="sc-day-name">Wednesday</div>
-                <div class="sc-day-hours">2.5 Studio Hrs</div>
+            <div class="td-section">
+              <h4>Weekly Schedule</h4>
+              <div class="td-day-block">
+                <div class="td-day-head"><span class="td-day-name">Tuesday</span><span class="td-day-hours">3.5 hrs</span></div>
+                <ul class="td-slots">
+                  <li><span class="td-slot-time">4:00 &ndash; 5:30</span><span class="td-slot-name">Ballet</span></li>
+                  <li><span class="td-slot-time">5:30 &ndash; 6:30</span><span class="td-slot-name">Rotation</span></li>
+                  <li><span class="td-slot-time">6:30 &ndash; 7:30</span><span class="td-slot-name">Rotation <span class="td-tag">Pro Only</span></span></li>
+                </ul>
               </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">4:00 &ndash; 5:30</div>
-                <div class="sc-slot-name">Jazz Technique</div>
+              <div class="td-day-block">
+                <div class="td-day-head"><span class="td-day-name">Wednesday</span><span class="td-day-hours">2.5 hrs</span></div>
+                <ul class="td-slots">
+                  <li><span class="td-slot-time">4:00 &ndash; 5:30</span><span class="td-slot-name">Jazz Technique</span></li>
+                  <li><span class="td-slot-time">5:30 &ndash; 6:30</span><span class="td-slot-name">Choreography</span></li>
+                </ul>
               </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">5:30 &ndash; 6:30</div>
-                <div class="sc-slot-name">Choreography</div>
+              <div class="td-day-block">
+                <div class="td-day-head"><span class="td-day-name">Thursday</span><span class="td-day-hours">4 hrs</span></div>
+                <ul class="td-slots">
+                  <li><span class="td-slot-time">5:00 &ndash; 6:00</span><span class="td-slot-name">Company Choreography <span class="td-tag td-tag-all">All</span></span></li>
+                  <li><span class="td-slot-time">6:00 &ndash; 7:00</span><span class="td-slot-name">Choreography</span></li>
+                  <li><span class="td-slot-time">7:00 &ndash; 8:00</span><span class="td-slot-name">Solo Hour</span></li>
+                  <li><span class="td-slot-time">8:00 &ndash; 9:00</span><span class="td-slot-name">Choreography <span class="td-tag">Pro Only</span></span></li>
+                </ul>
               </div>
             </div>
 
-            <div class="sc-day">
-              <div class="sc-day-head">
-                <div class="sc-day-name">Thursday</div>
-                <div class="sc-day-hours">4 Studio Hrs</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">5:00 &ndash; 6:00</div>
-                <div class="sc-slot-name">Company Choreography <span class="sc-tag tag-all">All</span></div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">6:00 &ndash; 7:00</div>
-                <div class="sc-slot-name">Choreography</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">7:00 &ndash; 8:00</div>
-                <div class="sc-slot-name">Solo Hour</div>
-              </div>
-              <div class="sc-slot">
-                <div class="sc-slot-time">8:00 &ndash; 9:00</div>
-                <div class="sc-slot-name">Choreography <span class="sc-tag">Pro Only</span></div>
-              </div>
-            </div>
-          </article>
-
-        </div>
-
-        <!-- At a glance -->
-        <div class="schedule-glance">
-          <h3>The full week at a glance</h3>
-
-          <div class="schedule-glance-row" data-track="prep">
-            <div class="g-track">Prep</div>
-            <div class="g-hours">4 hrs / week</div>
-            <div class="g-days">
-              <div class="g-day"><strong>Mon</strong><span>2 hrs</span></div>
-              <div class="g-day"><strong>Thu</strong><span>2 hrs</span></div>
-            </div>
-          </div>
-
-          <div class="schedule-glance-row" data-track="elite">
-            <div class="g-track">Elite</div>
-            <div class="g-hours">8 hrs / week</div>
-            <div class="g-days">
-              <div class="g-day"><strong>Tue</strong><span>2.5 hrs</span></div>
-              <div class="g-day"><strong>Wed</strong><span>3.5 hrs</span></div>
-              <div class="g-day"><strong>Thu</strong><span>2 hrs</span></div>
-            </div>
-          </div>
-
-          <div class="schedule-glance-row" data-track="pro">
-            <div class="g-track">Pro</div>
-            <div class="g-hours">10 hrs / week</div>
-            <div class="g-days">
-              <div class="g-day"><strong>Tue</strong><span>3.5 hrs</span></div>
-              <div class="g-day"><strong>Wed</strong><span>2.5 hrs</span></div>
-              <div class="g-day"><strong>Thu</strong><span>4 hrs</span></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Tuition & Fees -->
-      <section class="pricing-section reveal" id="proseries-pricing" aria-label="ProSeries tuition and fees">
-        <div class="pricing-intro">
-          <h2>Tuition &amp; Fees</h2>
-          <p>Three tracks, transparent monthly pricing. Costume and competition charges are spread out as deposits across the season so the bigger costs don't land all at once.</p>
-        </div>
-
-        <div class="pricing-cards">
-
-          <!-- PREP -->
-          <article class="pricing-card" data-track="prep">
-            <header>
-              <div class="pc-eyebrow">Track One</div>
-              <div class="pc-name">Prep</div>
-              <div class="pc-meta">Ages 5&ndash;8 &nbsp;/&nbsp; <strong>3 routines</strong></div>
-            </header>
-
-            <div class="pc-tuition">
-              <div class="pc-tuition-amount">$195<span>/mo</span></div>
-              <div class="pc-tuition-label">Tuition</div>
+            <div class="td-section">
+              <h4>Training &amp; Performance</h4>
+              <div class="td-genres">Jazz Technique &middot; Ballet &middot; Contemporary &middot; Lyrical &middot; Hip Hop &middot; Tap &middot; Acro &middot; Musical Theatre</div>
+              <ul class="td-included">
+                <li>4 group routines + solo + duo/trio (6 total)</li>
+                <li>Mandatory Solo Hour</li>
+                <li>Conventions &amp; competition prep</li>
+                <li>4&ndash;6 competitions per season</li>
+              </ul>
             </div>
 
-            <ul class="pc-fees">
-              <li><span>Tuition</span><span>$195/mo</span></li>
-              <li><span>Admin (Aug&ndash;May)</span><span>$25/mo</span></li>
-              <li><span>Costume deposit (Aug&ndash;Oct)</span><span>$75/mo</span></li>
-              <li><span>Competition deposit (Aug&ndash;Feb)</span><span>$75/mo</span></li>
-            </ul>
-
-            <div class="pc-allin">
-              <div class="pc-allin-label">Peak months (Aug&ndash;Oct), all-in</div>
-              <div class="pc-allin-amount">$370<span>/mo</span></div>
-            </div>
-          </article>
-
-          <!-- ELITE -->
-          <article class="pricing-card" data-track="elite">
-            <header>
-              <div class="pc-eyebrow">Track Two</div>
-              <div class="pc-name">Elite</div>
-              <div class="pc-meta">Ages 8&ndash;12 &nbsp;/&nbsp; <strong>5 routines</strong></div>
-            </header>
-
-            <div class="pc-tuition">
-              <div class="pc-tuition-amount">$310<span>/mo</span></div>
-              <div class="pc-tuition-label">Tuition</div>
+            <div class="td-section">
+              <h4>Pricing</h4>
+              <ul class="td-fees">
+                <li><span>Tuition</span><span>$360/mo</span></li>
+                <li><span>Admin (Aug&ndash;May)</span><span>$25/mo</span></li>
+                <li><span>Costume deposit (Aug&ndash;Oct)</span><span>$150/mo</span></li>
+                <li><span>Competition deposit (Aug&ndash;Feb)</span><span>$150/mo</span></li>
+              </ul>
             </div>
 
-            <ul class="pc-fees">
-              <li><span>Tuition</span><span>$310/mo</span></li>
-              <li><span>Admin (Aug&ndash;May)</span><span>$25/mo</span></li>
-              <li><span>Costume deposit (Aug&ndash;Oct)</span><span>$125/mo</span></li>
-              <li><span>Competition deposit (Aug&ndash;Feb)</span><span>$125/mo</span></li>
-            </ul>
-
-            <div class="pc-allin">
-              <div class="pc-allin-label">Peak months (Aug&ndash;Oct), all-in</div>
-              <div class="pc-allin-amount">$585<span>/mo</span></div>
-            </div>
-          </article>
-
-          <!-- PRO -->
-          <article class="pricing-card" data-track="pro">
-            <header>
-              <div class="pc-eyebrow">Track Three</div>
-              <div class="pc-name">Pro</div>
-              <div class="pc-meta">Ages 12+ &nbsp;/&nbsp; <strong>6 routines</strong></div>
-            </header>
-
-            <div class="pc-tuition">
-              <div class="pc-tuition-amount">$360<span>/mo</span></div>
-              <div class="pc-tuition-label">Tuition</div>
-            </div>
-
-            <ul class="pc-fees">
-              <li><span>Tuition</span><span>$360/mo</span></li>
-              <li><span>Admin (Aug&ndash;May)</span><span>$25/mo</span></li>
-              <li><span>Costume deposit (Aug&ndash;Oct)</span><span>$150/mo</span></li>
-              <li><span>Competition deposit (Aug&ndash;Feb)</span><span>$150/mo</span></li>
-            </ul>
-
-            <div class="pc-allin">
-              <div class="pc-allin-label">Peak months (Aug&ndash;Oct), all-in</div>
-              <div class="pc-allin-amount">$685<span>/mo</span></div>
+            <div class="td-allin">
+              <div class="td-allin-label">Peak months (Aug&ndash;Oct), all-in</div>
+              <div class="td-allin-amount">$685<span>/mo</span></div>
             </div>
           </article>
 
@@ -967,7 +825,7 @@
         <!-- Deposit framing -->
         <div class="pricing-notes">
           <h3>How deposits work</h3>
-          <p><strong>Costume and competition charges are deposits, not the final cost.</strong> The monthly amounts above start paying down the real total from day one — so by the time costumes are ordered or the competition slate locks, most of it is already handled.</p>
+          <p><strong>Costume and competition charges are deposits, not the final cost.</strong> The monthly amounts above start paying down the real total from day one &mdash; so by the time costumes are ordered or the competition slate locks, most of it is already handled.</p>
           <ul>
             <li><strong>Costume final balance</strong> &mdash; billed once costumes are ordered.</li>
             <li><strong>Competition final balance</strong> &mdash; billed once the 2026&ndash;27 competition slate locks.</li>
@@ -975,6 +833,7 @@
           <p class="pricing-notes-fine">Tuition, admin, and deposit amounts shown are confirmed. Final balances vary based on the costumes selected and the specific competitions on the season slate.</p>
         </div>
       </section>
+
 
       <!-- Coming Soon Banner: Interest Form (shows before May 1) -->
       <div class="coming-soon-banner" id="cs-form">
