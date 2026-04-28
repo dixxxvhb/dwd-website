@@ -717,13 +717,13 @@
       }
     });
 
-    // Update hero CTA: point to coming-soon signup if form is hidden
+    // Update hero CTA: route to early-access email capture if interest form is hidden
     var heroCta = document.getElementById('ps-hero-cta');
     var interestForm = document.getElementById('proseries-interest');
     if (heroCta && interestForm) {
       if (interestForm.style.display === 'none') {
-        heroCta.href = '#cs-tracks';
-        heroCta.textContent = 'Get Notified';
+        heroCta.href = '#early-access';
+        heroCta.textContent = 'Get Early Access';
       } else {
         heroCta.href = '#proseries-interest';
         heroCta.textContent = 'Express Interest';
