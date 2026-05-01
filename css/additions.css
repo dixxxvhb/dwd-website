@@ -2014,3 +2014,274 @@ a:focus-visible,
     margin-top: 20px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   LAUNCH STATE — appears at 00:00 ET, May 1, 2026
+   Toggled by data-reveal-after / data-hide-after in campaign.js
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Top-nav launch CTA — terracotta to scream "open" */
+.nav-cta-launch {
+  background: var(--terra) !important;
+  color: var(--cream) !important;
+  border-color: var(--terra) !important;
+  font-weight: 700 !important;
+}
+.nav-cta-launch:hover {
+  background: #b85540 !important;
+  border-color: #b85540 !important;
+  transform: translateY(-1px);
+}
+
+/* Launch banner under hero — terracotta variant of ea-banner */
+.ea-banner-launch {
+  background: linear-gradient(135deg, #c8614b 0%, #b85540 100%) !important;
+  border-color: rgba(248, 215, 200, 0.4) !important;
+}
+.ea-banner-launch:hover {
+  background: linear-gradient(135deg, #b85540 0%, #a44935 100%) !important;
+  border-color: var(--blush) !important;
+}
+.ea-banner-launch .ea-banner-text {
+  color: var(--cream) !important;
+  font-weight: 500;
+}
+.ea-banner-launch .ea-banner-text strong {
+  color: #fff;
+  font-weight: 700;
+}
+.ea-banner-launch .ea-banner-arrow {
+  color: var(--cream) !important;
+}
+.ea-banner-tag-live {
+  background: var(--cream) !important;
+  color: var(--terra) !important;
+  position: relative;
+  padding-left: 18px !important;
+}
+.ea-banner-tag-live::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c8614b;
+  animation: lc-pulse 1.6s ease-in-out infinite;
+}
+
+/* ── HERO LAUNCH CARD — the centerpiece of the home flip ── */
+.launch-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 1.5rem;
+  padding: 22px 26px 20px;
+  background: linear-gradient(135deg, rgba(200, 97, 75, 0.96) 0%, rgba(184, 85, 64, 0.98) 100%);
+  border: 1px solid rgba(248, 215, 200, 0.45);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--cream);
+  box-shadow:
+    0 12px 40px rgba(200, 97, 75, 0.3),
+    0 2px 8px rgba(12, 31, 23, 0.4),
+    inset 0 1px 0 rgba(248, 215, 200, 0.15);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  max-width: 520px;
+}
+.launch-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 90% 10%, rgba(248, 215, 200, 0.18), transparent 50%);
+  pointer-events: none;
+}
+.launch-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 50px rgba(200, 97, 75, 0.4),
+    0 4px 12px rgba(12, 31, 23, 0.5),
+    inset 0 1px 0 rgba(248, 215, 200, 0.25);
+  border-color: var(--blush);
+}
+.lc-pulse-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.lc-pulse {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
+  animation: lc-pulse 1.6s ease-in-out infinite;
+}
+@keyframes lc-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25); }
+  50%      { box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.08); }
+}
+.lc-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.lc-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 4vw, 2.4rem);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.05;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.lc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: rgba(250, 243, 232, 0.92);
+  letter-spacing: 0.2px;
+}
+.lc-meta-item strong { color: #fff; font-weight: 700; }
+.lc-meta-divider {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(248, 215, 200, 0.5);
+  flex-shrink: 0;
+}
+.lc-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 12px 22px;
+  background: var(--cream);
+  color: #c8614b;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  border-radius: 2px;
+  align-self: flex-start;
+  transition: all 0.25s ease;
+}
+.launch-card:hover .lc-cta {
+  background: #fff;
+  transform: translateX(2px);
+}
+.lc-arrow {
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: transform 0.25s ease;
+}
+.launch-card:hover .lc-arrow { transform: translateX(3px); }
+
+@media (max-width: 600px) {
+  .launch-card { padding: 18px 18px 16px; gap: 10px; max-width: 100%; }
+  .lc-headline { font-size: 1.65rem; }
+  .lc-meta { font-size: 0.74rem; gap: 8px 10px; }
+  .lc-cta { padding: 11px 18px; font-size: 0.72rem; width: 100%; align-self: stretch; }
+}
+
+/* Ticker — terracotta variant for launch */
+#page-home .ticker-bar-launch {
+  background: linear-gradient(90deg, #c8614b 0%, #b85540 50%, #c8614b 100%) !important;
+  color: var(--cream) !important;
+  border-color: rgba(248, 215, 200, 0.3) !important;
+}
+#page-home .ticker-bar-launch .ticker-track {
+  color: var(--cream) !important;
+}
+#page-home .ticker-bar-launch .ticker-track span {
+  color: var(--cream) !important;
+  font-weight: 700 !important;
+}
+
+/* Email-signup launch variant */
+.email-signup-launch .kicker {
+  color: var(--terra) !important;
+}
+.email-signup-launch .btn-blush {
+  background: var(--terra) !important;
+  color: var(--cream) !important;
+  border-color: var(--terra) !important;
+  font-weight: 700 !important;
+}
+.email-signup-launch .btn-blush:hover {
+  background: #b85540 !important;
+  border-color: #b85540 !important;
+}
+
+/* Early-access page — launch state */
+.ea-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 6px 14px;
+  background: rgba(200, 97, 75, 0.15);
+  border: 1px solid rgba(200, 97, 75, 0.5);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--terra);
+}
+.ea-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--terra);
+  box-shadow: 0 0 0 3px rgba(200, 97, 75, 0.25);
+  animation: lc-pulse 1.6s ease-in-out infinite;
+}
+.ea-cta-wrap {
+  margin-top: 1.75rem;
+  text-align: center;
+}
+.ea-launch-cta {
+  display: inline-block;
+  padding: 16px 36px !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+  background: var(--terra) !important;
+  color: var(--cream) !important;
+  border: 1px solid var(--terra) !important;
+  border-radius: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 24px rgba(200, 97, 75, 0.25);
+}
+.ea-launch-cta:hover {
+  background: #b85540 !important;
+  border-color: #b85540 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(200, 97, 75, 0.35);
+}
+.early-access-page-launch .ea-early-note {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--cream-faint);
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.early-access-page-launch .ea-early-note strong { color: var(--blush); }

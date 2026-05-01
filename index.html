@@ -178,7 +178,8 @@
       <a href="#shop" data-page="shop">Merch</a>
       <a href="#contact" data-page="contact">Contact</a>
     </nav>
-    <a href="#early-access" class="nav-cta" data-page="early-access">Join the List &rarr;</a>
+    <a href="#early-access" class="nav-cta" data-page="early-access" data-hide-after="2026-05-01T00:00:00-04:00">Join the List &rarr;</a>
+    <a href="https://dwd-director.netlify.app/register" class="nav-cta nav-cta-launch" data-track="nav-register" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">Register &rarr;</a>
     <button class="topnav-toggle" id="topnav-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
   </header>
 
@@ -228,11 +229,27 @@
             <span class="line">Dixon.</span>
           </h1>
           <p class="subtitle">Elite youth training program (ages 5&ndash;19). Adult modern dance company (18+). Built from scratch in Orlando.</p>
-          <a href="#early-access" class="audition-chip" data-track="home-audition-chip">
+          <a href="#early-access" class="audition-chip" data-track="home-audition-chip" data-hide-after="2026-05-01T00:00:00-04:00">
             <span class="dot"></span>
             <span class="label">Audition Registration</span>
             <span class="date">Opens May 1, 2026</span>
             <span class="meta">30 spots total &middot; 10 per track</span>
+          </a>
+          <!-- LAUNCH HERO CARD — appears at 00:00 ET, May 1, 2026 -->
+          <a href="https://dwd-director.netlify.app/register" class="launch-card" data-track="home-launch-card-register" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">
+            <span class="lc-pulse-row">
+              <span class="lc-pulse"></span>
+              <span class="lc-eyebrow">Registration is Open</span>
+            </span>
+            <span class="lc-headline">Audition for ProSeries</span>
+            <span class="lc-meta">
+              <span class="lc-meta-item"><strong>Sat June 6</strong> &middot; 11am&ndash;1pm</span>
+              <span class="lc-meta-divider"></span>
+              <span class="lc-meta-item">Exchange Dance, Orlando</span>
+              <span class="lc-meta-divider"></span>
+              <span class="lc-meta-item"><strong>$25</strong> &middot; 30 spots</span>
+            </span>
+            <span class="lc-cta">Register Now <span class="lc-arrow">&rarr;</span></span>
           </a>
           <div class="hero-foot">
             <span>Season One · 2026 / 2027</span>
@@ -242,9 +259,15 @@
       </div>
 
       <!-- EARLY ACCESS BANNER -->
-      <a href="#early-access" class="ea-banner reveal" data-track="home-early-access-banner">
+      <a href="#early-access" class="ea-banner reveal" data-track="home-early-access-banner" data-hide-after="2026-05-01T00:00:00-04:00">
         <span class="ea-banner-tag">NEW</span>
         <span class="ea-banner-text">Get early access to register for the audition &mdash; spots are limited.</span>
+        <span class="ea-banner-arrow">&rarr;</span>
+      </a>
+      <!-- LAUNCH BANNER — appears at 00:00 ET, May 1, 2026 -->
+      <a href="https://dwd-director.netlify.app/register" class="ea-banner ea-banner-launch reveal" data-track="home-launch-banner" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">
+        <span class="ea-banner-tag ea-banner-tag-live">LIVE</span>
+        <span class="ea-banner-text">30 spots. 10 per track. Audition <strong>Saturday, June 6</strong> at Exchange Dance Studio, Orlando.</span>
         <span class="ea-banner-arrow">&rarr;</span>
       </a>
 
@@ -286,7 +309,7 @@
           <div class="foot">
             <div class="facts">
               <div class="f"><div class="k">Tracks</div><div class="v">Prep &middot; Elite &middot; Pro</div></div>
-              <div class="f"><div class="k">Register to Audition</div><div class="v">Opens <em>May 1</em></div></div>
+              <div class="f"><div class="k">Register to Audition</div><div class="v"><span data-hide-after="2026-05-01T00:00:00-04:00">Opens <em>May 1</em></span><span data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none"><em>Open Now</em></span></div></div>
             </div>
             <span class="enter-arrow">Enter<span class="a"> &rarr;</span></span>
           </div>
@@ -341,7 +364,7 @@
       </div>
 
       <!-- TICKER -->
-      <div class="ticker-bar" aria-hidden="true">
+      <div class="ticker-bar" aria-hidden="true" data-hide-after="2026-05-01T00:00:00-04:00">
         <div class="ticker-track">
           <span>ProSeries Audition Registration Opens May 1</span>
           <span>Amusing Spaces June 2026</span>
@@ -349,6 +372,18 @@
           <span>ProSeries Audition Registration Opens May 1</span>
           <span>Amusing Spaces June 2026</span>
           <span>Adult Classes Now Enrolling</span>
+        </div>
+      </div>
+      <div class="ticker-bar ticker-bar-launch" aria-hidden="true" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">
+        <div class="ticker-track">
+          <span>Registration is Open</span>
+          <span>ProSeries Audition &middot; Sat June 6</span>
+          <span>30 Spots &middot; 10 Per Track</span>
+          <span>Register Now &rarr;</span>
+          <span>Registration is Open</span>
+          <span>ProSeries Audition &middot; Sat June 6</span>
+          <span>30 Spots &middot; 10 Per Track</span>
+          <span>Register Now &rarr;</span>
         </div>
       </div>
 
@@ -365,11 +400,18 @@
       </div>
 
       <!-- EMAIL SIGNUP -->
-      <div class="email-signup reveal">
+      <div class="email-signup reveal" data-hide-after="2026-05-01T00:00:00-04:00">
         <div class="kicker">Get Early Access</div>
         <h3>Join <em>the List.</em></h3>
         <p>Be first in line for ProSeries registration and DWD updates. Spots are limited.</p>
         <a href="#early-access" class="btn btn-blush" data-track="home-early-access-join">Join the List</a>
+      </div>
+      <!-- LAUNCH CTA — replaces email signup at 00:00 ET, May 1, 2026 -->
+      <div class="email-signup email-signup-launch reveal" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">
+        <div class="kicker">Audition is June 6</div>
+        <h3>Register <em>Now.</em></h3>
+        <p>30 spots. 10 per track. Audition Saturday, June 6 at Exchange Dance Studio in Orlando &mdash; $25 to lock your spot.</p>
+        <a href="https://dwd-director.netlify.app/register" class="btn btn-blush" data-track="home-launch-register-cta">Register for Audition &rarr;</a>
       </div>
     </section>
 
@@ -423,8 +465,10 @@
 
       <div class="cta-banner">
         <h3>Ready to dance?</h3>
-        <p>DWD ProSeries (ages 5&ndash;19): register May 1, audition this June, training begins August. DWD Collective (18+) adult classes are happening now.</p>
-        <a href="#proseries" class="btn btn-primary" data-track="about-explore-proseries">Explore ProSeries</a>
+        <p data-hide-after="2026-05-01T00:00:00-04:00">DWD ProSeries (ages 5&ndash;19): register May 1, audition this June, training begins August. DWD Collective (18+) adult classes are happening now.</p>
+        <p data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">DWD ProSeries (ages 5&ndash;19): registration is open, audition Saturday June 6, training begins August. DWD Collective (18+) adult classes are happening now.</p>
+        <a href="https://dwd-director.netlify.app/register" class="btn btn-primary" data-track="about-register" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">Register for Audition</a>
+        <a href="#proseries" class="btn btn-primary" data-track="about-explore-proseries" data-hide-after="2026-05-01T00:00:00-04:00">Explore ProSeries</a>
         <a href="#adult-company" class="btn btn-outline" data-track="about-join-collective">Join DWD Collective</a>
       </div>
     </section>
@@ -817,7 +861,7 @@
       </section>
 
 
-      <!-- Coming Soon Banner: Interest Form (shows before May 1) -->
+      <!-- Coming Soon Banner: shows BEFORE the launch moment -->
       <div class="coming-soon-banner" id="cs-form">
         <div class="coming-soon-inner">
           <div class="coming-soon-eyebrow">May 1, 2026</div>
@@ -826,11 +870,11 @@
         </div>
       </div>
 
-      <div data-reveal-after="2026-05-01" class="content-section alt reveal" id="proseries-interest">
-        <h2>Interested in ProSeries?</h2>
-        <p>Have questions about tracks, schedule, or auditions? We'd love to hear from you.</p>
+      <div data-reveal-after="2026-05-01T00:00:00-04:00" class="content-section alt reveal" id="proseries-interest">
+        <h2>Registration is Open.</h2>
+        <p>You're registering to audition &mdash; not to enroll. Spots are limited (10 per track, 30 total). Audition is <strong>Saturday, June 6</strong> at Exchange Dance Studio in Orlando.</p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
-          <a href="#early-access" class="btn btn-blush">Get Early Access</a>
+          <a href="https://dwd-director.netlify.app/register" class="btn btn-blush" data-track="proseries-register">Register for Audition &rarr;</a>
           <a href="#contact" class="btn btn-outline">Contact Us</a>
         </div>
       </div>
@@ -1201,9 +1245,10 @@
       </div>
     </section>
 
-    <!-- ══════════ EARLY ACCESS ══════════ -->
-    <section class="page" id="page-early-access" aria-label="ProSeries Early Access">
-      <div class="early-access-page">
+    <!-- ══════════ EARLY ACCESS / REGISTRATION OPEN ══════════ -->
+    <section class="page" id="page-early-access" aria-label="ProSeries Registration">
+      <!-- PRE-LAUNCH STATE — Be First In Line -->
+      <div class="early-access-page" data-hide-after="2026-05-01T00:00:00-04:00">
         <div class="ea-container">
           <img src="images/logos/DWDPS-pink.png" alt="DWD ProSeries" class="ea-logo" width="120" height="120">
           <h1 class="ea-headline">Be First In Line</h1>
@@ -1252,6 +1297,57 @@
 
           <div class="ea-social">
             <p>Follow the countdown:</p>
+            <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="ea-ig-link">@dwdproseries</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAUNCH STATE — Registration is Open -->
+      <div class="early-access-page early-access-page-launch" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">
+        <div class="ea-container">
+          <img src="images/logos/DWDPS-pink.png" alt="DWD ProSeries" class="ea-logo" width="120" height="120">
+          <div class="ea-live-badge"><span class="ea-live-dot"></span> Live Now</div>
+          <h1 class="ea-headline">Registration is Open</h1>
+          <p class="ea-subhead">Audition for DWD ProSeries.<br>Saturday, <strong>June 6, 2026</strong> &middot; 11am&ndash;1pm<br>Exchange Dance Studio &middot; Orlando, FL</p>
+
+          <div class="ea-details">
+            <div class="ea-detail">
+              <span class="ea-detail-label">3 Tracks</span>
+              <span class="ea-detail-value">Prep / Elite / Pro</span>
+            </div>
+            <div class="ea-detail">
+              <span class="ea-detail-label">Ages</span>
+              <span class="ea-detail-value">5&ndash;19</span>
+            </div>
+            <div class="ea-detail">
+              <span class="ea-detail-label">Max Roster</span>
+              <span class="ea-detail-value">30 dancers total</span>
+            </div>
+            <div class="ea-detail">
+              <span class="ea-detail-label">Audition Fee</span>
+              <span class="ea-detail-value">$25</span>
+            </div>
+          </div>
+
+          <div class="ea-cta-wrap">
+            <a href="https://dwd-director.netlify.app/register" class="btn btn-blush ea-launch-cta" data-track="ea-launch-register">Register for Audition &rarr;</a>
+            <p class="ea-early-note">You're registering to <strong>audition</strong> &mdash; not to enroll. Spots are filled by audition placement, not first-come. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for daily updates.</p>
+          </div>
+
+          <div class="ea-bullets">
+            <div class="ea-bullet">
+              <strong>One artistic director.</strong> Every piece choreographed and coached by Dixon Bowles &mdash; 15 years of professional experience.
+            </div>
+            <div class="ea-bullet">
+              <strong>Company model, not a class.</strong> Your dancer joins a training company. 4-6 competitions, 2+ conventions, end-of-year production.
+            </div>
+            <div class="ea-bullet">
+              <strong>Limited spots.</strong> 10 per track, 30 total. Audition is the only way in.
+            </div>
+          </div>
+
+          <div class="ea-social">
+            <p>Stay close:</p>
             <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="ea-ig-link">@dwdproseries</a>
           </div>
         </div>

@@ -683,8 +683,17 @@
     return d.getFullYear() + '-' + m + '-' + day;
   }
 
+  // Preview helper — `?launched=1` (URL) OR `window.__dwdLaunchPreview = true` (eval)
+  // forces every reveal/hide as if launch moment passed. Production never sets these.
+  function isLaunchPreview() {
+    if (window.__dwdLaunchPreview === true) return true;
+    try { return new URLSearchParams(window.location.search).get('launched') === '1'; }
+    catch (e) { return false; }
+  }
+
   function shouldReveal(attr) {
     if (!attr) return true;
+    if (isLaunchPreview()) return true;
     // Full ISO datetime — compare timestamps
     if (attr.indexOf('T') !== -1) {
       var revealMs = new Date(attr).getTime();
@@ -717,7 +726,18 @@
       }
     });
 
-    // Update hero CTA: route to early-access email capture if interest form is hidden
+    // data-hide-after — element disappears when its date/time passes.
+    // Forced unlock does NOT hide these (preview mode keeps everything visible).
+    document.querySelectorAll('[data-hide-after]').forEach(function (el) {
+      var hideAttr = el.dataset.hideAfter;
+      if (!unlocked && shouldReveal(hideAttr)) {
+        el.style.display = 'none';
+      } else {
+        el.style.display = '';
+      }
+    });
+
+    // Update hero CTA: pre-launch → email capture; post-launch → register page
     var heroCta = document.getElementById('ps-hero-cta');
     var interestForm = document.getElementById('proseries-interest');
     if (heroCta && interestForm) {
@@ -725,11 +745,20 @@
         heroCta.href = '#early-access';
         heroCta.textContent = 'Get Early Access';
       } else {
-        heroCta.href = '#proseries-interest';
-        heroCta.textContent = 'Express Interest';
+        heroCta.href = 'https://dwd-director.netlify.app/register';
+        heroCta.textContent = 'Register for Audition';
       }
     }
   };
+
+  // Re-check every 2s so visitors on the page at the launch moment see it flip
+  // within seconds. The function is cheap (a few querySelectorAlls + display flips),
+  // so polling forever is fine — once the moment passes the work is a no-op.
+  setInterval(function () {
+    if (typeof window.applyProSeriesReveal === 'function') {
+      window.applyProSeriesReveal();
+    }
+  }, 2000);
 
   // ── INIT ──
   // Run on page load and hash change
