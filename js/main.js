@@ -9,7 +9,8 @@
   // ── HASH ROUTING ──
   const validPages = [
     'home', 'about', 'adult-company', 'proseries',
-    'classes-events', 'gallery', 'shop', 'contact', 'campaign', 'analytics', 'privacy',
+    'classes-events', 'amuse-in-space',
+    'gallery', 'shop', 'contact', 'campaign', 'analytics', 'privacy',
     'early-access'
   ];
 
@@ -63,6 +64,7 @@
       'adult-company': 'Adult Company | DWD',
       'proseries': 'ProSeries | DWD',
       'classes-events': 'Classes & Events | DWD',
+      'amuse-in-space': 'A·Muse in Space — June 27 at Orlando Ballet | DWD Collective',
 
       'gallery': 'Gallery | DWD',
       'shop': 'Merch | DWD',
