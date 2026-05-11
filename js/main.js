@@ -9,7 +9,7 @@
   // ── HASH ROUTING ──
   const validPages = [
     'home', 'about', 'adult-company', 'proseries',
-    'classes-events', 'amuse-in-space',
+    'classes-events',
     'gallery', 'shop', 'contact', 'campaign', 'analytics', 'privacy',
     'early-access'
   ];
@@ -63,8 +63,7 @@
       'about': 'About Dixon Bowles | DWD',
       'adult-company': 'Adult Company | DWD',
       'proseries': 'ProSeries | DWD',
-      'classes-events': 'Classes & Events | DWD',
-      'amuse-in-space': 'A·Muse in Space — June 27 at Orlando Ballet | DWD Collective',
+      'classes-events': 'A·Muse in Space — June 27 at Orlando Ballet | DWD',
 
       'gallery': 'Gallery | DWD',
       'shop': 'Merch | DWD',
