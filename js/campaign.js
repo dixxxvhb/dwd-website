@@ -743,10 +743,10 @@
     if (heroCta && interestForm) {
       if (interestForm.style.display === 'none') {
         heroCta.href = '#early-access';
-        heroCta.textContent = 'Get Early Access';
+        heroCta.innerHTML = 'Get Early Access <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
       } else {
         heroCta.href = 'https://dwd-director.netlify.app/register';
-        heroCta.textContent = 'Register for Audition';
+        heroCta.innerHTML = 'Register for Audition <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
       }
     }
   };
@@ -787,4 +787,163 @@
     setTimeout(initCampaign, 50);
   });
 
+})();
+
+/* ============================================================
+   OPEN HOUSE — sticky ticker dismiss, RSVP routing, .ics, maps
+   Event: Sat May 23, 2026 · 11:30am–2pm · Exchange Dance, Orlando.
+   ============================================================ */
+(function () {
+  var STORAGE_KEY = 'dwd:openhouse-ticker:dismissed:v1';
+  var EVENT_END_MS = new Date('2026-05-23T14:00:00-04:00').getTime();
+  var EVENT_START_LOCAL = '20260523T113000';
+  var EVENT_END_LOCAL   = '20260523T140000';
+  var VENUE = 'Exchange Dance, 7409 Chancery Ln, Orlando, FL';
+  var DIRECTIONS_URL = 'https://maps.google.com/?daddr=' +
+    encodeURIComponent('7409 Chancery Ln, Orlando, FL');
+
+  function eventIsPast() { return Date.now() >= EVENT_END_MS; }
+
+  function syncTickerBodyClass() {
+    var ticker = document.querySelector('.oh-ticker');
+    if (!ticker) {
+      document.body.classList.remove('has-oh-ticker');
+      return;
+    }
+    var hidden = ticker.style.display === 'none' ||
+                 getComputedStyle(ticker).display === 'none';
+    document.body.classList.toggle('has-oh-ticker', !hidden);
+  }
+
+  function hideTicker() {
+    var t = document.querySelector('.oh-ticker');
+    if (t) t.classList.add('oh-ticker--dismissed');
+    syncTickerBodyClass();
+  }
+
+  function buildIcs() {
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    var now = new Date();
+    var stamp = now.getUTCFullYear() +
+                pad(now.getUTCMonth() + 1) +
+                pad(now.getUTCDate()) + 'T' +
+                pad(now.getUTCHours()) +
+                pad(now.getUTCMinutes()) +
+                pad(now.getUTCSeconds()) + 'Z';
+    return [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Dance With Dixon//Open House//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      'UID:openhouse-2026-05-23@dancewithdixon.com',
+      'DTSTAMP:' + stamp,
+      'DTSTART;TZID=America/New_York:' + EVENT_START_LOCAL,
+      'DTEND;TZID=America/New_York:'   + EVENT_END_LOCAL,
+      'SUMMARY:DWD ProSeries Open House',
+      'LOCATION:' + VENUE,
+      'DESCRIPTION:Free drop-in open house for the dwdPROSERIES youth training program. Meet Dixon and the rotation teachers\\, tour the studio\\, watch DWD choreography showcases\\, and enter the raffle for a free June 6 audition spot.',
+      'URL:https://dancewithdixon.com/#open-house',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+  }
+
+  function downloadIcs() {
+    var blob = new Blob([buildIcs()], { type: 'text/calendar;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'dwd-open-house-may-23.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 0);
+  }
+
+  function scrollToOpenHouse() {
+    var target = document.getElementById('open-house');
+    if (!target) return;
+    // If we're not on the home page, activate it first.
+    var home = document.getElementById('page-home');
+    if (home && !home.classList.contains('active')) {
+      if (typeof window.showPage === 'function') {
+        window.showPage('home');
+      } else {
+        window.location.hash = '#home';
+      }
+      // Let showPage run, then scroll
+      setTimeout(function () {
+        var t = document.getElementById('open-house');
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+      return;
+    }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function initOpenHouse() {
+    // 1. Event passed → wipe dismissal + let data-hide-after take over.
+    if (eventIsPast()) {
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+      syncTickerBodyClass();
+      return;
+    }
+
+    // 2. Honor prior dismissal.
+    var dismissed = false;
+    try { dismissed = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
+    if (dismissed) {
+      hideTicker();
+    } else {
+      syncTickerBodyClass();
+    }
+
+    // 3. Delegate clicks on data-oh-action elements.
+    document.addEventListener('click', function (ev) {
+      var t = ev.target.closest('[data-oh-action]');
+      if (!t) return;
+      var action = t.getAttribute('data-oh-action');
+
+      if (action === 'ticker-dismiss') {
+        ev.preventDefault();
+        try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+        hideTicker();
+        return;
+      }
+      if (action === 'ticker-rsvp') {
+        ev.preventDefault();
+        scrollToOpenHouse();
+        return;
+      }
+      if (action === 'rsvp') {
+        ev.preventDefault();
+        downloadIcs();
+        return;
+      }
+      if (action === 'directions') {
+        ev.preventDefault();
+        window.open(DIRECTIONS_URL, '_blank', 'noopener');
+        return;
+      }
+    });
+
+    // 4. Hero Open House card uses href="#open-house" — let the browser route
+    //    and rely on showPage for the hash-change to land on the home section.
+
+    // 5. Keep body padding-bottom in sync if other code toggles the ticker
+    //    (e.g. data-hide-after at 2pm on May 23, or our dismissed class).
+    var ticker = document.querySelector('.oh-ticker');
+    if (ticker && 'MutationObserver' in window) {
+      new MutationObserver(syncTickerBodyClass)
+        .observe(ticker, { attributes: true, attributeFilter: ['style', 'class'] });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initOpenHouse);
+  } else {
+    initOpenHouse();
+  }
 })();

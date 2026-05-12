@@ -1,0 +1,1054 @@
+/* ============================================================
+   open-house.css
+   Three Open House surfaces on dancewithdixon.com:
+     1. Hero dual-card (Open House poster + glowing Audition card)
+     2. Dedicated full-bleed Open House section (#open-house)
+     3. Sitewide sticky ticker (.oh-ticker)
+   Tokens lifted verbatim from brand.jsx in the design handoff.
+   Namespaced --oh-* so nothing collides with existing site vars.
+   ============================================================ */
+
+:root {
+  --oh-green-deep: #0d2820;
+  --oh-green-dark: #14352a;
+  --oh-green-ink:  #0a1f18;
+  --oh-coral:      #d97757;
+  --oh-coral-deep: #c25b46;
+  --oh-coral-ink:  #a4452f;
+  --oh-cream:      #f6efe2;
+  --oh-cream-warm: #faeee0;
+  --oh-blush:      #f4d8c4;
+  --oh-blush-soft: #f0c4b0;
+  --oh-mute:       rgba(246, 239, 226, 0.55);
+  --oh-rule:       rgba(246, 239, 226, 0.18);
+}
+
+/* Scoped font stacks — DO NOT change global body font. */
+.oh-hero-openhouse,
+.oh-audition-card,
+.open-house-band,
+.oh-ticker {
+  font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.oh-serif { font-family: "Cormorant Garamond", "Cormorant", Georgia, serif; }
+.oh-block { font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif; }
+
+/* Square corners everywhere on these surfaces. */
+.oh-hero-openhouse,
+.oh-hero-openhouse *,
+.oh-audition-card,
+.oh-audition-card *,
+.open-house-band,
+.open-house-band *,
+.oh-ticker,
+.oh-ticker * {
+  border-radius: 0 !important;
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes oh-auditionPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 25px rgba(217,119,87,.5),
+      0 0 60px rgba(217,119,87,.25),
+      0 0 100px rgba(217,119,87,.1),
+      inset 0 0 30px rgba(217,119,87,.08);
+  }
+  50% {
+    box-shadow:
+      0 0 35px rgba(217,119,87,.65),
+      0 0 80px rgba(217,119,87,.35),
+      0 0 130px rgba(217,119,87,.18),
+      inset 0 0 40px rgba(217,119,87,.12);
+  }
+}
+
+@keyframes oh-shimmer {
+  0%   { transform: translateX(-120%); opacity: 0; }
+  20%  { opacity: .6; }
+  60%  { opacity: .6; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+@keyframes oh-dotPulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(0.6); opacity: .6; }
+}
+
+@keyframes oh-edgeGlow {
+  0%, 100% { opacity: .3; }
+  50%      { opacity: 1; }
+}
+
+@keyframes oh-btnGlow {
+  0%, 100% { box-shadow: 0 0 0 rgba(217,119,87,0), 0 0 18px rgba(217,119,87,.45); }
+  50%      { box-shadow: 0 0 0 rgba(217,119,87,0), 0 0 28px rgba(217,119,87,.7); }
+}
+
+/* ============================================================
+   DIRECTION 1 — Editorial Hybrid homepage
+   Overrides the existing #page-home .hero to be a TIGHTER split
+   (photo column ~35%, no 92vh min-height), then the .triptych
+   section below carries the three concurrent events.
+   ============================================================ */
+
+#page-home .hero {
+  grid-template-columns: 7fr 10fr 7fr;   /* photo | brand text | big DWD logo */
+  min-height: 0;
+  max-height: none;
+  padding: 0 !important;
+}
+#page-home .hero-logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  min-height: 0;
+}
+#page-home .hero-logo-mark video,
+#page-home .hero-logo-mark img {
+  display: block;
+  width: min(360px, 90%);
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 36px rgba(0,0,0,.32));
+}
+@media (max-width: 1100px) {
+  #page-home .hero { grid-template-columns: 7fr 13fr; }
+  #page-home .hero-logo-mark { display: none; }   /* drop the 3rd col on narrower */
+}
+#page-home .hero-photo {
+  min-height: 480px;
+  max-height: 620px;
+  /* let the photo conform to the brand-column natural height */
+}
+#page-home .hero-text {
+  padding: 56px 64px 56px 72px;
+  justify-content: center;            /* center brand stack in available height */
+  align-items: flex-start;            /* left-align text in the right column */
+  text-align: left;
+  gap: 22px;
+}
+#page-home .hero h1,
+#page-home .hero .subtitle,
+#page-home .hero-eyebrow,
+#page-home .hero-foot { text-align: left; }
+#page-home .hero h1 .line { display: block; }
+#page-home .hero-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+#page-home .hero h1 {
+  font-size: clamp(40px, 4.5vw, 72px);  /* was 64–140px — much smaller */
+  line-height: 0.94;
+  letter-spacing: -0.018em;
+}
+#page-home .hero .subtitle {
+  font-size: clamp(15px, 1.05vw, 18px);
+  max-width: 480px;
+}
+#page-home .hero-foot { margin-top: 12px; }
+/* drop the decorative ::after coral hairline (it floated 3rem off the bottom) */
+#page-home .hero::after { display: none; }
+
+@media (max-width: 1024px) {
+  #page-home .hero { grid-template-columns: 1fr; }
+  #page-home .hero-photo {
+    min-height: 320px; max-height: 420px; order: 1;
+  }
+  /* On mobile/tablet the photo is a TOP BAND (wider than tall) so the
+     desktop crop (65% / 60%) lands on his legs. Bias higher to keep
+     his face in frame. */
+  #page-home .hero-photo img { object-position: 55% 35% !important; }
+  #page-home .hero-text { order: 2; padding: 40px 32px 40px; gap: 18px; align-items: center; text-align: center; }
+  #page-home .hero-text::before { display: none; }
+  #page-home .hero h1 { font-size: clamp(44px, 10vw, 72px); }
+  #page-home .hero .subtitle { max-width: 100%; }
+  #page-home .hero-foot { width: 100%; justify-content: space-between; }
+}
+
+/* ============================================================
+   TRIPTYCH — three equal-weight event cards immediately below hero
+   ============================================================ */
+
+.triptych {
+  background: var(--oh-green-deep);
+  padding: 48px 56px 56px;
+  border-top: 1px solid var(--oh-rule);
+  border-bottom: 1px solid var(--oh-rule);
+}
+.triptych-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+.triptych-eyebrow {
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .28em;
+  color: var(--oh-coral);
+  text-transform: uppercase;
+}
+.triptych-sub {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--oh-mute);
+}
+.triptych-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+/* Card skeleton — all three share these properties */
+.tri-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 28px 24px;
+  background: #143126;            /* slightly lighter than --oh-green-deep so cards float */
+  border: 1px solid rgba(246,239,226,.10);
+  color: var(--oh-cream);
+  text-decoration: none;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+}
+.tri-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--oh-coral);
+  transition: height .25s ease;
+}
+.tri-card:hover { transform: translateY(-2px); }
+.tri-card:hover::before { height: 5px; }
+.tri-card:focus-visible { outline: 2px solid var(--oh-coral); outline-offset: 4px; }
+
+/* Eyebrow row — category + status pill */
+.tri-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tri-eyebrow {
+  font-family: "Manrope", sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--oh-coral);
+}
+.tri-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  background: rgba(217,119,87,.12);
+  color: var(--oh-coral);
+  font-family: "Manrope", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid rgba(217,119,87,.32);
+}
+
+/* Big Anton block date — the visual hook */
+.tri-date {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 4px 0 2px;
+  color: var(--oh-cream);
+  line-height: 1;
+}
+.tri-date-mon {
+  font-family: "Anton", sans-serif;
+  font-size: 22px;
+  letter-spacing: .04em;
+  color: var(--oh-cream);
+  opacity: .92;
+}
+.tri-date-day {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(64px, 5vw, 84px);
+  line-height: 0.85;
+  color: var(--oh-cream);
+  letter-spacing: .005em;
+}
+
+/* Italic Cormorant headline */
+.tri-headline {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.1;
+  color: var(--oh-cream);
+  letter-spacing: .005em;
+}
+.tri-meta {
+  font-family: "Manrope", sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--oh-mute);
+}
+
+.tri-spacer { flex: 1; }
+
+.tri-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Manrope", sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--oh-cream);
+  padding-top: 6px;
+  border-top: 1px solid var(--oh-rule);
+  transition: color .2s ease, border-color .2s ease;
+}
+.tri-cta em {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 16px;
+  letter-spacing: 0;
+  transition: transform .2s ease;
+}
+.tri-card:hover .tri-cta { color: var(--oh-coral); border-color: var(--oh-coral); }
+.tri-card:hover .tri-cta em { transform: translateX(4px); }
+
+/* --- Variant: Open House (warm, free, drop-in) --- */
+.tri-card--openhouse::before { background: var(--oh-blush); }
+.tri-card--openhouse .tri-pill {
+  background: var(--oh-blush);
+  color: var(--oh-green-ink);
+  border-color: var(--oh-blush);
+}
+
+/* --- Variant: Audition (the conversion target — coral glow) --- */
+.tri-card--audition {
+  border: 1px solid rgba(217,119,87,.55);
+  box-shadow:
+    0 0 0 1px rgba(217,119,87,.18) inset,
+    0 0 24px rgba(217,119,87,.22),
+    0 0 60px rgba(217,119,87,.10);
+}
+.tri-card--audition::before { background: var(--oh-coral); }
+.tri-card--audition .tri-pill {
+  background: var(--oh-coral);
+  color: var(--oh-cream-warm);
+  border-color: var(--oh-coral);
+}
+.tri-card--audition:hover {
+  box-shadow:
+    0 0 0 1px rgba(217,119,87,.32) inset,
+    0 0 32px rgba(217,119,87,.36),
+    0 0 80px rgba(217,119,87,.18);
+}
+
+/* --- Variant: A·Muse (stage, prestige, DWDC) --- */
+.tri-card--amuse::before { background: var(--oh-cream-warm); }
+.tri-card--amuse .tri-eyebrow { color: var(--oh-cream-warm); }
+.tri-card--amuse .tri-pill {
+  background: rgba(246,239,226,.10);
+  color: var(--oh-cream-warm);
+  border-color: rgba(246,239,226,.32);
+}
+.tri-card--amuse .tri-headline { color: var(--oh-cream-warm); }
+
+/* --- Responsive --- */
+@media (max-width: 980px) {
+  .triptych { padding: 40px 32px 48px; }
+  .triptych-grid { grid-template-columns: 1fr; gap: 14px; }
+  .tri-card { padding: 24px 24px 20px; }
+  .tri-date-day { font-size: 64px; }
+  .tri-headline { font-size: 22px; }
+}
+@media (max-width: 520px) {
+  .triptych { padding: 32px 22px 40px; }
+  .triptych-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .tri-card { padding: 22px 20px 18px; gap: 10px; }
+  .tri-date-day { font-size: 56px; }
+}
+
+/* ============================================================
+   SECTION 1A — Open House hero poster card (.oh-hero-openhouse)
+   Three stacked bands: coral header / green date / blush footer.
+   Square corners, no rounded anything.
+   ============================================================ */
+.oh-hero-openhouse {
+  display: block;
+  max-width: 540px;
+  margin-top: 18px;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+  transition: transform .2s ease, box-shadow .25s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+}
+.oh-hero-openhouse:hover { transform: translateY(-1px); box-shadow: 0 14px 32px rgba(0,0,0,.28); }
+.oh-hero-openhouse:focus-visible { outline: 2px solid var(--oh-coral); outline-offset: 3px; }
+
+/* --- Coral band (OPEN / HOUSE) -------------------------------- */
+.oh-hh-coral {
+  display: block;
+  background: var(--oh-coral-deep);
+  color: var(--oh-cream-warm);
+  padding: 14px 20px 10px;
+}
+.oh-hh-eyebrow {
+  display: block;
+  font-family: "Manrope", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  color: rgba(250,238,224,.85);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.oh-hh-titlewrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  line-height: .88;
+}
+.oh-hh-open {
+  font-size: 54px;
+  line-height: .88;
+  letter-spacing: .01em;
+  color: var(--oh-cream-warm);
+}
+.oh-hh-house {
+  display: inline-block;
+  background: var(--oh-blush);
+  color: var(--oh-green-ink);
+  padding: 2px 10px 4px;
+  font-size: 54px;
+  line-height: .88;
+  letter-spacing: .01em;
+}
+
+/* --- Green date band ------------------------------------------ */
+.oh-hh-green {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  background: var(--oh-green-ink);
+  color: var(--oh-cream-warm);
+  padding: 10px 20px;
+}
+.oh-hh-date {
+  font-size: 24px;
+  letter-spacing: .01em;
+  color: var(--oh-cream-warm);
+}
+.oh-hh-meta {
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  opacity: .8;
+}
+.oh-dot { opacity: .55; }
+
+/* --- Blush footer band ---------------------------------------- */
+.oh-hh-blush {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: var(--oh-blush);
+  color: var(--oh-green-ink);
+  padding: 10px 14px 10px 20px;
+}
+.oh-hh-tag {
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+.oh-hh-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--oh-green-ink);
+  color: var(--oh-cream-warm);
+  padding: 8px 14px;
+  font-family: "Manrope", sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .22em;
+}
+.oh-hh-cta .oh-arrow { font-style: italic; font-size: 14px; }
+
+/* Tablet collapse — make sure card never overflows hero right col */
+@media (max-width: 720px) {
+  .oh-hero-openhouse { max-width: 100%; margin-top: 14px; }
+  .oh-hh-open, .oh-hh-house { font-size: clamp(40px, 11vw, 54px); }
+  .oh-hh-blush { flex-wrap: wrap; }
+}
+
+/* ============================================================
+   SECTION 1B — Audition hero card (.oh-audition-card)
+   Glowing, pulsing, shimmering — the "loud" element in the hero.
+   ============================================================ */
+.oh-audition-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: 540px;
+  margin-top: 14px;
+  padding: 18px 22px;
+  border: 2px solid var(--oh-coral);
+  background:
+    linear-gradient(135deg, rgba(217,119,87,.14), rgba(217,119,87,.06), rgba(217,119,87,.14));
+  color: var(--oh-cream);
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  animation: oh-auditionPulse 2.5s ease-in-out infinite;
+}
+.oh-audition-card:focus-visible { outline: 2px solid var(--oh-coral); outline-offset: 3px; }
+
+/* Top + bottom 1px coral-cream-coral edge lines, pulsing */
+.oh-ac-edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--oh-coral), var(--oh-cream-warm), var(--oh-coral));
+  animation: oh-edgeGlow 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+.oh-ac-edge--top { top: 0; }
+.oh-ac-edge--bot { bottom: 0; animation-delay: 1.5s; }
+
+/* Diagonal shimmer sweep */
+.oh-ac-shimmer {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 60%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(250,238,224,.18) 45%,
+    rgba(250,238,224,.32) 50%,
+    rgba(250,238,224,.18) 55%,
+    transparent 100%
+  );
+  transform: translateX(-120%);
+  animation: oh-shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.oh-ac-body {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.oh-ac-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.oh-ac-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--oh-coral);
+  box-shadow: 0 0 12px rgba(217,119,87,.9);
+  animation: oh-dotPulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.oh-ac-eyebrow {
+  font-family: "Manrope", sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  color: var(--oh-coral);
+  text-transform: uppercase;
+}
+.oh-ac-headline {
+  font-style: italic;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.05;
+  color: var(--oh-cream);
+  text-shadow: 0 1px 14px rgba(217,119,87,.35);
+  letter-spacing: .005em;
+}
+.oh-ac-meta {
+  font-family: "Manrope", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--oh-cream);
+  opacity: .92;
+}
+.oh-ac-meta strong { font-weight: 700; }
+
+.oh-ac-cta {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 14px 22px;
+  background: var(--oh-coral);
+  color: var(--oh-cream);
+  font-family: "Manrope", sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  animation: oh-btnGlow 2s ease-in-out infinite;
+  transition: background .2s ease;
+}
+.oh-ac-cta .oh-arrow { font-style: italic; font-size: 14px; letter-spacing: 0; }
+.oh-audition-card:hover .oh-ac-cta { background: var(--oh-coral-ink); }
+
+/* Tablet/mobile — stack vertically so headline + CTA don't collide */
+@media (max-width: 720px) {
+  .oh-audition-card { flex-direction: column; align-items: stretch; gap: 14px; max-width: 100%; }
+  .oh-ac-cta { justify-content: center; }
+  .oh-ac-headline { font-size: 24px; }
+}
+
+/* ============================================================
+   SECTION 2 — Dedicated Open House band (#open-house)
+   Four bands: coral header / green date / cream schedule / split footer.
+   Full-bleed, square corners, IG-poster aesthetic.
+   ============================================================ */
+.open-house-band {
+  display: block;
+  margin: 40px 0 0;
+  color: var(--oh-green-ink);
+  font-family: "Manrope", sans-serif;
+}
+
+/* --- Band 1 · Coral header ------------------------------------ */
+.ohb-coral {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--oh-coral-deep);
+  color: var(--oh-cream-warm);
+}
+.ohb-coral-text {
+  padding: 40px 56px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: flex-start;
+  justify-content: center;
+}
+.ohb-eyebrow {
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .24em;
+  color: rgba(250,238,224,.85);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+.ohb-open {
+  font-size: clamp(100px, 11vw, 160px);
+  line-height: .84;
+  color: var(--oh-cream-warm);
+  letter-spacing: .005em;
+}
+.ohb-house {
+  display: inline-block;
+  background: var(--oh-blush);
+  color: var(--oh-green-ink);
+  padding: 0 14px 6px;
+  margin-top: -2px;
+  font-size: clamp(100px, 11vw, 160px);
+  line-height: .84;
+  letter-spacing: .005em;
+}
+.ohb-coral-photo {
+  position: relative;
+  min-height: 320px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(135deg, #1a0a14 0 14px, #2a1320 14px 28px),
+    radial-gradient(ellipse at 30% 60%, #6b1b3a 0%, transparent 55%),
+    radial-gradient(ellipse at 70% 40%, #0d3a4a 0%, transparent 55%);
+}
+.ohb-coral-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.55));
+}
+.ohb-photo-label {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  font-family: "SF Mono", Menlo, ui-monospace, monospace;
+  color: rgba(255,255,255,.6);
+  font-size: 10px;
+  letter-spacing: .2em;
+  z-index: 1;
+}
+
+/* --- Band 2 · Green date bar ---------------------------------- */
+.ohb-greenbar {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  background: var(--oh-green-ink);
+  color: var(--oh-cream-warm);
+  padding: 18px 56px;
+}
+.ohb-date {
+  font-size: clamp(32px, 3.5vw, 52px);
+  line-height: 1;
+  letter-spacing: .005em;
+}
+.ohb-time, .ohb-place {
+  font-size: clamp(22px, 2.2vw, 32px);
+  line-height: 1;
+  opacity: .85;
+  letter-spacing: .005em;
+}
+.ohb-sep {
+  font-size: 28px;
+  opacity: .5;
+  line-height: 1;
+}
+
+/* --- Band 3 · Cream schedule strip ---------------------------- */
+.ohb-schedule {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr 1fr;
+  gap: 36px;
+  align-items: center;
+  background: var(--oh-cream-warm);
+  color: var(--oh-green-ink);
+  padding: 22px 56px;
+}
+.ohb-sched-label {
+  font-size: 38px;
+  color: var(--oh-coral-deep);
+  line-height: 1;
+}
+.ohb-slot { display: flex; flex-direction: column; gap: 4px; }
+.ohb-slot-time {
+  font-size: 30px;
+  line-height: 1;
+  color: var(--oh-green-ink);
+  letter-spacing: .005em;
+}
+.ohb-slot-label {
+  font-family: "Manrope", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+/* --- Band 4 · Bottom split (Drop-In + Win-a-spot) ------------- */
+.ohb-split {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+}
+
+.ohb-dropin {
+  background: var(--oh-blush);
+  color: var(--oh-green-ink);
+  padding: 28px 56px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.ohb-dropin-title {
+  font-size: clamp(36px, 3.8vw, 56px);
+  line-height: .92;
+  letter-spacing: .005em;
+}
+.ohb-dropin-row {
+  font-family: "Manrope", sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+.ohb-addr-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.ohb-addr, .ohb-ages {
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: .005em;
+}
+.ohb-addr-rule {
+  flex: 1;
+  height: 1px;
+  background: rgba(10,31,24,.15);
+  min-width: 24px;
+}
+.ohb-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ohb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  font-family: "Manrope", sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+.ohb-btn-primary {
+  background: var(--oh-green-ink);
+  color: var(--oh-cream-warm);
+}
+.ohb-btn-primary:hover { background: #000; }
+.ohb-btn-primary .oh-arrow { font-style: italic; font-size: 14px; letter-spacing: 0; }
+.ohb-btn-secondary {
+  background: transparent;
+  color: var(--oh-green-ink);
+  border: 1px solid var(--oh-green-ink);
+  padding: 13px 21px;
+}
+.ohb-btn-secondary:hover { background: var(--oh-green-ink); color: var(--oh-cream-warm); }
+
+.ohb-win {
+  background: var(--oh-coral-deep);
+  color: var(--oh-cream-warm);
+  padding: 28px 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0;
+}
+.ohb-win-eyebrow {
+  font-family: "Manrope", sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  opacity: .85;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.ohb-win-prize {
+  font-size: 42px;
+  line-height: .95;
+  letter-spacing: .005em;
+}
+.ohb-win-more {
+  font-size: 18px;
+  font-style: italic;
+  margin-top: 12px;
+  opacity: .85;
+}
+.ohb-win-url {
+  font-family: "Manrope", sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  opacity: .85;
+  margin-top: 16px;
+}
+
+/* --- Responsive collapses --- */
+@media (max-width: 1024px) {
+  .ohb-coral-text { padding: 32px 32px 28px; }
+  .ohb-greenbar { padding: 18px 32px; }
+  .ohb-schedule { padding: 22px 32px; gap: 24px; }
+  .ohb-dropin { padding: 28px 32px; }
+  .ohb-win { padding: 28px 28px; }
+}
+@media (max-width: 840px) {
+  .ohb-split { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .ohb-coral { grid-template-columns: 1fr; }
+  .ohb-coral-photo { min-height: 220px; }
+  .ohb-schedule {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: minmax(0, auto);
+  }
+  .ohb-sched-label { grid-column: 1 / -1; font-size: 32px; }
+}
+@media (max-width: 520px) {
+  .ohb-coral-text { padding: 28px 22px 22px; }
+  .ohb-greenbar { padding: 16px 22px; gap: 6px 14px; }
+  .ohb-schedule { padding: 20px 22px; gap: 18px; }
+  .ohb-dropin, .ohb-win { padding: 24px 22px; }
+  .ohb-addr-rule { display: none; }
+}
+
+/* ============================================================
+   SECTION 3 — Sticky bottom ticker (.oh-ticker)
+   Sitewide, persists across hash routes.
+   ============================================================ */
+.oh-ticker {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: stretch;
+  background: var(--oh-green-ink);
+  color: var(--oh-cream-warm);
+  border-top: 1px solid rgba(0,0,0,.35);
+  box-shadow: 0 -6px 18px rgba(0,0,0,.35);
+  font-family: "Manrope", sans-serif;
+}
+/* Compensator so submit buttons / page-foot don't get covered */
+body.has-oh-ticker { padding-bottom: 56px; }
+
+/* Dismissed via the ✕ button (or auto-hidden post-event). Survives the
+   campaign.js polling reveal handler that resets inline display. */
+.oh-ticker.oh-ticker--dismissed { display: none !important; }
+
+/* Cell 1 · Coral tag */
+.oh-tk-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--oh-coral-deep);
+  color: var(--oh-cream-warm);
+  padding: 0 20px;
+}
+.oh-tk-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--oh-cream-warm);
+  flex-shrink: 0;
+  animation: oh-dotPulse 2s ease-in-out infinite;
+}
+.oh-tk-tag-text {
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: .005em;
+  white-space: nowrap;
+}
+
+/* Cell 2 · Green main strip */
+.oh-tk-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: nowrap;
+  padding: 12px 24px;
+  color: var(--oh-cream-warm);
+  min-width: 0;
+}
+.oh-tk-head {
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: .005em;
+  white-space: nowrap;
+}
+.oh-tk-when {
+  font-size: 13px;
+  line-height: 1.1;
+  white-space: nowrap;
+  opacity: .92;
+}
+.oh-tk-sep {
+  opacity: .5;
+  font-size: 13px;
+}
+
+/* Cell 3 · Blush RSVP */
+.oh-tk-rsvp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--oh-blush);
+  color: var(--oh-green-ink);
+  padding: 0 22px;
+  font-family: "Manrope", sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background .2s ease;
+}
+.oh-tk-rsvp:hover { background: var(--oh-blush-soft); }
+.oh-tk-rsvp .oh-arrow { font-style: italic; font-size: 14px; letter-spacing: 0; }
+
+/* Cell 4 · Coral close ✕ */
+.oh-tk-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  padding: 0 16px;
+  background: var(--oh-coral-deep);
+  color: var(--oh-cream-warm);
+  border: 0;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+.oh-tk-close:hover { background: var(--oh-coral-ink); }
+
+/* Hide the truncated mobile bits by default; show below 520px */
+@media (min-width: 521px) {
+  .oh-tk-when-mobile { display: none; }
+}
+
+/* Below 520px — compress to: tag + headline + RSVP + ✕ only */
+@media (max-width: 520px) {
+  .oh-ticker { grid-template-columns: auto 1fr auto auto; }
+  .oh-tk-tag { padding: 0 12px; }
+  .oh-tk-tag-text { font-size: 13px; }
+  .oh-tk-main { padding: 10px 14px; gap: 8px; overflow: hidden; }
+  .oh-tk-head { font-size: 15px; }
+  .oh-tk-when, .oh-tk-sep { display: none; }
+  .oh-tk-rsvp { padding: 0 14px; font-size: 10px; letter-spacing: .18em; }
+}
+
+/* Below 360px — drop the THIS SATURDAY tag text but keep the dot */
+@media (max-width: 360px) {
+  .oh-tk-tag-text { display: none; }
+}

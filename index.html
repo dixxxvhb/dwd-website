@@ -121,18 +121,28 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/additions.css">
   <link rel="stylesheet" href="css/editorial.css">
   <link rel="stylesheet" href="css/rebrand.css">
+  <link rel="stylesheet" href="css/open-house.css">
+  <link rel="stylesheet" href="css/poster-pages.css">
+  <link rel="stylesheet" href="css/tighten.css">
+
+  <!-- SnapWidget auto-resize (for Instagram feed strips on Gallery).
+       The onload flag lets main.js detect when this script was blocked by
+       an ad blocker / privacy extension, so we can swap in a fallback CTA. -->
+  <script>window.__snapwidgetReady = false;</script>
+  <script src="https://snapwidget.com/js/snapwidget.js" async
+          onload="window.__snapwidgetReady = true"></script>
 
   <!-- Supabase Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
-<body class="has-topnav">
+<body class="has-topnav has-oh-ticker">
 
   <!-- Skip to content -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -140,17 +150,18 @@
   <!-- SIDEBAR NAVIGATION -->
   <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
     <div class="sidebar-brand">
-      <img src="images/logos/DWD-green.png" alt="DWD Logo" width="100" height="100">
+      <video src="images/logos/DWD-green-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="DWD animated logo" width="100" height="100">
+        <img src="images/logos/DWD-green.png" alt="DWD Logo" width="100" height="100">
+      </video>
       <h3>Dance with<br>Dixon</h3>
     </div>
     <div class="sidebar-divider"></div>
     <div class="sidebar-label">Pages</div>
     <nav>
       <a href="#home" class="active" data-page="home">Home</a>
-      <a href="#about" data-page="about">About Dixon</a>
       <a href="#proseries" data-page="proseries">ProSeries</a>
       <a href="#adult-company" data-page="adult-company">Adult Company</a>
-      <a href="#classes-events" data-page="classes-events">Classes &amp; Events</a>
+      <a href="#teachers" data-page="teachers">Teachers</a>
       <a href="#gallery" data-page="gallery">Gallery</a>
       <a href="#shop" data-page="shop">Merch</a>
       <a href="#contact" data-page="contact">Contact</a>
@@ -170,10 +181,9 @@
     </a>
     <nav aria-label="Primary navigation">
       <a href="#home" class="active" data-page="home">Home</a>
-      <a href="#about" data-page="about">About</a>
       <a href="#proseries" data-page="proseries">ProSeries</a>
       <a href="#adult-company" data-page="adult-company">Collective</a>
-      <a href="#classes-events" data-page="classes-events">Performances</a>
+      <a href="#teachers" data-page="teachers">Teachers</a>
       <a href="#gallery" data-page="gallery">Gallery</a>
       <a href="#shop" data-page="shop">Merch</a>
       <a href="#contact" data-page="contact">Contact</a>
@@ -209,19 +219,8 @@
           <div class="caption">John Nuzzi · Solo Work · 2024</div>
         </div>
         <div class="hero-text">
-          <!-- Tamara Mark — For Mom -->
-          <svg class="tamara-mark tamara-mark--hero" viewBox="20 10 200 190" width="46" height="42" aria-label="Tamara Mark — in memory of Tamara S. Bowles">
-            <title>In memory of Tamara S. Bowles</title>
-            <circle cx="100" cy="115" r="65" fill="none" stroke="url(#tm-gold-h)" stroke-width="1.8" stroke-linecap="round" opacity="0.75"/>
-            <circle cx="152" cy="70" r="49" fill="none" stroke="url(#tm-gold-h)" stroke-width="2.5" stroke-linecap="round" opacity="0.95"/>
-            <circle cx="107" cy="50" r="10" fill="url(#tm-glow-h)" opacity="0.25"/>
-            <defs>
-              <linearGradient id="tm-gold-h" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#c9956c"/><stop offset="40%" stop-color="#e8c49a"/><stop offset="100%" stop-color="#d4a574"/>
-              </linearGradient>
-              <radialGradient id="tm-glow-h"><stop offset="0%" stop-color="#e8c49a"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-            </defs>
-          </svg>
+          <!-- Tamara Mark removed — it's now baked into the animated DWD logo
+               on the right side of the hero (hero-logo-mark). -->
           <div class="hero-eyebrow"><span class="bar"></span>Est. 2025 <span class="sep">·</span> Orlando, FL</div>
           <h1>
             <span class="line">Dance</span>
@@ -229,47 +228,155 @@
             <span class="line">Dixon.</span>
           </h1>
           <p class="subtitle">Elite youth training program (ages 5&ndash;19). Adult modern dance company (18+). Built from scratch in Orlando.</p>
-          <a href="#early-access" class="audition-chip" data-track="home-audition-chip" data-hide-after="2026-05-01T00:00:00-04:00">
-            <span class="dot"></span>
-            <span class="label">Audition Registration</span>
-            <span class="date">Opens May 1, 2026</span>
-            <span class="meta">30 spots total &middot; 10 per track</span>
-          </a>
-          <!-- LAUNCH HERO CARD — appears at 00:00 ET, May 1, 2026 -->
-          <a href="https://dwd-director.netlify.app/register" class="launch-card" data-track="home-launch-card-register" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">
-            <span class="lc-pulse-row">
-              <span class="lc-pulse"></span>
-              <span class="lc-eyebrow">Registration is Open</span>
-            </span>
-            <span class="lc-headline">Audition for ProSeries</span>
-            <span class="lc-meta">
-              <span class="lc-meta-item"><strong>Sat June 6</strong> &middot; 11am&ndash;1pm</span>
-              <span class="lc-meta-divider"></span>
-              <span class="lc-meta-item">Exchange Dance, Orlando</span>
-              <span class="lc-meta-divider"></span>
-              <span class="lc-meta-item"><strong>$25</strong> &middot; 30 spots</span>
-            </span>
-            <span class="lc-cta">Register Now <span class="lc-arrow">&rarr;</span></span>
-          </a>
           <div class="hero-foot">
-            <span>Season One · 2026 / 2027</span>
-            <span class="scroll">Scroll to begin →</span>
+            <span>Season One &middot; 2026 / 2027</span>
           </div>
+        </div>
+        <div class="hero-logo-mark" aria-hidden="false">
+          <video src="images/logos/DWD-pink-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="Dance With Dixon animated logo">
+            <img src="images/logos/DWD-pink.png" alt="Dance With Dixon" loading="lazy">
+          </video>
         </div>
       </div>
 
-      <!-- EARLY ACCESS BANNER -->
-      <a href="#early-access" class="ea-banner reveal" data-track="home-early-access-banner" data-hide-after="2026-05-01T00:00:00-04:00">
-        <span class="ea-banner-tag">NEW</span>
-        <span class="ea-banner-text">Get early access to register for the audition &mdash; spots are limited.</span>
-        <span class="ea-banner-arrow">&rarr;</span>
-      </a>
-      <!-- LAUNCH BANNER — appears at 00:00 ET, May 1, 2026 -->
-      <a href="https://dwd-director.netlify.app/register" class="ea-banner ea-banner-launch reveal" data-track="home-launch-banner" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">
-        <span class="ea-banner-tag ea-banner-tag-live">LIVE</span>
-        <span class="ea-banner-text">30 spots. 10 per track. Audition <strong>Saturday, June 6</strong> at Exchange Dance Studio, Orlando.</span>
-        <span class="ea-banner-arrow">&rarr;</span>
-      </a>
+      <!-- TRIPTYCH — three concurrent events at equal rank -->
+      <section class="triptych" aria-label="What's happening at DWD">
+        <div class="triptych-head">
+          <span class="triptych-eyebrow">What's Happening</span>
+          <span class="triptych-sub">Three weekends, three doors in.</span>
+        </div>
+        <div class="triptych-grid">
+
+          <!-- Card 1 · Open House (May 23) -->
+          <a class="tri-card tri-card--openhouse" href="#open-house"
+             data-track="home-tri-openhouse"
+             data-hide-after="2026-05-23T14:00:00-04:00">
+            <div class="tri-row-top">
+              <span class="tri-eyebrow">Open House</span>
+              <span class="tri-pill">Free</span>
+            </div>
+            <div class="tri-date">
+              <span class="tri-date-mon">MAY</span>
+              <span class="tri-date-day">23</span>
+            </div>
+            <span class="tri-headline">A free Saturday at the studio.</span>
+            <span class="tri-meta">Saturday &middot; 11:30am&ndash;2pm &middot; Exchange Dance, Orlando &middot; Ages 5&ndash;18 &middot; Drop in anytime.</span>
+            <span class="tri-spacer"></span>
+            <span class="tri-cta">Details <em>&rarr;</em></span>
+          </a>
+
+          <!-- Card 2 · Audition (June 6) -->
+          <a class="tri-card tri-card--audition" href="https://dwd-director.netlify.app/register"
+             data-track="home-tri-audition"
+             data-hide-after="2026-06-06T13:00:00-04:00">
+            <div class="tri-row-top">
+              <span class="tri-eyebrow">Audition</span>
+              <span class="tri-pill">$25 &middot; 30 Spots</span>
+            </div>
+            <div class="tri-date">
+              <span class="tri-date-mon">JUN</span>
+              <span class="tri-date-day">06</span>
+            </div>
+            <span class="tri-headline">Audition for ProSeries.</span>
+            <span class="tri-meta">Saturday &middot; 11am&ndash;1pm &middot; Three tracks &mdash; Prep, Elite, Pro. Season One starts August 10.</span>
+            <span class="tri-spacer"></span>
+            <span class="tri-cta">Register <em>&rarr;</em></span>
+          </a>
+
+          <!-- Card 3 · A·Muse in Space (June 27) -->
+          <a class="tri-card tri-card--amuse" href="#amuse"
+             data-track="home-tri-amuse"
+             data-hide-after="2026-06-28T00:00:00-04:00">
+            <div class="tri-row-top">
+              <span class="tri-eyebrow">dwdCollective &middot; Stage</span>
+              <span class="tri-pill">Showcase</span>
+            </div>
+            <div class="tri-date">
+              <span class="tri-date-mon">JUN</span>
+              <span class="tri-date-day">27</span>
+            </div>
+            <span class="tri-headline">A&middot;Muse in Space.</span>
+            <span class="tri-meta">Saturday &middot; Orlando Ballet &middot; dwdCOLLECTIVE&rsquo;s first public performance. Aric Barrow presents.</span>
+            <span class="tri-spacer"></span>
+            <span class="tri-cta">Learn more <em>&rarr;</em></span>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- OPEN HOUSE BAND — IG-poster surface, hides after Sat May 23, 2pm ET -->
+      <section class="open-house-band" id="open-house" data-hide-after="2026-05-23T14:00:00-04:00" aria-label="Open House — Saturday, May 23">
+        <!-- Band 1 · Coral header with OPEN/HOUSE + stage photo -->
+        <div class="ohb-coral">
+          <div class="ohb-coral-text">
+            <span class="ohb-eyebrow oh-block">dwdPROSERIES</span>
+            <span class="ohb-open oh-block">OPEN</span>
+            <span class="ohb-house oh-block">HOUSE</span>
+          </div>
+          <div class="ohb-coral-photo" role="img" aria-label="Group shot, floorwork, black costumes">
+            <span class="ohb-photo-label">[ GROUP SHOT &middot; FLOORWORK &middot; BLACK COSTUMES ]</span>
+          </div>
+        </div>
+
+        <!-- Band 2 · Green date bar -->
+        <div class="ohb-greenbar">
+          <span class="ohb-date oh-block">SATURDAY &middot; MAY 23</span>
+          <span class="ohb-time oh-block">11:30AM &ndash; 2PM</span>
+          <span class="ohb-sep oh-block">&middot;</span>
+          <span class="ohb-place oh-block">EXCHANGE DANCE &middot; ORLANDO</span>
+        </div>
+
+        <!-- Band 3 · Cream schedule strip -->
+        <div class="ohb-schedule">
+          <span class="ohb-sched-label oh-block">SCHEDULE</span>
+          <div class="ohb-slot">
+            <span class="ohb-slot-time oh-block">12:00</span>
+            <span class="ohb-slot-label">DWD CHOREOGRAPHY SHOWCASE #1</span>
+          </div>
+          <div class="ohb-slot">
+            <span class="ohb-slot-time oh-block">12:30</span>
+            <span class="ohb-slot-label">SAMPLE CLASS WITH DIXON</span>
+          </div>
+          <div class="ohb-slot">
+            <span class="ohb-slot-time oh-block">1:15</span>
+            <span class="ohb-slot-label">DWD CHOREOGRAPHY SHOWCASE #2</span>
+          </div>
+          <div class="ohb-slot">
+            <span class="ohb-slot-time oh-block">1:45</span>
+            <span class="ohb-slot-label">RAFFLE DRAWING</span>
+          </div>
+        </div>
+
+        <!-- Band 4 · Bottom split (Drop-In + Win-a-spot) -->
+        <div class="ohb-split">
+          <div class="ohb-dropin">
+            <span class="ohb-dropin-title oh-block">DROP IN ANYTIME</span>
+            <div class="ohb-dropin-row">
+              <span>Meet Dixon &amp; rotation teachers</span>
+              <span class="oh-dot">&middot;</span>
+              <span>Tour the studio</span>
+              <span class="oh-dot">&middot;</span>
+              <span>Grab info packets</span>
+            </div>
+            <div class="ohb-addr-row">
+              <span class="ohb-addr oh-block">7409 CHANCERY LN &middot; ORLANDO &middot; FREE ENTRY</span>
+              <span class="ohb-addr-rule"></span>
+              <span class="ohb-ages oh-block">AGES 5&ndash;18</span>
+            </div>
+            <div class="ohb-btn-row">
+              <a class="ohb-btn ohb-btn-primary" href="#" data-oh-action="rsvp" data-track="openhouse-rsvp">RSVP / ADD TO CAL <span class="oh-serif oh-arrow">&rarr;</span></a>
+              <a class="ohb-btn ohb-btn-secondary" href="#" data-oh-action="directions" data-track="openhouse-directions">DIRECTIONS</a>
+            </div>
+          </div>
+          <div class="ohb-win">
+            <span class="ohb-win-eyebrow">WIN A FREE</span>
+            <span class="ohb-win-prize oh-block">JUNE 6 AUDITION</span>
+            <span class="ohb-win-prize oh-block">+ dwdPS GEAR</span>
+            <span class="ohb-win-more oh-serif">and more&hellip;</span>
+            <span class="ohb-win-url">DANCEWITHDIXON.COM</span>
+          </div>
+        </div>
+      </section>
 
       <!-- TRACK RECORD — director's credentials at a glance -->
       <section class="track-record reveal" aria-label="Director's track record">
@@ -336,7 +443,7 @@
       </div>
 
       <!-- UP NEXT — A·MUSE IN SPACE FEATURE -->
-      <a href="#classes-events" class="upnext-card reveal" data-track="home-amuse-feature" style="display:block; margin: 64px auto; max-width: 1100px; padding: 0; text-decoration:none; color:inherit;">
+      <a href="#amuse" class="upnext-card reveal" data-track="home-amuse-feature" style="display:block; margin: 64px auto; max-width: 1100px; padding: 0; text-decoration:none; color:inherit;">
         <div style="background: linear-gradient(135deg, rgba(15,35,24,0.96), rgba(15,35,24,0.86)), url('images/photos/dwdc-7I6A3760.jpg'); background-size: cover; background-position: center; padding: 48px 40px; border-radius: 16px; border: 1px solid rgba(216,194,150,0.18); position: relative; overflow: hidden;">
           <div style="font-family: 'Bebas Neue', Impact, sans-serif; font-size: 14px; letter-spacing: 0.32em; color: #d4775f; margin-bottom: 14px;">UP NEXT &middot; dwdCOLLECTIVE</div>
           <h2 style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(40px, 6vw, 72px); line-height: 1; color: #FAF3E8; margin: 0 0 18px; letter-spacing: -0.02em;">A&middot;Muse in Space.</h2>
@@ -425,72 +532,24 @@
       </div>
     </section>
 
-    <!-- ══════════ ABOUT DIXON ══════════ -->
-    <section class="page" id="page-about" aria-label="About Dixon">
-      <div class="about-hero">
-        <div class="about-photo">
-          <img src="images/photos/BW-Headshot.jpg" alt="Dixon Bowles headshot — black and white" class="about-slide active" loading="lazy">
-          <img src="images/photos/Bowles-33-headshot.jpg" alt="Dixon Bowles professional headshot" class="about-slide" loading="lazy">
-          <img src="images/photos/dixon-award-groove-solo.jpg" alt="Dixon on stage receiving award at GROOVE competition" class="about-slide" loading="lazy">
-          <img src="images/photos/IMG_1950.JPG" alt="Dixon — career moment" class="about-slide" loading="lazy">
-          <img src="images/photos/dixon-malik-onstage-award.jpg" alt="Dixon and Malik on stage receiving competition award" class="about-slide" loading="lazy">
-          <img src="images/photos/IMG_2919.jpeg" alt="Dixon over the years" class="about-slide" loading="lazy">
-          <img src="images/photos/dixon-adcc-excellence-banner.jpg" alt="Dixon holding ADCC Studio of Excellence Winner banner" class="about-slide" loading="lazy">
-          <img src="images/photos/dixon-groove-stage-plaque.jpg" alt="Dixon commanding the stage at GROOVE with award plaque" class="about-slide" loading="lazy">
-        </div>
-        <div class="about-content">
-          <div class="label">Director &amp; Choreographer</div>
-          <h1>Dixon Bowles<!-- Tamara Mark — For Mom --><svg class="tamara-mark tamara-mark--about" viewBox="20 10 200 190" width="14" height="13" aria-hidden="true"><circle cx="100" cy="115" r="65" fill="none" stroke="url(#tm-gold-a)" stroke-width="1.8" stroke-linecap="round" opacity="0.75"/><circle cx="152" cy="70" r="49" fill="none" stroke="url(#tm-gold-a)" stroke-width="2.5" stroke-linecap="round" opacity="0.95"/><circle cx="107" cy="50" r="10" fill="url(#tm-glow-a)" opacity="0.25"/><defs><linearGradient id="tm-gold-a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c9956c"/><stop offset="40%" stop-color="#e8c49a"/><stop offset="100%" stop-color="#d4a574"/></linearGradient><radialGradient id="tm-glow-a"><stop offset="0%" stop-color="#e8c49a"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs></svg></h1>
-          <div class="title">Teacher. Choreographer. Director.</div>
-          <div class="tagline">Building a new home for dance in Orlando.</div>
-          <p class="bio">I trained at Utah Valley University and got hired by Disney Jr. Live before I finished my degree. I performed with professional dance companies in New York. And then I moved to Florida and decided to build.</p>
-          <p class="bio">For nine years, I ran the competitive dance program at a major Central Florida studio as choreographer, director, and the only person in the room every single day. I built it from 9 dancers to 23 across five competition seasons. My dancers earned titles at Groove, Inferno, Tremaine, and StarQuest. The program won ADCC Studio of Excellence. I choreographed nearly every piece, ran every rehearsal, directed every competition weekend.</p>
-          <p class="bio">Outside the studio, I toured nationally as a Tour Director with Fly Dance Competition. I've judged competitions, taught masterclasses across the country, and choreographed for musical theatre. I know this industry from every angle as a performer, a teacher, a director, and a judge.</p>
-          <p class="bio">DWD is what happens when the person who built your program decides to build their own. Two programs, one standard. An entire season designed, directed, and choreographed by one artistic director. DWD ProSeries for young competitive dancers ages 5 to 19 who want real training. DWD Collective for adults 18 and up who want real choreography and real stage time. Come find out what it means to Dance With Dixon.</p>
-        </div>
-      </div>
-
-      <div class="what-i-bring reveal">
-        <div class="chapter">
-          <span class="no"><sup>No.</sup>01</span>
-          <span class="lbl">About — The Director</span>
-        </div>
-        <h2>What I Bring</h2>
-        <div class="bring-grid">
-          <div class="bring-item">
-            <h4>Teaching Philosophy</h4>
-            <p>I believe in rigor with heart. Every class should challenge you, every rehearsal should push you, and every piece of choreography should mean something. I don't do filler. I don't do lazy. But I also don't do fear-based teaching. My dancers work hard because they want to — because they feel invested, not intimidated.</p>
-          </div>
-          <div class="bring-item">
-            <h4>Two Programs, One Standard</h4>
-            <ul>
-              <li><strong>DWD ProSeries</strong> — full competitive training across all styles (jazz technique, ballet, contemporary, lyrical, hip hop, tap, acro, musical theatre) for dancers ages 5&ndash;19. Three tracks. Not a studio — a dedicated training company.</li>
-              <li><strong>DWD Collective</strong> — modern dance company for adults 18+. No audition required. All levels welcome. Weekly classes and real performances.</li>
-              <li>Every class designed by a working director and choreographer — not pulled from a syllabus</li>
-              <li>Choreography that tells stories — every piece has a purpose</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="cta-banner">
-        <h3>Ready to dance?</h3>
-        <p data-hide-after="2026-05-01T00:00:00-04:00">DWD ProSeries (ages 5&ndash;19): register May 1, audition this June, training begins August. DWD Collective (18+) adult classes are happening now.</p>
-        <p data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">DWD ProSeries (ages 5&ndash;19): registration is open, audition Saturday June 6, training begins August. DWD Collective (18+) adult classes are happening now.</p>
-        <a href="https://dwd-director.netlify.app/register" class="btn btn-primary" data-track="about-register" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">Register for Audition</a>
-        <a href="#proseries" class="btn btn-primary" data-track="about-explore-proseries" data-hide-after="2026-05-01T00:00:00-04:00">Explore ProSeries</a>
-        <a href="#adult-company" class="btn btn-outline" data-track="about-join-collective">Join DWD Collective</a>
-      </div>
-    </section>
+    <!-- (About Dixon page — merged into Teachers (Dixon bio + photo shuffle) and
+         ProSeries (Teaching Philosophy). Hash redirect lives in main.js.) -->
 
     <!-- ══════════ ADULT COMPANY ══════════ -->
     <section class="page" id="page-adult-company" aria-label="Adult Company">
-      <div class="ac-hero" style="background-image: linear-gradient(rgba(15,35,24,0.85), rgba(15,35,24,0.92)), url('images/photos/A-06-06-25~4927-Enhanced-NR.jpg'); background-size: cover; background-position: center;">
-        <img src="images/logos/DWDC-green.png" alt="dwdCOLLECTIVE Logo" class="hero-logo-section" width="100" height="100" loading="lazy" style="margin-bottom: 24px;">
-        <div class="label">Orlando, Florida</div>
-        <h1>DWD Collective</h1>
-        <div class="sub">Modern / Contemporary Dance for Adults 18+</div>
-        <div class="tagline">No audition. No experience required. Just show up ready to move.</div>
+      <div class="ac-hero ac-hero--split" style="background-image: linear-gradient(rgba(15,35,24,0.85), rgba(15,35,24,0.92)), url('images/photos/A-06-06-25~4927-Enhanced-NR.jpg'); background-size: cover; background-position: center;">
+        <div class="ac-hero-text-stack">
+          <div class="label">Orlando, Florida</div>
+          <h1>DWD Collective</h1>
+          <div class="sub">Modern / Contemporary Dance for Adults 18+</div>
+          <div class="tagline">No audition. No experience required. Just show up ready to move.</div>
+          <a href="#amuse" class="btn btn-blush ac-hero-amuse-jump" data-track="collective-amuse-jump">Find Info for First Show <span aria-hidden="true">&darr;</span></a>
+        </div>
+        <div class="hero-logo-big">
+          <video src="images/logos/DWDC-pink-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="dwdCOLLECTIVE animated logo">
+            <img src="images/logos/DWDC-green.png" alt="dwdCOLLECTIVE Logo" loading="lazy">
+          </video>
+        </div>
       </div>
 
       <div class="content-section reveal">
@@ -505,7 +564,7 @@
         <div class="cc-intro">
           <h2>The Collective</h2>
           <p>I didn't start dwdCOLLECTIVE to run a drop-in class. I started it because adults 18 and up deserve what competitive dancers get &mdash; real training, real choreography, a real stage. Whether you danced your whole life or you've never set foot in a studio, this is your company.</p>
-          <p>Our first performance is <em>A&middot;Muse in Space</em> &mdash; Saturday, June 27, 2026 at Orlando Ballet, presented by Aric Barrow. Original contemporary modern choreography, performed by adult dancers (16+) of all levels. <a href="#classes-events">Learn more &rarr;</a></p>
+          <p>Our first performance is <em>A&middot;Muse in Space</em> &mdash; Saturday, June 27, 2026 at Orlando Ballet, presented by Aric Barrow. Original contemporary modern choreography, performed by adult dancers (16+) of all levels. <a href="#amuse">Learn more &rarr;</a></p>
         </div>
 
         <div class="cc-grid">
@@ -594,19 +653,98 @@
       <div class="cta-banner">
         <h3>Spring classes are happening now.</h3>
         <a href="#contact" class="btn btn-primary" data-track="adult-join-us">Join Us</a>
-        <a href="#classes-events" class="btn btn-outline" data-track="adult-view-schedule">View Full Schedule</a>
+        <a href="#amuse" class="btn btn-outline" data-track="adult-view-schedule">View Full Schedule</a>
       </div>
+
+      <!-- ══════════ A·MUSE IN SPACE — featured performance (merged from Performances) ══════════ -->
+      <section id="amuse" aria-label="A·Muse in Space — featured performance">
+        <div class="ac-hero" style="background-image: linear-gradient(rgba(15,35,24,0.82), rgba(15,35,24,0.94)), url('images/photos/dwdc-7I6A3724.jpg'); background-size: cover; background-position: center;">
+          <div class="label">Aric Barrow presents</div>
+          <h1>A&middot;Muse in Space</h1>
+          <div class="sub">Saturday, June 27, 2026 &middot; Orlando Ballet</div>
+          <div class="tagline">featuring dwdCOLLECTIVE</div>
+        </div>
+
+        <div class="content-section reveal">
+          <div class="chapter">
+            <span class="no"><sup>No.</sup>04</span>
+            <span class="lbl">Performances &mdash; Up Next on Stage</span>
+          </div>
+        </div>
+
+        <section class="collective-card reveal" aria-label="A·Muse in Space — overview">
+          <div class="cc-intro">
+            <h2>The Show</h2>
+            <p>dwdCOLLECTIVE takes the stage as part of <em>A&middot;Muse in Space</em>, presented by Aric Barrow at Orlando Ballet. We're performing an original contemporary modern piece &mdash; upbeat, full-out, built for adult dancers who want a real stage and a real room.</p>
+            <p>This is dwdC's first public performance. We've been building toward it since we started.</p>
+          </div>
+
+          <div class="cc-grid">
+            <div class="cc-section">
+              <h3>The Details</h3>
+              <ul class="cc-slots">
+                <li>
+                  <span class="cc-slot-time">Sat Jun 27, 2026</span>
+                  <div>
+                    <span class="cc-slot-name">Orlando Ballet</span>
+                    <p class="cc-slot-desc">Showtime &amp; ticket info coming from Aric Barrow's team closer to the date.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="cc-slot-time">The Piece</span>
+                  <div>
+                    <span class="cc-slot-name">Contemporary modern &middot; upbeat</span>
+                    <p class="cc-slot-desc">Original choreography by Dixon Bowles.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="cc-slot-time">The Cast</span>
+                  <div>
+                    <span class="cc-slot-name">Adult dancers &middot; ages 16+</span>
+                    <p class="cc-slot-desc">All levels welcome. No audition &mdash; reach out and we'll get you the cast-info packet.</p>
+                  </div>
+                </li>
+              </ul>
+              <p class="cc-meta">Presented by Aric Barrow &middot; performed at Orlando Ballet</p>
+            </div>
+
+            <div class="cc-section cc-pricing-block">
+              <h3>Want to dance in it?</h3>
+              <p style="margin-bottom: 16px;">Email or text and I'll send you the cast-info packet &mdash; rehearsal schedule, what to bring, how to commit.</p>
+              <div class="cc-payment">
+                <p class="cc-payment-label">Get in touch:</p>
+                <div class="payment-methods">
+                  <a href="mailto:dancewithdixon@gmail.com" class="payment-chip" data-track="amuse-email">Email</a>
+                  <a href="sms:+12082411899" class="payment-chip" data-track="amuse-text">Text</a>
+                </div>
+              </div>
+              <a href="#contact" class="btn btn-primary cc-cta" data-track="amuse-contact">Dance with us &rarr;</a>
+            </div>
+          </div>
+        </section>
+
+        <div class="cta-banner">
+          <h3>Want to come watch?</h3>
+          <p>Showtime &amp; ticket details posted as soon as Aric's team releases them. Follow <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a> for updates.</p>
+        </div>
+      </section>
     </section>
 
     <!-- ══════════ PROSERIES ══════════ -->
     <section class="page" id="page-proseries" aria-label="ProSeries">
-      <div class="ps-hero" style="background-image: linear-gradient(rgba(15,35,24,0.88), rgba(15,35,24,0.92)), url('images/photos/dixon-groove-stage-awards.jpg'); background-size: cover; background-position: center;">
-        <img src="images/logos/DWDPS-green.png" alt="dwdPROSERIES Logo" class="hero-logo-section" width="100" height="100" loading="lazy" style="margin-bottom: 24px;">
-        <div class="label">Ages 5&ndash;19 | Competitive Training</div>
-        <h1>ProSeries</h1>
-        <div class="sub">Elite dance training for the convention and competition circuit</div>
-        <div class="tagline">Season 1 begins August 2026.</div>
-        <a href="#proseries-interest" class="btn btn-blush" id="ps-hero-cta" data-track="proseries-hero-cta">Express Interest</a>
+      <div class="ps-hero">
+        <div class="ps-hero-text">
+          <div class="label">Ages 5&ndash;19 | Competitive Training</div>
+          <h1>Pro<em class="ps-block">Series</em></h1>
+          <div class="sub">Elite dance training for the convention and competition circuit</div>
+          <div class="tagline">Season 1 begins August 2026.</div>
+          <a href="#proseries-interest" class="btn btn-blush" id="ps-hero-cta" data-track="proseries-hero-cta">Express Interest</a>
+        </div>
+        <div class="ps-hero-logo">
+          <video src="images/logos/ProSeries-green-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="dwdPROSERIES animated logo" poster="images/logos/DWDPS-pink-transparent.png">
+            <img src="images/logos/DWDPS-pink-transparent.png" alt="dwdPROSERIES">
+          </video>
+        </div>
       </div>
 
       <div class="content-section reveal">
@@ -645,6 +783,12 @@
       </div>
 
 
+      <!-- Teaching Philosophy (merged from former About page) -->
+      <div class="content-section alt reveal">
+        <h2>Teaching Philosophy</h2>
+        <p>I believe in rigor with heart. Every class should challenge you, every rehearsal should push you, and every piece of choreography should mean something. I don't do filler. I don't do lazy. But I also don't do fear-based teaching. My dancers work hard because they want to &mdash; because they feel invested, not intimidated.</p>
+      </div>
+
       <!-- Three Tracks — full detail per card -->
       <section class="track-detail-section reveal" id="proseries-tracks-full" aria-label="ProSeries tracks — full detail">
         <div class="td-intro">
@@ -652,10 +796,27 @@
           <p>Everything in one place &mdash; schedule, training, and pricing for each track. Season runs August 2026 &ndash; May 2027.</p>
         </div>
 
+        <div class="track-tabs" role="tablist" aria-label="Choose a track">
+          <button class="track-tab" data-track-tab="prep" aria-selected="true" role="tab" id="tab-prep" aria-controls="panel-prep">
+            <span class="tt-num">Track One</span>
+            <span class="tt-name">Prep</span>
+            <span class="tt-meta">Ages 5&ndash;8 &middot; 4 hrs/wk &middot; $195/mo</span>
+          </button>
+          <button class="track-tab" data-track-tab="elite" aria-selected="false" role="tab" id="tab-elite" aria-controls="panel-elite">
+            <span class="tt-num">Track Two</span>
+            <span class="tt-name">Elite</span>
+            <span class="tt-meta">Ages 8&ndash;12 &middot; 8 hrs/wk &middot; $310/mo</span>
+          </button>
+          <button class="track-tab" data-track-tab="pro" aria-selected="false" role="tab" id="tab-pro" aria-controls="panel-pro">
+            <span class="tt-num">Track Three</span>
+            <span class="tt-name">Pro</span>
+            <span class="tt-meta">Ages 12+ &middot; 10 hrs/wk &middot; $360/mo</span>
+          </button>
+        </div>
         <div class="track-detail-grid">
 
           <!-- PREP -->
-          <article class="track-detail" data-track="prep">
+          <article class="track-detail" data-track="prep" data-active="true" id="panel-prep" role="tabpanel" aria-labelledby="tab-prep">
             <header class="td-header">
               <div class="td-eyebrow">Track One</div>
               <div class="td-name-row">
@@ -712,7 +873,7 @@
           </article>
 
           <!-- ELITE -->
-          <article class="track-detail" data-track="elite">
+          <article class="track-detail" data-track="elite" data-active="false" id="panel-elite" role="tabpanel" aria-labelledby="tab-elite">
             <header class="td-header">
               <div class="td-eyebrow">Track Two</div>
               <div class="td-name-row">
@@ -777,7 +938,7 @@
           </article>
 
           <!-- PRO -->
-          <article class="track-detail" data-track="pro">
+          <article class="track-detail" data-track="pro" data-active="false" id="panel-pro" role="tabpanel" aria-labelledby="tab-pro">
             <header class="td-header">
               <div class="td-eyebrow">Track Three</div>
               <div class="td-name-row">
@@ -876,6 +1037,25 @@
       </section>
 
 
+      <!-- What else is coming — Summer Intensive + Competition Season (merged from old Performances) -->
+      <div class="content-section reveal ps-whatelse">
+        <h2>Also on the calendar</h2>
+      </div>
+      <div class="coming-up three-up ps-whatelse-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="coming-up-card reveal">
+          <div class="label">Summer 2026</div>
+          <h3>Summer Intensive</h3>
+          <div class="meta">Details TBA</div>
+          <p>Pre-season summer intensive details coming soon. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for the announcement.</p>
+        </div>
+        <div class="coming-up-card reveal" data-delay="1">
+          <div class="label">Fall 2026 &ndash; Spring 2027</div>
+          <h3>Competition Season</h3>
+          <div class="meta">Regional &amp; National Events</div>
+          <p>ProSeries dancers compete at regional and national competitions throughout the season.</p>
+        </div>
+      </div>
+
       <!-- Coming Soon Banner: shows BEFORE the launch moment -->
       <div class="coming-soon-banner" id="cs-form">
         <div class="coming-soon-inner">
@@ -901,119 +1081,160 @@
       </div>
     </section>
 
-    <!-- ══════════ CLASSES & EVENTS — Performances ══════════ -->
-    <section class="page" id="page-classes-events" aria-label="Performances">
-      <div class="ac-hero" style="background-image: linear-gradient(rgba(15,35,24,0.82), rgba(15,35,24,0.94)), url('images/photos/dwdc-7I6A3724.jpg'); background-size: cover; background-position: center;">
-        <div class="label">Aric Barrow presents</div>
-        <h1>A&middot;Muse in Space</h1>
-        <div class="sub">Saturday, June 27, 2026 &middot; Orlando Ballet</div>
-        <div class="tagline">featuring dwdCOLLECTIVE</div>
-      </div>
-
-      <div class="content-section reveal">
-        <div class="chapter">
-          <span class="no"><sup>No.</sup>04</span>
-          <span class="lbl">Performances &mdash; Up Next on Stage</span>
+    <!-- ══════════ TEACHERS ══════════ -->
+    <section class="page" id="page-teachers" aria-label="Teachers">
+      <!-- Hero band -->
+      <div class="tch-hero tch-hero--split">
+        <div class="tch-hero-text">
+          <span class="tch-hero-eyebrow">Director &middot; Rotation Faculty</span>
+          <h1>Teachers</h1>
+          <p class="tch-hero-sub">Every class designed by a working director &mdash; supported by a rotation of working artists.</p>
+        </div>
+        <div class="hero-logo-big">
+          <video src="images/logos/DWD-pink-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="Dance With Dixon animated logo">
+            <img src="images/logos/DWD-pink.png" alt="DWD" loading="lazy">
+          </video>
         </div>
       </div>
 
-      <section class="collective-card reveal" aria-label="A·Muse in Space — overview">
-        <div class="cc-intro">
-          <h2>The Show</h2>
-          <p>dwdCOLLECTIVE takes the stage as part of <em>A&middot;Muse in Space</em>, presented by Aric Barrow at Orlando Ballet. We're performing an original contemporary modern piece &mdash; upbeat, full-out, built for adult dancers who want a real stage and a real room.</p>
-          <p>This is dwdC's first public performance. We've been building toward it since we started.</p>
+      <!-- Director · Dixon (bio + photo shuffle, merged in from former About page) -->
+      <div class="tch-director">
+        <div class="tch-director-text">
+          <span class="tch-eyebrow">Director &amp; Choreographer</span>
+          <h2 class="tch-name">Dixon <em>Bowles</em><!-- Tamara Mark — For Mom --><svg class="tamara-mark tamara-mark--about" viewBox="20 10 200 190" width="14" height="13" aria-hidden="true"><circle cx="100" cy="115" r="65" fill="none" stroke="url(#tm-gold-t)" stroke-width="1.8" stroke-linecap="round" opacity="0.75"/><circle cx="152" cy="70" r="49" fill="none" stroke="url(#tm-gold-t)" stroke-width="2.5" stroke-linecap="round" opacity="0.95"/><circle cx="107" cy="50" r="10" fill="url(#tm-glow-t)" opacity="0.25"/><defs><linearGradient id="tm-gold-t" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c9956c"/><stop offset="40%" stop-color="#e8c49a"/><stop offset="100%" stop-color="#d4a574"/></linearGradient><radialGradient id="tm-glow-t"><stop offset="0%" stop-color="#e8c49a"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs></svg></h2>
+          <p class="tch-role">Teacher. Choreographer. Director.</p>
+          <p class="tch-tagline">Building a new home for dance in Orlando.</p>
+          <p class="tch-bio">I trained at Utah Valley University and got hired by Disney Jr. Live before I finished my degree. I performed with professional dance companies in New York. And then I moved to Florida and decided to build.</p>
+          <p class="tch-bio">For nine years, I ran the competitive dance program at a major Central Florida studio as choreographer, director, and the only person in the room every single day. I built it from 9 dancers to 23 across five competition seasons. My dancers earned titles at Groove, Inferno, Tremaine, and StarQuest. The program won ADCC Studio of Excellence. I choreographed nearly every piece, ran every rehearsal, directed every competition weekend.</p>
+          <p class="tch-bio">Outside the studio, I toured nationally as a Tour Director with Fly Dance Competition. I've judged competitions, taught masterclasses across the country, and choreographed for musical theatre. I know this industry from every angle as a performer, a teacher, a director, and a judge.</p>
+          <p class="tch-bio">DWD is what happens when the person who built your program decides to build their own. Two programs, one standard. An entire season designed, directed, and choreographed by one artistic director. DWD ProSeries for young competitive dancers ages 5 to 19 who want real training. DWD Collective for adults 18 and up who want real choreography and real stage time. Come find out what it means to Dance With Dixon.</p>
         </div>
-
-        <div class="cc-grid">
-          <div class="cc-section">
-            <h3>The Details</h3>
-            <ul class="cc-slots">
-              <li>
-                <span class="cc-slot-time">Sat Jun 27, 2026</span>
-                <div>
-                  <span class="cc-slot-name">Orlando Ballet</span>
-                  <p class="cc-slot-desc">Showtime &amp; ticket info coming from Aric Barrow's team closer to the date.</p>
-                </div>
-              </li>
-              <li>
-                <span class="cc-slot-time">The Piece</span>
-                <div>
-                  <span class="cc-slot-name">Contemporary modern &middot; upbeat</span>
-                  <p class="cc-slot-desc">Original choreography by Dixon Bowles.</p>
-                </div>
-              </li>
-              <li>
-                <span class="cc-slot-time">The Cast</span>
-                <div>
-                  <span class="cc-slot-name">Adult dancers &middot; ages 16+</span>
-                  <p class="cc-slot-desc">All levels welcome. No audition &mdash; reach out and we'll get you the cast-info packet.</p>
-                </div>
-              </li>
-            </ul>
-            <p class="cc-meta">Presented by Aric Barrow &middot; performed at Orlando Ballet</p>
-          </div>
-
-          <div class="cc-section cc-pricing-block">
-            <h3>Want to dance in it?</h3>
-            <p style="margin-bottom: 16px;">Email or text and I'll send you the cast-info packet &mdash; rehearsal schedule, what to bring, how to commit.</p>
-            <div class="cc-payment">
-              <p class="cc-payment-label">Get in touch:</p>
-              <div class="payment-methods">
-                <a href="mailto:dancewithdixon@gmail.com" class="payment-chip" data-track="amuse-email">Email</a>
-                <a href="sms:+12082411899" class="payment-chip" data-track="amuse-text">Text</a>
-              </div>
-            </div>
-            <a href="#contact" class="btn btn-primary cc-cta" data-track="amuse-contact">Dance with us &rarr;</a>
-          </div>
-        </div>
-      </section>
-
-      <div class="cta-banner">
-        <h3>Want to come watch?</h3>
-        <p>Showtime &amp; ticket details posted as soon as Aric's team releases them. Follow <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a> for updates.</p>
-      </div>
-
-      <div class="content-section reveal" style="margin-top: 48px;">
-        <h2 style="text-align: center;">Also on the calendar</h2>
-      </div>
-
-      <div class="coming-up three-up" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="coming-up-card reveal">
-          <div class="label">Summer 2026</div>
-          <h3>Summer Intensive</h3>
-          <div class="meta">Details TBA</div>
-          <p>Pre-season summer intensive details coming soon. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for the announcement.</p>
-        </div>
-        <div class="coming-up-card reveal" data-delay="1">
-          <div class="label">Fall 2026 – Spring 2027</div>
-          <h3>Competition Season</h3>
-          <div class="meta">Regional &amp; National Events</div>
-          <p>ProSeries dancers compete at regional and national competitions throughout the season.</p>
+        <div class="tch-director-photo">
+          <img src="images/photos/BW-Headshot.jpg" alt="Dixon Bowles headshot — black and white" class="tch-slide active" loading="lazy">
+          <img src="images/photos/Bowles-33-headshot.jpg" alt="Dixon Bowles professional headshot" class="tch-slide" loading="lazy">
+          <img src="images/photos/dixon-award-groove-solo.jpg" alt="Dixon on stage receiving award at GROOVE competition" class="tch-slide" loading="lazy">
+          <img src="images/photos/IMG_1950.JPG" alt="Dixon — career moment" class="tch-slide" loading="lazy">
+          <img src="images/photos/dixon-malik-onstage-award.jpg" alt="Dixon and Malik on stage receiving competition award" class="tch-slide" loading="lazy">
+          <img src="images/photos/IMG_2919.jpeg" alt="Dixon over the years" class="tch-slide" loading="lazy">
+          <img src="images/photos/dixon-adcc-excellence-banner.jpg" alt="Dixon holding ADCC Studio of Excellence Winner banner" class="tch-slide" loading="lazy">
+          <img src="images/photos/dixon-groove-stage-plaque.jpg" alt="Dixon commanding the stage at GROOVE with award plaque" class="tch-slide" loading="lazy">
+          <img src="images/photos/dixon-mom/dixon-mom-1.jpg" alt="Dixon and his mom Tamara at his wedding" class="tch-slide" loading="lazy">
+          <img src="images/photos/dixon-mom/dixon-mom-2.jpg" alt="Dixon and his mom Tamara — wedding dance" class="tch-slide" loading="lazy">
+          <img src="images/photos/dixon-mom/dixon-mom-3.jpg" alt="Dixon and his mom Tamara on the wedding dance floor" class="tch-slide" loading="lazy">
+          <img src="images/photos/dixon-mom/dixon-mom-4.jpg" alt="Dixon and his mom Tamara — wedding spin" class="tch-slide" loading="lazy">
+          <img src="images/photos/dixon-mom/dixon-mom-5.jpg" alt="Dixon and his mom Tamara at his wedding — portrait" class="tch-slide" loading="lazy">
         </div>
       </div>
 
-      <div class="ce-teasers reveal">
-        <a class="ce-teaser" href="#adult-company" data-track="classes-teaser-adult">
-          <div class="ce-teaser-eyebrow">Adults 18+</div>
-          <h3>DWD Collective</h3>
-          <p>Modern technique &amp; original choreography at Exchange Dance Studio. No audition required.</p>
-          <span class="ce-teaser-arrow">Explore the Collective &rarr;</span>
-        </a>
-        <a class="ce-teaser" href="#proseries" data-track="classes-teaser-proseries">
-          <div class="ce-teaser-eyebrow">Ages 5&ndash;19</div>
-          <h3>DWD ProSeries</h3>
-          <p>Three competitive training tracks &mdash; Prep, Elite, Pro. Season 1 begins August 2026.</p>
-          <span class="ce-teaser-arrow">Explore ProSeries &rarr;</span>
-        </a>
+      <!-- Rotation faculty 3-up -->
+      <div class="tch-rotation-band">
+        <div class="tch-rotation-head">
+          <span class="tch-rotation-eyebrow">Rotation Faculty</span>
+          <h2 class="tch-rotation-title">Working artists in the room.</h2>
+        </div>
+        <div class="tch-rotation-grid">
+          <article class="tch-card tch-card--composite" data-teacher="malik">
+            <img src="images/teachers/malik.png" alt="Malik Van Hoozer-Bowles — Musical Theatre and Acting rotation for dwdPROSERIES" loading="lazy">
+          </article>
+
+          <article class="tch-card tch-card--composite" data-teacher="yahia">
+            <img src="images/teachers/yahia.png" alt="Yahia Icheboudene — Acro and Cirque rotation for dwdPROSERIES" loading="lazy">
+          </article>
+
+          <article class="tch-card tch-card--composite" data-teacher="madi">
+            <img src="images/teachers/madi.png" alt="Madi Sprague — Tap rotation for dwdPROSERIES" loading="lazy">
+          </article>
+
+          <article class="tch-card tch-card--composite" data-teacher="jackson">
+            <img src="images/teachers/jackson.png" alt="Jackson Haughton — Hip Hop rotation for dwdPROSERIES" loading="lazy">
+          </article>
+
+          <article class="tch-card tch-card--composite" data-teacher="tori">
+            <img src="images/teachers/tori.png" alt="Tori Ugalde — Strength &amp; Stretch rotation for dwdPROSERIES" loading="lazy">
+          </article>
+        </div>
+      </div>
+
+      <!-- Outro CTA -->
+      <div class="tch-outro">
+        <h3>Want to know more about who you'll train with?</h3>
+        <p>Bios and class breakdowns are coming. In the meantime, reach out &mdash; happy to talk through the rotation.</p>
+        <a href="#contact" class="btn btn-primary" data-track="teachers-contact">Get in Touch</a>
       </div>
     </section>
 
     <!-- ══════════ GALLERY ══════════ -->
     <section class="page" id="page-gallery" aria-label="Gallery">
-      <div class="gallery-hero">
-        <h1>Gallery</h1>
-        <p>Movement captured. Community in action.</p>
+      <div class="gallery-hero gallery-hero--split">
+        <div class="gallery-hero-text">
+          <h1>Gallery</h1>
+          <p>Movement captured. Community in action.</p>
+        </div>
+        <div class="hero-logo-big">
+          <video src="images/logos/DWD-pink-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="Dance With Dixon animated logo">
+            <img src="images/logos/DWD-pink.png" alt="DWD" loading="lazy">
+          </video>
+        </div>
       </div>
+
+      <!-- ──────────────────────────────────────────────────────────
+           Instagram feeds — two stacked horizontal-scroll strips.
+           Wired via SnapWidget iframes (free tier supports HTTPS).
+           To activate:
+             1. Sign up free at https://snapwidget.com
+             2. Create new widget → Source = Instagram, Account = "dwdproseries"
+                Layout: Slideshow / Carousel (horizontal scroll), 8–12 thumbs.
+             3. Copy the iframe `src` URL from the embed code shown.
+             4. Replace YOUR_PROSERIES_WIDGET_ID in the iframe below.
+             5. Repeat for @dwd_collective (replace YOUR_COLLECTIVE_WIDGET_ID).
+           Until the IDs are swapped in, the strips show the "setup pending"
+           fallback message below each iframe.
+      ────────────────────────────────────────────────────────── -->
+      <section class="ig-feeds reveal" aria-label="Instagram feeds">
+        <div class="ig-strip">
+          <div class="ig-strip-head">
+            <span class="ig-eyebrow">Latest on Instagram</span>
+            <a class="ig-handle" href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" data-track="gallery-ig-proseries">@dwdproseries <span aria-hidden="true">&rarr;</span></a>
+          </div>
+          <iframe class="ig-strip-frame snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no"
+                  src="https://snapwidget.com/embed/1123531"
+                  aria-label="Latest Instagram posts from dwdproseries"
+                  title="@dwdproseries Instagram feed"></iframe>
+          <div class="ig-strip-fallback">
+            <div class="ig-strip-fallback-dev">
+              <p>Instagram strip not wired yet — paste your SnapWidget iframe URL into <code>index.html</code> for <code>@dwdproseries</code>. (See comment in markup.)</p>
+              <a class="ig-strip-fallback-cta" href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">Open @dwdproseries on Instagram &rarr;</a>
+            </div>
+            <div class="ig-strip-fallback-blocked">
+              <span class="ig-strip-fallback-eyebrow">See the latest on Instagram</span>
+              <span class="ig-strip-fallback-handle">@dwdproseries</span>
+              <a class="ig-strip-fallback-cta" href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" data-track="gallery-ig-proseries-fallback">Open on Instagram &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ig-strip">
+          <div class="ig-strip-head">
+            <span class="ig-eyebrow">Latest on Instagram</span>
+            <a class="ig-handle" href="https://instagram.com/dwd_collective" target="_blank" rel="noopener" data-track="gallery-ig-collective">@dwd_collective <span aria-hidden="true">&rarr;</span></a>
+          </div>
+          <iframe class="ig-strip-frame snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no"
+                  src="https://snapwidget.com/embed/1123527"
+                  aria-label="Latest Instagram posts from dwd_collective"
+                  title="@dwd_collective Instagram feed"></iframe>
+          <div class="ig-strip-fallback">
+            <div class="ig-strip-fallback-dev">
+              <p>Instagram strip not wired yet — paste your SnapWidget iframe URL into <code>index.html</code> for <code>@dwd_collective</code>. (See comment in markup.)</p>
+              <a class="ig-strip-fallback-cta" href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">Open @dwd_collective on Instagram &rarr;</a>
+            </div>
+            <div class="ig-strip-fallback-blocked">
+              <span class="ig-strip-fallback-eyebrow">See the latest on Instagram</span>
+              <span class="ig-strip-fallback-handle">@dwd_collective</span>
+              <a class="ig-strip-fallback-cta" href="https://instagram.com/dwd_collective" target="_blank" rel="noopener" data-track="gallery-ig-collective-fallback">Open on Instagram &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div class="gallery-section-label">Choreography</div>
       <div class="video-grid">
@@ -1093,7 +1314,9 @@
     <section class="page" id="page-shop" aria-label="Merch">
       <div class="merch-poll">
         <div class="merch-poll-hero">
-          <img src="images/logos/DWDPS-green.png" alt="dwdPROSERIES" class="hero-logo-section" width="100" height="100" loading="lazy" style="margin-bottom: 24px;">
+          <video src="images/logos/ProSeries-pink-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="dwdPROSERIES animated logo" class="hero-logo-section" width="100" height="100" style="margin-bottom: 24px;">
+            <img src="images/logos/DWDPS-green.png" alt="dwdPROSERIES" width="100" height="100" loading="lazy">
+          </video>
           <h1>dwdPROSERIES Merch</h1>
           <div class="sub">Help shape the first drop. Pick what you'd rock — one, two, or all three.</div>
         </div>
@@ -1225,7 +1448,9 @@
           </form>
         </div>
         <div class="contact-info-side">
-          <img src="images/logos/DWD-green.png" alt="DWD Logo" width="80" height="80" style="margin-bottom: 24px;">
+          <video src="images/logos/DWD-green-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="DWD animated logo" width="80" height="80" style="margin-bottom: 24px;">
+            <img src="images/logos/DWD-green.png" alt="DWD Logo" width="80" height="80">
+          </video>
           <h3>Connect with DWD</h3>
           <div class="contact-detail">
             <div class="dlabel">Email</div>
@@ -1269,7 +1494,9 @@
       <!-- Access Code Gate -->
       <div class="campaign-gate" id="campaign-gate">
         <div class="campaign-gate-inner">
-          <img src="images/logos/DWDPS-green.png" alt="dwdPS" width="80" height="80" style="margin-bottom: 1.5rem;">
+          <video src="images/logos/ProSeries-green-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="dwdPROSERIES animated logo" width="80" height="80" style="margin-bottom: 1.5rem;">
+            <img src="images/logos/DWDPS-green.png" alt="dwdPS" width="80" height="80">
+          </video>
           <h2>Campaign Command Center</h2>
           <p>Enter access code to view the ProSeries launch campaign.</p>
           <form id="campaign-auth-form" class="campaign-auth-form">
@@ -1299,7 +1526,9 @@
     <section class="page" id="page-analytics" aria-label="Site Analytics">
       <div class="campaign-gate" id="analytics-gate">
         <div class="campaign-gate-inner">
-          <img src="images/logos/DWD-green.png" alt="DWD" width="80" height="80" style="margin-bottom: 1.5rem;">
+          <video src="images/logos/DWD-green-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="DWD animated logo" width="80" height="80" style="margin-bottom: 1.5rem;">
+            <img src="images/logos/DWD-green.png" alt="DWD" width="80" height="80">
+          </video>
           <h2>Site Analytics</h2>
           <p>Enter access code to view website analytics.</p>
           <form id="analytics-auth-form" class="campaign-auth-form">
@@ -1463,10 +1692,10 @@
       <div class="footer-links">
         <h5>Navigate</h5>
         <a href="#home">Home</a>
-        <a href="#about">About Dixon</a>
+        <a href="#teachers">About / Teachers</a>
         <a href="#adult-company">Adult Company</a>
         <a href="#proseries">ProSeries</a>
-        <a href="#classes-events">Classes &amp; Events</a>
+        <a href="#teachers">Teachers</a>
         <a href="#gallery">Gallery</a>
         <a href="#shop">Merch</a>
         <a href="#contact">Contact</a>
@@ -1521,6 +1750,24 @@
   <script src="js/main.js"></script>
   <script src="js/campaign.js"></script>
   <script src="js/analytics.js"></script>
+  <!-- OPEN HOUSE STICKY TICKER — sitewide, hides after May 23, 2pm ET -->
+  <aside class="oh-ticker" data-hide-after="2026-05-23T14:00:00-04:00" aria-label="Open House — this Saturday">
+    <span class="oh-tk-tag">
+      <span class="oh-tk-dot" aria-hidden="true"></span>
+      <span class="oh-tk-tag-text oh-block">THIS SATURDAY</span>
+    </span>
+    <span class="oh-tk-main">
+      <span class="oh-tk-head oh-block">OPEN HOUSE</span>
+      <span class="oh-tk-sep" aria-hidden="true">&middot;</span>
+      <span class="oh-tk-when">May 23 &middot; 11:30am&ndash;2pm &middot; Exchange Dance, Orlando</span>
+      <span class="oh-tk-sep" aria-hidden="true">&middot;</span>
+      <span class="oh-tk-when">Ages 5&ndash;18 &middot; Free</span>
+    </span>
+    <a class="oh-tk-rsvp" href="#open-house" data-oh-action="ticker-rsvp" data-track="ticker-rsvp">
+      More Info <span class="oh-serif oh-arrow">&rarr;</span>
+    </a>
+    <button type="button" class="oh-tk-close" data-oh-action="ticker-dismiss" data-track="ticker-dismiss" aria-label="Dismiss Open House ticker">&times;</button>
+  </aside>
   <script src="js/analytics-dashboard.js?v=3"></script>
   <script>
     if ('serviceWorker' in navigator) {

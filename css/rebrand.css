@@ -47,7 +47,7 @@ main.main .page:not(.active) { display: none; }
    sticky topnav flow, so without this the top ~6px of h1 would be covered by the
    70px-tall fixed topnav at scrollY=0. Home's #page-home .hero has its own padding-top). */
 body.has-topnav main.main > .page.active:not(#page-home) {
-  padding-top: 16px;
+  padding-top: 72px;
 }
 
 /* ═══ GLOBAL — TOP NAV ═══ */

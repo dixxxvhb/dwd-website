@@ -8,11 +8,25 @@
 
   // ── HASH ROUTING ──
   const validPages = [
-    'home', 'about', 'adult-company', 'proseries',
-    'classes-events',
+    'home', 'adult-company', 'proseries',
+    'teachers',
     'gallery', 'shop', 'contact', 'campaign', 'analytics', 'privacy',
     'early-access'
   ];
+
+  // Legacy hash redirects — Performances was merged into Collective (#adult-company),
+  // About was merged into Teachers, and A·Muse content lives at #amuse.
+  const legacyHashRedirects = {
+    'classes-events': 'adult-company',
+    'performances':   'adult-company',
+    'about':          'teachers'
+  };
+  (function applyLegacyRedirect() {
+    var raw = window.location.hash.replace('#', '').split('?')[0];
+    if (legacyHashRedirects[raw]) {
+      window.location.hash = '#' + legacyHashRedirects[raw];
+    }
+  })();
 
   function getPageFromHash() {
     const hash = window.location.hash.replace('#', '').split('?')[0];
@@ -60,10 +74,9 @@
     // Update page title
     var titles = {
       'home': 'Dance With Dixon | Orlando Dance Company',
-      'about': 'About Dixon Bowles | DWD',
       'adult-company': 'Adult Company | DWD',
       'proseries': 'ProSeries | DWD',
-      'classes-events': 'A·Muse in Space — June 27 at Orlando Ballet | DWD',
+      'teachers': 'Teachers | DWD',
 
       'gallery': 'Gallery | DWD',
       'shop': 'Merch | DWD',
@@ -78,6 +91,12 @@
   // Listen for hash changes
   window.addEventListener('hashchange', function () {
     var hash = window.location.hash.replace('#', '').split('?')[0];
+
+    // Legacy redirects — old Performances anchors land on the Collective page now.
+    if (legacyHashRedirects[hash]) {
+      window.location.hash = '#' + legacyHashRedirects[hash];
+      return;
+    }
 
     // If hash matches a valid page, route to it
     if (validPages.includes(hash)) {
@@ -574,16 +593,19 @@
     });
   });
 
-  // ── ABOUT PAGE PHOTO SLIDESHOW ──
-  var aboutSlides = document.querySelectorAll('.about-slide');
-  if (aboutSlides.length > 1) {
-    var currentSlide = 0;
+  // ── TEACHERS / ABOUT PHOTO SLIDESHOW ──
+  // (.about-slide was the original About page; .tch-slide is the new Teachers
+  //  Dixon-director photo column. Same shuffle cycler handles both.)
+  ['.about-slide', '.tch-slide'].forEach(function (sel) {
+    var slides = document.querySelectorAll(sel);
+    if (slides.length < 2) return;
+    var i = 0;
     setInterval(function () {
-      aboutSlides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % aboutSlides.length;
-      aboutSlides[currentSlide].classList.add('active');
+      slides[i].classList.remove('active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('active');
     }, 5000);
-  }
+  });
 
   // ── INIT: Load correct page from hash ──
   var initialPage = getPageFromHash();
@@ -604,4 +626,72 @@
     }, 100);
   }
 
+})();
+
+/* ============================================================
+   ProSeries Track Tabs (Prep / Elite / Pro accordion)
+   Click a tab to swap which detail panel is visible.
+   ============================================================ */
+(function () {
+  function activateTrack(name) {
+    document.querySelectorAll('.track-tab').forEach(function (t) {
+      t.setAttribute('aria-selected', t.dataset.trackTab === name ? 'true' : 'false');
+    });
+    document.querySelectorAll('.track-detail').forEach(function (p) {
+      p.setAttribute('data-active', p.dataset.track === name ? 'true' : 'false');
+    });
+  }
+  document.addEventListener('click', function (ev) {
+    var tab = ev.target.closest('.track-tab');
+    if (!tab) return;
+    var name = tab.dataset.trackTab;
+    if (!name) return;
+    ev.preventDefault();
+    activateTrack(name);
+  });
+  // Keyboard support: left/right arrows move between tabs when one is focused
+  document.addEventListener('keydown', function (ev) {
+    var tab = document.activeElement;
+    if (!tab || !tab.matches || !tab.matches('.track-tab')) return;
+    if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
+    var tabs = Array.from(document.querySelectorAll('.track-tab'));
+    var idx = tabs.indexOf(tab);
+    var next = ev.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
+    tabs[next].focus();
+    activateTrack(tabs[next].dataset.trackTab);
+    ev.preventDefault();
+  });
+})();
+
+/* ============================================================
+   Instagram strip fallback detection (SnapWidget)
+   Ad blockers (uBlock, Privacy Badger, etc.) often classify SnapWidget
+   as a tracker and block its script + iframe requests entirely. The
+   <script src="snapwidget.com/js/snapwidget.js"> in <head> has an
+   onload handler that sets window.__snapwidgetReady = true. If that
+   flag is still false after 4 seconds, we assume the visitor's browser
+   blocked SnapWidget and mark each wired strip as broken so the CSS
+   fallback panel takes over with an "Open on Instagram" CTA.
+   ============================================================ */
+(function () {
+  var TIMEOUT_MS = 4000;
+
+  function checkIgStrips() {
+    if (window.__snapwidgetReady) return; // script loaded fine, do nothing
+    document.querySelectorAll('.ig-strip-frame').forEach(function (ifr) {
+      // Skip unwired iframes (the placeholder fallback already shows via CSS).
+      if (!ifr.src || ifr.src.indexOf('YOUR_') !== -1) return;
+      ifr.classList.add('ig-strip-frame--broken');
+    });
+  }
+
+  function start() {
+    setTimeout(checkIgStrips, TIMEOUT_MS);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
 })();

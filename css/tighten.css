@@ -1,0 +1,145 @@
+/* ============================================================
+   tighten.css
+   Sitewide vertical-spacing pass. Loaded LAST so it wins.
+   Goal: cut dead space without breaking section rhythm.
+   ============================================================ */
+
+/* ─── Heroes ────────────────────────────────────────────────── */
+/* The legacy .hero (sub-page heroes like About / Contact / Gallery
+   used 6rem top / 10rem bottom). Cut both. */
+.hero {
+  padding-top: 3.5rem !important;
+  padding-bottom: 4rem !important;
+}
+.hero.home-hero { padding: 5rem 3rem !important; }
+
+/* Decorative coral hairline 3rem off the bottom — pull it tighter */
+.hero::after { bottom: 1.25rem !important; }
+
+/* ProSeries / A·Muse / Adult Company / Merch / Gallery heroes
+   all use the .ac-hero / .ps-hero / .gallery-hero / .merch-poll-hero
+   pattern. They tend to be padded by clamp(80px, ...) — halve them. */
+#page-adult-company > .ac-hero,
+#amuse .ac-hero,
+#page-about .ac-hero,
+#page-gallery .ac-hero {
+  padding-top: 56px !important;
+  padding-bottom: 56px !important;
+  min-height: 0 !important;
+}
+.gallery-hero { padding: 56px 40px !important; }
+.contact-hero,
+.shop-hero { padding: 48px 40px !important; }
+
+/* ─── Chapter eyebrow bands ─────────────────────────────────── */
+/* The "No.04 · PERFORMANCES — UP NEXT ON STAGE" band was 64+64 padding
+   around a single line of small text. Cut hard. */
+.content-section {
+  padding-top: 36px !important;
+  padding-bottom: 36px !important;
+}
+/* Even tighter when it's just a chapter eyebrow with no other content */
+.content-section:has(> .chapter:only-child),
+.content-section .chapter:only-child {
+  /* :has() may not be supported in some legacy browsers — fall through to the
+     plain selector below */
+}
+/* Fallback / always-on: when .content-section contains only a .chapter,
+   the section is decorative — kill the bottom padding so it sits flush. */
+#amuse > .content-section,
+#page-adult-company > .content-section:first-of-type {
+  padding-top: 28px !important;
+  padding-bottom: 12px !important;
+}
+
+/* ─── Cards / panels with their own margin ──────────────────── */
+.collective-card {
+  margin-top: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+/* ─── CTA banner ────────────────────────────────────────────── */
+.cta-banner {
+  padding-top: 32px !important;
+  padding-bottom: 36px !important;
+  margin-top: 8px !important;
+  margin-bottom: 12px !important;
+}
+
+/* ─── Coming-up / 2-up grids on Performances were doubly padded ── */
+.coming-up,
+.coming-up.three-up {
+  margin-top: 4px !important;
+  margin-bottom: 12px !important;
+}
+
+/* ─── ProSeries content sections (poster aesthetic) ─────────── */
+#page-proseries .content-section { padding: 44px 64px !important; }
+#page-proseries .ps-whatelse { padding: 36px 64px !important; }
+#page-proseries .td-intro { padding: 44px 64px 24px !important; }
+#page-proseries .pricing-onetime,
+#page-proseries .pricing-notes { padding: 36px 64px !important; }
+#page-proseries .coming-soon-banner { padding: 40px 64px !important; }
+#page-proseries #proseries-interest { padding: 44px 64px !important; }
+#page-proseries .cta-banner { padding: 36px 64px !important; }
+#page-proseries .track-detail { padding: 40px 64px !important; }
+
+/* ─── Teachers page bands ───────────────────────────────────── */
+.tch-hero { padding: 0 !important; }
+.tch-hero-text { padding: 44px 64px 36px !important; }
+.tch-director { min-height: 380px !important; }
+.tch-director-text { padding: 44px 56px !important; }
+.tch-rotation-head { padding: 32px 64px 16px !important; }
+.tch-outro { padding: 36px 64px !important; }
+
+/* ─── Merch ──────────────────────────────────────────────────── */
+#page-shop .merch-poll-hero { padding: 44px 64px !important; }
+#page-shop .merch-category-card { padding: 28px 28px !important; }
+#page-shop .merch-extras { padding: 32px 64px !important; }
+#page-shop .merch-vote-success { padding: 40px 64px !important; }
+
+/* ─── Performances (now A·Muse inside Collective) ──────────── */
+#amuse > .cta-banner { padding: 32px 40px !important; margin: 8px 0 16px !important; }
+
+/* ─── Home: tighten extras around the upnext card ───────────── */
+.upnext-card { margin: 28px auto !important; }
+
+/* ─── Track Record on home ──────────────────────────────────── */
+.track-record { padding: 36px 40px !important; }
+
+/* ─── About / Contact / Privacy / Early-access — generic ────── */
+.about-content,
+.contact-content,
+.privacy-content,
+.early-access-content { padding: 40px 40px !important; }
+
+/* ─── Gallery grid ──────────────────────────────────────────── */
+.gallery-grid { margin-top: 16px !important; gap: 12px !important; }
+
+/* ─── Mobile: even tighter ──────────────────────────────────── */
+@media (max-width: 720px) {
+  .hero { padding: 2.5rem 1.5rem 3rem !important; }
+  #page-adult-company > .ac-hero,
+  #amuse .ac-hero,
+  #page-about .ac-hero,
+  #page-gallery .ac-hero { padding: 40px 24px !important; }
+  .content-section { padding: 28px 24px !important; }
+  .cta-banner { padding: 24px 24px 28px !important; }
+  #page-proseries .content-section,
+  #page-proseries .ps-whatelse,
+  #page-proseries .td-intro,
+  #page-proseries .pricing-onetime,
+  #page-proseries .pricing-notes,
+  #page-proseries .coming-soon-banner,
+  #page-proseries #proseries-interest,
+  #page-proseries .cta-banner,
+  #page-proseries .track-detail { padding: 32px 24px !important; }
+  .tch-hero-text,
+  .tch-director-text,
+  .tch-rotation-head,
+  .tch-outro { padding: 28px 24px !important; }
+  #page-shop .merch-poll-hero,
+  #page-shop .merch-extras,
+  #page-shop .merch-vote-success,
+  #page-shop .merch-category-card { padding: 24px 24px !important; }
+}
