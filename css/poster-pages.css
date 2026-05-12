@@ -575,10 +575,16 @@
   display: none;
 }
 
-/* Mobile: stack the strip head. SnapWidget's iframe doesn't reflow to mobile widths
-   (one squashed row of tiny thumbnails inside a 390px viewport), so we hide the
-   iframe and show the clean "Open on Instagram" fallback CTA instead — a much
-   better mobile experience than a malformed widget. */
+/* iPad portrait (721-900px): SnapWidget renders one tidy row of thumbnails but
+   the default 240px height leaves a big empty gap below. Cap the iframe to one
+   row's worth so the page flows cleanly. */
+@media (min-width: 721px) and (max-width: 900px) {
+  .ig-strip-frame { height: 130px; }
+}
+
+/* Mobile (≤720px): SnapWidget's iframe doesn't reflow to phone widths (one
+   squashed row of tiny thumbnails inside a 390px viewport), so we hide the
+   iframe and show the clean "Open on Instagram" fallback CTA instead. */
 @media (max-width: 720px) {
   .ig-feeds {
     padding: 20px 16px 12px;
