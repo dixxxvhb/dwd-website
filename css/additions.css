@@ -1670,6 +1670,7 @@ button[type="submit"]:disabled {
 /* ══════════ EARLY ACCESS PAGE ══════════ */
 .early-access-page {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1917,6 +1918,9 @@ a:focus-visible,
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  /* Hide autoplay WebM logos; fall back to sibling PNG */
+  video[autoplay] { display: none !important; }
+  video[autoplay] + img { display: inline-block !important; }
 }
 
 /* ── TRACK RECORD landmark (homepage, between EA banner and two-entry split) ── */

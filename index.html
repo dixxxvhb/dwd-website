@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c1f17">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Dance With Dixon | Orlando Dance Company</title>
   <meta name="description" content="DWD is an Orlando-based dance collective — adult modern dance company and elite youth training program. Founded by choreographer Dixon Bowles.">
   <meta name="keywords" content="dance, Orlando, modern dance, contemporary, adult dance class, youth dance training, competition dance, Dixon Bowles, DWD, DWDC">
@@ -13,6 +15,9 @@
 
   <!-- Canonical -->
   <link rel="canonical" href="https://dancewithdixon.com">
+
+  <!-- LCP hero preload (home page first paint) -->
+  <link rel="preload" as="image" href="images/photos/high res pose — hero crop.jpeg" fetchpriority="high">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Dance With Dixon | Orlando Dance Company">
@@ -215,7 +220,7 @@
       <!-- HERO — DUAL SPLIT -->
       <div class="hero">
         <div class="hero-photo">
-          <img src="images/photos/high res pose — hero crop.jpeg" alt="DWD dancer on stage" loading="eager">
+          <img src="images/photos/high res pose — hero crop.jpeg" alt="DWD dancer on stage" loading="eager" fetchpriority="high" width="4608" height="2092">
           <div class="caption">John Nuzzi · Solo Work · 2024</div>
         </div>
         <div class="hero-text">
@@ -734,7 +739,7 @@
     <section class="page" id="page-proseries" aria-label="ProSeries">
       <div class="ps-hero">
         <div class="ps-hero-text">
-          <div class="label">Ages 5&ndash;19 | Competitive Training</div>
+          <div class="label">Ages 5&ndash;19 &middot; Competitive Training</div>
           <h1>Pro<em class="ps-block">Series</em></h1>
           <div class="sub">Elite dance training for the convention and competition circuit</div>
           <div class="tagline">Season 1 begins August 2026.</div>
@@ -1425,11 +1430,11 @@
           <form data-form="contact">
             <div class="form-group">
               <label for="contact-name">Name</label>
-              <input type="text" id="contact-name" placeholder="Your name" required>
+              <input type="text" id="contact-name" placeholder="Your name" required autocomplete="name" autocapitalize="words">
             </div>
             <div class="form-group">
               <label for="contact-email">Email</label>
-              <input type="email" id="contact-email" placeholder="your@email.com" required>
+              <input type="email" id="contact-email" placeholder="your@email.com" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false">
             </div>
             <fieldset class="form-group" style="border:none;padding:0;margin:0;">
               <legend style="font-size:0.85rem;font-weight:500;color:var(--cream-faint);margin-bottom:0.5rem;">What's this about?</legend>
@@ -1441,7 +1446,7 @@
             </fieldset>
             <div class="form-group">
               <label for="contact-message">Message</label>
-              <textarea id="contact-message" placeholder="Tell us what's on your mind..."></textarea>
+              <textarea id="contact-message" placeholder="Tell us what's on your mind..." enterkeyhint="send"></textarea>
             </div>
             <button type="submit" class="btn btn-primary" data-track="contact-send-message">Send Message</button>
             <div class="form-success" aria-live="polite">Message sent! We'll get back to you soon.</div>
@@ -1573,7 +1578,7 @@
 
           <div class="ea-form-wrap">
             <form data-form="signup-proseries-early-access" class="ea-form">
-              <input type="email" placeholder="Your email address" required autocomplete="email" aria-label="Email address">
+              <input type="email" placeholder="Your email address" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" aria-label="Email address">
               <button type="submit" class="btn btn-blush" data-track="early-access-signup">Get Early Access</button>
             </form>
             <div class="form-success" aria-live="polite">You're on the list. You'll hear from us before anyone else.</div>

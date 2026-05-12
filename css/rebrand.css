@@ -35,10 +35,13 @@ body.has-topnav {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Hide legacy sidebar & mobile header — topnav is the only visible nav */
-body.has-topnav .sidebar,
-body.has-topnav .mobile-header,
-body.has-topnav .sidebar-overlay { display: none !important; }
+/* Hide legacy sidebar & mobile header — topnav is the only visible nav on desktop.
+   On mobile (<=900px) the .sidebar acts as the slide-in nav drawer (see styles.css:1820). */
+@media (min-width: 901px) {
+  body.has-topnav .sidebar,
+  body.has-topnav .mobile-header,
+  body.has-topnav .sidebar-overlay { display: none !important; }
+}
 
 /* Only the active .page shows (mirrors main.js behavior, keeps preview clean) */
 main.main .page:not(.active) { display: none; }

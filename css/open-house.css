@@ -905,7 +905,9 @@
 }
 @media (max-width: 720px) {
   .ohb-coral { grid-template-columns: 1fr; }
-  .ohb-coral-photo { min-height: 220px; }
+  /* Drop the decorative striped placeholder zone on mobile — it's a desktop-only
+     flourish with no payload; eating ~500px of vertical hurts mobile flow. */
+  .ohb-coral-photo { display: none; }
   .ohb-schedule {
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: minmax(0, auto);
@@ -918,6 +920,20 @@
   .ohb-schedule { padding: 20px 22px; gap: 18px; }
   .ohb-dropin, .ohb-win { padding: 24px 22px; }
   .ohb-addr-rule { display: none; }
+  /* Cap "OPEN HOUSE" so OPEN never crops above the cream/blush block on phones. */
+  .ohb-open,
+  .ohb-house {
+    font-size: clamp(64px, 18vw, 96px);
+    line-height: .9;
+  }
+  /* Raffle headline fits a 390px viewport */
+  .ohb-win-prize {
+    font-size: clamp(26px, 8vw, 36px);
+    line-height: 1;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  .ohb-win-more { font-size: 16px; }
 }
 
 /* ============================================================
@@ -938,9 +954,10 @@
   border-top: 1px solid rgba(0,0,0,.35);
   box-shadow: 0 -6px 18px rgba(0,0,0,.35);
   font-family: "Manrope", sans-serif;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 /* Compensator so submit buttons / page-foot don't get covered */
-body.has-oh-ticker { padding-bottom: 56px; }
+body.has-oh-ticker { padding-bottom: calc(56px + env(safe-area-inset-bottom)); }
 
 /* Dismissed via the ✕ button (or auto-hidden post-event). Survives the
    campaign.js polling reveal handler that resets inline display. */

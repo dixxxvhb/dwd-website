@@ -575,6 +575,33 @@
   display: none;
 }
 
+/* Mobile: stack the strip head. SnapWidget's iframe doesn't reflow to mobile widths
+   (one squashed row of tiny thumbnails inside a 390px viewport), so we hide the
+   iframe and show the clean "Open on Instagram" fallback CTA instead — a much
+   better mobile experience than a malformed widget. */
+@media (max-width: 720px) {
+  .ig-feeds {
+    padding: 20px 16px 12px;
+    gap: 28px;
+  }
+  .ig-strip-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .ig-strip-head .ig-handle {
+    font-size: 24px;
+  }
+  .ig-strip-frame {
+    display: none !important;
+  }
+  /* Force the user-facing "Open on Instagram" fallback to render on mobile */
+  .ig-strip-fallback { display: block !important; }
+  .ig-strip-fallback-dev { display: none !important; }
+  .ig-strip-fallback-blocked { display: block !important; }
+}
+
 @media (max-width: 720px) {
   .ig-feeds { padding: 24px 24px 8px; }
   .ig-strip-frame { height: 200px; }
@@ -682,17 +709,31 @@
   .gallery-hero.gallery-hero--split {
     grid-template-columns: 1fr !important;
     min-height: 0;
+    max-height: none !important;
   }
   #page-adult-company .ac-hero--split .ac-hero-text-stack,
   #page-teachers .tch-hero--split .tch-hero-text,
   .gallery-hero.gallery-hero--split .gallery-hero-text {
-    padding: 36px 28px !important;
+    padding: 24px 24px 32px !important;
     text-align: center;
   }
   #page-adult-company .ac-hero--split .hero-logo-big,
   #page-teachers .tch-hero--split .hero-logo-big,
   .gallery-hero.gallery-hero--split .hero-logo-big {
     order: -1;
+    padding: 28px 24px 8px !important;
+    min-height: 160px;
+  }
+  #page-adult-company .ac-hero--split .hero-logo-big video,
+  #page-adult-company .ac-hero--split .hero-logo-big img,
+  #page-teachers .tch-hero--split .hero-logo-big video,
+  #page-teachers .tch-hero--split .hero-logo-big img,
+  .gallery-hero.gallery-hero--split .hero-logo-big video,
+  .gallery-hero.gallery-hero--split .hero-logo-big img {
+    width: 160px !important;
+    height: 160px !important;
+    max-width: 50vw !important;
+    object-fit: contain;
   }
 }
 
@@ -2726,4 +2767,100 @@
   #page-proseries .td-name-row { flex-direction: column; gap: 8px; }
   #page-proseries .pricing-onetime .pot-row { grid-template-columns: 1fr; gap: 4px; }
   #page-proseries .pricing-onetime .pot-amount { font-size: 28px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MOBILE POLISH PASS (2026-05-13) — see plan
+   Targets: ProSeries hero shrink, Merch headline fit, Track tabs
+   compact, Collective hero shrink, ProSeries home scrim.
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 720px) {
+  /* ProSeries hero — collapse to single column, tighten the giant circle */
+  #page-proseries .ps-hero {
+    grid-template-columns: 1fr !important;
+    min-height: 0 !important;
+    padding-top: 16px !important;
+  }
+  #page-proseries .ps-hero h1 {
+    font-size: clamp(64px, 18vw, 96px) !important;
+    margin-top: 12px !important;
+  }
+  .ps-hero-text { padding: 24px 24px 40px !important; order: 2; }
+  #page-proseries .ps-hero .hero-logo-big,
+  #page-proseries .ps-hero .ps-hero-logo {
+    order: 1;
+    min-height: 220px !important;
+    padding: 28px 24px 8px !important;
+  }
+  #page-proseries .ps-hero .hero-logo-big video,
+  #page-proseries .ps-hero .hero-logo-big img,
+  #page-proseries .ps-hero .ps-hero-logo video,
+  #page-proseries .ps-hero .ps-hero-logo img {
+    width: min(220px, 60vw) !important;
+  }
+
+  /* Merch hero — contain DWDPROSERIES on phone widths */
+  #page-shop .merch-poll-hero {
+    padding: 36px 24px !important;
+  }
+  #page-shop .merch-poll-hero h1 {
+    font-size: clamp(42px, 12vw, 72px) !important;
+    line-height: 0.9 !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  /* ProSeries Track tabs (Prep/Elite/Pro) — drop the long meta line on phones */
+  #page-proseries .track-tab .tt-meta { display: none; }
+  #page-proseries .track-tab {
+    padding: 14px 10px !important;
+    min-height: 56px;
+    gap: 4px !important;
+  }
+  #page-proseries .track-tab .tt-num {
+    font-size: 9px !important;
+    letter-spacing: .2em !important;
+  }
+  #page-proseries .track-tab .tt-name {
+    font-size: clamp(22px, 6.5vw, 30px) !important;
+  }
+
+  /* Collective hero — same shrink treatment so the logo doesn't eat half the fold */
+  #page-adult-company .ac-hero--split .hero-logo-big {
+    min-height: 200px !important;
+    padding: 28px 24px 8px !important;
+  }
+  #page-adult-company .ac-hero--split .hero-logo-big video,
+  #page-adult-company .ac-hero--split .hero-logo-big img {
+    width: min(220px, 55vw) !important;
+  }
+}
+
+/* Home entry cards — extra contrast scrim on mobile so the body text is always
+   legible against a busy thumb image at the small mobile thumb size. */
+@media (max-width: 720px) {
+  #page-home .entry .thumb::after {
+    background: linear-gradient(90deg, rgba(12, 31, 23, 0) 0%, rgba(12, 31, 23, 0.55) 100%) !important;
+  }
+}
+
+/* Triptych CTA tap-target floor (DETAILS / REGISTER / LEARN MORE rows) */
+@media (max-width: 720px) {
+  .triptych-card .btn-link,
+  .triptych-card a.tri-cta,
+  .tri-card .tri-cta,
+  .tri-card a[href^="#"] { min-height: 44px; display: inline-flex; align-items: center; }
+}
+
+/* Ticker buttons + close X — ensure 44px Apple HIG tap-target floor */
+@media (max-width: 720px) {
+  .oh-ticker { min-height: 44px; }
+  .oh-ticker .oh-ticker-close,
+  .oh-ticker [data-ticker-close],
+  .oh-ticker button.close {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .oh-ticker a,
+  .oh-ticker button { min-height: 44px; }
 }

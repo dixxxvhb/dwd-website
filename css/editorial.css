@@ -127,11 +127,13 @@
 }
 
 /* ── Top nav bar ──
-   Horizontal sticky bar replacing the old sidebar.
-   Old .sidebar + .mobile-header stay in DOM but are hidden via CSS. */
-.sidebar,
-.mobile-header,
-.sidebar-overlay { display: none !important; }
+   Horizontal sticky bar replacing the old sidebar on desktop.
+   On mobile (<=900px) the .sidebar slides in as the nav drawer (see styles.css:1820). */
+@media (min-width: 901px) {
+  .sidebar,
+  .mobile-header,
+  .sidebar-overlay { display: none !important; }
+}
 
 body.has-topnav .main {
   margin-left: 0 !important;

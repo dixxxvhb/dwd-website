@@ -147,6 +147,7 @@ a:hover {
 .app-container {
   display: flex;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .sidebar {
@@ -155,6 +156,7 @@ a:hover {
   top: 0;
   width: 240px;
   height: 100vh;
+  height: 100dvh;
   background-color: var(--sidebar-bg);
   border-right: 1px solid var(--forest-light);
   padding: 2.5rem 1.5rem;
@@ -244,6 +246,7 @@ a:hover {
   margin-left: 240px;
   width: calc(100% - 240px);
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -1444,6 +1447,7 @@ a:hover {
   gap: 0;
   padding: 0;
   min-height: calc(100vh - 240px);
+  min-height: calc(100dvh - 240px);
 }
 
 .contact-form-side {
@@ -3166,4 +3170,49 @@ a:hover {
 .cc-cta {
   width: 100%;
   text-align: center;
+}
+
+/* ═══ MOBILE PRIMITIVES (2026 mobile polish pass — see plan) ═══ */
+
+/* Kill iOS Safari auto-zoom on input focus (≥16px floor).
+   `!important` defeats `.form-group input { font-size: 0.95rem }` upstream
+   and any other class-scoped form rules that drop below the 16px floor. */
+input,
+textarea,
+select,
+.form-group input,
+.form-group textarea,
+.form-group select,
+.email-row input,
+.ea-form input {
+  font-size: 16px !important;
+}
+
+/* Ticker + safe-area clearance — every .page reserves bottom space for the fixed
+   Open House ticker (~36px) plus the iPhone home indicator inset. */
+.page {
+  padding-bottom: calc(60px + env(safe-area-inset-bottom));
+}
+
+/* Smooth hash-router scrolling (respects user motion preference) */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* Polished tap feedback + keyboard-only focus ring */
+* { -webkit-tap-highlight-color: rgba(200, 97, 75, 0.15); }
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--terracotta, #C8614B);
+  outline-offset: 2px;
+}
+
+/* Mobile drawer clears iPhone home indicator (the drawer is the .sidebar restored
+   on <=900px — see editorial.css + rebrand.css media guards). */
+@media (max-width: 900px) {
+  .sidebar {
+    min-height: 100dvh;
+    padding-bottom: calc(2.5rem + env(safe-area-inset-bottom));
+  }
 }
