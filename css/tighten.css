@@ -322,3 +322,209 @@
     padding: 8px 14px 8px 12px;
   }
 }
+
+/* ═════════════════════════════════════════════════
+   Site-wide interactivity layer
+   Layers a consistent bouncy hover language on top
+   of existing hovers, never overriding hard. The
+   curve `--ease-spring` matches the hero pills.
+   Everything respects prefers-reduced-motion below.
+   ═════════════════════════════════════════════════ */
+:root {
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* ── REGISTER topnav CTA: pulse like the audition pill ── */
+.topnav .nav-cta {
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s var(--ease-spring), box-shadow 0.25s ease !important;
+  animation: nav-cta-pulse 3s ease-in-out infinite;
+}
+.topnav .nav-cta:hover,
+.topnav .nav-cta:focus-visible {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 22px rgba(200, 97, 75, 0.30);
+  animation-play-state: paused;
+}
+.topnav .nav-cta:active { transform: translateY(0) scale(0.97); transition-duration: 0.08s; }
+@keyframes nav-cta-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 97, 75, 0); }
+  50%      { box-shadow: 0 0 0 6px rgba(200, 97, 75, 0.15); }
+}
+
+/* ── Triptych cards: punch up the existing lift ── */
+.tri-card {
+  transition: transform 0.32s var(--ease-spring), box-shadow 0.32s ease, background 0.32s ease !important;
+}
+.tri-card:hover {
+  transform: translateY(-4px) scale(1.012) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+.tri-card:active { transform: translateY(-1px) scale(0.998) !important; transition-duration: 0.1s !important; }
+
+/* ── Home entries (ProSeries / Collective): lift + soft glow ── */
+#page-home .entries .entry {
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s ease, background 0.35s ease;
+}
+#page-home .entries .entry:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.40);
+}
+
+/* ── Up-next / amuse feature card on home ── */
+.upnext-card {
+  transition: transform 0.32s var(--ease-spring), box-shadow 0.32s ease;
+}
+.upnext-card:hover {
+  transform: translateY(-3px) scale(1.005);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+}
+
+/* ── ProSeries track-detail cards ── */
+.track-detail-card,
+.td-card {
+  transition: transform 0.32s var(--ease-spring), box-shadow 0.32s ease;
+}
+.track-detail-card:hover,
+.td-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+}
+
+/* ── Teacher rotation cards ── */
+.tch-card {
+  transition: transform 0.32s var(--ease-spring), box-shadow 0.32s ease, filter 0.32s ease !important;
+}
+.tch-card:hover {
+  transform: translateY(-4px) scale(1.015) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+  filter: brightness(1.06);
+}
+
+/* ── Generic .btn: bouncier curve + soft shadow + tiny scale ── */
+.btn {
+  transition: transform 0.25s var(--ease-spring), background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, letter-spacing 0.25s ease !important;
+}
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+.btn:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.08s !important;
+}
+
+/* ── Top nav links: animated underline ── */
+.topnav nav a {
+  transition: color 0.22s ease;
+  position: relative;
+}
+.topnav nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 1.5px;
+  background: var(--rb-terracotta, #c8614b);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.28s var(--ease-spring);
+}
+.topnav nav a:hover::after,
+.topnav nav a.active::after { transform: scaleX(1); }
+.topnav nav a:hover { color: var(--rb-terracotta, #c8614b); }
+
+/* ── Footer links: pink slide ── */
+.site-footer a,
+.footer-links a {
+  transition: color 0.22s ease, transform 0.22s var(--ease-spring);
+  display: inline-block;
+}
+.site-footer a:hover,
+.footer-links a:hover {
+  color: var(--rb-pink, #f8d7c8);
+  transform: translateX(2px);
+}
+
+/* ── Social icons inside the footer (SVG wrappers) ── */
+.footer-links a svg {
+  transition: transform 0.28s var(--ease-spring);
+}
+.footer-links a:hover svg {
+  transform: scale(1.18) rotate(-4deg);
+}
+
+/* ── Form inputs: focused border + lift ── */
+input[type="email"],
+input[type="text"],
+input[type="tel"],
+textarea {
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s var(--ease-spring);
+}
+input[type="email"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(200, 97, 75, 0.18);
+}
+
+/* ── Photo grid on home & gallery tiles: subtle zoom ── */
+#page-home .photo-grid .ph,
+.gallery-grid .gallery-item {
+  transition: transform 0.5s var(--ease-spring);
+}
+#page-home .photo-grid .ph:hover,
+.gallery-grid .gallery-item:hover {
+  transform: translateY(-2px);
+}
+
+/* ── Track-record stat numbers: subtle bobble on hover ── */
+.track-record .tr-stat {
+  transition: transform 0.32s var(--ease-spring);
+}
+.track-record .tr-stat:hover {
+  transform: translateY(-3px) scale(1.04);
+}
+
+/* ── Triptych "MORE INFO →" bottom ticker action ── */
+.oh-ticker-cta {
+  transition: transform 0.22s var(--ease-spring), background 0.22s ease;
+}
+.oh-ticker-cta:hover {
+  transform: scale(1.04);
+}
+
+/* ── Reduced-motion: kill all bounces, keep color transitions ── */
+@media (prefers-reduced-motion: reduce) {
+  .topnav .nav-cta,
+  .tri-card,
+  #page-home .entries .entry,
+  .upnext-card,
+  .track-detail-card,
+  .td-card,
+  .tch-card,
+  .btn,
+  .footer-links a,
+  .footer-links a svg,
+  #page-home .photo-grid .ph,
+  .gallery-grid .gallery-item,
+  .track-record .tr-stat,
+  .oh-ticker-cta {
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
+    animation: none !important;
+  }
+  .topnav .nav-cta:hover,
+  .tri-card:hover,
+  #page-home .entries .entry:hover,
+  .upnext-card:hover,
+  .track-detail-card:hover,
+  .td-card:hover,
+  .tch-card:hover,
+  .btn:hover,
+  .footer-links a:hover,
+  #page-home .photo-grid .ph:hover,
+  .gallery-grid .gallery-item:hover,
+  .track-record .tr-stat:hover,
+  .oh-ticker-cta:hover {
+    transform: none !important;
+  }
+  .footer-links a:hover svg { transform: none !important; }
+}
