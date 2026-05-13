@@ -371,28 +371,83 @@
   })();
 
   // ── FORM HELPERS ──
+  function clearFieldError(field) {
+    field.classList.remove('invalid');
+    field.removeAttribute('aria-invalid');
+    var slot = getOrCreateFieldErrorSlot(field);
+    if (slot) {
+      slot.textContent = '';
+      slot.classList.remove('show');
+    }
+  }
+
+  function getOrCreateFieldErrorSlot(field) {
+    var group = field.closest('.form-group') || field.parentElement;
+    if (!group) return null;
+    var slot = group.querySelector(':scope > .form-field-error');
+    if (!slot) {
+      slot = document.createElement('span');
+      slot.className = 'form-field-error';
+      // Match input by id so screen readers announce the inline error.
+      if (field.id) {
+        slot.id = field.id + '-error';
+        var existing = field.getAttribute('aria-describedby') || '';
+        if (existing.indexOf(slot.id) === -1) {
+          field.setAttribute('aria-describedby', (existing + ' ' + slot.id).trim());
+        }
+      }
+      group.appendChild(slot);
+    }
+    return slot;
+  }
+
+  function setFieldError(field, msg) {
+    field.classList.add('invalid');
+    field.setAttribute('aria-invalid', 'true');
+    var slot = getOrCreateFieldErrorSlot(field);
+    if (slot) {
+      slot.textContent = msg;
+      slot.classList.add('show');
+    }
+  }
+
   function validateForm(form) {
     var valid = true;
     form.querySelectorAll('[required]').forEach(function (field) {
-      field.classList.remove('invalid');
-      if (!field.value.trim()) {
-        field.classList.add('invalid');
+      clearFieldError(field);
+      var value = field.value.trim();
+      if (!value) {
+        var labelEl = field.id ? form.querySelector('label[for="' + field.id + '"]') : null;
+        var labelText = labelEl ? labelEl.textContent.trim().toLowerCase() : '';
+        var fallback = field.type === 'email' ? 'an email address'
+                     : field.tagName === 'TEXTAREA' ? 'a message'
+                     : 'this field';
+        var hint = labelText ? ('your ' + labelText) : fallback;
+        setFieldError(field, 'Please enter ' + hint + '.');
         valid = false;
+        return;
       }
-      if (field.type === 'email' && field.value.trim()) {
+      if (field.type === 'email') {
         var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(field.value.trim())) {
-          field.classList.add('invalid');
+        if (!emailPattern.test(value)) {
+          setFieldError(field, 'That email doesn’t look right. Try again?');
           valid = false;
         }
       }
     });
     if (!valid) {
       var firstInvalid = form.querySelector('.invalid');
-      if (firstInvalid) firstInvalid.focus();
+      if (firstInvalid && typeof firstInvalid.focus === 'function') firstInvalid.focus();
     }
     return valid;
   }
+
+  // Clear per-field error the moment the user starts correcting it.
+  document.addEventListener('input', function (e) {
+    if (e.target && e.target.classList && e.target.classList.contains('invalid')) {
+      clearFieldError(e.target);
+    }
+  }, true);
 
   function showFormSuccess(form) {
     // Show modal for email signup forms, fall back to inline for contact/other

@@ -2289,3 +2289,48 @@ a:focus-visible,
   margin-right: auto;
 }
 .early-access-page-launch .ea-early-note strong { color: var(--blush); }
+
+/* ───── A11y utilities ───── */
+
+/* Visually hidden, but available to screen readers. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Fieldset for the merch poll — wraps the category checkbox group so screen
+   readers announce the group, without adding visual chrome (browser default
+   is a border + 1em padding). */
+.merch-fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+/* ───── Per-field inline error (form polish) ───── */
+.form-field-error {
+  display: block;
+  min-height: 0;
+  margin-top: 6px;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: #ff6b6b;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.15s ease, max-height 0.15s ease;
+}
+.form-field-error.show {
+  opacity: 1;
+  max-height: 4em;
+}
