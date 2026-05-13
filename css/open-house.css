@@ -119,7 +119,15 @@
   width: min(360px, 90%);
   aspect-ratio: 1 / 1;
   object-fit: contain;
-  filter: drop-shadow(0 12px 36px rgba(0,0,0,.32));
+}
+/* The "transparent" webms are actually yuv420p — alpha is baked as
+   pure black. mix-blend-mode: lighten = max(base, blend) per channel,
+   so anything darker than the forest column drops out, while the dark
+   green ring and the DWD wordmark (which are brighter than the forest)
+   are preserved. screen-blend was tested first but flattened the ring
+   and text into invisibility. See feedback_transparent_video_ios.md. */
+#page-home .hero-logo-mark video {
+  mix-blend-mode: lighten;
 }
 @media (max-width: 1100px) {
   #page-home .hero { grid-template-columns: 7fr 13fr; }
