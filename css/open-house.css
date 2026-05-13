@@ -174,7 +174,14 @@
 }
 #page-home .hero-foot { margin-top: 12px; }
 /* drop the decorative ::after coral hairline (it floated 3rem off the bottom) */
-#page-home .hero::after { display: none; }
+/* Kill BOTH decorative pseudo-elements from styles.css on the home hero.
+   ::before paints two radial glows (pink at 20%/50% and gold/cream at
+   80%/80%) that tint the photo and logo columns differently from the
+   title column — visible as the cross-column shade mismatch.
+   ::after is a 60px decorative hairline that conflicts with the editorial
+   layout. */
+#page-home .hero::before,
+#page-home .hero::after { display: none !important; }
 
 @media (max-width: 1024px) {
   #page-home .hero { grid-template-columns: 1fr; }
