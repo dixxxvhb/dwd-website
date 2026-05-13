@@ -16,25 +16,32 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://dancewithdixon.com">
 
-  <!-- LCP hero preload (home page first paint) -->
-  <link rel="preload" as="image" href="images/photos/high res pose — hero crop.jpeg" fetchpriority="high">
+  <!-- LCP hero preload (home page first paint). imagesrcset matches the
+       `<picture>` element below so the browser picks the right variant. -->
+  <link rel="preload" as="image"
+        imagesrcset="images/photos/hero-800.webp 800w, images/photos/hero-1600.webp 1600w"
+        imagesizes="(max-width: 768px) 100vw, 60vw"
+        type="image/webp"
+        fetchpriority="high">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Dance With Dixon | Orlando Dance Company">
   <meta property="og:description" content="An Orlando-based dance collective. Elite youth training. Adult company. Real stages. Real work.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dancewithdixon.com">
-  <meta property="og:image" content="https://dancewithdixon.com/images/logos/DWD-green.png">
-  <meta property="og:image:width" content="512">
-  <meta property="og:image:height" content="512">
+  <meta property="og:image" content="https://dancewithdixon.com/images/photos/hero-og-1200x630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="DWD dancer mid-pose on stage.">
   <meta property="og:site_name" content="Dance With Dixon">
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Dance With Dixon | Orlando Dance Company">
   <meta name="twitter:description" content="Elite youth training program &amp; adult modern dance company in Orlando. Founded by choreographer Dixon Bowles.">
-  <meta name="twitter:image" content="https://dancewithdixon.com/images/logos/DWD-green.png">
+  <meta name="twitter:image" content="https://dancewithdixon.com/images/photos/hero-og-1200x630.jpg">
+  <meta name="twitter:image:alt" content="DWD dancer mid-pose on stage.">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -104,6 +111,101 @@
         "url": "https://dancewithdixon.com",
         "name": "Dance With Dixon",
         "publisher": { "@id": "https://dancewithdixon.com/#organization" }
+      },
+      {
+        "@type": "Event",
+        "@id": "https://dancewithdixon.com/#event-openhouse-2026",
+        "name": "DWD ProSeries Open House",
+        "description": "A free Saturday at the studio — meet Dixon and rotation faculty, watch two choreography showcases, take a sample class, enter the raffle for a free June 6 audition spot.",
+        "startDate": "2026-05-23T11:30:00-04:00",
+        "endDate": "2026-05-23T14:00:00-04:00",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "Exchange Dance",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "7409 Chancery Lane",
+            "addressLocality": "Orlando",
+            "addressRegion": "FL",
+            "postalCode": "32809",
+            "addressCountry": "US"
+          }
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://dancewithdixon.com/#open-house"
+        },
+        "image": "https://dancewithdixon.com/images/logos/DWD-green.png",
+        "organizer": { "@id": "https://dancewithdixon.com/#organization" },
+        "url": "https://dancewithdixon.com/#open-house"
+      },
+      {
+        "@type": "Event",
+        "@id": "https://dancewithdixon.com/#event-audition-2026",
+        "name": "DWD ProSeries Audition Day",
+        "description": "Audition for DWD ProSeries Season One (2026/2027). Three tracks — Prep (ages 5-8), Elite (8-12), Pro (12+). Max 10 per track, 30 total. Season starts August 10, 2026.",
+        "startDate": "2026-06-06T11:00:00-04:00",
+        "endDate": "2026-06-06T13:00:00-04:00",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "Exchange Dance",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "7409 Chancery Lane",
+            "addressLocality": "Orlando",
+            "addressRegion": "FL",
+            "postalCode": "32809",
+            "addressCountry": "US"
+          }
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "25",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://dwd-director.netlify.app/register",
+          "validFrom": "2026-05-01T00:00:00-04:00"
+        },
+        "image": "https://dancewithdixon.com/images/logos/DWD-green.png",
+        "organizer": { "@id": "https://dancewithdixon.com/#organization" },
+        "url": "https://dancewithdixon.com/#proseries"
+      },
+      {
+        "@type": "TheaterEvent",
+        "@id": "https://dancewithdixon.com/#event-amuse-2026",
+        "name": "A·Muse in Space",
+        "description": "DWD Collective's first public performance. Original contemporary modern choreography by Dixon Bowles, performed by adult dancers. Presented by Aric Barrow.",
+        "startDate": "2026-06-27T19:30:00-04:00",
+        "endDate": "2026-06-27T21:30:00-04:00",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "Orlando Ballet",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Orlando",
+            "addressRegion": "FL",
+            "addressCountry": "US"
+          }
+        },
+        "performer": {
+          "@type": "PerformingGroup",
+          "name": "DWD Collective"
+        },
+        "image": "https://dancewithdixon.com/images/logos/DWD-green.png",
+        "organizer": {
+          "@type": "Person",
+          "name": "Aric Barrow"
+        },
+        "url": "https://dancewithdixon.com/#amuse"
       }
     ]
   }
@@ -123,9 +225,12 @@
   <link rel="icon" type="image/png" sizes="192x192" href="images/icons/icon-192.png">
   <link rel="icon" type="image/png" href="images/logos/DWD-green.png">
 
-  <!-- Fonts -->
+  <!-- Fonts. preload as=style accelerates first paint; the stylesheet then loads
+       normally. display=swap is already in the URL so Outfit/Cormorant render
+       in the fallback face until the web font is ready (no FOIT). -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
@@ -220,7 +325,11 @@
       <!-- HERO — DUAL SPLIT -->
       <div class="hero">
         <div class="hero-photo">
-          <img src="images/photos/high res pose — hero crop.jpeg" alt="DWD dancer on stage" loading="eager" fetchpriority="high" width="4608" height="2092">
+          <picture>
+            <source type="image/webp" srcset="images/photos/hero-800.webp 800w, images/photos/hero-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 60vw">
+            <source type="image/jpeg" srcset="images/photos/hero-800.jpg 800w, images/photos/hero-1600.jpg 1600w" sizes="(max-width: 768px) 100vw, 60vw">
+            <img src="images/photos/hero-1600.jpg" alt="DWD dancer on stage" loading="eager" fetchpriority="high" width="1600" height="726">
+          </picture>
           <div class="caption">John Nuzzi · Solo Work · 2024</div>
         </div>
         <div class="hero-text">
@@ -404,8 +513,30 @@
             <div class="tr-label">Artistic director &mdash; every class, every piece</div>
           </div>
         </div>
-        <div class="tr-credits">Disney Jr. Live &middot; performed in NYC with professional company &middot; adjunct professor &middot; ADCC Studio of Excellence &middot; titles at Groove, Inferno, Tremaine, StarQuest</div>
       </section>
+
+      <!-- ───── Credentials strip ───── -->
+      <aside class="creds-strip reveal" aria-label="Director credentials and recognized competitions">
+        <div class="creds-strip-row">
+          <span class="creds-eyebrow">Earned&nbsp;at</span>
+          <ul class="creds-list" role="list">
+            <li>ADCC Studio of Excellence</li>
+            <li>Groove</li>
+            <li>Inferno</li>
+            <li>Tremaine</li>
+            <li>StarQuest</li>
+          </ul>
+        </div>
+        <div class="creds-strip-row">
+          <span class="creds-eyebrow">Trained&nbsp;&amp;&nbsp;worked&nbsp;with</span>
+          <ul class="creds-list" role="list">
+            <li>Disney Jr. Live</li>
+            <li>NYC professional company</li>
+            <li>Fly Dance Competition · Tour Director</li>
+            <li>Adjunct Professor</li>
+          </ul>
+        </div>
+      </aside>
 
       <!-- TWO ENTRIES -->
       <div class="entries reveal">
@@ -1327,6 +1458,8 @@
         </div>
 
         <form id="merch-vote-form" data-form="merch-poll" class="merch-poll-form">
+          <fieldset class="merch-fieldset">
+            <legend class="sr-only">Pick the merch categories you'd wear — one, two, or all three.</legend>
           <div class="merch-categories">
             <label class="merch-category-card" data-cat="everyday">
               <input type="checkbox" name="category" value="everyday">
@@ -1407,6 +1540,7 @@
               <div class="merch-select-dot" aria-hidden="true"></div>
             </label>
           </div>
+          </fieldset>
 
           <div class="merch-extras">
             <button type="submit" class="btn btn-blush">Cast my vote</button>
@@ -1427,7 +1561,7 @@
         <div class="contact-form-side">
           <h1>Get in Touch</h1>
           <div class="sub">Whether you want to join a class, audition for ProSeries, book Dixon for choreography, or just say hey.</div>
-          <form data-form="contact">
+          <form data-form="contact" novalidate>
             <div class="form-group">
               <label for="contact-name">Name</label>
               <input type="text" id="contact-name" placeholder="Your name" required autocomplete="name" autocapitalize="words">
@@ -1449,7 +1583,7 @@
               <textarea id="contact-message" placeholder="Tell us what's on your mind..." enterkeyhint="send"></textarea>
             </div>
             <button type="submit" class="btn btn-primary" data-track="contact-send-message">Send Message</button>
-            <div class="form-success" aria-live="polite">Message sent! We'll get back to you soon.</div>
+            <div class="form-success" aria-live="polite">Message sent. Dixon will reply within 48 hours.</div>
           </form>
         </div>
         <div class="contact-info-side">
@@ -1577,13 +1711,13 @@
           </div>
 
           <div class="ea-form-wrap">
-            <form data-form="signup-proseries-early-access" class="ea-form">
-              <input type="email" placeholder="Your email address" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" aria-label="Email address">
+            <form data-form="signup-proseries-early-access" class="ea-form" novalidate>
+              <input type="email" placeholder="Your email address" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" aria-label="Email address" aria-describedby="ea-privacy-note">
               <button type="submit" class="btn btn-blush" data-track="early-access-signup">Get Early Access</button>
             </form>
             <div class="form-success" aria-live="polite">You're on the list. You'll hear from us before anyone else.</div>
             <p class="ea-early-note">You'll get the audition registration link <strong>24 hours before it goes public</strong>. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for program details as they drop.</p>
-            <p class="ea-privacy">We'll only email you about ProSeries registration. No spam. <a href="#privacy">Privacy policy</a>.</p>
+            <p class="ea-privacy" id="ea-privacy-note">We'll only email you about ProSeries registration. No spam. <a href="#privacy">Privacy policy</a>.</p>
           </div>
 
           <div class="ea-bullets">
