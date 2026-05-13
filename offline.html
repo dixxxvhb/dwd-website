@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c1f17">
+  <title>Offline · Dance With Dixon</title>
+  <link rel="icon" type="image/png" href="images/logos/DWD-green.png">
+  <style>
+    :root {
+      --bg: #0c1f17;
+      --ink: #faf3e8;
+      --terra: #c8614b;
+      --muted: rgba(250, 243, 232, 0.6);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+    .offline-card {
+      max-width: 420px;
+    }
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin: 0 0 1rem;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 500;
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+    p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.55;
+      margin: 0 0 2rem;
+    }
+    button {
+      background: var(--terra);
+      color: var(--ink);
+      border: 0;
+      padding: 0.85rem 1.75rem;
+      font-family: inherit;
+      font-size: 0.875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    button:hover { transform: translateY(-1px); }
+    button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main class="offline-card">
+    <p class="eyebrow">Dance With Dixon</p>
+    <h1>Looks like you're offline.</h1>
+    <p>The network dropped before we could load the page. Once you're back online, the site will work as usual.</p>
+    <button type="button" onclick="window.location.reload()">Try again</button>
+  </main>
+</body>
+</html>

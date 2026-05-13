@@ -1,11 +1,16 @@
-const CACHE_NAME = 'dwd-site-v10';
+const CACHE_NAME = 'dwd-site-v11';
+const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',
   '/index.html',
+  '/offline.html',
   '/css/styles.css',
   '/css/additions.css',
   '/css/editorial.css',
   '/css/rebrand.css',
+  '/css/open-house.css',
+  '/css/poster-pages.css',
+  '/css/tighten.css',
   '/images/logos/DWD-green.png',
   '/images/icons/icon-192.png',
   '/images/icons/icon-512.png'
@@ -38,7 +43,14 @@ self.addEventListener('fetch', (e) => {
         var clone = res.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
         return res;
-      }).catch(() => caches.match(e.request) || caches.match('/index.html'))
+      }).catch(() => {
+        // Try cache, then fall through to offline page on navigations.
+        return caches.match(e.request).then((cached) => {
+          if (cached) return cached;
+          if (e.request.mode === 'navigate') return caches.match(OFFLINE_URL);
+          return caches.match('/index.html');
+        });
+      })
     );
   } else {
     // Cache-first for images/fonts (rarely change)
