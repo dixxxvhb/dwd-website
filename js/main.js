@@ -104,10 +104,27 @@
       return;
     }
 
-    // If hash matches an element ID on the current page, scroll to it
+    // If hash matches an element ID, scroll to it. If that element lives
+    // on a page that isn't active (e.g. #amuse is inside #page-adult-company),
+    // first switch to that page, then scroll once it's painted.
     var target = document.getElementById(hash);
     if (target) {
       closeMobileMenu();
+      var owningPage = target.closest('.page');
+      if (owningPage && !owningPage.classList.contains('active')) {
+        var pageName = (owningPage.id || '').replace(/^page-/, '');
+        if (validPages.includes(pageName)) {
+          showPage(pageName);
+          // showPage scrolls to top — wait a tick, then scroll to the anchor.
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              var el = document.getElementById(hash);
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            });
+          });
+          return;
+        }
+      }
       target.scrollIntoView({ behavior: 'smooth' });
       return;
     }
