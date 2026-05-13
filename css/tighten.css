@@ -528,3 +528,24 @@ textarea:focus {
   }
   .footer-links a:hover svg { transform: none !important; }
 }
+
+/* ───── Anchor scroll offset for fixed topnav ───── */
+/* The topnav is position:fixed at ~70px tall on desktop and ~60px on mobile.
+   When the router scrolls to an in-page anchor (#open-house, #amuse,
+   #proseries-tracks-full, etc.) the topnav covers the section heading.
+   scroll-margin-top tells the browser to land that many pixels below the
+   target so the heading clears the nav. */
+#open-house,
+#amuse,
+#proseries-tracks-full,
+#proseries-interest {
+  scroll-margin-top: 90px;
+}
+@media (max-width: 900px) {
+  #open-house,
+  #amuse,
+  #proseries-tracks-full,
+  #proseries-interest {
+    scroll-margin-top: 76px;
+  }
+}
