@@ -883,6 +883,36 @@
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  function updateTickerLabel() {
+    // Set the leading chip text based on how far away the event is.
+    // Was hardcoded "THIS SATURDAY" — wrong any day the event isn't
+    // within the current week.
+    var tag = document.querySelector('.oh-ticker .oh-tk-tag-text');
+    if (!tag) return;
+    var EVENT_START_MS = new Date('2026-05-23T11:30:00-04:00').getTime();
+    var now = Date.now();
+    var msPerDay = 86400000;
+    // Compare calendar-day delta in ET so "tomorrow" works near midnight.
+    var startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+    var eventDay = new Date(EVENT_START_MS);
+    eventDay.setHours(0, 0, 0, 0);
+    var days = Math.round((eventDay - startOfToday) / msPerDay);
+    var label;
+    if (now >= EVENT_START_MS && now < EVENT_START_MS + 9 * 3600 * 1000) {
+      label = 'HAPPENING NOW';
+    } else if (days <= 0) {
+      label = 'TODAY';
+    } else if (days === 1) {
+      label = 'TOMORROW';
+    } else if (days <= 6) {
+      label = 'THIS SATURDAY';
+    } else {
+      label = 'MAY 23';
+    }
+    tag.textContent = label;
+  }
+
   function initOpenHouse() {
     // 1. Event passed → wipe dismissal + let data-hide-after take over.
     if (eventIsPast()) {
@@ -891,7 +921,10 @@
       return;
     }
 
-    // 2. Honor prior dismissal.
+    // 2. Dynamic chip label (TODAY / TOMORROW / THIS SATURDAY / MAY 23).
+    updateTickerLabel();
+
+    // 3. Honor prior dismissal.
     var dismissed = false;
     try { dismissed = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
     if (dismissed) {
