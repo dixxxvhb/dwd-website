@@ -205,24 +205,25 @@
   .creds-list { font-size: 0.72rem; }
 }
 
-/* ───── Hero jump pills — little terracotta bubbles between title + logo
-   Visual language matches .tri-pill ($25 · 30 SPOTS in the triptych below).
+/* ───── Hero jump pills — rounded terracotta bubbles in the title column.
+   Visual language inherited from .tri-pill ($25 · 30 SPOTS in the triptych
+   below): all-caps Manrope, terracotta accent, vertical date|label divider.
+   Lives inside .hero-text so it left-aligns with the title.
    ───── */
 #page-home .hero-jump {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-self: center;
   align-items: flex-start;
   gap: 8px;
-  padding: 24px 16px;
+  margin: 0;
+  padding: 0;
 }
 
 #page-home .hero-jump-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
+  gap: 10px;
+  padding: 7px 16px 7px 14px;
   text-decoration: none;
   white-space: nowrap;
   font-family: "Manrope", "Outfit", system-ui, sans-serif;
@@ -233,7 +234,13 @@
   background: rgba(200, 97, 75, 0.12);
   color: var(--rb-terracotta, #c8614b);
   border: 1px solid rgba(200, 97, 75, 0.45);
-  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  border-radius: 999px;            /* fully rounded pill */
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    transform 0.22s cubic-bezier(.34,1.56,.64,1),
+    box-shadow 0.22s ease;
 }
 
 #page-home .hero-jump-pill:hover,
@@ -241,49 +248,77 @@
   background: var(--rb-terracotta, #c8614b);
   color: var(--rb-ivory, #faf3e8);
   border-color: var(--rb-terracotta, #c8614b);
-  transform: translateX(2px);
+  transform: translateX(3px) scale(1.04);
+  box-shadow: 0 6px 20px rgba(200, 97, 75, 0.22);
+}
+
+#page-home .hero-jump-pill:active {
+  transform: translateX(2px) scale(0.98);
+  transition-duration: 0.08s;
 }
 
 #page-home .hero-jump-pill .hjp-date {
-  font-weight: 700;
-  /* vertical separator after the date */
   padding-right: 8px;
   border-right: 1px solid currentColor;
   opacity: 0.85;
 }
+
 #page-home .hero-jump-pill .hjp-label {
   letter-spacing: 0.14em;
 }
 
-/* Audition is the conversion target — solid terracotta from the start. */
+#page-home .hero-jump-pill .hjp-arrow {
+  display: inline-block;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0.85;
+  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), opacity 0.22s ease;
+}
+#page-home .hero-jump-pill:hover .hjp-arrow,
+#page-home .hero-jump-pill:focus-visible .hjp-arrow {
+  transform: translateX(4px);
+  opacity: 1;
+}
+
+/* Audition is the conversion target — solid terracotta from rest. */
 #page-home .hero-jump-pill--audition {
   background: var(--rb-terracotta, #c8614b);
   color: var(--rb-ivory, #faf3e8);
   border-color: var(--rb-terracotta, #c8614b);
+  /* Tiny breathing pulse so the primary CTA reads as the live one. */
+  animation: hjp-pulse 2.6s ease-in-out infinite;
 }
 #page-home .hero-jump-pill--audition:hover,
 #page-home .hero-jump-pill--audition:focus-visible {
   background: #b1543e;
   border-color: #b1543e;
   color: var(--rb-ivory, #faf3e8);
+  animation-play-state: paused;
+}
+@keyframes hjp-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 97, 75, 0.0); }
+  50%      { box-shadow: 0 0 0 6px rgba(200, 97, 75, 0.18); }
 }
 
-/* Tablets and below: the logo column drops, pills span the row and
-   flow horizontally inside the hero. */
-@media (max-width: 1100px) {
-  #page-home .hero-jump {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0 32px 28px 88px;     /* match .hero-text left padding */
-    order: 3;                      /* photo + text use order:1/2 on mobile */
+/* Respect reduced motion: drop the bounce + pulse, keep color hover. */
+@media (prefers-reduced-motion: reduce) {
+  #page-home .hero-jump-pill,
+  #page-home .hero-jump-pill .hjp-arrow {
+    transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+  }
+  #page-home .hero-jump-pill:hover,
+  #page-home .hero-jump-pill:focus-visible {
+    transform: none;
+  }
+  #page-home .hero-jump-pill--audition {
+    animation: none;
   }
 }
 
 @media (max-width: 640px) {
-  #page-home .hero-jump {
-    padding: 0 24px 24px;
+  #page-home .hero-jump-pill {
+    font-size: 10px;
+    padding: 8px 14px 8px 12px;
   }
 }

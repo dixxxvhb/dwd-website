@@ -97,7 +97,7 @@
    ============================================================ */
 
 #page-home .hero {
-  grid-template-columns: 7fr 10fr min-content 7fr;   /* photo | brand text | jump cards | big DWD logo */
+  grid-template-columns: 7fr 10fr 7fr;   /* photo | brand text | big DWD logo */
   min-height: 0;
   max-height: none;
   padding: 0 !important;
@@ -108,9 +108,15 @@
   justify-content: center;
   padding: 24px;
   min-height: 0;
-  /* Match .hero-text's explicit forest. Without this, the body::before
-     pink radial glow (top-right) leaks through and tints this column a
-     hair warmer than the middle column — visible as a vertical seam. */
+  /* Match .hero-text's explicit forest, with !important so no later
+     rule (or grid-item auto-painting) can re-let the body::before pink
+     radial glow leak through. Combined with `isolation: isolate` on
+     .hero, this fully kills the cross-column shade mismatch. */
+  background: var(--rb-bg-base) !important;
+}
+#page-home .hero-photo {
+  /* Photo column also gets an explicit forest underlay so any letterbox
+     bleed when the image is mid-loading or transitioning stays on-brand. */
   background: var(--rb-bg-base);
 }
 #page-home .hero-logo-mark video,
