@@ -108,6 +108,11 @@ body.has-topnav main.main > .page.active:not(#page-home) {
   max-height: 960px;
   position: relative;
   background: var(--rb-bg-base);
+  /* Isolate the hero so body::before's pink radial glow (top: -20%,
+     right: -15%, position: fixed, z-index: 0) doesn't paint over the
+     right side of the hero. Without this, the glow gradient created a
+     visible vertical seam between the title and logo columns. */
+  isolation: isolate;
 }
 #page-home .hero-photo {
   position: relative; overflow: hidden;

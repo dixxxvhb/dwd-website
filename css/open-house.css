@@ -97,7 +97,7 @@
    ============================================================ */
 
 #page-home .hero {
-  grid-template-columns: 7fr 10fr 7fr;   /* photo | brand text | big DWD logo */
+  grid-template-columns: 7fr 10fr min-content 7fr;   /* photo | brand text | jump cards | big DWD logo */
   min-height: 0;
   max-height: none;
   padding: 0 !important;
@@ -130,8 +130,10 @@
   mix-blend-mode: lighten;
 }
 @media (max-width: 1100px) {
+  /* Drop the 4th col (big logo) at tablet+; the jump cards re-flow below
+     the hero text on tablets and mobiles via tighten.css. */
   #page-home .hero { grid-template-columns: 7fr 13fr; }
-  #page-home .hero-logo-mark { display: none; }   /* drop the 3rd col on narrower */
+  #page-home .hero-logo-mark { display: none; }
 }
 #page-home .hero-photo {
   min-height: 480px;
