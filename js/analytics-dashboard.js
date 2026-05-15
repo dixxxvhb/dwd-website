@@ -1,7 +1,9 @@
 /* ═══════════════════════════════════════════════
-   DWD — Analytics Dashboard v2
-   Mobile-first tabbed dashboard with signups,
-   sources, conversions, and period comparison
+   DWD — Analytics Dashboard v3
+   - Today period (24h hourly buckets)
+   - Live strip with 60s auto-refresh
+   - Direct-traffic spike detection
+   - UTM URL builder
    ═══════════════════════════════════════════════ */
 
 (function () {
@@ -9,6 +11,8 @@
 
   var ACCESS_CODE = 'dwdps2026';
   var STORAGE_KEY = 'dwd_analytics_auth';
+  var UTM_HISTORY_KEY = 'dwd_utm_history';
+  var LIVE_REFRESH_MS = 60000;
 
   var gate = document.getElementById('analytics-gate');
   var dashboard = document.getElementById('analytics-dashboard');
@@ -22,7 +26,8 @@
   function unlock() {
     gate.style.display = 'none';
     dashboard.style.display = 'block';
-    loadDashboard(30);
+    loadDashboard('today');
+    startLiveStrip();
   }
 
   if (isAuthed()) unlock();
@@ -42,16 +47,19 @@
   }
 
   // ── State ──
-  var currentPeriod = 30;
+  var currentPeriod = 'today';   // 'today' | 7 | 30 | 90
   var currentTab = 'overview';
   var cachedData = null;
   var cachedMerchData = null;
+  var liveTimer = null;
 
   function getSb() { return window.__dwd_sb || null; }
 
+  function periodToDays(p) { return p === 'today' ? 1 : p; }
+
   // ── Load ──
-  function loadDashboard(days) {
-    currentPeriod = days;
+  function loadDashboard(period) {
+    currentPeriod = period;
     dashboard.innerHTML = '<div class="a-loading">Loading analytics...</div>';
     var client = getSb();
     if (!client) {
@@ -59,8 +67,8 @@
       return;
     }
     Promise.all([
-      client.rpc('get_analytics_summary', { days_back: days }),
-      client.rpc('get_merch_poll_stats', { days_back: days })
+      client.rpc('get_analytics_summary', { days_back: periodToDays(period) }),
+      client.rpc('get_merch_poll_stats', { days_back: periodToDays(period) })
     ]).then(function (results) {
       var summary = results[0];
       var merch = results[1];
@@ -71,6 +79,34 @@
       cachedData = summary.data;
       cachedMerchData = (merch && !merch.error) ? merch.data : null;
       render(summary.data);
+    });
+  }
+
+  // ── Live strip (independent of main render) ──
+  function startLiveStrip() {
+    if (liveTimer) clearInterval(liveTimer);
+    refreshLiveStrip();
+    liveTimer = setInterval(refreshLiveStrip, LIVE_REFRESH_MS);
+  }
+
+  function refreshLiveStrip() {
+    var client = getSb();
+    if (!client) return;
+    client.rpc('get_analytics_live').then(function (res) {
+      if (res.error || !res.data) return;
+      var d = res.data;
+      var stripEl = document.getElementById('a-live-strip');
+      if (!stripEl) return;
+      var topPage = d.top_page_last_hour ? formatPage(d.top_page_last_hour) : '—';
+      var pulseClass = d.active_now > 0 ? ' is-live' : '';
+      stripEl.className = 'a-live-strip' + pulseClass;
+      stripEl.innerHTML =
+        '<span class="a-live-dot"></span>' +
+        '<span class="a-live-stat"><strong>' + d.visitors_last_hour + '</strong> in last hour</span>' +
+        '<span class="a-live-sep">·</span>' +
+        '<span class="a-live-stat"><strong>' + d.active_now + '</strong> active now</span>' +
+        '<span class="a-live-sep">·</span>' +
+        '<span class="a-live-stat a-live-page">top: ' + topPage + '</span>';
     });
   }
 
@@ -98,10 +134,24 @@
     return days + 'd ago';
   }
 
+  function formatHourLabel(iso) {
+    var d = new Date(iso);
+    var h = d.getHours();
+    var ampm = h >= 12 ? 'p' : 'a';
+    var h12 = h % 12; if (h12 === 0) h12 = 12;
+    return h12 + ampm;
+  }
+
   // ── Render ──
   function render(d) {
     var pp = d.prior_period || {};
     var html = '';
+
+    // Live strip (always pinned at top)
+    html += '<div id="a-live-strip" class="a-live-strip">';
+    html += '<span class="a-live-dot"></span>';
+    html += '<span class="a-live-stat">loading…</span>';
+    html += '</div>';
 
     // Header
     html += '<div class="a-header">';
@@ -112,10 +162,12 @@
     html += '</button>';
     html += '</div>';
 
-    // Period pills
+    // Period pills (Today, 7d, 30d, 90d)
     html += '<div class="a-pills">';
-    [7, 30, 90].forEach(function (n) {
-      html += '<button class="a-pill' + (currentPeriod === n ? ' active' : '') + '" data-days="' + n + '">' + n + 'd</button>';
+    var periods = [{ k: 'today', l: 'Today' }, { k: 7, l: '7d' }, { k: 30, l: '30d' }, { k: 90, l: '90d' }];
+    periods.forEach(function (p) {
+      var active = currentPeriod === p.k ? ' active' : '';
+      html += '<button class="a-pill' + active + '" data-period="' + p.k + '">' + p.l + '</button>';
     });
     html += '</div>';
 
@@ -133,15 +185,30 @@
 
     dashboard.innerHTML = html;
     bindEvents();
+    refreshLiveStrip(); // populate immediately after re-render
   }
 
   // ── Overview Tab ──
   function renderOverview(d, pp) {
-    var totalSignups = (d.email_signups || 0) + (d.contact_submissions || 0) + (d.early_access_signups || 0);
-    var priorSignups = pp.total_signups || 0;
-    var visitorChange = pctChange(d.unique_visitors || 0, pp.unique_visitors);
-    var viewsChange = pctChange(d.total_views || 0, pp.total_views);
-    var signupChange = pctChange(totalSignups, priorSignups);
+    var isToday = currentPeriod === 'today';
+
+    // Stat values: Today uses 24h-scoped fields; other periods use cutoff-scoped
+    var visitors, views, signups, viewsChange, visitorChange, signupChange;
+    if (isToday) {
+      visitors = d.today_visitors || 0;
+      views = d.today_views || 0;
+      signups = d.today_signups || 0;
+      visitorChange = pctChange(visitors, d.prior_today_visitors);
+      viewsChange = pctChange(views, d.prior_today_views);
+      signupChange = pctChange(signups, d.prior_today_signups);
+    } else {
+      visitors = d.unique_visitors || 0;
+      views = d.total_views || 0;
+      signups = (d.email_signups || 0) + (d.contact_submissions || 0) + (d.early_access_signups || 0);
+      visitorChange = pctChange(visitors, pp.unique_visitors);
+      viewsChange = pctChange(views, pp.total_views);
+      signupChange = pctChange(signups, pp.total_signups);
+    }
 
     var avgDurations = d.avg_duration || [];
     var avgAll = 0;
@@ -155,16 +222,20 @@
 
     // 2x2 grid
     html += '<div class="a-grid">';
-    html += statCard(d.unique_visitors || 0, 'Visitors', visitorChange);
-    html += statCard(d.total_views || 0, 'Page Views', viewsChange);
-    html += statCard(totalSignups, 'Signups', signupChange, true);
+    html += statCard(visitors, 'Visitors', visitorChange);
+    html += statCard(views, 'Page Views', viewsChange);
+    html += statCard(signups, 'Signups', signupChange, true);
     html += statCard(avgAll + 's', 'Avg Time', { text: d.bounce_rate + '% bounce', cls: 'a-change-flat' });
     html += '</div>';
 
-    // Daily views
+    // Sparkline — hourly for Today, daily for other periods
     html += '<div class="a-card">';
-    html += '<div class="a-card-label">Daily Views</div>';
-    html += sparkline(d.daily_views || []);
+    html += '<div class="a-card-label">' + (isToday ? 'Hourly Views (last 24h)' : 'Daily Views') + '</div>';
+    if (isToday) {
+      html += hourlySparkline(d.today_hourly || []);
+    } else {
+      html += sparkline(d.daily_views || []);
+    }
     html += '</div>';
 
     // Top pages
@@ -194,16 +265,14 @@
     var html = '<div class="a-card">';
     html += '<div class="a-card-label">Merch Poll</div>';
 
-    // Stats grid: votes + conversion rate
+    var periodLbl = currentPeriod === 'today' ? '24h' : currentPeriod + 'd';
     html += '<div class="a-grid">';
-    html += statCard(totalVotes, 'Votes (' + currentPeriod + 'd)', voteChange, true);
+    html += statCard(totalVotes, 'Votes (' + periodLbl + ')', voteChange, true);
     html += statCard(conversionPct + '%', 'Vote Rate', { text: shopViews + ' shop views', cls: 'a-change-flat' });
     html += '</div>';
 
-    // Secondary stats
     html += '<div class="a-row"><span class="a-row-label">All-time votes</span><span class="a-row-val">' + (m.votes_all_time || 0) + '</span></div>';
 
-    // Category breakdown
     if (cats.length) {
       html += '<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);">';
       html += '<div class="a-card-label" style="margin-bottom:8px;">By category</div>';
@@ -244,12 +313,49 @@
       html += '</div>';
     });
     html += '</div>';
-    // Date range
     if (rows.length > 1) {
       var first = new Date(rows[0].day);
       var last = new Date(rows[rows.length - 1].day);
       html += '<div class="a-spark-range"><span>' + (first.getMonth() + 1) + '/' + first.getDate() + '</span><span>' + (last.getMonth() + 1) + '/' + last.getDate() + '</span></div>';
     }
+    return html;
+  }
+
+  // Hourly sparkline — fills missing hours with 0 across the 24h window
+  function hourlySparkline(rows) {
+    var now = new Date();
+    var buckets = [];
+    var start = new Date(now.getTime() - 23 * 3600000);
+    start.setMinutes(0, 0, 0);
+
+    var byHour = {};
+    rows.forEach(function (r) {
+      var key = new Date(r.hour).toISOString().slice(0, 13); // yyyy-mm-ddThh
+      byHour[key] = r.views;
+    });
+
+    for (var i = 0; i < 24; i++) {
+      var hour = new Date(start.getTime() + i * 3600000);
+      var key = hour.toISOString().slice(0, 13);
+      buckets.push({ hour: hour, views: byHour[key] || 0 });
+    }
+
+    var max = 0;
+    buckets.forEach(function (b) { if (b.views > max) max = b.views; });
+
+    if (max === 0) return '<div class="a-empty">No views in the last 24 hours</div>';
+
+    var html = '<div class="a-spark a-spark-hourly">';
+    buckets.forEach(function (b, i) {
+      var pct = max > 0 ? Math.max(2, Math.round((b.views / max) * 100)) : 2;
+      var label = formatHourLabel(b.hour.toISOString());
+      var showLbl = (i % 4 === 0);
+      html += '<div class="a-spark-col" title="' + label + ': ' + b.views + ' views">';
+      html += '<div class="a-spark-bar" style="height:' + pct + '%"></div>';
+      if (showLbl) html += '<span class="a-spark-lbl a-spark-lbl-hour">' + label + '</span>';
+      html += '</div>';
+    });
+    html += '</div>';
     return html;
   }
 
@@ -266,14 +372,12 @@
   function renderSignups(d) {
     var html = '<div class="a-content">';
 
-    // 2-column counts: early access (combined) + contacts
     var allEarlyAccess = (d.email_signups || 0) + (d.early_access_signups || 0);
     html += '<div class="a-grid">';
     html += '<div class="a-stat a-stat-green"><div class="a-stat-val a-val-green">' + allEarlyAccess + '</div><div class="a-stat-label">Early Access</div></div>';
     html += '<div class="a-stat a-stat-green"><div class="a-stat-val a-val-green">' + (d.contact_submissions || 0) + '</div><div class="a-stat-label">Contact</div></div>';
     html += '</div>';
 
-    // Recent activity
     html += '<div class="a-card">';
     html += '<div class="a-card-label">Recent Activity</div>';
     var signups = d.recent_signups || [];
@@ -298,7 +402,6 @@
     }
     html += '</div>';
 
-    // Conversion funnel
     var funnel = d.conversion_funnel || {};
     html += '<div class="a-card">';
     html += '<div class="a-card-label">Conversion Funnel</div>';
@@ -339,11 +442,16 @@
     var totalVisits = 0;
     sources.forEach(function (s) { totalVisits += s.visits; });
 
-    // Color map
     var colorMap = { instagram: '#C8614B', ig: '#C8614B', direct: '#6BAF8A', google: '#FF8FAB', facebook: '#7C8CF8', tiktok: '#69C9D0', linktree: '#43e660' };
     var defaultColor = 'rgba(255,255,255,0.15)';
 
-    // Stacked bar
+    // ── Spike detector for Direct ──
+    var baseline = parseFloat(d.direct_baseline_per_hour) || 0;
+    var todayRate = parseFloat(d.direct_per_hour_today) || 0;
+    var spikeMultiple = (baseline > 0.05) ? (todayRate / baseline) : 0;
+    var hasSpike = spikeMultiple >= 2;
+    var spikeLabel = spikeMultiple >= 10 ? '10x+' : (Math.round(spikeMultiple * 10) / 10) + 'x';
+
     if (sources.length) {
       html += '<div class="a-card">';
       html += '<div class="a-card-label">Where Visitors Come From</div>';
@@ -355,12 +463,15 @@
       });
       html += '</div>';
 
-      // Source list
       sources.forEach(function (s) {
         var pct = totalVisits > 0 ? Math.round((s.visits / totalVisits) * 100) : 0;
         var color = colorMap[s.source.toLowerCase()] || defaultColor;
+        var spike = '';
+        if (hasSpike && s.source.toLowerCase() === 'direct') {
+          spike = ' <span class="a-spike-badge" title="Direct traffic is ' + spikeLabel + ' the prior 7-day baseline (' + baseline.toFixed(1) + '/hr → ' + todayRate.toFixed(1) + '/hr today). Likely from an external mention — Reel, podcast, word of mouth.">↑ ' + spikeLabel + ' Spike</span>';
+        }
         html += '<div class="a-row">';
-        html += '<span class="a-row-label"><span class="a-dot" style="background:' + color + '"></span>' + formatSource(s.source) + '</span>';
+        html += '<span class="a-row-label"><span class="a-dot" style="background:' + color + '"></span>' + formatSource(s.source) + spike + '</span>';
         html += '<span class="a-row-val">' + pct + '%</span>';
         html += '</div>';
       });
@@ -377,6 +488,9 @@
       });
       html += '</div>';
     }
+
+    // ── UTM URL Builder ──
+    html += renderUtmBuilder();
 
     // Devices
     var devices = d.devices || [];
@@ -420,12 +534,142 @@
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
+  // ── UTM URL Builder ──
+  var SOURCE_OPTIONS = [
+    { v: 'ig', label: 'Instagram (ig)', medium: 'social' },
+    { v: 'linktree', label: 'Linktree', medium: 'link-tree' },
+    { v: 'email', label: 'Email', medium: 'email' },
+    { v: 'tiktok', label: 'TikTok', medium: 'social' },
+    { v: 'facebook', label: 'Facebook', medium: 'social' },
+    { v: 'dixonbowles-bio', label: '@dixonbowles bio', medium: 'social' },
+    { v: 'dwdproseries-bio', label: '@dwdproseries bio', medium: 'social' },
+    { v: 'qr', label: 'QR Code', medium: 'print' }
+  ];
+  var LANDING_OPTIONS = [
+    { v: '', label: 'Home' },
+    { v: 'proseries', label: 'ProSeries' },
+    { v: 'adult-company', label: 'Adult Company' },
+    { v: 'amuse-in-space', label: 'A·Muse in Space' },
+    { v: 'early-access', label: 'Early Access' },
+    { v: 'contact', label: 'Contact' }
+  ];
+
+  function renderUtmBuilder() {
+    var html = '<div class="a-card a-utm-builder">';
+    html += '<div class="a-card-label">UTM URL Builder</div>';
+    html += '<p class="a-utm-help">Generate a tagged link before posting so the visit shows up here as <em>that campaign</em>, not "direct."</p>';
+
+    html += '<div class="a-utm-form">';
+    html += '<label class="a-utm-field"><span>Campaign name</span>';
+    html += '<input type="text" id="utm-campaign" placeholder="e.g. may15-website-reel" autocomplete="off">';
+    html += '</label>';
+
+    html += '<label class="a-utm-field"><span>Source</span>';
+    html += '<select id="utm-source">';
+    SOURCE_OPTIONS.forEach(function (o) {
+      html += '<option value="' + o.v + '" data-medium="' + o.medium + '">' + o.label + '</option>';
+    });
+    html += '</select></label>';
+
+    html += '<label class="a-utm-field"><span>Medium <em>(auto)</em></span>';
+    html += '<input type="text" id="utm-medium" value="social" autocomplete="off">';
+    html += '</label>';
+
+    html += '<label class="a-utm-field"><span>Landing page</span>';
+    html += '<select id="utm-landing">';
+    LANDING_OPTIONS.forEach(function (o) {
+      html += '<option value="' + o.v + '">' + o.label + '</option>';
+    });
+    html += '</select></label>';
+    html += '</div>';
+
+    html += '<div class="a-utm-output">';
+    html += '<div class="a-utm-url" id="utm-url-output">https://dancewithdixon.com/</div>';
+    html += '<button class="a-utm-copy" id="utm-copy-btn" type="button">Copy</button>';
+    html += '</div>';
+
+    var history = loadUtmHistory();
+    if (history.length) {
+      html += '<div class="a-utm-history">';
+      html += '<div class="a-utm-history-label">Recent campaigns</div>';
+      history.slice(0, 6).forEach(function (h) {
+        html += '<div class="a-utm-history-row" data-utm-url="' + escapeAttr(h.url) + '">';
+        html += '<span class="a-utm-history-name">' + escapeHtml(h.campaign) + ' <em>· ' + escapeHtml(h.source) + '</em></span>';
+        html += '<button class="a-utm-history-copy" type="button">Copy</button>';
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+
+    html += '</div>';
+    return html;
+  }
+
+  function buildUtmUrl() {
+    var campaign = (document.getElementById('utm-campaign').value || '').trim().toLowerCase().replace(/\s+/g, '-');
+    var source = document.getElementById('utm-source').value;
+    var medium = (document.getElementById('utm-medium').value || '').trim();
+    var landing = document.getElementById('utm-landing').value;
+
+    var base = 'https://dancewithdixon.com/';
+    var params = [];
+    if (source) params.push('utm_source=' + encodeURIComponent(source));
+    if (medium) params.push('utm_medium=' + encodeURIComponent(medium));
+    if (campaign) params.push('utm_campaign=' + encodeURIComponent(campaign));
+    var url = base + (params.length ? '?' + params.join('&') : '');
+    if (landing) url += '#' + landing;
+    return { url: url, campaign: campaign, source: source };
+  }
+
+  function loadUtmHistory() {
+    try {
+      var raw = localStorage.getItem(UTM_HISTORY_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+  }
+
+  function saveUtmToHistory(entry) {
+    if (!entry.campaign) return;
+    var list = loadUtmHistory();
+    list = list.filter(function (h) { return h.url !== entry.url; });
+    list.unshift({ url: entry.url, campaign: entry.campaign, source: entry.source, ts: Date.now() });
+    list = list.slice(0, 12);
+    try { localStorage.setItem(UTM_HISTORY_KEY, JSON.stringify(list)); } catch (e) {}
+  }
+
+  function copyToClipboard(text, btn) {
+    var done = function () {
+      if (!btn) return;
+      var orig = btn.textContent;
+      btn.textContent = '✓ Copied';
+      btn.classList.add('is-copied');
+      setTimeout(function () { btn.textContent = orig; btn.classList.remove('is-copied'); }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () {});
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
+
   // ── Event Binding ──
   function bindEvents() {
     // Period pills
     dashboard.querySelectorAll('.a-pill').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        loadDashboard(parseInt(btn.dataset.days, 10));
+        var p = btn.dataset.period;
+        var period = p === 'today' ? 'today' : parseInt(p, 10);
+        loadDashboard(period);
       });
     });
 
@@ -437,7 +681,7 @@
       });
     });
 
-    // Refresh button — forces a live refetch (no cache)
+    // Refresh button
     var refreshBtn = dashboard.querySelector('[data-action="refresh"]');
     if (refreshBtn) {
       refreshBtn.addEventListener('click', function () {
@@ -446,6 +690,52 @@
         loadDashboard(currentPeriod);
       });
     }
+
+    // UTM builder live update
+    var campaignInput = document.getElementById('utm-campaign');
+    var sourceSelect = document.getElementById('utm-source');
+    var mediumInput = document.getElementById('utm-medium');
+    var landingSelect = document.getElementById('utm-landing');
+    var urlOutput = document.getElementById('utm-url-output');
+    var copyBtn = document.getElementById('utm-copy-btn');
+
+    function syncUrl() {
+      if (!urlOutput) return;
+      var built = buildUtmUrl();
+      urlOutput.textContent = built.url;
+    }
+    function syncMedium() {
+      if (!sourceSelect || !mediumInput) return;
+      var opt = sourceSelect.options[sourceSelect.selectedIndex];
+      if (opt) mediumInput.value = opt.dataset.medium || 'social';
+      syncUrl();
+    }
+
+    if (sourceSelect) sourceSelect.addEventListener('change', syncMedium);
+    if (campaignInput) campaignInput.addEventListener('input', syncUrl);
+    if (mediumInput) mediumInput.addEventListener('input', syncUrl);
+    if (landingSelect) landingSelect.addEventListener('change', syncUrl);
+    if (sourceSelect) syncMedium(); // initial
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        var built = buildUtmUrl();
+        if (!built.campaign) {
+          copyBtn.textContent = 'Add a campaign name';
+          setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
+          return;
+        }
+        copyToClipboard(built.url, copyBtn);
+        saveUtmToHistory(built);
+      });
+    }
+
+    dashboard.querySelectorAll('.a-utm-history-copy').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var row = btn.closest('.a-utm-history-row');
+        if (row && row.dataset.utmUrl) copyToClipboard(row.dataset.utmUrl, btn);
+      });
+    });
   }
 
 })();

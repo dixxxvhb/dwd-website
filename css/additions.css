@@ -1630,6 +1630,181 @@ button[type="submit"]:disabled {
   .a-tabs { margin: 8px 2rem 0; max-width: 400px; }
   .a-content { padding: 14px 2rem 2rem; max-width: 600px; }
   .a-spark-lbl { display: block; }
+  .a-utm-builder { max-width: 600px; }
+}
+
+/* ════════════════════════════════════════════════
+   ANALYTICS V3 — Live strip · Spike badge · UTM builder
+   ════════════════════════════════════════════════ */
+
+/* Live strip (always pinned at top of dashboard) */
+.a-live-strip {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 8px 1.25rem;
+  background: linear-gradient(90deg, rgba(200,97,75,0.10), rgba(107,175,138,0.06));
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-family: 'Outfit', sans-serif; font-size: 12px;
+  color: rgba(245,240,232,0.75);
+  letter-spacing: 0.01em;
+}
+.a-live-stat strong {
+  color: var(--cream, #f5f0e8); font-weight: 600; margin-right: 2px;
+}
+.a-live-page { color: rgba(245,240,232,0.55); font-size: 11px; }
+.a-live-sep { color: rgba(255,255,255,0.18); }
+.a-live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.2); flex-shrink: 0;
+}
+.a-live-strip.is-live .a-live-dot {
+  background: #6BAF8A;
+  box-shadow: 0 0 0 0 rgba(107,175,138, 0.7);
+  animation: a-live-pulse 2s infinite;
+}
+@keyframes a-live-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(107,175,138, 0.7); }
+  70%  { box-shadow: 0 0 0 8px rgba(107,175,138, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(107,175,138, 0); }
+}
+@media (min-width: 769px) {
+  .a-live-strip { padding: 10px 2rem; font-size: 13px; }
+}
+
+/* Spike badge (Direct traffic anomaly chip) */
+.a-spike-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 7px;
+  font-size: 10px; font-weight: 700;
+  background: var(--terra, #C8614B);
+  color: var(--forest, #0f1a14);
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+  cursor: help;
+  vertical-align: middle;
+}
+
+/* Hourly sparkline tweaks */
+.a-spark-hourly { gap: 2px; height: 64px; }
+.a-spark-lbl-hour { display: block; font-size: 8px; color: rgba(255,255,255,0.35); }
+
+/* UTM URL Builder card */
+.a-utm-builder { padding: 14px; }
+.a-utm-help {
+  font-size: 12px; color: rgba(255,255,255,0.5);
+  margin: -4px 0 12px; line-height: 1.45;
+}
+.a-utm-help em { color: var(--terra, #C8614B); font-style: normal; font-weight: 500; }
+
+.a-utm-form {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px;
+  margin-bottom: 12px;
+}
+.a-utm-field {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.a-utm-field span {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px;
+  color: rgba(255,255,255,0.4);
+}
+.a-utm-field span em { font-style: normal; opacity: 0.7; text-transform: none; letter-spacing: 0; font-size: 10px; }
+
+.a-utm-field input,
+.a-utm-field select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--cream, #f5f0e8);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.15s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.a-utm-field input:focus,
+.a-utm-field select:focus {
+  border-color: var(--terra, #C8614B);
+  background: rgba(200,97,75,0.06);
+}
+.a-utm-field select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0998a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 26px;
+}
+
+.a-utm-output {
+  display: flex; align-items: stretch; gap: 6px;
+  margin-bottom: 8px;
+}
+.a-utm-url {
+  flex: 1;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--cream-faint, #d4cfc0);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 11px;
+  word-break: break-all;
+  line-height: 1.4;
+  user-select: all;
+}
+.a-utm-copy {
+  background: var(--terra, #C8614B);
+  color: var(--forest, #0f1a14);
+  border: none;
+  padding: 0 14px;
+  border-radius: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px; font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter 0.15s;
+}
+.a-utm-copy:hover { filter: brightness(1.08); }
+.a-utm-copy.is-copied { background: #6BAF8A; }
+
+.a-utm-history {
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.a-utm-history-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px;
+  color: rgba(255,255,255,0.4); margin-bottom: 6px;
+}
+.a-utm-history-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 0; font-size: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  gap: 8px;
+}
+.a-utm-history-row:last-child { border-bottom: none; }
+.a-utm-history-name {
+  color: var(--cream-faint, #d4cfc0);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.a-utm-history-name em {
+  color: rgba(255,255,255,0.4); font-style: normal; font-size: 11px;
+}
+.a-utm-history-copy {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--cream-faint, #d4cfc0);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.a-utm-history-copy:hover { background: rgba(255,255,255,0.1); }
+.a-utm-history-copy.is-copied { background: #6BAF8A; color: var(--forest, #0f1a14); border-color: transparent; }
+
+@media (max-width: 480px) {
+  .a-utm-form { grid-template-columns: 1fr; }
 }
 
 /* Tamara Mark — memorial easter egg */
