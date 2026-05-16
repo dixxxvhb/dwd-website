@@ -305,6 +305,24 @@ body {
   text-transform: none;
   letter-spacing: 0;
 }
+.amuse-checkbox-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.amuse-checkbox-date {
+  font-size: 0.96rem;
+  color: var(--amuse-cream);
+  font-weight: 500;
+}
+.amuse-checkbox-meta {
+  font-size: 0.78rem;
+  color: var(--amuse-muted);
+  font-weight: 400;
+  line-height: 1.35;
+}
 .amuse-checkbox input[type="checkbox"] {
   width: 20px;
   height: 20px;

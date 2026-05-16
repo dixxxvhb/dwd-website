@@ -115,7 +115,6 @@
         rehearsal_jun_14: form.querySelector('#r-jun-14').checked,
         rehearsal_jun_21: form.querySelector('#r-jun-21').checked,
         attending_show:   form.querySelector('#show-jun-27').checked,
-        experience: form.querySelector('#amuse-experience').value.trim() || null,
         notes:      form.querySelector('#amuse-notes').value.trim() || null,
       };
 
