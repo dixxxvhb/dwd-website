@@ -169,37 +169,45 @@
       color: #f8d7c8;
     }
 
-    /* Info strip — two compact pill cards */
+    /* Info strip — stacked cards */
     .info-pills {
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      align-items: center;
-      margin-top: 44px;
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 40px;
     }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 18px;
-      padding: 22px 36px;
+    .info-card {
+      padding: 22px 32px;
       background: rgba(248, 215, 200, 0.06);
       border: 1px solid rgba(248, 215, 200, 0.25);
-      border-radius: 999px;
+      border-radius: 28px;
+      text-align: center;
       backdrop-filter: blur(4px);
     }
-    .pill-label {
+    .info-card-label {
       font-family: 'Outfit', sans-serif;
       font-size: 18px;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
       color: #FF8FAB;
+      margin-bottom: 10px;
     }
-    .pill-value {
+    .info-card-value {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 32px;
+      font-style: italic;
+      font-size: 34px;
       font-weight: 500;
       color: #FAF3E8;
+      line-height: 1.2;
       letter-spacing: 0.005em;
+    }
+    .info-card-meta {
+      margin-top: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      color: rgba(250, 243, 232, 0.7);
+      letter-spacing: 0.01em;
     }
 
     /* Footer — CTA + URL */
@@ -313,21 +321,21 @@
       <!-- Middle: hero -->
       <div class="hero">
         <div class="eyebrow"><span class="sp">✦</span>A·Muse in Space<span class="sp">✦</span></div>
-        <h1 class="headline">Wanna dance<br><em>the show?</em></h1>
+        <h1 class="headline">Wanna be<br><em>in the show?</em></h1>
         <p class="sub-line">
           Open call for the DWD Collective.<br>
-          <strong>Four Sunday rehearsals</strong> into the<br>
-          showcase at <strong>Orlando Ballet</strong>, June 27.
+          <strong>Ages 16+ · any level welcome.</strong>
         </p>
 
         <div class="info-pills">
-          <div class="pill">
-            <span class="pill-label">Rehearsals</span>
-            <span class="pill-value">Sundays · 6:30–8:30 PM</span>
+          <div class="info-card">
+            <div class="info-card-label">Rehearsals</div>
+            <div class="info-card-value">Sun · May 24 · May 31 · Jun 14 · Jun 21</div>
+            <div class="info-card-meta">6:30–8:30 PM · Next Level Dance Studio, St. Cloud</div>
           </div>
-          <div class="pill">
-            <span class="pill-label">Show</span>
-            <span class="pill-value">Sat · Jun 27 · Orlando Ballet</span>
+          <div class="info-card">
+            <div class="info-card-label">Show</div>
+            <div class="info-card-value">Sat · Jun 27 · Orlando Ballet</div>
           </div>
         </div>
       </div>
