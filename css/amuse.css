@@ -1,19 +1,20 @@
 /* A·Muse in Space — public registration page.
-   Self-contained styles (page is standalone, not part of the SPA).
-   Mirrors the IG story aesthetic from the brand kit. */
+   Self-contained styles. Cosmic-y, on-brand, with twinkles. */
 
 :root {
   --amuse-forest:       #0c1f17;
-  --amuse-forest-deep:  #08160f;
+  --amuse-forest-deep:  #06120c;
+  --amuse-forest-mid:   #0f2a1c;
   --amuse-pink:         #f8d7c8;
+  --amuse-pink-hot:     #ff8fab;
   --amuse-terra:        #C8614B;
+  --amuse-seafoam:      #6BAF8A;
   --amuse-cream:        #FAF3E8;
-  --amuse-cream-soft:   #faf5ed;
   --amuse-muted:        rgba(250, 243, 232, 0.62);
-  --amuse-line:         rgba(248, 215, 200, 0.18);
-  --amuse-card:         rgba(255, 255, 255, 0.04);
-  --amuse-card-line:    rgba(255, 255, 255, 0.07);
-  --amuse-glow:         radial-gradient(60% 50% at 70% 20%, rgba(107, 175, 138, 0.18), transparent 70%);
+  --amuse-faint:        rgba(250, 243, 232, 0.42);
+  --amuse-line:         rgba(248, 215, 200, 0.22);
+  --amuse-card:         rgba(255, 255, 255, 0.035);
+  --amuse-card-line:    rgba(248, 215, 200, 0.12);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,12 +30,85 @@ html, body {
   min-height: 100%;
 }
 
+/* ─── Cosmic background: layered radial glows + drifting nebula ─── */
 body {
-  background-image: var(--amuse-glow);
+  background:
+    radial-gradient(50% 35% at 80% 12%, rgba(255, 143, 171, 0.18), transparent 70%),
+    radial-gradient(45% 35% at 18% 78%, rgba(107, 175, 138, 0.16), transparent 70%),
+    radial-gradient(60% 45% at 50% 50%, rgba(200, 97, 75, 0.07), transparent 75%),
+    var(--amuse-forest);
   background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ─── Star field: two layers of pseudo-elements, gentle twinkle ─── */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+body::before {
+  background-image:
+    radial-gradient(1.5px 1.5px at 8%  12%, rgba(248,215,200,0.85), transparent 60%),
+    radial-gradient(1px   1px   at 22% 38%, rgba(250,243,232,0.7),  transparent 60%),
+    radial-gradient(2px   2px   at 38% 8%,  rgba(255,143,171,0.7),  transparent 55%),
+    radial-gradient(1px   1px   at 55% 24%, rgba(248,215,200,0.6),  transparent 60%),
+    radial-gradient(1.5px 1.5px at 72% 16%, rgba(250,243,232,0.8),  transparent 60%),
+    radial-gradient(1px   1px   at 86% 44%, rgba(248,215,200,0.65), transparent 60%),
+    radial-gradient(1.5px 1.5px at 14% 62%, rgba(255,143,171,0.55), transparent 60%),
+    radial-gradient(1px   1px   at 30% 76%, rgba(248,215,200,0.7),  transparent 60%),
+    radial-gradient(2px   2px   at 48% 88%, rgba(250,243,232,0.8),  transparent 55%),
+    radial-gradient(1px   1px   at 62% 70%, rgba(248,215,200,0.5),  transparent 60%),
+    radial-gradient(1.5px 1.5px at 80% 82%, rgba(255,143,171,0.6),  transparent 60%),
+    radial-gradient(1px   1px   at 92% 60%, rgba(250,243,232,0.7),  transparent 60%);
+  background-size: 100% 100%;
+  animation: twinkle 7s ease-in-out infinite;
+}
+body::after {
+  background-image:
+    radial-gradient(1px 1px at 5% 30%,  rgba(255,255,255,0.55), transparent 55%),
+    radial-gradient(1px 1px at 18% 88%, rgba(255,255,255,0.4),  transparent 55%),
+    radial-gradient(1px 1px at 40% 50%, rgba(255,255,255,0.5),  transparent 55%),
+    radial-gradient(1px 1px at 64% 38%, rgba(255,255,255,0.45), transparent 55%),
+    radial-gradient(1px 1px at 78% 70%, rgba(255,255,255,0.5),  transparent 55%),
+    radial-gradient(1px 1px at 95% 22%, rgba(255,255,255,0.4),  transparent 55%);
+  animation: twinkle 4.5s ease-in-out infinite reverse;
+  opacity: 0.7;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-6px) rotate(2deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 10px 28px rgba(248,215,200,0.22), 0 0 0 0 rgba(255,143,171,0.0); }
+  50%      { box-shadow: 0 14px 38px rgba(248,215,200,0.32), 0 0 0 8px rgba(255,143,171,0.10); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes spark {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.55; }
+  50%      { transform: scale(1.25) rotate(180deg); opacity: 1; }
 }
 
 .amuse-page {
+  position: relative;
+  z-index: 1;
   max-width: 720px;
   margin: 0 auto;
   padding: 32px 24px 64px;
@@ -61,7 +135,9 @@ body {
   text-transform: uppercase;
   color: var(--amuse-cream);
   text-decoration: none;
+  transition: opacity 0.2s;
 }
+.amuse-wm:hover { opacity: 0.85; }
 .amuse-wm em {
   color: var(--amuse-pink);
   font-style: normal;
@@ -77,53 +153,131 @@ body {
 }
 
 /* ─── Hero ─── */
-.amuse-main { flex: 1; }
+.amuse-main { flex: 1; position: relative; }
 
-.amuse-hero { margin-bottom: 56px; }
+.amuse-hero {
+  margin-bottom: 64px;
+  position: relative;
+}
+
+/* Decorative sparkle floating near the hero */
+.amuse-hero::after {
+  content: '✦';
+  position: absolute;
+  top: -10px;
+  right: 8%;
+  font-size: 1.4rem;
+  color: var(--amuse-pink-hot);
+  opacity: 0.7;
+  animation: spark 5s ease-in-out infinite;
+  pointer-events: none;
+}
 
 .amuse-eyebrow {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.22em;
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--amuse-pink);
-  margin-bottom: 24px;
+  margin-bottom: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.amuse-eyebrow::before,
+.amuse-eyebrow::after {
+  content: '✦';
+  font-size: 0.7rem;
+  color: var(--amuse-pink-hot);
+  letter-spacing: 0;
 }
 
 .amuse-title {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 500;
   font-style: italic;
-  font-size: clamp(2.6rem, 8vw, 4.4rem);
-  line-height: 1.02;
-  letter-spacing: -0.015em;
-  color: var(--amuse-cream);
-  margin-bottom: 22px;
+  font-size: clamp(2.8rem, 9vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg,
+    var(--amuse-cream) 0%,
+    var(--amuse-pink) 50%,
+    var(--amuse-cream) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 8s ease-in-out infinite;
 }
 .amuse-title em {
   font-style: italic;
-  color: var(--amuse-pink);
+  background: linear-gradient(135deg,
+    var(--amuse-pink-hot) 0%,
+    var(--amuse-pink) 60%,
+    var(--amuse-pink-hot) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s ease-in-out infinite;
+  position: relative;
 }
 
 .amuse-lede {
   font-size: 1.08rem;
-  line-height: 1.55;
-  color: var(--amuse-muted);
+  line-height: 1.6;
+  color: var(--amuse-cream);
+  opacity: 0.85;
   max-width: 560px;
 }
 
-/* ─── Info card ─── */
-.amuse-info {
-  margin-bottom: 64px;
+/* ─── Ornamental divider (between sections) ─── */
+.amuse-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 48px 0;
+  color: var(--amuse-pink);
 }
+.amuse-divider::before,
+.amuse-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--amuse-line) 40%, var(--amuse-line) 60%, transparent);
+  max-width: 220px;
+}
+.amuse-divider span {
+  font-size: 0.95rem;
+  letter-spacing: 0.6em;
+  color: var(--amuse-pink-hot);
+  text-shadow: 0 0 12px rgba(255, 143, 171, 0.5);
+  padding-left: 0.6em; /* compensate for letter-spacing on last char */
+}
+
+/* ─── Info card ─── */
+.amuse-info { margin-bottom: 48px; }
 
 .amuse-info-title {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 500;
-  font-size: 2rem;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
   color: var(--amuse-cream);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  position: relative;
+  display: inline-block;
+}
+.amuse-info-title::after {
+  content: '✧';
+  margin-left: 12px;
+  color: var(--amuse-pink-hot);
+  font-size: 0.75em;
+  opacity: 0.7;
+  animation: spark 7s ease-in-out infinite;
+  display: inline-block;
 }
 
 .amuse-details {
@@ -131,25 +285,43 @@ body {
   flex-direction: column;
   gap: 0;
   border-top: 1px solid var(--amuse-line);
+  background: linear-gradient(180deg, rgba(248, 215, 200, 0.02), transparent);
+  border-radius: 14px;
+  overflow: hidden;
 }
 .amuse-detail {
   display: grid;
   grid-template-columns: 110px 1fr;
   gap: 18px;
   align-items: baseline;
-  padding: 18px 4px;
+  padding: 20px 16px;
   border-bottom: 1px solid var(--amuse-line);
+  transition: background 0.18s;
 }
+.amuse-detail:last-child { border-bottom: none; }
+.amuse-detail:hover { background: rgba(248, 215, 200, 0.03); }
+
 .amuse-detail-label {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--amuse-pink);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.amuse-detail-label::before {
+  content: '✦';
+  color: var(--amuse-pink-hot);
+  font-size: 0.7em;
+  letter-spacing: 0;
+  opacity: 0.85;
 }
 .amuse-detail-value {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;
+  font-size: 1.22rem;
   line-height: 1.4;
   color: var(--amuse-cream);
   font-weight: 500;
@@ -164,47 +336,68 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* ─── Form ─── */
+/* ─── Form section ─── */
 .amuse-form-section {
-  background: var(--amuse-forest-deep);
+  position: relative;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(248, 215, 200, 0.06), transparent 70%),
+    var(--amuse-forest-deep);
   border: 1px solid var(--amuse-line);
-  border-radius: 16px;
-  padding: 36px 28px;
+  border-radius: 20px;
+  padding: 44px 32px 36px;
   margin-bottom: 32px;
+  overflow: hidden;
 }
+/* Glowing corner accents */
+.amuse-form-section::before,
+.amuse-form-section::after {
+  content: '✦';
+  position: absolute;
+  font-size: 1rem;
+  color: var(--amuse-pink-hot);
+  opacity: 0.55;
+  animation: spark 6s ease-in-out infinite;
+  pointer-events: none;
+}
+.amuse-form-section::before { top: 18px; right: 22px; }
+.amuse-form-section::after  { bottom: 18px; left: 22px; animation-delay: 3s; }
 
 .amuse-form-title {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 500;
-  font-size: 2rem;
+  font-size: clamp(1.9rem, 5.5vw, 2.6rem);
   color: var(--amuse-cream);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--amuse-cream), var(--amuse-pink), var(--amuse-cream));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 10s ease-in-out infinite;
 }
 
 .amuse-form-lede {
-  font-size: 0.96rem;
+  font-size: 0.98rem;
   color: var(--amuse-muted);
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
-.form-group {
-  margin-bottom: 20px;
-}
+.form-group { margin-bottom: 22px; }
 .form-group label,
 .form-group legend {
   display: block;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
+  font-size: 0.74rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--amuse-pink);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .amuse-optional {
   font-size: 0.7rem;
   letter-spacing: 0.12em;
-  color: var(--amuse-muted);
+  color: var(--amuse-faint);
   text-transform: none;
 }
 
@@ -213,17 +406,17 @@ body {
 .form-group input[type="tel"],
 .form-group textarea {
   width: 100%;
-  min-height: 48px;
-  padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.03);
+  min-height: 50px;
+  padding: 13px 16px;
+  background: rgba(255, 255, 255, 0.025);
   border: 1px solid var(--amuse-card-line);
-  border-radius: 8px;
+  border-radius: 10px;
   color: var(--amuse-cream);
   font-family: 'Outfit', sans-serif;
   font-size: 1rem;
   line-height: 1.4;
   outline: none;
-  transition: border-color 0.18s, background 0.18s;
+  transition: all 0.2s;
 }
 .form-group textarea {
   resize: vertical;
@@ -231,12 +424,13 @@ body {
 }
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: rgba(250, 243, 232, 0.35);
+  color: rgba(250, 243, 232, 0.32);
 }
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--amuse-pink);
-  background: rgba(248, 215, 200, 0.05);
+  background: rgba(248, 215, 200, 0.045);
+  box-shadow: 0 0 0 4px rgba(248, 215, 200, 0.10);
 }
 .form-group input.invalid,
 .form-group textarea.invalid {
@@ -257,39 +451,37 @@ body {
 }
 .form-field-error.show { display: block; }
 
-/* Rehearsal checkboxes */
+/* ─── Rehearsal checkboxes ─── */
 .amuse-commitment {
   border: none;
   padding: 0;
 }
 .amuse-commitment-help {
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   color: var(--amuse-muted);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   margin-top: -4px;
 }
 .amuse-checkbox-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 @media (min-width: 540px) {
-  .amuse-checkbox-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  .amuse-checkbox-grid { grid-template-columns: 1fr 1fr; }
 }
 
-/* High specificity to beat the `.form-group label` uppercase rule above. */
+/* High-specificity to beat the `.form-group label` uppercase rule. */
 .form-group label.amuse-checkbox,
 .amuse-form-section label.amuse-checkbox {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-height: 48px;
-  padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.03);
+  gap: 14px;
+  min-height: 56px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.025);
   border: 1px solid var(--amuse-card-line);
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   user-select: none;
   text-transform: none;
@@ -299,7 +491,8 @@ body {
   font-size: 0.96rem;
   font-weight: 400;
   margin: 0;
-  transition: border-color 0.18s, background 0.18s;
+  transition: all 0.2s ease;
+  position: relative;
 }
 .amuse-checkbox span {
   text-transform: none;
@@ -323,33 +516,99 @@ body {
   font-weight: 400;
   line-height: 1.35;
 }
+
+/* Custom-styled checkbox box, replacing the native one */
 .amuse-checkbox input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--amuse-pink);
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
+  border: 2px solid rgba(248, 215, 200, 0.35);
+  border-radius: 7px;
+  background: rgba(12, 31, 23, 0.4);
   cursor: pointer;
+  position: relative;
+  margin: 0;
+  transition: all 0.2s ease;
 }
+.amuse-checkbox input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, var(--amuse-pink), var(--amuse-pink-hot));
+  border-color: var(--amuse-pink-hot);
+  box-shadow:
+    0 0 0 4px rgba(248, 215, 200, 0.15),
+    0 0 18px rgba(255, 143, 171, 0.45);
+  transform: scale(1.05);
+}
+.amuse-checkbox input[type="checkbox"]:checked::before {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--amuse-forest);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+.amuse-checkbox input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--amuse-pink);
+  outline-offset: 2px;
+}
+
 .amuse-checkbox:hover {
   border-color: var(--amuse-pink);
+  background: rgba(248, 215, 200, 0.04);
+  transform: translateY(-1px);
 }
 .amuse-checkbox:has(input:checked) {
   border-color: var(--amuse-pink);
   background: rgba(248, 215, 200, 0.07);
 }
 
-.amuse-show-row {
-  margin-bottom: 28px;
-}
+.amuse-show-row { margin: 28px 0 30px; }
+
 .amuse-checkbox-show {
-  background: rgba(248, 215, 200, 0.04);
-  border-color: var(--amuse-pink);
+  background:
+    radial-gradient(80% 100% at 50% 50%, rgba(255, 143, 171, 0.08), transparent 80%),
+    rgba(248, 215, 200, 0.04) !important;
+  border: 1px solid var(--amuse-pink) !important;
+  border-radius: 14px !important;
+  padding: 16px 18px !important;
+  min-height: 64px !important;
 }
 .amuse-checkbox-show span {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 1.08rem;
+  font-size: 1.12rem;
   font-weight: 500;
+}
+.amuse-checkbox-show:has(input:checked) {
+  background:
+    radial-gradient(80% 100% at 50% 50%, rgba(255, 143, 171, 0.18), transparent 80%),
+    rgba(248, 215, 200, 0.08) !important;
+  box-shadow:
+    0 0 0 4px rgba(255, 143, 171, 0.10),
+    0 8px 32px rgba(255, 143, 171, 0.22);
+}
+/* Mini sparkle on show row when checked */
+.amuse-checkbox-show::after {
+  content: '✧';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  font-size: 1.2rem;
+  color: var(--amuse-pink-hot);
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+.amuse-checkbox-show:has(input:checked)::after {
+  transform: translateY(-50%) scale(1);
+  opacity: 1;
+  animation: spark 3s ease-in-out infinite 0.3s;
 }
 
 /* Honeypot — hidden from humans, present for bots */
@@ -361,92 +620,146 @@ body {
   overflow: hidden;
 }
 
-/* Submit */
+/* ─── Submit button ─── */
 .amuse-submit {
   display: block;
   width: 100%;
-  min-height: 56px;
-  padding: 16px 28px;
-  background: var(--amuse-pink);
+  min-height: 60px;
+  padding: 18px 28px;
+  background: linear-gradient(135deg, var(--amuse-pink) 0%, #ffe1d4 50%, var(--amuse-pink) 100%);
+  background-size: 200% 200%;
   color: var(--amuse-forest);
   border: none;
   border-radius: 999px;
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   letter-spacing: 0.01em;
   cursor: pointer;
-  transition: transform 0.18s, background 0.18s, box-shadow 0.18s;
-  box-shadow: 0 8px 24px rgba(248, 215, 200, 0.18);
+  position: relative;
+  transition: transform 0.2s ease, background-position 0.5s ease;
+  animation: pulse-glow 3.5s ease-in-out infinite;
+}
+.amuse-submit::after {
+  content: '→';
+  display: inline-block;
+  margin-left: 14px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.5rem;
+  transition: transform 0.2s ease;
+  color: var(--amuse-terra);
 }
 .amuse-submit:hover:not(:disabled) {
-  background: #ffe1d4;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(248, 215, 200, 0.28);
+  transform: translateY(-3px);
+  background-position: 100% 50%;
 }
-.amuse-submit:active:not(:disabled) { transform: translateY(0); }
+.amuse-submit:hover:not(:disabled)::after {
+  transform: translateX(6px);
+}
+.amuse-submit:active:not(:disabled) { transform: translateY(-1px); }
 .amuse-submit:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+  animation: none;
 }
 
+/* ─── Status messages ─── */
 .form-success,
 .form-error {
   display: none;
-  margin-top: 16px;
-  padding: 14px 16px;
-  border-radius: 8px;
-  font-size: 0.96rem;
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  font-size: 0.98rem;
   line-height: 1.5;
+  text-align: center;
 }
 .form-success {
-  background: rgba(107, 175, 138, 0.10);
-  border: 1px solid rgba(107, 175, 138, 0.35);
-  color: #cdebd9;
+  background:
+    radial-gradient(60% 100% at 50% 50%, rgba(107, 175, 138, 0.18), transparent),
+    rgba(107, 175, 138, 0.08);
+  border: 1px solid rgba(107, 175, 138, 0.45);
+  color: #d9efe3;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.08rem;
+}
+.form-success::before {
+  content: '✧';
+  display: inline-block;
+  margin-right: 10px;
+  color: var(--amuse-seafoam);
+  animation: spark 2s ease-in-out infinite;
 }
 .form-error {
   background: rgba(200, 97, 75, 0.12);
-  border: 1px solid rgba(200, 97, 75, 0.4);
+  border: 1px solid rgba(200, 97, 75, 0.45);
   color: #f4b8a7;
 }
 .form-success.show,
 .form-error.show { display: block; }
 
 .amuse-questions {
-  margin-top: 22px;
+  margin-top: 28px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--amuse-muted);
 }
 .amuse-questions a {
   color: var(--amuse-pink);
   text-decoration: none;
   border-bottom: 1px solid rgba(248, 215, 200, 0.3);
+  transition: all 0.18s;
 }
-.amuse-questions a:hover { border-bottom-color: var(--amuse-pink); }
+.amuse-questions a:hover {
+  color: var(--amuse-pink-hot);
+  border-bottom-color: var(--amuse-pink-hot);
+}
 
-/* Footer */
+/* ─── Footer ─── */
 .amuse-footer {
   margin-top: auto;
-  padding-top: 32px;
+  padding-top: 40px;
   text-align: center;
   font-size: 0.78rem;
-  color: var(--amuse-muted);
+  color: var(--amuse-faint);
 }
 .amuse-footer a {
   color: var(--amuse-pink);
   text-decoration: none;
+  transition: color 0.18s;
 }
+.amuse-footer a:hover { color: var(--amuse-pink-hot); }
 
-/* Smaller screens */
+/* ─── Small-screen tuning ─── */
 @media (max-width: 540px) {
   .amuse-page { padding: 24px 18px 48px; }
   .amuse-header { margin-bottom: 40px; }
-  .amuse-hero { margin-bottom: 40px; }
-  .amuse-info { margin-bottom: 48px; }
-  .amuse-form-section { padding: 28px 20px; }
+  .amuse-hero { margin-bottom: 48px; }
+  .amuse-divider { margin: 36px 0; }
+  .amuse-info { margin-bottom: 36px; }
+  .amuse-form-section { padding: 36px 22px 30px; }
   .form-row { grid-template-columns: 1fr; }
-  .amuse-detail { grid-template-columns: 1fr; gap: 6px; padding: 16px 4px; }
+  .amuse-detail {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 18px 12px;
+  }
   .amuse-detail-label { font-size: 0.68rem; }
+  .amuse-divider::before,
+  .amuse-divider::after { max-width: 100px; }
+}
+
+/* ─── Reduced motion respect ─── */
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after,
+  .amuse-title, .amuse-title em, .amuse-form-title,
+  .amuse-hero::after, .amuse-info-title::after,
+  .amuse-form-section::before, .amuse-form-section::after,
+  .amuse-submit, .amuse-checkbox-show:has(input:checked)::after {
+    animation: none !important;
+  }
+  .amuse-checkbox input[type="checkbox"]:checked { transform: none; }
 }
