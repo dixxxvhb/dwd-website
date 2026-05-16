@@ -111,7 +111,7 @@ body::after {
   z-index: 1;
   max-width: 720px;
   margin: 0 auto;
-  padding: 32px 24px 64px;
+  padding: 20px 24px 56px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -122,8 +122,8 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 56px;
-  padding-bottom: 18px;
+  margin-bottom: 28px;
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--amuse-line);
 }
 
@@ -156,7 +156,7 @@ body::after {
 .amuse-main { flex: 1; position: relative; }
 
 .amuse-hero {
-  margin-bottom: 64px;
+  margin-bottom: 28px;
   position: relative;
 }
 
@@ -164,9 +164,9 @@ body::after {
 .amuse-hero::after {
   content: '✦';
   position: absolute;
-  top: -10px;
-  right: 8%;
-  font-size: 1.4rem;
+  top: -4px;
+  right: 6%;
+  font-size: 1.1rem;
   color: var(--amuse-pink-hot);
   opacity: 0.7;
   animation: spark 5s ease-in-out infinite;
@@ -175,31 +175,29 @@ body::after {
 
 .amuse-eyebrow {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.28em;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--amuse-pink);
-  margin-bottom: 26px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  margin-bottom: 12px;
 }
-.amuse-eyebrow::before,
-.amuse-eyebrow::after {
-  content: '✦';
-  font-size: 0.7rem;
+.amuse-eyebrow .spark {
+  display: inline-block;
+  font-size: 0.85em;
   color: var(--amuse-pink-hot);
   letter-spacing: 0;
+  margin: 0 0.4em;
+  vertical-align: baseline;
 }
 
 .amuse-title {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 500;
   font-style: italic;
-  font-size: clamp(2.8rem, 9vw, 5rem);
+  font-size: clamp(2.2rem, 7.5vw, 3.6rem);
   line-height: 1;
   letter-spacing: -0.02em;
-  margin-bottom: 24px;
+  margin-bottom: 14px;
   background: linear-gradient(135deg,
     var(--amuse-cream) 0%,
     var(--amuse-pink) 50%,
@@ -225,10 +223,10 @@ body::after {
 }
 
 .amuse-lede {
-  font-size: 1.08rem;
-  line-height: 1.6;
+  font-size: 0.96rem;
+  line-height: 1.5;
   color: var(--amuse-cream);
-  opacity: 0.85;
+  opacity: 0.82;
   max-width: 560px;
 }
 
@@ -238,7 +236,7 @@ body::after {
   align-items: center;
   justify-content: center;
   gap: 16px;
-  margin: 48px 0;
+  margin: 14px 0;
   color: var(--amuse-pink);
 }
 .amuse-divider::before,
@@ -258,21 +256,21 @@ body::after {
 }
 
 /* ─── Info card ─── */
-.amuse-info { margin-bottom: 48px; }
+.amuse-info { margin-bottom: 22px; }
 
 .amuse-info-title {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
   color: var(--amuse-cream);
-  margin-bottom: 28px;
+  margin-bottom: 14px;
   position: relative;
   display: inline-block;
 }
 .amuse-info-title::after {
   content: '✧';
-  margin-left: 12px;
+  margin-left: 10px;
   color: var(--amuse-pink-hot);
   font-size: 0.75em;
   opacity: 0.7;
@@ -286,15 +284,15 @@ body::after {
   gap: 0;
   border-top: 1px solid var(--amuse-line);
   background: linear-gradient(180deg, rgba(248, 215, 200, 0.02), transparent);
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
 }
 .amuse-detail {
   display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 18px;
+  grid-template-columns: 92px 1fr;
+  gap: 14px;
   align-items: baseline;
-  padding: 20px 16px;
+  padding: 8px 14px;
   border-bottom: 1px solid var(--amuse-line);
   transition: background 0.18s;
 }
@@ -303,14 +301,14 @@ body::after {
 
 .amuse-detail-label {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.24em;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--amuse-pink);
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 .amuse-detail-label::before {
   content: '✦';
@@ -321,16 +319,16 @@ body::after {
 }
 .amuse-detail-value {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.22rem;
-  line-height: 1.4;
+  font-size: 0.96rem;
+  line-height: 1.3;
   color: var(--amuse-cream);
   font-weight: 500;
 }
 .amuse-detail-small {
   display: inline-block;
-  margin-top: 4px;
+  margin-top: 2px;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 400;
   color: var(--amuse-muted);
   letter-spacing: 0.01em;
@@ -344,7 +342,7 @@ body::after {
     var(--amuse-forest-deep);
   border: 1px solid var(--amuse-line);
   border-radius: 20px;
-  padding: 44px 32px 36px;
+  padding: 30px 30px 32px;
   margin-bottom: 32px;
   overflow: hidden;
 }
@@ -735,21 +733,22 @@ body::after {
 
 /* ─── Small-screen tuning ─── */
 @media (max-width: 540px) {
-  .amuse-page { padding: 24px 18px 48px; }
-  .amuse-header { margin-bottom: 40px; }
-  .amuse-hero { margin-bottom: 48px; }
-  .amuse-divider { margin: 36px 0; }
-  .amuse-info { margin-bottom: 36px; }
-  .amuse-form-section { padding: 36px 22px 30px; }
+  .amuse-page { padding: 16px 18px 48px; }
+  .amuse-header { margin-bottom: 20px; padding-bottom: 12px; }
+  .amuse-hero { margin-bottom: 18px; }
+  .amuse-divider { margin: 16px 0; }
+  .amuse-info { margin-bottom: 18px; }
+  .amuse-form-section { padding: 26px 20px 28px; }
   .form-row { grid-template-columns: 1fr; }
   .amuse-detail {
     grid-template-columns: 1fr;
-    gap: 6px;
-    padding: 18px 12px;
+    gap: 4px;
+    padding: 12px 12px;
   }
-  .amuse-detail-label { font-size: 0.68rem; }
+  .amuse-detail-label { font-size: 0.62rem; }
+  .amuse-detail-value { font-size: 0.96rem; }
   .amuse-divider::before,
-  .amuse-divider::after { max-width: 100px; }
+  .amuse-divider::after { max-width: 90px; }
 }
 
 /* ─── Reduced motion respect ─── */
