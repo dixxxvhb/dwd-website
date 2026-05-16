@@ -1,0 +1,434 @@
+/* A·Muse in Space — public registration page.
+   Self-contained styles (page is standalone, not part of the SPA).
+   Mirrors the IG story aesthetic from the brand kit. */
+
+:root {
+  --amuse-forest:       #0c1f17;
+  --amuse-forest-deep:  #08160f;
+  --amuse-pink:         #f8d7c8;
+  --amuse-terra:        #C8614B;
+  --amuse-cream:        #FAF3E8;
+  --amuse-cream-soft:   #faf5ed;
+  --amuse-muted:        rgba(250, 243, 232, 0.62);
+  --amuse-line:         rgba(248, 215, 200, 0.18);
+  --amuse-card:         rgba(255, 255, 255, 0.04);
+  --amuse-card-line:    rgba(255, 255, 255, 0.07);
+  --amuse-glow:         radial-gradient(60% 50% at 70% 20%, rgba(107, 175, 138, 0.18), transparent 70%);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--amuse-forest);
+  color: var(--amuse-cream);
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+}
+
+body {
+  background-image: var(--amuse-glow);
+  background-attachment: fixed;
+}
+
+.amuse-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header ─── */
+.amuse-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--amuse-line);
+}
+
+.amuse-wm {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 1.05rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amuse-cream);
+  text-decoration: none;
+}
+.amuse-wm em {
+  color: var(--amuse-pink);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.amuse-issue {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  color: var(--amuse-muted);
+  text-transform: uppercase;
+}
+
+/* ─── Hero ─── */
+.amuse-main { flex: 1; }
+
+.amuse-hero { margin-bottom: 56px; }
+
+.amuse-eyebrow {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amuse-pink);
+  margin-bottom: 24px;
+}
+
+.amuse-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(2.6rem, 8vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  color: var(--amuse-cream);
+  margin-bottom: 22px;
+}
+.amuse-title em {
+  font-style: italic;
+  color: var(--amuse-pink);
+}
+
+.amuse-lede {
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: var(--amuse-muted);
+  max-width: 560px;
+}
+
+/* ─── Info card ─── */
+.amuse-info {
+  margin-bottom: 64px;
+}
+
+.amuse-info-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 2rem;
+  color: var(--amuse-cream);
+  margin-bottom: 24px;
+}
+
+.amuse-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--amuse-line);
+}
+.amuse-detail {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 18px;
+  align-items: baseline;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--amuse-line);
+}
+.amuse-detail-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amuse-pink);
+}
+.amuse-detail-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  color: var(--amuse-cream);
+  font-weight: 500;
+}
+.amuse-detail-small {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--amuse-muted);
+  letter-spacing: 0.01em;
+}
+
+/* ─── Form ─── */
+.amuse-form-section {
+  background: var(--amuse-forest-deep);
+  border: 1px solid var(--amuse-line);
+  border-radius: 16px;
+  padding: 36px 28px;
+  margin-bottom: 32px;
+}
+
+.amuse-form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 2rem;
+  color: var(--amuse-cream);
+  margin-bottom: 8px;
+}
+
+.amuse-form-lede {
+  font-size: 0.96rem;
+  color: var(--amuse-muted);
+  margin-bottom: 28px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label,
+.form-group legend {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amuse-pink);
+  margin-bottom: 10px;
+}
+.amuse-optional {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--amuse-muted);
+  text-transform: none;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--amuse-card-line);
+  border-radius: 8px;
+  color: var(--amuse-cream);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
+  outline: none;
+  transition: border-color 0.18s, background 0.18s;
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(250, 243, 232, 0.35);
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--amuse-pink);
+  background: rgba(248, 215, 200, 0.05);
+}
+.form-group input.invalid,
+.form-group textarea.invalid {
+  border-color: var(--amuse-terra);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-field-error {
+  display: none;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--amuse-terra);
+}
+.form-field-error.show { display: block; }
+
+/* Rehearsal checkboxes */
+.amuse-commitment {
+  border: none;
+  padding: 0;
+}
+.amuse-commitment-help {
+  font-size: 0.85rem;
+  color: var(--amuse-muted);
+  margin-bottom: 14px;
+  margin-top: -4px;
+}
+.amuse-checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 540px) {
+  .amuse-checkbox-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* High specificity to beat the `.form-group label` uppercase rule above. */
+.form-group label.amuse-checkbox,
+.amuse-form-section label.amuse-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--amuse-card-line);
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--amuse-cream);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.96rem;
+  font-weight: 400;
+  margin: 0;
+  transition: border-color 0.18s, background 0.18s;
+}
+.amuse-checkbox span {
+  text-transform: none;
+  letter-spacing: 0;
+}
+.amuse-checkbox input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--amuse-pink);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.amuse-checkbox:hover {
+  border-color: var(--amuse-pink);
+}
+.amuse-checkbox:has(input:checked) {
+  border-color: var(--amuse-pink);
+  background: rgba(248, 215, 200, 0.07);
+}
+
+.amuse-show-row {
+  margin-bottom: 28px;
+}
+.amuse-checkbox-show {
+  background: rgba(248, 215, 200, 0.04);
+  border-color: var(--amuse-pink);
+}
+.amuse-checkbox-show span {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.08rem;
+  font-weight: 500;
+}
+
+/* Honeypot — hidden from humans, present for bots */
+.amuse-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Submit */
+.amuse-submit {
+  display: block;
+  width: 100%;
+  min-height: 56px;
+  padding: 16px 28px;
+  background: var(--amuse-pink);
+  color: var(--amuse-forest);
+  border: none;
+  border-radius: 999px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: transform 0.18s, background 0.18s, box-shadow 0.18s;
+  box-shadow: 0 8px 24px rgba(248, 215, 200, 0.18);
+}
+.amuse-submit:hover:not(:disabled) {
+  background: #ffe1d4;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(248, 215, 200, 0.28);
+}
+.amuse-submit:active:not(:disabled) { transform: translateY(0); }
+.amuse-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.form-success,
+.form-error {
+  display: none;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+.form-success {
+  background: rgba(107, 175, 138, 0.10);
+  border: 1px solid rgba(107, 175, 138, 0.35);
+  color: #cdebd9;
+}
+.form-error {
+  background: rgba(200, 97, 75, 0.12);
+  border: 1px solid rgba(200, 97, 75, 0.4);
+  color: #f4b8a7;
+}
+.form-success.show,
+.form-error.show { display: block; }
+
+.amuse-questions {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--amuse-muted);
+}
+.amuse-questions a {
+  color: var(--amuse-pink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(248, 215, 200, 0.3);
+}
+.amuse-questions a:hover { border-bottom-color: var(--amuse-pink); }
+
+/* Footer */
+.amuse-footer {
+  margin-top: auto;
+  padding-top: 32px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--amuse-muted);
+}
+.amuse-footer a {
+  color: var(--amuse-pink);
+  text-decoration: none;
+}
+
+/* Smaller screens */
+@media (max-width: 540px) {
+  .amuse-page { padding: 24px 18px 48px; }
+  .amuse-header { margin-bottom: 40px; }
+  .amuse-hero { margin-bottom: 40px; }
+  .amuse-info { margin-bottom: 48px; }
+  .amuse-form-section { padding: 28px 20px; }
+  .form-row { grid-template-columns: 1fr; }
+  .amuse-detail { grid-template-columns: 1fr; gap: 6px; padding: 16px 4px; }
+  .amuse-detail-label { font-size: 0.68rem; }
+}

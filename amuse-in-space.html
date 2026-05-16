@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c1f17">
+  <title>A·Muse in Space — Register | DWD Collective</title>
+  <meta name="description" content="Register to dance with the DWD Collective in A·Muse in Space — Aric Barrow's showcase at Orlando Ballet, Saturday June 27, 2026. Contemporary modern, ages 16+.">
+  <link rel="canonical" href="https://dancewithdixon.com/amuse-in-space.html">
+
+  <meta property="og:title" content="A·Muse in Space — Register">
+  <meta property="og:description" content="Dance with DWD Collective in Aric Barrow's A·Muse in Space showcase at Orlando Ballet, June 27, 2026.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dancewithdixon.com/amuse-in-space.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="images/logos/DWD-green.png">
+  <link rel="stylesheet" href="css/amuse.css">
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="amuse-page">
+    <header class="amuse-header">
+      <a href="/" class="amuse-wm">
+        dwd<em>COLLECTIVE</em>
+      </a>
+      <div class="amuse-issue">№ 06 · MMXXVI</div>
+    </header>
+
+    <main class="amuse-main">
+      <section class="amuse-hero">
+        <p class="amuse-eyebrow">Aric Barrow presents · A·Muse in Space</p>
+        <h1 class="amuse-title">Dance the show<br><em>with us.</em></h1>
+        <p class="amuse-lede">Open call for the DWD Collective. Contemporary modern, upbeat, ages 16+. Four Sunday rehearsals leading into the showcase at Orlando Ballet, June 27.</p>
+      </section>
+
+      <section class="amuse-info">
+        <h2 class="amuse-info-title">Here's the info.</h2>
+        <div class="amuse-details">
+          <div class="amuse-detail">
+            <span class="amuse-detail-label">Style</span>
+            <span class="amuse-detail-value">Contemporary modern · upbeat · ages 16+</span>
+          </div>
+          <div class="amuse-detail">
+            <span class="amuse-detail-label">Rehearsals</span>
+            <span class="amuse-detail-value">Sundays · May 24 · May 31 · Jun 14 · Jun 21<br>6:30–8:30 PM · Next Level Dance Studio, St. Cloud</span>
+          </div>
+          <div class="amuse-detail">
+            <span class="amuse-detail-label">Show</span>
+            <span class="amuse-detail-value">Saturday, June 27 · at Orlando Ballet</span>
+          </div>
+          <div class="amuse-detail">
+            <span class="amuse-detail-label">Pay</span>
+            <span class="amuse-detail-value">$10 per rehearsal · $35 for all four<br><span class="amuse-detail-small">Cash or Venmo at the first rehearsal</span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="amuse-form-section">
+        <h2 class="amuse-form-title">Count me in.</h2>
+        <p class="amuse-form-lede">Drop your info and let me know which rehearsals you can make. I'll be in touch within a few days.</p>
+
+        <form data-form="amuse-registration" id="amuse-form" novalidate>
+          <div class="form-group">
+            <label for="amuse-name">Full name</label>
+            <input type="text" id="amuse-name" name="full_name" required autocomplete="name" autocapitalize="words">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="amuse-email">Email</label>
+              <input type="email" id="amuse-email" name="email" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false">
+            </div>
+            <div class="form-group">
+              <label for="amuse-phone">Phone</label>
+              <input type="tel" id="amuse-phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="(optional)">
+            </div>
+          </div>
+
+          <fieldset class="form-group amuse-commitment">
+            <legend>Which rehearsals can you make?</legend>
+            <p class="amuse-commitment-help">Check every Sunday you can attend. All four = $35 total · individual = $10 each.</p>
+            <div class="amuse-checkbox-grid">
+              <label class="amuse-checkbox"><input type="checkbox" id="r-may-24" name="rehearsal_may_24"><span>Sun · May 24</span></label>
+              <label class="amuse-checkbox"><input type="checkbox" id="r-may-31" name="rehearsal_may_31"><span>Sun · May 31</span></label>
+              <label class="amuse-checkbox"><input type="checkbox" id="r-jun-14" name="rehearsal_jun_14"><span>Sun · Jun 14</span></label>
+              <label class="amuse-checkbox"><input type="checkbox" id="r-jun-21" name="rehearsal_jun_21"><span>Sun · Jun 21</span></label>
+            </div>
+          </fieldset>
+
+          <div class="form-group amuse-show-row">
+            <label class="amuse-checkbox amuse-checkbox-show"><input type="checkbox" id="show-jun-27" name="attending_show"><span>Yes — I'm in for the show on Sat, June 27 at Orlando Ballet</span></label>
+          </div>
+
+          <div class="form-group">
+            <label for="amuse-experience">Brief dance background <span class="amuse-optional">(optional)</span></label>
+            <textarea id="amuse-experience" name="experience" rows="3" placeholder="Training, recent work, anything you want me to know."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="amuse-notes">Anything else <span class="amuse-optional">(optional)</span></label>
+            <textarea id="amuse-notes" name="notes" rows="2" placeholder="Questions, conflicts, etc."></textarea>
+          </div>
+
+          <!-- Honeypot — bots fill anything visible; humans don't see this. -->
+          <div class="amuse-hp" aria-hidden="true">
+            <label for="amuse-website">Leave blank</label>
+            <input type="text" id="amuse-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button type="submit" class="amuse-submit">Send it</button>
+
+          <div class="form-success" aria-live="polite">You're in. I'll be in touch within a few days. See you on the dance floor.</div>
+          <div class="form-error" aria-live="polite"></div>
+        </form>
+
+        <p class="amuse-questions">
+          Questions? Text <a href="sms:+12082411899">(208) 241-1899</a> · email <a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a>
+        </p>
+      </section>
+    </main>
+
+    <footer class="amuse-footer">
+      <p>© 2026 Dance With Dixon LLC · <a href="/">dancewithdixon.com</a></p>
+    </footer>
+  </div>
+
+  <script src="js/amuse-form.js" defer></script>
+</body>
+</html>
