@@ -78,7 +78,7 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 .topnav .brand .wordmark em { font-style: italic; color: var(--rb-pink); font-weight: 400; }
 .topnav nav { display: flex; gap: 28px; }
 .topnav nav a {
-  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  font-size: clamp(11px, 0.55rem + 0.3vw, 16px); letter-spacing: 0.24em; text-transform: uppercase;
   color: var(--rb-ivory-dim); padding: 6px 0; position: relative;
   text-decoration: none;
   transition: color 0.3s ease;
@@ -91,7 +91,7 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 .topnav nav a:hover, .topnav nav a.active { color: var(--rb-pink); }
 .topnav nav a:hover::after, .topnav nav a.active::after { transform: scaleX(1); }
 .topnav .nav-cta {
-  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  font-size: clamp(11px, 0.5rem + 0.3vw, 15px); letter-spacing: 0.24em; text-transform: uppercase;
   padding: 12px 22px; background: var(--rb-pink); color: var(--rb-bg-base);
   text-decoration: none;
   transition: transform 0.25s ease;
