@@ -790,34 +790,46 @@
 })();
 
 /* ============================================================
-   OPEN HOUSE — sticky ticker dismiss, RSVP routing, .ics, maps
-   Event: Sat May 23, 2026 · 11:30am–2pm · Exchange Dance, Orlando.
+   AUDITION — countdown + sticky ticker dismiss + .ics
+   Event: Sat Jun 6, 2026 · 11am–1pm · Exchange Dance, Orlando.
    ============================================================ */
 (function () {
-  var STORAGE_KEY = 'dwd:openhouse-ticker:dismissed:v1';
-  var EVENT_END_MS = new Date('2026-05-23T14:00:00-04:00').getTime();
-  var EVENT_START_LOCAL = '20260523T113000';
-  var EVENT_END_LOCAL   = '20260523T140000';
-  var VENUE = 'Exchange Dance, 7409 Chancery Ln, Orlando, FL';
-  var DIRECTIONS_URL = 'https://maps.google.com/?daddr=' +
-    encodeURIComponent('7409 Chancery Ln, Orlando, FL');
+  var STORAGE_KEY = 'dwd:audition-ticker:dismissed:v1';
+  var EVENT_END_MS = new Date('2026-06-06T13:00:00-04:00').getTime();
+  var EVENT_START_LOCAL = '20260606T110000';
+  var EVENT_END_LOCAL   = '20260606T130000';
 
   function eventIsPast() { return Date.now() >= EVENT_END_MS; }
 
+  // Local-date math: "Today." fires across all of June 6, "Tomorrow." doesn't
+  // show in the final hours before 11am.
+  function daysUntilAudition() {
+    var start = new Date(2026, 5, 6); // local Jun 6, midnight
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    return Math.max(0, Math.round((start - today) / 86400000));
+  }
+
+  function renderCountdown() {
+    var d = daysUntilAudition();
+    var text = d === 0 ? 'Today.' : d === 1 ? 'Tomorrow.' : 'In ' + d + ' days.';
+    var nodes = document.querySelectorAll('[data-audition-countdown]');
+    for (var i = 0; i < nodes.length; i++) { nodes[i].textContent = text; }
+  }
+
   function syncTickerBodyClass() {
-    var ticker = document.querySelector('.oh-ticker');
+    var ticker = document.querySelector('.audition-ticker');
     if (!ticker) {
-      document.body.classList.remove('has-oh-ticker');
+      document.body.classList.remove('has-audition-ticker');
       return;
     }
     var hidden = ticker.style.display === 'none' ||
                  getComputedStyle(ticker).display === 'none';
-    document.body.classList.toggle('has-oh-ticker', !hidden);
+    document.body.classList.toggle('has-audition-ticker', !hidden);
   }
 
   function hideTicker() {
-    var t = document.querySelector('.oh-ticker');
-    if (t) t.classList.add('oh-ticker--dismissed');
+    var t = document.querySelector('.audition-ticker');
+    if (t) t.classList.add('audition-ticker--dismissed');
     syncTickerBodyClass();
   }
 
@@ -833,18 +845,18 @@
     return [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//Dance With Dixon//Open House//EN',
+      'PRODID:-//Dance With Dixon//Audition//EN',
       'CALSCALE:GREGORIAN',
       'METHOD:PUBLISH',
       'BEGIN:VEVENT',
-      'UID:openhouse-2026-05-23@dancewithdixon.com',
+      'UID:audition-2026-06-06@dancewithdixon.com',
       'DTSTAMP:' + stamp,
       'DTSTART;TZID=America/New_York:' + EVENT_START_LOCAL,
       'DTEND;TZID=America/New_York:'   + EVENT_END_LOCAL,
-      'SUMMARY:DWD ProSeries Open House',
-      'LOCATION:' + VENUE,
-      'DESCRIPTION:Free drop-in open house for the dwdPROSERIES youth training program. Meet Dixon and the rotation teachers\\, tour the studio\\, watch DWD choreography showcases\\, and enter the raffle for a free June 6 audition spot.',
-      'URL:https://dancewithdixon.com/#open-house',
+      'SUMMARY:DWD ProSeries Audition Day',
+      'LOCATION:Exchange Dance, 7409 Chancery Ln, Orlando, FL',
+      'DESCRIPTION:Audition for DWD ProSeries Season One. Three tracks — Prep\\, Elite\\, Pro. Register at https://dwd-director.netlify.app/register',
+      'URL:https://dancewithdixon.com/#audition',
       'END:VEVENT',
       'END:VCALENDAR'
     ].join('\r\n');
@@ -855,76 +867,26 @@
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url;
-    a.download = 'dwd-open-house-may-23.ics';
+    a.download = 'dwd-audition-2026-06-06.ics';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     setTimeout(function () { URL.revokeObjectURL(url); }, 0);
   }
 
-  function scrollToOpenHouse() {
-    var target = document.getElementById('open-house');
-    if (!target) return;
-    // If we're not on the home page, activate it first.
-    var home = document.getElementById('page-home');
-    if (home && !home.classList.contains('active')) {
-      if (typeof window.showPage === 'function') {
-        window.showPage('home');
-      } else {
-        window.location.hash = '#home';
-      }
-      // Let showPage run, then scroll
-      setTimeout(function () {
-        var t = document.getElementById('open-house');
-        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 60);
-      return;
-    }
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  function initAudition() {
+    // Hygiene: clear stale Open House dismiss key on returning visitors.
+    try { localStorage.removeItem('dwd:openhouse-ticker:dismissed:v1'); } catch (e) {}
 
-  function updateTickerLabel() {
-    // Set the leading chip text based on how far away the event is.
-    // Was hardcoded "THIS SATURDAY" — wrong any day the event isn't
-    // within the current week.
-    var tag = document.querySelector('.oh-ticker .oh-tk-tag-text');
-    if (!tag) return;
-    var EVENT_START_MS = new Date('2026-05-23T11:30:00-04:00').getTime();
-    var now = Date.now();
-    var msPerDay = 86400000;
-    // Compare calendar-day delta in ET so "tomorrow" works near midnight.
-    var startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0);
-    var eventDay = new Date(EVENT_START_MS);
-    eventDay.setHours(0, 0, 0, 0);
-    var days = Math.round((eventDay - startOfToday) / msPerDay);
-    var label;
-    if (now >= EVENT_START_MS && now < EVENT_START_MS + 9 * 3600 * 1000) {
-      label = 'HAPPENING NOW';
-    } else if (days <= 0) {
-      label = 'TODAY';
-    } else if (days === 1) {
-      label = 'TOMORROW';
-    } else if (days <= 6) {
-      label = 'THIS SATURDAY';
-    } else {
-      label = 'MAY 23';
-    }
-    tag.textContent = label;
-  }
-
-  function initOpenHouse() {
-    // 1. Event passed → wipe dismissal + let data-hide-after take over.
     if (eventIsPast()) {
       try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
       syncTickerBodyClass();
       return;
     }
 
-    // 2. Dynamic chip label (TODAY / TOMORROW / THIS SATURDAY / MAY 23).
-    updateTickerLabel();
+    renderCountdown();
+    setInterval(renderCountdown, 60000);
 
-    // 3. Honor prior dismissal.
     var dismissed = false;
     try { dismissed = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
     if (dismissed) {
@@ -933,11 +895,10 @@
       syncTickerBodyClass();
     }
 
-    // 3. Delegate clicks on data-oh-action elements.
     document.addEventListener('click', function (ev) {
-      var t = ev.target.closest('[data-oh-action]');
+      var t = ev.target.closest('[data-audition-action]');
       if (!t) return;
-      var action = t.getAttribute('data-oh-action');
+      var action = t.getAttribute('data-audition-action');
 
       if (action === 'ticker-dismiss') {
         ev.preventDefault();
@@ -945,29 +906,15 @@
         hideTicker();
         return;
       }
-      if (action === 'ticker-rsvp') {
-        ev.preventDefault();
-        scrollToOpenHouse();
-        return;
-      }
-      if (action === 'rsvp') {
+      if (action === 'add-to-cal') {
         ev.preventDefault();
         downloadIcs();
         return;
       }
-      if (action === 'directions') {
-        ev.preventDefault();
-        window.open(DIRECTIONS_URL, '_blank', 'noopener');
-        return;
-      }
     });
 
-    // 4. Hero Open House card uses href="#open-house" — let the browser route
-    //    and rely on showPage for the hash-change to land on the home section.
-
-    // 5. Keep body padding-bottom in sync if other code toggles the ticker
-    //    (e.g. data-hide-after at 2pm on May 23, or our dismissed class).
-    var ticker = document.querySelector('.oh-ticker');
+    // Keep body padding-bottom in sync if other code toggles the ticker.
+    var ticker = document.querySelector('.audition-ticker');
     if (ticker && 'MutationObserver' in window) {
       new MutationObserver(syncTickerBodyClass)
         .observe(ticker, { attributes: true, attributeFilter: ['style', 'class'] });
@@ -975,8 +922,8 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initOpenHouse);
+    document.addEventListener('DOMContentLoaded', initAudition);
   } else {
-    initOpenHouse();
+    initAudition();
   }
 })();

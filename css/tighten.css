@@ -205,124 +205,6 @@
   .creds-list { font-size: 0.72rem; }
 }
 
-/* ───── Hero jump pills — rounded terracotta bubbles in the title column.
-   Visual language inherited from .tri-pill ($25 · 30 SPOTS in the triptych
-   below): all-caps Manrope, terracotta accent, vertical date|label divider.
-   Lives inside .hero-text so it left-aligns with the title.
-   ───── */
-#page-home .hero-jump {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-}
-
-#page-home .hero-jump-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 16px 7px 14px;
-  text-decoration: none;
-  white-space: nowrap;
-  font-family: "Manrope", "Outfit", system-ui, sans-serif;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  background: rgba(200, 97, 75, 0.12);
-  color: var(--rb-terracotta, #c8614b);
-  border: 1px solid rgba(200, 97, 75, 0.45);
-  border-radius: 999px;            /* fully rounded pill */
-  transition:
-    background 0.22s ease,
-    color 0.22s ease,
-    border-color 0.22s ease,
-    transform 0.22s cubic-bezier(.34,1.56,.64,1),
-    box-shadow 0.22s ease;
-}
-
-#page-home .hero-jump-pill:hover,
-#page-home .hero-jump-pill:focus-visible {
-  background: var(--rb-terracotta, #c8614b);
-  color: var(--rb-ivory, #faf3e8);
-  border-color: var(--rb-terracotta, #c8614b);
-  transform: translateX(3px) scale(1.04);
-  box-shadow: 0 6px 20px rgba(200, 97, 75, 0.22);
-}
-
-#page-home .hero-jump-pill:active {
-  transform: translateX(2px) scale(0.98);
-  transition-duration: 0.08s;
-}
-
-#page-home .hero-jump-pill .hjp-date {
-  padding-right: 8px;
-  border-right: 1px solid currentColor;
-  opacity: 0.85;
-}
-
-#page-home .hero-jump-pill .hjp-label {
-  letter-spacing: 0.14em;
-}
-
-#page-home .hero-jump-pill .hjp-arrow {
-  display: inline-block;
-  font-family: inherit;
-  font-size: 13px;
-  line-height: 1;
-  opacity: 0.85;
-  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), opacity 0.22s ease;
-}
-#page-home .hero-jump-pill:hover .hjp-arrow,
-#page-home .hero-jump-pill:focus-visible .hjp-arrow {
-  transform: translateX(4px);
-  opacity: 1;
-}
-
-/* Audition is the conversion target — solid terracotta from rest. */
-#page-home .hero-jump-pill--audition {
-  background: var(--rb-terracotta, #c8614b);
-  color: var(--rb-ivory, #faf3e8);
-  border-color: var(--rb-terracotta, #c8614b);
-  /* Tiny breathing pulse so the primary CTA reads as the live one. */
-  animation: hjp-pulse 2.6s ease-in-out infinite;
-}
-#page-home .hero-jump-pill--audition:hover,
-#page-home .hero-jump-pill--audition:focus-visible {
-  background: #b1543e;
-  border-color: #b1543e;
-  color: var(--rb-ivory, #faf3e8);
-  animation-play-state: paused;
-}
-@keyframes hjp-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 97, 75, 0.0); }
-  50%      { box-shadow: 0 0 0 6px rgba(200, 97, 75, 0.18); }
-}
-
-/* Respect reduced motion: drop the bounce + pulse, keep color hover. */
-@media (prefers-reduced-motion: reduce) {
-  #page-home .hero-jump-pill,
-  #page-home .hero-jump-pill .hjp-arrow {
-    transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
-  }
-  #page-home .hero-jump-pill:hover,
-  #page-home .hero-jump-pill:focus-visible {
-    transform: none;
-  }
-  #page-home .hero-jump-pill--audition {
-    animation: none;
-  }
-}
-
-@media (max-width: 640px) {
-  #page-home .hero-jump-pill {
-    font-size: 10px;
-    padding: 8px 14px 8px 12px;
-  }
-}
-
 /* ═════════════════════════════════════════════════
    Site-wide interactivity layer
    Layers a consistent bouncy hover language on top
@@ -484,14 +366,6 @@ textarea:focus {
   transform: translateY(-3px) scale(1.04);
 }
 
-/* ── Triptych "MORE INFO →" bottom ticker action ── */
-.oh-ticker-cta {
-  transition: transform 0.22s var(--ease-spring), background 0.22s ease;
-}
-.oh-ticker-cta:hover {
-  transform: scale(1.04);
-}
-
 /* ── Reduced-motion: kill all bounces, keep color transitions ── */
 @media (prefers-reduced-motion: reduce) {
   .topnav .nav-cta,
@@ -506,8 +380,7 @@ textarea:focus {
   .footer-links a svg,
   #page-home .photo-grid .ph,
   .gallery-grid .gallery-item,
-  .track-record .tr-stat,
-  .oh-ticker-cta {
+  .track-record .tr-stat {
     transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
     animation: none !important;
   }
@@ -522,27 +395,24 @@ textarea:focus {
   .footer-links a:hover,
   #page-home .photo-grid .ph:hover,
   .gallery-grid .gallery-item:hover,
-  .track-record .tr-stat:hover,
-  .oh-ticker-cta:hover {
+  .track-record .tr-stat:hover {
     transform: none !important;
   }
   .footer-links a:hover svg { transform: none !important; }
 }
 
-/* ───── Anchor scroll offset for fixed topnav ───── */
-/* The topnav is position:fixed at ~70px tall on desktop and ~60px on mobile.
-   When the router scrolls to an in-page anchor (#open-house, #amuse,
-   #proseries-tracks-full, etc.) the topnav covers the section heading.
-   scroll-margin-top tells the browser to land that many pixels below the
-   target so the heading clears the nav. */
-#open-house,
+/* ───── Anchor scroll offset for fixed topnav ─────
+   scroll-margin-top so in-page anchor jumps clear the fixed topnav. */
+#audition,
+#audition-cta,
 #amuse,
 #proseries-tracks-full,
 #proseries-interest {
   scroll-margin-top: 90px;
 }
 @media (max-width: 900px) {
-  #open-house,
+  #audition,
+  #audition-cta,
   #amuse,
   #proseries-tracks-full,
   #proseries-interest {

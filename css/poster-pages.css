@@ -2,7 +2,7 @@
    poster-pages.css
    IG-ad poster aesthetic applied to:
      #page-proseries · .amuse-feature · #page-shop
-   Tokens reused from open-house.css (--oh-*).
+   Tokens reused from audition.css (--oh-* names preserved).
    Square corners everywhere, Anton block headlines, color blocking.
    ============================================================ */
 
@@ -2795,14 +2795,14 @@
   #page-proseries .ps-hero .hero-logo-big,
   #page-proseries .ps-hero .ps-hero-logo {
     order: 1;
-    min-height: 220px !important;
-    padding: 28px 24px 8px !important;
+    min-height: 160px !important;
+    padding: 16px 24px 4px !important;
   }
   #page-proseries .ps-hero .hero-logo-big video,
   #page-proseries .ps-hero .hero-logo-big img,
   #page-proseries .ps-hero .ps-hero-logo video,
   #page-proseries .ps-hero .ps-hero-logo img {
-    width: min(220px, 60vw) !important;
+    width: min(160px, 44vw) !important;
   }
 
   /* Merch hero — contain DWDPROSERIES on phone widths */
@@ -2860,13 +2860,13 @@
 
 /* Ticker buttons + close X — ensure 44px Apple HIG tap-target floor */
 @media (max-width: 720px) {
-  .oh-ticker { min-height: 44px; }
-  .oh-ticker .oh-ticker-close,
-  .oh-ticker [data-ticker-close],
-  .oh-ticker button.close {
+  .audition-ticker { min-height: 44px; }
+  .audition-ticker .at-close,
+  .audition-ticker [data-audition-action="ticker-dismiss"],
+  .audition-ticker button.close {
     min-width: 44px;
     min-height: 44px;
   }
-  .oh-ticker a,
-  .oh-ticker button { min-height: 44px; }
+  .audition-ticker a,
+  .audition-ticker button { min-height: 44px; }
 }

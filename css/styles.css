@@ -3185,7 +3185,7 @@ select,
 }
 
 /* Ticker + safe-area clearance — every .page reserves bottom space for the fixed
-   Open House ticker (~36px) plus the iPhone home indicator inset. */
+   audition ticker (~36px) plus the iPhone home indicator inset. */
 .page {
   padding-bottom: calc(60px + env(safe-area-inset-bottom));
 }
