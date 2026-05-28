@@ -610,30 +610,36 @@
   line-height: .84;
   letter-spacing: .005em;
 }
+/* Right poster panel — intentional brand statement (photo-free). */
 .ab-coral-photo {
   position: relative;
   min-height: 320px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: 44px 52px;
   background:
-    repeating-linear-gradient(135deg, #1a0a14 0 14px, #2a1320 14px 28px),
-    radial-gradient(ellipse at 30% 60%, #6b1b3a 0%, transparent 55%),
-    radial-gradient(ellipse at 70% 40%, #0d3a4a 0%, transparent 55%);
+    repeating-linear-gradient(135deg, rgba(246,239,226,.018) 0 2px, transparent 2px 10px),
+    radial-gradient(ellipse at 78% 22%, rgba(217,119,87,.20), transparent 60%),
+    linear-gradient(155deg, var(--oh-green-dark), var(--oh-green-ink));
 }
-.ab-coral-photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.55));
-}
-.ab-photo-label {
-  position: absolute;
-  left: 24px;
-  bottom: 24px;
-  font-family: "SF Mono", Menlo, ui-monospace, monospace;
-  color: rgba(255,255,255,.6);
-  font-size: 10px;
-  letter-spacing: .2em;
+.ab-cp-eyebrow {
+  position: relative;
   z-index: 1;
+  font-size: 13px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--oh-blush);
+}
+.ab-cp-statement {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(44px, 6vw, 86px);
+  line-height: .9;
+  text-transform: uppercase;
+  color: var(--oh-cream);
 }
 
 /* --- Band 2 · Green date bar ---------------------------------- */
@@ -981,4 +987,118 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
 /* Below 360px — drop the countdown text but keep the dot */
 @media (max-width: 360px) {
   .at-tag-text { display: none; }
+}
+
+/* ============================================================
+   BIG AUDITION COUNTDOWN — #audition-clock
+   Live ticker band between hero and the audition CTA card.
+   Deep-green band, coral numerals (Anton), cream labels.
+   ============================================================ */
+.audition-clock {
+  font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 48px 24px 52px;
+  margin: 0;
+  background:
+    radial-gradient(120% 140% at 50% -20%, rgba(217,119,87,.14), transparent 60%),
+    var(--oh-green-ink);
+  color: var(--oh-cream);
+  text-align: center;
+  border-radius: 0 !important;
+}
+.audition-clock * { border-radius: 0 !important; }
+
+.aclk-eyebrow {
+  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-size: clamp(13px, 1.4vw, 17px);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--oh-blush);
+}
+
+.aclk-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 4vw, 56px);
+  align-items: start;
+  width: 100%;
+  max-width: 760px;
+}
+
+.aclk-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+/* Colon-style separators between units */
+.aclk-unit + .aclk-unit::before {
+  content: ":";
+  position: absolute;
+  left: calc(-1 * (clamp(14px, 4vw, 56px) / 2));
+  top: 0;
+  transform: translateX(-50%);
+  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-size: clamp(40px, 8vw, 88px);
+  line-height: 1;
+  color: rgba(244, 216, 196, 0.3);
+}
+
+.aclk-num {
+  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-size: clamp(52px, 12vw, 110px);
+  line-height: .9;
+  color: var(--oh-coral);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.aclk-lbl {
+  font-size: clamp(10px, 1.2vw, 13px);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--oh-mute);
+}
+
+.aclk-now {
+  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-size: clamp(40px, 8vw, 88px);
+  line-height: 1;
+  color: var(--oh-coral);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.aclk-foot {
+  font-family: "Cormorant Garamond", "Cormorant", Georgia, serif;
+  font-size: clamp(16px, 2vw, 22px);
+  font-style: italic;
+  color: var(--oh-cream-warm);
+}
+
+.aclk-cta {
+  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-size: 13px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--oh-green-ink);
+  background: var(--oh-blush);
+  padding: 14px 28px;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+.aclk-cta em { font-style: normal; }
+.aclk-cta:hover { background: var(--oh-cream-warm); transform: translateY(-1px); }
+
+@media (max-width: 600px) {
+  .audition-clock { padding: 36px 16px 40px; gap: 14px; }
+  /* Keep 4-up but tighten the separators so they don't collide. */
+  .aclk-grid { gap: clamp(10px, 6vw, 24px); }
+  .aclk-unit + .aclk-unit::before { display: none; }
 }

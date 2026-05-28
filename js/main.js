@@ -735,35 +735,3 @@
   });
 })();
 
-/* ============================================================
-   Instagram strip fallback detection (SnapWidget)
-   Ad blockers (uBlock, Privacy Badger, etc.) often classify SnapWidget
-   as a tracker and block its script + iframe requests entirely. The
-   <script src="snapwidget.com/js/snapwidget.js"> in <head> has an
-   onload handler that sets window.__snapwidgetReady = true. If that
-   flag is still false after 4 seconds, we assume the visitor's browser
-   blocked SnapWidget and mark each wired strip as broken so the CSS
-   fallback panel takes over with an "Open on Instagram" CTA.
-   ============================================================ */
-(function () {
-  var TIMEOUT_MS = 4000;
-
-  function checkIgStrips() {
-    if (window.__snapwidgetReady) return; // script loaded fine, do nothing
-    document.querySelectorAll('.ig-strip-frame').forEach(function (ifr) {
-      // Skip unwired iframes (the placeholder fallback already shows via CSS).
-      if (!ifr.src || ifr.src.indexOf('YOUR_') !== -1) return;
-      ifr.classList.add('ig-strip-frame--broken');
-    });
-  }
-
-  function start() {
-    setTimeout(checkIgStrips, TIMEOUT_MS);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start);
-  } else {
-    start();
-  }
-})();

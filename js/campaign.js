@@ -795,11 +795,40 @@
    ============================================================ */
 (function () {
   var STORAGE_KEY = 'dwd:audition-ticker:dismissed:v1';
+  var EVENT_START_MS = new Date('2026-06-06T11:00:00-04:00').getTime();
   var EVENT_END_MS = new Date('2026-06-06T13:00:00-04:00').getTime();
   var EVENT_START_LOCAL = '20260606T110000';
   var EVENT_END_LOCAL   = '20260606T130000';
 
   function eventIsPast() { return Date.now() >= EVENT_END_MS; }
+
+  // Big live ticker (#audition-clock). Counts down to the 11am start.
+  // Visibility is owned entirely by the global data-hide-after handler in the
+  // CAMPAIGN IIFE — this function never touches `display` on the band.
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+  function renderClock() {
+    var grid = document.querySelector('[data-audition-clock]');
+    if (!grid) return;
+    var diff = EVENT_START_MS - Date.now();
+    if (diff <= 0) {
+      // Between 11am start and 1pm end → auditions underway.
+      grid.innerHTML = '<span class="aclk-now">Happening now.</span>';
+      return;
+    }
+    var totalSec = Math.floor(diff / 1000);
+    var days = Math.floor(totalSec / 86400);
+    var hrs  = Math.floor((totalSec % 86400) / 3600);
+    var mins = Math.floor((totalSec % 3600) / 60);
+    var secs = totalSec % 60;
+    function set(sel, val) {
+      var el = grid.querySelector(sel);
+      if (el) el.textContent = val;
+    }
+    set('[data-clk-days]', days);
+    set('[data-clk-hrs]', pad2(hrs));
+    set('[data-clk-mins]', pad2(mins));
+    set('[data-clk-secs]', pad2(secs));
+  }
 
   // Local-date math: "Today." fires across all of June 6, "Tomorrow." doesn't
   // show in the final hours before 11am.
@@ -886,6 +915,9 @@
 
     renderCountdown();
     setInterval(renderCountdown, 60000);
+
+    renderClock();
+    setInterval(renderClock, 1000);
 
     var dismissed = false;
     try { dismissed = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}

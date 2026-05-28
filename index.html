@@ -210,13 +210,6 @@
   <link rel="stylesheet" href="css/poster-pages.css">
   <link rel="stylesheet" href="css/tighten.css">
 
-  <!-- SnapWidget auto-resize (for Instagram feed strips on Gallery).
-       The onload flag lets main.js detect when this script was blocked by
-       an ad blocker / privacy extension, so we can swap in a fallback CTA. -->
-  <script>window.__snapwidgetReady = false;</script>
-  <script src="https://snapwidget.com/js/snapwidget.js" async
-          onload="window.__snapwidgetReady = true"></script>
-
   <!-- Supabase Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -321,6 +314,22 @@
         </div>
       </div>
 
+      <!-- BIG AUDITION COUNTDOWN — live ticker to Jun 6, 11am ET. Hides after 1pm
+           via the global data-hide-after handler in campaign.js. -->
+      <section class="audition-clock" id="audition-clock"
+               data-hide-after="2026-06-06T13:00:00-04:00"
+               aria-label="Countdown to ProSeries auditions">
+        <span class="aclk-eyebrow">dwdPROSERIES Auditions In</span>
+        <div class="aclk-grid" data-audition-clock aria-live="off">
+          <div class="aclk-unit"><span class="aclk-num" data-clk-days>--</span><span class="aclk-lbl">Days</span></div>
+          <div class="aclk-unit"><span class="aclk-num" data-clk-hrs>--</span><span class="aclk-lbl">Hrs</span></div>
+          <div class="aclk-unit"><span class="aclk-num" data-clk-mins>--</span><span class="aclk-lbl">Min</span></div>
+          <div class="aclk-unit"><span class="aclk-num" data-clk-secs>--</span><span class="aclk-lbl">Sec</span></div>
+        </div>
+        <span class="aclk-foot">Sat Jun 6 &middot; 11AM &middot; Exchange Dance, Orlando</span>
+        <a class="aclk-cta" href="https://dwd-director.netlify.app/register" data-track="audition-clock-register">Register now <em>&rarr;</em></a>
+      </section>
+
       <!-- AUDITION CTA — sibling-of-hero, single dominant call-to-action,
            hides itself after Jun 6, 1pm ET so the homepage reverts cleanly. -->
       <section class="audition-cta" id="audition-cta"
@@ -336,7 +345,6 @@
           <div class="ac-date">
             <span class="ac-date-day">SAT &middot; JUN 6</span>
             <span class="ac-date-time">11AM &ndash; 1PM</span>
-            <span class="ac-countdown" data-audition-countdown aria-live="polite"></span>
           </div>
           <span class="ac-cta">Register now <em>&rarr;</em></span>
         </a>
@@ -403,8 +411,9 @@
             <span class="ab-open oh-block">AUDITION</span>
             <span class="ab-house oh-block">DAY</span>
           </div>
-          <div class="ab-coral-photo" role="img" aria-label="ProSeries dancer on stage">
-            <span class="ab-photo-label">[ PROSERIES &middot; ON STAGE &middot; SEASON ONE ]</span>
+          <div class="ab-coral-photo">
+            <span class="ab-cp-eyebrow oh-block">Season One</span>
+            <span class="ab-cp-statement oh-block">Earn<br>Your<br>Spot.</span>
           </div>
         </div>
 
@@ -1262,10 +1271,11 @@
           </article>
 
           <article class="tch-card tch-card--composite tch-card--placeholder" data-teacher="tori" aria-label="Tori Ugalde · Strength &amp; Stretch rotation for dwdPROSERIES">
-            <div style="aspect-ratio: 4 / 5; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 14px; padding: 28px; text-align: center; background: var(--oh-green-ink); color: var(--oh-cream-warm);">
+            <div style="aspect-ratio: 4 / 5; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; padding: 28px; text-align: center; overflow: hidden; background: radial-gradient(120% 120% at 50% 0%, var(--oh-green-dark), var(--oh-green-ink)); color: var(--oh-cream-warm);">
+              <span aria-hidden="true" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: clamp(76px, 13vw, 128px); line-height: .78; color: var(--oh-blush);">TU</span>
+              <span aria-hidden="true" style="display: block; width: 36px; height: 1px; background: rgba(246,239,226,.3);"></span>
+              <h3 style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(26px, 3vw, 38px); font-weight: 500; line-height: 1; margin: 0;">Tori Ugalde</h3>
               <span style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: var(--oh-coral);">Strength &amp; Stretch</span>
-              <h3 style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(28px, 3vw, 40px); font-weight: 500; line-height: 1; margin: 0;">Tori Ugalde</h3>
-              <span style="font-family: 'Manrope', sans-serif; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; opacity: .65;">New headshot incoming</span>
             </div>
           </article>
         </div>
@@ -1293,62 +1303,22 @@
         </div>
       </div>
 
-      <!-- ──────────────────────────────────────────────────────────
-           Instagram feeds — two stacked horizontal-scroll strips.
-           Wired via SnapWidget iframes (free tier supports HTTPS).
-           To activate:
-             1. Sign up free at https://snapwidget.com
-             2. Create new widget → Source = Instagram, Account = "dwdproseries"
-                Layout: Slideshow / Carousel (horizontal scroll), 8–12 thumbs.
-             3. Copy the iframe `src` URL from the embed code shown.
-             4. Replace YOUR_PROSERIES_WIDGET_ID in the iframe below.
-             5. Repeat for @dwd_collective (replace YOUR_COLLECTIVE_WIDGET_ID).
-           Until the IDs are swapped in, the strips show the "setup pending"
-           fallback message below each iframe.
-      ────────────────────────────────────────────────────────── -->
-      <section class="ig-feeds reveal" aria-label="Instagram feeds">
-        <div class="ig-strip">
-          <div class="ig-strip-head">
-            <span class="ig-eyebrow">Latest on Instagram</span>
-            <a class="ig-handle" href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" data-track="gallery-ig-proseries">@dwdproseries <span aria-hidden="true">&rarr;</span></a>
-          </div>
-          <iframe class="ig-strip-frame snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no"
-                  src="https://snapwidget.com/embed/1123531"
-                  aria-label="Latest Instagram posts from dwdproseries"
-                  title="@dwdproseries Instagram feed"></iframe>
-          <div class="ig-strip-fallback">
-            <div class="ig-strip-fallback-dev">
-              <p>Instagram strip not wired yet. Paste your SnapWidget iframe URL into <code>index.html</code> for <code>@dwdproseries</code>. (See comment in markup.)</p>
-              <a class="ig-strip-fallback-cta" href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">Open @dwdproseries on Instagram &rarr;</a>
-            </div>
-            <div class="ig-strip-fallback-blocked">
-              <span class="ig-strip-fallback-eyebrow">See the latest on Instagram</span>
-              <span class="ig-strip-fallback-handle">@dwdproseries</span>
-              <a class="ig-strip-fallback-cta" href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" data-track="gallery-ig-proseries-fallback">Open on Instagram &rarr;</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="ig-strip">
-          <div class="ig-strip-head">
-            <span class="ig-eyebrow">Latest on Instagram</span>
-            <a class="ig-handle" href="https://instagram.com/dwd_collective" target="_blank" rel="noopener" data-track="gallery-ig-collective">@dwd_collective <span aria-hidden="true">&rarr;</span></a>
-          </div>
-          <iframe class="ig-strip-frame snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no"
-                  src="https://snapwidget.com/embed/1123527"
-                  aria-label="Latest Instagram posts from dwd_collective"
-                  title="@dwd_collective Instagram feed"></iframe>
-          <div class="ig-strip-fallback">
-            <div class="ig-strip-fallback-dev">
-              <p>Instagram strip not wired yet. Paste your SnapWidget iframe URL into <code>index.html</code> for <code>@dwd_collective</code>. (See comment in markup.)</p>
-              <a class="ig-strip-fallback-cta" href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">Open @dwd_collective on Instagram &rarr;</a>
-            </div>
-            <div class="ig-strip-fallback-blocked">
-              <span class="ig-strip-fallback-eyebrow">See the latest on Instagram</span>
-              <span class="ig-strip-fallback-handle">@dwd_collective</span>
-              <a class="ig-strip-fallback-cta" href="https://instagram.com/dwd_collective" target="_blank" rel="noopener" data-track="gallery-ig-collective-fallback">Open on Instagram &rarr;</a>
-            </div>
-          </div>
+      <!-- Instagram — static Follow card. (Replaced SnapWidget live embeds,
+           which ad blockers / privacy browsers routinely killed.) -->
+      <section class="ig-follow reveal" aria-label="Follow Dance With Dixon on Instagram">
+        <span class="igf-eyebrow">Follow Along</span>
+        <span class="igf-headline">The latest lives on Instagram.</span>
+        <div class="igf-grid">
+          <a class="igf-tile" href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" data-track="follow-ig-proseries">
+            <span class="igf-handle">@dwdproseries</span>
+            <span class="igf-sub">ProSeries youth</span>
+            <span class="igf-arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <a class="igf-tile" href="https://instagram.com/dwd_collective" target="_blank" rel="noopener" data-track="follow-ig-collective">
+            <span class="igf-handle">@dwd_collective</span>
+            <span class="igf-sub">Adult company</span>
+            <span class="igf-arrow" aria-hidden="true">&rarr;</span>
+          </a>
         </div>
       </section>
 

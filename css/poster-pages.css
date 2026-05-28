@@ -432,26 +432,20 @@
 }
 
 /* ============================================================
-   Instagram feed strips on Gallery
-   Two stacked, each with eyebrow + handle link + LightWidget iframe.
-   Fallback caption visible only when the iframe is broken (= unwired).
+   Instagram "Follow Along" card on Gallery
+   Static, on-brand follow card (replaced the SnapWidget live feeds,
+   which ad blockers / privacy browsers routinely killed).
    ============================================================ */
-.ig-feeds {
+.ig-follow {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 28px 40px 8px;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  padding: 48px 40px 40px;
   background: var(--oh-green-deep);
 }
-.ig-strip { position: relative; }
-.ig-strip-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 12px;
-}
-.ig-strip-head .ig-eyebrow {
+.ig-follow .igf-eyebrow {
   font-family: "Manrope", sans-serif;
   font-size: 11px;
   font-weight: 700;
@@ -459,158 +453,68 @@
   text-transform: uppercase;
   color: var(--oh-coral);
 }
-.ig-strip-head .ig-handle {
+.ig-follow .igf-headline {
+  font-family: "Cormorant Garamond", "Cormorant", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.1;
+  color: var(--oh-cream);
+}
+.igf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+  max-width: 720px;
+  margin-top: 10px;
+}
+.igf-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 24px 26px;
+  background: var(--oh-green-ink);
+  border: 1px solid var(--oh-rule);
+  text-decoration: none;
+  transition: border-color .2s ease, transform .2s ease, background .2s ease;
+}
+.igf-tile:hover {
+  border-color: var(--oh-coral);
+  background: #0b241b;
+  transform: translateY(-2px);
+}
+.igf-handle {
   font-family: "Anton", sans-serif;
-  font-size: clamp(22px, 2.2vw, 30px);
+  font-size: clamp(22px, 2.4vw, 32px);
   letter-spacing: .005em;
   text-transform: uppercase;
   color: var(--oh-cream);
-  text-decoration: none;
-  transition: color .2s ease;
 }
-.ig-strip-head .ig-handle:hover { color: var(--oh-coral); }
-
-.ig-strip-frame {
-  display: block;
-  width: 100%;
-  height: 240px;
-  background: var(--oh-green-ink);
-  border: 1px solid var(--oh-rule);
-}
-
-/* Fallback panel has two child states:
-   - .ig-strip-fallback-dev: shown only when the iframe src is still the YOUR_*
-     placeholder (developer hasn't wired the widget yet — internal-facing copy).
-   - .ig-strip-fallback-blocked: shown when the iframe is wired but failed to load
-     (typically an ad blocker eating snapwidget.com). End-user-facing — clean
-     "Open on Instagram" CTA, no mention of code or setup. */
-.ig-strip-fallback { display: none; }
-.ig-strip-fallback-dev,
-.ig-strip-fallback-blocked { display: none; }
-
-.ig-strip-frame[src*="YOUR_PROSERIES_WIDGET_ID"] + .ig-strip-fallback,
-.ig-strip-frame[src*="YOUR_COLLECTIVE_WIDGET_ID"] + .ig-strip-fallback,
-.ig-strip-frame--broken + .ig-strip-fallback {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 40px 24px;
-  background: var(--oh-green-ink);
-  border: 1px dashed var(--oh-rule);
-  min-height: 200px;
-  gap: 14px;
-}
-
-/* Dev sub-state — only shown for placeholder src */
-.ig-strip-frame[src*="YOUR_PROSERIES_WIDGET_ID"] + .ig-strip-fallback .ig-strip-fallback-dev,
-.ig-strip-frame[src*="YOUR_COLLECTIVE_WIDGET_ID"] + .ig-strip-fallback .ig-strip-fallback-dev {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-}
-
-/* Blocked sub-state — only shown when iframe failed to load (ad blocker, etc.) */
-.ig-strip-frame--broken + .ig-strip-fallback .ig-strip-fallback-blocked {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.ig-strip-fallback p {
-  font-family: "Manrope", sans-serif;
-  font-size: 13px;
-  color: var(--oh-mute);
-  margin: 0;
-  max-width: 56ch;
-}
-.ig-strip-fallback code {
-  font-family: "SF Mono", Menlo, ui-monospace, monospace;
-  font-size: 12px;
-  background: rgba(217, 119, 87, 0.14);
-  color: var(--oh-coral);
-  padding: 1px 6px;
-}
-.ig-strip-fallback-eyebrow {
-  font-family: "Manrope", sans-serif;
-  font-size: 10.5px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--oh-mute);
-  font-weight: 600;
-}
-.ig-strip-fallback-handle {
-  font-family: "Cormorant Garamond", "Cormorant", Georgia, serif;
-  font-style: italic;
-  font-size: 28px;
-  color: var(--oh-cream);
-  line-height: 1;
-}
-.ig-strip-fallback-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: var(--oh-coral);
-  color: var(--oh-cream-warm);
+.igf-sub {
   font-family: "Manrope", sans-serif;
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .22em;
+  font-weight: 600;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  text-decoration: none;
-  transition: background .2s ease;
+  color: var(--oh-mute);
 }
-.ig-strip-fallback-cta:hover { background: var(--oh-coral-ink); }
-
-/* Hide the iframe entirely when unwired (placeholder src) or broken (ad blocker
-   ate the SnapWidget script). The fallback panel takes its space naturally —
-   no negative-margin overlay, no double-reserved height. */
-.ig-strip-frame[src*="YOUR_PROSERIES_WIDGET_ID"],
-.ig-strip-frame[src*="YOUR_COLLECTIVE_WIDGET_ID"],
-.ig-strip-frame--broken {
-  display: none;
+.igf-arrow {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--oh-coral);
+  transition: transform .2s ease;
 }
+.igf-tile:hover .igf-arrow { transform: translateX(4px); }
 
-/* iPad portrait (721-900px): SnapWidget renders one tidy row of thumbnails but
-   the default 240px height leaves a big empty gap below. Cap the iframe to one
-   row's worth so the page flows cleanly. */
-@media (min-width: 721px) and (max-width: 900px) {
-  .ig-strip-frame { height: 130px; }
-}
-
-/* Mobile (≤720px): SnapWidget's iframe doesn't reflow to phone widths (one
-   squashed row of tiny thumbnails inside a 390px viewport), so we hide the
-   iframe and show the clean "Open on Instagram" fallback CTA instead. */
-@media (max-width: 720px) {
-  .ig-feeds {
-    padding: 20px 16px 12px;
-    gap: 28px;
-  }
-  .ig-strip-head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-    margin-bottom: 10px;
-  }
-  .ig-strip-head .ig-handle {
-    font-size: 24px;
-  }
-  .ig-strip-frame {
-    display: none !important;
-  }
-  /* Force the user-facing "Open on Instagram" fallback to render on mobile */
-  .ig-strip-fallback { display: block !important; }
-  .ig-strip-fallback-dev { display: none !important; }
-  .ig-strip-fallback-blocked { display: block !important; }
-}
-
-@media (max-width: 720px) {
-  .ig-feeds { padding: 24px 24px 8px; }
-  .ig-strip-frame { height: 200px; }
+@media (max-width: 600px) {
+  .ig-follow { padding: 36px 20px 32px; }
+  .igf-grid { grid-template-columns: 1fr; gap: 14px; }
 }
 
 /* ============================================================
