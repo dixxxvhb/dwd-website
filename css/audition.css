@@ -264,6 +264,15 @@
   color: var(--oh-coral);
   text-transform: uppercase;
 }
+.ac-date-note {
+  font-family: "Manrope", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--oh-cream);
+  opacity: .8;
+  text-transform: uppercase;
+}
 .ac-countdown {
   margin-top: 4px;
   font-family: "Cormorant Garamond", serif;
@@ -669,10 +678,53 @@
   line-height: 1;
 }
 
+/* --- Band 2.5 · Plan Your Day (doors / start / parent demo) --- */
+.ab-plan {
+  background: var(--oh-coral);
+  color: var(--oh-cream);
+  padding: 26px 56px 30px;
+}
+.ab-plan-label {
+  font-size: 30px;
+  line-height: 1;
+  color: var(--oh-cream);
+  opacity: .92;
+  letter-spacing: .01em;
+}
+.ab-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 40px;
+  margin-top: 18px;
+}
+.ab-plan-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 18px;
+  border-left: 3px solid rgba(246, 239, 226, 0.4);
+}
+.ab-plan-item--parents { border-left-color: var(--oh-cream); }
+.ab-plan-time {
+  font-size: clamp(34px, 3.4vw, 46px);
+  line-height: 1;
+  color: var(--oh-cream);
+  letter-spacing: .005em;
+}
+.ab-plan-desc {
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  max-width: 26ch;
+}
+
 /* --- Band 3 · Cream "what to expect" strip -------------------- */
 .ab-schedule {
   display: grid;
-  grid-template-columns: auto 1fr 1fr 1fr 1fr;
+  grid-template-columns: auto 1fr 1fr 1fr;
   gap: 36px;
   align-items: center;
   background: var(--oh-cream-warm);
@@ -824,6 +876,7 @@
 @media (max-width: 1024px) {
   .ab-coral-text { padding: 32px 32px 28px; }
   .ab-greenbar { padding: 18px 32px; }
+  .ab-plan { padding: 22px 32px 26px; }
   .ab-schedule { padding: 22px 32px; gap: 24px; }
   .ab-dropin { padding: 28px 32px; }
   .ab-win { padding: 28px 28px; }
@@ -839,10 +892,13 @@
     grid-auto-rows: minmax(0, auto);
   }
   .ab-sched-label { grid-column: 1 / -1; font-size: 28px; }
+  .ab-plan-grid { grid-template-columns: 1fr; gap: 16px; }
 }
 @media (max-width: 520px) {
   .ab-coral-text { padding: 28px 22px 22px; }
   .ab-greenbar { padding: 16px 22px; gap: 6px 14px; }
+  .ab-plan { padding: 20px 22px 24px; }
+  .ab-plan-label { font-size: 26px; }
   .ab-schedule { padding: 20px 22px; gap: 18px; }
   .ab-dropin, .ab-win { padding: 24px 22px; }
   .ab-addr-rule { display: none; }
