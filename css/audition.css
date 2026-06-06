@@ -1158,3 +1158,184 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
   .aclk-grid { gap: clamp(10px, 6vw, 24px); }
   .aclk-unit + .aclk-unit::before { display: none; }
 }
+
+/* ============================================================
+   VICTORY LAP — "That's a wrap." (#audition-wrap)
+   Successor to #audition-clock. Reveals at Jun 6, 1pm ET (the same instant
+   the countdown + audition surfaces hide, via the global data-reveal-after
+   handler in campaign.js) and auto-retires after Jun 13 (.--retired class
+   added by the audition IIFE; !important survives the polling reveal handler
+   that resets inline display — same trick as .audition-ticker--dismissed).
+   Pure-CSS curtain-part reveal; the animated DWD logo (Tamara Mark baked in)
+   blooms at center. Honors prefers-reduced-motion.
+   ============================================================ */
+.audition-wrap {
+  position: relative;
+  overflow: hidden;
+  font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 56px 24px 60px;
+  margin: 0;
+  background:
+    radial-gradient(120% 140% at 50% -20%, rgba(217,119,87,.16), transparent 60%),
+    var(--oh-green-ink);
+  color: var(--oh-cream);
+  text-align: center;
+  border-radius: 0 !important;
+}
+.audition-wrap * { border-radius: 0 !important; }
+.audition-wrap--retired { display: none !important; }
+
+/* Stage curtains — coral velvet, part outward on reveal. Default (resting)
+   state is PARTED + off-screen, so a no-JS / reduced-motion fallback never
+   traps content behind a closed curtain. */
+.awrap-curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+}
+.awrap-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 52%;
+  background:
+    repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 1px, transparent 1px 15px),
+    linear-gradient(180deg, var(--oh-coral-deep), var(--oh-coral-ink));
+  box-shadow: 0 0 40px rgba(0,0,0,.3);
+}
+.awrap-panel--l { left: 0;  transform: translateX(-101%); }
+.awrap-panel--r { right: 0; transform: translateX(101%); }
+
+/* Content sits beneath the curtain */
+.awrap-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 720px;
+}
+
+.awrap-eyebrow {
+  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-size: clamp(13px, 1.4vw, 17px);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--oh-blush);
+}
+
+.awrap-logo {
+  width: min(220px, 56vw);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.awrap-logo video,
+.awrap-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: lighten; /* match hero — pink-transparent webm on dark green */
+}
+
+.awrap-headline {
+  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-size: clamp(48px, 8vw, 104px);
+  line-height: .88;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  color: var(--oh-cream);
+  margin: 4px 0 0;
+}
+
+.awrap-sub {
+  font-family: "Cormorant Garamond", "Cormorant", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(17px, 2.1vw, 23px);
+  line-height: 1.4;
+  color: var(--oh-cream-warm);
+  max-width: 52ch;
+}
+
+.awrap-next {
+  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-size: clamp(18px, 2.4vw, 26px);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--oh-blush);
+  margin-top: 6px;
+}
+.awrap-next em { font-style: normal; color: var(--oh-coral); }
+
+.awrap-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 14px 28px;
+  background: var(--oh-blush);
+  color: var(--oh-green-ink);
+  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-size: 13px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+.awrap-cta em { font-style: normal; }
+.awrap-cta:hover { background: var(--oh-cream-warm); transform: translateY(-1px); }
+.awrap-cta:focus-visible { outline: 2px solid var(--oh-blush); outline-offset: 3px; }
+
+/* Reveal motion — plays when display flips none -> flex at 1pm.
+   All use `backwards` fill so each element is hidden during its delay, then
+   animates in; none use `forwards`, so no transform stays pinned afterward
+   (avoids the animation-fill-mode containing-block trap). */
+.awrap-panel--l { animation: awrap-partL 1.05s cubic-bezier(.66,0,.2,1) backwards; }
+.awrap-panel--r { animation: awrap-partR 1.05s cubic-bezier(.66,0,.2,1) backwards; }
+.awrap-eyebrow  { animation: awrap-rise .7s .35s ease backwards; }
+.awrap-logo     { animation: awrap-bloom 1.1s .45s cubic-bezier(.2,.7,.2,1) backwards; }
+.awrap-headline { animation: awrap-rise .8s .7s ease backwards; }
+.awrap-sub      { animation: awrap-rise .8s .9s ease backwards; }
+.awrap-next     { animation: awrap-rise .7s 1.1s ease backwards; }
+.awrap-cta      { animation: awrap-rise .7s 1.25s ease backwards; }
+
+@keyframes awrap-partL {
+  0%, 12% { transform: translateX(0); }
+  100%    { transform: translateX(-101%); }
+}
+@keyframes awrap-partR {
+  0%, 12% { transform: translateX(0); }
+  100%    { transform: translateX(101%); }
+}
+@keyframes awrap-bloom {
+  0%   { opacity: 0; transform: scale(.86); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes awrap-rise {
+  0%   { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .audition-wrap { padding: 44px 18px 48px; gap: 13px; }
+  .awrap-panel { width: 54%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .awrap-curtain { display: none; }
+  .awrap-panel--l, .awrap-panel--r,
+  .awrap-eyebrow, .awrap-logo,
+  .awrap-headline, .awrap-sub, .awrap-next, .awrap-cta { animation: none; }
+}

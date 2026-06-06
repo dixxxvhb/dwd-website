@@ -802,6 +802,19 @@
 
   function eventIsPast() { return Date.now() >= EVENT_END_MS; }
 
+  // Victory lap (#audition-wrap) retires after the celebration week. Its REVEAL
+  // is owned by the global data-reveal-after handler (fires at EVENT_END_MS — the
+  // same instant the countdown hides); this only caps the tail. The !important
+  // .audition-wrap--retired class survives the polling reveal handler that resets
+  // inline display (same trick as .audition-ticker--dismissed).
+  var WRAP_RETIRE_MS = new Date('2026-06-13T23:59:00-04:00').getTime();
+  function syncVictoryLap() {
+    var wrap = document.getElementById('audition-wrap');
+    if (wrap && Date.now() >= WRAP_RETIRE_MS) {
+      wrap.classList.add('audition-wrap--retired');
+    }
+  }
+
   // Big live ticker (#audition-clock). Counts down to the 11am start.
   // Visibility is owned entirely by the global data-hide-after handler in the
   // CAMPAIGN IIFE — this function never touches `display` on the band.
@@ -904,6 +917,10 @@
   }
 
   function initAudition() {
+    // Victory lap can outlive the event, so sync it before any early return.
+    syncVictoryLap();
+    setInterval(syncVictoryLap, 60000);
+
     // Hygiene: clear stale Open House dismiss key on returning visitors.
     try { localStorage.removeItem('dwd:openhouse-ticker:dismissed:v1'); } catch (e) {}
 

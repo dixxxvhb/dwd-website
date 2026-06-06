@@ -315,6 +315,34 @@
         </div>
       </div>
 
+      <!-- VICTORY LAP — "That's a wrap." Successor to #audition-clock. Reveals at
+           Jun 6, 1pm ET (the same instant the countdown + audition surfaces hide)
+           via the global data-reveal-after handler in campaign.js, then auto-retires
+           after Jun 13 (the .audition-wrap--retired class is added in campaign.js).
+           Pure-CSS curtain-part reveal; the animated DWD logo (Tamara Mark baked in)
+           blooms at center. Honors prefers-reduced-motion. -->
+      <section class="audition-wrap" id="audition-wrap"
+               data-reveal-after="2026-06-06T13:00:00-04:00"
+               aria-label="That's a wrap. ProSeries Season One auditions complete."
+               style="display:none">
+        <div class="awrap-curtain" aria-hidden="true">
+          <span class="awrap-panel awrap-panel--l"></span>
+          <span class="awrap-panel awrap-panel--r"></span>
+        </div>
+        <div class="awrap-inner">
+          <span class="awrap-eyebrow">dwdPROSERIES &middot; Season One Auditions</span>
+          <div class="awrap-logo">
+            <video src="images/logos/DWD-pink-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="Dance With Dixon animated logo">
+              <img src="images/logos/DWD-pink.png" alt="Dance With Dixon" loading="lazy">
+            </video>
+          </div>
+          <h2 class="awrap-headline">That&rsquo;s a wrap.</h2>
+          <p class="awrap-sub">Auditions for ProSeries Season One are complete. To every dancer who showed up and gave it everything today: thank you. The hard part is done.</p>
+          <span class="awrap-next">Season One begins <em>August 10</em>.</span>
+          <a class="awrap-cta" href="https://www.instagram.com/dwdproseries/" target="_blank" rel="noopener" data-track="audition-wrap-follow">Follow the season <em>&rarr;</em></a>
+        </div>
+      </section>
+
       <!-- BIG AUDITION COUNTDOWN — live ticker to Jun 6, 11am ET. Hides after 1pm
            via the global data-hide-after handler in campaign.js. -->
       <section class="audition-clock" id="audition-clock"
