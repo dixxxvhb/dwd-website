@@ -114,12 +114,11 @@
       },
       {
         "@type": "Event",
-        "@id": "https://dancewithdixon.com/#event-audition-2026",
-        "name": "DWD ProSeries Audition Day",
-        "description": "Audition for DWD ProSeries Season One (2026/2027). Three tracks: Prep (ages 5-8), Elite (8-12), Pro (12+). Max 10 per track, 30 total. Season starts August 10, 2026.",
-        "startDate": "2026-06-06T11:00:00-04:00",
-        "endDate": "2026-06-06T13:00:00-04:00",
-        "doorTime": "2026-06-06T10:30:00-04:00",
+        "@id": "https://dancewithdixon.com/#event-intensive-2026",
+        "name": "DWD ProSeries Summer Intensive",
+        "description": "Five-day pre-season summer intensive for dancers ages 5+. Open to all dancers, no audition needed. July 6-10, 2026, 10am-1pm daily at Exchange Dance, Orlando. Prep (ages 5-8) $200, Elite/Pro (ages 8+) $300.",
+        "startDate": "2026-07-06T10:00:00-04:00",
+        "endDate": "2026-07-10T13:00:00-04:00",
         "eventStatus": "https://schema.org/EventScheduled",
         "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
         "location": {
@@ -134,14 +133,26 @@
             "addressCountry": "US"
           }
         },
-        "offers": {
-          "@type": "Offer",
-          "price": "25",
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://dwd-director.netlify.app/register",
-          "validFrom": "2026-05-01T00:00:00-04:00"
-        },
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Prep (ages 5-8)",
+            "price": "200",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dwd-director.netlify.app/summer-intensive",
+            "validFrom": "2026-06-12T17:00:00-04:00"
+          },
+          {
+            "@type": "Offer",
+            "name": "Elite/Pro (ages 8+)",
+            "price": "300",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dwd-director.netlify.app/summer-intensive",
+            "validFrom": "2026-06-12T17:00:00-04:00"
+          }
+        ],
         "image": "https://dancewithdixon.com/images/logos/DWD-green.png",
         "organizer": { "@id": "https://dancewithdixon.com/#organization" },
         "url": "https://dancewithdixon.com/#proseries"
@@ -260,8 +271,8 @@
       <a href="#shop" data-page="shop">Merch</a>
       <a href="#contact" data-page="contact">Contact</a>
     </nav>
-    <a href="#early-access" class="nav-cta" data-page="early-access" data-hide-after="2026-05-01T00:00:00-04:00">Join the List &rarr;</a>
-    <a href="https://dwd-director.netlify.app/register" class="nav-cta nav-cta-launch" data-track="nav-register" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">Register &rarr;</a>
+    <a href="https://dwd-director.netlify.app/register" class="nav-cta nav-cta-launch" data-track="nav-register" data-hide-after="2026-06-12T17:00:00-04:00">Register &rarr;</a>
+    <a href="https://dwd-director.netlify.app/summer-intensive" class="nav-cta nav-cta-launch" data-track="nav-intensive" data-reveal-after="2026-06-12T17:00:00-04:00" style="display:none">Summer Intensive &rarr;</a>
     <button class="topnav-toggle" id="topnav-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
   </header>
 
@@ -343,6 +354,35 @@
         </div>
       </section>
 
+      <!-- SUMMER INTENSIVE BAND — takes the retired victory-lap slot. Reveals the
+           moment public sign-up opens (Jun 12, 5pm ET) via the global
+           data-reveal-after handler in campaign.js. The sign-up page itself is
+           gated by the same launch moment (Director toggle). -->
+      <section class="audition-cta" id="intensive-cta"
+               aria-label="ProSeries Summer Intensive sign-up"
+               data-reveal-after="2026-06-12T17:00:00-04:00"
+               style="display:none">
+        <a class="audition-cta-card" href="https://dwd-director.netlify.app/summer-intensive"
+           data-track="hero-intensive-signup">
+          <div class="ac-stack">
+            <span class="ac-eyebrow">Next Up &middot; dwdPROSERIES</span>
+            <span class="ac-headline">Summer Intensive.</span>
+            <span class="ac-meta">Open to all dancers ages 5+ &middot; No audition needed &middot; Prep $200 &middot; Elite/Pro $300</span>
+          </div>
+          <div class="ac-date">
+            <span class="ac-date-day">JUL &middot; 6&ndash;10</span>
+            <span class="ac-date-time">10AM &ndash; 1PM</span>
+            <span class="ac-date-note">Exchange Dance &middot; Orlando</span>
+          </div>
+          <span class="ac-cta">Sign up now <em>&rarr;</em></span>
+        </a>
+        <nav class="ac-sub" aria-label="More from this season">
+          <a href="#proseries" data-track="intensive-cta-details">ProSeries details &rarr;</a>
+          <span class="ac-sub-sep" aria-hidden="true">&middot;</span>
+          <a href="#amuse" data-track="intensive-cta-amuse">A&middot;Muse in Space showcase &middot; Jun 27 &rarr;</a>
+        </nav>
+      </section>
+
       <!-- BIG AUDITION COUNTDOWN — live ticker to Jun 6, 11am ET. Hides after 1pm
            via the global data-hide-after handler in campaign.js. -->
       <section class="audition-clock" id="audition-clock"
@@ -389,7 +429,7 @@
       <section class="triptych" aria-label="What's happening at DWD">
         <div class="triptych-head">
           <span class="triptych-eyebrow">What's Happening</span>
-          <span class="triptych-sub">Two weekends. One audition. One stage.</span>
+          <span class="triptych-sub">On the calendar before Season One.</span>
         </div>
         <div class="triptych-grid triptych-grid--two">
 
@@ -427,6 +467,25 @@
             <span class="tri-meta">Saturday &middot; Orlando Ballet &middot; dwdCOLLECTIVE&rsquo;s first public performance. Aric Barrow presents.</span>
             <span class="tri-spacer"></span>
             <span class="tri-cta">Learn more <em>&rarr;</em></span>
+          </a>
+
+          <!-- Card 3 · Summer Intensive (Jul 6–10) — reveals when sign-up opens, Jun 12 5pm ET -->
+          <a class="tri-card tri-card--audition tri-card--intensive" href="https://dwd-director.netlify.app/summer-intensive"
+             data-track="home-tri-intensive"
+             data-reveal-after="2026-06-12T17:00:00-04:00"
+             style="display:none">
+            <div class="tri-row-top">
+              <span class="tri-eyebrow">dwdPROSERIES &middot; Summer</span>
+              <span class="tri-pill">All Dancers &middot; Ages 5+</span>
+            </div>
+            <div class="tri-date">
+              <span class="tri-date-mon">JUL</span>
+              <span class="tri-date-day">6&ndash;10</span>
+            </div>
+            <span class="tri-headline">Summer Intensive.</span>
+            <span class="tri-meta">Monday&ndash;Friday &middot; 10am&ndash;1pm daily &middot; Exchange Dance, Orlando. No audition needed. Prep $200 &middot; Elite/Pro $300.</span>
+            <span class="tri-spacer"></span>
+            <span class="tri-cta">Sign up <em>&rarr;</em></span>
           </a>
 
         </div>
@@ -582,7 +641,8 @@
           <div class="foot">
             <div class="facts">
               <div class="f"><div class="k">Tracks</div><div class="v">Prep &middot; Elite &middot; Pro</div></div>
-              <div class="f"><div class="k">Register to Audition</div><div class="v"><span data-hide-after="2026-05-01T00:00:00-04:00">Opens <em>May 1</em></span><span data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none"><em>Open Now</em></span></div></div>
+              <div class="f" data-hide-after="2026-06-12T17:00:00-04:00"><div class="k">Register to Audition</div><div class="v"><span data-hide-after="2026-05-01T00:00:00-04:00">Opens <em>May 1</em></span><span data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none"><em>Open Now</em></span></div></div>
+              <div class="f" data-reveal-after="2026-06-12T17:00:00-04:00" style="display:none"><div class="k">Summer Intensive</div><div class="v"><em>Jul 6&ndash;10</em> &middot; Open</div></div>
             </div>
             <span class="enter-arrow">Enter<span class="a"> &rarr;</span></span>
           </div>
@@ -646,27 +706,29 @@
         </div>
       </div>
 
-      <!-- TICKER -->
-      <div class="ticker-bar" aria-hidden="true" data-hide-after="2026-05-01T00:00:00-04:00">
+      <!-- TICKER — audition-era bar retires at the intensive launch moment (Jun 12, 5pm ET) -->
+      <div class="ticker-bar ticker-bar-launch" aria-hidden="true" data-hide-after="2026-06-12T17:00:00-04:00">
         <div class="ticker-track">
-          <span>ProSeries Audition Registration Opens May 1</span>
-          <span>A&middot;Muse in Space &middot; Jun 27 &middot; Orlando Ballet</span>
-          <span>Adult Classes Now Enrolling</span>
-          <span>ProSeries Audition Registration Opens May 1</span>
-          <span>A&middot;Muse in Space &middot; Jun 27 &middot; Orlando Ballet</span>
-          <span>Adult Classes Now Enrolling</span>
+          <span>Registration is Open</span>
+          <span>ProSeries Audition &middot; Sat June 6</span>
+          <span>30 Spots &middot; 10 Per Track</span>
+          <span>Register Now &rarr;</span>
+          <span>Registration is Open</span>
+          <span>ProSeries Audition &middot; Sat June 6</span>
+          <span>30 Spots &middot; 10 Per Track</span>
+          <span>Register Now &rarr;</span>
         </div>
       </div>
-      <div class="ticker-bar ticker-bar-launch" aria-hidden="true" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">
+      <div class="ticker-bar ticker-bar-launch" aria-hidden="true" data-reveal-after="2026-06-12T17:00:00-04:00" style="display:none">
         <div class="ticker-track">
-          <span>Registration is Open</span>
-          <span>ProSeries Audition &middot; Sat June 6</span>
-          <span>30 Spots &middot; 10 Per Track</span>
-          <span>Register Now &rarr;</span>
-          <span>Registration is Open</span>
-          <span>ProSeries Audition &middot; Sat June 6</span>
-          <span>30 Spots &middot; 10 Per Track</span>
-          <span>Register Now &rarr;</span>
+          <span>Summer Intensive &middot; Jul 6&ndash;10</span>
+          <span>Open to All Dancers &middot; Ages 5+</span>
+          <span>Sign Up Now &rarr;</span>
+          <span>A&middot;Muse in Space &middot; Jun 27 &middot; Orlando Ballet</span>
+          <span>Summer Intensive &middot; Jul 6&ndash;10</span>
+          <span>Open to All Dancers &middot; Ages 5+</span>
+          <span>Sign Up Now &rarr;</span>
+          <span>A&middot;Muse in Space &middot; Jun 27 &middot; Orlando Ballet</span>
         </div>
       </div>
 
@@ -682,19 +744,19 @@
         </div>
       </div>
 
-      <!-- EMAIL SIGNUP -->
-      <div class="email-signup reveal" data-hide-after="2026-05-01T00:00:00-04:00">
-        <div class="kicker">Get Early Access</div>
-        <h3>Join <em>the List.</em></h3>
-        <p>Be first in line for ProSeries registration and DWD updates. Spots are limited.</p>
-        <a href="#early-access" class="btn btn-blush" data-track="home-early-access-join">Join the List</a>
-      </div>
-      <!-- LAUNCH CTA — replaces email signup at 00:00 ET, May 1, 2026 -->
-      <div class="email-signup email-signup-launch reveal" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">
+      <!-- LAUNCH CTA — audition-era version retires at the intensive launch moment -->
+      <div class="email-signup email-signup-launch reveal" data-hide-after="2026-06-12T17:00:00-04:00">
         <div class="kicker">Audition is June 6</div>
         <h3>Register <em>Now.</em></h3>
         <p>30 spots. 10 per track. Audition Saturday, June 6 at Exchange Dance Studio in Orlando. $25 to lock your spot.</p>
         <a href="https://dwd-director.netlify.app/register" class="btn btn-blush" data-track="home-launch-register-cta">Register for Audition &rarr;</a>
+      </div>
+      <!-- INTENSIVE CTA — takes the slot at 5pm ET, Jun 12, 2026 -->
+      <div class="email-signup email-signup-launch" data-reveal-after="2026-06-12T17:00:00-04:00" style="display:none">
+        <div class="kicker">Summer Intensive &middot; July 6&ndash;10</div>
+        <h3>Sign <em>Up Now.</em></h3>
+        <p>Five days in the studio before Season One. Open to all dancers ages 5 and up, no audition needed. 10am&ndash;1pm daily at Exchange Dance, Orlando. Prep $200 &middot; Elite/Pro $300.</p>
+        <a href="https://dwd-director.netlify.app/summer-intensive" class="btn btn-blush" data-track="home-intensive-signup-cta">Sign Up for the Intensive &rarr;</a>
       </div>
     </section>
 
@@ -1208,11 +1270,17 @@
         <h2>Also on the calendar</h2>
       </div>
       <div class="coming-up three-up ps-whatelse-grid" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="coming-up-card reveal">
+        <div class="coming-up-card reveal" data-hide-after="2026-06-12T17:00:00-04:00">
           <div class="label">Summer 2026</div>
           <h3>Summer Intensive</h3>
           <div class="meta">Details TBA</div>
           <p>Pre-season summer intensive details coming soon. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for the announcement.</p>
+        </div>
+        <div class="coming-up-card" data-reveal-after="2026-06-12T17:00:00-04:00" style="display:none">
+          <div class="label">Summer 2026 &middot; Sign-Up Open</div>
+          <h3>Summer Intensive</h3>
+          <div class="meta">July 6&ndash;10 &middot; 10am&ndash;1pm daily</div>
+          <p>Five days of technique, choreography, and artistry at Exchange Dance before Season One. Open to all dancers ages 5 and up, no audition needed. Prep (ages 5&ndash;8) $200 &middot; Elite/Pro (ages 8+) $300. Prep dancers are excused at 12pm. <a href="https://dwd-director.netlify.app/summer-intensive" data-track="proseries-intensive-card-signup">Sign up now &rarr;</a></p>
         </div>
         <div class="coming-up-card reveal" data-delay="1">
           <div class="label">Fall 2026 &ndash; Spring 2027</div>
@@ -1222,20 +1290,25 @@
         </div>
       </div>
 
-      <!-- Coming Soon Banner: shows BEFORE the launch moment -->
-      <div class="coming-soon-banner" id="cs-form">
-        <div class="coming-soon-inner">
-          <div class="coming-soon-eyebrow">May 1, 2026</div>
-          <h2>Audition registration opens May 1.</h2>
-          <p>When registration opens, you're registering to audition, not to enroll. Spots are limited. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for daily behind-the-scenes content and launch updates.</p>
-        </div>
-      </div>
-
-      <div data-reveal-after="2026-05-01T00:00:00-04:00" class="content-section alt reveal" id="proseries-interest">
+      <!-- Audition-era registration section — retires at the intensive launch moment.
+           (The pre-May-1 coming-soon banner that used to sit above this was removed
+           once the audition phase closed.) -->
+      <div data-hide-after="2026-06-12T17:00:00-04:00" class="content-section alt reveal" id="proseries-interest">
         <h2>Registration is Open.</h2>
         <p>You're registering to audition, not to enroll. Spots are limited (10 per track, 30 total). Audition is <strong>Saturday, June 6</strong> at Exchange Dance Studio in Orlando.</p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
           <a href="https://dwd-director.netlify.app/register" class="btn btn-blush" data-track="proseries-register">Register for Audition &rarr;</a>
+          <a href="#contact" class="btn btn-outline">Contact Us</a>
+        </div>
+      </div>
+
+      <!-- Summer Intensive sign-up section — takes the slot at 5pm ET, Jun 12.
+           campaign.js keys the ProSeries hero CTA off this element's display. -->
+      <div data-reveal-after="2026-06-12T17:00:00-04:00" class="content-section alt" id="proseries-intensive" style="display:none">
+        <h2>Summer Intensive sign-up is open.</h2>
+        <p>July 6&ndash;10 at Exchange Dance in Orlando, 10am&ndash;1pm daily. Open to all dancers ages 5 and up, no audition needed. Prep (ages 5&ndash;8) $200 &middot; Elite/Pro (ages 8+) $300.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+          <a href="https://dwd-director.netlify.app/summer-intensive" class="btn btn-blush" data-track="proseries-intensive-register">Sign Up Now &rarr;</a>
           <a href="#contact" class="btn btn-outline">Contact Us</a>
         </div>
       </div>
@@ -1734,8 +1807,8 @@
         </div>
       </div>
 
-      <!-- LAUNCH STATE — Registration is Open -->
-      <div class="early-access-page early-access-page-launch" data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none">
+      <!-- LAUNCH STATE — Registration is Open (audition era; retires at the intensive launch moment) -->
+      <div class="early-access-page early-access-page-launch" data-hide-after="2026-06-12T17:00:00-04:00">
         <div class="ea-container">
           <img src="images/logos/DWDPS-pink.png" alt="DWD ProSeries" class="ea-logo" width="120" height="120">
           <div class="ea-live-badge"><span class="ea-live-dot"></span> Live Now</div>
@@ -1776,6 +1849,45 @@
             <div class="ea-bullet">
               <strong>Limited spots.</strong> 10 per track, 30 total. Audition is the only way in.
             </div>
+          </div>
+
+          <div class="ea-social">
+            <p>Stay close:</p>
+            <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="ea-ig-link">@dwdproseries</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTENSIVE STATE — Summer Intensive sign-up (takes the slot at 5pm ET, Jun 12) -->
+      <div class="early-access-page early-access-page-launch" data-reveal-after="2026-06-12T17:00:00-04:00" style="display:none">
+        <div class="ea-container">
+          <img src="images/logos/DWDPS-pink.png" alt="DWD ProSeries" class="ea-logo" width="120" height="120">
+          <div class="ea-live-badge"><span class="ea-live-dot"></span> Sign-Up Open</div>
+          <h1 class="ea-headline">Summer Intensive</h1>
+          <p class="ea-subhead">Five days in the studio before Season One.<br><strong>July 6&ndash;10, 2026</strong> &middot; 10am&ndash;1pm daily<br>Exchange Dance Studio &middot; Orlando, FL</p>
+
+          <div class="ea-details">
+            <div class="ea-detail">
+              <span class="ea-detail-label">Who</span>
+              <span class="ea-detail-value">All dancers 5+</span>
+            </div>
+            <div class="ea-detail">
+              <span class="ea-detail-label">Audition</span>
+              <span class="ea-detail-value">Not required</span>
+            </div>
+            <div class="ea-detail">
+              <span class="ea-detail-label">Prep (5&ndash;8)</span>
+              <span class="ea-detail-value">$200</span>
+            </div>
+            <div class="ea-detail">
+              <span class="ea-detail-label">Elite/Pro (8+)</span>
+              <span class="ea-detail-value">$300</span>
+            </div>
+          </div>
+
+          <div class="ea-cta-wrap">
+            <a href="https://dwd-director.netlify.app/summer-intensive" class="btn btn-blush ea-launch-cta" data-track="ea-intensive-signup">Sign Up Now &rarr;</a>
+            <p class="ea-early-note">Prep dancers are excused at 12pm daily. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for updates.</p>
           </div>
 
           <div class="ea-social">

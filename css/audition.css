@@ -355,6 +355,10 @@
   .ac-date-day { font-size: 20px; }
 }
 
+/* Summer Intensive band (#intensive-cta) — the date range ("JUL · 6–10")
+   must stay on one line; the en dash is a wrap opportunity. */
+#intensive-cta .ac-date-day { white-space: nowrap; }
+
 /* ============================================================
    TRIPTYCH — two equal-weight event cards (audition + a-muse)
    ============================================================ */

@@ -230,6 +230,7 @@ body.has-topnav .main {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap; /* long CTA labels ("Summer Intensive") must not wrap */
   padding: 0.7rem 1.25rem;
   background: var(--terra);
   color: var(--cream);

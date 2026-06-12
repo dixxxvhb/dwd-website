@@ -737,16 +737,22 @@
       }
     });
 
-    // Update hero CTA: pre-launch → email capture; post-launch → register page
+    // Update hero CTA by phase: intensive sign-up (post Jun 12 5pm) → intensive page;
+    // audition era (#proseries-interest visible) → register page; else → email capture.
+    // Keyed off section display so the CTA always matches what the page shows.
     var heroCta = document.getElementById('ps-hero-cta');
     var interestForm = document.getElementById('proseries-interest');
-    if (heroCta && interestForm) {
-      if (interestForm.style.display === 'none') {
-        heroCta.href = '#early-access';
-        heroCta.innerHTML = 'Get Early Access <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
-      } else {
+    var intensiveForm = document.getElementById('proseries-intensive');
+    if (heroCta) {
+      if (intensiveForm && intensiveForm.style.display !== 'none') {
+        heroCta.href = 'https://dwd-director.netlify.app/summer-intensive';
+        heroCta.innerHTML = 'Sign Up for Summer Intensive <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
+      } else if (interestForm && interestForm.style.display !== 'none') {
         heroCta.href = 'https://dwd-director.netlify.app/register';
         heroCta.innerHTML = 'Register for Audition <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
+      } else {
+        heroCta.href = '#early-access';
+        heroCta.innerHTML = 'Get Early Access <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
       }
     }
   };

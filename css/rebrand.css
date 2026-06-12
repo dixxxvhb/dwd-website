@@ -93,7 +93,7 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 .topnav .nav-cta {
   font-size: clamp(11px, 0.5rem + 0.3vw, 15px); letter-spacing: 0.24em; text-transform: uppercase;
   padding: 12px 22px; background: var(--rb-pink); color: var(--rb-bg-base);
-  text-decoration: none;
+  text-decoration: none; white-space: nowrap; /* long CTA labels must not wrap */
   transition: transform 0.25s ease;
 }
 .topnav .nav-cta:hover { transform: translateY(-1px); }
