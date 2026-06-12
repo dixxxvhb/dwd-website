@@ -802,12 +802,13 @@
 
   function eventIsPast() { return Date.now() >= EVENT_END_MS; }
 
-  // Victory lap (#audition-wrap) retires after the celebration week. Its REVEAL
-  // is owned by the global data-reveal-after handler (fires at EVENT_END_MS — the
-  // same instant the countdown hides); this only caps the tail. The !important
-  // .audition-wrap--retired class survives the polling reveal handler that resets
-  // inline display (same trick as .audition-ticker--dismissed).
-  var WRAP_RETIRE_MS = new Date('2026-06-13T23:59:00-04:00').getTime();
+  // Victory lap (#audition-wrap) shows Jun 6 1pm through Jun 9, then retires at the
+  // Jun 10 boundary — Jun 10 is when track offers go out and the Summer Intensive
+  // countdown takes the slot. Its REVEAL is owned by the global data-reveal-after
+  // handler (fires at EVENT_END_MS — the same instant the countdown hides); this only
+  // caps the tail. The !important .audition-wrap--retired class survives the polling
+  // reveal handler that resets inline display (same trick as .audition-ticker--dismissed).
+  var WRAP_RETIRE_MS = new Date('2026-06-10T00:00:00-04:00').getTime();
   function syncVictoryLap() {
     var wrap = document.getElementById('audition-wrap');
     if (wrap && Date.now() >= WRAP_RETIRE_MS) {

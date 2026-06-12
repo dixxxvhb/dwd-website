@@ -1163,7 +1163,7 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
    VICTORY LAP — "That's a wrap." (#audition-wrap)
    Successor to #audition-clock. Reveals at Jun 6, 1pm ET (the same instant
    the countdown + audition surfaces hide, via the global data-reveal-after
-   handler in campaign.js) and auto-retires after Jun 13 (.--retired class
+   handler in campaign.js) and auto-retires at the Jun 10 boundary (.--retired class
    added by the audition IIFE; !important survives the polling reveal handler
    that resets inline display — same trick as .audition-ticker--dismissed).
    Pure-CSS curtain-part reveal; the animated DWD logo (Tamara Mark baked in)
