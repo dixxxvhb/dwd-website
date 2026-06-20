@@ -745,8 +745,8 @@
     var intensiveForm = document.getElementById('proseries-intensive');
     if (heroCta) {
       if (intensiveForm && intensiveForm.style.display !== 'none') {
-        heroCta.href = 'https://dwd-director.netlify.app/summer-intensive';
-        heroCta.innerHTML = 'Sign Up for Summer Intensive <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
+        heroCta.href = 'https://dancewithdixon.com/fullout';
+        heroCta.innerHTML = 'FULL OUT Takeover Intensive <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
       } else if (interestForm && interestForm.style.display !== 'none') {
         heroCta.href = 'https://dwd-director.netlify.app/register';
         heroCta.innerHTML = 'Register for Audition <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
