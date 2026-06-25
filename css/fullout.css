@@ -377,6 +377,75 @@ body {
   .fo-day > :nth-child(3) { grid-area: b; }
 }
 
+/* ─── Hero register CTA (added 2026-06-25 — register without scrolling to the bottom) ─── */
+.fo-hero-cta {
+  margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 18px;
+}
+.fo-hero-cta-note {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fo-coral-light);
+}
+
+/* ─── Mobile sticky register bar ─── */
+.fo-sticky-cta { display: none; }
+@media (max-width: 768px) {
+  /* Extra bottom room so the footer always clears the pinned bar. Wins over the
+     560px .fo-page shorthand because this longhand appears later in the file. */
+  .fo-page { padding-bottom: 96px; }
+  .fo-sticky-cta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(13, 13, 13, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--fo-rule);
+    text-decoration: none;
+  }
+  .fo-sticky-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fo-muted);
+  }
+  .fo-sticky-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: var(--fo-coral);
+    color: var(--fo-black);
+    border-radius: 999px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .fo-sticky-btn::after {
+    content: '→';
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .fo-btn { transition: none; }
