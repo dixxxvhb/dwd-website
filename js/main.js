@@ -347,13 +347,20 @@
   // ── SUPABASE CLIENT ──
   var supabaseUrl = 'https://ipulrvhiuvgbvralybxx.supabase.co';
   var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwdWxydmhpdXZnYnZyYWx5Ynh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2ODI0MzAsImV4cCI6MjA4NjI1ODQzMH0.O7MDYxkfqhQGNI58xyDq3HhsIm12OmgZRkJlyTXL0ug';
-  var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  // Guard the CDN: if supabase-js failed to load (ad blocker, network, CDN
+  // outage), don't throw here — that would abort the rest of this IIFE and
+  // kill form handlers + hash routing. Init as null and let each feature
+  // fall back gracefully.
+  var supabase = (window.supabase && window.supabase.createClient)
+    ? window.supabase.createClient(supabaseUrl, supabaseKey)
+    : null;
   window.__dwd_sb = supabase; // expose for analytics.js / analytics-dashboard.js
 
   // ── LIVE PRICING FROM PROSERIES CONFIG ──
   // Fetches active config from proseries_config table (anon RLS allows read)
   // Updates pricing on the page. Falls back silently to hardcoded HTML values on error.
   (function loadLivePricing() {
+    if (!supabase) return; // CDN unavailable — keep the hardcoded HTML prices
     supabase
       .from('proseries_config')
       .select('track_prep_price_cents, track_elite_price_cents, track_pro_price_cents, track_prep_ages, track_elite_ages, track_pro_ages')
@@ -573,6 +580,10 @@
         message: document.getElementById('contact-message').value.trim() || ''
       };
 
+      if (!supabase) {
+        showFormError(contactForm, 'Our form service is temporarily unavailable. Please email dancewithdixon@gmail.com and I’ll get right back to you.');
+        return;
+      }
       setSubmitLoading(contactForm, true);
       supabase.from('website_contacts').insert(payload)
         .then(function (res) {
@@ -597,6 +608,10 @@
       var emailInput = form.querySelector('input[type="email"]');
       var source = form.dataset.form.replace('signup-', '') || 'home';
 
+      if (!supabase) {
+        showFormError(form, 'Our signup service is temporarily unavailable. Please email dancewithdixon@gmail.com.');
+        return;
+      }
       setSubmitLoading(form, true);
       supabase.from('email_signups').insert({ email: emailInput.value.trim(), source: source })
         .then(function (res) {
@@ -639,6 +654,10 @@
       }
       var rows = Array.prototype.map.call(checked, function (cb) { return { category: cb.value }; });
 
+      if (!supabase) {
+        showFormError(merchForm, 'Voting is temporarily unavailable. Please try again shortly.');
+        return;
+      }
       setSubmitLoading(merchForm, true);
       supabase.from('merch_poll_responses').insert(rows)
         .then(function (res) {

@@ -294,6 +294,16 @@ body.has-topnav .main {
   }
   .topnav nav a::after { display: none; }
   .topnav .nav-cta { display: none; }
+  /* Surface the active launch CTA (e.g. Summer Intensive) inside the open
+     mobile menu so it isn't lost on phones. The date-hidden CTA keeps its
+     JS-set inline display:none, so only the currently-active one appears. */
+  .topnav.is-open .nav-cta-launch {
+    display: block;
+    grid-column: 1 / -1;
+    order: 4;
+    text-align: center;
+    margin: 0.6rem 0 0;
+  }
   .topnav .topnav-toggle { display: inline-block; }
 }
 

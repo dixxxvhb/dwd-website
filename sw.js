@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v15';
+const CACHE_NAME = 'dwd-site-v16';
 const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',
@@ -34,7 +34,11 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   var url = e.request.url;
-  var isCodeFile = url.endsWith('.js') || url.endsWith('.css') || url.endsWith('.html');
+  // Match on pathname so query-stringed assets (e.g. analytics-dashboard.js?v=4,
+  // styles.css?v=2) still take the network-first path and never freeze in cache.
+  var path;
+  try { path = new URL(url).pathname; } catch (err) { path = url; }
+  var isCodeFile = path.endsWith('.js') || path.endsWith('.css') || path.endsWith('.html');
 
   if (e.request.mode === 'navigate' || isCodeFile) {
     // Network-first for navigation + code files (always get latest)

@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0c1f17">
-  <title>A·Muse in Space · Register | DWD Collective</title>
-  <meta name="description" content="Register to dance with the DWD Collective in A·Muse in Space. Aric Barrow's showcase at Orlando Ballet, Saturday June 27, 2026. Contemporary modern, ages 16+.">
+  <title>A·Muse in Space · DWD Collective</title>
+  <meta name="description" content="dwdCOLLECTIVE danced in A·Muse in Space, Aric Barrow's showcase at Orlando Ballet on June 27, 2026. Our first public performance is in the books. More shows are on the way.">
   <link rel="canonical" href="https://dancewithdixon.com/amuse-in-space.html">
 
-  <meta property="og:title" content="A·Muse in Space · Register">
-  <meta property="og:description" content="Dance with DWD Collective in Aric Barrow's A·Muse in Space showcase at Orlando Ballet, June 27, 2026.">
+  <meta property="og:title" content="A·Muse in Space · DWD Collective">
+  <meta property="og:description" content="dwdCOLLECTIVE's first public performance, at Orlando Ballet on June 27, 2026. More shows are on the way.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dancewithdixon.com/amuse-in-space.html">
 
@@ -19,8 +19,6 @@
 
   <link rel="icon" type="image/png" href="images/logos/DWD-green.png">
   <link rel="stylesheet" href="css/amuse.css">
-
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <div class="amuse-page">
@@ -33,9 +31,9 @@
 
     <main class="amuse-main">
       <section class="amuse-hero">
-        <p class="amuse-eyebrow"><span class="spark">✦</span>&nbsp;Aric Barrow presents · A·Muse in Space&nbsp;<span class="spark">✦</span></p>
-        <h1 class="amuse-title">Dance the show<br><em>with us.</em></h1>
-        <p class="amuse-lede">Open call for the DWD Collective. Four Sunday rehearsals into the June 27 showcase at Orlando Ballet.</p>
+        <p class="amuse-eyebrow"><span class="spark">✦</span>&nbsp;Aric Barrow presented · A·Muse in Space&nbsp;<span class="spark">✦</span></p>
+        <h1 class="amuse-title">That's a<br><em>wrap.</em></h1>
+        <p class="amuse-lede">dwdCOLLECTIVE took the stage in A·Muse in Space at Orlando Ballet on June 27, 2026. Our first public performance is in the books, and it won't be the last.</p>
       </section>
 
       <div class="amuse-divider" aria-hidden="true"><span>✦ ✧ ✦</span></div>
@@ -43,20 +41,16 @@
       <section class="amuse-info">
         <div class="amuse-details">
           <div class="amuse-detail">
-            <span class="amuse-detail-label">Style</span>
-            <span class="amuse-detail-value">Contemporary modern · upbeat · ages 16+</span>
+            <span class="amuse-detail-label">The Piece</span>
+            <span class="amuse-detail-value">Contemporary modern · upbeat · original choreography by Dixon Bowles</span>
           </div>
           <div class="amuse-detail">
-            <span class="amuse-detail-label">Rehearsals</span>
-            <span class="amuse-detail-value">Sundays · May 24 · May 31 · Jun 14 · Jun 21<br>6:30–8:30 PM · Next Level Dance Studio, St. Cloud</span>
+            <span class="amuse-detail-label">The Cast</span>
+            <span class="amuse-detail-value">Adult dancers, all levels · no audition. This first cast made it happen.</span>
           </div>
           <div class="amuse-detail">
-            <span class="amuse-detail-label">Show</span>
-            <span class="amuse-detail-value">Saturday, June 27 · at Orlando Ballet</span>
-          </div>
-          <div class="amuse-detail">
-            <span class="amuse-detail-label">Pay</span>
-            <span class="amuse-detail-value">$10 per rehearsal · $35 for all four<br><span class="amuse-detail-small">Cash or Venmo at the first rehearsal</span></span>
+            <span class="amuse-detail-label">The Show</span>
+            <span class="amuse-detail-value">Saturday, June 27, 2026 · Orlando Ballet · presented by Aric Barrow</span>
           </div>
         </div>
       </section>
@@ -64,60 +58,11 @@
       <div class="amuse-divider" aria-hidden="true"><span>✦ ✧ ✦</span></div>
 
       <section class="amuse-form-section">
-        <h2 class="amuse-form-title">Count me in.</h2>
-        <p class="amuse-form-lede">Drop your info and let me know which rehearsals you can make. I'll be in touch within a few days.</p>
-
-        <form data-form="amuse-registration" id="amuse-form" novalidate>
-          <div class="form-group">
-            <label for="amuse-name">Full name</label>
-            <input type="text" id="amuse-name" name="full_name" required autocomplete="name" autocapitalize="words">
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="amuse-email">Email</label>
-              <input type="email" id="amuse-email" name="email" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false">
-            </div>
-            <div class="form-group">
-              <label for="amuse-phone">Phone</label>
-              <input type="tel" id="amuse-phone" name="phone" inputmode="tel" autocomplete="tel">
-            </div>
-          </div>
-
-          <fieldset class="form-group amuse-commitment">
-            <legend>Which rehearsals can you make?</legend>
-            <p class="amuse-commitment-help">Check every Sunday you can attend. All four = $35 total · individual = $10 each.</p>
-            <div class="amuse-checkbox-grid">
-              <label class="amuse-checkbox"><input type="checkbox" id="r-may-24" name="rehearsal_may_24"><span class="amuse-checkbox-text"><span class="amuse-checkbox-date">Sun · May 24</span><span class="amuse-checkbox-meta">6:30–8:30 PM · Next Level, St. Cloud</span></span></label>
-              <label class="amuse-checkbox"><input type="checkbox" id="r-may-31" name="rehearsal_may_31"><span class="amuse-checkbox-text"><span class="amuse-checkbox-date">Sun · May 31</span><span class="amuse-checkbox-meta">6:30–8:30 PM · Next Level, St. Cloud</span></span></label>
-              <label class="amuse-checkbox"><input type="checkbox" id="r-jun-14" name="rehearsal_jun_14"><span class="amuse-checkbox-text"><span class="amuse-checkbox-date">Sun · Jun 14</span><span class="amuse-checkbox-meta">6:30–8:30 PM · Next Level, St. Cloud</span></span></label>
-              <label class="amuse-checkbox"><input type="checkbox" id="r-jun-21" name="rehearsal_jun_21"><span class="amuse-checkbox-text"><span class="amuse-checkbox-date">Sun · Jun 21</span><span class="amuse-checkbox-meta">6:30–8:30 PM · Next Level, St. Cloud</span></span></label>
-            </div>
-          </fieldset>
-
-          <div class="form-group amuse-show-row">
-            <label class="amuse-checkbox amuse-checkbox-show"><input type="checkbox" id="show-jun-27" name="attending_show"><span>I'm available for the show on Sat, Jun 27 at Orlando Ballet</span></label>
-          </div>
-
-          <div class="form-group">
-            <label for="amuse-notes">Anything else <span class="amuse-optional">(optional)</span></label>
-            <textarea id="amuse-notes" name="notes" rows="2" placeholder="Questions, conflicts, etc."></textarea>
-          </div>
-
-          <!-- Honeypot — bots fill anything visible; humans don't see this. -->
-          <div class="amuse-hp" aria-hidden="true">
-            <label for="amuse-website">Leave blank</label>
-            <input type="text" id="amuse-website" name="website" tabindex="-1" autocomplete="off">
-          </div>
-
-          <button type="submit" class="amuse-submit">Send it</button>
-
-          <div class="form-success" aria-live="polite">You're in. I'll be in touch within a few days. See you on the dance floor.</div>
-          <div class="form-error" aria-live="polite"></div>
-        </form>
-
+        <h2 class="amuse-form-title">Want in on the next one?</h2>
+        <p class="amuse-form-lede">More shows are coming. Get on the list and I'll reach out when the next cast forms. dwdCOLLECTIVE is open to adults of all levels, no experience required.</p>
         <p class="amuse-questions">
-          Questions? Text <a href="sms:+12082411899">(208) 241-1899</a> · email <a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a>
+          Get on the list: text <a href="sms:+12082411899">(208) 241-1899</a> · email <a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a><br>
+          Or follow <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a> to know when the next show goes up.
         </p>
       </section>
     </main>
@@ -126,7 +71,5 @@
       <p>© 2026 Dance With Dixon LLC · <a href="/">dancewithdixon.com</a></p>
     </footer>
   </div>
-
-  <script src="js/amuse-form.js" defer></script>
 </body>
 </html>
