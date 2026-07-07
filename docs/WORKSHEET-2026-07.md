@@ -16,6 +16,10 @@ fixes the instance AND the disease.
   circles, no gradient). Footer/fullout/teachers SVGs are correct.
 - The `dwdps2026` code puts a browser in PERMANENT preview mode (all eras visible at once) —
   Dixon's own view of the live site is not what visitors see.
+- **2026-07-06 evening sweep addendum (Fable, agent audit):** the unpushed working-tree commit
+  already contains A6a (Bebas Neue in the fonts URL), A6e (sw.js pathname compare), and A3's
+  og:image/twitter card — VERIFY each and tick rather than redo. New: A1 gains the dead hero-CTA
+  bullet, D8/D9 added, one new Part B row.
 
 ## Session protocol
 
@@ -62,6 +66,10 @@ gate (the Jul 1 audit lists them). Then wire the missing gates:
   and kill the stale RSVP path: amuse-in-space.html's form becomes a "this show has closed —
   watch the recap" state (page stays as archive).
 - While in campaign.js: drop the 2s polling to 30s (marketing gates don't need reflows every 2s).
+- (sweep 07-06) Repoint the ProSeries hero CTA `#ps-hero-cta` (index.html:937) — it targets
+  `#proseries-interest`, which auto-hid Jun 12; the top-intent button has been a dead click for
+  3+ weeks. Point it at the current era's section AND give it its own ERAS.md row so it flips
+  with the eras instead of drifting dead again.
 
 **A2 [M] The Jul 11 – Aug 9 era (content + reveal).** New homepage state revealed
 `2026-07-11T00:00:00-04:00`: hero pivots to Season One — "Season One begins August 10" +
@@ -106,6 +114,7 @@ strings). (f) Teacher-card placeholder inline styles → brand tokens (Manrope o
 | **this week** | After A5 ships: hard-refresh your browser / clear the campaign unlock so you see the real site. |
 | **whenever** | Sanction or retire the campaign look: `--oh-*` tokens + Anton/Manrope stay as the official "campaign palette" (document in DESIGN.md) or get migrated to brand tokens. Recommend: sanction + document — the campaign pages earned their look. |
 | **decide** | Pro-track routine count on the site says "6 routines"; MASTER.md says 5 + optional solo. Which is the sales copy? (Also affects app deposit math conversations.) |
+| **decide** | amuse-in-space.html still runs its own ungated "want in on the next one?" form (posts to `amuse_registrations`, no date gate on the page). Intentional forward-looking interest capture, or fold into A1's archive treatment? Cheap either way — just needs your yes/no. |
 
 ---
 
@@ -149,6 +158,17 @@ prospects.
 - **D6 [S]** DESIGN.md: document the era system (ERAS.md pointer), the campaign-palette ruling
   from Part B, and the analytics/campaign access-code behavior post-A5.
 - **D7 [S]** 404.html: add a one-line "page not found — heading home" message before redirect.
+- **D8 [M]** (sweep 07-06) Gallery/About image pipeline — recommend FIRST after Part A ships:
+  `images/photos/` holds raw camera originals (4–11MB each, ~278MB total; e.g. dwdc-7I6A3629.jpg
+  = 11MB) behind `loading="lazy"` — scrolling the gallery on cellular pulls tens of MB on the
+  site's trust-building section. Script a batch resize (sharp or imagemagick): ~1600px max width,
+  WebP + JPG fallback, the exact pattern the hero already uses (hero-800.webp/hero-1600.jpg).
+  Markup structure unchanged. The hero pipeline itself is verified fine — this is only the
+  gallery/about grids.
+- **D9 [S]** (sweep 07-06) Minify-in-place: ~364KB of CSS across 8 sheets + campaign.js (48KB) +
+  analytics-dashboard.js (32KB) all ship raw. Run through cssnano/lightningcss + terser keeping
+  file boundaries EXACTLY as-is — this is NOT D4's consolidation (zero selector churn, zero
+  regression risk), just whitespace/comments, ~20-30% transfer for free.
 
 ## Explicitly rejected — don't resurrect
 
@@ -173,4 +193,4 @@ prospects.
 | C3 | [ ] | |
 | C4 | [ ] | |
 | C5 | [ ] | |
-| D1–D7 | [ ] | |
+| D1–D9 | [ ] | |
