@@ -71,6 +71,11 @@ the line number if they disagree; re-grep `data-reveal-after\|data-hide-after` t
 | `.fo-cta-band` "closes July 5" note | fullout.html:141 | — | 2026-07-11T00:00 | Intensive → Archive | n/a |
 | `.fo-sticky-cta` mobile sticky bar | fullout.html:154 | — | 2026-07-11T00:00 | Intensive → Archive | n/a |
 | JSON-LD `Event` node `#event-intensive-2026` (NOT a data-attr — static structured data) | index.html:47 (comment) | — | — | *(removed 2026-07-10)* | n/a. Was advertising the Jul 6-10 intensive as `EventScheduled` after the fact; removed entirely from the `@graph`, same treatment the past A-Muse JSON-LD got in the Jul 1 fix pass. Organization / LocalBusiness / WebSite nodes untouched. |
+| `#s1-ribbon` urgency ribbon (Season One visual framework) | index.html:218 | 2026-07-11T00:00 | 2026-08-10T04:00 | Standing interest (pre-season) | Ribbon disappears at Season One start; no dedicated replacement (the `.s1-kicker` hero pill, `#s1-mobile-bar`, and `#season-underway-cta` all keep carrying the message past this point). Sticky under the topnav, styled in css/season-one.css. |
+| `.s1-kicker` hero pill (Season One visual framework) | index.html:270 | 2026-07-11T00:00 | — (standing) | Standing interest | — (permanent for the season). Last child of `.hero-text` inside the new `.s1-hero` full-bleed hero; styled in css/season-one.css. |
+| `#s1-mobile-bar` sticky mobile bar (Season One visual framework) | index.html:2100 | 2026-07-11T00:00 | — (standing) | Standing interest | — (permanent; mobile-only <=768px, dismissible client-side via `js/motion.js`, sessionStorage `s1:bar:dismissed`). Internal copy swaps via its own two nested spans below rather than the whole bar re-gating. |
+| `#s1-mobile-bar` label — "Season One · Aug 10" span (nested) | index.html:2101 (nested) | — | 2026-08-10T04:00 | Standing interest (pre-season) | Nested "Season One · Underway" span (below) |
+| `#s1-mobile-bar` label — "Season One · Underway" span (nested) | index.html:2101 (nested) | 2026-08-10T04:00 | — (standing) | Standing interest (season underway) | — |
 
 ## Resolved this session (coordinator follow-ups, 2026-07-10)
 
