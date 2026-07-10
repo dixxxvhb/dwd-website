@@ -76,6 +76,8 @@ the line number if they disagree; re-grep `data-reveal-after\|data-hide-after` t
 | `#s1-mobile-bar` sticky mobile bar (Season One visual framework) | index.html:2100 | 2026-07-11T00:00 | — (standing) | Standing interest | — (permanent; mobile-only <=768px, dismissible client-side via `js/motion.js`, sessionStorage `s1:bar:dismissed`). Internal copy swaps via its own two nested spans below rather than the whole bar re-gating. |
 | `#s1-mobile-bar` label — "Season One · Aug 10" span (nested) | index.html:2101 (nested) | — | 2026-08-10T04:00 | Standing interest (pre-season) | Nested "Season One · Underway" span (below) |
 | `#s1-mobile-bar` label — "Season One · Underway" span (nested) | index.html:2101 (nested) | 2026-08-10T04:00 | — (standing) | Standing interest (season underway) | — |
+| `#intensive-recap` section (NEW, Summer Intensive recap) | index.html:526–615ish | 2026-07-11T00:00 | — (standing) | Standing interest | — (permanent; homepage recap section — eyebrow/H2/intro, 4-stat row, 4-card reel rail, Express Interest bridge CTA, two quiet footer links — sits between the triptych and the audition-day band). Styled in css/season-one.css, reuses `.s1-rail` / `.s1-video-card` / `.s1-reveal` / `.s1-stagger` scaffolding; click-to-play via js/motion.js's existing data-video/data-poster contract. |
+| Triptych — Summer Intensive Recap card `.tri-card--intensive-recap` (NEW) | index.html:499–513ish (before the Season One card) | 2026-07-11T00:00 | 2026-08-10T04:00 | Standing interest (pre-season) | — (the whole `.triptych` section retires at the same instant). Reveals/hides in lockstep with `.tri-card--season-one` next to it — see the correction note below, this pairing is why that card's full-span rule had to be cancelled. |
 
 ## Resolved this session (coordinator follow-ups, 2026-07-10)
 
@@ -97,6 +99,21 @@ Closed in two follow-up rounds after the initial A1/A2/A3/A5 pass:
   both grid columns (`grid-column: 1 / -1`) instead of sitting stranded in the left cell —
   verified via computed `getBoundingClientRect()` before (441px wide, left-offset within the
   centered 900px container) and after (900px wide, matches the grid exactly) the fix.
+
+## Correction (2026-07-10, Summer Intensive recap addition)
+
+The Season One triptych card row above (`.tri-card--season-one`) previously described it as
+"the lone visible card" in its Jul 11 → Aug 10 window and said its `grid-column: 1 / -1`
+full-span rule (css/audition.css) was needed so it didn't sit stranded in the two-up grid's
+left cell. That's no longer true: the new `.tri-card--intensive-recap` card added this
+session reveals/hides in the exact same window, so the grid holds two cards again. Rather
+than edit audition.css (untouched, per this session's constraints), css/season-one.css adds
+`.triptych-grid--two .tri-card--season-one { grid-column: auto; }`, which — because
+season-one.css loads last — cancels the full-span rule at >=980px so the two cards sit side
+by side in the existing 2-up grid instead of the Season One card claiming the whole row and
+stranding the recap card alone in the row below. Below 980px both stack full-width regardless
+(single-column breakpoint, untouched). The old rule itself was left in place in audition.css
+(harmless — just superseded at the one breakpoint/window where both cards coexist).
 
 ## Known gaps (found during the A1 sweep, still open)
 

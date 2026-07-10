@@ -558,3 +558,154 @@ body.s1-has-bar { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 .topnav.scrolled {
   background: rgba(12,31,23,0.98);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * SUMMER INTENSIVE RECAP — #intensive-recap (homepage, Standing-interest
+ * era; reveals 2026-07-11, standing, no hide-after — see docs/ERAS.md).
+ * Sits between the triptych and the audition-day band. Reuses .s1-rail /
+ * .s1-video-card / .s1-reveal / .s1-stagger from above; only new,
+ * section-specific scaffolding is defined below.
+ * ═══════════════════════════════════════════════════════════════════════ */
+#intensive-recap {
+  background: var(--rb-bg-base);
+  padding: clamp(64px, 10vh, 120px) clamp(24px, 6vw, 88px);
+}
+.s1-recap-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.s1-recap-head {
+  max-width: 720px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+.s1-recap-eyebrow {
+  display: inline-block;
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--rb-terracotta);
+  margin-bottom: 18px;
+}
+.s1-recap-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: clamp(44px, 6vw, 80px);
+  line-height: 0.98;
+  color: var(--rb-ivory);
+  margin: 0 0 20px;
+}
+.s1-recap-h2 em { font-style: italic; color: var(--rb-terracotta); }
+.s1-recap-intro {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--rb-ivory-dim);
+  margin: 0;
+}
+
+/* Stat row — same Bebas-numbers/Outfit-labels rhythm as .track-record's
+ * .tr-num/.tr-label (css/additions.css), new selectors so that component
+ * stays untouched. */
+.s1-recap-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 760px;
+  margin: 0 auto 56px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(250,243,232,0.12);
+}
+.s1-recap-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.s1-recap-stat-num {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--rb-ivory);
+}
+.s1-recap-stat-lbl {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--rb-ivory-dim);
+  opacity: 0.8;
+}
+@media (max-width: 640px) {
+  .s1-recap-stats { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
+}
+
+/* Reel rail — spacing wrapper only; .s1-rail/.s1-video-card scaffolding
+ * above supplies card visuals + click-to-play (js/motion.js). */
+#intensive-recap .s1-rail { margin-bottom: 56px; }
+
+/* Bridge — the conversion moment. Same glass-card treatment as the
+ * #season-one-cta / #season-underway-cta cards above, new selector so it
+ * never touches those IDs. */
+.s1-recap-bridge {
+  text-align: center;
+  padding: 40px 32px;
+  background: rgba(250,243,232,0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(250,243,232,0.12);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+.s1-recap-bridge-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(20px, 2.4vw, 26px);
+  line-height: 1.5;
+  color: var(--rb-ivory);
+  max-width: 560px;
+  margin: 0 auto 28px;
+}
+
+/* Footer — two quiet links */
+.s1-recap-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 28px;
+  margin-top: 36px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+}
+.s1-recap-foot a {
+  color: var(--rb-ivory-dim);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(250,243,232,0.25);
+  padding-bottom: 2px;
+}
+@media (hover: hover) {
+  @media (prefers-reduced-motion: no-preference) {
+    .s1-recap-foot a { transition: color .2s ease, border-color .2s ease; }
+    .s1-recap-foot a:hover { color: var(--rb-ivory); border-color: var(--rb-ivory); }
+  }
+}
+@media (max-width: 480px) {
+  .s1-recap-foot { flex-direction: column; gap: 12px; }
+}
+
+/* ── Triptych recap card pairing ──
+ * The new .tri-card--intensive-recap card (index.html) reveals 2026-07-11
+ * and hides 2026-08-10 — the same window as .tri-card--season-one. The
+ * two-up grid holds two cards again for that window, so cancel
+ * audition.css's full-span rule on the Season One card (written when it
+ * was the lone survivor there) — otherwise it claims the whole row and
+ * strands the recap card alone underneath instead of sitting side by
+ * side. Only takes effect at >=980px; below that .triptych-grid--two is
+ * already a single column (audition.css's own breakpoint), so both cards
+ * stack full-width regardless. */
+.triptych-grid--two .tri-card--season-one { grid-column: auto; }

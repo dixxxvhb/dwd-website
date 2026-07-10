@@ -497,10 +497,32 @@
             <span class="tri-cta">Sign up <em>&rarr;</em></span>
           </a>
 
-          <!-- Card 4 · Season One (Aug 10) — reveals the moment the standing-interest
+          <!-- Card 4 · Summer Intensive Recap (Jul 11 -> Aug 10) — reveals the same
+               instant as the Season One card next to it, refilling the two-up grid
+               for the standing-interest window (css/season-one.css cancels that
+               card's grid-column:1/-1 full-span rule now that it has a sibling
+               again). Placed first so the row reads look-back, then look-ahead. -->
+          <a class="tri-card tri-card--intensive-recap" href="#intensive-recap"
+             data-track="tri-intensive-recap"
+             data-reveal-after="2026-07-11T00:00:00-04:00"
+             data-hide-after="2026-08-10T04:00:00-04:00"
+             style="display:none">
+            <div class="tri-row-top">
+              <span class="tri-eyebrow">July 6&ndash;10 &middot; Wrapped</span>
+            </div>
+            <span class="tri-headline">Summer Intensive</span>
+            <span class="tri-meta">Five days, eight styles, awards on the final day. See the recap.</span>
+            <span class="tri-spacer"></span>
+            <span class="tri-cta">The recap <em>&rarr;</em></span>
+          </a>
+
+          <!-- Card 5 · Season One (Aug 10) — reveals the moment the standing-interest
                era begins, Jul 11; retires when Season One starts, Aug 10 (the whole
                .triptych section retires at the same instant, so this is really just
-               keeping the grid populated for the four weeks in between). -->
+               keeping the grid populated for the four weeks in between). Paired with
+               the recap card above for this window — see css/season-one.css for the
+               grid-column override that keeps both side by side instead of the
+               full-span rule below stranding the recap card alone underneath. -->
           <a class="tri-card tri-card--audition tri-card--season-one" href="https://dwd-director.netlify.app/register"
              data-track="home-tri-season-one"
              data-reveal-after="2026-07-11T00:00:00-04:00"
@@ -519,6 +541,91 @@
             <span class="tri-spacer"></span>
             <span class="tri-cta">Express Interest <em>&rarr;</em></span>
           </a>
+
+        </div>
+      </section>
+
+      <!-- SUMMER INTENSIVE RECAP — Season One visual framework. Reveals
+           2026-07-11 alongside the rest of the Standing-interest cutover
+           (nav/hero/triptych/ticker); standing thereafter, no hide-after.
+           Visibility owned by the global data-reveal-after handler in
+           campaign.js. Styled in css/season-one.css (reuses .s1-rail /
+           .s1-video-card / .s1-reveal / .s1-stagger scaffolding);
+           click-to-play wired via js/motion.js's data-video/data-poster
+           contract. Registry row in docs/ERAS.md. -->
+      <section id="intensive-recap" class="s1-recap" aria-label="Summer Intensive recap"
+               data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">
+        <div class="s1-recap-inner">
+
+          <div class="s1-recap-head s1-reveal">
+            <span class="s1-recap-eyebrow">dwdPROSERIES &middot; July 6&ndash;10, 2026</span>
+            <h2 class="s1-recap-h2">That was <em>full out.</em></h2>
+            <p class="s1-recap-intro">Five days at Exchange Dance Academy. Hip hop, jazz, ballet, musical theatre, tap, lyrical, acro, and contemporary, taught by five faculty, closed out with awards on the final day.</p>
+          </div>
+
+          <div class="s1-recap-stats s1-stagger">
+            <div class="s1-recap-stat">
+              <span class="s1-recap-stat-num">5</span>
+              <span class="s1-recap-stat-lbl">Days</span>
+            </div>
+            <div class="s1-recap-stat">
+              <span class="s1-recap-stat-num">8</span>
+              <span class="s1-recap-stat-lbl">Styles</span>
+            </div>
+            <div class="s1-recap-stat">
+              <span class="s1-recap-stat-num">5</span>
+              <span class="s1-recap-stat-lbl">Faculty</span>
+            </div>
+            <div class="s1-recap-stat">
+              <span class="s1-recap-stat-num">23</span>
+              <span class="s1-recap-stat-lbl">Awards</span>
+            </div>
+          </div>
+
+          <div class="s1-rail s1-stagger" aria-label="Summer Intensive daily recap reels">
+            <div class="s1-video-card" data-video="images/intensive/intensive-day1.mp4" data-poster="images/intensive/intensive-day1-poster.jpg">
+              <picture>
+                <source srcset="images/intensive/intensive-day1-poster.webp" type="image/webp">
+                <img class="s1-vc-poster" src="images/intensive/intensive-day1-poster.jpg" alt="Summer Intensive Day 1 recap · Hip Hop and Jazz" loading="lazy">
+              </picture>
+              <span class="s1-vc-ring" aria-hidden="true"></span>
+              <span class="s1-vc-caption">Day 01 &middot; Hip Hop + Jazz</span>
+            </div>
+            <div class="s1-video-card" data-video="images/intensive/intensive-day2.mp4" data-poster="images/intensive/intensive-day2-poster.jpg">
+              <picture>
+                <source srcset="images/intensive/intensive-day2-poster.webp" type="image/webp">
+                <img class="s1-vc-poster" src="images/intensive/intensive-day2-poster.jpg" alt="Summer Intensive Day 2 recap · Ballet and Musical Theatre" loading="lazy">
+              </picture>
+              <span class="s1-vc-ring" aria-hidden="true"></span>
+              <span class="s1-vc-caption">Day 02 &middot; Ballet + Musical Theatre</span>
+            </div>
+            <div class="s1-video-card" data-video="images/intensive/intensive-day3.mp4" data-poster="images/intensive/intensive-day3-poster.jpg">
+              <picture>
+                <source srcset="images/intensive/intensive-day3-poster.webp" type="image/webp">
+                <img class="s1-vc-poster" src="images/intensive/intensive-day3-poster.jpg" alt="Summer Intensive Day 3 recap · Tap and Lyrical" loading="lazy">
+              </picture>
+              <span class="s1-vc-ring" aria-hidden="true"></span>
+              <span class="s1-vc-caption">Day 03 &middot; Tap + Lyrical</span>
+            </div>
+            <div class="s1-video-card" data-video="images/intensive/intensive-day4.mp4" data-poster="images/intensive/intensive-day4-poster.jpg">
+              <picture>
+                <source srcset="images/intensive/intensive-day4-poster.webp" type="image/webp">
+                <img class="s1-vc-poster" src="images/intensive/intensive-day4-poster.jpg" alt="Summer Intensive Day 4 recap · Acro and Contemporary" loading="lazy">
+              </picture>
+              <span class="s1-vc-ring" aria-hidden="true"></span>
+              <span class="s1-vc-caption">Day 04 &middot; Acro + Contemporary</span>
+            </div>
+          </div>
+
+          <div class="s1-recap-bridge s1-reveal">
+            <p class="s1-recap-bridge-text">Season One is a full season of this: August through May, all three tracks. There is still room.</p>
+            <a class="btn ac-cta" href="https://dwd-director.netlify.app/register" data-track="recap-express-interest">Express Interest <em>&rarr;</em></a>
+          </div>
+
+          <div class="s1-recap-foot s1-reveal">
+            <a href="/fullout" data-track="recap-fullout">Relive the week &rarr;</a>
+            <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" data-track="recap-ig">The daily reels live on @dwdproseries &rarr;</a>
+          </div>
 
         </div>
       </section>
