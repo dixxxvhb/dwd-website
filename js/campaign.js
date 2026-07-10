@@ -684,16 +684,21 @@
   }
 
   // Preview helper — `?launched=1` (URL) OR `window.__dwdLaunchPreview = true` (eval)
-  // forces every reveal/hide as if launch moment passed. Production never sets these.
+  // forces every era visible at once (both reveal-after AND hide-after gates).
+  // Session-scoped only — neither is ever written to localStorage, so the
+  // preview can't outlive the tab. Production never sets these.
   function isLaunchPreview() {
     if (window.__dwdLaunchPreview === true) return true;
     try { return new URLSearchParams(window.location.search).get('launched') === '1'; }
     catch (e) { return false; }
   }
 
-  function shouldReveal(attr) {
+  // Pure date compare — has this attr's moment actually passed? No preview
+  // short-circuit here; applyProSeriesReveal() applies the preview override
+  // itself so it can treat data-reveal-after and data-hide-after oppositely
+  // (preview always REVEALS, never HIDES).
+  function dateHasPassed(attr) {
     if (!attr) return true;
-    if (isLaunchPreview()) return true;
     // Full ISO datetime — compare timestamps
     if (attr.indexOf('T') !== -1) {
       var revealMs = new Date(attr).getTime();
@@ -704,12 +709,36 @@
     return getTodayStr() >= attr;
   }
 
+  // Era preview (see-every-era-at-once) is granted ONLY by isLaunchPreview() —
+  // `?launched=1` in the URL, or `window.__dwdLaunchPreview = true` set at eval
+  // time. Both are session-scoped: neither persists to localStorage, so the
+  // preview never outlives the tab/page load. The `dwdps2026` campaign code no
+  // longer has any say over what era a visitor sees — it still gates the
+  // campaign HQ + analytics pages themselves (initCampaignAuth above), just not
+  // the site's date-gated sections. (A5, 2026-07-10 — a campaign-authed browser
+  // used to force-reveal every era and suppress every hide, which meant Dixon's
+  // own browser never showed him what visitors actually saw.)
   window.applyProSeriesReveal = function () {
-    var unlocked = window.dwdCampaignUnlocked || isAuthenticated();
+    var preview = isLaunchPreview();
 
-    document.querySelectorAll('[data-reveal-after]').forEach(function (el) {
+    // A single element frequently carries BOTH attributes now (an era window
+    // has a start AND an end — e.g. the Summer Intensive surfaces reveal Jun 12
+    // and hide Jul 11). Visibility has to be decided once, as one AND of both
+    // conditions — NOT as two independent passes. Two independent passes (the
+    // original implementation) is a real bug: whichever selector runs second
+    // wins outright, so an element that correctly hid itself because its
+    // reveal-after moment hasn't arrived yet gets un-hidden a few lines later
+    // by the hide-after pass simply because its hide-after moment ALSO hasn't
+    // arrived yet. Found live during A1/A2 verification (2026-07-10) once
+    // #season-one-cta — reveal Jul 11, hide Aug 10 — started showing up early.
+    document.querySelectorAll('[data-reveal-after], [data-hide-after]').forEach(function (el) {
       var revealAttr = el.dataset.revealAfter;
-      if (unlocked || shouldReveal(revealAttr)) {
+      var hideAttr = el.dataset.hideAfter;
+      var revealed = preview || !revealAttr || dateHasPassed(revealAttr);
+      var hidden = !preview && !!hideAttr && dateHasPassed(hideAttr);
+      var visible = revealed && !hidden;
+
+      if (visible) {
         el.style.display = '';
         // Hide the corresponding coming-soon banner
         var banner = el.previousElementSibling;
@@ -718,28 +747,21 @@
         }
       } else {
         el.style.display = 'none';
-        // Show the coming-soon banner
-        var banner = el.previousElementSibling;
-        if (banner && banner.classList.contains('coming-soon-banner')) {
-          banner.style.display = '';
+        // Show the coming-soon banner (only meaningful for the not-revealed-yet
+        // case — an element already revealed-then-hidden doesn't get one back)
+        var banner2 = el.previousElementSibling;
+        if (revealAttr && !revealed && banner2 && banner2.classList.contains('coming-soon-banner')) {
+          banner2.style.display = '';
         }
       }
     });
 
-    // data-hide-after — element disappears when its date/time passes.
-    // Forced unlock does NOT hide these (preview mode keeps everything visible).
-    document.querySelectorAll('[data-hide-after]').forEach(function (el) {
-      var hideAttr = el.dataset.hideAfter;
-      if (!unlocked && shouldReveal(hideAttr)) {
-        el.style.display = 'none';
-      } else {
-        el.style.display = '';
-      }
-    });
-
-    // Update hero CTA by phase: intensive sign-up (post Jun 12 5pm) → intensive page;
-    // audition era (#proseries-interest visible) → register page; else → email capture.
-    // Keyed off section display so the CTA always matches what the page shows.
+    // Update hero CTA by era, in priority order — keyed off section display so
+    // the CTA always matches what the page actually shows:
+    //   1. Intensive sign-up open (#proseries-intensive visible) → fullout page.
+    //   2. Standing interest era (#proseries-interest visible, Jul 11 on,
+    //      auditions wrapped) → jump to the on-page Express Interest section.
+    //   3. Otherwise (pre-launch) → early-access email capture.
     var heroCta = document.getElementById('ps-hero-cta');
     var interestForm = document.getElementById('proseries-interest');
     var intensiveForm = document.getElementById('proseries-intensive');
@@ -748,8 +770,8 @@
         heroCta.href = 'https://dancewithdixon.com/fullout';
         heroCta.innerHTML = 'FULL OUT Takeover Intensive <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
       } else if (interestForm && interestForm.style.display !== 'none') {
-        heroCta.href = 'https://dwd-director.netlify.app/register';
-        heroCta.innerHTML = 'Register for Audition <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
+        heroCta.href = '#proseries-interest';
+        heroCta.innerHTML = 'Express Interest';
       } else {
         heroCta.href = '#early-access';
         heroCta.innerHTML = 'Get Early Access <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
@@ -757,14 +779,15 @@
     }
   };
 
-  // Re-check every 2s so visitors on the page at the launch moment see it flip
-  // within seconds. The function is cheap (a few querySelectorAlls + display flips),
-  // so polling forever is fine — once the moment passes the work is a no-op.
+  // Re-check every 30s so visitors on the page at an era boundary still see it
+  // flip within the minute. These are marketing gates, not live event clocks —
+  // they don't need a 2s reflow forever. The function is cheap (a few
+  // querySelectorAlls + display flips), so polling forever is fine either way.
   setInterval(function () {
     if (typeof window.applyProSeriesReveal === 'function') {
       window.applyProSeriesReveal();
     }
-  }, 2000);
+  }, 30000);
 
   // ── INIT ──
   // Run on page load and hash change
@@ -981,5 +1004,54 @@
     document.addEventListener('DOMContentLoaded', initAudition);
   } else {
     initAudition();
+  }
+})();
+
+/* ============================================================
+   SEASON ONE — live countdown to Aug 10, 2026 kickoff.
+   Self-contained: no .ics download, no dismissible sticky ticker,
+   no localStorage. That machinery belongs to the retired June 6
+   audition surfaces above and stays there — this is a fresh,
+   minimal clock for the #season-one-cta hero block (A2).
+   ============================================================ */
+(function () {
+  var SEASON_START_MS = new Date('2026-08-10T00:00:00-04:00').getTime();
+
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function renderSeasonClock() {
+    var grids = document.querySelectorAll('[data-season-clock]');
+    if (!grids.length) return;
+    var diff = SEASON_START_MS - Date.now();
+    grids.forEach(function (grid) {
+      if (diff <= 0) {
+        grid.innerHTML = '<span class="aclk-now">Underway.</span>';
+        return;
+      }
+      var totalSec = Math.floor(diff / 1000);
+      var days = Math.floor(totalSec / 86400);
+      var hrs  = Math.floor((totalSec % 86400) / 3600);
+      var mins = Math.floor((totalSec % 3600) / 60);
+      var secs = totalSec % 60;
+      function set(sel, val) {
+        var el = grid.querySelector(sel);
+        if (el) el.textContent = val;
+      }
+      set('[data-clk-days]', days);
+      set('[data-clk-hrs]', pad2(hrs));
+      set('[data-clk-mins]', pad2(mins));
+      set('[data-clk-secs]', pad2(secs));
+    });
+  }
+
+  function initSeasonClock() {
+    renderSeasonClock();
+    setInterval(renderSeasonClock, 1000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSeasonClock);
+  } else {
+    initSeasonClock();
   }
 })();
