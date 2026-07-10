@@ -182,15 +182,19 @@ prospects.
 
 | Task | Status | Session note |
 |------|--------|--------------|
-| A1 | [ ] | |
-| A2 | [ ] | |
-| A3 | [ ] | |
+| A1 | [x] | 2026-07-10 (Sonnet): docs/ERAS.md created, backfilled every existing gate; added `data-hide-after="2026-07-11"` to all 8 intensive surfaces (nav, `#intensive-cta`, triptych card, both ticker bands, email-signup, coming-up card, `#proseries-intensive`, early-access intensive state) plus one straggler (ProSeries-entries "Summer Intensive" fact row); campaign.js poll dropped 2s→30s. Found + fixed a real bug in `applyProSeriesReveal()` while verifying: elements with BOTH reveal-after and hide-after were processed by two independent loops that clobbered each other — rewrote as one combined AND-condition pass. |
+| A2 | [x] | 2026-07-10 (Sonnet): CTA became the express-interest flow per Dixon's 2026-07-10 direction (no second audition this season). Built `#season-one-cta` (Jul 11→Aug 10, live countdown to Aug 10) + `#season-underway-cta` (Aug 10 on, no countdown) hero blocks; rewrote `#proseries-interest` as the standing "auditions are done, door is still open" state (reveal-only, no hide — permanent for the season); added Season One + season-underway ticker bands; rewrote `#ps-hero-cta`'s campaign.js override to prioritize intensive → interest → early-access. All new copy verbatim per Dixon's brief. |
+| A3 | [x] | 2026-07-10 (Sonnet): fullout.html archive banner (reveals Jul 11) + hide-after on hero CTA, bottom CTA band button/close-note, and sticky mobile bar; page now loads campaign.js (previously loaded zero JS, so its gates were inert — audit #13). og:image/twitter tags were already present, verified only. |
 | A4 | [ ] | |
-| A5 | [ ] | |
-| A6 | [ ] | |
+| A5 | [x] | 2026-07-10 (Sonnet): era preview decoupled from the `dwdps2026` campaign code — preview is now `?launched=1` / `window.__dwdLaunchPreview` only, session-scoped, never localStorage. Campaign code still gates the Campaign HQ + analytics pages themselves (untouched). Verified live: a campaign-authed browser now shows the exact same gate state as a clean one. |
+| A6 | [~] | 2026-07-10 (Sonnet): verify-only, not this session's scope to fix beyond a/e. A6a (Bebas Neue in index.html fonts URL) — PRESENT, computed font-family confirmed live. A6e (sw.js `new URL(url).pathname` compare) — PRESENT. b/c/d/f not checked. sw.js `CACHE_NAME` bumped v16→v17 per bookkeeping rule since HTML changed this session. |
 | C1 | [ ] | |
 | C2 | [ ] | |
 | C3 | [ ] | |
 | C4 | [ ] | |
 | C5 | [ ] | |
 | D1–D9 | [ ] | |
+
+**Remaining from this session:** A4 (Tamara Mark pull-quote fix) and the rest of A6 (b/c/d/f —
+contrast, reduced-motion logo, sitemap/noindex, teacher-card tokens) were not touched this
+session; A1/A2/A3/A5 were the scope. Both still open for a future pass.
