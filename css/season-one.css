@@ -932,3 +932,17 @@ body.s1-has-bar { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
  * already a single column (audition.css's own breakpoint), so both cards
  * stack full-width regardless. */
 .triptych-grid--two .tri-card--season-one { grid-column: auto; }
+
+/* ═══ HOME — PULL QUOTE — Tamara Mark (For Mom) ═══
+ * .bg-tamara (rebrand.css) already sizes/positions/dims the container
+ * (440x220, centered, opacity 0.12) behind the pull-quote text. The
+ * gradient-stroked circles now live in an inline <svg class="tamara-mark-pq">
+ * inside that container (copied 1:1 from the canonical footer mark, with
+ * its own tm-gold-pq / tm-glow-pq gradient ids so they never collide with
+ * the footer's tm-gold-f / tm-glow-f). This rule only fits the SVG into
+ * its container — the mark stays a quiet tribute behind the quote, not a
+ * foreground graphic. No motion here; the footer mark itself is static. */
+#page-home .pull-quote .tamara-mark-pq {
+  display: block;
+  width: 100%; height: 100%;
+}
