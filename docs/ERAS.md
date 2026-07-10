@@ -78,6 +78,12 @@ the line number if they disagree; re-grep `data-reveal-after\|data-hide-after` t
 | `#s1-mobile-bar` label — "Season One · Underway" span (nested) | index.html:2101 (nested) | 2026-08-10T04:00 | — (standing) | Standing interest (season underway) | — |
 | `#intensive-recap` section (NEW, Summer Intensive recap) | index.html:526–615ish | 2026-07-11T00:00 | — (standing) | Standing interest | — (permanent; homepage recap section — eyebrow/H2/intro, 4-stat row, 4-card reel rail, Express Interest bridge CTA, two quiet footer links — sits between the triptych and the audition-day band). Styled in css/season-one.css, reuses `.s1-rail` / `.s1-video-card` / `.s1-reveal` / `.s1-stagger` scaffolding; click-to-play via js/motion.js's existing data-video/data-poster contract. |
 | Triptych — Summer Intensive Recap card `.tri-card--intensive-recap` (NEW) | index.html:499–513ish (before the Season One card) | 2026-07-11T00:00 | 2026-08-10T04:00 | Standing interest (pre-season) | — (the whole `.triptych` section retires at the same instant). Reveals/hides in lockstep with `.tri-card--season-one` next to it — see the correction note below, this pairing is why that card's full-span rule had to be cancelled. |
+| ProSeries entries card — "Season One · Placement Open" row (NEW, closes the A1-sweep gap) | index.html:877 | 2026-07-11T00:00 | — (standing) | Standing interest | — (permanent; first standing-interest replacement for this fact row — previously the row just disappeared at Jul 11 with no successor, see "Known gaps" below). `k`/`v` split (`Season One` / `Placement Open`) matches the existing row markup exactly. |
+| Homepage `.email-signup.s1-close` — Season One variant (NEW, closes the A1-sweep gap) | index.html:1018–1029 | 2026-07-11T00:00 | 2026-08-10T04:00 | Standing interest (pre-season) | `.email-signup.s1-close` season-underway variant (below). Sits directly after the existing intensive-era `.email-signup` block; reuses its `.kicker`/`h3`/`p`/`.btn-blush` styling, adds a paired Express Interest link + `signup-season-1` email form (new `.s1-close-actions` row, css/season-one.css) since the older `.email-signup` states only ever carried a single CTA link. |
+| Homepage `.email-signup.s1-close` — season-underway variant (NEW, closes the A1-sweep gap) | index.html:1032–1043 | 2026-08-10T04:00 | — (standing) | Standing interest (season underway) | — (permanent for the season). Same structure as the variant above; body copy + `data-track` suffixes (`-underway`) differ only. |
+| `#proseries-faq` FAQ section (NEW) | index.html:1642–1697 | — | — | *(ungated — tense-safe for the whole standing-interest era)* | n/a. 10 Q&As in native `<details>`/`<summary>` (no JS), styled in css/season-one.css. JSON-LD `FAQPage` mirror added to `<head>` (index.html:124–213), same 10 Q&As verbatim. Sits on the ProSeries page between the standing-interest/intensive blocks and `.cta-banner`. |
+| `.s1-timeline` season timeline strip (NEW) | index.html:1311–1327 | — | — | *(ungated)* | n/a. 4-beat strip (Aug 10 / Fall / Winter-spring / May 25) under the track-detail-section intro, above the track-tabs. Styled in css/season-one.css, 4-up at >=1024px / 2x2 below. |
+| `.s1-track-rail` track mini-card rail (NEW) | index.html:1332–1352 | — | — | *(ungated)* | n/a. Three mini-cards (Prep/Elite/Pro) above `.track-tabs`; clicking one drives the matching `.track-tab` + smooth-scrolls to `.track-detail-grid` (js/motion.js `initTrackRail()`). Prices live-update via `[data-live-price]` (see `loadLivePricing()` extension in js/main.js). |
 
 ## Resolved this session (coordinator follow-ups, 2026-07-10)
 
@@ -115,12 +121,11 @@ stranding the recap card alone in the row below. Below 980px both stack full-wid
 (single-column breakpoint, untouched). The old rule itself was left in place in audition.css
 (harmless — just superseded at the one breakpoint/window where both cards coexist).
 
-## Known gaps (found during the A1 sweep, still open)
+## Known gaps (found during the A1 sweep)
 
-- **ProSeries-entries "fact" row and the homepage `.email-signup` block don't get a
-  standing-interest replacement.** Only the `#season-one-cta` / `#season-underway-cta` hero
-  blocks, the nav CTA, `#proseries-interest`, the triptych Season One card, and the
-  `/#early-access` standing state carry the standing-interest message. Noting the smaller
-  secondary surfaces stay silent about the season era rather than showing stale intensive
-  copy — not wrong, just quieter than it could be. Not raised as a blocker in either
-  coordinator follow-up; still open for a future pass if desired.
+- **CLOSED 2026-07-10 (conversion/content pass).** ProSeries-entries "fact" row and the
+  homepage `.email-signup` block previously had no standing-interest replacement — see the
+  registry rows above (`Season One · Placement Open` row, `.email-signup.s1-close` pair).
+  Both secondary surfaces now carry the standing-interest message alongside `#season-one-cta`
+  / `#season-underway-cta`, the nav CTA, `#proseries-interest`, the triptych Season One card,
+  and the `/#early-access` standing state.

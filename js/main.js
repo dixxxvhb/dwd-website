@@ -391,6 +391,21 @@
           var cells = feeRows[0].querySelectorAll('td');
           if (cells[1]) cells[1].textContent = '$' + prepDollars + '–$' + proDollars + ' / month';
         }
+
+        // Update [data-live-price] targets (Season One track mini-rail +
+        // the .td-price-amount inside each .track-detail panel). Mini-rail
+        // spans hold the bare number (the "$" prefix is static markup);
+        // .td-price-amount holds "$" + number as a single text node.
+        var liveDollars = { prep: prepDollars, elite: eliteDollars, pro: proDollars };
+        Object.keys(liveDollars).forEach(function (track) {
+          document.querySelectorAll('[data-live-price="' + track + '"]').forEach(function (el) {
+            if (el.classList.contains('td-price-amount')) {
+              el.textContent = '$' + liveDollars[track];
+            } else {
+              el.textContent = liveDollars[track];
+            }
+          });
+        });
       });
   })();
 

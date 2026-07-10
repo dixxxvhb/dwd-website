@@ -698,6 +698,229 @@ body.s1-has-bar { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   .s1-recap-foot { flex-direction: column; gap: 12px; }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+ * PROSERIES FAQ — #proseries-faq (native <details>/<summary>, no JS).
+ * Sits on the ProSeries page between the standing-interest/intensive
+ * blocks and .cta-banner. JSON-LD FAQPage mirror lives in index.html
+ * <head>. Ungated — see docs/ERAS.md.
+ * ═══════════════════════════════════════════════════════════════════════ */
+.s1-faq {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: clamp(48px, 8vh, 96px) clamp(24px, 6vw, 64px);
+}
+.s1-faq h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(32px, 4vw, 44px);
+  color: var(--rb-ivory);
+  text-align: center;
+  margin: 0 0 40px;
+}
+.s1-faq-item {
+  border-top: 1px solid rgba(250,243,232,0.16);
+}
+.s1-faq-item:last-of-type {
+  border-bottom: 1px solid rgba(250,243,232,0.16);
+}
+.s1-faq-item summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 4px;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.35;
+  color: var(--rb-ivory);
+}
+.s1-faq-item summary::-webkit-details-marker { display: none; }
+.s1-faq-item summary::marker { content: ""; }
+.s1-faq-item summary::after {
+  content: "+";
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--rb-terracotta);
+  border: 1px solid rgba(200,97,75,0.4);
+  border-radius: 50%;
+}
+.s1-faq-item[open] summary::after { content: "\2212"; }
+@media (prefers-reduced-motion: no-preference) {
+  .s1-faq-item summary::after { transition: transform .25s ease, background .25s ease; }
+  .s1-faq-item[open] summary::after { transform: rotate(180deg); }
+}
+.s1-faq-item > div {
+  padding: 0 32px 26px 4px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--rb-ivory-dim);
+}
+@media (max-width: 640px) {
+  .s1-faq-item summary { font-size: 18px; padding: 18px 4px; }
+  .s1-faq-item > div { padding-right: 24px; font-size: 14px; }
+}
+.s1-faq-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * SEASON TIMELINE STRIP — .s1-timeline (ProSeries page, under the track
+ * detail intro). Grid 4-up desktop, 2x2 mobile. Ungated.
+ * ═══════════════════════════════════════════════════════════════════════ */
+.s1-timeline {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 20px;
+  max-width: 1000px;
+  margin: 0 auto 40px;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+@media (min-width: 1024px) {
+  .s1-timeline {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .s1-timeline-beat {
+    padding: 0 20px;
+    border-left: 1px solid rgba(250,243,232,0.16);
+  }
+  .s1-timeline-beat:first-child { border-left: none; padding-left: 0; }
+}
+.s1-timeline-beat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.s1-timeline-date {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: var(--rb-terracotta);
+}
+.s1-timeline-line {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--rb-ivory-dim);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * TRACK MINI-CARD RAIL — .s1-track-rail (ProSeries page, above the track
+ * tabs). Each card is a real <button> that drives the tab below (see
+ * js/motion.js). Ungated. --tk is set inline per card (dwdPS palette).
+ * ═══════════════════════════════════════════════════════════════════════ */
+.s1-track-rail {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 1000px;
+  margin: 0 auto 32px;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+@media (min-width: 1024px) {
+  .s1-track-rail {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+.s1-track-mini {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  padding: 20px 22px 18px;
+  background: rgba(250,243,232,0.04);
+  border: 1px solid rgba(250,243,232,0.14);
+  border-radius: 14px;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  appearance: none;
+  overflow: hidden;
+}
+.s1-track-mini::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--tk);
+}
+.s1-track-mini .s1-tm-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 26px;
+  color: var(--rb-ivory);
+}
+.s1-track-mini .s1-tm-ages,
+.s1-track-mini .s1-tm-meta {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  color: var(--rb-ivory-dim);
+}
+.s1-track-mini .s1-tm-price {
+  margin-top: 8px;
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  color: var(--tk);
+}
+.s1-track-mini.is-active {
+  border-color: var(--tk);
+  background: rgba(250,243,232,0.08);
+}
+@media (hover: hover) {
+  @media (prefers-reduced-motion: no-preference) {
+    .s1-track-mini { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+    .s1-track-mini:hover {
+      transform: translateY(-4px);
+      border-color: var(--tk);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.3);
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * STANDING CLOSE CTA — .s1-close (homepage, pair of gated blocks directly
+ * after the existing .email-signup era blocks). Reuses #page-home
+ * .email-signup / .kicker / h3 / p / .btn-blush styling as-is; only new
+ * rule needed is the two-action row (Express Interest link + email form)
+ * since the older .email-signup states only ever carried a single link.
+ * ═══════════════════════════════════════════════════════════════════════ */
+.s1-close-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 48px;
+}
+#page-home .email-signup.s1-close .s1-close-actions .btn,
+#page-home .email-signup.s1-close .s1-close-actions .btn-blush {
+  margin-top: 0;
+}
+#page-home .email-signup.s1-close .s1-close-actions .season-cta-form {
+  max-width: 300px;
+}
+@media (max-width: 620px) {
+  .s1-close-actions { flex-direction: column; align-items: stretch; width: 100%; }
+  #page-home .email-signup.s1-close .s1-close-actions .season-cta-form { max-width: 100%; }
+}
+
 /* ── Triptych recap card pairing ──
  * The new .tri-card--intensive-recap card (index.html) reveals 2026-07-11
  * and hides 2026-08-10 — the same window as .tri-card--season-one. The

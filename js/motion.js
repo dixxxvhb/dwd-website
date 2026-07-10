@@ -173,8 +173,55 @@
     }
   }
 
+  // ── Track mini-card rail (.s1-track-mini): clicking a mini card drives
+  // the matching .track-tab below (its own document-level click handler in
+  // js/main.js does the actual tab/panel swap), then smooth-scrolls the
+  // track detail grid into view. Also mirrors is-active on the minis so
+  // the rail reflects whichever track is currently open, including when a
+  // visitor clicks a .track-tab directly instead of a mini card. ──
+  function initTrackRail() {
+    var rail = document.querySelector('.s1-track-rail');
+    if (!rail) return;
+
+    function syncActive(name) {
+      rail.querySelectorAll('.s1-track-mini').forEach(function (mini) {
+        mini.classList.toggle('is-active', mini.dataset.miniTrack === name);
+      });
+    }
+
+    rail.addEventListener('click', function (e) {
+      var mini = e.target && e.target.closest ? e.target.closest('.s1-track-mini') : null;
+      if (!mini) return;
+      var name = mini.dataset.miniTrack;
+      if (!name) return;
+
+      var tab = document.querySelector('.track-tab[data-track-tab="' + name + '"]');
+      if (tab) tab.click();
+
+      syncActive(name);
+
+      var grid = document.querySelector('.track-detail-grid');
+      if (grid && grid.scrollIntoView) {
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
+    // Keep the rail in sync if a .track-tab is clicked directly.
+    document.addEventListener('click', function (e) {
+      var tab = e.target && e.target.closest ? e.target.closest('.track-tab') : null;
+      if (!tab) return;
+      var name = tab.dataset.trackTab;
+      if (name) syncActive(name);
+    });
+
+    // Initial state matches whichever tab/panel is already active on load.
+    var activeTab = document.querySelector('.track-tab[aria-selected="true"]');
+    if (activeTab) syncActive(activeTab.dataset.trackTab);
+  }
+
   initHeroVideo();
   initReveal();
   initVideoCards();
   initStickyBar();
+  initTrackRail();
 })();

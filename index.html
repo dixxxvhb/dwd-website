@@ -121,6 +121,98 @@
   }
   </script>
 
+  <!-- FAQPage structured data — mirrors the ProSeries FAQ section
+       (#proseries-faq) verbatim. Ungated: the questions/answers are
+       tense-safe for the whole standing-interest era. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is it too late to join Season One?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not yet. Our June audition set the core of the company, but placement is open in all three tracks. Express interest and Dixon will reach out personally to talk about your dancer and where they fit."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there another audition?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No formal audition. Placement happens through a conversation and, when it helps, a visit to class. Seeing how your dancer moves and how they take a correction tells us more than one nervous morning ever could."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens after I express interest?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Dixon reaches out personally, usually within a day or two. You will talk through your dancer's training history, which track fits, and what the season looks like. There is no fee to express interest."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which track is right for my dancer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Prep is ages 5 to 8 and builds the foundation. Elite is ages 8 to 12 and adds hours, styles, and a bigger competition load. Pro is ages 12 and up and trains at a pre-professional level. Age is a starting point, not a rule. Placement is about where your dancer will grow fastest."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does it cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tuition is $195, $310, or $360 a month depending on track, plus a one-time $50 registration and a $25 monthly admin fee during the season. Choreography is included. Costume and competition fees bill as monthly deposits that pay down the real totals from day one, and final balances bill when costumes are ordered and the competition slate locks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does a training week look like?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Prep trains Monday evenings plus Thursday company work, about 4 hours a week. Elite trains Tuesday through Thursday, about 8 hours. Pro trains Tuesday through Thursday, about 10, including a weekly solo hour. Every track shares Thursday company choreography, because the company dancing together is the point."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "We would be joining after the season starts. Is my dancer behind?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The season is built in layers. New dancers are placed into routines as they join, and choreography is structured so a dancer starting in late summer is not behind. The sooner we talk, the easier that is."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "My dancer has never competed. Is ProSeries a fit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Maybe, and that is an honest maybe. ProSeries is a competitive training company, so the stage is the goal. Nobody starts out competition-ready, and Prep and Elite exist to build that dancer. If your kid loves to dance and wants to be pushed, express interest and let's talk."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where do you train?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Exchange Dance Academy, 7409 Chancery Lane, Orlando. Evening classes, Monday through Thursday."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who teaches?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Dixon leads every track and builds the choreography. Rotation faculty in hip hop, tap, acro, and musical theatre round out the training. Meet the whole team on the Teachers page."
+        }
+      }
+    ]
+  }
+  </script>
+
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0c1f17">
@@ -782,6 +874,7 @@
               <div class="f"><div class="k">Tracks</div><div class="v">Prep &middot; Elite &middot; Pro</div></div>
               <div class="f" data-hide-after="2026-06-12T17:00:00-04:00"><div class="k">Register to Audition</div><div class="v"><span data-hide-after="2026-05-01T00:00:00-04:00">Opens <em>May 1</em></span><span data-reveal-after="2026-05-01T00:00:00-04:00" style="display:none"><em>Open Now</em></span></div></div>
               <div class="f" data-reveal-after="2026-06-12T17:00:00-04:00" data-hide-after="2026-07-11T00:00:00-04:00" style="display:none"><div class="k">Summer Intensive</div><div class="v"><em>Jul 6&ndash;10</em> &middot; Open</div></div>
+              <div class="f" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none"><div class="k">Season One</div><div class="v">Placement Open</div></div>
             </div>
             <span class="enter-arrow">Enter<span class="a"> &rarr;</span></span>
           </div>
@@ -916,6 +1009,37 @@
         <h3>Sign <em>Up Now.</em></h3>
         <p>Five days in the studio before Season One. Open to all dancers, no audition needed. 10am&ndash;1pm at Exchange Dance Academy, Orlando. $200 half day (ages 5+) &middot; $300 full day (ages 9+).</p>
         <a href="https://dwd-director.netlify.app/summer-intensive" class="btn btn-blush" data-track="home-intensive-signup-cta">Sign Up for the Intensive &rarr;</a>
+      </div>
+      <!-- STANDING CLOSE CTA — Season One variant (Jul 11 -> Aug 10). Fills the
+           "Known gap" noted in docs/ERAS.md: the homepage .email-signup block
+           had no post-Jul-11 era state. Reuses .email-signup structural classes
+           + s1-close; pairs an Express Interest link with the same
+           signup-season-1 email form used by #season-one-cta above. -->
+      <div class="email-signup email-signup-launch s1-close" data-reveal-after="2026-07-11T00:00:00-04:00" data-hide-after="2026-08-10T04:00:00-04:00" style="display:none">
+        <div class="kicker">dwdPROSERIES &middot; Season One</div>
+        <h3>Earn your <em>spot.</em></h3>
+        <p>Our June audition set the core of the company. Placement is open in all three tracks, and Season One begins August 10. Tell us about your dancer, and Dixon will reach out personally. There is no fee to express interest.</p>
+        <div class="s1-close-actions">
+          <a href="https://dwd-director.netlify.app/register" class="btn btn-blush" data-track="close-express-interest">Express Interest &rarr;</a>
+          <form data-form="signup-season-1" class="ea-form season-cta-form" novalidate>
+            <input type="email" placeholder="Email for updates" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" aria-label="Email address">
+            <button type="submit" class="btn" data-track="close-email-signup">Get Updates</button>
+          </form>
+        </div>
+      </div>
+      <!-- STANDING CLOSE CTA — Season One underway variant (Aug 10 onward). Same
+           structure, same actions, updated body copy only. -->
+      <div class="email-signup email-signup-launch s1-close" data-reveal-after="2026-08-10T04:00:00-04:00" style="display:none">
+        <div class="kicker">dwdPROSERIES &middot; Season One</div>
+        <h3>Earn your <em>spot.</em></h3>
+        <p>Our June audition set the core of the company. Season One is underway, and placement stays open while tracks have room. Tell us about your dancer, and Dixon will reach out personally. There is no fee to express interest.</p>
+        <div class="s1-close-actions">
+          <a href="https://dwd-director.netlify.app/register" class="btn btn-blush" data-track="close-express-interest-underway">Express Interest &rarr;</a>
+          <form data-form="signup-season-1" class="ea-form season-cta-form" novalidate>
+            <input type="email" placeholder="Email for updates" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" aria-label="Email address">
+            <button type="submit" class="btn" data-track="close-email-signup-underway">Get Updates</button>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -1183,6 +1307,49 @@
           <p>Everything in one place: schedule, training, and pricing for each track. Season runs August 10, 2026 through May 25, 2027.</p>
         </div>
 
+        <!-- SEASON TIMELINE STRIP — 4 beats, Season One at a glance. Ungated. -->
+        <div class="s1-timeline">
+          <div class="s1-timeline-beat">
+            <span class="s1-timeline-date">August 10</span>
+            <span class="s1-timeline-line">First day in the studio. Season One begins.</span>
+          </div>
+          <div class="s1-timeline-beat">
+            <span class="s1-timeline-date">Fall</span>
+            <span class="s1-timeline-line">Technique deepens and the routines are built.</span>
+          </div>
+          <div class="s1-timeline-beat">
+            <span class="s1-timeline-date">Winter through spring</span>
+            <span class="s1-timeline-line">Competition season. The work hits the stage.</span>
+          </div>
+          <div class="s1-timeline-beat">
+            <span class="s1-timeline-date">May 25</span>
+            <span class="s1-timeline-line">Season One ends. We celebrate, then we build the next one.</span>
+          </div>
+        </div>
+
+        <!-- TRACK MINI-CARD RAIL — quick-glance summary above the tabs; clicking
+             a card activates the matching tab below (js/motion.js). Ungated. -->
+        <div class="s1-track-rail" role="presentation">
+          <button type="button" class="s1-track-mini" data-mini-track="prep" style="--tk:#FF8FAB">
+            <span class="s1-tm-name">Prep</span>
+            <span class="s1-tm-ages">Ages 5&ndash;8</span>
+            <span class="s1-tm-meta">4 hrs/wk &middot; 3 routines</span>
+            <span class="s1-tm-price">$<span data-live-price="prep">195</span>/mo</span>
+          </button>
+          <button type="button" class="s1-track-mini" data-mini-track="elite" style="--tk:#6BAF8A">
+            <span class="s1-tm-name">Elite</span>
+            <span class="s1-tm-ages">Ages 8&ndash;12</span>
+            <span class="s1-tm-meta">8 hrs/wk &middot; 5 routines</span>
+            <span class="s1-tm-price">$<span data-live-price="elite">310</span>/mo</span>
+          </button>
+          <button type="button" class="s1-track-mini" data-mini-track="pro" style="--tk:#C8614B">
+            <span class="s1-tm-name">Pro</span>
+            <span class="s1-tm-ages">Ages 12+</span>
+            <span class="s1-tm-meta">10 hrs/wk &middot; 6 routines</span>
+            <span class="s1-tm-price">$<span data-live-price="pro">360</span>/mo</span>
+          </button>
+        </div>
+
         <div class="track-tabs" role="tablist" aria-label="Choose a track">
           <button class="track-tab" data-track-tab="prep" aria-selected="true" role="tab" id="tab-prep" aria-controls="panel-prep">
             <span class="tt-num">Track One</span>
@@ -1208,7 +1375,7 @@
               <div class="td-eyebrow">Track One</div>
               <div class="td-name-row">
                 <h3 class="td-name">Prep</h3>
-                <div class="td-price"><span class="td-price-amount">$195</span><span class="td-price-unit">/mo</span></div>
+                <div class="td-price"><span class="td-price-amount" data-live-price="prep">$195</span><span class="td-price-unit">/mo</span></div>
               </div>
               <div class="td-meta">Ages 5&ndash;8 &middot; 4 hrs/week &middot; 3 routines</div>
             </header>
@@ -1265,7 +1432,7 @@
               <div class="td-eyebrow">Track Two</div>
               <div class="td-name-row">
                 <h3 class="td-name">Elite</h3>
-                <div class="td-price"><span class="td-price-amount">$310</span><span class="td-price-unit">/mo</span></div>
+                <div class="td-price"><span class="td-price-amount" data-live-price="elite">$310</span><span class="td-price-unit">/mo</span></div>
               </div>
               <div class="td-meta">Ages 8&ndash;12 &middot; 8 hrs/week &middot; 5 routines</div>
             </header>
@@ -1330,7 +1497,7 @@
               <div class="td-eyebrow">Track Three</div>
               <div class="td-name-row">
                 <h3 class="td-name">Pro</h3>
-                <div class="td-price"><span class="td-price-amount">$360</span><span class="td-price-unit">/mo</span></div>
+                <div class="td-price"><span class="td-price-amount" data-live-price="pro">$360</span><span class="td-price-unit">/mo</span></div>
               </div>
               <div class="td-meta">Ages 12+ &middot; 10 hrs/week &middot; 6 routines</div>
             </header>
@@ -1469,6 +1636,55 @@
           <a href="#contact" class="btn btn-outline">Contact Us</a>
         </div>
       </div>
+
+      <!-- FAQ — ungated, tense-safe copy for the whole standing-interest era.
+           JSON-LD mirror lives in <head> (mainEntity, same 10 Q&As verbatim). -->
+      <section id="proseries-faq" class="s1-faq" aria-label="ProSeries frequently asked questions">
+        <h2>Questions, answered.</h2>
+        <details class="s1-faq-item">
+          <summary>Is it too late to join Season One?</summary>
+          <div>Not yet. Our June audition set the core of the company, but placement is open in all three tracks. Express interest and Dixon will reach out personally to talk about your dancer and where they fit.</div>
+        </details>
+        <details class="s1-faq-item">
+          <summary>Is there another audition?</summary>
+          <div>No formal audition. Placement happens through a conversation and, when it helps, a visit to class. Seeing how your dancer moves and how they take a correction tells us more than one nervous morning ever could.</div>
+        </details>
+        <details class="s1-faq-item">
+          <summary>What happens after I express interest?</summary>
+          <div>Dixon reaches out personally, usually within a day or two. You will talk through your dancer's training history, which track fits, and what the season looks like. There is no fee to express interest.</div>
+        </details>
+        <details class="s1-faq-item">
+          <summary>Which track is right for my dancer?</summary>
+          <div>Prep is ages 5 to 8 and builds the foundation. Elite is ages 8 to 12 and adds hours, styles, and a bigger competition load. Pro is ages 12 and up and trains at a pre-professional level. Age is a starting point, not a rule. Placement is about where your dancer will grow fastest.</div>
+        </details>
+        <details class="s1-faq-item">
+          <summary>What does it cost?</summary>
+          <div>Tuition is $195, $310, or $360 a month depending on track, plus a one-time $50 registration and a $25 monthly admin fee during the season. Choreography is included. Costume and competition fees bill as monthly deposits that pay down the real totals from day one, and final balances bill when costumes are ordered and the competition slate locks.</div>
+        </details>
+        <details class="s1-faq-item">
+          <summary>What does a training week look like?</summary>
+          <div>Prep trains Monday evenings plus Thursday company work, about 4 hours a week. Elite trains Tuesday through Thursday, about 8 hours. Pro trains Tuesday through Thursday, about 10, including a weekly solo hour. Every track shares Thursday company choreography, because the company dancing together is the point.</div>
+        </details>
+        <details class="s1-faq-item">
+          <summary>We would be joining after the season starts. Is my dancer behind?</summary>
+          <div>The season is built in layers. New dancers are placed into routines as they join, and choreography is structured so a dancer starting in late summer is not behind. The sooner we talk, the easier that is.</div>
+        </details>
+        <details class="s1-faq-item">
+          <summary>My dancer has never competed. Is ProSeries a fit?</summary>
+          <div>Maybe, and that is an honest maybe. ProSeries is a competitive training company, so the stage is the goal. Nobody starts out competition-ready, and Prep and Elite exist to build that dancer. If your kid loves to dance and wants to be pushed, express interest and let's talk.</div>
+        </details>
+        <details class="s1-faq-item">
+          <summary>Where do you train?</summary>
+          <div>Exchange Dance Academy, 7409 Chancery Lane, Orlando. Evening classes, Monday through Thursday.</div>
+        </details>
+        <details class="s1-faq-item">
+          <summary>Who teaches?</summary>
+          <div>Dixon leads every track and builds the choreography. Rotation faculty in hip hop, tap, acro, and musical theatre round out the training. Meet the whole team on the Teachers page.</div>
+        </details>
+        <div class="s1-faq-cta">
+          <a class="btn ac-cta" href="https://dwd-director.netlify.app/register" data-track="faq-express-interest">Express Interest <em>&rarr;</em></a>
+        </div>
+      </section>
 
       <div class="cta-banner">
         <h3>Questions? We'd love to hear from you.</h3>
