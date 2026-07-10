@@ -43,7 +43,12 @@
   <meta name="twitter:image" content="https://dancewithdixon.com/images/photos/hero-og-1200x630.jpg">
   <meta name="twitter:image:alt" content="DWD dancer mid-pose on stage.">
 
-  <!-- Structured Data -->
+  <!-- Structured Data. The Summer Intensive Event node (@id #event-intensive-2026)
+       used to live in this @graph. Removed 2026-07-10 — the event ran Jul 6-10,
+       2026 and was still advertising itself as EventScheduled after the fact. Same
+       treatment the past A-Muse JSON-LD got in the Jul 1 fix pass: retired events
+       come out of the graph entirely rather than getting relabeled EventCompleted,
+       since nothing links to or needs the past listing once it's over. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -111,51 +116,6 @@
         "url": "https://dancewithdixon.com",
         "name": "Dance With Dixon",
         "publisher": { "@id": "https://dancewithdixon.com/#organization" }
-      },
-      {
-        "@type": "Event",
-        "@id": "https://dancewithdixon.com/#event-intensive-2026",
-        "name": "DWD ProSeries Summer Intensive",
-        "description": "FULL OUT TAKEOVER: the DWD ProSeries Summer Intensive. Five days, every style, open to all dancers with no audition needed. July 6-10, 2026 at Exchange Dance Academy, Orlando. Half day 10am-12pm (ages 5+) $200, full day 10am-1pm (ages 9+) $300.",
-        "startDate": "2026-07-06T10:00:00-04:00",
-        "endDate": "2026-07-10T13:00:00-04:00",
-        "eventStatus": "https://schema.org/EventScheduled",
-        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-        "location": {
-          "@type": "Place",
-          "name": "Exchange Dance Academy",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "7409 Chancery Lane",
-            "addressLocality": "Orlando",
-            "addressRegion": "FL",
-            "postalCode": "32809",
-            "addressCountry": "US"
-          }
-        },
-        "offers": [
-          {
-            "@type": "Offer",
-            "name": "Half Day (ages 5+)",
-            "price": "200",
-            "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock",
-            "url": "https://dancewithdixon.com/fullout",
-            "validFrom": "2026-06-12T17:00:00-04:00"
-          },
-          {
-            "@type": "Offer",
-            "name": "Full Day (ages 9+)",
-            "price": "300",
-            "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock",
-            "url": "https://dancewithdixon.com/fullout",
-            "validFrom": "2026-06-12T17:00:00-04:00"
-          }
-        ],
-        "image": "https://dancewithdixon.com/images/logos/DWD-green.png",
-        "organizer": { "@id": "https://dancewithdixon.com/#organization" },
-        "url": "https://dancewithdixon.com/fullout"
       }
     ]
   }
@@ -243,6 +203,12 @@
     </nav>
     <a href="https://dwd-director.netlify.app/register" class="nav-cta nav-cta-launch" data-track="nav-register" data-hide-after="2026-06-12T17:00:00-04:00">Register &rarr;</a>
     <a href="https://dancewithdixon.com/fullout" class="nav-cta nav-cta-launch" data-track="nav-intensive" data-reveal-after="2026-06-12T17:00:00-04:00" data-hide-after="2026-07-11T00:00:00-04:00" style="display:none">Summer Intensive &rarr;</a>
+    <!-- Standing interest era — reveals Jul 11, no hide (permanent nav CTA for the
+         rest of the season). Same element serves desktop nav AND the mobile menu
+         (CSS shows/hides .nav-cta-launch together via .topnav.is-open — there is no
+         separate mobile-only nav CTA element on this site, see the "Summer
+         Intensive" item above for the same pattern). -->
+    <a href="https://dwd-director.netlify.app/register" class="nav-cta nav-cta-launch" data-track="nav-express-interest" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">Express Interest &rarr;</a>
     <button class="topnav-toggle" id="topnav-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
   </header>
 
@@ -1927,6 +1893,26 @@
           <div class="ea-cta-wrap">
             <a href="https://dwd-director.netlify.app/summer-intensive" class="btn btn-blush ea-launch-cta" data-track="ea-intensive-signup">Sign Up Now &rarr;</a>
             <p class="ea-early-note">Half-day dancers finish at 12pm. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for updates.</p>
+          </div>
+
+          <div class="ea-social">
+            <p>Stay close:</p>
+            <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="ea-ig-link">@dwdproseries</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- STANDING INTEREST STATE — reveals Jul 11, no hide (permanent for the rest
+           of the season). Prevents the page from rendering empty once the intensive
+           state above hides itself. -->
+      <div class="early-access-page early-access-page-launch" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">
+        <div class="ea-container">
+          <img src="images/logos/DWDPS-pink.png" alt="DWD ProSeries" class="ea-logo" width="120" height="120">
+          <h1 class="ea-headline">Auditions are done. The door is still open.</h1>
+          <p class="ea-subhead">Spots remain in all three tracks for Season One. Tell us about your dancer and Dixon will personally reach out with options on how to move forward.</p>
+
+          <div class="ea-cta-wrap">
+            <a href="https://dwd-director.netlify.app/register" class="btn btn-blush ea-launch-cta" data-track="ea-interest-express">Express Interest &rarr;</a>
           </div>
 
           <div class="ea-social">
