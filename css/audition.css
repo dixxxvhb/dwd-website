@@ -1343,3 +1343,49 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
   .awrap-eyebrow, .awrap-logo,
   .awrap-headline, .awrap-sub, .awrap-next, .awrap-cta { animation: none; }
 }
+
+/* ============================================================
+   SEASON ONE CTA — #season-one-cta (Jul 11 → Aug 10, with
+   countdown) and #season-underway-cta (Aug 10 on, no countdown).
+   Reuses the .audition-cta / .ac-* shell for visual consistency
+   with the retired audition + intensive hero cards, but the card
+   itself is a plain div (not an <a>) because it carries two calls
+   to action — a link and an email form — plus an optional clock.
+   ============================================================ */
+.season-cta-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+  cursor: default;
+}
+.season-cta-card .ac-stack {
+  align-items: center;
+  text-align: center;
+  flex: none;
+  width: 100%;
+}
+.season-cta-clock {
+  max-width: 460px;
+  margin: 0;
+}
+.season-cta-actions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.season-cta-form {
+  display: flex;
+  gap: 0;
+  margin: 0;
+  max-width: 300px;
+}
+@media (max-width: 620px) {
+  .season-cta-actions { flex-direction: column; align-items: stretch; width: 100%; }
+  .season-cta-form { max-width: 100%; }
+}
