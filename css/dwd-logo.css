@@ -1,0 +1,87 @@
+/* ================================================================
+   <dwd-animated-logo> — layout parity with the old <video> logo tags
+   it replaces.
+
+   Every rule below mirrors an existing "<selector> video, <selector>
+   img { ... }" pair elsewhere in this CSS stack, minus the
+   mix-blend-mode: screen/lighten hacks — those existed only to fake
+   transparency on the old *-transparent.webm files. The live
+   component has a real transparent background, so no blend mode is
+   needed (or wanted).
+
+   Loaded last so it wins layout ties with the legacy video rules
+   (which still apply harmlessly to any <video> left on other pages).
+   ================================================================ */
+
+dwd-animated-logo {
+  display: block;
+  width: 200px;
+  height: 200px;
+  line-height: 0;
+}
+
+/* Topnav brand mark. (The old sidebar brand mark and a few one-off
+   spots sized themselves purely via width/height attributes on the
+   <video> tag; those now use the `size` attribute instead — see
+   index.html.) */
+.topnav .brand dwd-animated-logo {
+  width: 42px;
+  height: 42px;
+}
+@media (max-width: 900px) {
+  .topnav .brand dwd-animated-logo { width: 52px; height: 52px; }
+}
+
+/* Home hero logo mark */
+#page-home .hero-logo-mark dwd-animated-logo {
+  display: block;
+  width: min(360px, 90%);
+  aspect-ratio: 1 / 1;
+}
+
+/* Audition "that's a wrap" logo */
+.awrap-logo dwd-animated-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ProSeries hero + generic big hero logo (Collective / Teachers / Gallery) */
+.ps-hero-logo dwd-animated-logo,
+.hero-logo-big dwd-animated-logo {
+  display: block;
+  width: min(620px, 100%);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  filter: drop-shadow(0 12px 36px rgba(0, 0, 0, 0.32));
+}
+@media (max-width: 1024px) {
+  .ps-hero-logo dwd-animated-logo,
+  .hero-logo-big dwd-animated-logo { width: min(420px, 80%); }
+}
+
+.gallery-hero.gallery-hero--split .hero-logo-big dwd-animated-logo {
+  width: min(260px, 100%);
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 980px) {
+  #page-adult-company .ac-hero--split .hero-logo-big dwd-animated-logo,
+  #page-teachers .tch-hero--split .hero-logo-big dwd-animated-logo,
+  .gallery-hero.gallery-hero--split .hero-logo-big dwd-animated-logo {
+    width: 160px !important;
+    height: 160px !important;
+    max-width: 50vw !important;
+  }
+}
+
+@media (max-width: 720px) {
+  #page-proseries .ps-hero .hero-logo-big dwd-animated-logo,
+  #page-proseries .ps-hero .ps-hero-logo dwd-animated-logo {
+    width: min(160px, 44vw) !important;
+  }
+  #page-adult-company .ac-hero--split .hero-logo-big dwd-animated-logo {
+    width: min(220px, 55vw) !important;
+  }
+}
