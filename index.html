@@ -151,6 +151,7 @@
   <link rel="stylesheet" href="css/audition.css">
   <link rel="stylesheet" href="css/poster-pages.css">
   <link rel="stylesheet" href="css/tighten.css">
+  <link rel="stylesheet" href="css/season-one.css">
 
   <!-- Supabase Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -212,6 +213,10 @@
     <button class="topnav-toggle" id="topnav-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
   </header>
 
+  <!-- SEASON ONE URGENCY RIBBON — standing-interest pre-season window only
+       (Jul 11 → Aug 10). Sticky under the topnav; see css/season-one.css. -->
+  <a id="s1-ribbon" href="https://dwd-director.netlify.app/register" data-track="ribbon-express-interest" data-reveal-after="2026-07-11T00:00:00-04:00" data-hide-after="2026-08-10T04:00:00-04:00" style="display:none">Season One begins August 10 &middot; Placement is open in all three tracks &middot; Express Interest &rarr;</a>
+
   <!-- MOBILE HEADER (hidden — kept for legacy JS) -->
   <header class="mobile-header" id="mobile-header">
     <img src="images/logos/DWD-green.png" alt="DWD" class="mobile-logo" width="36" height="36">
@@ -231,8 +236,14 @@
 
     <!-- ══════════ HOME ══════════ -->
     <section class="page active" id="page-home" aria-label="Home">
-      <!-- HERO — DUAL SPLIT -->
-      <div class="hero">
+      <!-- HERO — DUAL SPLIT, upgraded to Season One full-bleed treatment
+           (css/season-one.css). All original children kept as-is; the
+           .hero-photo <picture> (LCP, preload/fetchpriority untouched)
+           becomes the absolute full-bleed base layer. #s1-hero-video is a
+           desktop-only (>=1024px) floating phone-frame — the hero-reel
+           asset is 608x1080 portrait video, so it can't be a full-bleed
+           cover layer; it sits beside the type instead. -->
+      <div class="hero s1-hero">
         <div class="hero-photo">
           <picture>
             <source type="image/webp" srcset="images/photos/hero-800.webp 800w, images/photos/hero-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 60vw">
@@ -241,7 +252,9 @@
           </picture>
           <div class="caption">John Nuzzi · Solo Work · 2024</div>
         </div>
-        <div class="hero-text">
+        <div class="s1-hero-scrim" aria-hidden="true"></div>
+        <div id="s1-hero-video" aria-hidden="true"></div>
+        <div class="hero-text s1-stagger">
           <!-- Tamara Mark removed — it's now baked into the animated DWD logo
                on the right side of the hero (hero-logo-mark). -->
           <div class="hero-eyebrow"><span class="bar"></span>Est. 2025 <span class="sep">·</span> Orlando, FL</div>
@@ -254,6 +267,7 @@
           <div class="hero-foot">
             <span>Season One &middot; 2026 / 2027</span>
           </div>
+          <a class="s1-kicker" href="https://dwd-director.netlify.app/register" data-track="hero-express-interest-kicker" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">Season One begins Aug 10 &middot; Placement still open &middot; Express Interest <em>&rarr;</em></a>
         </div>
         <div class="hero-logo-mark" aria-hidden="false">
           <video src="images/logos/DWD-pink-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="Dance With Dixon animated logo">
@@ -2048,6 +2062,7 @@
   </div>
 
   <script src="js/main.js"></script>
+  <script src="js/motion.js" defer></script>
   <script src="js/campaign.js"></script>
   <script src="js/analytics.js"></script>
   <!-- AUDITION STICKY TICKER — sitewide, hides after Jun 6, 1pm ET -->
@@ -2078,5 +2093,14 @@
       });
     }
   </script>
+
+  <!-- SEASON ONE STICKY MOBILE BAR — era-gated (Jul 11 on), <=768px only.
+       js/motion.js drives .s1-bar-hidden (auto-hide near other CTAs) and
+       the dismiss button; it never forces the era-gated display itself. -->
+  <div id="s1-mobile-bar" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">
+    <span class="s1-bar-label"><span data-hide-after="2026-08-10T04:00:00-04:00">Season One &middot; Aug 10</span><span data-reveal-after="2026-08-10T04:00:00-04:00" style="display:none">Season One &middot; Underway</span></span>
+    <a class="s1-bar-cta" href="https://dwd-director.netlify.app/register" data-track="mobile-bar-express-interest">Express Interest &rarr;</a>
+    <button type="button" class="s1-bar-x" aria-label="Dismiss">&times;</button>
+  </div>
 </body>
 </html>

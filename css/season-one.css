@@ -1,0 +1,560 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * DWD — Season One visual framework
+ * Loaded LAST (after css/tighten.css). Everything in this file is
+ * namespaced `s1-` (new components) or targets existing selectors with
+ * ID-qualified specificity so it reliably wins regardless of source order
+ * in the older stylesheets it layers over (rebrand.css / audition.css /
+ * editorial.css / tighten.css are all untouched).
+ *
+ * Motion convention (deliberately the OPPOSITE of tighten.css's opt-out
+ * pattern): every rule in this file that animates or transitions something
+ * lives inside `@media (prefers-reduced-motion: no-preference)`. The base
+ * (unwrapped) rule for the same component is always fully styled and
+ * usable as a static end-state — no-JS and reduced-motion visitors get a
+ * complete, non-broken page, never a component stuck at opacity:0.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+/* ═══ FULL-BLEED HERO ═══
+ * .s1-hero is added alongside the existing .hero class (all existing
+ * children kept). The existing .hero-photo <picture> becomes the absolute
+ * full-bleed base layer + scrim. #s1-hero-video is a desktop-only
+ * (>=1024px) floating phone-frame beside the type — NOT a full-bleed
+ * layer, because the hero-reel asset is 608x1080 portrait video and can't
+ * cover a landscape viewport. Selectors are ID+class qualified so they
+ * beat rebrand.css's 2-col grid AND audition.css's 3-col grid (both
+ * `#page-home .hero`) regardless of load order. */
+#page-home .hero.s1-hero {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  /* !important required: audition.css's unconditional
+     `#page-home .hero { padding: 0 !important; }` (Direction 1 hybrid
+     rules) otherwise wins regardless of specificity/source order and
+     silently zeroes the nav-clearance padding below. */
+  padding: 72px 0 0 0 !important;
+  min-height: 100svh;
+  max-height: none;
+  background: var(--rb-bg-base);
+}
+
+#page-home .hero.s1-hero .hero-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  min-height: 0;
+  max-height: none;
+}
+#page-home .hero.s1-hero .hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Move the photo caption clear of the bottom-left type stack below */
+#page-home .hero.s1-hero .hero-photo .caption {
+  left: auto;
+  right: 20px;
+  bottom: 20px;
+}
+
+.s1-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(12,31,23,.35), rgba(12,31,23,.55) 60%, #0c1f17 98%);
+}
+
+/* Type container — bottom-left, generous padding, above photo + scrim */
+#page-home .hero.s1-hero .hero-text {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  min-height: calc(100svh - 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 20px;
+  padding: 0 24px clamp(48px, 8vh, 96px);
+  background: transparent;
+}
+@media (min-width: 640px) {
+  #page-home .hero.s1-hero .hero-text {
+    padding-left: clamp(32px, 6vw, 88px);
+    padding-right: clamp(32px, 6vw, 88px);
+  }
+}
+@media (min-width: 1024px) {
+  /* Constrain width so the type stack never runs into the floating
+     phone-frame video on the right (checked against the frame's own
+     geometry below: clear at every width from 1024px up). */
+  #page-home .hero.s1-hero .hero-text { max-width: 640px; }
+}
+@media (min-width: 1441px) {
+  #page-home .hero.s1-hero .hero-text { max-width: 760px; }
+}
+/* Drop the old 2-column vertical divider rule — doesn't fit the stacked layout */
+#page-home .hero.s1-hero .hero-text::before { display: none; }
+#page-home .hero.s1-hero .hero-text .tamara-mark--hero { z-index: 4; }
+
+/* Display type — scale only, text untouched */
+#page-home .hero.s1-hero h1 {
+  font-size: clamp(56px, 10vw, 168px);
+  line-height: 0.86;
+  letter-spacing: -0.03em;
+}
+
+/* hero-logo-mark shrinks into a corner badge instead of its own grid column */
+#page-home .hero.s1-hero .hero-logo-mark {
+  position: absolute;
+  z-index: 4;
+  top: 64px;
+  right: clamp(20px, 4vw, 48px);
+  width: 76px;
+  height: 76px;
+  min-height: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+}
+#page-home .hero.s1-hero .hero-logo-mark video,
+#page-home .hero.s1-hero .hero-logo-mark img {
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 640px) {
+  #page-home .hero.s1-hero .hero-logo-mark {
+    width: 56px;
+    height: 56px;
+    top: 88px;
+    right: 16px;
+  }
+}
+
+/* ── Floating phone-frame hero video (desktop only, >=1024px) ──
+ * DOM: empty <div id="s1-hero-video"> in the markup; motion.js injects a
+ * muted/loop/silent <video> once loaded. Poster shows immediately via
+ * background-image so there's never an empty box while the video buffers. */
+#s1-hero-video { display: none; }
+@media (min-width: 1024px) {
+  #s1-hero-video {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    right: clamp(32px, 5vw, 88px);
+    transform: translateY(-50%);
+    width: min(320px, 26vw);
+    aspect-ratio: 9 / 16;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(250,243,232,0.15);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 6px 18px rgba(0,0,0,0.25);
+    background-image: url('../images/video/hero-reel-poster.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(12,31,23,0.6);
+  }
+}
+#s1-hero-video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  #s1-hero-video video {
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  #s1-hero-video video.s1-video-live { opacity: 1; }
+}
+
+/* ── Hero reveal: h1 lines + sub-elements, gated on .s1-hero.s1-in ──
+ * Base rule cancels rebrand.css's unconditional rb-rise keyframe (higher
+ * specificity: #page-home .hero.s1-hero h1 .line beats
+ * #page-home .hero h1 .line) and shows the text immediately — the static,
+ * no-JS/reduced-motion end state. The no-preference block re-hides it and
+ * re-reveals it via the JS-driven .s1-in class so there's no flash. */
+#page-home .hero.s1-hero h1 .line {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+#page-home .hero.s1-hero .hero-text.s1-stagger > *:not(h1) {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  #page-home .hero.s1-hero h1 .line {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms cubic-bezier(.2,.8,.2,1), transform 700ms cubic-bezier(.2,.8,.2,1);
+  }
+  #page-home .hero.s1-hero.s1-in h1 .line { opacity: 1; transform: translateY(0); }
+  #page-home .hero.s1-hero.s1-in h1 .line:nth-child(1) { transition-delay: 0ms; }
+  #page-home .hero.s1-hero.s1-in h1 .line:nth-child(2) { transition-delay: 80ms; }
+  #page-home .hero.s1-hero.s1-in h1 .line:nth-child(3) { transition-delay: 160ms; }
+}
+
+/* ═══ KICKER PILL ═══ */
+.s1-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  padding: 10px 18px;
+  border: 1px solid rgba(250,243,232,0.2);
+  border-radius: 999px;
+  background: rgba(250,243,232,0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--rb-ivory);
+  text-decoration: none;
+}
+.s1-kicker em {
+  font-style: normal;
+  color: var(--rb-terracotta);
+  margin-left: 2px;
+}
+@media (max-width: 640px) {
+  .s1-kicker { font-size: 11px; padding: 8px 14px; gap: 8px; }
+}
+@media (hover: hover) {
+  @media (prefers-reduced-motion: no-preference) {
+    .s1-kicker { transition: background .3s ease, border-color .3s ease; }
+    .s1-kicker:hover { background: rgba(250,243,232,0.12); border-color: rgba(250,243,232,0.35); }
+  }
+}
+
+/* ═══ URGENCY RIBBON ═══
+ * Sticky (not fixed) so it costs zero layout when hidden (its era window
+ * is Jul 11 → Aug 10 only) and, when visible, sits in normal flow directly
+ * under the topnav, then sticks there on scroll. margin-top clears the
+ * fixed topnav's own footprint (topnav is position:fixed, out of flow). */
+#s1-ribbon {
+  display: block;
+  position: sticky;
+  top: 72px;
+  z-index: 90;
+  margin-top: 72px;
+  width: 100%;
+  padding: 11px 20px;
+  background: var(--rb-terracotta-deep);
+  color: var(--rb-ivory);
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-align: center;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(250,243,232,0.12);
+}
+@media (min-width: 640px) {
+  #s1-ribbon { font-size: 14px; }
+}
+@media (hover: hover) {
+  @media (prefers-reduced-motion: no-preference) {
+    #s1-ribbon { transition: background .25s ease; }
+    #s1-ribbon:hover { background: #ad5140; }
+  }
+}
+
+/* ═══ STICKY MOBILE BAR ═══
+ * Hidden above 768px. Below it: fixed bottom bar. Era-gated in HTML
+ * (data-reveal-after/data-hide-after) — motion.js only toggles
+ * .s1-bar-hidden / body.s1-has-bar, it never forces display. */
+#s1-mobile-bar { display: none; }
+@media (max-width: 768px) {
+  #s1-mobile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 95;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom)) 14px;
+    background: rgba(12,31,23,0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(250,243,232,0.14);
+  }
+}
+#s1-mobile-bar .s1-bar-label {
+  flex: 1;
+  min-width: 0;
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: var(--rb-ivory);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#s1-mobile-bar .s1-bar-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 8px;
+  background: var(--rb-terracotta-deep);
+  color: var(--rb-ivory);
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+#s1-mobile-bar .s1-bar-x {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--rb-ivory);
+  opacity: 0.7;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+body.s1-has-bar { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+@media (min-width: 769px) {
+  body.s1-has-bar { padding-bottom: 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #s1-mobile-bar { transition: transform .3s ease; }
+}
+#s1-mobile-bar.s1-bar-hidden { transform: translateY(120%); }
+
+/* ═══ SEASON CTA GLASS RESTYLE ═══
+ * #season-one-cta / #season-underway-cta only (not #audition-cta /
+ * #intensive-cta) — ID-qualified so it never touches the other
+ * .audition-cta-card instances. Markup/data-clk-*/ids untouched.
+ * `animation: none` unconditionally cancels audition.css's unconditional
+ * oh-auditionPulse keyframe (that rule was never reduced-motion-gated to
+ * begin with, so removing it is a static correctness fix, not new motion). */
+#season-one-cta .audition-cta-card {
+  background: rgba(250,243,232,0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(250,243,232,0.12);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  animation: none;
+}
+#season-underway-cta .audition-cta-card {
+  background: rgba(250,243,232,0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(250,243,232,0.12);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  animation: none;
+}
+.season-cta .aclk-num {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: clamp(40px, 6vw, 72px);
+  color: var(--rb-ivory);
+}
+.season-cta .aclk-lbl {
+  color: var(--rb-terracotta);
+}
+
+/* ═══ REVEAL SYSTEM ═══
+ * .s1-reveal and .s1-stagger > * ship visible/static by default; the
+ * no-preference block re-hides then reveals via .s1-in (added by
+ * motion.js's IntersectionObserver at 15% visibility, once). */
+.s1-reveal { opacity: 1; transform: none; }
+.s1-stagger > *:not(h1) { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .s1-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms cubic-bezier(.2,.8,.2,1), transform 700ms cubic-bezier(.2,.8,.2,1);
+  }
+  .s1-reveal.s1-in { opacity: 1; transform: translateY(0); }
+
+  .s1-stagger > *:not(h1) {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms cubic-bezier(.2,.8,.2,1), transform 700ms cubic-bezier(.2,.8,.2,1);
+  }
+  .s1-stagger.s1-in > *:not(h1) { opacity: 1; transform: translateY(0); }
+  .s1-stagger.s1-in > *:nth-child(1):not(h1) { transition-delay: 0ms; }
+  .s1-stagger.s1-in > *:nth-child(2):not(h1) { transition-delay: 80ms; }
+  .s1-stagger.s1-in > *:nth-child(3):not(h1) { transition-delay: 160ms; }
+  .s1-stagger.s1-in > *:nth-child(4):not(h1) { transition-delay: 240ms; }
+  .s1-stagger.s1-in > *:nth-child(5):not(h1) { transition-delay: 320ms; }
+  .s1-stagger.s1-in > *:nth-child(6):not(h1) { transition-delay: 400ms; }
+}
+
+/* Progressive-enhancement parallax utility (infra for future use —
+ * unused by any element shipped in this pass). Scroll-driven, so it's
+ * additionally gated behind @supports for browsers without it. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .s1-parallax {
+      animation: s1-parallax-move linear;
+      animation-timeline: view();
+      animation-range: entry 0% cover 50%;
+    }
+    @keyframes s1-parallax-move {
+      from { transform: translateY(4%); }
+      to { transform: translateY(-4%); }
+    }
+  }
+}
+
+/* ═══ MICRO-INTERACTIONS ═══ */
+@media (hover: hover) {
+  @media (prefers-reduced-motion: no-preference) {
+    .btn,
+    .ac-cta {
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .btn:hover,
+    .ac-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(200,97,75,0.35);
+    }
+    .s1-lift { transition: transform .3s ease, border-color .3s ease; }
+    .s1-lift:hover {
+      transform: translateY(-6px);
+      border-color: rgba(250,243,232,0.3);
+    }
+  }
+}
+
+/* ═══ VIDEO CARD SCAFFOLDING (built now, populated by a later task) ═══
+ * Expected children: img.s1-vc-poster, .s1-vc-ring (play glyph),
+ * .s1-vc-caption. motion.js appends a bare <video> (no class dependency
+ * needed for these rules — targeted by element selector) on first click. */
+.s1-video-card {
+  position: relative;
+  flex: 0 0 auto;
+  aspect-ratio: 9 / 16;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(250,243,232,0.15);
+  background: rgba(12,31,23,0.6);
+  cursor: pointer;
+  scroll-snap-align: start;
+}
+.s1-video-card .s1-vc-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.s1-video-card .s1-vc-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, transparent, rgba(12,31,23,0.85));
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  color: var(--rb-ivory);
+}
+.s1-video-card .s1-vc-ring {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(250,243,232,0.5);
+  background: rgba(12,31,23,0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.s1-video-card .s1-vc-ring::after {
+  content: "";
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  border-style: solid;
+  border-width: 9px 0 9px 15px;
+  border-color: transparent transparent transparent var(--rb-terracotta);
+}
+.s1-video-card video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+.s1-video-card.is-playing .s1-vc-poster,
+.s1-video-card.is-playing .s1-vc-ring,
+.s1-video-card.is-playing .s1-vc-caption {
+  display: none;
+}
+.s1-video-card.is-playing video { display: block; }
+
+.s1-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(72vw, 340px);
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+.s1-rail .s1-video-card { width: min(72vw, 340px); }
+@media (min-width: 1280px) {
+  .s1-rail {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, 1fr);
+    overflow-x: visible;
+    scroll-snap-type: none;
+  }
+  .s1-rail .s1-video-card { width: auto; }
+}
+@media (hover: hover) {
+  @media (prefers-reduced-motion: no-preference) {
+    .s1-video-card { transition: transform .3s ease; }
+    .s1-video-card:hover { transform: translateY(-4px); }
+  }
+}
+
+/* ═══ FROSTED-NAV POLISH ═══
+ * Layers over rebrand.css's .topnav (this file loads last, so equal
+ * specificity here already wins on source order — no extra qualifiers
+ * needed). */
+.topnav {
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+}
+.topnav.scrolled {
+  background: rgba(12,31,23,0.98);
+}
