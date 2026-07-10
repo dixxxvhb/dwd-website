@@ -555,6 +555,13 @@
 }
 .tri-card--amuse .tri-headline { color: var(--oh-cream-warm); }
 
+/* Card 4 (Season One) is the lone survivor in the two-up grid for its Jul 11 ->
+   Aug 10 window — every other tri-card has already retired by then. Span both
+   grid columns instead of sitting stranded in the left cell with an empty one
+   beside it. Harmless in ?launched=1 preview too (falls to its own full-width
+   row alongside the other three cards, which is fine). */
+.tri-card--season-one { grid-column: 1 / -1; }
+
 /* --- Responsive --- */
 @media (max-width: 980px) {
   .triptych { padding: 40px 32px 48px; }

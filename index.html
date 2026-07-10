@@ -416,8 +416,11 @@
         </nav>
       </section>
 
-      <!-- TRIPTYCH — two concurrent events -->
-      <section class="triptych" aria-label="What's happening at DWD">
+      <!-- TRIPTYCH — two concurrent events. Retires whole-section at Season One
+           (its own sub-line says "before Season One"); this also stops the
+           empty-grid state from recurring after Aug 10 once every card below
+           has retired. -->
+      <section class="triptych" aria-label="What's happening at DWD" data-hide-after="2026-08-10T04:00:00-04:00">
         <div class="triptych-head">
           <span class="triptych-eyebrow">What's Happening</span>
           <span class="triptych-sub">On the calendar before Season One.</span>
@@ -478,6 +481,29 @@
             <span class="tri-meta">Monday&ndash;Friday &middot; 10am&ndash;1pm &middot; Exchange Dance Academy, Orlando. No audition needed. $200 half day &middot; $300 full day.</span>
             <span class="tri-spacer"></span>
             <span class="tri-cta">Sign up <em>&rarr;</em></span>
+          </a>
+
+          <!-- Card 4 · Season One (Aug 10) — reveals the moment the standing-interest
+               era begins, Jul 11; retires when Season One starts, Aug 10 (the whole
+               .triptych section retires at the same instant, so this is really just
+               keeping the grid populated for the four weeks in between). -->
+          <a class="tri-card tri-card--audition tri-card--season-one" href="https://dwd-director.netlify.app/register"
+             data-track="home-tri-season-one"
+             data-reveal-after="2026-07-11T00:00:00-04:00"
+             data-hide-after="2026-08-10T04:00:00-04:00"
+             style="display:none">
+            <div class="tri-row-top">
+              <span class="tri-eyebrow">dwdPROSERIES &middot; Season One</span>
+              <span class="tri-pill">Accepting Dancers</span>
+            </div>
+            <div class="tri-date">
+              <span class="tri-date-mon">AUG</span>
+              <span class="tri-date-day">10</span>
+            </div>
+            <span class="tri-headline">Season One begins.</span>
+            <span class="tri-meta">Weekly training, choreography by Dixon, and a competition season. Placement is open in all three tracks.</span>
+            <span class="tri-spacer"></span>
+            <span class="tri-cta">Express Interest <em>&rarr;</em></span>
           </a>
 
         </div>
