@@ -13,9 +13,9 @@
 - Branch: main → auto-deploys to GitHub Pages
 
 ## Key Files
-- `index.html` (67KB, ~1105 lines) — single-page site, all routes handled via hash navigation
-- `styles.css` (~2000 lines) — primary stylesheet, CSS variables at top
-- `additions.css` (~1633 lines) — supplementary styles (additions, not overrides)
+- `index.html` (2438 lines) — single-page site, all routes handled via hash navigation
+- CSS: 10-sheet layered system ending with `css/season-one.css`
+- `js/motion.js` — motion & reveal effects
 - `main.js` — page navigation, lightbox, scroll reveals, form handling
 - `analytics.js` — lightweight cookie-free tracking via Supabase
 - `analytics-dashboard.js` — tabbed dashboard (30d/custom period), access code protected
@@ -42,14 +42,12 @@ Home, About, ProSeries, DWDC (Adult Company), Merch, Contact, Gallery, FAQ, Earl
 - Animated WebM logo on hero (1050px desktop, 420px mobile) with `mix-blend-mode: screen` for iOS transparency
 - Tamara Mark included
 - No emojis ever
+- Never ship *-transparent.webm logo videos (replacement in progress on feat/live-logo-embed).
 
 ## Dev Server
-```bash
-cd ~/Desktop/DWD/Website && python3 -m http.server 8790
+```
+py -m http.server 8790 -d C:/Users/bowle/Code/dwd-website
 ```
 
 ## Deploy
-```bash
-cd ~/Desktop/DWD/Website && git add -A && git commit -m "message" && git push
-```
-GitHub Pages auto-deploys from main branch.
+Push to main = production deploy on GitHub Pages. Deploys are ask-first. Source of truth for era-gated content is `docs/ERAS.md`.
