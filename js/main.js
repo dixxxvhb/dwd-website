@@ -187,6 +187,7 @@
     var toggle = document.getElementById('topnav-toggle');
     if (topnav) topnav.classList.remove('is-open');
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    document.documentElement.classList.remove('menu-open');
     document.body.style.overflow = '';
   }
 
@@ -209,14 +210,16 @@
   var topnavToggle = document.getElementById('topnav-toggle');
   if (topnavToggle && topnav) {
     topnavToggle.addEventListener('click', function () {
-      var open = topnav.classList.toggle('is-open');
-      topnavToggle.setAttribute('aria-expanded', String(open));
+      if (topnav.classList.contains('is-open')) {
+        closeMobileMenu();
+      } else {
+        topnav.classList.add('is-open');
+        topnavToggle.setAttribute('aria-expanded', 'true');
+        document.documentElement.classList.add('menu-open');
+      }
     });
     topnav.querySelectorAll('nav a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        topnav.classList.remove('is-open');
-        topnavToggle.setAttribute('aria-expanded', 'false');
-      });
+      a.addEventListener('click', closeMobileMenu);
     });
   }
 
