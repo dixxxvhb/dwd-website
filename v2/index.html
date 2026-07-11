@@ -4,35 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Dance With Dixon · Season One</title>
+<title>Dance With Dixon | Orlando Dance Company</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════════════════
-   DWD — "THE PIECE"  (v2 concept, take two)
-   The website as a choreography document. Marley floor, stage
-   grid, spike tape, formation charts, counts, margin notes.
-   A visual language only a choreographer can claim.
+   DWD — "THE PIECE"  (v2 concept, take three: full site shape)
+   Same pages + hash routing as the live site, wearing the
+   choreography-document design language.
    ═══════════════════════════════════════════════════════════════ */
 :root {
-  --marley: #0a1410;          /* the floor */
-  --marley-worn: #10201a;     /* scuffed panel */
-  --chalk: #FAF3E8;           /* ivory as chalk, not cream fields */
+  --marley: #0a1410;
+  --marley-worn: #10201a;
+  --chalk: #FAF3E8;
   --chalk-dim: rgba(250,243,232,.6);
   --grid: rgba(250,243,232,.07);
-  --tape: #C8614B;            /* spike tape */
+  --tape: #C8614B;
   --tape-2: #d4775f;
-  --pencil: #f8d7c8;          /* pink = pencil/highlighter notes */
-  --cast-b: #6BAF8A;          /* seafoam = cast marking */
-  --gold: #e2b955;            /* Tamara only */
+  --pencil: #f8d7c8;
+  --cast-b: #6BAF8A;
+  --gold: #e2b955;
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'Outfit', system-ui, sans-serif;
   --count: 'Bebas Neue', var(--sans);
   --gut: clamp(20px, 5vw, 80px);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
 body {
   font-family: var(--sans);
   font-weight: 300;
@@ -45,7 +43,7 @@ img, video { display: block; max-width: 100%; }
 a { color: inherit; }
 ::selection { background: var(--tape); color: var(--marley); }
 
-/* ── the floor: grid + center line, fixed behind everything ── */
+/* ── the floor ── */
 .floor {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image:
@@ -53,44 +51,34 @@ a { color: inherit; }
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 96px 96px;
 }
-.floor::before { /* center line — every stage has one */
+.floor::before {
   content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px;
   background: rgba(250,243,232,.14);
 }
-.floor::after { /* marley panel seams */
+.floor::after {
   content: ''; position: absolute; inset: 0;
   background: repeating-linear-gradient(90deg,
     transparent 0, transparent 191px, rgba(0,0,0,.35) 191px, rgba(0,0,0,.35) 193px);
   opacity: .5;
 }
-
-/* ── formation layer: dots that re-form as you scroll ── */
-#formation {
-  position: fixed; inset: 0; z-index: 1; pointer-events: none;
-  width: 100%; height: 100%;
-  opacity: .5;
-}
-
-/* ── stage directions framing the viewport ── */
+#formation { position: fixed; inset: 0; z-index: 1; pointer-events: none; width: 100%; height: 100%; opacity: .5; }
 .stage-dir {
   position: fixed; z-index: 90; pointer-events: none;
   font-size: 9px; font-weight: 600; letter-spacing: .5em; color: rgba(250,243,232,.32);
 }
-.stage-dir.us { display: none; } /* masthead owns upstage */
 .stage-dir.ds { bottom: 10px; left: 50%; transform: translateX(-50%); }
 .stage-dir.sl { right: 8px; top: 50%; transform: rotate(90deg) translateX(50%); transform-origin: right; }
 .stage-dir.sr { left: 8px; top: 50%; transform: rotate(-90deg) translateX(-50%); transform-origin: left; }
 @media (max-width: 760px) { .stage-dir.sl, .stage-dir.sr { display: none; } }
 
 main { position: relative; z-index: 2; }
+.page { display: none; min-height: 100svh; }
+.page.active { display: block; }
 
-/* ── spike tape ─────────────────────────────────
-   Small hard-edged strips, slightly rotated — the ONLY sharp
-   corners in the system, because tape is tape. */
+/* ── shared bits ── */
 .tape {
   display: inline-block;
-  background: var(--tape);
-  color: var(--marley);
+  background: var(--tape); color: var(--marley);
   font-size: 10.5px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
   padding: 6px 14px 5px;
   transform: rotate(-1.2deg);
@@ -99,89 +87,39 @@ main { position: relative; z-index: 2; }
 .tape.t2 { transform: rotate(.8deg); background: var(--cast-b); }
 .tape.t3 { transform: rotate(-.6deg); background: var(--pencil); }
 .brandcase { text-transform: none; }
-
-/* ── margin notes: the director's pencil ── */
 .note {
-  font-family: var(--serif);
-  font-style: italic;
+  font-family: var(--serif); font-style: italic;
   font-size: clamp(17px, 1.8vw, 21px);
   color: var(--pencil);
   transform: rotate(-1.6deg);
-  max-width: 30ch;
-  line-height: 1.4;
+  max-width: 30ch; line-height: 1.4;
 }
 .note .u { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
-
-/* ── counts: structural numerals ── */
 .count-8 {
-  font-family: var(--count);
-  letter-spacing: .1em;
+  font-family: var(--count); letter-spacing: .1em;
   color: rgba(250,243,232,.22);
   font-size: clamp(15px, 1.6vw, 19px);
   display: flex; gap: clamp(10px, 2vw, 22px);
 }
 .count-8 b { color: var(--tape-2); font-weight: 400; }
-
-/* ── sections as marks on the sheet ── */
-.mark {
-  position: relative;
-  padding: clamp(90px, 15vh, 170px) var(--gut);
-  max-width: 1500px; margin: 0 auto;
-}
-.mark-head {
-  display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap;
-  margin: 14px 0 clamp(30px, 5vh, 56px);
-}
+.mark { position: relative; padding: clamp(80px, 12vh, 150px) var(--gut); max-width: 1500px; margin: 0 auto; }
+.mark.tight { padding-top: clamp(40px, 6vh, 70px); }
+.mark-head { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; margin: 14px 0 clamp(30px, 5vh, 56px); }
 .mark-no {
   font-family: var(--count);
-  font-size: clamp(64px, 8vw, 130px);
-  line-height: .8;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(250,243,232,.35);
+  font-size: clamp(64px, 8vw, 130px); line-height: .8;
+  color: transparent; -webkit-text-stroke: 1.5px rgba(250,243,232,.35);
 }
 .mark-title {
-  font-family: var(--serif);
-  font-weight: 500;
+  font-family: var(--serif); font-weight: 500;
   font-size: clamp(40px, 6.5vw, 104px);
-  line-height: .95;
-  letter-spacing: -0.015em;
+  line-height: .95; letter-spacing: -0.015em;
 }
 .mark-title em { font-style: italic; font-weight: 400; color: var(--tape-2); }
+.page-title { font-size: clamp(46px, 8vw, 130px); }
+.lede-copy { font-size: clamp(15px, 1.6vw, 18px); line-height: 1.8; color: var(--chalk-dim); max-width: 56ch; margin-top: 16px; }
+.lede-copy strong { color: var(--chalk); font-weight: 500; }
 
-/* ── hero: the count-in ── */
-.countin {
-  min-height: 100svh;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 90px var(--gut) 60px;
-  max-width: 1500px; margin: 0 auto;
-  position: relative;
-}
-.countin .prep {
-  font-family: var(--serif); font-style: italic;
-  font-size: clamp(22px, 3vw, 38px);
-  color: var(--pencil);
-}
-.countin .prep b { font-style: normal; font-family: var(--count); font-weight: 400; letter-spacing: .12em; color: var(--chalk); }
-.countin h1 {
-  font-family: var(--serif); font-weight: 500;
-  font-size: clamp(58px, 11.5vw, 190px);
-  line-height: .9; letter-spacing: -0.02em;
-  margin: clamp(14px, 2.5vh, 28px) 0 0;
-}
-.countin h1 em { font-style: italic; font-weight: 400; color: var(--tape-2); }
-.countin .sub {
-  margin-top: clamp(22px, 4vh, 40px);
-  max-width: 52ch;
-  font-size: clamp(15px, 1.6vw, 18px);
-  line-height: 1.75;
-  color: var(--chalk-dim);
-}
-.countin .sub strong { color: var(--chalk); font-weight: 500; }
-.hero-tape-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: clamp(26px, 4vh, 44px); align-items: center; }
-.countin .corner-note { position: absolute; right: var(--gut); bottom: clamp(24px, 6vh, 64px); text-align: right; transform: rotate(1.4deg); }
-@media (max-width: 900px) { .countin .corner-note { display: none; } }
-
-/* ── buttons: gaff-tape buttons ── */
 .btn {
   display: inline-flex; align-items: center; gap: 12px;
   font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
@@ -200,8 +138,155 @@ main { position: relative; z-index: 2; }
   transform: rotate(.4deg);
 }
 .btn.ghost:hover { outline-color: var(--pencil); color: var(--pencil); }
+.cta-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-top: clamp(26px, 4vh, 44px); }
 
-/* ── the piece: track casting ── */
+.print { position: relative; display: inline-block; }
+.print img { display: block; filter: saturate(1.02); }
+.print .ptape {
+  position: absolute; width: 74px; height: 20px; background: rgba(250,243,232,.28);
+  box-shadow: 0 1px 2px rgba(0,0,0,.3);
+}
+.print .ptape.a { top: -8px; left: -18px; transform: rotate(-38deg); }
+.print .ptape.b { top: -8px; right: -18px; transform: rotate(38deg); }
+.print figcaption {
+  margin-top: 12px;
+  font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--chalk-dim);
+  transform: rotate(-.8deg);
+}
+.blocking { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(30px, 5vw, 80px); align-items: center; }
+@media (max-width: 900px) { .blocking { grid-template-columns: 1fr; } }
+
+/* ── masthead + nav ── */
+.masthead {
+  position: fixed; inset: 0 0 auto 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  padding: 15px var(--gut);
+  transition: background .3s ease;
+}
+.masthead.solid { background: rgba(10,20,16,.85); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(250,243,232,.1); }
+.mast-brand { font-family: var(--serif); font-size: 19px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.mast-brand em { font-style: italic; font-weight: 400; color: var(--tape-2); }
+.nav-links { display: flex; gap: clamp(14px, 2vw, 30px); align-items: center; }
+.nav-links a {
+  font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+  text-decoration: none; color: var(--chalk-dim);
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+  transition: color .2s ease;
+}
+.nav-links a:hover { color: var(--chalk); }
+.nav-links a.on { color: var(--chalk); border-bottom-color: var(--tape); }
+.mast-cta {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; text-decoration: none;
+  background: var(--tape); color: var(--marley); padding: 10px 18px;
+  transform: rotate(-.8deg); box-shadow: 0 1px 0 rgba(0,0,0,.4);
+  white-space: nowrap;
+}
+.mast-cta:hover { background: var(--tape-2); }
+.menu-btn {
+  display: none;
+  font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
+  background: transparent; color: var(--chalk);
+  border: 1px dashed rgba(250,243,232,.4); padding: 10px 16px;
+  cursor: pointer;
+}
+@media (max-width: 1080px) {
+  .nav-links { display: none; }
+  .menu-btn { display: block; }
+}
+@media (max-width: 560px) { .mast-cta { display: none; } }
+
+/* mobile menu: the program of pages */
+.menu-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(10,20,16,.97);
+  display: none;
+  flex-direction: column; justify-content: center;
+  padding: 0 var(--gut);
+}
+.menu-overlay.open { display: flex; }
+.menu-overlay a {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(34px, 7vh, 56px); line-height: 1.25;
+  text-decoration: none; color: var(--chalk);
+}
+.menu-overlay a .no { font-family: var(--count); font-size: .45em; color: var(--tape-2); margin-right: 16px; letter-spacing: .1em; }
+.menu-overlay a.on { color: var(--tape-2); font-style: italic; }
+.menu-close {
+  position: absolute; top: 18px; right: var(--gut);
+  background: var(--tape); color: var(--marley); border: 0;
+  font-size: 11px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
+  padding: 10px 16px; cursor: pointer; transform: rotate(-1deg);
+}
+
+/* ── HOME: hero ── */
+.hero {
+  min-height: 100svh;
+  display: grid; grid-template-columns: 1.15fr .85fr;
+  gap: clamp(28px, 4vw, 70px); align-items: center;
+  padding: 110px var(--gut) 70px;
+  max-width: 1500px; margin: 0 auto;
+}
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr; padding-top: 96px; } }
+.hero .prep { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2.6vw, 34px); color: var(--pencil); }
+.hero .prep b { font-style: normal; font-family: var(--count); font-weight: 400; letter-spacing: .12em; color: var(--chalk); }
+.hero h1 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(52px, 8.5vw, 136px);
+  line-height: .92; letter-spacing: -0.02em;
+  margin: clamp(12px, 2vh, 24px) 0 0;
+}
+.hero h1 em { font-style: italic; font-weight: 400; color: var(--tape-2); }
+.hero .sub { margin-top: clamp(20px, 3.5vh, 36px); max-width: 48ch; font-size: clamp(15px, 1.6vw, 18px); line-height: 1.75; color: var(--chalk-dim); }
+.hero .sub strong { color: var(--chalk); font-weight: 500; }
+.hero-print { justify-self: end; width: min(440px, 100%); }
+.hero-print img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+@media (max-width: 900px) { .hero-print { justify-self: start; width: min(380px, 88%); } }
+
+/* ── ticker: one long piece of tape ── */
+.tickertape {
+  position: relative; z-index: 3;
+  background: var(--tape);
+  transform: rotate(-.7deg) scale(1.02);
+  box-shadow: 0 2px 0 rgba(0,0,0,.4);
+  overflow: hidden;
+  padding: 11px 0 9px;
+  margin: 10px 0 30px;
+}
+.tickertape .track { display: flex; width: max-content; white-space: nowrap; }
+.tickertape span {
+  font-family: var(--count); font-size: 17px; letter-spacing: .16em;
+  color: var(--marley); padding-right: 56px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tickertape .track { animation: tick 30s linear infinite; }
+  @keyframes tick { to { transform: translateX(-50%); } }
+}
+
+/* ── HOME: the two companies ── */
+.entries { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 44px); }
+@media (max-width: 860px) { .entries { grid-template-columns: 1fr; } }
+.entry {
+  position: relative; display: block; text-decoration: none;
+  background: var(--marley-worn);
+  border: 1px solid rgba(250,243,232,.12);
+  padding: clamp(22px, 3vw, 36px);
+  transition: border-color .25s ease, transform .25s ease;
+}
+.entry:hover { border-color: rgba(250,243,232,.35); transform: translateY(-4px); }
+.entry .holdtape {
+  position: absolute; top: -11px; left: 34px; width: 88px; height: 20px;
+  background: var(--tape); transform: rotate(-2deg); box-shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+.entry.alt .holdtape { background: var(--cast-b); transform: rotate(1.6deg); }
+.entry img { width: 100%; aspect-ratio: 16/10; object-fit: cover; margin: 10px 0 20px; }
+.entry h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 3.4vw, 46px); line-height: 1; }
+.entry h3 em { font-style: italic; font-weight: 400; color: var(--tape-2); }
+.entry .who { font-size: 10.5px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--chalk-dim); margin-top: 10px; }
+.entry p { font-size: 14px; line-height: 1.7; color: var(--chalk-dim); margin-top: 12px; }
+.entry .enter { margin-top: 18px; font-size: 11px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--tape-2); }
+
+/* ── casting cards (proseries) ── */
 .casting { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.5vw, 36px); }
 .cast-card {
   position: relative;
@@ -217,70 +302,41 @@ main { position: relative; z-index: 2; }
 }
 .cast-card:nth-child(2) .holdtape { background: var(--cast-b); transform: translateX(-50%) rotate(1.5deg); }
 .cast-card:nth-child(3) .holdtape { background: var(--pencil); transform: translateX(-50%) rotate(-1deg); }
-.cast-card h3 {
-  font-family: var(--count); font-weight: 400;
-  font-size: clamp(40px, 4.5vw, 64px); line-height: .9; letter-spacing: .04em;
-}
+.cast-card h3 { font-family: var(--count); font-weight: 400; font-size: clamp(40px, 4.5vw, 64px); line-height: .9; letter-spacing: .04em; }
 .cast-card .ages { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--pencil); margin-top: 6px; }
 .cast-card .fee { font-family: var(--count); font-size: clamp(26px, 3vw, 38px); letter-spacing: .06em; margin-top: 18px; color: var(--chalk); }
 .cast-card .fee small { font-family: var(--sans); font-size: 10px; letter-spacing: .2em; color: var(--chalk-dim); }
 .cast-card p { font-size: 13.5px; line-height: 1.7; color: var(--chalk-dim); margin-top: 14px; }
-.cast-card .spots {
-  margin-top: 18px; font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
-  color: var(--cast-b);
-}
+.cast-card .spots { margin-top: 18px; font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--cast-b); }
 @media (max-width: 900px) { .casting { grid-template-columns: 1fr; } }
 .casting-note { margin-top: clamp(26px, 4vh, 44px); display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: flex-end; }
 .casting-fine { font-size: 12.5px; line-height: 1.8; color: var(--chalk-dim); max-width: 52ch; }
 
-/* ── photos: prints taped to the sheet ── */
-.print { position: relative; display: inline-block; }
-.print img { display: block; filter: saturate(1.02); }
-.print .ptape {
-  position: absolute; width: 74px; height: 20px; background: rgba(250,243,232,.28);
-  box-shadow: 0 1px 2px rgba(0,0,0,.3);
-}
-.print .ptape.a { top: -8px; left: -18px; transform: rotate(-38deg); }
-.print .ptape.b { top: -8px; right: -18px; transform: rotate(38deg); }
-.print figcaption {
-  margin-top: 12px;
-  font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--chalk-dim);
-  transform: rotate(-.8deg);
-}
-
-/* ── blocking: two-column w/ photo ── */
-.blocking { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(30px, 5vw, 80px); align-items: center; }
-@media (max-width: 900px) { .blocking { grid-template-columns: 1fr; } }
-.blocking .copy p { font-size: clamp(15px, 1.6vw, 18px); line-height: 1.8; color: var(--chalk-dim); max-width: 56ch; margin-top: 16px; }
-.blocking .copy p strong { color: var(--chalk); font-weight: 500; }
-
-/* ── rehearsal footage: slates ── */
-.slates {
-  display: flex; gap: 20px; overflow-x: auto; padding: 16px 4px 28px;
-  scroll-snap-type: x mandatory; scrollbar-width: none;
-}
+/* ── slates ── */
+.slates { display: flex; gap: 20px; overflow-x: auto; padding: 16px 4px 28px; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .slates::-webkit-scrollbar { display: none; }
 .slate { flex: 0 0 clamp(220px, 24vw, 300px); scroll-snap-align: start; }
-.slate .clip { position: relative; aspect-ratio: 9/16; overflow: hidden; background: var(--marley-worn); border: 1px solid rgba(250,243,232,.12); }
+.slate .clip { aspect-ratio: 9/16; overflow: hidden; background: var(--marley-worn); border: 1px solid rgba(250,243,232,.12); }
 .slate video { width: 100%; height: 100%; object-fit: cover; }
 .slate .clapper {
   display: flex; justify-content: space-between; align-items: baseline;
   font-family: var(--count); letter-spacing: .1em; font-size: 15px;
   border: 1px solid rgba(250,243,232,.25); border-top: none;
-  padding: 10px 12px 8px;
-  color: var(--chalk);
+  padding: 10px 12px 8px; color: var(--chalk);
 }
 .slate .clapper i { font-style: normal; color: var(--tape-2); font-size: 12px; }
 .slate .styles { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--chalk-dim); padding: 8px 12px 0; }
 
-/* ── run stats: chalk tallies ── */
 .tallies { display: flex; gap: clamp(28px, 6vw, 90px); flex-wrap: wrap; margin: clamp(28px, 5vh, 50px) 0; }
 .tallies .n { font-family: var(--count); font-size: clamp(58px, 7vw, 110px); line-height: .85; color: var(--chalk); }
 .tallies .n sup { font-size: .45em; color: var(--tape-2); }
 .tallies .l { font-size: 10.5px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--chalk-dim); margin-top: 8px; }
 
-/* ── director: the choreographer's card ── */
-.chart-frame .print img, .chart-frame img { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: top; }
+/* ── teachers ── */
+.faculty { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: clamp(24px, 3vw, 44px); margin-top: clamp(30px, 5vh, 54px); }
+.faculty .print img { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: top; }
+.faculty .fname { font-family: var(--serif); font-weight: 500; font-size: 24px; margin-top: 14px; }
+.faculty .frole { font-size: 10.5px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--tape-2); margin-top: 4px; }
 .credits-sheet {
   margin-top: clamp(26px, 4vh, 44px);
   display: grid; grid-template-columns: 1fr 1fr; gap: 8px 40px;
@@ -291,12 +347,35 @@ main { position: relative; z-index: 2; }
 .credits-sheet li::before { content: '·  '; color: var(--tape-2); }
 @media (max-width: 700px) { .credits-sheet { grid-template-columns: 1fr; } }
 
-/* ── tamara: her mark on the chart ── */
-.tamara {
-  position: relative;
-  padding: clamp(110px, 18vh, 200px) var(--gut);
-  text-align: center;
+/* ── gallery ── */
+.wall { columns: 3; column-gap: clamp(20px, 2.5vw, 40px); margin-top: clamp(30px, 5vh, 54px); }
+@media (max-width: 1000px) { .wall { columns: 2; } }
+@media (max-width: 620px) { .wall { columns: 1; } }
+.wall figure { break-inside: avoid; margin-bottom: clamp(28px, 3.5vw, 48px); }
+.wall .print { display: block; }
+.wall img { width: 100%; }
+
+/* ── merch: the order sheet ── */
+.ordersheet { margin-top: clamp(30px, 5vh, 50px); max-width: 760px; border-top: 1px solid rgba(250,243,232,.18); }
+.ordersheet .row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 18px;
+  padding: 18px 4px;
+  border-bottom: 1px solid rgba(250,243,232,.18);
 }
+.ordersheet .item { font-family: var(--serif); font-size: clamp(20px, 2.4vw, 28px); font-weight: 500; }
+.ordersheet .fill { flex: 1; border-bottom: 1px dotted rgba(250,243,232,.25); transform: translateY(-6px); }
+.ordersheet .st { font-family: var(--count); font-size: 15px; letter-spacing: .14em; color: var(--chalk-dim); }
+
+/* ── contact ── */
+.contact-wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(30px, 5vw, 90px); align-items: start; }
+@media (max-width: 900px) { .contact-wrap { grid-template-columns: 1fr; } }
+.contact-lines { margin-top: clamp(26px, 4vh, 44px); font-size: 14px; line-height: 2.4; color: var(--chalk-dim); }
+.contact-lines a { color: var(--chalk); text-decoration: none; border-bottom: 1px dashed rgba(250,243,232,.4); }
+.contact-lines a:hover { color: var(--pencil); border-bottom-color: var(--pencil); }
+.contact-lines .lbl { font-size: 10px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--tape-2); display: block; line-height: 1.6; margin-top: 18px; }
+
+/* ── tamara ── */
+.tamara { position: relative; padding: clamp(100px, 15vh, 180px) var(--gut); text-align: center; }
 .tamara .chartbox { width: min(420px, 82vw); margin: 0 auto; }
 .tamara svg { width: 100%; height: auto; }
 .tamara .dot { fill: rgba(250,243,232,.5); }
@@ -307,54 +386,22 @@ main { position: relative; z-index: 2; }
   .tamara.revealed .gold-mark circle:last-child { animation-delay: .45s; }
   @keyframes draw { to { stroke-dashoffset: 0; } }
 }
-.tamara p {
-  margin-top: 30px;
-  font-family: var(--serif); font-style: italic;
-  font-size: clamp(19px, 2.2vw, 26px);
-  color: var(--chalk-dim);
-}
+.tamara p { margin-top: 30px; font-family: var(--serif); font-style: italic; font-size: clamp(19px, 2.2vw, 26px); color: var(--chalk-dim); }
 .tamara p b { color: var(--gold); font-weight: 500; }
-
-/* ── finale ── */
-.finale { text-align: center; padding-bottom: clamp(110px, 16vh, 190px); }
-.finale .mark-title { font-size: clamp(46px, 9vw, 150px); }
-.finale .count-8 { justify-content: center; margin-bottom: 22px; }
-.finale .sub { max-width: 46ch; margin: clamp(18px, 3vh, 30px) auto 0; color: var(--chalk-dim); line-height: 1.8; font-size: clamp(15px, 1.6vw, 18px); }
-.finale .ctas { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-top: clamp(30px, 5vh, 52px); }
-.finale .no-fee { margin-top: 26px; }
 
 /* ── colophon ── */
 .colophon {
   border-top: 1px dashed rgba(250,243,232,.2);
-  max-width: 1500px; margin: 0 auto;
-  padding: 40px var(--gut) 90px;
+  padding: 40px var(--gut) 80px;
   display: flex; flex-wrap: wrap; gap: 16px 40px; justify-content: space-between; align-items: baseline;
   font-size: 12px; color: var(--chalk-dim);
   position: relative; z-index: 2;
+  max-width: 1500px; margin: 0 auto;
 }
 .colophon .brand { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--chalk); }
 .colophon a { text-decoration: none; }
 .colophon a:hover { color: var(--pencil); }
 .colophon .socials { display: flex; gap: 20px; }
-
-/* ── masthead ── */
-.masthead {
-  position: fixed; inset: 0 0 auto 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between; gap: 14px;
-  padding: 16px var(--gut);
-  transition: background .3s ease, backdrop-filter .3s ease;
-}
-.masthead.solid { background: rgba(10,20,16,.82); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(250,243,232,.1); }
-.mast-brand { font-family: var(--serif); font-size: 19px; font-weight: 600; text-decoration: none; }
-.mast-brand em { font-style: italic; font-weight: 400; color: var(--tape-2); }
-.mast-mid { font-family: var(--count); font-size: 13px; letter-spacing: .3em; color: var(--chalk-dim); }
-@media (max-width: 720px) { .mast-mid { display: none; } }
-.mast-cta {
-  font-size: 10.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; text-decoration: none;
-  background: var(--tape); color: var(--marley); padding: 10px 18px;
-  transform: rotate(-.8deg); box-shadow: 0 1px 0 rgba(0,0,0,.4);
-}
-.mast-cta:hover { background: var(--tape-2); }
 
 /* ── reveals ── */
 @media (prefers-reduced-motion: no-preference) {
@@ -362,247 +409,434 @@ main { position: relative; z-index: 2; }
   .rv.revealed { opacity: 1; transform: none; }
   .rv2 { transition-delay: .15s; }
   .note.rv.revealed { transform: rotate(-1.6deg); }
-  .corner-note.rv.revealed { transform: rotate(1.4deg); }
 }
 </style>
 </head>
 <body>
 
 <div class="floor" aria-hidden="true"></div>
-
-<!-- formation layer: dancers re-form as you scroll -->
 <svg id="formation" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"></svg>
-
-<span class="stage-dir us">Upstage</span>
 <span class="stage-dir ds">Downstage</span>
 <span class="stage-dir sl">Stage Left</span>
 <span class="stage-dir sr">Stage Right</span>
 
 <header class="masthead" id="masthead">
-  <a class="mast-brand" href="#top">Dance <em>With</em> Dixon</a>
-  <span class="mast-mid">SEASON ONE &middot; 2026/27</span>
-  <a class="mast-cta" href="https://dancewithdixon.com/#contact">Express Interest</a>
+  <a class="mast-brand" href="#home">Dance <em>With</em> Dixon</a>
+  <nav class="nav-links" id="navlinks">
+    <a href="#home" data-page="home">Home</a>
+    <a href="#proseries" data-page="proseries">ProSeries</a>
+    <a href="#collective" data-page="collective">Collective</a>
+    <a href="#teachers" data-page="teachers">Teachers</a>
+    <a href="#gallery" data-page="gallery">Gallery</a>
+    <a href="#merch" data-page="merch">Merch</a>
+    <a href="#contact" data-page="contact">Contact</a>
+  </nav>
+  <div style="display:flex; gap:12px; align-items:center;">
+    <a class="mast-cta" href="#contact">Express Interest</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">Menu</button>
+  </div>
 </header>
+
+<div class="menu-overlay" id="menuOverlay">
+  <button class="menu-close" id="menuClose">Close</button>
+  <a href="#home" data-page="home"><span class="no">01</span>Home</a>
+  <a href="#proseries" data-page="proseries"><span class="no">02</span>ProSeries</a>
+  <a href="#collective" data-page="collective"><span class="no">03</span>Collective</a>
+  <a href="#teachers" data-page="teachers"><span class="no">04</span>Teachers</a>
+  <a href="#gallery" data-page="gallery"><span class="no">05</span>Gallery</a>
+  <a href="#merch" data-page="merch"><span class="no">06</span>Merch</a>
+  <a href="#contact" data-page="contact"><span class="no">07</span>Contact</a>
+</div>
 
 <main>
 
-<!-- ═══ THE COUNT-IN ═══ -->
-<section class="countin" id="top" data-formation="scatter">
-  <p class="prep rv">and we begin in <b>5, 6, 7, 8</b></p>
-  <h1 class="rv rv2">This isn&rsquo;t a studio.<br>It&rsquo;s a <em>company.</em></h1>
-  <p class="sub rv rv2">Elite youth training, ages 5 to 19. An adult modern company, 18 and up.
-  <strong>Every class and every piece from one working director.</strong>
-  Built from scratch in Orlando.</p>
-  <div class="hero-tape-row rv rv2">
-    <a class="btn" href="https://dancewithdixon.com/#contact">Express Interest &rarr;</a>
-    <a class="btn ghost" href="#mark-1">See Season One &darr;</a>
-    <span class="tape">Season One begins Aug 10</span>
-  </div>
-  <p class="note corner-note rv">placement still open,<br><span class="u">all three tracks.</span></p>
-</section>
+<!-- ════════════ HOME ════════════ -->
+<section class="page" id="page-home" data-formation="scatter">
 
-<!-- ═══ MARK 01 — THE CAST (PROSERIES) ═══ -->
-<section class="mark" id="mark-1" data-formation="lines">
-  <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
-  <div class="mark-head rv">
-    <span class="mark-no">01</span>
-    <h2 class="mark-title">Earn <em>your spot.</em></h2>
-  </div>
-  <div class="blocking" style="margin-bottom: clamp(30px,5vh,54px); align-items: start;">
-    <div class="copy rv">
-      <span class="tape"><span class="brandcase">dwdPROSERIES</span> &middot; ages 5 to 19</span>
-      <p>Three tracks: Prep, Elite, Pro. Audition-based, and every class designed by a working
-      director. Auditions wrapped in June. <strong>Placement is open in all three tracks, and
-      Dixon personally reaches out to every family who expresses interest.</strong></p>
-    </div>
-    <p class="note rv rv2">every track capped at ten.<br>small on purpose. <span class="u">spacing matters.</span></p>
-  </div>
-  <div class="casting rv">
-    <div class="cast-card">
-      <span class="holdtape"></span>
-      <h3>PREP</h3>
-      <p class="ages">ages 5 to 8 &middot; the foundation years</p>
-      <div class="fee">$195 <small>/ MONTH</small></div>
-      <p>Technique, musicality, first stage time.</p>
-      <p class="spots">Placement open</p>
-    </div>
-    <div class="cast-card">
-      <span class="holdtape"></span>
-      <h3>ELITE</h3>
-      <p class="ages">ages 8 to 12 &middot; the building years</p>
-      <div class="fee">$310 <small>/ MONTH</small></div>
-      <p>Full competition season with the full faculty rotation.</p>
-      <p class="spots">Placement open</p>
-    </div>
-    <div class="cast-card">
-      <span class="holdtape"></span>
-      <h3>PRO</h3>
-      <p class="ages">ages 12+ &middot; the proving years</p>
-      <div class="fee">$360 <small>/ MONTH</small></div>
-      <p>Advanced choreography and title-track entries.</p>
-      <p class="spots">Placement open</p>
-    </div>
-  </div>
-  <div class="casting-note rv">
-    <p class="casting-fine">Registration is $50, once. Costume and competition fees bill monthly
-    as deposits against the season&rsquo;s real total. You start paying it down from day one,
-    and the final balance settles when costumes are ordered and the comp slate locks.</p>
-    <a class="btn" href="https://dancewithdixon.com/#contact">Apply for placement &rarr;</a>
-  </div>
-</section>
-
-<!-- ═══ MARK 02 — THE COMPANY (COLLECTIVE) ═══ -->
-<section class="mark" id="mark-2" data-formation="diagonal">
-  <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
-  <div class="mark-head rv">
-    <span class="mark-no">02</span>
-    <h2 class="mark-title">More than a <em>drop-in class.</em></h2>
-  </div>
-  <div class="blocking">
-    <div class="copy rv">
-      <span class="tape t2"><span class="brandcase">dwdCOLLECTIVE</span> &middot; 18+</span>
-      <p>An adult modern company, about fifteen dancers, rehearsing by project across Orlando.
-      <strong>Real technique, real choreography, real stage time.</strong>
-      No audition. Just show up ready to move.</p>
-      <div class="hero-tape-row">
-        <a class="btn ghost" href="https://dancewithdixon.com/#collective">Join the Collective &rarr;</a>
+  <div class="hero">
+    <div>
+      <p class="prep rv">and we begin in <b>5, 6, 7, 8</b></p>
+      <h1 class="rv rv2">This isn&rsquo;t a studio.<br>It&rsquo;s a <em>company.</em></h1>
+      <p class="sub rv rv2">Elite youth training, ages 5 to 19. An adult modern company, 18 and up.
+      <strong>Every class and every piece from one working director.</strong>
+      Built from scratch in Orlando.</p>
+      <div class="cta-row rv rv2">
+        <a class="btn" href="#contact">Express Interest &rarr;</a>
+        <a class="btn ghost" href="#proseries">The Tracks &rarr;</a>
       </div>
     </div>
-    <figure class="print rv rv2">
+    <figure class="print hero-print rv rv2">
       <span class="ptape a"></span><span class="ptape b"></span>
-      <img src="img/dwdc-7I6A3724.jpg" alt="dwdCOLLECTIVE dancers mid-piece" style="aspect-ratio:4/3; object-fit:cover; width:100%;">
-      <figcaption>the Collective, spring showing</figcaption>
+      <img src="img/263_Calor_36.JPG" alt="DWD dancer performing Calor">
+      <figcaption>Calor, original choreography</figcaption>
     </figure>
   </div>
-</section>
 
-<!-- ═══ MARK 03 — REHEARSAL FOOTAGE (INTENSIVE) ═══ -->
-<section class="mark" id="mark-3" data-formation="clump">
-  <div class="count-8 rv"><span>3</span><span>2</span><span>3</span><span>4</span><span>5</span><b>6</b><span>7</span><span>8</span></div>
-  <div class="mark-head rv">
-    <span class="mark-no">03</span>
-    <h2 class="mark-title">That was <em>full out.</em></h2>
-  </div>
-  <div class="blocking" style="align-items: flex-end; margin-bottom: 10px;">
-    <div class="copy rv">
-      <span class="tape">Summer Intensive &middot; July 6 to 10 &middot; wrapped</span>
-      <p>Five days at Exchange Dance Academy. Eight styles, five faculty,
-      twenty-three awards on the last day. <strong>Season One is a full season of this:
-      August through May, all three tracks.</strong></p>
-    </div>
-    <p class="note rv rv2">the daily reels live<br>on <span class="u">@dwdproseries.</span></p>
-  </div>
-  <div class="tallies rv">
-    <div><div class="n">5</div><div class="l">Days</div></div>
-    <div><div class="n">8</div><div class="l">Styles</div></div>
-    <div><div class="n">5</div><div class="l">Faculty</div></div>
-    <div><div class="n">23<sup>&#9733;</sup></div><div class="l">Awards</div></div>
-  </div>
-  <div class="slates rv">
-    <div class="slate">
-      <div class="clip"><video src="../images/intensive/intensive-day1.mp4" poster="../images/intensive/intensive-day1-poster.jpg" muted loop playsinline preload="none"></video></div>
-      <div class="clapper"><span>DAY 01</span><i>JUL 6</i></div>
-      <div class="styles">Hip Hop + Jazz</div>
-    </div>
-    <div class="slate">
-      <div class="clip"><video src="../images/intensive/intensive-day2.mp4" poster="../images/intensive/intensive-day2-poster.jpg" muted loop playsinline preload="none"></video></div>
-      <div class="clapper"><span>DAY 02</span><i>JUL 7</i></div>
-      <div class="styles">Ballet + Musical Theatre</div>
-    </div>
-    <div class="slate">
-      <div class="clip"><video src="../images/intensive/intensive-day3.mp4" poster="../images/intensive/intensive-day3-poster.jpg" muted loop playsinline preload="none"></video></div>
-      <div class="clapper"><span>DAY 03</span><i>JUL 8</i></div>
-      <div class="styles">Tap + Lyrical</div>
-    </div>
-    <div class="slate">
-      <div class="clip"><video src="../images/intensive/intensive-day4.mp4" poster="../images/intensive/intensive-day4-poster.jpg" muted loop playsinline preload="none"></video></div>
-      <div class="clapper"><span>DAY 04</span><i>JUL 9</i></div>
-      <div class="styles">Acro + Contemporary</div>
+  <div class="tickertape" aria-hidden="true">
+    <div class="track">
+      <span>SEASON ONE BEGINS AUG 10 &middot; PLACEMENT OPEN IN ALL THREE TRACKS &middot; NO FEE TO EXPRESS INTEREST &middot;</span>
+      <span>SEASON ONE BEGINS AUG 10 &middot; PLACEMENT OPEN IN ALL THREE TRACKS &middot; NO FEE TO EXPRESS INTEREST &middot;</span>
     </div>
   </div>
-</section>
 
-<!-- ═══ MARK 04 — THE CHOREOGRAPHER ═══ -->
-<section class="mark" id="mark-4" data-formation="v">
-  <div class="count-8 rv"><span>4</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><b>7</b><span>8</span></div>
-  <div class="mark-head rv">
-    <span class="mark-no">04</span>
-    <h2 class="mark-title">Every class. <em>Every piece.</em></h2>
+  <div class="mark tight">
+    <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">01</span>
+      <h2 class="mark-title">Two companies. <em>One director.</em></h2>
+    </div>
+    <div class="entries rv">
+      <a class="entry" href="#proseries">
+        <span class="holdtape"></span>
+        <span class="who"><span class="brandcase">dwdPROSERIES</span> &middot; ages 5 to 19 &middot; competitive</span>
+        <img src="img/A-06-06-25-4927-Enhanced-NR.jpg" alt="ProSeries dancers at the June audition">
+        <h3>Earn <em>your spot.</em></h3>
+        <p>Three tracks: Prep, Elite, Pro. Audition-based. Every class designed by a working director.</p>
+        <span class="enter">Enter &rarr;</span>
+      </a>
+      <a class="entry alt" href="#collective">
+        <span class="holdtape"></span>
+        <span class="who"><span class="brandcase">dwdCOLLECTIVE</span> &middot; adults 18+ &middot; modern</span>
+        <img src="img/dwdc-7I6A3620.jpg" alt="dwdCOLLECTIVE in rehearsal">
+        <h3>More than a <em>drop-in class.</em></h3>
+        <p>Real technique, real choreography, real stage time. No audition. Just show up ready to move.</p>
+        <span class="enter">Enter &rarr;</span>
+      </a>
+    </div>
   </div>
-  <div class="blocking">
-    <figure class="print chart-frame rv">
-      <span class="ptape a"></span><span class="ptape b"></span>
-      <img src="img/Bowles-33-headshot.jpg" alt="Dixon Bowles, director and choreographer">
-      <figcaption>Dixon Bowles, director and choreographer</figcaption>
-    </figure>
-    <div class="copy">
-      <p class="rv">Seventeen years inside youth and professional dance. Dixon built DWD so
-      families get <strong>a working director, not a franchise.</strong> Every class designed by him.
-      Every piece set by him or faculty he chose.</p>
-      <div class="tallies rv rv2" style="margin-bottom: 0;">
-        <div><div class="n">100+</div><div class="l">Competition pieces</div></div>
-        <div><div class="n">9</div><div class="l">Years directing comp teams</div></div>
-        <div><div class="n">9&rarr;23</div><div class="l">Team grown, five seasons</div></div>
-      </div>
-      <div class="credits-sheet rv rv2">
-        <div>
-          <div class="ch">Trained &amp; worked with</div>
-          <ul>
-            <li>Disney Jr. Live &middot; national tour</li>
-            <li>Professional company &middot; NYC</li>
-            <li>Fly Dance Competition &middot; tour director</li>
-            <li>Adjunct professor of Jazz &middot; UVU</li>
-          </ul>
-        </div>
-        <div>
-          <div class="ch">Earned at</div>
-          <ul>
-            <li>ADCC Studio of Excellence</li>
-            <li>Groove &middot; Inferno</li>
-            <li>Tremaine &middot; StarQuest</li>
-          </ul>
+
+  <div class="mark tight">
+    <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">02</span>
+      <h2 class="mark-title">That was <em>full out.</em></h2>
+    </div>
+    <div class="blocking" style="align-items: flex-end;">
+      <div>
+        <span class="tape rv">Summer Intensive &middot; July 6 to 10 &middot; wrapped</span>
+        <p class="lede-copy rv">Five days at Exchange Dance Academy. Eight styles, five faculty,
+        twenty-three awards on the last day. <strong>Season One is a full season of this:
+        August through May, all three tracks.</strong></p>
+        <div class="cta-row rv rv2">
+          <a class="btn ghost" href="#proseries">See the recap &rarr;</a>
         </div>
       </div>
+      <p class="note rv rv2">the daily reels live<br>on <span class="u">@dwdproseries.</span></p>
+    </div>
+  </div>
+
+  <!-- her mark -->
+  <section class="tamara" id="tamara">
+    <div class="chartbox">
+      <svg viewBox="0 0 420 240" aria-label="Formation chart with Tamara's mark upstage center">
+        <text x="210" y="16" text-anchor="middle" fill="rgba(250,243,232,.3)" font-size="8" letter-spacing="4" font-family="Outfit, sans-serif">UPSTAGE</text>
+        <line x1="210" y1="26" x2="210" y2="232" stroke="rgba(250,243,232,.12)" stroke-width="1" stroke-dasharray="3 5"/>
+        <circle class="dot" cx="90"  cy="180" r="5"/>
+        <circle class="dot" cx="150" cy="196" r="5"/>
+        <circle class="dot" cx="210" cy="204" r="5"/>
+        <circle class="dot" cx="270" cy="196" r="5"/>
+        <circle class="dot" cx="330" cy="180" r="5"/>
+        <circle class="dot" cx="120" cy="130" r="5"/>
+        <circle class="dot" cx="210" cy="142" r="5"/>
+        <circle class="dot" cx="300" cy="130" r="5"/>
+        <g class="gold-mark">
+          <circle cx="204" cy="66" r="17"/>
+          <circle cx="219" cy="61" r="13"/>
+        </g>
+      </svg>
+    </div>
+    <p>Upstage center is marked, and it stays marked.<br><b>For Tamara.</b></p>
+  </section>
+
+</section>
+
+<!-- ════════════ PROSERIES ════════════ -->
+<section class="page" id="page-proseries" data-formation="lines">
+  <div class="mark" style="padding-top: 130px;">
+    <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">02</span>
+      <h2 class="mark-title page-title">Earn <em>your spot.</em></h2>
+    </div>
+    <div class="blocking" style="margin-bottom: clamp(30px,5vh,54px); align-items: start;">
+      <div>
+        <span class="tape rv"><span class="brandcase">dwdPROSERIES</span> &middot; ages 5 to 19</span>
+        <p class="lede-copy rv">Three tracks: Prep, Elite, Pro. Audition-based, and every class designed
+        by a working director. Auditions wrapped in June. <strong>Placement is open in all three tracks,
+        and Dixon personally reaches out to every family who expresses interest.</strong></p>
+      </div>
+      <p class="note rv rv2">every track capped at ten.<br>small on purpose. <span class="u">spacing matters.</span></p>
+    </div>
+    <div class="casting rv">
+      <div class="cast-card">
+        <span class="holdtape"></span>
+        <h3>PREP</h3>
+        <p class="ages">ages 5 to 8 &middot; the foundation years</p>
+        <div class="fee">$195 <small>/ MONTH</small></div>
+        <p>Technique, musicality, first stage time.</p>
+        <p class="spots">Placement open</p>
+      </div>
+      <div class="cast-card">
+        <span class="holdtape"></span>
+        <h3>ELITE</h3>
+        <p class="ages">ages 8 to 12 &middot; the building years</p>
+        <div class="fee">$310 <small>/ MONTH</small></div>
+        <p>Full competition season with the full faculty rotation.</p>
+        <p class="spots">Placement open</p>
+      </div>
+      <div class="cast-card">
+        <span class="holdtape"></span>
+        <h3>PRO</h3>
+        <p class="ages">ages 12+ &middot; the proving years</p>
+        <div class="fee">$360 <small>/ MONTH</small></div>
+        <p>Advanced choreography and title-track entries.</p>
+        <p class="spots">Placement open</p>
+      </div>
+    </div>
+    <div class="casting-note rv">
+      <p class="casting-fine">Registration is $50, once. Costume and competition fees bill monthly
+      as deposits against the season&rsquo;s real total. You start paying it down from day one,
+      and the final balance settles when costumes are ordered and the comp slate locks.</p>
+      <a class="btn" href="#contact">Apply for placement &rarr;</a>
+    </div>
+  </div>
+
+  <div class="mark tight">
+    <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">03</span>
+      <h2 class="mark-title">That was <em>full out.</em></h2>
+    </div>
+    <div class="blocking" style="align-items: flex-end; margin-bottom: 10px;">
+      <div>
+        <span class="tape rv">Summer Intensive &middot; July 6 to 10 &middot; wrapped</span>
+        <p class="lede-copy rv">Five days at Exchange Dance Academy. Eight styles, five faculty,
+        twenty-three awards on the last day. <strong>Season One is a full season of this:
+        August through May, all three tracks.</strong></p>
+      </div>
+      <p class="note rv rv2">the daily reels live<br>on <span class="u">@dwdproseries.</span></p>
+    </div>
+    <div class="tallies rv">
+      <div><div class="n">5</div><div class="l">Days</div></div>
+      <div><div class="n">8</div><div class="l">Styles</div></div>
+      <div><div class="n">5</div><div class="l">Faculty</div></div>
+      <div><div class="n">23<sup>&#9733;</sup></div><div class="l">Awards</div></div>
+    </div>
+    <div class="slates rv">
+      <div class="slate">
+        <div class="clip"><video src="../images/intensive/intensive-day1.mp4" poster="../images/intensive/intensive-day1-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="clapper"><span>DAY 01</span><i>JUL 6</i></div>
+        <div class="styles">Hip Hop + Jazz</div>
+      </div>
+      <div class="slate">
+        <div class="clip"><video src="../images/intensive/intensive-day2.mp4" poster="../images/intensive/intensive-day2-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="clapper"><span>DAY 02</span><i>JUL 7</i></div>
+        <div class="styles">Ballet + Musical Theatre</div>
+      </div>
+      <div class="slate">
+        <div class="clip"><video src="../images/intensive/intensive-day3.mp4" poster="../images/intensive/intensive-day3-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="clapper"><span>DAY 03</span><i>JUL 8</i></div>
+        <div class="styles">Tap + Lyrical</div>
+      </div>
+      <div class="slate">
+        <div class="clip"><video src="../images/intensive/intensive-day4.mp4" poster="../images/intensive/intensive-day4-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="clapper"><span>DAY 04</span><i>JUL 9</i></div>
+        <div class="styles">Acro + Contemporary</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ HER MARK ═══ -->
-<section class="tamara" id="tamara" data-formation="circle">
-  <div class="chartbox">
-    <svg viewBox="0 0 420 240" aria-label="Formation chart with Tamara's mark upstage center">
-      <text x="210" y="16" text-anchor="middle" fill="rgba(250,243,232,.3)" font-size="8" letter-spacing="4" font-family="Outfit, sans-serif">UPSTAGE</text>
-      <line x1="210" y1="26" x2="210" y2="232" stroke="rgba(250,243,232,.12)" stroke-width="1" stroke-dasharray="3 5"/>
-      <circle class="dot" cx="90"  cy="180" r="5"/>
-      <circle class="dot" cx="150" cy="196" r="5"/>
-      <circle class="dot" cx="210" cy="204" r="5"/>
-      <circle class="dot" cx="270" cy="196" r="5"/>
-      <circle class="dot" cx="330" cy="180" r="5"/>
-      <circle class="dot" cx="120" cy="130" r="5"/>
-      <circle class="dot" cx="210" cy="142" r="5"/>
-      <circle class="dot" cx="300" cy="130" r="5"/>
-      <g class="gold-mark">
-        <circle cx="204" cy="66" r="17"/>
-        <circle cx="219" cy="61" r="13"/>
-      </g>
-    </svg>
+<!-- ════════════ COLLECTIVE ════════════ -->
+<section class="page" id="page-collective" data-formation="diagonal">
+  <div class="mark" style="padding-top: 130px;">
+    <div class="count-8 rv"><span>3</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">03</span>
+      <h2 class="mark-title page-title">More than a <em>drop-in class.</em></h2>
+    </div>
+    <div class="blocking">
+      <div>
+        <span class="tape t2 rv"><span class="brandcase">dwdCOLLECTIVE</span> &middot; 18+</span>
+        <p class="lede-copy rv">An adult modern company, about fifteen dancers, rehearsing by project
+        across Orlando. <strong>Real technique, real choreography, real stage time.</strong>
+        No audition. Just show up ready to move.</p>
+        <div class="cta-row rv rv2">
+          <a class="btn" href="#contact">Get rehearsal info &rarr;</a>
+        </div>
+      </div>
+      <figure class="print rv rv2">
+        <span class="ptape a"></span><span class="ptape b"></span>
+        <img src="img/dwdc-7I6A3724.jpg" alt="dwdCOLLECTIVE dancers mid-piece" style="aspect-ratio:4/3; object-fit:cover; width:100%;">
+        <figcaption>the Collective, spring showing</figcaption>
+      </figure>
+    </div>
+    <div class="blocking" style="margin-top: clamp(40px,7vh,80px);">
+      <figure class="print rv">
+        <span class="ptape a"></span><span class="ptape b"></span>
+        <img src="img/dwdc-7I6A3629.jpg" alt="dwdCOLLECTIVE company movement" style="aspect-ratio:4/3; object-fit:cover; width:100%;">
+        <figcaption>rehearsal, by project</figcaption>
+      </figure>
+      <p class="note rv rv2">no audition.<br><span class="u">just show up ready to move.</span></p>
+    </div>
   </div>
-  <p>Upstage center is marked, and it stays marked.<br><b>For Tamara.</b></p>
 </section>
 
-<!-- ═══ THE FINALE ═══ -->
-<section class="mark finale" id="finale" data-formation="button">
-  <div class="count-8 rv"><span>5</span><span>6</span><span>7</span><b>8</b><span>hold</span></div>
-  <div class="rv">
-    <h2 class="mark-title">There is<br><em>still room.</em></h2>
+<!-- ════════════ TEACHERS ════════════ -->
+<section class="page" id="page-teachers" data-formation="v">
+  <div class="mark" style="padding-top: 130px;">
+    <div class="count-8 rv"><span>4</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><b>7</b><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">04</span>
+      <h2 class="mark-title page-title">Every class. <em>Every piece.</em></h2>
+    </div>
+    <div class="blocking">
+      <figure class="print rv">
+        <span class="ptape a"></span><span class="ptape b"></span>
+        <img src="img/Bowles-33-headshot.jpg" alt="Dixon Bowles, director and choreographer" style="width:100%; aspect-ratio:4/5; object-fit:cover; object-position:top;">
+        <figcaption>Dixon Bowles, director and choreographer</figcaption>
+      </figure>
+      <div>
+        <p class="lede-copy rv">Seventeen years inside youth and professional dance. Dixon built DWD so
+        families get <strong>a working director, not a franchise.</strong> Every class designed by him.
+        Every piece set by him or faculty he chose.</p>
+        <div class="tallies rv rv2" style="margin-bottom: 0;">
+          <div><div class="n">100+</div><div class="l">Competition pieces</div></div>
+          <div><div class="n">9</div><div class="l">Years directing comp teams</div></div>
+          <div><div class="n">9&rarr;23</div><div class="l">Team grown, five seasons</div></div>
+        </div>
+        <div class="credits-sheet rv rv2">
+          <div>
+            <div class="ch">Trained &amp; worked with</div>
+            <ul>
+              <li>Disney Jr. Live &middot; national tour</li>
+              <li>Professional company &middot; NYC</li>
+              <li>Fly Dance Competition &middot; tour director</li>
+              <li>Adjunct professor of Jazz &middot; UVU</li>
+            </ul>
+          </div>
+          <div>
+            <div class="ch">Earned at</div>
+            <ul>
+              <li>ADCC Studio of Excellence</li>
+              <li>Groove &middot; Inferno</li>
+              <li>Tremaine &middot; StarQuest</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: clamp(50px,8vh,90px);">
+      <span class="tape rv">The rotation</span>
+      <div class="faculty rv">
+        <figure class="print">
+          <span class="ptape a"></span><span class="ptape b"></span>
+          <img src="img/jackson.jpg" alt="Jackson">
+          <div class="fname">Jackson</div>
+          <div class="frole">Hip Hop</div>
+        </figure>
+        <figure class="print">
+          <span class="ptape a"></span><span class="ptape b"></span>
+          <img src="img/madi.jpg" alt="Madi Sprague">
+          <div class="fname">Madi Sprague</div>
+          <div class="frole">Tap</div>
+        </figure>
+        <figure class="print">
+          <span class="ptape a"></span><span class="ptape b"></span>
+          <img src="img/tori.jpg" alt="Tori Ugalde">
+          <div class="fname">Tori Ugalde</div>
+          <div class="frole">Faculty rotation</div>
+        </figure>
+        <figure class="print">
+          <span class="ptape a"></span><span class="ptape b"></span>
+          <img src="img/yahia.jpg" alt="Yahia">
+          <div class="fname">Yahia</div>
+          <div class="frole">Faculty</div>
+        </figure>
+      </div>
+    </div>
   </div>
-  <p class="sub rv rv2">Season One begins August 10, and placement is open in all three tracks.
-  Tell us about your dancer, and Dixon will reach out personally.</p>
-  <div class="ctas rv rv2">
-    <a class="btn" href="https://dancewithdixon.com/#contact">Express Interest &rarr;</a>
-    <a class="btn ghost" href="https://dancewithdixon.com/#proseries">See the tracks &rarr;</a>
+</section>
+
+<!-- ════════════ GALLERY ════════════ -->
+<section class="page" id="page-gallery" data-formation="clump">
+  <div class="mark" style="padding-top: 130px;">
+    <div class="count-8 rv"><span>5</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><b>8</b></div>
+    <div class="mark-head rv">
+      <span class="mark-no">05</span>
+      <h2 class="mark-title page-title">See the <em>work.</em></h2>
+    </div>
+    <div class="wall">
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/263_Calor_36.JPG" alt="Calor"><figcaption>Calor</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/121_Sisters_30.JPG" alt="Sisters"><figcaption>Sisters</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/231_Chariot_36.JPG" alt="Chariot"><figcaption>Chariot</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/287_Lime-in-the-Coconut_40.JPG" alt="Lime in the Coconut"><figcaption>Lime in the Coconut</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/70_Show-Some-Emotion_35.JPG" alt="Show Some Emotion"><figcaption>Show Some Emotion</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/48_I-Wanna-Go-Back_28.JPG" alt="I Wanna Go Back"><figcaption>I Wanna Go Back</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/201_Prelude-in-C-Minor_84.JPG" alt="Prelude in C Minor"><figcaption>Prelude in C Minor</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/dwdc-7I6A3760.jpg" alt="the Collective"><figcaption>the Collective</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/A-06-06-25-4993-Enhanced-NR.jpg" alt="June auditions"><figcaption>June auditions</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/A-06-06-25-5086-Enhanced-NR.jpg" alt="June auditions"><figcaption>June auditions</figcaption></figure>
+    </div>
   </div>
-  <div class="no-fee rv rv2"><span class="tape t3">No fee to express interest</span></div>
+</section>
+
+<!-- ════════════ MERCH ════════════ -->
+<section class="page" id="page-merch" data-formation="button">
+  <div class="mark" style="padding-top: 130px;">
+    <div class="count-8 rv"><span>6</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">06</span>
+      <h2 class="mark-title page-title">Wear the <em>company.</em></h2>
+    </div>
+    <span class="tape t3 rv">The order sheet</span>
+    <div class="ordersheet rv">
+      <div class="row"><span class="item">Hoodie</span><span class="fill"></span><span class="st">DWD &middot; FOREST</span></div>
+      <div class="row"><span class="item">Crewneck</span><span class="fill"></span><span class="st">DWD &middot; PINK</span></div>
+      <div class="row"><span class="item">Warmup jacket</span><span class="fill"></span><span class="st">PROSERIES</span></div>
+      <div class="row"><span class="item">Tee</span><span class="fill"></span><span class="st">DWD &middot; IVORY</span></div>
+      <div class="row"><span class="item">Joggers</span><span class="fill"></span><span class="st">DWD</span></div>
+      <div class="row"><span class="item">Tote</span><span class="fill"></span><span class="st">COLLECTIVE</span></div>
+      <div class="row"><span class="item">Stickers, pins, pens</span><span class="fill"></span><span class="st">ALL</span></div>
+    </div>
+    <div class="cta-row rv rv2">
+      <a class="btn" href="https://dancewithdixon.com/#merch">Shop the live site &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ CONTACT ════════════ -->
+<section class="page" id="page-contact" data-formation="circle">
+  <div class="mark" style="padding-top: 130px;">
+    <div class="count-8 rv"><span>5</span><span>6</span><span>7</span><b>8</b><span>hold</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">07</span>
+      <h2 class="mark-title page-title">There is<br><em>still room.</em></h2>
+    </div>
+    <div class="contact-wrap">
+      <div>
+        <p class="lede-copy rv">Season One begins August 10, and placement is open in all three tracks.
+        Tell us about your dancer, and Dixon will reach out personally.
+        <strong>There is no fee to express interest.</strong></p>
+        <div class="cta-row rv rv2">
+          <a class="btn" href="https://dancewithdixon.com/#contact">Express Interest &rarr;</a>
+        </div>
+        <div class="contact-lines rv rv2">
+          <span class="lbl">Email</span>
+          <a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a>
+          <span class="lbl">Instagram</span>
+          <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> &nbsp;&middot;&nbsp;
+          <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a> &nbsp;&middot;&nbsp;
+          <a href="https://instagram.com/dixonbowles" target="_blank" rel="noopener">@dixonbowles</a>
+          <span class="lbl">Home base</span>
+          Exchange Dance Academy &middot; Orlando, FL
+        </div>
+      </div>
+      <p class="note rv rv2" style="justify-self: end; align-self: center;">the express interest form on this
+      concept links to the real one.<br><span class="u">nothing here goes live without you.</span></p>
+    </div>
+  </div>
 </section>
 
 </main>
@@ -618,11 +852,32 @@ main { position: relative; z-index: 2; }
 </footer>
 
 <script>
+/* ── hash router (same model as the live site) ── */
+const PAGES = ['home','proseries','collective','teachers','gallery','merch','contact'];
+function currentPage() {
+  const h = (location.hash || '#home').slice(1);
+  return PAGES.includes(h) ? h : 'home';
+}
+function route() {
+  const p = currentPage();
+  document.querySelectorAll('.page').forEach(s => s.classList.toggle('active', s.id === 'page-' + p));
+  document.querySelectorAll('[data-page]').forEach(a => a.classList.toggle('on', a.dataset.page === p));
+  document.getElementById('menuOverlay').classList.remove('open');
+  window.scrollTo(0, 0);
+  const sec = document.getElementById('page-' + p);
+  if (sec && sec.dataset.formation) setFormation(sec.dataset.formation);
+  onScroll();
+}
+window.addEventListener('hashchange', route);
+
 /* ── masthead ── */
 const mast = document.getElementById('masthead');
 const onScroll = () => mast.classList.toggle('solid', window.scrollY > 40);
 window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
+
+/* ── mobile menu ── */
+document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('menuOverlay').classList.add('open'));
+document.getElementById('menuClose').addEventListener('click', () => document.getElementById('menuOverlay').classList.remove('open'));
 
 /* ── reveals ── */
 const io = new IntersectionObserver((es) => {
@@ -630,7 +885,7 @@ const io = new IntersectionObserver((es) => {
 }, { threshold: 0.16 });
 document.querySelectorAll('.rv, .tamara').forEach(el => io.observe(el));
 
-/* ── rehearsal clips: play on hover/tap ── */
+/* ── rehearsal clips ── */
 document.querySelectorAll('.slate video').forEach(v => {
   const c = v.closest('.slate');
   c.addEventListener('mouseenter', () => v.play().catch(()=>{}));
@@ -638,9 +893,7 @@ document.querySelectorAll('.slate video').forEach(v => {
   c.addEventListener('click', () => v.paused ? v.play().catch(()=>{}) : v.pause());
 });
 
-/* ── FORMATIONS: 14 dancers re-blocking as you scroll ──
-   Positions in 0..100 stage space. Each section declares
-   data-formation; dots ease toward the active target. */
+/* ── FORMATIONS: 14 dancers, re-blocked per page ── */
 const F = {
   scatter:  [[8,22],[24,60],[16,84],[34,30],[45,72],[52,14],[60,52],[68,86],[74,28],[82,64],[90,16],[93,44],[86,88],[40,92]],
   lines:    [[15,25],[32,25],[49,25],[66,25],[83,25],[15,50],[32,50],[49,50],[66,50],[83,50],[24,75],[41,75],[58,75],[75,75]],
@@ -665,10 +918,6 @@ function setFormation(name) {
   const f = F[name] || F.scatter;
   dots.forEach((d, i) => { d.tx = f[i][0]; d.ty = f[i][1]; if (reduced) { d.x = d.tx; d.y = d.ty; } });
 }
-const fio = new IntersectionObserver((es) => {
-  for (const e of es) if (e.isIntersecting) setFormation(e.target.dataset.formation);
-}, { threshold: 0.4 });
-document.querySelectorAll('[data-formation]').forEach(s => fio.observe(s));
 (function tick() {
   for (const d of dots) {
     d.x += (d.tx - d.x) * 0.045;
@@ -678,6 +927,8 @@ document.querySelectorAll('[data-formation]').forEach(s => fio.observe(s));
   }
   requestAnimationFrame(tick);
 })();
+
+route();
 </script>
 </body>
 </html>
