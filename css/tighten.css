@@ -239,7 +239,7 @@
 }
 .tri-card:hover {
   transform: translateY(-4px) scale(1.012) !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--rb-shadow-3);
 }
 .tri-card:active { transform: translateY(-1px) scale(0.998) !important; transition-duration: 0.1s !important; }
 
@@ -249,7 +249,7 @@
 }
 #page-home .entries .entry:hover {
   transform: translateY(-3px);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.40);
+  box-shadow: var(--rb-shadow-3);
 }
 
 /* ── Up-next / amuse feature card on home ── */
@@ -258,7 +258,7 @@
 }
 .upnext-card:hover {
   transform: translateY(-3px) scale(1.005);
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--rb-shadow-3);
 }
 
 /* ── ProSeries track-detail cards ── */
@@ -269,7 +269,7 @@
 .track-detail-card:hover,
 .td-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+  box-shadow: var(--rb-shadow-2);
 }
 
 /* ── Teacher rotation cards ── */
@@ -278,7 +278,7 @@
 }
 .tch-card:hover {
   transform: translateY(-4px) scale(1.015) !important;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--rb-shadow-3);
   filter: brightness(1.06);
 }
 
@@ -417,5 +417,203 @@ textarea:focus {
   #proseries-tracks-full,
   #proseries-interest {
     scroll-margin-top: 76px;
+  }
+}
+
+/* ═════════════════════════════════════════════════
+   iOS-feel polish pass — glass nav, scroll lock,
+   press states, focus rings, themed scrollbar.
+   ═════════════════════════════════════════════════ */
+
+/* ── C. Frosted-glass nav ──
+   The blur lives on a ::before pseudo-element, NOT on .topnav itself.
+   filter/backdrop-filter on an element creates a new containing block for
+   position:fixed descendants — and .topnav's own descendant, the mobile
+   menu panel (`.topnav nav`, see editorial.css), must stay fixed to the
+   *viewport* so it can go full-screen, not fixed to the ~100px-tall header.
+   Putting backdrop-filter on .topnav directly was shrinking that panel to a
+   sliver. The pseudo sits behind .topnav's real children (brand/nav/toggle)
+   via z-index: -1 within .topnav's own stacking context, so it reads
+   identically to a filter on .topnav itself. */
+.topnav {
+  background: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.topnav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(12, 31, 23, 0.82);
+  border-bottom: 1px solid var(--rb-rule);
+}
+.topnav.scrolled::before {
+  background: rgba(12, 31, 23, 0.96);
+}
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .topnav::before {
+    background: rgba(12, 31, 23, 0.72);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
+    backdrop-filter: blur(18px) saturate(1.5);
+    border-bottom: 1px solid var(--rb-rule-soft);
+  }
+  .topnav.scrolled::before {
+    background: rgba(12, 31, 23, 0.86);
+  }
+}
+
+/* ── D. Scroll lock while the mobile menu is open ──
+   main.js toggles `menu-open` on <html> on every open/close path
+   (toggle click, nav-link click, Escape). */
+html.menu-open {
+  overflow: hidden;
+}
+
+/* Menu toggle button: pressed/open visual state + real tap target */
+.topnav-toggle {
+  min-height: 44px;
+  transition: background var(--rb-dur-fast) ease, border-color var(--rb-dur-fast) ease;
+}
+.topnav.is-open .topnav-toggle {
+  background: rgba(250, 243, 232, 0.1);
+  border-color: var(--rb-rule);
+}
+
+/* ── E. Global iOS feel ── */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+/* Reserved for the menu panel only — never on body, so pull-to-refresh
+   and normal page bounce are untouched. */
+.topnav nav {
+  overscroll-behavior-y: contain;
+}
+
+/* Press states — extend the existing spring-hover pattern with a settle-down
+   tap. Fast duration so it reads as a snappy iOS press, not a lingering one. */
+.btn:active,
+.tri-card:active,
+.upnext-card:active,
+#page-home .entries .entry:active,
+.track-detail-card:active,
+.td-card:active,
+.track-detail:active,
+.tch-card:active,
+.topnav .nav-cta:active {
+  transform: scale(0.985);
+  transition-duration: var(--rb-dur-fast) !important;
+}
+
+/* :focus-visible ring — replaces default/blue outlines site-wide */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--rb-seafoam) !important;
+  outline-offset: 3px !important;
+}
+
+/* Themed thin scrollbar (desktop) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(250, 243, 232, 0.25) transparent;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(250, 243, 232, 0.25);
+  border-radius: var(--rb-radius-pill);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(250, 243, 232, 0.4);
+}
+
+/* Text selection */
+::selection {
+  background: var(--rb-terracotta);
+  color: var(--rb-ivory);
+}
+
+/* ── F. Card depth — tonal layering normalized across the main card
+       components. Overrides only (bases live in audition.css / poster-
+       pages.css / additions.css / styles.css, which this pass doesn't
+       touch). ── */
+.tri-card {
+  background: linear-gradient(180deg, var(--rb-bg-elevated) 0%, var(--rb-bg-base) 100%) !important;
+  border-color: var(--rb-rule-soft) !important;
+  border-radius: var(--rb-radius-m) !important;
+  box-shadow: var(--rb-shadow-1);
+}
+
+/* .track-detail on the live ProSeries page is poster-pages.css's
+   #page-proseries-scoped, !important, solid-color-per-track design
+   (coral/blush/green-ink block cards) — intentionally bold, not part of
+   the tonal "elevated card" system, and out of scope to restyle here.
+   Background/border/radius overrides would just lose to that ID-scoped
+   !important anyway; a soft resting/hover shadow is the one thing that
+   layers on top cleanly without fighting the poster look. */
+.track-detail {
+  box-shadow: var(--rb-shadow-1);
+  transition: transform var(--rb-dur-med) var(--ease-spring), box-shadow var(--rb-dur-med) ease;
+}
+.track-detail:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--rb-shadow-2);
+}
+
+/* No border-radius here: #page-teachers * { border-radius: 0 } is a
+   deliberate sharp-corner poster-page reset in poster-pages.css (higher
+   specificity via the ID + universal selector) — square corners are the
+   intentional look on this page, so only border + shadow layer on top. */
+.tch-card {
+  border: 1px solid var(--rb-rule-soft);
+  box-shadow: var(--rb-shadow-1);
+}
+.tch-card:hover {
+  box-shadow: var(--rb-shadow-3);
+}
+
+.track-record {
+  border: 1px solid var(--rb-rule-soft);
+  box-shadow: var(--rb-shadow-1);
+}
+
+/* ── G. Footer logo tile — soften the flat pink-on-white square ── */
+footer.site-footer .footer-brand img {
+  background: var(--rb-ivory);
+  border: 1px solid var(--rb-rule-soft);
+  border-radius: var(--rb-radius-m);
+  box-shadow: var(--rb-shadow-1);
+}
+
+/* ── Reduced-motion coverage for the new pieces above ──
+   additions.css's `*` strip already zeroes every transition/animation
+   duration site-wide; this block additionally kills the transform/opacity
+   end-states so nothing "settles" into an offset position. */
+@media (prefers-reduced-motion: reduce) {
+  .topnav nav a {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .btn:active,
+  .tri-card:active,
+  .upnext-card:active,
+  #page-home .entries .entry:active,
+  .track-detail-card:active,
+  .td-card:active,
+  .track-detail:active,
+  .tch-card:active,
+  .topnav .nav-cta:active,
+  .track-detail:hover {
+    transform: none !important;
   }
 }

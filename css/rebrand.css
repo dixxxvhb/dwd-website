@@ -24,6 +24,21 @@
   /* Rules */
   --rb-rule: rgba(250,243,232,0.16);
   --rb-rule-soft: rgba(250,243,232,0.08);
+
+  /* Radius scale */
+  --rb-radius-s: 8px;
+  --rb-radius-m: 16px;
+  --rb-radius-pill: 999px;
+
+  /* Forest-tinted shadow scale — never black */
+  --rb-shadow-1: 0 1px 2px rgba(12,31,23,.10), 0 2px 8px rgba(12,31,23,.10);
+  --rb-shadow-2: 0 2px 4px rgba(12,31,23,.12), 0 8px 24px rgba(12,31,23,.16);
+  --rb-shadow-3: 0 4px 12px rgba(12,31,23,.14), 0 16px 40px rgba(12,31,23,.22);
+
+  /* iOS-feel motion */
+  --rb-ease-out: cubic-bezier(.22,1,.36,1);
+  --rb-dur-fast: 160ms;
+  --rb-dur-med: 320ms;
 }
 
 /* ═══ GLOBAL — BODY & LEGACY NAV CONTROL ═══ */
