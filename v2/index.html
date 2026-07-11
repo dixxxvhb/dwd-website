@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Season One · The Program — Dance With Dixon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DWD — SEASON ONE: THE PROGRAM  (v2 concept, clean slate)
+   The site as a theatrical playbill. Acts, an intermission,
+   a finale, a colophon. No legacy CSS. No override wars.
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  --forest: #0c1f17;
+  --forest-light: #1a3d2e;
+  --forest-mid: #1e4432;
+  --terra: #C8614B;
+  --terra-light: #d4775f;
+  --terra-dark: #a8503e;
+  --pink: #f8d7c8;
+  --ivory: #FAF3E8;
+  --ivory-dim: #e8ddd0;
+  --seafoam: #6BAF8A;
+  --tamara-gold: #e2b955;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+  --impact: 'Bebas Neue', var(--sans);
+  --gutter: clamp(20px, 5vw, 72px);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--ivory);
+  color: var(--forest);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img, video { display: block; max-width: 100%; }
+a { color: inherit; }
+
+/* ── shared type ─────────────────────────────── */
+.eyebrow {
+  font-family: var(--sans);
+  font-size: clamp(10px, 1.1vw, 12px);
+  font-weight: 600;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+}
+.act-label {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: clamp(28px, 4vh, 48px);
+}
+.act-label::after { content: ''; flex: 1; height: 1px; background: currentColor; opacity: .3; }
+.brandcase { text-transform: none; }
+.display {
+  font-family: var(--serif);
+  font-weight: 500;
+  line-height: .92;
+  letter-spacing: -0.02em;
+}
+.lede {
+  font-family: var(--serif);
+  font-size: clamp(19px, 2.2vw, 26px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+/* ── buttons ─────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 17px 34px;
+  border-radius: 999px;
+  transition: background .25s ease, color .25s ease, transform .25s ease;
+}
+.btn-terra { background: var(--terra); color: var(--ivory); }
+.btn-terra:hover { background: var(--terra-dark); transform: translateY(-2px); }
+.btn-ghost-dark { border: 1px solid rgba(12,31,23,.45); color: var(--forest); }
+.btn-ghost-dark:hover { background: var(--forest); color: var(--ivory); }
+.btn-ghost-light { border: 1px solid rgba(250,243,232,.5); color: var(--ivory); }
+.btn-ghost-light:hover { background: var(--ivory); color: var(--forest); }
+.btn .arrow { font-family: var(--serif); font-size: 1.25em; line-height: 0; }
+
+/* ── masthead ────────────────────────────────── */
+.masthead {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px var(--gutter);
+  transition: background .35s ease, box-shadow .35s ease;
+}
+.masthead.solid {
+  background: rgba(250,243,232,.92);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(12,31,23,.12);
+}
+.masthead.on-dark:not(.solid) { color: var(--ivory); }
+.mast-brand {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.mast-brand em { font-style: italic; font-weight: 400; }
+.mast-center {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  opacity: .75;
+}
+.mast-cta {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--terra);
+  color: var(--ivory);
+  padding: 11px 20px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background .25s ease;
+}
+.mast-cta:hover { background: var(--terra-dark); }
+@media (max-width: 720px) { .mast-center { display: none; } }
+
+/* ── cover ───────────────────────────────────── */
+.cover {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  padding: 110px var(--gutter) 0;
+  background: var(--ivory);
+}
+.cover-rules {
+  position: absolute;
+  top: 86px; left: var(--gutter); right: var(--gutter);
+  border-top: 1px solid var(--forest);
+  padding-top: 5px;
+}
+.cover-rules::after { content: ''; display: block; border-top: 3px solid var(--forest); }
+.cover-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: end;
+  flex: 1;
+  padding: clamp(36px, 6vh, 72px) 0 clamp(28px, 5vh, 64px);
+}
+.cover-presents { color: var(--terra-dark); margin-bottom: clamp(18px, 3vh, 34px); }
+.cover h1 {
+  font-size: clamp(64px, 12.5vw, 210px);
+  color: var(--forest);
+}
+.cover h1 .line { display: block; }
+.cover h1 .line em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--terra);
+}
+.cover-dates {
+  margin-top: clamp(22px, 3.5vh, 40px);
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.9vw, 23px);
+  font-style: italic;
+  line-height: 1.5;
+  max-width: 34ch;
+}
+.cover-dates strong { font-style: normal; font-weight: 600; }
+.cover-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(24px, 3.5vh, 40px); }
+.cover-plate { position: relative; align-self: stretch; min-height: 380px; }
+.cover-plate .frame {
+  position: absolute;
+  inset: 26px -14px -14px 26px;
+  border: 1.5px solid var(--terra);
+  border-radius: 16px;
+}
+.cover-plate img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  filter: saturate(1.05);
+}
+.cover-plate figcaption {
+  position: absolute;
+  bottom: 14px; left: 16px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  text-shadow: 0 1px 8px rgba(12,31,23,.7);
+}
+@media (max-width: 860px) {
+  .cover-grid { grid-template-columns: 1fr; align-items: start; }
+  .cover-plate { min-height: 320px; order: 2; margin-bottom: 8px; }
+}
+
+/* ── ticker ──────────────────────────────────── */
+.ticker {
+  background: var(--forest);
+  color: var(--ivory);
+  overflow: hidden;
+  border-top: 1px solid rgba(250,243,232,.15);
+  padding: 13px 0;
+}
+.ticker-track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  white-space: nowrap;
+}
+.ticker-track span {
+  font-family: var(--impact);
+  font-size: 17px;
+  letter-spacing: .14em;
+  padding-right: 48px;
+}
+.ticker-track span i {
+  font-style: normal;
+  color: var(--terra-light);
+  padding-right: 48px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ticker-track { animation: ticker 32s linear infinite; }
+  @keyframes ticker { to { transform: translateX(-50%); } }
+}
+
+/* ── acts (shared) ───────────────────────────── */
+.act { position: relative; padding: clamp(80px, 13vh, 150px) var(--gutter); }
+.act-num {
+  position: absolute;
+  top: clamp(24px, 4vh, 56px);
+  right: var(--gutter);
+  font-family: var(--serif);
+  font-size: clamp(120px, 20vw, 300px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: .8;
+  opacity: .07;
+  pointer-events: none;
+  user-select: none;
+}
+.stage-dark { background: var(--forest); color: var(--ivory); }
+.stage-dark .eyebrow { color: var(--pink); }
+.stage-ivory { background: var(--ivory); color: var(--forest); }
+.stage-ivory .eyebrow { color: var(--terra-dark); }
+.stage-terra { background: var(--terra); color: var(--ivory); }
+.act h2.display { font-size: clamp(46px, 7.5vw, 120px); }
+.act .lede { max-width: 52ch; margin-top: clamp(18px, 3vh, 30px); }
+
+/* ── act I: proseries cast list ──────────────── */
+.act-1-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(36px, 5vw, 90px);
+  align-items: start;
+}
+.tracklist { margin-top: clamp(30px, 5vh, 56px); border-top: 1px solid rgba(250,243,232,.25); }
+.track-row {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  gap: 8px 24px;
+  align-items: baseline;
+  padding: clamp(20px, 3vh, 30px) 0;
+  border-bottom: 1px solid rgba(250,243,232,.25);
+  transition: padding-left .3s ease;
+}
+.track-row:hover { padding-left: 12px; }
+.track-name {
+  font-family: var(--serif);
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 500;
+  line-height: 1;
+}
+.track-name .dotlead { color: var(--terra-light); }
+.track-price { font-family: var(--impact); font-size: clamp(22px, 2.6vw, 32px); letter-spacing: .05em; color: var(--pink); }
+.track-price small { font-family: var(--sans); font-size: 11px; letter-spacing: .18em; color: var(--ivory-dim); }
+.track-meta {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  color: var(--ivory-dim);
+  line-height: 1.6;
+}
+.track-open {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--forest);
+  background: var(--seafoam);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-left: 12px;
+  vertical-align: middle;
+  transform: translateY(-4px);
+}
+.act-1-media { position: relative; }
+.act-1-media img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.act-1-media .caption-chip {
+  position: absolute;
+  top: 18px; left: 18px;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  background: rgba(12,31,23,.72);
+  color: var(--ivory);
+  padding: 8px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+.act-1-note {
+  margin-top: 22px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ivory-dim);
+  max-width: 46ch;
+}
+@media (max-width: 900px) { .act-1-grid { grid-template-columns: 1fr; } }
+
+/* ── act II: collective ──────────────────────── */
+.act-2-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(36px, 5vw, 90px);
+  align-items: center;
+}
+.act-2-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.act-2-photos img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.act-2-photos img:nth-child(2) { transform: translateY(clamp(20px, 4vh, 44px)); }
+.fact-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 36px;
+  margin-top: clamp(26px, 4vh, 40px);
+  padding-top: 22px;
+  border-top: 1px solid rgba(12,31,23,.2);
+}
+.fact-strip div { display: flex; flex-direction: column; gap: 4px; }
+.fact-strip dt { font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--terra-dark); }
+.fact-strip dd { font-family: var(--serif); font-size: 21px; font-weight: 500; }
+@media (max-width: 900px) { .act-2-grid { grid-template-columns: 1fr; } .act-2-photos { order: 2; } }
+
+/* ── intermission ────────────────────────────── */
+.intermission { padding: clamp(80px, 13vh, 150px) 0; }
+.intermission .inner-head { padding: 0 var(--gutter); }
+.intermission h2 { font-size: clamp(44px, 7vw, 110px); }
+.inter-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(24px, 5vw, 80px);
+  padding: 0 var(--gutter);
+  margin: clamp(30px, 5vh, 54px) 0;
+}
+.inter-stats div { text-align: left; }
+.inter-stats .n { font-family: var(--impact); font-size: clamp(56px, 8vw, 120px); line-height: .9; }
+.inter-stats .l { font-size: 11px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; opacity: .85; margin-top: 6px; }
+.filmstrip {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding: 10px var(--gutter) 26px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.filmstrip::-webkit-scrollbar { display: none; }
+.film-card {
+  position: relative;
+  flex: 0 0 clamp(230px, 26vw, 330px);
+  scroll-snap-align: start;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--forest);
+  aspect-ratio: 9 / 16;
+}
+.film-card video, .film-card img { width: 100%; height: 100%; object-fit: cover; }
+.film-card .day-tag {
+  position: absolute;
+  top: 14px; left: 14px;
+  font-family: var(--impact);
+  font-size: 20px;
+  letter-spacing: .1em;
+  color: var(--ivory);
+  background: rgba(12,31,23,.7);
+  padding: 6px 14px 4px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+.film-card .day-sub {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 40px 16px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  background: linear-gradient(180deg, transparent, rgba(12,31,23,.85));
+}
+.inter-close { padding: 0 var(--gutter); margin-top: 18px; }
+.inter-close .lede { max-width: 56ch; }
+
+/* ── act III: director ───────────────────────── */
+.act-3-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr);
+  gap: clamp(36px, 5vw, 90px);
+  align-items: start;
+}
+.act-3-media { position: relative; }
+.act-3-media img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 16px;
+  filter: saturate(1.02);
+}
+.act-3-media .frame {
+  position: absolute;
+  inset: -14px 26px 26px -14px;
+  border: 1.5px solid var(--terra-light);
+  border-radius: 16px;
+  pointer-events: none;
+}
+.bignum-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 28px 24px;
+  margin-top: clamp(28px, 4vh, 48px);
+}
+.bignum-row .n { font-family: var(--impact); font-size: clamp(48px, 6vw, 88px); line-height: .9; color: var(--pink); }
+.bignum-row .l { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--ivory-dim); margin-top: 8px; line-height: 1.5; }
+.credits {
+  margin-top: clamp(30px, 5vh, 52px);
+  columns: 2;
+  column-gap: 48px;
+  font-size: 13.5px;
+  line-height: 2.1;
+  letter-spacing: .04em;
+  color: var(--ivory-dim);
+}
+.credits .c-head {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--terra-light);
+  break-after: avoid;
+  margin-bottom: 4px;
+}
+.credits ul { list-style: none; margin-bottom: 22px; }
+@media (max-width: 900px) { .act-3-grid { grid-template-columns: 1fr; } .credits { columns: 1; } }
+
+/* ── tamara interlude ────────────────────────── */
+.interlude {
+  background: #081510;
+  color: var(--ivory);
+  text-align: center;
+  padding: clamp(90px, 15vh, 170px) var(--gutter);
+}
+.tamara-mark { width: 92px; height: 64px; margin: 0 auto 26px; }
+.tamara-mark circle { fill: none; stroke: var(--tamara-gold); stroke-width: 1.6; }
+@media (prefers-reduced-motion: no-preference) {
+  .tamara-mark circle {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+  }
+  .interlude.revealed .tamara-mark circle { animation: draw 2.4s ease forwards; }
+  .interlude.revealed .tamara-mark circle:last-child { animation-delay: .5s; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+}
+.interlude p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(19px, 2.2vw, 26px);
+  color: var(--ivory-dim);
+}
+
+/* ── finale ──────────────────────────────────── */
+.finale {
+  background: var(--ivory);
+  padding: clamp(90px, 15vh, 170px) var(--gutter);
+  text-align: center;
+}
+.finale h2 {
+  font-size: clamp(52px, 10vw, 170px);
+  color: var(--forest);
+}
+.finale h2 em { font-style: italic; font-weight: 300; color: var(--terra); }
+.finale .lede { max-width: 52ch; margin: clamp(20px, 3vh, 32px) auto 0; }
+.finale-ctas { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: clamp(28px, 5vh, 48px); }
+.finale-note { margin-top: 22px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--terra-dark); font-weight: 600; }
+
+/* ── colophon ────────────────────────────────── */
+.colophon {
+  background: var(--forest);
+  color: var(--ivory-dim);
+  padding: 44px var(--gutter) 54px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 44px;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 12px;
+  letter-spacing: .06em;
+}
+.colophon .brand { font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--ivory); }
+.colophon a { text-decoration: none; opacity: .85; }
+.colophon a:hover { opacity: 1; color: var(--pink); }
+.colophon .socials { display: flex; gap: 22px; }
+
+/* ── reveals ─────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.revealed { opacity: 1; transform: none; }
+  .reveal-d1 { transition-delay: .12s; }
+  .reveal-d2 { transition-delay: .24s; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead on-dark" id="masthead">
+  <a class="mast-brand" href="#top">Dance <em>With</em> Dixon</a>
+  <div class="mast-center">Season One &middot; The Program &middot; 2026&ndash;27</div>
+  <a class="mast-cta" href="https://dancewithdixon.com/#contact">Express Interest</a>
+</header>
+
+<!-- ═══ COVER ═══ -->
+<section class="cover" id="top">
+  <div class="cover-rules"></div>
+  <div class="cover-grid">
+    <div>
+      <p class="eyebrow cover-presents reveal">Dance With Dixon presents</p>
+      <h1 class="display reveal reveal-d1">
+        <span class="line">Season</span>
+        <span class="line"><em>One.</em></span>
+      </h1>
+      <p class="cover-dates reveal reveal-d2">
+        <strong>August 10, 2026 &mdash; May 25, 2027</strong><br>
+        A youth training company and an adult modern company,
+        built from scratch in Orlando, Florida.
+      </p>
+      <div class="cover-ctas reveal reveal-d2">
+        <a class="btn btn-terra" href="https://dancewithdixon.com/#contact">Express Interest <span class="arrow">&rarr;</span></a>
+        <a class="btn btn-ghost-dark" href="#act-1">Open the Program <span class="arrow">&darr;</span></a>
+      </div>
+    </div>
+    <figure class="cover-plate reveal reveal-d1">
+      <div class="frame"></div>
+      <img src="img/263_Calor_36.JPG" alt="DWD dancer mid-performance under stage light">
+      <figcaption>Calor &middot; Original Choreography</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══ TICKER ═══ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Season One begins Aug 10 <i>&#9670;</i> Placement open in all three tracks <i>&#9670;</i> Auditions wrapped in June <i>&#9670;</i> There is no fee to express interest <i>&#9670;</i></span>
+    <span>Season One begins Aug 10 <i>&#9670;</i> Placement open in all three tracks <i>&#9670;</i> Auditions wrapped in June <i>&#9670;</i> There is no fee to express interest <i>&#9670;</i></span>
+  </div>
+</div>
+
+<!-- ═══ ACT I — PROSERIES ═══ -->
+<section class="act stage-dark" id="act-1">
+  <div class="act-num">I</div>
+  <div class="act-label eyebrow">Act I &middot; <span class="brandcase">dwdPROSERIES</span> &middot; Ages 5&ndash;19</div>
+  <div class="act-1-grid">
+    <div>
+      <h2 class="display reveal">The company<br>your kid earns.</h2>
+      <p class="lede reveal reveal-d1">Three tracks, ten dancers each, every class designed by a working
+      director. This is not a studio you sign up for &mdash; it&rsquo;s a company you apply to.</p>
+
+      <dl class="tracklist reveal reveal-d1">
+        <div class="track-row">
+          <dt class="track-name">Prep <span class="track-open">Placement open</span></dt>
+          <dd class="track-price">$195<small> / MO</small></dd>
+          <dd class="track-meta">Ages 5&ndash;8 &middot; the foundation years &middot; technique, musicality, first stage time</dd>
+        </div>
+        <div class="track-row">
+          <dt class="track-name">Elite <span class="track-open">Placement open</span></dt>
+          <dd class="track-price">$310<small> / MO</small></dd>
+          <dd class="track-meta">Ages 8&ndash;12 &middot; the building years &middot; full competition season, faculty rotation</dd>
+        </div>
+        <div class="track-row">
+          <dt class="track-name">Pro <span class="track-open">Placement open</span></dt>
+          <dd class="track-price">$360<small> / MO</small></dd>
+          <dd class="track-meta">Ages 12+ &middot; the proving years &middot; advanced choreography, title-track entries</dd>
+        </div>
+      </dl>
+      <p class="act-1-note">Registration is $50, once. Costume and competition fees bill monthly as
+      deposits against the season&rsquo;s real total &mdash; you start paying it down from day one.</p>
+    </div>
+    <div class="act-1-media reveal reveal-d2">
+      <img src="img/A-06-06-25-4927-Enhanced-NR.jpg" alt="ProSeries dancers at the June audition">
+      <span class="caption-chip">June Auditions &middot; Exchange Dance</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ACT II — COLLECTIVE ═══ -->
+<section class="act stage-ivory" id="act-2">
+  <div class="act-num">II</div>
+  <div class="act-label eyebrow">Act II &middot; <span class="brandcase">dwdCOLLECTIVE</span> &middot; Adults 18+</div>
+  <div class="act-2-grid">
+    <div class="act-2-photos reveal">
+      <img src="img/dwdc-7I6A3620.jpg" alt="dwdCOLLECTIVE dancers in rehearsal">
+      <img src="img/dwdc-7I6A3724.jpg" alt="dwdCOLLECTIVE company movement study">
+    </div>
+    <div>
+      <h2 class="display reveal reveal-d1">More than a<br>drop-in class.</h2>
+      <p class="lede reveal reveal-d1">Real technique, real choreography, real stage time.
+      An adult modern company of about fifteen dancers, rehearsing by project across Orlando.</p>
+      <dl class="fact-strip reveal reveal-d2">
+        <div><dt>Audition</dt><dd>None</dd></div>
+        <div><dt>Style</dt><dd>Modern</dd></div>
+        <div><dt>Company</dt><dd>~15 dancers</dd></div>
+        <div><dt>Requirement</dt><dd>Show up ready to move</dd></div>
+      </dl>
+      <div class="cover-ctas reveal reveal-d2" style="margin-top:34px;">
+        <a class="btn btn-ghost-dark" href="https://dancewithdixon.com/#collective">Join the Collective <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INTERMISSION — SUMMER INTENSIVE ═══ -->
+<section class="intermission stage-terra" id="intermission">
+  <div class="inner-head">
+    <div class="act-label eyebrow">Intermission &middot; Summer Intensive &middot; July 6&ndash;10</div>
+    <h2 class="display reveal">That was full out.</h2>
+  </div>
+  <div class="inter-stats reveal reveal-d1">
+    <div><div class="n">5</div><div class="l">Days</div></div>
+    <div><div class="n">8</div><div class="l">Styles</div></div>
+    <div><div class="n">5</div><div class="l">Faculty</div></div>
+    <div><div class="n">23</div><div class="l">Awards</div></div>
+  </div>
+  <div class="filmstrip reveal reveal-d1">
+    <div class="film-card">
+      <video src="../images/intensive/intensive-day1.mp4" poster="../images/intensive/intensive-day1-poster.jpg" muted loop playsinline preload="none"></video>
+      <span class="day-tag">Day 01</span>
+      <span class="day-sub">Hip Hop + Jazz</span>
+    </div>
+    <div class="film-card">
+      <video src="../images/intensive/intensive-day2.mp4" poster="../images/intensive/intensive-day2-poster.jpg" muted loop playsinline preload="none"></video>
+      <span class="day-tag">Day 02</span>
+      <span class="day-sub">Ballet + Musical Theatre</span>
+    </div>
+    <div class="film-card">
+      <video src="../images/intensive/intensive-day3.mp4" poster="../images/intensive/intensive-day3-poster.jpg" muted loop playsinline preload="none"></video>
+      <span class="day-tag">Day 03</span>
+      <span class="day-sub">Tap + Lyrical</span>
+    </div>
+    <div class="film-card">
+      <video src="../images/intensive/intensive-day4.mp4" poster="../images/intensive/intensive-day4-poster.jpg" muted loop playsinline preload="none"></video>
+      <span class="day-tag">Day 04</span>
+      <span class="day-sub">Acro + Contemporary</span>
+    </div>
+  </div>
+  <div class="inter-close">
+    <p class="lede reveal">Five days at Exchange Dance Academy, closed out with awards.
+    Season One is a full season of this &mdash; August through May, all three tracks.</p>
+  </div>
+</section>
+
+<!-- ═══ ACT III — THE DIRECTOR ═══ -->
+<section class="act stage-dark" id="act-3">
+  <div class="act-num">III</div>
+  <div class="act-label eyebrow">Act III &middot; The Director</div>
+  <div class="act-3-grid">
+    <div class="act-3-media reveal">
+      <div class="frame"></div>
+      <img src="img/Bowles-33-headshot.jpg" alt="Dixon Bowles, director and choreographer">
+    </div>
+    <div>
+      <h2 class="display reveal reveal-d1">Every class.<br>Every piece.</h2>
+      <p class="lede reveal reveal-d1">Dixon Bowles has spent seventeen years inside youth and
+      professional dance &mdash; and built DWD so families get a director, not a franchise.</p>
+      <div class="bignum-row reveal reveal-d2">
+        <div><div class="n">100+</div><div class="l">Competition pieces choreographed</div></div>
+        <div><div class="n">9</div><div class="l">Years inside a youth competition program</div></div>
+        <div><div class="n">9&rarr;23</div><div class="l">Team grown across five seasons</div></div>
+        <div><div class="n">1</div><div class="l">Artistic director, start to finish</div></div>
+      </div>
+      <div class="credits reveal reveal-d2">
+        <div>
+          <div class="c-head">Trained &amp; worked with</div>
+          <ul>
+            <li>Disney Jr. Live &middot; National Tour</li>
+            <li>Professional company &middot; NYC</li>
+            <li>Fly Dance Competition &middot; Tour Director</li>
+            <li>Adjunct Professor of Jazz &middot; UVU</li>
+          </ul>
+        </div>
+        <div>
+          <div class="c-head">Earned at</div>
+          <ul>
+            <li>ADCC Studio of Excellence</li>
+            <li>Groove &middot; Inferno</li>
+            <li>Tremaine &middot; StarQuest</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INTERLUDE — TAMARA ═══ -->
+<section class="interlude" id="interlude">
+  <svg class="tamara-mark" viewBox="0 0 92 64" aria-label="Tamara memorial mark">
+    <circle cx="34" cy="34" r="26"></circle>
+    <circle cx="60" cy="30" r="22"></circle>
+  </svg>
+  <p>For Tamara.</p>
+</section>
+
+<!-- ═══ FINALE ═══ -->
+<section class="finale" id="finale">
+  <p class="eyebrow reveal" style="color: var(--terra-dark);">The Finale &middot; Your Move</p>
+  <h2 class="display reveal reveal-d1">Earn <em>your</em> spot.</h2>
+  <p class="lede reveal reveal-d1">Our June audition set the core of the company. Placement is open
+  in all three tracks, and Season One begins August 10. Tell us about your dancer, and Dixon
+  will reach out personally.</p>
+  <div class="finale-ctas reveal reveal-d2">
+    <a class="btn btn-terra" href="https://dancewithdixon.com/#contact">Express Interest <span class="arrow">&rarr;</span></a>
+    <a class="btn btn-ghost-dark" href="https://dancewithdixon.com/#proseries">See the Tracks <span class="arrow">&rarr;</span></a>
+  </div>
+  <p class="finale-note reveal reveal-d2">No fee to express interest</p>
+</section>
+
+<!-- ═══ COLOPHON ═══ -->
+<footer class="colophon">
+  <span class="brand">Dance <em style="font-weight:400;">With</em> Dixon</span>
+  <span>Est. 2025 &middot; Orlando, Florida &middot; &copy; 2026 Dance With Dixon LLC</span>
+  <span class="socials">
+    <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a>
+    <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a>
+    <a href="https://instagram.com/dixonbowles" target="_blank" rel="noopener">@dixonbowles</a>
+  </span>
+</footer>
+
+<script>
+// masthead: solid after cover, light text while over dark stages? keep simple: solid on scroll
+const mast = document.getElementById('masthead');
+const onScroll = () => {
+  const past = window.scrollY > 40;
+  mast.classList.toggle('solid', past);
+  mast.classList.toggle('on-dark', false);
+};
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// reveals
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
+}, { threshold: 0.18 });
+document.querySelectorAll('.reveal, .interlude').forEach(el => io.observe(el));
+
+// film strip: play on hover / tap, pause off
+document.querySelectorAll('.film-card video').forEach(v => {
+  const card = v.closest('.film-card');
+  card.addEventListener('mouseenter', () => { v.play().catch(()=>{}); });
+  card.addEventListener('mouseleave', () => { v.pause(); });
+  card.addEventListener('click', () => { v.paused ? v.play().catch(()=>{}) : v.pause(); });
+});
+</script>
+</body>
+</html>
