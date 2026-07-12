@@ -34,9 +34,9 @@ company works" section, new FAQ page (legacy copy verbatim), gallery lightbox,
 global mark-no renumbering 01-13.
 
 ## Known gaps / next steps
-- Faculty photos: jackson/madi are baked social graphics (names in-image), tori is a
-  casual photo. Need real faculty shots.
-- Director headshot is the old pre-beard one (same as live site).
+- Faculty photos: REAL photos in place (2026-07-12) from dwdPROSERIES/rotation-teachers/source.
+  Tori's is a 3x-upscaled crop of a casual field photo; a proper headshot of her is still wanted.
+- Director headshot is the old pre-beard one (same as live site). No current bald+beard solo shot exists anywhere on this PC; a new photo must be taken.
 - Merch page is a typographic stub linking to the live merch page.
 - Contact links out to the real express-interest form; no forms wired here.
 - A real port = replace the live index.html wholesale + rewire forms, analytics,
