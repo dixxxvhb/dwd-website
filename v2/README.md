@@ -1,7 +1,11 @@
 # /v2 — "THE PIECE" (approved working upgrade)
 
-**Status: approved direction, 2026-07-11.** Dixon signed off on this as the working
-upgrade for dancewithdixon.com. Work continues in later sessions. Do not delete.
+**Status: approved direction, 2026-07-11. Consolidated 2026-07-12: the working
+branch is now `version2`** (contains the full season-one-v2 history plus all THE
+PIECE work — one branch, one name). `concept/the-program` and `season-one-v2`
+are superseded; leave them as archive, do all new work on `version2`. Dixon
+signed off on this as the working upgrade for dancewithdixon.com. Work continues
+in later sessions. Do not delete.
 
 ## What this is
 A clean-slate redesign concept for the whole site, built as ONE self-contained file
@@ -42,5 +46,5 @@ global mark-no renumbering 01-13.
 - A real port = replace the live index.html wholesale + rewire forms, analytics,
   service worker, and era gates (docs/ERAS.md). Do NOT try to merge this into the
   legacy 10-sheet CSS system.
-- Relationship to branch `season-one-v2` (paused incremental overhaul, pre-ship):
-  Dixon decides later whether that still ships first or THE PIECE supersedes it.
+- DECIDED 2026-07-12: `version2` (THE PIECE) supersedes the season-one-v2
+  incremental overhaul. Its commits are part of this branch's history anyway.
