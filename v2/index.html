@@ -594,7 +594,8 @@ main { position: relative; z-index: 2; }
         twenty-three awards on the last day. <strong>Season One is a full season of this:
         August through May, all three tracks.</strong></p>
         <div class="cta-row rv rv2">
-          <a class="btn ghost" href="#proseries">See the recap &rarr;</a>
+          <a class="btn" href="#proseries" data-jump="#intensive-reels">Watch the recap reels &rarr;</a>
+          <a class="btn ghost" href="#proseries">The tracks &rarr;</a>
         </div>
       </div>
       <p class="note rv rv2">the daily reels live<br>on <span class="u">@dwdproseries.</span></p>
@@ -730,7 +731,7 @@ main { position: relative; z-index: 2; }
       <div><div class="n">5</div><div class="l">Faculty</div></div>
       <div><div class="n">23<sup>&#9733;</sup></div><div class="l">Awards</div></div>
     </div>
-    <div class="slates rv">
+    <div class="slates rv" id="intensive-reels">
       <div class="slate">
         <div class="clip"><video src="../images/intensive/intensive-day1.mp4" poster="../images/intensive/intensive-day1-poster.jpg" muted loop playsinline preload="none"></video></div>
         <div class="clapper"><span>DAY 01</span><i>JUL 6</i></div>
@@ -1091,6 +1092,20 @@ function route() {
   onScroll();
 }
 window.addEventListener('hashchange', route);
+
+/* ── cross-page jump links: route to the page, then scroll to the target ── */
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a[data-jump]');
+  if (!a) return;
+  const target = a.dataset.jump;
+  const go = () => {
+    const el = document.querySelector(target);
+    const smooth = !document.hidden && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (el) el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center' });
+  };
+  if (a.getAttribute('href') === location.hash) { e.preventDefault(); go(); }
+  else window.addEventListener('hashchange', () => setTimeout(go, 50), { once: true }); // after route() resets scroll
+});
 
 /* ── masthead ── */
 const mast = document.getElementById('masthead');
