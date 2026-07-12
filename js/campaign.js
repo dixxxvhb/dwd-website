@@ -760,7 +760,7 @@
     // the CTA always matches what the page actually shows:
     //   1. Intensive sign-up open (#proseries-intensive visible) → fullout page.
     //   2. Standing interest era (#proseries-interest visible, Jul 11 on,
-    //      auditions wrapped) → jump to the on-page Express Interest section.
+    //      auditions wrapped) → straight to the express-interest form (one click).
     //   3. Otherwise (pre-launch) → early-access email capture.
     var heroCta = document.getElementById('ps-hero-cta');
     var interestForm = document.getElementById('proseries-interest');
@@ -770,8 +770,8 @@
         heroCta.href = 'https://dancewithdixon.com/fullout';
         heroCta.innerHTML = 'FULL OUT Takeover Intensive <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
       } else if (interestForm && interestForm.style.display !== 'none') {
-        heroCta.href = '#proseries-interest';
-        heroCta.innerHTML = 'Express Interest';
+        heroCta.href = 'https://dwd-director.netlify.app/register';
+        heroCta.innerHTML = 'Express Interest <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
       } else {
         heroCta.href = '#early-access';
         heroCta.innerHTML = 'Get Early Access <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
