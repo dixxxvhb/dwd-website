@@ -25,6 +25,14 @@ file. `img/` holds resized derivatives (max ~1400px) — never hotlink
 python -m http.server 18790 -d C:/Users/bowle/Code/dwd-website-s1
 → http://localhost:18790/v2/  (browser caches hard; bust with ?v=N)
 
+## Flesh-out pass (2026-07-12)
+Full-site expansion: live Aug 10 countdown on home (flips to "Season One is
+underway" after), all ProSeries CTAs wired straight to the real express-interest
+form (dwd-director.netlify.app/register), "How placement works" 3-step section on
+ProSeries + Contact, tuition fine print under casting cards, Collective "How the
+company works" section, new FAQ page (legacy copy verbatim), gallery lightbox,
+global mark-no renumbering 01-13.
+
 ## Known gaps / next steps
 - Faculty photos: jackson/madi are baked social graphics (names in-image), tori is a
   casual photo. Need real faculty shots.

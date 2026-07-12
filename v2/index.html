@@ -327,6 +327,11 @@ main { position: relative; z-index: 2; }
 .slate .clapper i { font-style: normal; color: var(--tape-2); font-size: 12px; }
 .slate .styles { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--chalk-dim); padding: 8px 12px 0; }
 
+.curtain-count { display: flex; gap: clamp(24px, 5vw, 70px); flex-wrap: wrap; margin: clamp(18px, 3vh, 30px) 0 clamp(24px, 4vh, 40px); }
+.curtain-count .cc-n { font-family: var(--count); font-size: clamp(48px, 6vw, 92px); line-height: .85; color: var(--chalk); }
+.curtain-count .cc-l { font-size: 10.5px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--chalk-dim); margin-top: 6px; }
+.curtain-count.done .cc-n { font-family: var(--serif); font-style: italic; font-size: clamp(26px, 3.4vw, 40px); color: var(--pencil); }
+
 .tallies { display: flex; gap: clamp(28px, 6vw, 90px); flex-wrap: wrap; margin: clamp(28px, 5vh, 50px) 0; }
 .tallies .n { font-family: var(--count); font-size: clamp(58px, 7vw, 110px); line-height: .85; color: var(--chalk); }
 .tallies .n sup { font-size: .45em; color: var(--tape-2); }
@@ -346,14 +351,57 @@ main { position: relative; z-index: 2; }
 .credits-sheet ul { list-style: none; }
 .credits-sheet li::before { content: '·  '; color: var(--tape-2); }
 @media (max-width: 700px) { .credits-sheet { grid-template-columns: 1fr; } }
+.steps-sheet { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.5vw, 36px); }
+@media (max-width: 700px) { .steps-sheet { grid-template-columns: 1fr; } }
+.steps-sheet .ch { font-size: 10px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--tape-2); }
+.steps-sheet p { font-size: 13.5px; line-height: 1.7; color: var(--chalk-dim); margin-top: 6px; }
 
 /* ── gallery ── */
 .wall { columns: 3; column-gap: clamp(20px, 2.5vw, 40px); margin-top: clamp(30px, 5vh, 54px); }
 @media (max-width: 1000px) { .wall { columns: 2; } }
 @media (max-width: 620px) { .wall { columns: 1; } }
 .wall figure { break-inside: avoid; margin-bottom: clamp(28px, 3.5vw, 48px); }
-.wall .print { display: block; }
+.wall .print { display: block; cursor: zoom-in; }
 .wall img { width: 100%; }
+
+/* ── gallery lightbox ── */
+.lightbox {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(10,20,16,.96);
+  display: none;
+  align-items: center; justify-content: center;
+  flex-direction: column; gap: 18px;
+  padding: 60px var(--gut);
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: min(1100px, 92vw); max-height: 76vh; width: auto; object-fit: contain; }
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox img { animation: lbIn .25s ease; }
+  @keyframes lbIn { from { opacity: 0; transform: scale(.98); } to { opacity: 1; transform: scale(1); } }
+}
+.lightbox figcaption {
+  font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--chalk-dim);
+}
+.lightbox .lb-close {
+  position: absolute; top: 18px; right: var(--gut);
+  background: var(--tape); color: var(--marley); border: 0;
+  font-size: 11px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
+  padding: 10px 16px; cursor: pointer; transform: rotate(-1deg);
+}
+
+/* ── faq ── */
+.faq-sheet { margin-top: clamp(30px, 5vh, 50px); max-width: 900px; }
+.faq-item { border-top: 1px solid rgba(250,243,232,.18); padding: 20px 0; }
+.faq-item:last-child { border-bottom: 1px solid rgba(250,243,232,.18); }
+.faq-item summary {
+  cursor: pointer; list-style: none;
+  font-family: var(--serif); font-weight: 500; font-size: clamp(19px, 2.2vw, 25px);
+  color: var(--chalk); display: flex; align-items: baseline; gap: 14px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::before { content: '+'; font-family: var(--count); color: var(--tape-2); font-size: 20px; }
+.faq-item[open] summary::before { content: '\2212'; }
+.faq-item div { font-size: 14px; line-height: 1.8; color: var(--chalk-dim); margin-top: 12px; max-width: 62ch; }
 
 /* ── merch: the order sheet ── */
 .ordersheet { margin-top: clamp(30px, 5vh, 50px); max-width: 760px; border-top: 1px solid rgba(250,243,232,.18); }
@@ -429,10 +477,11 @@ main { position: relative; z-index: 2; }
     <a href="#teachers" data-page="teachers">Teachers</a>
     <a href="#gallery" data-page="gallery">Gallery</a>
     <a href="#merch" data-page="merch">Merch</a>
+    <a href="#faq" data-page="faq">FAQ</a>
     <a href="#contact" data-page="contact">Contact</a>
   </nav>
   <div style="display:flex; gap:12px; align-items:center;">
-    <a class="mast-cta" href="#contact">Express Interest</a>
+    <a class="mast-cta" href="https://dwd-director.netlify.app/register">Express Interest</a>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu">Menu</button>
   </div>
 </header>
@@ -445,7 +494,14 @@ main { position: relative; z-index: 2; }
   <a href="#teachers" data-page="teachers"><span class="no">04</span>Teachers</a>
   <a href="#gallery" data-page="gallery"><span class="no">05</span>Gallery</a>
   <a href="#merch" data-page="merch"><span class="no">06</span>Merch</a>
-  <a href="#contact" data-page="contact"><span class="no">07</span>Contact</a>
+  <a href="#faq" data-page="faq"><span class="no">07</span>FAQ</a>
+  <a href="#contact" data-page="contact"><span class="no">08</span>Contact</a>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lightboxClose">Close</button>
+  <img id="lightboxImg" src="" alt="">
+  <figcaption id="lightboxCaption"></figcaption>
 </div>
 
 <main>
@@ -461,7 +517,7 @@ main { position: relative; z-index: 2; }
       <strong>Every class and every piece from one working director.</strong>
       Built from scratch in Orlando.</p>
       <div class="cta-row rv rv2">
-        <a class="btn" href="#contact">Express Interest &rarr;</a>
+        <a class="btn" href="https://dwd-director.netlify.app/register">Express Interest &rarr;</a>
         <a class="btn ghost" href="#proseries">The Tracks &rarr;</a>
       </div>
     </div>
@@ -480,9 +536,29 @@ main { position: relative; z-index: 2; }
   </div>
 
   <div class="mark tight">
-    <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
       <span class="mark-no">01</span>
+      <h2 class="mark-title">Season One begins <em>August 10.</em></h2>
+    </div>
+    <span class="tape rv">Counts to curtain</span>
+    <div class="curtain-count rv" id="curtainCount">
+      <div class="cc-unit"><div class="cc-n" id="ccDays">00</div><div class="cc-l">Days</div></div>
+      <div class="cc-unit"><div class="cc-n" id="ccHrs">00</div><div class="cc-l">Hrs</div></div>
+      <div class="cc-unit"><div class="cc-n" id="ccMin">00</div><div class="cc-l">Min</div></div>
+      <div class="cc-unit"><div class="cc-n" id="ccSec">00</div><div class="cc-l">Sec</div></div>
+    </div>
+    <p class="lede-copy rv">Auditions have wrapped, but spots remain in all three tracks. Express interest
+    and Dixon will personally reach out with next steps.</p>
+    <div class="cta-row rv rv2">
+      <a class="btn" href="https://dwd-director.netlify.app/register">Express Interest</a>
+      <a class="btn ghost" href="#contact">How placement works</a>
+    </div>
+  </div>
+
+  <div class="mark tight">
+    <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">02</span>
       <h2 class="mark-title">Two companies. <em>One director.</em></h2>
     </div>
     <div class="entries rv">
@@ -508,7 +584,7 @@ main { position: relative; z-index: 2; }
   <div class="mark tight">
     <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">02</span>
+      <span class="mark-no">03</span>
       <h2 class="mark-title">That was <em>full out.</em></h2>
     </div>
     <div class="blocking" style="align-items: flex-end;">
@@ -555,7 +631,7 @@ main { position: relative; z-index: 2; }
   <div class="mark" style="padding-top: 130px;">
     <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">02</span>
+      <span class="mark-no">04</span>
       <h2 class="mark-title page-title">Earn <em>your spot.</em></h2>
     </div>
     <div class="blocking" style="margin-bottom: clamp(30px,5vh,54px); align-items: start;">
@@ -593,18 +669,50 @@ main { position: relative; z-index: 2; }
         <p class="spots">Placement open</p>
       </div>
     </div>
+    <p class="casting-fine rv" style="margin-top: clamp(20px,3vh,32px);">Plus a one-time $50 registration.
+    Costume and competition fees bill monthly as deposits toward the season&rsquo;s real total.</p>
     <div class="casting-note rv">
-      <p class="casting-fine">Registration is $50, once. Costume and competition fees bill monthly
-      as deposits against the season&rsquo;s real total. You start paying it down from day one,
-      and the final balance settles when costumes are ordered and the comp slate locks.</p>
-      <a class="btn" href="#contact">Apply for placement &rarr;</a>
+      <a class="btn" href="https://dwd-director.netlify.app/register">Apply for placement &rarr;</a>
+    </div>
+  </div>
+
+  <div class="mark tight">
+    <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">05</span>
+      <h2 class="mark-title">Auditions are done.<br><em>The door is still open.</em></h2>
+    </div>
+    <div class="blocking" style="align-items: start; margin-bottom: clamp(30px,5vh,54px);">
+      <p class="lede-copy rv">Our June audition set the core of Season One, but spots remain in all three
+      tracks. Here is how it works: fill out a short form about your dancer. No fee, no audition day to
+      wait for. Dixon reads every submission personally, and within a few days he will reach out directly
+      with placement options and next steps. That&rsquo;s it. One form, then a real conversation about
+      whether ProSeries is the right home for your dancer.</p>
+      <p class="note rv rv2">rolling placement<br><span class="u">until tracks fill.</span></p>
+    </div>
+    <div class="steps-sheet rv">
+      <div>
+        <div class="ch">1. The form</div>
+        <p>Tell us about your dancer. Two minutes, no fee.</p>
+      </div>
+      <div>
+        <div class="ch">2. The read</div>
+        <p>Dixon reads every submission personally.</p>
+      </div>
+      <div>
+        <div class="ch">3. The call</div>
+        <p>Within a few days he reaches out with placement options.</p>
+      </div>
+    </div>
+    <div class="cta-row rv rv2">
+      <a class="btn" href="https://dwd-director.netlify.app/register">Express Interest</a>
     </div>
   </div>
 
   <div class="mark tight">
     <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">03</span>
+      <span class="mark-no">06</span>
       <h2 class="mark-title">That was <em>full out.</em></h2>
     </div>
     <div class="blocking" style="align-items: flex-end; margin-bottom: 10px;">
@@ -652,7 +760,7 @@ main { position: relative; z-index: 2; }
   <div class="mark" style="padding-top: 130px;">
     <div class="count-8 rv"><span>3</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">03</span>
+      <span class="mark-no">07</span>
       <h2 class="mark-title page-title">More than a <em>drop-in class.</em></h2>
     </div>
     <div class="blocking">
@@ -680,6 +788,44 @@ main { position: relative; z-index: 2; }
       <p class="note rv rv2">no audition.<br><span class="u">just show up ready to move.</span></p>
     </div>
   </div>
+
+  <div class="mark tight">
+    <div class="count-8 rv"><span>3</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">08</span>
+      <h2 class="mark-title">How the company <em>works.</em></h2>
+    </div>
+    <div class="blocking">
+      <div>
+        <p class="lede-copy rv">dwdCOLLECTIVE is project based. We cast a piece, rehearse it, and put it
+        on a stage. Rehearsals run at Exchange Dance in Orlando or Next Level in St. Cloud depending on
+        the project. Adults 18 and up, modern and contemporary, all levels welcome to inquire. No
+        season-long commitment, you join per project.</p>
+        <div class="credits-sheet rv rv2" style="grid-template-columns: 1fr; gap: 18px;">
+          <div>
+            <span class="ch">The cast</span>
+            <p style="font-size:14px; line-height:1.7; color:var(--chalk-dim); margin-top:4px;">Around 15 dancers per project, mixed experience.</p>
+          </div>
+          <div>
+            <span class="ch">The commitment</span>
+            <p style="font-size:14px; line-height:1.7; color:var(--chalk-dim); margin-top:4px;">Weekly rehearsals for the run of a piece.</p>
+          </div>
+          <div>
+            <span class="ch">The stage</span>
+            <p style="font-size:14px; line-height:1.7; color:var(--chalk-dim); margin-top:4px;">Local shows, festivals, and collaborations around Central Florida.</p>
+          </div>
+        </div>
+        <div class="cta-row rv rv2">
+          <a class="btn" href="#contact">Get rehearsal info &rarr;</a>
+        </div>
+      </div>
+      <figure class="print rv rv2">
+        <span class="ptape a"></span><span class="ptape b"></span>
+        <img src="img/dwdc-7I6A3760.jpg" alt="dwdCOLLECTIVE dancers in rehearsal" style="aspect-ratio:4/3; object-fit:cover; width:100%;">
+        <figcaption>the Collective, in the room</figcaption>
+      </figure>
+    </div>
+  </div>
 </section>
 
 <!-- ════════════ TEACHERS ════════════ -->
@@ -687,7 +833,7 @@ main { position: relative; z-index: 2; }
   <div class="mark" style="padding-top: 130px;">
     <div class="count-8 rv"><span>4</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><b>7</b><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">04</span>
+      <span class="mark-no">09</span>
       <h2 class="mark-title page-title">Every class. <em>Every piece.</em></h2>
     </div>
     <div class="blocking">
@@ -764,10 +910,10 @@ main { position: relative; z-index: 2; }
   <div class="mark" style="padding-top: 130px;">
     <div class="count-8 rv"><span>5</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><b>8</b></div>
     <div class="mark-head rv">
-      <span class="mark-no">05</span>
+      <span class="mark-no">10</span>
       <h2 class="mark-title page-title">See the <em>work.</em></h2>
     </div>
-    <div class="wall">
+    <div class="wall" id="galleryWall">
       <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/263_Calor_36.JPG" alt="Calor"><figcaption>Calor</figcaption></figure>
       <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/121_Sisters_30.JPG" alt="Sisters"><figcaption>Sisters</figcaption></figure>
       <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/231_Chariot_36.JPG" alt="Chariot"><figcaption>Chariot</figcaption></figure>
@@ -787,7 +933,7 @@ main { position: relative; z-index: 2; }
   <div class="mark" style="padding-top: 130px;">
     <div class="count-8 rv"><span>6</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">06</span>
+      <span class="mark-no">11</span>
       <h2 class="mark-title page-title">Wear the <em>company.</em></h2>
     </div>
     <span class="tape t3 rv">The order sheet</span>
@@ -806,12 +952,69 @@ main { position: relative; z-index: 2; }
   </div>
 </section>
 
+<!-- ════════════ FAQ ════════════ -->
+<section class="page" id="page-faq" data-formation="lines">
+  <div class="mark" style="padding-top: 130px;">
+    <div class="count-8 rv"><span>7</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><b>8</b></div>
+    <div class="mark-head rv">
+      <span class="mark-no">12</span>
+      <h2 class="mark-title page-title">Questions from<br>the <em>wings.</em></h2>
+    </div>
+    <div class="faq-sheet rv">
+      <details class="faq-item">
+        <summary>Is it too late to join Season One?</summary>
+        <div>Not yet. Our June audition set the core of the company, but placement is open in all three tracks. Express interest and Dixon will reach out personally to talk about your dancer and where they fit.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is there another audition?</summary>
+        <div>No formal audition. Placement happens through a conversation and, when it helps, a visit to class. Seeing how your dancer moves and how they take a correction tells us more than one nervous morning ever could.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What happens after I express interest?</summary>
+        <div>Dixon reaches out personally, usually within a day or two. You will talk through your dancer's training history, which track fits, and what the season looks like. There is no fee to express interest.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Which track is right for my dancer?</summary>
+        <div>Prep is ages 5 to 8 and builds the foundation. Elite is ages 8 to 12 and adds hours, styles, and a bigger competition load. Pro is ages 12 and up and trains at a pre-professional level. Age is a starting point, not a rule. Placement is about where your dancer will grow fastest.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What does it cost?</summary>
+        <div>Tuition is $195, $310, or $360 a month depending on track, plus a one-time $50 registration and a $25 monthly admin fee during the season. Choreography is included. Costume and competition fees bill as monthly deposits that pay down the real totals from day one, and final balances bill when costumes are ordered and the competition slate locks.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What does a training week look like?</summary>
+        <div>Prep trains Monday evenings plus Thursday company work, about 4 hours a week. Elite trains Tuesday through Thursday, about 8 hours. Pro trains Tuesday through Thursday, about 10, including a weekly solo hour. Every track shares Thursday company choreography, because the company dancing together is the point.</div>
+      </details>
+      <details class="faq-item">
+        <summary>We would be joining after the season starts. Is my dancer behind?</summary>
+        <div>The season is built in layers. New dancers are placed into routines as they join, and choreography is structured so a dancer starting in late summer is not behind. The sooner we talk, the easier that is.</div>
+      </details>
+      <details class="faq-item">
+        <summary>My dancer has never competed. Is ProSeries a fit?</summary>
+        <div>Maybe, and that is an honest maybe. ProSeries is a competitive training company, so the stage is the goal. Nobody starts out competition-ready, and Prep and Elite exist to build that dancer. If your kid loves to dance and wants to be pushed, express interest and let's talk.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Where do you train?</summary>
+        <div>Exchange Dance Academy, 7409 Chancery Lane, Orlando. Evening classes, Monday through Thursday.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Who teaches?</summary>
+        <div>Dixon leads every track and builds the choreography. Rotation faculty in hip hop, tap, acro, and musical theatre round out the training. Meet the whole team on the Teachers page.</div>
+      </details>
+    </div>
+    <div class="cta-row rv rv2">
+      <a class="btn" href="https://dwd-director.netlify.app/register">Express Interest &rarr;</a>
+      <a class="btn ghost" href="#contact">How placement works &rarr;</a>
+    </div>
+  </div>
+</section>
+
 <!-- ════════════ CONTACT ════════════ -->
 <section class="page" id="page-contact" data-formation="circle">
   <div class="mark" style="padding-top: 130px;">
     <div class="count-8 rv"><span>5</span><span>6</span><span>7</span><b>8</b><span>hold</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">07</span>
+      <span class="mark-no">13</span>
       <h2 class="mark-title page-title">There is<br><em>still room.</em></h2>
     </div>
     <div class="contact-wrap">
@@ -820,7 +1023,21 @@ main { position: relative; z-index: 2; }
         Tell us about your dancer, and Dixon will reach out personally.
         <strong>There is no fee to express interest.</strong></p>
         <div class="cta-row rv rv2">
-          <a class="btn" href="https://dancewithdixon.com/#contact">Express Interest &rarr;</a>
+          <a class="btn" href="https://dwd-director.netlify.app/register">Express Interest &rarr;</a>
+        </div>
+        <div class="steps-sheet rv rv2" style="margin-top: clamp(20px,3vh,32px);">
+          <div>
+            <div class="ch">1. The form</div>
+            <p>Tell us about your dancer. Two minutes, no fee.</p>
+          </div>
+          <div>
+            <div class="ch">2. The read</div>
+            <p>Dixon reads every submission personally.</p>
+          </div>
+          <div>
+            <div class="ch">3. The call</div>
+            <p>Within a few days he reaches out with placement options.</p>
+          </div>
         </div>
         <div class="contact-lines rv rv2">
           <span class="lbl">Email</span>
@@ -853,7 +1070,7 @@ main { position: relative; z-index: 2; }
 
 <script>
 /* ── hash router (same model as the live site) ── */
-const PAGES = ['home','proseries','collective','teachers','gallery','merch','contact'];
+const PAGES = ['home','proseries','collective','teachers','gallery','merch','faq','contact'];
 function currentPage() {
   const h = (location.hash || '#home').slice(1);
   return PAGES.includes(h) ? h : 'home';
@@ -926,6 +1143,54 @@ function setFormation(name) {
     d.el.setAttribute('cy', d.y.toFixed(2));
   }
   requestAnimationFrame(tick);
+})();
+
+/* ── curtain countdown ── */
+(function curtainCount() {
+  const target = new Date('2026-08-10T04:00:00-04:00').getTime();
+  const box = document.getElementById('curtainCount');
+  if (!box) return;
+  const dEl = document.getElementById('ccDays'), hEl = document.getElementById('ccHrs'),
+        mEl = document.getElementById('ccMin'), sEl = document.getElementById('ccSec');
+  function tick() {
+    const diff = target - Date.now();
+    if (diff <= 0) {
+      box.classList.add('done');
+      box.innerHTML = '<div class="cc-n">Season One is underway.</div>';
+      return;
+    }
+    const s = Math.floor(diff / 1000);
+    dEl.textContent = String(Math.floor(s / 86400)).padStart(2, '0');
+    hEl.textContent = String(Math.floor((s % 86400) / 3600)).padStart(2, '0');
+    mEl.textContent = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+    sEl.textContent = String(s % 60).padStart(2, '0');
+    requestAnimationFrame(() => setTimeout(tick, 1000));
+  }
+  tick();
+})();
+
+/* ── gallery lightbox ── */
+(function lightbox() {
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCap = document.getElementById('lightboxCaption');
+  if (!lb) return;
+  function open(fig) {
+    const img = fig.querySelector('img');
+    const cap = fig.querySelector('figcaption');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt || '';
+    lbCap.textContent = cap ? cap.textContent : '';
+    lb.classList.add('open');
+  }
+  function close() { lb.classList.remove('open'); lbImg.src = ''; }
+  document.getElementById('galleryWall')?.addEventListener('click', (e) => {
+    const fig = e.target.closest('figure');
+    if (fig) open(fig);
+  });
+  document.getElementById('lightboxClose').addEventListener('click', close);
+  lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('open')) close(); });
 })();
 
 route();
