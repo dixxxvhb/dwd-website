@@ -4,33 +4,63 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a1410">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Dance With Dixon. An Orlando dance company: elite youth training and an adult modern company, led by one working director.">
 <title>Dance With Dixon | Orlando Dance Company</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a1410'/%3E%3Crect x='3' y='13' width='26' height='7' fill='%23C8614B' transform='rotate(-9 16 16)'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════════════════
-   DWD — "THE PIECE"  (v2 concept, take three: full site shape)
-   Same pages + hash routing as the live site, wearing the
-   choreography-document design language.
+   DWD — "THE PIECE"  (v4 prototype, branch version4)
+   The site as a choreography document. Same pages and hash routing
+   as the live site. The visuals carry the metaphor; Dixon's own
+   site copy carries the words.
    ═══════════════════════════════════════════════════════════════ */
+
+/* ── tokens ── */
 :root {
   --marley: #0a1410;
   --marley-worn: #10201a;
   --chalk: #FAF3E8;
-  --chalk-dim: rgba(250,243,232,.6);
-  --grid: rgba(250,243,232,.07);
+
+  /* one ink ladder instead of scattered alphas */
+  --ink-88: rgba(250,243,232,.88);
+  --ink-66: rgba(250,243,232,.66);
+  --ink-45: rgba(250,243,232,.45);
+  --ink-30: rgba(250,243,232,.30);
+  --ink-16: rgba(250,243,232,.16);
+  --ink-08: rgba(250,243,232,.08);
+
   --tape: #C8614B;
   --tape-2: #d4775f;
   --pencil: #f8d7c8;
-  --cast-b: #6BAF8A;
-  --gold: #e2b955;
+  --cast-b: #6BAF8A;      /* seafoam, Elite accent */
+  --cast-p: #FF8FAB;      /* soft pink, Prep accent */
+  --gold: #e2b955;        /* Tamara only. never elsewhere. */
+
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'Outfit', system-ui, sans-serif;
   --count: 'Bebas Neue', var(--sans);
+
+  --fs-cap: 10.5px;
+  --fs-fine: 13px;
+  --fs-body: clamp(15px, 1.55vw, 17.5px);
+  --fs-note: clamp(17px, 1.8vw, 21px);
+
   --gut: clamp(20px, 5vw, 80px);
+  --sp-section: clamp(80px, 12vh, 150px);
+  --sp-head: clamp(30px, 5vh, 56px);
+  --sp-block: clamp(26px, 4vh, 44px);
+
+  /* movement ends like a phrase: slow in, decisive out, settled */
+  --out: cubic-bezier(.16, 1, .3, 1);
+  --io: cubic-bezier(.65, .05, .35, 1);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
+html { scrollbar-color: var(--ink-30) var(--marley); }
 body {
   font-family: var(--sans);
   font-weight: 300;
@@ -39,16 +69,27 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-img, video { display: block; max-width: 100%; }
+img, video { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 ::selection { background: var(--tape); color: var(--marley); }
+:focus-visible { outline: 2px dashed var(--pencil); outline-offset: 3px; }
+.btn:focus-visible, .mast-cta:focus-visible, .tapebtn:focus-visible { outline-color: var(--chalk); }
+
+.skip {
+  position: fixed; top: -60px; left: var(--gut); z-index: 400;
+  background: var(--tape); color: var(--marley);
+  font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+  padding: 12px 18px; text-decoration: none;
+  transition: top .2s var(--out);
+}
+.skip:focus { top: 12px; }
 
 /* ── the floor ── */
 .floor {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    linear-gradient(var(--ink-08) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ink-08) 1px, transparent 1px);
   background-size: 96px 96px;
 }
 .floor::before {
@@ -61,10 +102,10 @@ a { color: inherit; }
     transparent 0, transparent 191px, rgba(0,0,0,.35) 191px, rgba(0,0,0,.35) 193px);
   opacity: .5;
 }
-#formation { position: fixed; inset: 0; z-index: 1; pointer-events: none; width: 100%; height: 100%; opacity: .5; }
+#formation { position: fixed; inset: 72px 0 0 0; z-index: 1; pointer-events: none; width: 100%; height: calc(100% - 72px); }
 .stage-dir {
   position: fixed; z-index: 90; pointer-events: none;
-  font-size: 9px; font-weight: 600; letter-spacing: .5em; color: rgba(250,243,232,.32);
+  font-size: 9px; font-weight: 600; letter-spacing: .5em; color: var(--ink-30);
 }
 .stage-dir.ds { bottom: 10px; left: 50%; transform: translateX(-50%); }
 .stage-dir.sl { right: 8px; top: 50%; transform: rotate(90deg) translateX(50%); transform-origin: right; }
@@ -74,22 +115,36 @@ a { color: inherit; }
 main { position: relative; z-index: 2; }
 .page { display: none; min-height: 100svh; }
 .page.active { display: block; }
+.page:focus { outline: none; }
 
-/* ── shared bits ── */
+/* ── tape ── */
 .tape {
   display: inline-block;
   background: var(--tape); color: var(--marley);
-  font-size: 10.5px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
+  font-size: var(--fs-cap); font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
   padding: 6px 14px 5px;
   transform: rotate(-1.2deg);
   box-shadow: 0 1px 0 rgba(0,0,0,.4);
 }
 .tape.t2 { transform: rotate(.8deg); background: var(--cast-b); }
 .tape.t3 { transform: rotate(-.6deg); background: var(--pencil); }
+.tape + .tape { margin-left: 10px; }
 .brandcase { text-transform: none; }
+
+/* spike-tape X: an open spot on the floor */
+.xmark { position: relative; width: 86px; height: 86px; flex: 0 0 auto; }
+.xmark::before, .xmark::after {
+  content: ''; position: absolute; left: 50%; top: 50%;
+  width: 104px; height: 16px;
+  background: var(--tape);
+  transform: translate(-50%,-50%) rotate(44deg);
+  box-shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+.xmark::after { transform: translate(-50%,-50%) rotate(-47deg); background: var(--tape-2); }
+
 .note {
   font-family: var(--serif); font-style: italic;
-  font-size: clamp(17px, 1.8vw, 21px);
+  font-size: var(--fs-note);
   color: var(--pencil);
   transform: rotate(-1.6deg);
   max-width: 30ch; line-height: 1.4;
@@ -97,14 +152,17 @@ main { position: relative; z-index: 2; }
 .note .u { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .count-8 {
   font-family: var(--count); letter-spacing: .1em;
-  color: rgba(250,243,232,.22);
+  color: var(--ink-45);
   font-size: clamp(15px, 1.6vw, 19px);
   display: flex; gap: clamp(10px, 2vw, 22px);
 }
 .count-8 b { color: var(--tape-2); font-weight: 400; }
-.mark { position: relative; padding: clamp(80px, 12vh, 150px) var(--gut); max-width: 1500px; margin: 0 auto; }
+
+/* ── marks (sections) ── */
+.mark { position: relative; padding: var(--sp-section) var(--gut); max-width: 1500px; margin: 0 auto; }
 .mark.tight { padding-top: clamp(40px, 6vh, 70px); }
-.mark-head { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; margin: 14px 0 clamp(30px, 5vh, 56px); }
+.mark.top { padding-top: 130px; }
+.mark-head { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; margin: 14px 0 var(--sp-head); }
 .mark-no {
   font-family: var(--count);
   font-size: clamp(64px, 8vw, 130px); line-height: .8;
@@ -114,10 +172,11 @@ main { position: relative; z-index: 2; }
   font-family: var(--serif); font-weight: 500;
   font-size: clamp(40px, 6.5vw, 104px);
   line-height: .95; letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 .mark-title em { font-style: italic; font-weight: 400; color: var(--tape-2); }
 .page-title { font-size: clamp(46px, 8vw, 130px); }
-.lede-copy { font-size: clamp(15px, 1.6vw, 18px); line-height: 1.8; color: var(--chalk-dim); max-width: 56ch; margin-top: 16px; }
+.lede-copy { font-size: var(--fs-body); line-height: 1.8; color: var(--ink-66); max-width: 56ch; margin-top: 16px; text-wrap: pretty; }
 .lede-copy strong { color: var(--chalk); font-weight: 500; }
 
 .btn {
@@ -128,7 +187,7 @@ main { position: relative; z-index: 2; }
   background: var(--tape); color: var(--marley);
   transform: rotate(-.5deg);
   box-shadow: 0 2px 0 rgba(0,0,0,.45);
-  transition: transform .2s ease, background .2s ease;
+  transition: transform .45s var(--out), background .3s ease;
 }
 .btn:hover { transform: rotate(-.5deg) translateY(-2px); background: var(--tape-2); }
 .btn.ghost {
@@ -138,22 +197,44 @@ main { position: relative; z-index: 2; }
   transform: rotate(.4deg);
 }
 .btn.ghost:hover { outline-color: var(--pencil); color: var(--pencil); }
-.cta-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-top: clamp(26px, 4vh, 44px); }
+.cta-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-top: var(--sp-block); }
 
+/* ── prints: photos taped to the document ── */
 .print { position: relative; display: inline-block; }
-.print img { display: block; filter: saturate(1.02); }
+.print .ph { position: relative; overflow: hidden; }
+.print .ph img { width: 100%; filter: saturate(.78) contrast(1.05) brightness(.97); }
+.print .ph::before {
+  /* pull every photo toward the room: marley in the hue, luminance kept */
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: var(--marley-worn);
+  mix-blend-mode: color; opacity: .22;
+}
+.print .ph::after {
+  /* the honey grade: warm top light, shadows fall toward the floor */
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(168deg,
+    rgba(248,215,200,.16) 0%, rgba(248,215,200,0) 36%,
+    rgba(10,20,16,0) 55%, rgba(10,20,16,.5) 100%);
+  mix-blend-mode: soft-light;
+}
 .print .ptape {
-  position: absolute; width: 74px; height: 20px; background: rgba(250,243,232,.28);
+  position: absolute; z-index: 2; width: 74px; height: 20px; background: rgba(250,243,232,.28);
   box-shadow: 0 1px 2px rgba(0,0,0,.3);
 }
 .print .ptape.a { top: -8px; left: -18px; transform: rotate(-38deg); }
 .print .ptape.b { top: -8px; right: -18px; transform: rotate(38deg); }
+.print .ptape.c { top: -9px; left: 50%; transform: translateX(-50%) rotate(-2.5deg); width: 92px; }
+.print .ptape.d { bottom: -8px; right: -16px; transform: rotate(-40deg); }
 .print figcaption {
   margin-top: 12px;
-  font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--chalk-dim);
+  font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-66);
   transform: rotate(-.8deg);
 }
 .blocking { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(30px, 5vw, 80px); align-items: center; }
+.blocking.head { align-items: start; }
+.blocking.feet { align-items: end; }
+.blocking.director { grid-template-columns: .8fr 1.2fr; align-items: start; }
+.blocking.director .print { max-width: 460px; }
 @media (max-width: 900px) { .blocking { grid-template-columns: 1fr; } }
 
 /* ── masthead + nav ── */
@@ -169,7 +250,7 @@ main { position: relative; z-index: 2; }
 .nav-links { display: flex; gap: clamp(14px, 2vw, 30px); align-items: center; }
 .nav-links a {
   font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
-  text-decoration: none; color: var(--chalk-dim);
+  text-decoration: none; color: var(--ink-66);
   padding: 6px 2px;
   border-bottom: 2px solid transparent;
   transition: color .2s ease;
@@ -177,7 +258,7 @@ main { position: relative; z-index: 2; }
 .nav-links a:hover { color: var(--chalk); }
 .nav-links a.on { color: var(--chalk); border-bottom-color: var(--tape); }
 .mast-cta {
-  font-size: 10.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; text-decoration: none;
+  font-size: var(--fs-cap); font-weight: 700; letter-spacing: .22em; text-transform: uppercase; text-decoration: none;
   background: var(--tape); color: var(--marley); padding: 10px 18px;
   transform: rotate(-.8deg); box-shadow: 0 1px 0 rgba(0,0,0,.4);
   white-space: nowrap;
@@ -205,13 +286,23 @@ main { position: relative; z-index: 2; }
   padding: 0 var(--gut);
 }
 .menu-overlay.open { display: flex; }
-.menu-overlay a {
+.menu-overlay nav { display: flex; flex-direction: column; }
+.menu-overlay nav a {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(34px, 7vh, 56px); line-height: 1.25;
+  font-size: clamp(30px, 6.2vh, 54px); line-height: 1.25;
   text-decoration: none; color: var(--chalk);
 }
-.menu-overlay a .no { font-family: var(--count); font-size: .45em; color: var(--tape-2); margin-right: 16px; letter-spacing: .1em; }
-.menu-overlay a.on { color: var(--tape-2); font-style: italic; }
+.menu-overlay nav a .no { font-family: var(--count); font-size: .45em; color: var(--tape-2); margin-right: 16px; letter-spacing: .1em; }
+.menu-overlay nav a.on { color: var(--tape-2); font-style: italic; }
+.menu-foot { margin-top: clamp(24px, 5vh, 44px); display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+.tapebtn {
+  display: inline-block;
+  background: var(--tape); color: var(--marley); text-decoration: none;
+  font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+  padding: 14px 24px; transform: rotate(-1deg); box-shadow: 0 2px 0 rgba(0,0,0,.45);
+}
+.menu-foot .socials { display: flex; gap: 18px; font-size: 12px; color: var(--ink-66); }
+.menu-foot .socials a { text-decoration: none; }
 .menu-close {
   position: absolute; top: 18px; right: var(--gut);
   background: var(--tape); color: var(--marley); border: 0;
@@ -235,13 +326,28 @@ main { position: relative; z-index: 2; }
   font-size: clamp(52px, 8.5vw, 136px);
   line-height: .92; letter-spacing: -0.02em;
   margin: clamp(12px, 2vh, 24px) 0 0;
+  text-wrap: balance;
 }
 .hero h1 em { font-style: italic; font-weight: 400; color: var(--tape-2); }
-.hero .sub { margin-top: clamp(20px, 3.5vh, 36px); max-width: 48ch; font-size: clamp(15px, 1.6vw, 18px); line-height: 1.75; color: var(--chalk-dim); }
+.hero .sub { margin-top: clamp(20px, 3.5vh, 36px); max-width: 48ch; font-size: var(--fs-body); line-height: 1.75; color: var(--ink-66); }
 .hero .sub strong { color: var(--chalk); font-weight: 500; }
 .hero-print { justify-self: end; width: min(440px, 100%); }
-.hero-print img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+.hero-print .ph img { aspect-ratio: 4/5; object-fit: cover; }
 @media (max-width: 900px) { .hero-print { justify-self: start; width: min(380px, 88%); } }
+
+/* the count-in: numbers land on the beat, the headline lands on one */
+@media (prefers-reduced-motion: no-preference) {
+  body.count-in .cin span { opacity: 0; translate: 0 8px; animation: landIn .5s var(--out) forwards; }
+  body.count-in .cin span:nth-child(1) { animation-delay: .15s; }
+  body.count-in .cin span:nth-child(2) { animation-delay: .5s; }
+  body.count-in .cin span:nth-child(3) { animation-delay: .85s; }
+  body.count-in .cin span:nth-child(4) { animation-delay: 1.2s; }
+  body.count-in .cue { opacity: 0; translate: 0 20px; animation: landIn .9s var(--out) forwards; }
+  body.count-in .cue.c1 { animation-delay: 1.6s; }
+  body.count-in .cue.c2 { animation-delay: 1.75s; }
+  body.count-in .cue.c3 { animation-delay: 1.9s; }
+  @keyframes landIn { to { opacity: 1; translate: 0 0; } }
+}
 
 /* ── ticker: one long piece of tape ── */
 .tickertape {
@@ -259,8 +365,9 @@ main { position: relative; z-index: 2; }
   color: var(--marley); padding-right: 56px;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .tickertape .track { animation: tick 30s linear infinite; }
-  @keyframes tick { to { transform: translateX(-50%); } }
+  .tickertape .track { animation: tick 36s linear infinite; }
+  .tickertape:hover .track { animation-play-state: paused; }
+  @keyframes tick { to { transform: translateX(-33.333%); } }
 }
 
 /* ── HOME: the two companies ── */
@@ -271,7 +378,7 @@ main { position: relative; z-index: 2; }
   background: var(--marley-worn);
   border: 1px solid rgba(250,243,232,.12);
   padding: clamp(22px, 3vw, 36px);
-  transition: border-color .25s ease, transform .25s ease;
+  transition: border-color .3s ease, transform .5s var(--out);
 }
 .entry:hover { border-color: rgba(250,243,232,.35); transform: translateY(-4px); }
 .entry .holdtape {
@@ -279,12 +386,14 @@ main { position: relative; z-index: 2; }
   background: var(--tape); transform: rotate(-2deg); box-shadow: 0 1px 2px rgba(0,0,0,.4);
 }
 .entry.alt .holdtape { background: var(--cast-b); transform: rotate(1.6deg); }
-.entry img { width: 100%; aspect-ratio: 16/10; object-fit: cover; margin: 10px 0 20px; }
+.entry .ph { margin: 10px 0 20px; }
+.entry .ph img { aspect-ratio: 16/10; object-fit: cover; transition: scale 1.4s var(--out); }
+.entry:hover .ph img { scale: 1.02; }
 .entry h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 3.4vw, 46px); line-height: 1; }
 .entry h3 em { font-style: italic; font-weight: 400; color: var(--tape-2); }
-.entry .who { font-size: 10.5px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--chalk-dim); margin-top: 10px; }
-.entry p { font-size: 14px; line-height: 1.7; color: var(--chalk-dim); margin-top: 12px; }
-.entry .enter { margin-top: 18px; font-size: 11px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--tape-2); }
+.entry .who { font-size: var(--fs-cap); font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-66); margin-top: 10px; }
+.entry p { font-size: 14px; line-height: 1.7; color: var(--ink-66); margin-top: 12px; }
+.entry .enter { margin-top: 18px; display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--tape-2); }
 
 /* ── casting cards (proseries) ── */
 .casting { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.5vw, 36px); }
@@ -297,26 +406,54 @@ main { position: relative; z-index: 2; }
 }
 .cast-card .holdtape {
   position: absolute; top: -12px; left: 50%; transform: translateX(-50%) rotate(-2deg);
-  width: 92px; height: 22px; background: var(--tape);
+  width: 92px; height: 22px;
   opacity: .92; box-shadow: 0 1px 2px rgba(0,0,0,.4);
 }
-.cast-card:nth-child(2) .holdtape { background: var(--cast-b); transform: translateX(-50%) rotate(1.5deg); }
-.cast-card:nth-child(3) .holdtape { background: var(--pencil); transform: translateX(-50%) rotate(-1deg); }
+/* track accents live on the tape and the open line, nothing louder */
+.cast-card.prep .holdtape { background: var(--cast-p); }
+.cast-card.elite .holdtape { background: var(--cast-b); transform: translateX(-50%) rotate(1.5deg); }
+.cast-card.pro .holdtape { background: var(--tape); transform: translateX(-50%) rotate(-1deg); }
 .cast-card h3 { font-family: var(--count); font-weight: 400; font-size: clamp(40px, 4.5vw, 64px); line-height: .9; letter-spacing: .04em; }
 .cast-card .ages { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--pencil); margin-top: 6px; }
 .cast-card .fee { font-family: var(--count); font-size: clamp(26px, 3vw, 38px); letter-spacing: .06em; margin-top: 18px; color: var(--chalk); }
-.cast-card .fee small { font-family: var(--sans); font-size: 10px; letter-spacing: .2em; color: var(--chalk-dim); }
-.cast-card p { font-size: 13.5px; line-height: 1.7; color: var(--chalk-dim); margin-top: 14px; }
-.cast-card .spots { margin-top: 18px; font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--cast-b); }
+.cast-card .fee small { font-family: var(--sans); font-size: 10px; letter-spacing: .2em; color: var(--ink-66); }
+.cast-card p { font-size: var(--fs-fine); line-height: 1.7; color: var(--ink-66); margin-top: 14px; }
+.cast-card .spots { margin-top: 18px; font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; }
+.cast-card.prep .spots { color: var(--cast-p); }
+.cast-card.elite .spots { color: var(--cast-b); }
+.cast-card.pro .spots { color: var(--tape-2); }
 @media (max-width: 900px) { .casting { grid-template-columns: 1fr; } }
-.casting-note { margin-top: clamp(26px, 4vh, 44px); display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: flex-end; }
-.casting-fine { font-size: 12.5px; line-height: 1.8; color: var(--chalk-dim); max-width: 52ch; }
+.casting-note { margin-top: var(--sp-block); display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: flex-end; }
+.casting-fine { font-size: 12.5px; line-height: 1.8; color: var(--ink-66); max-width: 52ch; }
+
+/* ── the training week: a call sheet ── */
+.callsheet {
+  margin-top: var(--sp-head);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--ink-16); border-left: 1px solid var(--ink-16);
+}
+.callsheet .day {
+  border-right: 1px solid var(--ink-16); border-bottom: 1px solid var(--ink-16);
+  padding: clamp(18px, 2.5vw, 30px);
+  min-height: clamp(130px, 16vw, 190px);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.callsheet .d { font-size: 10px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--ink-45); }
+.callsheet .who { font-family: var(--serif); font-weight: 500; font-size: clamp(20px, 2.3vw, 27px); line-height: 1.15; margin-top: auto; }
+.callsheet .who em { font-style: italic; color: var(--tape-2); }
+.callsheet .sub { font-size: 11.5px; letter-spacing: .06em; color: var(--ink-45); }
+@media (max-width: 760px) { .callsheet { grid-template-columns: 1fr 1fr; } }
+.hours { display: flex; gap: clamp(28px, 6vw, 80px); flex-wrap: wrap; margin-top: var(--sp-head); }
+.hours .n { font-family: var(--count); font-size: clamp(48px, 6vw, 88px); line-height: .85; color: var(--chalk); }
+.hours .n small { font-size: .38em; letter-spacing: .08em; color: var(--ink-45); }
+.hours .l { font-size: 10px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; margin-top: 8px; }
+.hours .prep-l { color: var(--cast-p); } .hours .elite-l { color: var(--cast-b); } .hours .pro-l { color: var(--tape-2); }
 
 /* ── slates ── */
 .slates { display: flex; gap: 20px; overflow-x: auto; padding: 16px 4px 28px; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .slates::-webkit-scrollbar { display: none; }
 .slate { flex: 0 0 clamp(220px, 24vw, 300px); scroll-snap-align: start; }
-.slate .clip { aspect-ratio: 9/16; overflow: hidden; background: var(--marley-worn); border: 1px solid rgba(250,243,232,.12); }
+.slate .clip { aspect-ratio: 9/16; overflow: hidden; background: var(--marley-worn); border: 1px solid rgba(250,243,232,.12); cursor: pointer; }
 .slate video { width: 100%; height: 100%; object-fit: cover; }
 .slate .clapper {
   display: flex; justify-content: space-between; align-items: baseline;
@@ -325,27 +462,28 @@ main { position: relative; z-index: 2; }
   padding: 10px 12px 8px; color: var(--chalk);
 }
 .slate .clapper i { font-style: normal; color: var(--tape-2); font-size: 12px; }
-.slate .styles { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--chalk-dim); padding: 8px 12px 0; }
+.slate .styles { font-size: var(--fs-cap); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-66); padding: 8px 12px 0; }
 
 .curtain-count { display: flex; gap: clamp(24px, 5vw, 70px); flex-wrap: wrap; margin: clamp(18px, 3vh, 30px) 0 clamp(24px, 4vh, 40px); }
 .curtain-count .cc-n { font-family: var(--count); font-size: clamp(48px, 6vw, 92px); line-height: .85; color: var(--chalk); }
-.curtain-count .cc-l { font-size: 10.5px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--chalk-dim); margin-top: 6px; }
+.curtain-count .cc-l { font-size: var(--fs-cap); font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-66); margin-top: 6px; }
 .curtain-count.done .cc-n { font-family: var(--serif); font-style: italic; font-size: clamp(26px, 3.4vw, 40px); color: var(--pencil); }
 
 .tallies { display: flex; gap: clamp(28px, 6vw, 90px); flex-wrap: wrap; margin: clamp(28px, 5vh, 50px) 0; }
 .tallies .n { font-family: var(--count); font-size: clamp(58px, 7vw, 110px); line-height: .85; color: var(--chalk); }
 .tallies .n sup { font-size: .45em; color: var(--tape-2); }
-.tallies .l { font-size: 10.5px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--chalk-dim); margin-top: 8px; }
+.tallies .l { font-size: var(--fs-cap); font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-66); margin-top: 8px; }
 
 /* ── teachers ── */
 .faculty { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: clamp(24px, 3vw, 44px); margin-top: clamp(30px, 5vh, 54px); }
-.faculty .print img { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: top; }
+.faculty .print .ph img { aspect-ratio: 4/5; object-fit: cover; object-position: top; }
 .faculty .fname { font-family: var(--serif); font-weight: 500; font-size: 24px; margin-top: 14px; }
-.faculty .frole { font-size: 10.5px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--tape-2); margin-top: 4px; }
+.faculty .frole { font-size: var(--fs-cap); font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--tape-2); margin-top: 4px; }
+.faculty .fcredit { font-size: var(--fs-fine); line-height: 1.65; color: var(--ink-66); margin-top: 10px; max-width: 30ch; }
 .credits-sheet {
-  margin-top: clamp(26px, 4vh, 44px);
+  margin-top: var(--sp-block);
   display: grid; grid-template-columns: 1fr 1fr; gap: 8px 40px;
-  font-size: 13px; line-height: 2.15; letter-spacing: .03em; color: var(--chalk-dim);
+  font-size: var(--fs-fine); line-height: 2.15; letter-spacing: .03em; color: var(--ink-66);
 }
 .credits-sheet .ch { font-size: 10px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--tape-2); }
 .credits-sheet ul { list-style: none; }
@@ -354,7 +492,15 @@ main { position: relative; z-index: 2; }
 .steps-sheet { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.5vw, 36px); }
 @media (max-width: 700px) { .steps-sheet { grid-template-columns: 1fr; } }
 .steps-sheet .ch { font-size: 10px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--tape-2); }
-.steps-sheet p { font-size: 13.5px; line-height: 1.7; color: var(--chalk-dim); margin-top: 6px; }
+.steps-sheet p { font-size: var(--fs-fine); line-height: 1.7; color: var(--ink-66); margin-top: 6px; }
+.fact-sheet { display: grid; gap: 18px; margin-top: var(--sp-block); }
+.fact-sheet .ch { font-size: 10px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--tape-2); }
+.fact-sheet p { font-size: 14px; line-height: 1.7; color: var(--ink-66); margin-top: 4px; }
+
+/* ── collective: the wide print ── */
+.wide-print { margin-top: clamp(40px, 7vh, 80px); }
+.wide-print .ph img { aspect-ratio: 21/9; object-fit: cover; }
+@media (max-width: 700px) { .wide-print .ph img { aspect-ratio: 16/10; } }
 
 /* ── gallery ── */
 .wall { columns: 3; column-gap: clamp(20px, 2.5vw, 40px); margin-top: clamp(30px, 5vh, 54px); }
@@ -362,6 +508,7 @@ main { position: relative; z-index: 2; }
 @media (max-width: 620px) { .wall { columns: 1; } }
 .wall figure { break-inside: avoid; margin-bottom: clamp(28px, 3.5vw, 48px); }
 .wall .print { display: block; cursor: zoom-in; }
+.wall .print.in { padding: 0 clamp(10px, 1.4vw, 22px); }
 .wall img { width: 100%; }
 
 /* ── gallery lightbox ── */
@@ -374,34 +521,55 @@ main { position: relative; z-index: 2; }
   padding: 60px var(--gut);
 }
 .lightbox.open { display: flex; }
-.lightbox img { max-width: min(1100px, 92vw); max-height: 76vh; width: auto; object-fit: contain; }
+.lightbox img { max-width: min(1100px, 92vw); max-height: 72vh; width: auto; height: auto; object-fit: contain; }
 @media (prefers-reduced-motion: no-preference) {
-  .lightbox img { animation: lbIn .25s ease; }
-  @keyframes lbIn { from { opacity: 0; transform: scale(.98); } to { opacity: 1; transform: scale(1); } }
+  .lightbox img { animation: lbIn .3s var(--out); }
+  @keyframes lbIn { from { opacity: 0; scale: .985; } to { opacity: 1; scale: 1; } }
 }
-.lightbox figcaption {
-  font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--chalk-dim);
-}
+.lightbox .lb-bar { display: flex; align-items: baseline; gap: 22px; }
+.lightbox figcaption { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--ink-66); }
+.lightbox .lb-count { font-family: var(--count); font-size: 15px; letter-spacing: .14em; color: var(--ink-45); }
 .lightbox .lb-close {
   position: absolute; top: 18px; right: var(--gut);
   background: var(--tape); color: var(--marley); border: 0;
   font-size: 11px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
   padding: 10px 16px; cursor: pointer; transform: rotate(-1deg);
 }
+.lightbox .lb-prev, .lightbox .lb-next {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: transparent; color: var(--chalk); border: 1px dashed rgba(250,243,232,.4);
+  font-family: var(--count); font-size: 20px; letter-spacing: 0;
+  width: 46px; height: 46px; cursor: pointer;
+}
+.lightbox .lb-prev { left: max(12px, calc(var(--gut) - 34px)); }
+.lightbox .lb-next { right: max(12px, calc(var(--gut) - 34px)); }
+.lightbox .lb-prev:hover, .lightbox .lb-next:hover { border-color: var(--pencil); color: var(--pencil); }
+@media (max-width: 700px) { .lightbox .lb-prev, .lightbox .lb-next { top: auto; bottom: 18px; transform: none; } }
 
-/* ── faq ── */
-.faq-sheet { margin-top: clamp(30px, 5vh, 50px); max-width: 900px; }
+/* ── faq: the callboard ── */
+.faq-sheet {
+  position: relative;
+  margin-top: clamp(36px, 6vh, 60px); max-width: 900px;
+  background: rgba(16,32,26,.5);
+  border: 1px solid var(--ink-16);
+  padding: clamp(22px, 3.5vw, 44px);
+}
+.faq-sheet::before {
+  content: ''; position: absolute; top: -11px; left: 50%; transform: translateX(-50%) rotate(-1.6deg);
+  width: 108px; height: 22px; background: var(--tape); box-shadow: 0 1px 2px rgba(0,0,0,.4);
+}
 .faq-item { border-top: 1px solid rgba(250,243,232,.18); padding: 20px 0; }
-.faq-item:last-child { border-bottom: 1px solid rgba(250,243,232,.18); }
+.faq-item:first-of-type { border-top: none; }
+.faq-item:last-child { padding-bottom: 4px; }
 .faq-item summary {
   cursor: pointer; list-style: none;
   font-family: var(--serif); font-weight: 500; font-size: clamp(19px, 2.2vw, 25px);
   color: var(--chalk); display: flex; align-items: baseline; gap: 14px;
 }
 .faq-item summary::-webkit-details-marker { display: none; }
-.faq-item summary::before { content: '+'; font-family: var(--count); color: var(--tape-2); font-size: 20px; }
+.faq-item summary::before { content: '+'; font-family: var(--count); color: var(--tape-2); font-size: 20px; flex: 0 0 auto; }
 .faq-item[open] summary::before { content: '\2212'; }
-.faq-item div { font-size: 14px; line-height: 1.8; color: var(--chalk-dim); margin-top: 12px; max-width: 62ch; }
+.faq-item div { font-size: 14px; line-height: 1.8; color: var(--ink-66); margin-top: 12px; max-width: 62ch; }
 
 /* ── merch: the order sheet ── */
 .ordersheet { margin-top: clamp(30px, 5vh, 50px); max-width: 760px; border-top: 1px solid rgba(250,243,232,.18); }
@@ -412,12 +580,14 @@ main { position: relative; z-index: 2; }
 }
 .ordersheet .item { font-family: var(--serif); font-size: clamp(20px, 2.4vw, 28px); font-weight: 500; }
 .ordersheet .fill { flex: 1; border-bottom: 1px dotted rgba(250,243,232,.25); transform: translateY(-6px); }
-.ordersheet .st { font-family: var(--count); font-size: 15px; letter-spacing: .14em; color: var(--chalk-dim); }
+.ordersheet .st { font-family: var(--count); font-size: 15px; letter-spacing: .14em; color: var(--ink-66); }
 
 /* ── contact ── */
 .contact-wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(30px, 5vw, 90px); align-items: start; }
 @media (max-width: 900px) { .contact-wrap { grid-template-columns: 1fr; } }
-.contact-lines { margin-top: clamp(26px, 4vh, 44px); font-size: 14px; line-height: 2.4; color: var(--chalk-dim); }
+.contact-aside { display: flex; flex-direction: column; gap: clamp(28px, 5vh, 48px); align-items: flex-start; justify-self: end; padding-top: 14px; }
+@media (max-width: 900px) { .contact-aside { justify-self: start; } }
+.contact-lines { margin-top: var(--sp-block); font-size: 14px; line-height: 2.4; color: var(--ink-66); }
 .contact-lines a { color: var(--chalk); text-decoration: none; border-bottom: 1px dashed rgba(250,243,232,.4); }
 .contact-lines a:hover { color: var(--pencil); border-bottom-color: var(--pencil); }
 .contact-lines .lbl { font-size: 10px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--tape-2); display: block; line-height: 1.6; margin-top: 18px; }
@@ -430,11 +600,11 @@ main { position: relative; z-index: 2; }
 .tamara .gold-mark circle { fill: none; stroke: var(--gold); stroke-width: 1.4; }
 @media (prefers-reduced-motion: no-preference) {
   .tamara .gold-mark circle { stroke-dasharray: 200; stroke-dashoffset: 200; }
-  .tamara.revealed .gold-mark circle { animation: draw 2.2s ease forwards; }
-  .tamara.revealed .gold-mark circle:last-child { animation-delay: .45s; }
+  .tamara.revealed .gold-mark circle { animation: draw 2.6s var(--out) forwards; }
+  .tamara.revealed .gold-mark circle:last-child { animation-delay: .5s; }
   @keyframes draw { to { stroke-dashoffset: 0; } }
 }
-.tamara p { margin-top: 30px; font-family: var(--serif); font-style: italic; font-size: clamp(19px, 2.2vw, 26px); color: var(--chalk-dim); }
+.tamara p { margin-top: 30px; font-family: var(--serif); font-style: italic; font-size: clamp(19px, 2.2vw, 26px); color: var(--ink-66); }
 .tamara p b { color: var(--gold); font-weight: 500; }
 
 /* ── colophon ── */
@@ -442,7 +612,7 @@ main { position: relative; z-index: 2; }
   border-top: 1px dashed rgba(250,243,232,.2);
   padding: 40px var(--gut) 80px;
   display: flex; flex-wrap: wrap; gap: 16px 40px; justify-content: space-between; align-items: baseline;
-  font-size: 12px; color: var(--chalk-dim);
+  font-size: 12px; color: var(--ink-66);
   position: relative; z-index: 2;
   max-width: 1500px; margin: 0 auto;
 }
@@ -453,24 +623,32 @@ main { position: relative; z-index: 2; }
 
 /* ── reveals ── */
 @media (prefers-reduced-motion: no-preference) {
-  .rv { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
-  .rv.revealed { opacity: 1; transform: none; }
-  .rv2 { transition-delay: .15s; }
-  .note.rv.revealed { transform: rotate(-1.6deg); }
+  .rv { opacity: 0; translate: 0 18px; transition: opacity .9s var(--out), translate .9s var(--out); }
+  .rv.revealed { opacity: 1; translate: 0 0; }
+  .rv2 { transition-delay: .12s; }
+  .rv3 { transition-delay: .24s; }
 }
+
+/* ── still mode (?still=1): the finished state of every animation,
+      for screenshot rigs and reel captures ── */
+html.still *, html.still *::before, html.still *::after { animation: none !important; transition: none !important; }
+html.still .rv, html.still .cue, html.still .cin span { opacity: 1 !important; translate: none !important; }
+html.still .tamara .gold-mark circle { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
 </style>
 </head>
 <body>
 
+<a class="skip" href="#main">Skip to content</a>
+
 <div class="floor" aria-hidden="true"></div>
 <svg id="formation" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"></svg>
-<span class="stage-dir ds">Downstage</span>
-<span class="stage-dir sl">Stage Left</span>
-<span class="stage-dir sr">Stage Right</span>
+<span class="stage-dir ds" aria-hidden="true">Downstage</span>
+<span class="stage-dir sl" aria-hidden="true">Stage Left</span>
+<span class="stage-dir sr" aria-hidden="true">Stage Right</span>
 
 <header class="masthead" id="masthead">
   <a class="mast-brand" href="#home">Dance <em>With</em> Dixon</a>
-  <nav class="nav-links" id="navlinks">
+  <nav class="nav-links" id="navlinks" aria-label="Primary">
     <a href="#home" data-page="home">Home</a>
     <a href="#proseries" data-page="proseries">ProSeries</a>
     <a href="#collective" data-page="collective">Collective</a>
@@ -482,54 +660,69 @@ main { position: relative; z-index: 2; }
   </nav>
   <div style="display:flex; gap:12px; align-items:center;">
     <a class="mast-cta" href="https://dwd-director.netlify.app/register">Express Interest</a>
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu">Menu</button>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuOverlay">Menu</button>
   </div>
 </header>
 
-<div class="menu-overlay" id="menuOverlay">
+<div class="menu-overlay" id="menuOverlay" role="dialog" aria-modal="true" aria-label="Site menu">
   <button class="menu-close" id="menuClose">Close</button>
-  <a href="#home" data-page="home"><span class="no">01</span>Home</a>
-  <a href="#proseries" data-page="proseries"><span class="no">02</span>ProSeries</a>
-  <a href="#collective" data-page="collective"><span class="no">03</span>Collective</a>
-  <a href="#teachers" data-page="teachers"><span class="no">04</span>Teachers</a>
-  <a href="#gallery" data-page="gallery"><span class="no">05</span>Gallery</a>
-  <a href="#merch" data-page="merch"><span class="no">06</span>Merch</a>
-  <a href="#faq" data-page="faq"><span class="no">07</span>FAQ</a>
-  <a href="#contact" data-page="contact"><span class="no">08</span>Contact</a>
+  <nav aria-label="Menu">
+    <a href="#home" data-page="home"><span class="no">01</span>Home</a>
+    <a href="#proseries" data-page="proseries"><span class="no">02</span>ProSeries</a>
+    <a href="#collective" data-page="collective"><span class="no">03</span>Collective</a>
+    <a href="#teachers" data-page="teachers"><span class="no">04</span>Teachers</a>
+    <a href="#gallery" data-page="gallery"><span class="no">05</span>Gallery</a>
+    <a href="#merch" data-page="merch"><span class="no">06</span>Merch</a>
+    <a href="#faq" data-page="faq"><span class="no">07</span>FAQ</a>
+    <a href="#contact" data-page="contact"><span class="no">08</span>Contact</a>
+  </nav>
+  <div class="menu-foot">
+    <a class="tapebtn" href="https://dwd-director.netlify.app/register">Express Interest</a>
+    <div class="socials">
+      <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a>
+      <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a>
+    </div>
+  </div>
 </div>
 
-<div class="lightbox" id="lightbox">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
   <button class="lb-close" id="lightboxClose">Close</button>
+  <button class="lb-prev" id="lightboxPrev" aria-label="Previous photo">&larr;</button>
   <img id="lightboxImg" src="" alt="">
-  <figcaption id="lightboxCaption"></figcaption>
+  <div class="lb-bar">
+    <figcaption id="lightboxCaption"></figcaption>
+    <span class="lb-count" id="lightboxCount"></span>
+  </div>
+  <button class="lb-next" id="lightboxNext" aria-label="Next photo">&rarr;</button>
 </div>
 
-<main>
+<main id="main">
 
 <!-- ════════════ HOME ════════════ -->
 <section class="page" id="page-home" data-formation="scatter">
 
   <div class="hero">
     <div>
-      <p class="prep rv">and we begin in <b>5, 6, 7, 8</b></p>
-      <h1 class="rv rv2">This isn&rsquo;t a studio.<br>It&rsquo;s a <em>company.</em></h1>
-      <p class="sub rv rv2">Elite youth training, ages 5 to 19. An adult modern company, 18 and up.
+      <p class="prep" aria-label="and we begin in 5, 6, 7, 8">and we begin in <b class="cin"><span>5,</span> <span>6,</span> <span>7,</span> <span>8</span></b></p>
+      <h1 class="cue c1">This isn&rsquo;t a studio.<br>It&rsquo;s a <em>company.</em></h1>
+      <p class="sub cue c2">Elite youth training, ages 5 to 19. An adult modern company, 18 and up.
       <strong>Every class and every piece from one working director.</strong>
       Built from scratch in Orlando.</p>
-      <div class="cta-row rv rv2">
+      <div class="cta-row cue c3">
         <a class="btn" href="https://dwd-director.netlify.app/register">Express Interest &rarr;</a>
         <a class="btn ghost" href="#proseries">The Tracks &rarr;</a>
       </div>
     </div>
-    <figure class="print hero-print rv rv2">
+    <figure class="print hero-print cue c2">
       <span class="ptape a"></span><span class="ptape b"></span>
-      <img src="img/263_Calor_36.JPG" alt="DWD dancer performing Calor">
-      <figcaption>Calor, original choreography</figcaption>
+      <div class="ph"><img src="img/201_Prelude-in-C-Minor_84.JPG" alt="DWD dancer performing Prelude in C Minor" width="1200" height="800" fetchpriority="high"></div>
+      <figcaption>Prelude in C Minor, original choreography</figcaption>
     </figure>
   </div>
 
   <div class="tickertape" aria-hidden="true">
     <div class="track">
+      <span>SEASON ONE BEGINS AUG 10 &middot; PLACEMENT OPEN IN ALL THREE TRACKS &middot; NO FEE TO EXPRESS INTEREST &middot;</span>
       <span>SEASON ONE BEGINS AUG 10 &middot; PLACEMENT OPEN IN ALL THREE TRACKS &middot; NO FEE TO EXPRESS INTEREST &middot;</span>
       <span>SEASON ONE BEGINS AUG 10 &middot; PLACEMENT OPEN IN ALL THREE TRACKS &middot; NO FEE TO EXPRESS INTEREST &middot;</span>
     </div>
@@ -555,7 +748,7 @@ main { position: relative; z-index: 2; }
     </div>
   </div>
 
-  <div class="mark tight">
+  <div class="mark tight" data-formation="twoclumps">
     <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
       <span class="mark-no">02</span>
@@ -565,7 +758,7 @@ main { position: relative; z-index: 2; }
       <a class="entry" href="#proseries">
         <span class="holdtape"></span>
         <span class="who"><span class="brandcase">dwdPROSERIES</span> &middot; ages 5 to 19 &middot; competitive</span>
-        <img src="img/121_Sisters_30.JPG" alt="Two young dancers performing on a competition stage">
+        <div class="ph"><img src="img/121_Sisters_30.JPG" alt="Two young dancers performing on a competition stage" width="1200" height="800" loading="lazy" decoding="async"></div>
         <h3>Earn <em>your spot.</em></h3>
         <p>Three tracks: Prep, Elite, Pro. Audition-based. Every class designed by a working director.</p>
         <span class="enter">Enter &rarr;</span>
@@ -573,7 +766,7 @@ main { position: relative; z-index: 2; }
       <a class="entry alt" href="#collective">
         <span class="holdtape"></span>
         <span class="who"><span class="brandcase">dwdCOLLECTIVE</span> &middot; adults 18+ &middot; modern</span>
-        <img src="img/dwdc-7I6A3620.jpg" alt="dwdCOLLECTIVE in rehearsal">
+        <div class="ph"><img src="img/dwdc-7I6A3620.jpg" alt="dwdCOLLECTIVE in rehearsal" width="1400" height="934" loading="lazy" decoding="async"></div>
         <h3>More than a <em>drop-in class.</em></h3>
         <p>Real technique, real choreography, real stage time. No audition. Just show up ready to move.</p>
         <span class="enter">Enter &rarr;</span>
@@ -581,13 +774,13 @@ main { position: relative; z-index: 2; }
     </div>
   </div>
 
-  <div class="mark tight">
+  <div class="mark tight" data-formation="lines">
     <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
       <span class="mark-no">03</span>
       <h2 class="mark-title">That was <em>full out.</em></h2>
     </div>
-    <div class="blocking" style="align-items: flex-end;">
+    <div class="blocking feet">
       <div>
         <span class="tape rv">Summer Intensive &middot; July 6 to 10 &middot; wrapped</span>
         <p class="lede-copy rv">Five days at Exchange Dance Academy. Eight styles, five faculty,
@@ -603,7 +796,7 @@ main { position: relative; z-index: 2; }
   </div>
 
   <!-- her mark -->
-  <section class="tamara" id="tamara">
+  <section class="tamara" id="tamara" data-formation="vigil">
     <div class="chartbox">
       <svg viewBox="0 0 420 240" aria-label="Formation chart with Tamara's mark upstage center">
         <text x="210" y="16" text-anchor="middle" fill="rgba(250,243,232,.3)" font-size="8" letter-spacing="4" font-family="Outfit, sans-serif">UPSTAGE</text>
@@ -629,15 +822,15 @@ main { position: relative; z-index: 2; }
 
 <!-- ════════════ PROSERIES ════════════ -->
 <section class="page" id="page-proseries" data-formation="lines">
-  <div class="mark" style="padding-top: 130px;">
+  <div class="mark top" data-formation="threeclumps">
     <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
       <span class="mark-no">04</span>
       <h2 class="mark-title page-title">Earn <em>your spot.</em></h2>
     </div>
-    <div class="blocking" style="margin-bottom: clamp(30px,5vh,54px); align-items: start;">
+    <div class="blocking head" style="margin-bottom: clamp(30px,5vh,54px);">
       <div>
-        <span class="tape rv"><span class="brandcase">dwdPROSERIES</span> &middot; ages 5 to 19</span>
+        <span class="tape rv"><span class="brandcase">dwdPROSERIES</span> &middot; ages 5 to 19</span><span class="tape t3 rv" id="curtainTape" hidden></span>
         <p class="lede-copy rv">Three tracks: Prep, Elite, Pro. Audition-based, and every class designed
         by a working director. Auditions wrapped in June. <strong>Placement is open in all three tracks,
         and Dixon personally reaches out to every family who expresses interest.</strong></p>
@@ -645,7 +838,7 @@ main { position: relative; z-index: 2; }
       <p class="note rv rv2">every track capped at ten.<br>small on purpose. <span class="u">spacing matters.</span></p>
     </div>
     <div class="casting rv">
-      <div class="cast-card">
+      <div class="cast-card prep">
         <span class="holdtape"></span>
         <h3>PREP</h3>
         <p class="ages">ages 5 to 8 &middot; the foundation years</p>
@@ -653,7 +846,7 @@ main { position: relative; z-index: 2; }
         <p>Technique, musicality, first stage time.</p>
         <p class="spots">Placement open</p>
       </div>
-      <div class="cast-card">
+      <div class="cast-card elite">
         <span class="holdtape"></span>
         <h3>ELITE</h3>
         <p class="ages">ages 8 to 12 &middot; the building years</p>
@@ -661,7 +854,7 @@ main { position: relative; z-index: 2; }
         <p>Full competition season with the full faculty rotation.</p>
         <p class="spots">Placement open</p>
       </div>
-      <div class="cast-card">
+      <div class="cast-card pro">
         <span class="holdtape"></span>
         <h3>PRO</h3>
         <p class="ages">ages 12+ &middot; the proving years</p>
@@ -677,13 +870,59 @@ main { position: relative; z-index: 2; }
     </div>
   </div>
 
-  <div class="mark tight">
-    <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
+  <div class="mark tight" data-formation="windows">
+    <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><b>7</b><span>8</span></div>
     <div class="mark-head rv">
       <span class="mark-no">05</span>
+      <h2 class="mark-title">The training <em>week.</em></h2>
+    </div>
+    <div class="blocking head">
+      <div>
+        <span class="tape rv">The call sheet &middot; evenings at Exchange</span>
+        <p class="lede-copy rv">Four nights a week, Monday through Thursday, at Exchange Dance Academy
+        in Orlando. <strong>Every track shares Thursday company choreography, because the company
+        dancing together is the point.</strong></p>
+      </div>
+      <p class="note rv rv2">solo hour is built in<br>for <span class="u">every Pro dancer.</span></p>
+    </div>
+    <div class="callsheet rv">
+      <div class="day">
+        <span class="d">Monday</span>
+        <span class="who">Prep</span>
+        <span class="sub">foundation night</span>
+      </div>
+      <div class="day">
+        <span class="d">Tuesday</span>
+        <span class="who">Elite &middot; Pro</span>
+        <span class="sub">technique and styles</span>
+      </div>
+      <div class="day">
+        <span class="d">Wednesday</span>
+        <span class="who">Elite &middot; Pro</span>
+        <span class="sub">choreography</span>
+      </div>
+      <div class="day">
+        <span class="d">Thursday</span>
+        <span class="who"><em>All three tracks</em></span>
+        <span class="sub">company choreography</span>
+      </div>
+    </div>
+    <div class="hours rv rv2">
+      <div><div class="n">4 <small>HRS / WK</small></div><div class="l prep-l">Prep</div></div>
+      <div><div class="n">8 <small>HRS / WK</small></div><div class="l elite-l">Elite</div></div>
+      <div><div class="n">10 <small>HRS / WK</small></div><div class="l pro-l">Pro</div></div>
+    </div>
+    <p class="casting-fine rv" style="margin-top: clamp(18px,2.5vh,26px);">Pro hours include a weekly
+    solo hour. Exchange Dance Academy, 7409 Chancery Lane, Orlando.</p>
+  </div>
+
+  <div class="mark tight" data-formation="diagonal">
+    <div class="count-8 rv"><span>3</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
+    <div class="mark-head rv">
+      <span class="mark-no">06</span>
       <h2 class="mark-title">Auditions are done.<br><em>The door is still open.</em></h2>
     </div>
-    <div class="blocking" style="align-items: start; margin-bottom: clamp(30px,5vh,54px);">
+    <div class="blocking head" style="margin-bottom: clamp(30px,5vh,54px);">
       <p class="lede-copy rv">Our June audition set the core of Season One, but spots remain in all three
       tracks. Here is how it works: fill out a short form about your dancer. No fee, no audition day to
       wait for. Dixon reads every submission personally, and within a few days he will reach out directly
@@ -710,13 +949,13 @@ main { position: relative; z-index: 2; }
     </div>
   </div>
 
-  <div class="mark tight">
-    <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
+  <div class="mark tight" data-formation="v">
+    <div class="count-8 rv"><span>4</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">06</span>
+      <span class="mark-no">07</span>
       <h2 class="mark-title">That was <em>full out.</em></h2>
     </div>
-    <div class="blocking" style="align-items: flex-end; margin-bottom: 10px;">
+    <div class="blocking feet" style="margin-bottom: 10px;">
       <div>
         <span class="tape rv">Summer Intensive &middot; July 6 to 10 &middot; wrapped</span>
         <p class="lede-copy rv">Five days at Exchange Dance Academy. Eight styles, five faculty,
@@ -733,27 +972,27 @@ main { position: relative; z-index: 2; }
     </div>
     <div class="slates rv" id="intensive-reels">
       <div class="slate">
-        <div class="clip"><video src="../images/intensive/intensive-day1.mp4" poster="../images/intensive/intensive-day1-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="clip" role="button" tabindex="0" aria-label="Play the Day 1 recap: hip hop and jazz"><video src="../images/intensive/intensive-day1.mp4" poster="../images/intensive/intensive-day1-poster.jpg" muted loop playsinline preload="none"></video></div>
         <div class="clapper"><span>DAY 01</span><i>JUL 6</i></div>
         <div class="styles">Hip Hop + Jazz</div>
       </div>
       <div class="slate">
-        <div class="clip"><video src="../images/intensive/intensive-day2.mp4" poster="../images/intensive/intensive-day2-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="clip" role="button" tabindex="0" aria-label="Play the Day 2 recap: ballet and musical theatre"><video src="../images/intensive/intensive-day2.mp4" poster="../images/intensive/intensive-day2-poster.jpg" muted loop playsinline preload="none"></video></div>
         <div class="clapper"><span>DAY 02</span><i>JUL 7</i></div>
         <div class="styles">Ballet + Musical Theatre</div>
       </div>
       <div class="slate">
-        <div class="clip"><video src="../images/intensive/intensive-day3.mp4" poster="../images/intensive/intensive-day3-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="clip" role="button" tabindex="0" aria-label="Play the Day 3 recap: tap and lyrical"><video src="../images/intensive/intensive-day3.mp4" poster="../images/intensive/intensive-day3-poster.jpg" muted loop playsinline preload="none"></video></div>
         <div class="clapper"><span>DAY 03</span><i>JUL 8</i></div>
         <div class="styles">Tap + Lyrical</div>
       </div>
       <div class="slate">
-        <div class="clip"><video src="../images/intensive/intensive-day4.mp4" poster="../images/intensive/intensive-day4-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="clip" role="button" tabindex="0" aria-label="Play the Day 4 recap: acro and contemporary"><video src="../images/intensive/intensive-day4.mp4" poster="../images/intensive/intensive-day4-poster.jpg" muted loop playsinline preload="none"></video></div>
         <div class="clapper"><span>DAY 04</span><i>JUL 9</i></div>
         <div class="styles">Acro + Contemporary</div>
       </div>
       <div class="slate">
-        <div class="clip"><video src="../images/intensive/intensive-week.mp4" poster="../images/intensive/intensive-week-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="clip" role="button" tabindex="0" aria-label="Play the full week recap"><video src="../images/intensive/intensive-week.mp4" poster="../images/intensive/intensive-week-poster.jpg" muted loop playsinline preload="none"></video></div>
         <div class="clapper"><span>THE WEEK</span><i>JUL 6&ndash;10</i></div>
         <div class="styles">Five days, full out</div>
       </div>
@@ -763,10 +1002,10 @@ main { position: relative; z-index: 2; }
 
 <!-- ════════════ COLLECTIVE ════════════ -->
 <section class="page" id="page-collective" data-formation="diagonal">
-  <div class="mark" style="padding-top: 130px;">
-    <div class="count-8 rv"><span>3</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
+  <div class="mark top">
+    <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><span>4</span><b>5</b><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">07</span>
+      <span class="mark-no">08</span>
       <h2 class="mark-title page-title">More than a <em>drop-in class.</em></h2>
     </div>
     <div class="blocking">
@@ -781,71 +1020,71 @@ main { position: relative; z-index: 2; }
       </div>
       <figure class="print rv rv2">
         <span class="ptape a"></span><span class="ptape b"></span>
-        <img src="img/dwdc-7I6A3724.jpg" alt="dwdCOLLECTIVE dancers mid-piece" style="aspect-ratio:4/3; object-fit:cover; width:100%;">
+        <div class="ph"><img src="img/dwdc-7I6A3724.jpg" alt="dwdCOLLECTIVE dancers mid-piece" width="1400" height="934" loading="lazy" decoding="async" style="aspect-ratio:4/3; object-fit:cover;"></div>
         <figcaption>the Collective, spring showing</figcaption>
       </figure>
     </div>
-    <div class="blocking" style="margin-top: clamp(40px,7vh,80px);">
-      <figure class="print rv">
-        <span class="ptape a"></span><span class="ptape b"></span>
-        <img src="img/dwdc-7I6A3629.jpg" alt="dwdCOLLECTIVE company movement" style="aspect-ratio:4/3; object-fit:cover; width:100%;">
-        <figcaption>rehearsal, by project</figcaption>
-      </figure>
-      <p class="note rv rv2">no audition.<br><span class="u">just show up ready to move.</span></p>
-    </div>
+    <figure class="print wide-print rv">
+      <span class="ptape c"></span>
+      <div class="ph"><img src="img/dwdc-7I6A3762.jpg" alt="the full Collective cast in motion" width="1400" height="934" loading="lazy" decoding="async"></div>
+      <figcaption>the company, in the room</figcaption>
+    </figure>
   </div>
 
-  <div class="mark tight">
-    <div class="count-8 rv"><span>3</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
+  <div class="mark tight" data-formation="circle">
+    <div class="count-8 rv"><span>2</span><span>2</span><span>3</span><b>4</b><span>5</span><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">08</span>
+      <span class="mark-no">09</span>
       <h2 class="mark-title">How the company <em>works.</em></h2>
     </div>
-    <div class="blocking">
+    <div class="blocking head">
       <div>
         <p class="lede-copy rv">dwdCOLLECTIVE is project based. We cast a piece, rehearse it, and put it
         on a stage. Rehearsals run at Exchange Dance in Orlando or Next Level in St. Cloud depending on
         the project. Adults 18 and up, modern and contemporary, all levels welcome to inquire. No
         season-long commitment, you join per project.</p>
-        <div class="credits-sheet rv rv2" style="grid-template-columns: 1fr; gap: 18px;">
+        <div class="fact-sheet rv rv2">
           <div>
             <span class="ch">The cast</span>
-            <p style="font-size:14px; line-height:1.7; color:var(--chalk-dim); margin-top:4px;">Around 15 dancers per project, mixed experience.</p>
+            <p>Around 15 dancers per project, mixed experience.</p>
           </div>
           <div>
             <span class="ch">The commitment</span>
-            <p style="font-size:14px; line-height:1.7; color:var(--chalk-dim); margin-top:4px;">Weekly rehearsals for the run of a piece.</p>
+            <p>Weekly rehearsals for the run of a piece.</p>
           </div>
           <div>
             <span class="ch">The stage</span>
-            <p style="font-size:14px; line-height:1.7; color:var(--chalk-dim); margin-top:4px;">Local shows, festivals, and collaborations around Central Florida.</p>
+            <p>Local shows, festivals, and collaborations around Central Florida.</p>
           </div>
         </div>
         <div class="cta-row rv rv2">
           <a class="btn" href="#contact">Get rehearsal info &rarr;</a>
         </div>
       </div>
-      <figure class="print rv rv2">
-        <span class="ptape a"></span><span class="ptape b"></span>
-        <img src="img/dwdc-7I6A3760.jpg" alt="dwdCOLLECTIVE dancers in rehearsal" style="aspect-ratio:4/3; object-fit:cover; width:100%;">
-        <figcaption>the Collective, in the room</figcaption>
-      </figure>
+      <div>
+        <figure class="print rv rv2">
+          <span class="ptape a"></span><span class="ptape d"></span>
+          <div class="ph"><img src="img/dwdc-7I6A3765.jpg" alt="dwdCOLLECTIVE dancers in rehearsal" width="1400" height="934" loading="lazy" decoding="async" style="aspect-ratio:4/3; object-fit:cover;"></div>
+          <figcaption>rehearsal, by project</figcaption>
+        </figure>
+        <p class="note rv rv3" style="margin-top: 26px;">no audition.<br><span class="u">just show up ready to move.</span></p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ════════════ TEACHERS ════════════ -->
 <section class="page" id="page-teachers" data-formation="v">
-  <div class="mark" style="padding-top: 130px;">
-    <div class="count-8 rv"><span>4</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><b>7</b><span>8</span></div>
+  <div class="mark top" data-formation="bow">
+    <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><b>7</b><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">09</span>
+      <span class="mark-no">10</span>
       <h2 class="mark-title page-title">Every class. <em>Every piece.</em></h2>
     </div>
-    <div class="blocking">
+    <div class="blocking director">
       <figure class="print rv">
         <span class="ptape a"></span><span class="ptape b"></span>
-        <img src="img/Bowles-33-headshot.jpg" alt="Dixon Bowles, director and choreographer" style="width:100%; aspect-ratio:4/5; object-fit:cover; object-position:top;">
+        <div class="ph"><img src="img/Bowles-33-headshot.jpg" alt="Dixon Bowles, director and choreographer" width="1400" height="2092" loading="lazy" decoding="async" style="aspect-ratio:4/5; object-fit:cover; object-position:top;"></div>
         <figcaption>Dixon Bowles, director and choreographer</figcaption>
       </figure>
       <div>
@@ -884,27 +1123,31 @@ main { position: relative; z-index: 2; }
       <div class="faculty rv">
         <figure class="print">
           <span class="ptape a"></span><span class="ptape b"></span>
-          <img src="img/jackson.jpg" alt="Jackson">
-          <div class="fname">Jackson</div>
+          <div class="ph"><img src="img/jackson.jpg" alt="Jackson Haughton" width="800" height="1000" loading="lazy" decoding="async"></div>
+          <div class="fname">Jackson Haughton</div>
           <div class="frole">Hip Hop</div>
+          <p class="fcredit">Fourteen years teaching, studios across Florida and Alaska.</p>
         </figure>
         <figure class="print">
-          <span class="ptape a"></span><span class="ptape b"></span>
-          <img src="img/madi.jpg" alt="Madi Sprague">
+          <span class="ptape c"></span>
+          <div class="ph"><img src="img/madi.jpg" alt="Madi Sprague" width="800" height="1000" loading="lazy" decoding="async"></div>
           <div class="fname">Madi Sprague</div>
           <div class="frole">Tap</div>
+          <p class="fcredit">Two decades in. Built a competitive tap program from the ground up.</p>
         </figure>
         <figure class="print">
-          <span class="ptape a"></span><span class="ptape b"></span>
-          <img src="img/tori.jpg" alt="Tori Ugalde">
+          <span class="ptape a"></span><span class="ptape d"></span>
+          <div class="ph"><img src="img/tori.jpg" alt="Tori Ugalde" width="800" height="1000" loading="lazy" decoding="async"></div>
           <div class="fname">Tori Ugalde</div>
-          <div class="frole">Faculty rotation</div>
+          <div class="frole">Rotation Faculty</div>
+          <p class="fcredit">Fly Dance Competition staff. Sets competition pieces across studios.</p>
         </figure>
         <figure class="print">
-          <span class="ptape a"></span><span class="ptape b"></span>
-          <img src="img/yahia.jpg" alt="Yahia">
-          <div class="fname">Yahia</div>
-          <div class="frole">Faculty</div>
+          <span class="ptape b"></span>
+          <div class="ph"><img src="img/yahia.jpg" alt="Yahia Icheboudene" width="800" height="1000" loading="lazy" decoding="async"></div>
+          <div class="fname">Yahia Icheboudene</div>
+          <div class="frole">Acro &amp; Cirque</div>
+          <p class="fcredit">Cirque du Soleil: OVO, La Nouba, Michael Jackson One.</p>
         </figure>
       </div>
     </div>
@@ -913,33 +1156,36 @@ main { position: relative; z-index: 2; }
 
 <!-- ════════════ GALLERY ════════════ -->
 <section class="page" id="page-gallery" data-formation="clump">
-  <div class="mark" style="padding-top: 130px;">
-    <div class="count-8 rv"><span>5</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><b>8</b></div>
+  <div class="mark top" data-formation="scatter">
+    <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><b>8</b></div>
     <div class="mark-head rv">
-      <span class="mark-no">10</span>
+      <span class="mark-no">11</span>
       <h2 class="mark-title page-title">See the <em>work.</em></h2>
     </div>
     <div class="wall" id="galleryWall">
-      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/263_Calor_36.JPG" alt="Calor"><figcaption>Calor</figcaption></figure>
-      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/121_Sisters_30.JPG" alt="Sisters"><figcaption>Sisters</figcaption></figure>
-      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/231_Chariot_36.JPG" alt="Chariot"><figcaption>Chariot</figcaption></figure>
-      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/287_Lime-in-the-Coconut_40.JPG" alt="Lime in the Coconut"><figcaption>Lime in the Coconut</figcaption></figure>
-      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/70_Show-Some-Emotion_35.JPG" alt="Show Some Emotion"><figcaption>Show Some Emotion</figcaption></figure>
-      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/48_I-Wanna-Go-Back_28.JPG" alt="I Wanna Go Back"><figcaption>I Wanna Go Back</figcaption></figure>
-      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/201_Prelude-in-C-Minor_84.JPG" alt="Prelude in C Minor"><figcaption>Prelude in C Minor</figcaption></figure>
-      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/dwdc-7I6A3760.jpg" alt="the Collective"><figcaption>the Collective</figcaption></figure>
-      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/A-06-06-25-4993-Enhanced-NR.jpg" alt="June auditions"><figcaption>June auditions</figcaption></figure>
-      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><img src="img/A-06-06-25-5086-Enhanced-NR.jpg" alt="June auditions"><figcaption>June auditions</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><div class="ph"><img src="img/263_Calor_36.JPG" alt="Calor" width="1400" height="934" loading="lazy" decoding="async"></div><figcaption>Calor</figcaption></figure>
+      <figure class="print rv in"><span class="ptape c"></span><div class="ph"><img src="img/121_Sisters_30.JPG" alt="Sisters" width="1200" height="800" loading="lazy" decoding="async"></div><figcaption>Sisters</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape d"></span><div class="ph"><img src="img/120_Material-Girl_66.JPG" alt="Material Girl" width="1400" height="934" loading="lazy" decoding="async"></div><figcaption>Material Girl</figcaption></figure>
+      <figure class="print rv"><span class="ptape b"></span><div class="ph"><img src="img/231_Chariot_36.JPG" alt="Chariot" width="1200" height="800" loading="lazy" decoding="async"></div><figcaption>Chariot</figcaption></figure>
+      <figure class="print rv in"><span class="ptape a"></span><span class="ptape b"></span><div class="ph"><img src="img/32_We-Cant-Be-Friends_81.JPG" alt="We Can't Be Friends" width="1400" height="934" loading="lazy" decoding="async"></div><figcaption>We Can&rsquo;t Be Friends</figcaption></figure>
+      <figure class="print rv"><span class="ptape c"></span><div class="ph"><img src="img/287_Lime-in-the-Coconut_40.JPG" alt="Lime in the Coconut" width="1200" height="800" loading="lazy" decoding="async"></div><figcaption>Lime in the Coconut</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><div class="ph"><img src="img/70_Show-Some-Emotion_35.JPG" alt="Show Some Emotion" width="1200" height="800" loading="lazy" decoding="async"></div><figcaption>Show Some Emotion</figcaption></figure>
+      <figure class="print rv in"><span class="ptape d"></span><div class="ph"><img src="img/211_My-Days_18.JPG" alt="My Days" width="1400" height="934" loading="lazy" decoding="async"></div><figcaption>My Days</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><div class="ph"><img src="img/48_I-Wanna-Go-Back_28.JPG" alt="I Wanna Go Back" width="1200" height="800" loading="lazy" decoding="async"></div><figcaption>I Wanna Go Back</figcaption></figure>
+      <figure class="print rv"><span class="ptape c"></span><div class="ph"><img src="img/201_Prelude-in-C-Minor_84.JPG" alt="Prelude in C Minor" width="1200" height="800" loading="lazy" decoding="async"></div><figcaption>Prelude in C Minor</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape d"></span><div class="ph"><img src="img/dwdc-7I6A3760.jpg" alt="the Collective" width="1200" height="800" loading="lazy" decoding="async"></div><figcaption>the Collective</figcaption></figure>
+      <figure class="print rv in"><span class="ptape b"></span><div class="ph"><img src="img/A-06-06-25-4927-Enhanced-NR.jpg" alt="June auditions" width="1400" height="842" loading="lazy" decoding="async"></div><figcaption>June auditions</figcaption></figure>
+      <figure class="print rv"><span class="ptape a"></span><span class="ptape b"></span><div class="ph"><img src="img/A-06-06-25-5086-Enhanced-NR.jpg" alt="June auditions" width="1200" height="1008" loading="lazy" decoding="async"></div><figcaption>June auditions</figcaption></figure>
     </div>
   </div>
 </section>
 
 <!-- ════════════ MERCH ════════════ -->
 <section class="page" id="page-merch" data-formation="button">
-  <div class="mark" style="padding-top: 130px;">
-    <div class="count-8 rv"><span>6</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span></div>
+  <div class="mark top">
+    <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">11</span>
+      <span class="mark-no">12</span>
       <h2 class="mark-title page-title">Wear the <em>company.</em></h2>
     </div>
     <span class="tape t3 rv">The order sheet</span>
@@ -960,10 +1206,10 @@ main { position: relative; z-index: 2; }
 
 <!-- ════════════ FAQ ════════════ -->
 <section class="page" id="page-faq" data-formation="lines">
-  <div class="mark" style="padding-top: 130px;">
-    <div class="count-8 rv"><span>7</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><b>8</b></div>
+  <div class="mark top" data-formation="windows">
+    <div class="count-8 rv"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><b>8</b></div>
     <div class="mark-head rv">
-      <span class="mark-no">12</span>
+      <span class="mark-no">13</span>
       <h2 class="mark-title page-title">Questions from<br>the <em>wings.</em></h2>
     </div>
     <div class="faq-sheet rv">
@@ -1017,10 +1263,10 @@ main { position: relative; z-index: 2; }
 
 <!-- ════════════ CONTACT ════════════ -->
 <section class="page" id="page-contact" data-formation="circle">
-  <div class="mark" style="padding-top: 130px;">
+  <div class="mark top" data-formation="x">
     <div class="count-8 rv"><span>5</span><span>6</span><span>7</span><b>8</b><span>hold</span></div>
     <div class="mark-head rv">
-      <span class="mark-no">13</span>
+      <span class="mark-no">14</span>
       <h2 class="mark-title page-title">There is<br><em>still room.</em></h2>
     </div>
     <div class="contact-wrap">
@@ -1056,8 +1302,10 @@ main { position: relative; z-index: 2; }
           Exchange Dance Academy &middot; Orlando, FL
         </div>
       </div>
-      <p class="note rv rv2" style="justify-self: end; align-self: center;">the express interest form on this
-      concept links to the real one.<br><span class="u">nothing here goes live without you.</span></p>
+      <div class="contact-aside">
+        <div class="xmark rv rv2" aria-hidden="true"></div>
+        <p class="note rv rv3">no fee, no audition day<br><span class="u">to wait for.</span></p>
+      </div>
     </div>
   </div>
 </section>
@@ -1067,6 +1315,7 @@ main { position: relative; z-index: 2; }
 <footer class="colophon">
   <span class="brand">Dance <em style="font-style:italic;font-weight:400;">With</em> Dixon</span>
   <span>Est. 2025 &middot; Orlando, Florida &middot; &copy; 2026 Dance With Dixon LLC</span>
+  <a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a>
   <span class="socials">
     <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a>
     <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a>
@@ -1075,6 +1324,15 @@ main { position: relative; z-index: 2; }
 </footer>
 
 <script>
+/* ── setup ── */
+const $ = (s, c) => (c || document).querySelector(s);
+const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const STILL = new URLSearchParams(location.search).has('still');
+if (STILL) document.documentElement.classList.add('still');
+const noMotion = () => STILL || reducedMotion.matches;
+const CURTAIN = new Date('2026-08-10T04:00:00-04:00').getTime();
+
 /* ── hash router (same model as the live site) ── */
 const PAGES = ['home','proseries','collective','teachers','gallery','merch','faq','contact'];
 function currentPage() {
@@ -1083,12 +1341,16 @@ function currentPage() {
 }
 function route() {
   const p = currentPage();
-  document.querySelectorAll('.page').forEach(s => s.classList.toggle('active', s.id === 'page-' + p));
-  document.querySelectorAll('[data-page]').forEach(a => a.classList.toggle('on', a.dataset.page === p));
-  document.getElementById('menuOverlay').classList.remove('open');
+  $$('.page').forEach(s => s.classList.toggle('active', s.id === 'page-' + p));
+  $$('[data-page]').forEach(a => a.classList.toggle('on', a.dataset.page === p));
+  closeMenu();
   window.scrollTo(0, 0);
-  const sec = document.getElementById('page-' + p);
-  if (sec && sec.dataset.formation) setFormation(sec.dataset.formation);
+  const sec = $('#page-' + p);
+  if (sec) {
+    if (sec.dataset.formation) setFormation(sec.dataset.formation);
+    sec.setAttribute('tabindex', '-1');
+    sec.focus({ preventScroll: true });
+  }
   onScroll();
 }
 window.addEventListener('hashchange', route);
@@ -1099,8 +1361,8 @@ document.addEventListener('click', (e) => {
   if (!a) return;
   const target = a.dataset.jump;
   const go = () => {
-    const el = document.querySelector(target);
-    const smooth = !document.hidden && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const el = $(target);
+    const smooth = !document.hidden && !noMotion();
     if (el) el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center' });
   };
   if (a.getAttribute('href') === location.hash) { e.preventDefault(); go(); }
@@ -1108,75 +1370,177 @@ document.addEventListener('click', (e) => {
 });
 
 /* ── masthead ── */
-const mast = document.getElementById('masthead');
+const mast = $('#masthead');
 const onScroll = () => mast.classList.toggle('solid', window.scrollY > 40);
 window.addEventListener('scroll', onScroll, { passive: true });
 
+/* ── overlays: scroll lock + focus trap, shared by menu and lightbox ── */
+let lockCount = 0;
+function lockScroll(on) {
+  lockCount = Math.max(0, lockCount + (on ? 1 : -1));
+  document.documentElement.style.overflow = lockCount ? 'hidden' : '';
+}
+function trapFocus(box, e) {
+  const focusables = $$('a[href], button, [tabindex="0"]', box).filter(el => el.offsetParent !== null);
+  if (!focusables.length) return;
+  const first = focusables[0], last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
 /* ── mobile menu ── */
-document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('menuOverlay').classList.add('open'));
-document.getElementById('menuClose').addEventListener('click', () => document.getElementById('menuOverlay').classList.remove('open'));
+const menuOverlay = $('#menuOverlay');
+const menuBtn = $('#menuBtn');
+function openMenu() {
+  menuOverlay.classList.add('open');
+  menuBtn.setAttribute('aria-expanded', 'true');
+  lockScroll(true);
+  $('#menuClose').focus();
+}
+function closeMenu() {
+  if (!menuOverlay.classList.contains('open')) return;
+  menuOverlay.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  lockScroll(false);
+}
+menuBtn.addEventListener('click', openMenu);
+$('#menuClose').addEventListener('click', () => { closeMenu(); menuBtn.focus(); });
+menuOverlay.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeMenu(); menuBtn.focus(); }
+  if (e.key === 'Tab') trapFocus(menuOverlay, e);
+});
 
 /* ── reveals ── */
 const io = new IntersectionObserver((es) => {
   for (const e of es) if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
 }, { threshold: 0.16 });
-document.querySelectorAll('.rv, .tamara').forEach(el => io.observe(el));
+$$('.rv, .tamara').forEach(el => io.observe(el));
+
+/* ── the count-in: only when the piece opens on home ── */
+document.body.classList.add(
+  currentPage() === 'home' && !noMotion() ? 'count-in' : 'no-count'
+);
 
 /* ── rehearsal clips ── */
-document.querySelectorAll('.slate video').forEach(v => {
-  const c = v.closest('.slate');
-  c.addEventListener('mouseenter', () => v.play().catch(()=>{}));
-  c.addEventListener('mouseleave', () => v.pause());
-  c.addEventListener('click', () => v.paused ? v.play().catch(()=>{}) : v.pause());
+$$('.slate').forEach(slate => {
+  const v = $('video', slate);
+  const clip = $('.clip', slate);
+  slate.addEventListener('mouseenter', () => v.play().catch(() => {}));
+  slate.addEventListener('mouseleave', () => v.pause());
+  const toggle = () => v.paused ? v.play().catch(() => {}) : v.pause();
+  clip.addEventListener('click', toggle);
+  clip.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  });
 });
+/* pause anything playing once it scrolls away */
+const slateIO = new IntersectionObserver((es) => {
+  for (const e of es) if (!e.isIntersecting) $('video', e.target)?.pause();
+}, { threshold: 0.1 });
+$$('.slate').forEach(s => slateIO.observe(s));
 
-/* ── FORMATIONS: 14 dancers, re-blocked per page ── */
+/* ── FORMATIONS: 14 dancers, re-blocked as you move through the piece ──
+   Dots walk their paths on a slight arc and settle in canon; the loop
+   stops itself once everyone is on their mark. */
 const F = {
-  scatter:  [[8,22],[24,60],[16,84],[34,30],[45,72],[52,14],[60,52],[68,86],[74,28],[82,64],[90,16],[93,44],[86,88],[40,92]],
-  lines:    [[15,25],[32,25],[49,25],[66,25],[83,25],[15,50],[32,50],[49,50],[66,50],[83,50],[24,75],[41,75],[58,75],[75,75]],
-  diagonal: [[10,88],[17,80],[24,72],[31,64],[38,56],[45,48],[52,40],[59,32],[66,24],[73,16],[26,90],[40,78],[54,66],[68,54]],
-  clump:    [[46,44],[52,40],[58,46],[49,52],[55,54],[43,50],[61,52],[50,34],[64,42],[40,42],[57,60],[47,60],[68,48],[36,52]],
-  v:        [[50,18],[43,28],[57,28],[36,38],[64,38],[29,48],[71,48],[22,58],[78,58],[15,68],[85,68],[8,78],[92,78],[50,88]],
-  circle:   [[50,14],[68,20],[80,36],[82,54],[74,70],[60,80],[42,80],[28,72],[19,56],[20,38],[30,23],[50,30],[62,50],[38,50]],
-  button:   [[50,30],[38,42],[62,42],[28,56],[50,50],[72,56],[20,72],[38,66],[62,66],[80,72],[46,84],[54,84],[10,86],[90,86]]
+  scatter:    [[8,22],[24,60],[16,84],[34,30],[45,72],[52,14],[60,52],[68,86],[74,28],[82,64],[90,16],[93,44],[86,88],[40,92]],
+  twoclumps:  [[18,38],[26,30],[24,46],[32,40],[14,52],[30,54],[22,62],[70,38],[78,32],[76,48],[84,42],[68,54],[82,58],[74,64]],
+  lines:      [[15,25],[32,25],[49,25],[66,25],[83,25],[15,50],[32,50],[49,50],[66,50],[83,50],[24,75],[41,75],[58,75],[75,75]],
+  vigil:      [[14,78],[24,72],[34,68],[44,66],[56,66],[66,68],[76,72],[86,78],[20,86],[32,82],[44,80],[58,80],[70,82],[82,86]],
+  threeclumps:[[14,34],[22,28],[18,42],[26,38],[12,46],[46,28],[54,26],[48,40],[56,36],[78,32],[86,28],[82,42],[90,38],[76,46]],
+  windows:    [[12,28],[31,28],[50,28],[69,28],[88,28],[21,52],[40,52],[59,52],[78,52],[12,76],[31,76],[50,76],[69,76],[88,76]],
+  diagonal:   [[10,88],[17,80],[24,72],[31,64],[38,56],[45,48],[52,40],[59,32],[66,24],[73,16],[26,90],[40,78],[54,66],[68,54]],
+  v:          [[50,18],[43,28],[57,28],[36,38],[64,38],[29,48],[71,48],[22,58],[78,58],[15,68],[85,68],[8,78],[92,78],[50,88]],
+  bow:        [[8,74],[15,72],[22,74],[29,72],[36,74],[43,72],[57,72],[64,74],[71,72],[78,74],[85,72],[92,74],[43,86],[50,86]],
+  clump:      [[46,44],[52,40],[58,46],[49,52],[55,54],[43,50],[61,52],[50,34],[64,42],[40,42],[57,60],[47,60],[68,48],[36,52]],
+  circle:     [[50,14],[68,20],[80,36],[82,54],[74,70],[60,80],[42,80],[28,72],[19,56],[20,38],[30,23],[50,30],[62,50],[38,50]],
+  button:     [[50,30],[38,42],[62,42],[28,56],[50,50],[72,56],[20,72],[38,66],[62,66],[80,72],[46,84],[54,84],[10,86],[90,86]],
+  x:          [[20,20],[30,30],[40,40],[50,50],[60,60],[70,70],[80,80],[80,20],[70,30],[60,40],[40,60],[30,70],[20,80],[50,88]]
 };
-const svg = document.getElementById('formation');
+const svg = $('#formation');
 const NS = 'http://www.w3.org/2000/svg';
-const palette = ['rgba(250,243,232,.5)','rgba(248,215,200,.55)','rgba(107,175,138,.55)'];
+const dotFills = ['rgba(250,243,232,.58)','rgba(248,215,200,.6)','rgba(107,175,138,.58)'];
+const easeIO = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
 const dots = F.scatter.map((p, i) => {
-  const c = document.createElementNS(NS, 'circle');
-  c.setAttribute('r', 0.55);
-  c.setAttribute('fill', palette[i % 3]);
-  svg.appendChild(c);
-  return { el: c, x: p[0], y: p[1], tx: p[0], ty: p[1] };
+  const el = document.createElementNS(NS, 'circle');
+  el.setAttribute('r', 0.62);
+  el.setAttribute('fill', dotFills[i % 3]);
+  svg.appendChild(el);
+  /* everyone starts in the wings */
+  const wing = i % 2 ? 106 : -6;
+  const d = {
+    el, x: wing, y: p[1] + (i % 5) - 2,
+    sx: wing, sy: p[1] + (i % 5) - 2, tx: wing, ty: p[1],
+    t: 1, dur: 1, bow: 0
+  };
+  el.setAttribute('cx', d.x); el.setAttribute('cy', d.y);
+  return d;
 });
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let rafId = null, lastStamp = 0, currentF = '';
 function setFormation(name) {
-  const f = F[name] || F.scatter;
-  dots.forEach((d, i) => { d.tx = f[i][0]; d.ty = f[i][1]; if (reduced) { d.x = d.tx; d.y = d.ty; } });
-}
-(function tick() {
-  for (const d of dots) {
-    d.x += (d.tx - d.x) * 0.045;
-    d.y += (d.ty - d.y) * 0.045;
-    d.el.setAttribute('cx', d.x.toFixed(2));
-    d.el.setAttribute('cy', d.y.toFixed(2));
+  if (!F[name] || name === currentF) return;
+  currentF = name;
+  const f = F[name];
+  dots.forEach((d, i) => {
+    d.sx = d.x; d.sy = d.y;
+    d.tx = f[i][0]; d.ty = f[i][1];
+    d.t = 0;
+    d.dur = 1100 + (i % 7) * 90;                       /* hit marks in canon */
+    d.bow = ((i % 2) ? 1 : -1) * (1.2 + (i % 5) * .45); /* walk a slight arc */
+    if (noMotion()) { d.t = 1; d.x = d.tx; d.y = d.ty; place(d); }
+  });
+  if (!noMotion() && rafId === null && !document.hidden) {
+    lastStamp = performance.now();
+    rafId = requestAnimationFrame(tickDots);
   }
-  requestAnimationFrame(tick);
-})();
+}
+function place(d) {
+  d.el.setAttribute('cx', d.x.toFixed(2));
+  d.el.setAttribute('cy', d.y.toFixed(2));
+}
+function tickDots(stamp) {
+  const dt = Math.min(50, stamp - lastStamp);
+  lastStamp = stamp;
+  let moving = false;
+  for (const d of dots) {
+    if (d.t >= 1) continue;
+    moving = true;
+    d.t = Math.min(1, d.t + dt / d.dur);
+    const e = easeIO(d.t);
+    const dx = d.tx - d.sx, dy = d.ty - d.sy;
+    const len = Math.hypot(dx, dy) || 1;
+    const arc = Math.sin(Math.PI * e) * d.bow;
+    d.x = d.sx + dx * e + (-dy / len) * arc;
+    d.y = d.sy + dy * e + (dx / len) * arc;
+    place(d);
+  }
+  rafId = moving ? requestAnimationFrame(tickDots) : null;
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+  else if (!document.hidden && dots.some(d => d.t < 1)) {
+    lastStamp = performance.now();
+    rafId = requestAnimationFrame(tickDots);
+  }
+});
+/* sections can call their own blocking as they cross center stage */
+const markIO = new IntersectionObserver((es) => {
+  for (const e of es) if (e.isIntersecting && e.target.dataset.formation) setFormation(e.target.dataset.formation);
+}, { rootMargin: '-42% 0px -42% 0px' });
+$$('.mark[data-formation], .tamara[data-formation]').forEach(el => markIO.observe(el));
 
-/* ── curtain countdown ── */
+/* ── counts to curtain ── */
 (function curtainCount() {
-  const target = new Date('2026-08-10T04:00:00-04:00').getTime();
-  const box = document.getElementById('curtainCount');
+  const box = $('#curtainCount');
   if (!box) return;
-  const dEl = document.getElementById('ccDays'), hEl = document.getElementById('ccHrs'),
-        mEl = document.getElementById('ccMin'), sEl = document.getElementById('ccSec');
+  const dEl = $('#ccDays'), hEl = $('#ccHrs'), mEl = $('#ccMin'), sEl = $('#ccSec');
+  let timer = null;
   function tick() {
-    const diff = target - Date.now();
+    const diff = CURTAIN - Date.now();
     if (diff <= 0) {
       box.classList.add('done');
       box.innerHTML = '<div class="cc-n">Season One is underway.</div>';
+      clearInterval(timer);
       return;
     }
     const s = Math.floor(diff / 1000);
@@ -1184,33 +1548,77 @@ function setFormation(name) {
     hEl.textContent = String(Math.floor((s % 86400) / 3600)).padStart(2, '0');
     mEl.textContent = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
     sEl.textContent = String(s % 60).padStart(2, '0');
-    requestAnimationFrame(() => setTimeout(tick, 1000));
   }
   tick();
+  timer = setInterval(tick, 1000);
+})();
+/* the proseries page carries the same count on a strip of tape */
+(function curtainTape() {
+  const tape = $('#curtainTape');
+  if (!tape) return;
+  const days = Math.ceil((CURTAIN - Date.now()) / 86400000);
+  if (days > 0) {
+    tape.textContent = days + (days === 1 ? ' day' : ' days') + ' to curtain';
+    tape.hidden = false;
+  } else {
+    tape.textContent = 'Season One is underway';
+    tape.hidden = false;
+  }
 })();
 
 /* ── gallery lightbox ── */
 (function lightbox() {
-  const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lightboxImg');
-  const lbCap = document.getElementById('lightboxCaption');
+  const lb = $('#lightbox');
   if (!lb) return;
-  function open(fig) {
-    const img = fig.querySelector('img');
-    const cap = fig.querySelector('figcaption');
-    lbImg.src = img.src;
+  const lbImg = $('#lightboxImg'), lbCap = $('#lightboxCaption'), lbCount = $('#lightboxCount');
+  const figures = $$('#galleryWall figure');
+  let idx = 0, lastFocus = null;
+  function show(i) {
+    idx = (i + figures.length) % figures.length;
+    const img = $('img', figures[idx]);
+    const cap = $('figcaption', figures[idx]);
+    lbImg.src = img.currentSrc || img.src;
     lbImg.alt = img.alt || '';
     lbCap.textContent = cap ? cap.textContent : '';
-    lb.classList.add('open');
+    lbCount.textContent = (idx + 1) + ' / ' + figures.length;
   }
-  function close() { lb.classList.remove('open'); lbImg.src = ''; }
-  document.getElementById('galleryWall')?.addEventListener('click', (e) => {
+  function open(i) {
+    lastFocus = document.activeElement;
+    show(i);
+    lb.classList.add('open');
+    lockScroll(true);
+    $('#lightboxClose').focus();
+  }
+  function close() {
+    lb.classList.remove('open');
+    lbImg.src = '';
+    lockScroll(false);
+    if (lastFocus) lastFocus.focus();
+  }
+  $('#galleryWall')?.addEventListener('click', (e) => {
     const fig = e.target.closest('figure');
-    if (fig) open(fig);
+    if (fig) open(figures.indexOf(fig));
   });
-  document.getElementById('lightboxClose').addEventListener('click', close);
+  $('#lightboxClose').addEventListener('click', close);
+  $('#lightboxPrev').addEventListener('click', () => show(idx - 1));
+  $('#lightboxNext').addEventListener('click', () => show(idx + 1));
   lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
-  window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('open')) close(); });
+  lb.addEventListener('keydown', (e) => { if (e.key === 'Tab') trapFocus(lb, e); });
+  window.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(idx - 1);
+    if (e.key === 'ArrowRight') show(idx + 1);
+  });
+  /* swipe */
+  let swipeX = null;
+  lb.addEventListener('pointerdown', (e) => { swipeX = e.clientX; });
+  lb.addEventListener('pointerup', (e) => {
+    if (swipeX === null) return;
+    const dx = e.clientX - swipeX;
+    if (Math.abs(dx) > 44) show(idx + (dx < 0 ? 1 : -1));
+    swipeX = null;
+  });
 })();
 
 route();
