@@ -1416,10 +1416,14 @@ const io = new IntersectionObserver((es) => {
 }, { threshold: 0.16 });
 $$('.rv, .tamara').forEach(el => io.observe(el));
 
-/* ── the count-in: only when the piece opens on home ── */
-document.body.classList.add(
-  currentPage() === 'home' && !noMotion() ? 'count-in' : 'no-count'
-);
+/* ── the count-in: once, when the piece opens on home ── */
+if (currentPage() === 'home' && !noMotion()) {
+  document.body.classList.add('count-in');
+  /* after the phrase lands, retire it so returning to home stays settled */
+  setTimeout(() => document.body.classList.replace('count-in', 'no-count'), 3200);
+} else {
+  document.body.classList.add('no-count');
+}
 
 /* ── rehearsal clips ── */
 $$('.slate').forEach(slate => {
@@ -1552,18 +1556,20 @@ $$('.mark[data-formation], .tamara[data-formation]').forEach(el => markIO.observ
   tick();
   timer = setInterval(tick, 1000);
 })();
-/* the proseries page carries the same count on a strip of tape */
+/* the proseries page carries the same day count on a strip of tape */
 (function curtainTape() {
   const tape = $('#curtainTape');
   if (!tape) return;
-  const days = Math.ceil((CURTAIN - Date.now()) / 86400000);
-  if (days > 0) {
-    tape.textContent = days + (days === 1 ? ' day' : ' days') + ' to curtain';
-    tape.hidden = false;
-  } else {
+  const diff = CURTAIN - Date.now();
+  const days = Math.floor(diff / 86400000);
+  if (diff <= 0) {
     tape.textContent = 'Season One is underway';
     tape.hidden = false;
+  } else if (days > 0) {
+    tape.textContent = days + (days === 1 ? ' day' : ' days') + ' to curtain';
+    tape.hidden = false;
   }
+  /* under a day out, the home countdown carries it; no tape */
 })();
 
 /* ── gallery lightbox ── */

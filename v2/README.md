@@ -1,9 +1,10 @@
 # /v2 — "THE PIECE" (v4 prototype, branch `version4`)
 
-**Status: v4 prototype pass, 2026-07-16, branch `version4` (NOT live, not merged).**
-Branch lineage: `version2` (approved v2 concept, tip 764e217) → `version4` (this).
-`version2` stays as the approved checkpoint; `concept/the-program` and
-`season-one-v2` remain archive. Dixon has NOT click-through'd the v4 pass yet.
+**Status: v4 prototype FINISHED and signed off ("okay") by Dixon 2026-07-16.
+Branch `version4` — NOT live, not merged, and it stays that way until Dixon
+calls for a port.** Branch lineage: `version2` (approved v2 concept, tip
+764e217) → `version4` (this). `version2` stays as the approved checkpoint;
+`concept/the-program` and `season-one-v2` remain archive.
 
 ## What this is
 A clean-slate redesign for the whole site, ONE self-contained file (`index.html`),
