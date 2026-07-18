@@ -1,0 +1,432 @@
+/* dwdCON — one-day public dance convention landing page.
+   Self-contained comic-book / dwdPS-LOUD treatment: halftone dot texture
+   over forest green, hard terracotta comic-shadow display type, tilted
+   sticker rows for the class schedule, a pink starburst callout, and
+   ticket-stub pricing cards. Cormorant Garamond (display) + Outfit (body)
+   + Bebas Neue (numerals/time tags). Gold = Tamara Mark memorial only,
+   never used decoratively here. No emojis. */
+
+:root {
+  --dc-forest:      #0c1f17;
+  --dc-forest-2:    #142e22;
+  --dc-terra:       #C8614B;
+  --dc-terra-light: #d4775f;
+  --dc-terra-dark:  #a8503e;
+  --dc-ivory:       #FAF3E8;
+  --dc-seafoam:     #6BAF8A;
+  --dc-pink:        #FF7AA2;
+  --dc-ink:         #0c1f17;
+  --dc-rule:        rgba(250, 243, 232, 0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--dc-forest);
+  color: var(--dc-ivory);
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+}
+
+/* Halftone dot texture over the forest ground — comic-panel paper feel. */
+body {
+  background-image:
+    radial-gradient(rgba(250, 243, 232, 0.09) 1px, transparent 1.4px),
+    radial-gradient(120% 60% at 100% 0%, rgba(200, 97, 75, 0.22), transparent 55%),
+    radial-gradient(120% 55% at 0% 100%, rgba(107, 175, 138, 0.16), transparent 55%),
+    var(--dc-forest);
+  background-size: 14px 14px, auto, auto, auto;
+  background-attachment: fixed, fixed, fixed, fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.dc-display {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  line-height: 0.94;
+}
+
+.dc-numerals {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+/* ─── Layout shell ─── */
+.dc-page {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 22px 26px 64px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header ─── */
+.dc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--dc-rule);
+}
+.dc-wm {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  color: var(--dc-ivory);
+  text-decoration: none;
+}
+.dc-wm em {
+  font-style: normal;
+  color: var(--dc-terra-light);
+}
+.dc-issue {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dc-seafoam);
+}
+
+/* ─── Hero ─── */
+.dc-hero {
+  padding: 34px 0 26px;
+  text-align: center;
+  position: relative;
+}
+.dc-eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--dc-seafoam);
+  margin-bottom: 14px;
+}
+.dc-hero-title {
+  font-size: clamp(3.6rem, 15vw, 6.5rem);
+  color: var(--dc-ivory);
+  text-shadow:
+    3px 3px 0 var(--dc-terra),
+    6px 6px 0 var(--dc-terra-dark);
+  letter-spacing: 0.01em;
+  margin-bottom: 6px;
+}
+.dc-hero-title span {
+  color: var(--dc-pink);
+  text-shadow:
+    3px 3px 0 var(--dc-terra),
+    6px 6px 0 var(--dc-terra-dark);
+}
+.dc-hero-meta {
+  font-size: 1.05rem;
+  color: var(--dc-ivory);
+  margin: 16px 0 6px;
+}
+.dc-hero-meta .dash { color: var(--dc-terra-light); margin: 0 4px; }
+.dc-hero-sub {
+  font-size: 0.98rem;
+  color: rgba(250, 243, 232, 0.72);
+  max-width: 480px;
+  margin: 0 auto 26px;
+}
+.dc-hero-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dc-btn {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--dc-ink);
+  background: var(--dc-ivory);
+  border: 2px solid var(--dc-ink);
+  padding: 14px 34px;
+  border-radius: 3px;
+  box-shadow: 4px 4px 0 var(--dc-terra);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.dc-btn:hover,
+.dc-btn:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--dc-terra);
+}
+.dc-btn:active {
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 0 var(--dc-terra);
+}
+.dc-hero-cta-note {
+  font-size: 0.78rem;
+  color: rgba(250, 243, 232, 0.6);
+}
+
+/* ─── Starburst callout ─── */
+.dc-starburst-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 6px 0 34px;
+}
+.dc-starburst {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-6deg);
+}
+.dc-starburst svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.dc-starburst-text {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: var(--dc-ink);
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.02em;
+}
+.dc-starburst-text .dc-sb-big {
+  display: block;
+  font-size: 1.9rem;
+  line-height: 0.95;
+}
+.dc-starburst-text .dc-sb-small {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+/* ─── Section shell ─── */
+.dc-section {
+  padding: 30px 0;
+  border-top: 1px solid var(--dc-rule);
+}
+.dc-section-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dc-terra-light);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* ─── Class sticker rows ─── */
+.dc-classes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.dc-class {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--dc-ivory);
+  color: var(--dc-ink);
+  border: 2px solid var(--dc-ink);
+  border-radius: 4px;
+  padding: 14px 18px;
+  box-shadow: 5px 5px 0 var(--dc-terra-dark);
+}
+.dc-class:nth-child(odd)  { transform: rotate(-1.4deg); }
+.dc-class:nth-child(even) { transform: rotate(1.3deg); background: var(--dc-seafoam); }
+.dc-class:hover { transform: rotate(0deg) translateY(-2px); }
+
+.dc-class-time {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  line-height: 1;
+  flex: 0 0 auto;
+  min-width: 58px;
+  text-align: center;
+  color: var(--dc-terra-dark);
+}
+.dc-class-body { flex: 1 1 auto; }
+.dc-class-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.05;
+}
+.dc-class-type {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(12, 31, 23, 0.62);
+  margin-top: 2px;
+}
+
+/* ─── Pricing ticket stubs ─── */
+.dc-tickets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.dc-ticket {
+  position: relative;
+  width: 220px;
+  background: var(--dc-ivory);
+  color: var(--dc-ink);
+  border: 2px dashed var(--dc-ink);
+  border-radius: 6px;
+  padding: 20px 18px 18px;
+  text-align: center;
+}
+.dc-ticket::before,
+.dc-ticket::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: var(--dc-forest);
+  border: 2px solid var(--dc-ink);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.dc-ticket::before { left: -11px; }
+.dc-ticket::after { right: -11px; }
+.dc-ticket-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dc-terra-dark);
+  margin-bottom: 8px;
+}
+.dc-ticket-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+}
+.dc-ticket-unit {
+  font-size: 0.85rem;
+  color: rgba(12, 31, 23, 0.66);
+  margin-top: 4px;
+}
+.dc-ticket--all {
+  background: var(--dc-terra);
+  color: var(--dc-ivory);
+  border-color: var(--dc-terra-dark);
+}
+.dc-ticket--all::before,
+.dc-ticket--all::after {
+  border-color: var(--dc-terra-dark);
+}
+.dc-ticket--all .dc-ticket-label { color: var(--dc-ivory); opacity: 0.85; }
+.dc-ticket--all .dc-ticket-unit { color: rgba(250, 243, 232, 0.85); }
+
+.dc-walkin-note {
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(250, 243, 232, 0.7);
+  margin-top: 18px;
+}
+
+/* ─── FAQ ─── */
+.dc-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.dc-faq-item {
+  border-left: 3px solid var(--dc-terra);
+  padding-left: 16px;
+}
+.dc-faq-q {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--dc-ivory);
+  margin-bottom: 4px;
+}
+.dc-faq-a {
+  font-size: 0.92rem;
+  color: rgba(250, 243, 232, 0.78);
+}
+
+/* ─── CTA band ─── */
+.dc-cta-band {
+  text-align: center;
+  padding: 40px 0 20px;
+}
+.dc-cta-head {
+  font-size: clamp(1.8rem, 6vw, 2.6rem);
+  color: var(--dc-ivory);
+  text-shadow: 3px 3px 0 var(--dc-terra);
+  margin-bottom: 18px;
+}
+.dc-cta-head span { color: var(--dc-pink); }
+.dc-cta-fine {
+  font-size: 0.82rem;
+  color: rgba(250, 243, 232, 0.6);
+  margin-top: 14px;
+}
+.dc-cta-fine a { color: var(--dc-terra-light); }
+
+/* ─── Footer ─── */
+.dc-footer {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--dc-rule);
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(250, 243, 232, 0.6);
+}
+.dc-footer a { color: var(--dc-terra-light); text-decoration: none; }
+
+/* ─── Mobile sticky CTA ─── */
+.dc-sticky-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--dc-ivory);
+  color: var(--dc-ink);
+  border-top: 2px solid var(--dc-ink);
+  padding: 12px 18px;
+  text-decoration: none;
+}
+.dc-sticky-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.dc-sticky-btn {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  background: var(--dc-terra);
+  color: var(--dc-ivory);
+  padding: 9px 20px;
+  border-radius: 3px;
+  border: 2px solid var(--dc-ink);
+}
+
+@media (max-width: 620px) {
+  .dc-sticky-cta { display: flex; }
+  .dc-page { padding-bottom: 90px; }
+  .dc-class { flex-direction: row; }
+}
+
+@media (min-width: 621px) {
+  .dc-sticky-cta { display: none !important; }
+}
