@@ -101,6 +101,13 @@ body {
   text-align: center;
   position: relative;
 }
+/* Tamara Mark — sits quietly by the hero. Gold stays gold. */
+.dc-tamara {
+  position: absolute;
+  top: 14px;
+  right: 2px;
+  opacity: 0.92;
+}
 .dc-eyebrow {
   font-size: 0.78rem;
   letter-spacing: 0.16em;
@@ -416,7 +423,7 @@ body {
   font-weight: 700;
   background: var(--dc-terra);
   color: var(--dc-ivory);
-  padding: 9px 20px;
+  padding: 12px 22px;
   border-radius: 3px;
   border: 2px solid var(--dc-ink);
 }
