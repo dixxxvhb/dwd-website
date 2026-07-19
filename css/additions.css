@@ -2510,21 +2510,217 @@ a:focus-visible,
   max-height: 4em;
 }
 
-/* ── dwdCON homepage flier card — comic accent over the shared audition-cta shell.
-      Family Pink border + halftone dot texture echoing /dwdcon (css/dwdcon.css).
-      Retires with the #dwdcon-cta section after Jul 26, 2026. ── */
-.audition-cta-card.dwdcon-cta-card {
-  border-color: #FF7AA2;
-  background:
-    radial-gradient(rgba(250, 243, 232, 0.07) 1px, transparent 1.4px),
-    linear-gradient(135deg, rgba(255, 122, 162, 0.14), rgba(200, 97, 75, 0.10), rgba(255, 122, 162, 0.14));
-  background-size: 12px 12px, auto;
-  animation: none;
+/* ── dwdCON homepage flier card — mini comic-con poster, matches the IG
+      announce graphics (campaign dwdcon-jul-2026): halftone forest ground,
+      ISSUE #1 frame badge, terracotta-shadowed serif wordmark, tilted sticker
+      chips, pink starburst, hard-shadow pink CTA. Retires with #dwdcon-cta
+      after Jul 26, 2026. Gold = Tamara Mark only (none here). ── */
+.dwdcon-cta {
+  background: var(--oh-green-deep, #0c1f17);
+  padding: 36px 56px 28px;
+  border-top: 1px solid rgba(250, 243, 232, 0.12);
 }
-.audition-cta-card.dwdcon-cta-card .ac-eyebrow { color: #FF7AA2; text-transform: none; }
-.audition-cta-card.dwdcon-cta-card .ac-headline { text-shadow: 0 1px 14px rgba(255, 122, 162, 0.35); }
-.audition-cta-card.dwdcon-cta-card .ac-date {
-  border-left-color: rgba(255, 122, 162, 0.35);
-  border-right-color: rgba(255, 122, 162, 0.35);
+.dcc-card {
+  --dcc-forest: #0c1f17;
+  --dcc-terra: #C8614B;
+  --dcc-ivory: #FAF3E8;
+  --dcc-sea: #6BAF8A;
+  --dcc-pink: #FF7AA2;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "main side" "foot foot";
+  gap: 10px 28px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 46px 40px 18px;
+  border: 2px solid var(--dcc-ivory);
+  outline: 6px solid var(--dcc-forest);
+  outline-offset: -10px;
+  background-image:
+    radial-gradient(rgba(250, 243, 232, 0.10) 1.1px, transparent 1.5px),
+    radial-gradient(120% 80% at 100% 0%, rgba(200, 97, 75, 0.28), transparent 55%),
+    radial-gradient(120% 70% at 0% 100%, rgba(107, 175, 138, 0.18), transparent 55%);
+  background-size: 13px 13px, auto, auto;
+  background-color: var(--dcc-forest);
+  color: var(--dcc-ivory);
+  text-decoration: none;
+  overflow: hidden;
 }
-.audition-cta-card.dwdcon-cta-card .ac-date-time { color: #FF7AA2; }
+.dcc-card:focus-visible { outline-color: var(--dcc-pink); }
+
+/* corner badges */
+.dcc-issue, .dcc-allday {
+  position: absolute;
+  top: 16px;
+  z-index: 3;
+  font-family: "Anton", "Archivo Narrow", Impact, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px 4px;
+  line-height: 1;
+}
+.dcc-issue {
+  left: 18px;
+  color: var(--dcc-ivory);
+  border: 2px solid var(--dcc-ivory);
+  box-shadow: inset 0 0 0 2px var(--dcc-forest), inset 0 0 0 3px var(--dcc-ivory);
+}
+.dcc-allday {
+  right: 18px;
+  color: var(--dcc-forest);
+  background: var(--dcc-pink);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.35);
+}
+
+.dcc-main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  position: relative;
+  z-index: 2;
+}
+.dcc-presents {
+  font-family: "Outfit", "Manrope", sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: var(--dcc-ivory);
+  opacity: 0.85;
+}
+.dcc-wordmark {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(52px, 6.5vw, 84px);
+  line-height: 0.92;
+  color: var(--dcc-ivory);
+  letter-spacing: 0.01em;
+  text-shadow: 4px 4px 0 var(--dcc-terra);
+}
+.dcc-tag {
+  font-family: "Outfit", "Manrope", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--dcc-pink);
+}
+.dcc-stickers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin-top: 12px;
+}
+.dcc-stick {
+  font-family: "Anton", "Archivo Narrow", Impact, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 8px 12px 7px;
+  white-space: nowrap;
+}
+.dcc-stick b { font-weight: 400; margin-right: 4px; }
+.dcc-stick--ivory {
+  background: var(--dcc-ivory);
+  color: var(--dcc-forest);
+  box-shadow: 4px 4px 0 var(--dcc-terra);
+  transform: rotate(-1.6deg);
+}
+.dcc-stick--ivory b { color: var(--dcc-terra); }
+.dcc-stick--sea {
+  background: var(--dcc-sea);
+  color: var(--dcc-forest);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+  transform: rotate(1.4deg);
+}
+.dcc-stick:nth-child(3) { transform: rotate(1.2deg); }
+.dcc-stick:nth-child(4) { transform: rotate(-1.8deg); }
+
+.dcc-side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+  padding: 0 6px;
+}
+.dcc-burst {
+  width: 108px;
+  height: 108px;
+  display: grid;
+  place-items: center;
+  background: var(--dcc-pink);
+  clip-path: polygon(50% 0%, 59% 12%, 72% 5%, 75% 19%, 89% 17%, 86% 31%, 100% 35%, 91% 46%, 100% 57%, 88% 64%, 94% 77%, 79% 78%, 79% 92%, 66% 87%, 60% 100%, 50% 90%, 40% 100%, 34% 87%, 21% 92%, 21% 78%, 6% 77%, 12% 64%, 0% 57%, 9% 46%, 0% 35%, 14% 31%, 11% 17%, 25% 19%, 28% 5%, 41% 12%);
+  transform: rotate(-7deg);
+}
+.dcc-burst span {
+  font-family: "Anton", "Archivo Narrow", Impact, sans-serif;
+  font-size: 15px;
+  line-height: 1.05;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--dcc-forest);
+  text-align: center;
+  transform: rotate(2deg);
+}
+.dcc-date {
+  font-family: "Bebas Neue", "Anton", sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: var(--dcc-ivory);
+}
+.dcc-cta {
+  font-family: "Anton", "Archivo Narrow", Impact, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--dcc-forest);
+  background: var(--dcc-pink);
+  padding: 12px 22px 11px;
+  box-shadow: 4px 4px 0 var(--dcc-ivory);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.dcc-card:hover .dcc-cta {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--dcc-ivory);
+}
+
+.dcc-foot {
+  grid-area: foot;
+  margin: 14px -40px -18px;
+  padding: 10px 40px;
+  background: var(--dcc-ivory);
+  color: var(--dcc-forest);
+  font-family: "Outfit", "Manrope", sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.dwdcon-cta .ac-sub { margin-top: 14px; }
+
+@media (max-width: 760px) {
+  .dwdcon-cta { padding: 28px 20px 22px; }
+  .dcc-card {
+    grid-template-columns: 1fr;
+    grid-template-areas: "main" "side" "foot";
+    padding: 56px 22px 16px;
+    gap: 18px;
+  }
+  .dcc-main { align-items: center; text-align: center; }
+  .dcc-stickers { justify-content: center; }
+  .dcc-wordmark { font-size: clamp(56px, 16vw, 72px); }
+  .dcc-foot { margin: 6px -22px -16px; padding: 10px 18px; }
+}
