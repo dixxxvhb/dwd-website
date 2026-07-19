@@ -2509,3 +2509,22 @@ a:focus-visible,
   opacity: 1;
   max-height: 4em;
 }
+
+/* ── dwdCON homepage flier card — comic accent over the shared audition-cta shell.
+      Family Pink border + halftone dot texture echoing /dwdcon (css/dwdcon.css).
+      Retires with the #dwdcon-cta section after Jul 26, 2026. ── */
+.audition-cta-card.dwdcon-cta-card {
+  border-color: #FF7AA2;
+  background:
+    radial-gradient(rgba(250, 243, 232, 0.07) 1px, transparent 1.4px),
+    linear-gradient(135deg, rgba(255, 122, 162, 0.14), rgba(200, 97, 75, 0.10), rgba(255, 122, 162, 0.14));
+  background-size: 12px 12px, auto;
+  animation: none;
+}
+.audition-cta-card.dwdcon-cta-card .ac-eyebrow { color: #FF7AA2; text-transform: none; }
+.audition-cta-card.dwdcon-cta-card .ac-headline { text-shadow: 0 1px 14px rgba(255, 122, 162, 0.35); }
+.audition-cta-card.dwdcon-cta-card .ac-date {
+  border-left-color: rgba(255, 122, 162, 0.35);
+  border-right-color: rgba(255, 122, 162, 0.35);
+}
+.audition-cta-card.dwdcon-cta-card .ac-date-time { color: #FF7AA2; }
