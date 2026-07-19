@@ -500,7 +500,7 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 /* ═══ HOME — EMAIL SIGNUP ═══ */
 #page-home .email-signup {
   padding: 160px 32px;
-  background: url('../images/photos/201_Prelude in C Minor_84.JPG') center/cover;
+  background: url('../images/photos/opt/201_prelude-in-c-minor_84-1600.webp') center/cover;
   position: relative; text-align: center;
 }
 #page-home .email-signup::before {
