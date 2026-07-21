@@ -225,15 +225,15 @@
 #page-proseries { padding: 0; }
 #page-proseries > * { max-width: none !important; }
 
-/* PS HERO — coral band with PRO / SERIES poster wordmark + stage photo */
+/* PS HERO — Family Pink band, forest ink (loud dwdPS volume) */
 #page-proseries .ps-hero {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  background: var(--oh-coral-deep) !important;
+  background: var(--pink) !important;
   padding: 0 !important;
   min-height: 540px;
   text-align: left !important;
-  color: var(--oh-cream-warm) !important;
+  color: var(--forest) !important;
 }
 #page-proseries .ps-hero::before,
 #page-proseries .ps-hero::after { display: none !important; }
@@ -244,7 +244,7 @@
   font-weight: 700 !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
-  color: var(--oh-cream-warm) !important;
+  color: var(--forest) !important;
   opacity: .85;
   margin: 0 !important;
   padding: 0 !important;
@@ -259,7 +259,7 @@
   line-height: 0.84 !important;
   letter-spacing: .005em !important;
   text-transform: uppercase !important;
-  color: var(--oh-cream-warm) !important;
+  color: var(--forest) !important;
   margin: 18px 0 0 !important;
   padding: 0 !important;
   text-shadow: none !important;
@@ -268,8 +268,8 @@
 #page-proseries .ps-hero h1 .ps-block {
   font-style: normal !important;
   display: inline-block;
-  background: var(--oh-blush);
-  color: var(--oh-green-ink);
+  background: var(--forest);
+  color: var(--pink);
   padding: 0 14px 4px;
   margin-top: -2px;
   font-family: "Anton", sans-serif !important;
@@ -279,7 +279,7 @@
   font-style: italic !important;
   font-size: clamp(18px, 1.6vw, 24px) !important;
   font-weight: 500 !important;
-  color: var(--oh-cream-warm) !important;
+  color: var(--forest) !important;
   opacity: .92;
   max-width: 560px;
   margin: 22px 0 12px !important;
@@ -290,7 +290,7 @@
   font-weight: 600 !important;
   letter-spacing: .14em !important;
   text-transform: uppercase !important;
-  color: var(--oh-cream-warm) !important;
+  color: var(--forest) !important;
   opacity: .82;
   margin: 0 !important;
   display: inline-block !important;
@@ -307,8 +307,8 @@
   letter-spacing: .24em !important;
   text-transform: uppercase !important;
   text-decoration: none !important;
-  background: var(--oh-green-ink) !important;
-  color: var(--oh-cream-warm) !important;
+  background: var(--forest) !important;
+  color: var(--ivory) !important;
   border: 0 !important;
 }
 #page-proseries .ps-hero .btn:hover { background: #000 !important; }
@@ -580,7 +580,7 @@
   content: "";
   display: block;
   height: 6px;
-  background: var(--oh-coral-deep);
+  background: var(--pink);
 }
 #page-early-access .ea-headline {
   font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif !important;
@@ -647,15 +647,15 @@
   }
 }
 
-/* PS GREEN BAR — under hero, Anton meta line */
+/* PS GREEN BAR — under hero, Anton meta line (currently unused in markup) */
 .ps-meta-bar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 14px 28px;
   padding: 22px 64px;
-  background: var(--oh-green-ink);
-  color: var(--oh-cream-warm);
+  background: var(--forest);
+  color: var(--ivory);
   font-family: "Anton", sans-serif;
   font-size: clamp(20px, 2vw, 28px);
   letter-spacing: .005em;
@@ -669,16 +669,16 @@
   max-width: none !important;
   margin: 0 !important;
   padding: 64px 64px !important;
-  background: var(--oh-cream-warm) !important;
-  color: var(--oh-green-ink) !important;
+  background: var(--ivory) !important;
+  color: var(--forest) !important;
   text-align: left !important;
   width: 100% !important;
 }
 #page-proseries .content-section.alt {
-  background: var(--oh-green-deep) !important;
-  color: var(--oh-cream) !important;
+  background: var(--forest) !important;
+  color: var(--ivory) !important;
 }
-#page-proseries .content-section.alt h2 { color: var(--oh-cream-warm) !important; }
+#page-proseries .content-section.alt h2 { color: var(--pink) !important; }
 #page-proseries .content-section .chapter {
   display: inline-flex !important;
   align-items: center;
@@ -689,9 +689,10 @@
   letter-spacing: .26em;
   text-transform: uppercase;
   margin-bottom: 16px !important;
-  color: var(--oh-coral) !important;
+  color: var(--terra-dark) !important; /* small accent on the light (ivory) ground */
   opacity: .9;
 }
+#page-proseries .content-section.alt .chapter { color: var(--pink) !important; } /* small accent on the dark (forest) ground */
 #page-proseries .content-section .chapter::before,
 #page-proseries .content-section .chapter::after { display: none !important; }
 #page-proseries .content-section .chapter .no {
@@ -709,9 +710,9 @@
   letter-spacing: .005em !important;
   text-transform: uppercase !important;
   margin: 0 0 24px !important;
-  color: var(--oh-coral-deep);
+  color: var(--pink);
 }
-#page-proseries .content-section.alt h2 { color: var(--oh-coral) !important; }
+#page-proseries .content-section.alt h2 { color: var(--pink) !important; }
 #page-proseries .content-section p,
 #page-proseries .content-section .section-lead {
   font-family: "Manrope", sans-serif !important;
@@ -721,7 +722,7 @@
   margin: 0 0 14px !important;
   color: inherit;
 }
-#page-proseries .content-section.alt p { color: var(--oh-cream); }
+#page-proseries .content-section.alt p { color: var(--ivory); }
 
 /* Why ProSeries — 4-item grid as alternating coral / blush / forest / cream blocks */
 #page-proseries .why-grid {
@@ -729,28 +730,30 @@
   grid-template-columns: 1fr 1fr !important;
   gap: 2px !important;
   margin-top: 32px !important;
-  background: var(--oh-green-deep);
+  background: var(--forest);
   border: 1px solid var(--oh-rule);
 }
 #page-proseries .why-item {
   padding: 36px 32px !important;
-  background: var(--oh-green-ink);
-  color: var(--oh-cream) !important;
+  background: var(--forest);
+  color: var(--ivory) !important;
   border: 0 !important;
   margin: 0 !important;
 }
-#page-proseries .why-item:nth-child(1) { background: var(--oh-coral-deep); color: var(--oh-cream-warm); }
+/* Family-thread terracotta panel (display-size fill, not text-on-ground) stays part of the checker */
+#page-proseries .why-item:nth-child(1) { background: var(--terra); color: var(--ivory); }
 #page-proseries .why-item:nth-child(1) h4,
-#page-proseries .why-item:nth-child(1) p { color: var(--oh-cream-warm) !important; }
-#page-proseries .why-item:nth-child(2) { background: var(--oh-cream-warm); color: var(--oh-green-ink); }
+#page-proseries .why-item:nth-child(1) p { color: var(--ivory) !important; }
+#page-proseries .why-item:nth-child(2) { background: var(--ivory); color: var(--forest); }
 #page-proseries .why-item:nth-child(2) h4,
-#page-proseries .why-item:nth-child(2) p { color: var(--oh-green-ink) !important; }
-#page-proseries .why-item:nth-child(3) { background: var(--oh-blush); color: var(--oh-green-ink); }
+#page-proseries .why-item:nth-child(2) p { color: var(--forest) !important; }
+/* Retired blush panel -> Family Pink fill (forest text on pink fill is contrast-safe) */
+#page-proseries .why-item:nth-child(3) { background: var(--pink); color: var(--forest); }
 #page-proseries .why-item:nth-child(3) h4,
-#page-proseries .why-item:nth-child(3) p { color: var(--oh-green-ink) !important; }
-#page-proseries .why-item:nth-child(4) { background: var(--oh-green-ink); color: var(--oh-cream-warm); }
+#page-proseries .why-item:nth-child(3) p { color: var(--forest) !important; }
+#page-proseries .why-item:nth-child(4) { background: var(--forest); color: var(--ivory); }
 #page-proseries .why-item:nth-child(4) h4,
-#page-proseries .why-item:nth-child(4) p { color: var(--oh-cream-warm) !important; }
+#page-proseries .why-item:nth-child(4) p { color: var(--ivory) !important; }
 #page-proseries .why-item h4 {
   font-family: "Anton", sans-serif !important;
   font-size: clamp(26px, 2.4vw, 38px) !important;
@@ -779,12 +782,12 @@
 #page-proseries .track-detail-section {
   max-width: none !important;
   padding: 0 !important;
-  background: var(--oh-green-deep);
+  background: var(--forest);
 }
 #page-proseries .td-intro {
   padding: 64px 64px 40px;
-  background: var(--oh-green-deep);
-  color: var(--oh-cream);
+  background: var(--forest);
+  color: var(--ivory);
   text-align: left;
 }
 #page-proseries .td-intro h2 {
@@ -795,13 +798,13 @@
   letter-spacing: .005em !important;
   text-transform: uppercase !important;
   margin: 0 0 20px !important;
-  color: var(--oh-cream-warm) !important;
+  color: var(--pink) !important;
 }
 #page-proseries .td-intro p {
   font-family: "Manrope", sans-serif !important;
   font-size: 15px !important;
   max-width: 60ch;
-  color: var(--oh-cream);
+  color: var(--ivory);
   opacity: .85;
 }
 
@@ -817,8 +820,8 @@
 #page-proseries .track-tab {
   text-align: left;
   padding: 22px 28px;
-  background: var(--oh-green-deep);
-  color: var(--oh-cream);
+  background: var(--forest);
+  color: var(--ivory);
   border: 0;
   cursor: pointer;
   display: flex;
@@ -850,16 +853,22 @@
   opacity: .72;
   margin-top: 6px;
 }
-/* Active tab takes its track's own accent so the panel below feels seamless */
-#page-proseries .track-tab[data-track-tab="prep"][aria-selected="true"]   { background: var(--oh-coral-deep); color: var(--oh-cream-warm); }
-#page-proseries .track-tab[data-track-tab="elite"][aria-selected="true"]  { background: var(--oh-blush);      color: var(--oh-green-ink); }
-#page-proseries .track-tab[data-track-tab="pro"][aria-selected="true"]    { background: var(--oh-green-ink);  color: var(--oh-cream-warm); }
+/* Active tab stays on the same neutral (forest) ground as the tabs bar — track
+   identity is badge-bounded: it lives in the label color + underline accent,
+   never as a full-tab fill (REBRAND §3 badge rule). */
+#page-proseries .track-tab[aria-selected="true"] { background: var(--forest-mid); color: var(--ivory); }
+#page-proseries .track-tab[data-track-tab="prep"][aria-selected="true"]   { box-shadow: inset 0 -4px 0 0 var(--pink-soft); }
+#page-proseries .track-tab[data-track-tab="elite"][aria-selected="true"]  { box-shadow: inset 0 -4px 0 0 var(--seafoam); }
+#page-proseries .track-tab[data-track-tab="pro"][aria-selected="true"]    { box-shadow: inset 0 -4px 0 0 var(--terra); }
+#page-proseries .track-tab[data-track-tab="prep"][aria-selected="true"] .tt-name   { color: var(--pink-soft); }
+#page-proseries .track-tab[data-track-tab="elite"][aria-selected="true"] .tt-name  { color: var(--seafoam); }
+#page-proseries .track-tab[data-track-tab="pro"][aria-selected="true"] .tt-name    { color: var(--terra); }
 #page-proseries .track-tab[aria-selected="true"] .tt-num,
 #page-proseries .track-tab[aria-selected="true"] .tt-meta { opacity: .9; }
 
 /* Hover hints */
-#page-proseries .track-tab:not([aria-selected="true"]):hover { background: var(--oh-green-ink); }
-#page-proseries .track-tab:focus-visible { outline: 2px solid var(--oh-coral); outline-offset: -2px; }
+#page-proseries .track-tab:not([aria-selected="true"]):hover { background: var(--forest-light); }
+#page-proseries .track-tab:focus-visible { outline: 2px solid var(--pink); outline-offset: -2px; }
 
 /* Hide non-active panels */
 #page-proseries .track-detail[data-active="false"] { display: none !important; }
@@ -913,14 +922,29 @@
       "allin";
   }
 }
-#page-proseries .track-detail[data-track="prep"]  { background: var(--oh-coral-deep) !important; color: var(--oh-cream-warm) !important; }
-#page-proseries .track-detail[data-track="elite"] { background: var(--oh-blush) !important;      color: var(--oh-green-ink) !important; }
-#page-proseries .track-detail[data-track="pro"]   { background: var(--oh-green-ink) !important;  color: var(--oh-cream-warm) !important; }
+/* Track panels — consistent neutral ground per REBRAND badge rule: track color
+   is never a full-surface fill. Prep/Pro keep the dark (forest) ground they had
+   (coral-deep / green-ink were both dark); Elite keeps the light ground it had
+   (blush was light) but on ivory instead of the retired blush. Each track's
+   identity now lives in the top border + panel heading + price figure below. */
+#page-proseries .track-detail[data-track="prep"]  { background: var(--forest) !important; color: var(--ivory) !important; border-top: 4px solid var(--pink-soft) !important; }
+#page-proseries .track-detail[data-track="elite"] { background: var(--ivory) !important;  color: var(--forest) !important; border-top: 4px solid var(--seafoam) !important; }
+#page-proseries .track-detail[data-track="pro"]   { background: var(--forest) !important; color: var(--ivory) !important; border-top: 4px solid var(--terra) !important; }
 
 /* Force per-track text color on all descendants */
 #page-proseries .track-detail[data-track="prep"] *,
-#page-proseries .track-detail[data-track="pro"] * { color: var(--oh-cream-warm) !important; }
-#page-proseries .track-detail[data-track="elite"] * { color: var(--oh-green-ink) !important; }
+#page-proseries .track-detail[data-track="pro"] * { color: var(--ivory) !important; }
+#page-proseries .track-detail[data-track="elite"] * { color: var(--forest) !important; }
+
+/* Panel heading + price figure carry the track accent where contrast allows.
+   Prep (pink-soft) and Pro (terra) sit on the forest ground — both legal per
+   the hard contrast rules. Elite sits on ivory: seafoam text fails AA there
+   (~2.3:1), so Elite's heading/price stay forest (ground ink) and the track
+   identity rides the top border + active tab label instead — see report. */
+#page-proseries .track-detail[data-track="prep"] .td-name,
+#page-proseries .track-detail[data-track="prep"] .td-price-amount { color: var(--pink-soft) !important; }
+#page-proseries .track-detail[data-track="pro"] .td-name,
+#page-proseries .track-detail[data-track="pro"] .td-price-amount { color: var(--terra) !important; }
 
 /* Special-case the all-in box content (different bg so different color) */
 #page-proseries .track-detail[data-track="prep"] .td-allin-label,
@@ -1085,8 +1109,10 @@
   color: inherit;
   vertical-align: middle;
 }
-#page-proseries .track-detail[data-track="elite"] .td-tag,
-#page-proseries .track-detail[data-track="pro"] .td-tag { background: rgba(255,255,255,.16); }
+/* Elite is the light (ivory) panel now — a dark-tint chip reads better there
+   than the old white overlay (that pairing was for the blush ground). Pro
+   stays on the default black-tint chip (it's forest like Prep now). */
+#page-proseries .track-detail[data-track="elite"] .td-tag { background: rgba(10,31,23,.12); }
 
 #page-proseries .td-genres {
   font-family: "Manrope", sans-serif !important;
@@ -1146,8 +1172,9 @@
   justify-content: space-between;
   gap: 14px;
 }
-#page-proseries .track-detail[data-track="elite"] .td-allin,
-#page-proseries .track-detail[data-track="pro"] .td-allin { background: rgba(255,255,255,.10) !important; }
+/* Elite is the light (ivory) panel now — needs a dark overlay like the others,
+   not the old light-on-light overlay (that pairing was for the blush ground). */
+#page-proseries .track-detail[data-track="elite"] .td-allin { background: rgba(10,31,23,.10) !important; }
 #page-proseries .td-allin-label {
   font-family: "Manrope", sans-serif !important;
   font-size: 10.5px !important;
@@ -1181,12 +1208,14 @@
   border: 0 !important;
 }
 #page-proseries .pricing-onetime {
-  background: var(--oh-cream-warm) !important;
-  color: var(--oh-green-ink) !important;
+  background: var(--ivory) !important;
+  color: var(--forest) !important;
 }
+/* Retired blush band -> Family Pink; heading flips to forest ink since it now
+   sits ON the pink field (pink-on-pink would vanish). */
 #page-proseries .pricing-notes {
-  background: var(--oh-blush) !important;
-  color: var(--oh-green-ink) !important;
+  background: var(--pink) !important;
+  color: var(--forest) !important;
 }
 #page-proseries .pricing-onetime h3,
 #page-proseries .pricing-notes h3 {
@@ -1197,14 +1226,15 @@
   text-transform: uppercase !important;
   letter-spacing: .005em !important;
   margin: 0 0 22px !important;
-  color: var(--oh-coral-deep);
+  color: var(--pink);
 }
+#page-proseries .pricing-notes h3 { color: var(--forest) !important; }
 #page-proseries .pricing-onetime-rows {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0 !important;
-  border-top: 1px solid var(--oh-green-ink);
-  border-bottom: 1px solid var(--oh-green-ink);
+  border-top: 1px solid var(--forest);
+  border-bottom: 1px solid var(--forest);
 }
 #page-proseries .pricing-onetime .pot-row {
   display: grid !important;
@@ -1240,7 +1270,7 @@
   line-height: 1.6 !important;
   margin: 0 0 14px !important;
   max-width: 70ch;
-  color: var(--oh-green-ink) !important;
+  color: var(--forest) !important;
 }
 #page-proseries .pricing-notes ul {
   list-style: none;
@@ -1252,10 +1282,10 @@
   font-size: 14px;
   line-height: 1.6;
   padding: 4px 0;
-  color: var(--oh-green-ink) !important;
+  color: var(--forest) !important;
 }
 #page-proseries .pricing-notes li strong {
-  color: var(--oh-coral-deep) !important;
+  color: var(--forest) !important;
 }
 #page-proseries .pricing-notes li::before {
   content: "—  ";
@@ -1266,27 +1296,27 @@
   font-size: 12.5px !important;
   opacity: .75;
   font-style: italic;
-  color: var(--oh-green-ink) !important;
+  color: var(--forest) !important;
 }
-/* Force readable colors on both Fees + Deposits bands, but preserve
-   the coral H3 headings + the coral strong-emphasis in deposits. */
+/* Force readable colors on both Fees (ivory) + Deposits (pink) bands. The
+   Deposits h3 flips to forest ink since its ground is pink now, not coral;
+   the old coral strong-emphasis in Deposits body copy also drops to forest
+   (pink text on a pink ground would vanish). */
 #page-proseries .pricing-onetime,
 #page-proseries .pricing-onetime *:not(h3),
 #page-proseries .pricing-notes,
-#page-proseries .pricing-notes *:not(h3):not(strong) { color: var(--oh-green-ink) !important; }
-#page-proseries .pricing-onetime h3,
-#page-proseries .pricing-notes h3 { color: var(--oh-coral-deep) !important; }
-#page-proseries .pricing-notes p strong,
-#page-proseries .pricing-notes li strong { color: var(--oh-coral-deep) !important; }
+#page-proseries .pricing-notes *:not(h3) { color: var(--forest) !important; }
+#page-proseries .pricing-onetime h3 { color: var(--pink) !important; }
+#page-proseries .pricing-notes h3 { color: var(--forest) !important; }
 #page-proseries .pricing-onetime .pot-amount,
-#page-proseries .pricing-onetime .pot-name { color: var(--oh-green-ink) !important; }
-#page-proseries .pricing-onetime .pot-meta { color: var(--oh-green-ink) !important; opacity: .7; }
+#page-proseries .pricing-onetime .pot-name { color: var(--forest) !important; }
+#page-proseries .pricing-onetime .pot-meta { color: var(--forest) !important; opacity: .7; }
 
 /* Coming Soon banner */
 #page-proseries .coming-soon-banner {
   padding: 56px 64px !important;
-  background: var(--oh-cream-warm) !important;
-  color: var(--oh-green-ink) !important;
+  background: var(--ivory) !important;
+  color: var(--forest) !important;
   max-width: none !important;
   border: 0 !important;
 }
@@ -1296,7 +1326,7 @@
   font-weight: 700;
   letter-spacing: .26em;
   text-transform: uppercase;
-  color: var(--oh-coral-deep);
+  color: var(--terra-dark);
   margin-bottom: 14px;
 }
 #page-proseries .coming-soon-banner h2 {
@@ -1307,7 +1337,7 @@
   letter-spacing: .005em !important;
   text-transform: uppercase !important;
   margin: 0 0 16px !important;
-  color: var(--oh-green-ink) !important;
+  color: var(--pink) !important;
 }
 #page-proseries .coming-soon-banner p {
   font-family: "Manrope", sans-serif !important;
@@ -1317,10 +1347,11 @@
 }
 
 /* Registration is Open */
+/* "Auditions are done" band — the other named full-pink band, forest ink */
 #page-proseries #proseries-interest {
   padding: 64px 64px !important;
-  background: var(--oh-coral-deep) !important;
-  color: var(--oh-cream-warm) !important;
+  background: var(--pink) !important;
+  color: var(--forest) !important;
   text-align: left !important;
   max-width: none !important;
   margin: 0 !important;
@@ -1333,28 +1364,29 @@
   text-transform: uppercase !important;
   letter-spacing: .005em !important;
   margin: 0 0 24px !important;
-  color: var(--oh-cream-warm) !important;
+  color: var(--forest) !important;
 }
 #page-proseries #proseries-interest p {
   font-family: "Manrope", sans-serif !important;
   font-size: 16px !important;
   line-height: 1.6;
   max-width: 64ch;
-  color: var(--oh-cream-warm) !important;
+  color: var(--forest) !important;
 }
+/* Primary CTA on a pink band must invert to forest/ivory (pink-on-pink would vanish) */
 #page-proseries #proseries-interest .btn-blush {
-  background: var(--oh-blush) !important;
-  color: var(--oh-green-ink) !important;
+  background: var(--forest) !important;
+  color: var(--ivory) !important;
 }
-#page-proseries #proseries-interest .btn-blush:hover { background: var(--oh-blush-soft) !important; }
+#page-proseries #proseries-interest .btn-blush:hover { background: var(--forest-mid) !important; }
 #page-proseries #proseries-interest .btn-outline {
   background: transparent !important;
-  color: var(--oh-cream-warm) !important;
-  border: 1px solid var(--oh-cream-warm) !important;
+  color: var(--forest) !important;
+  border: 1px solid var(--forest) !important;
 }
 #page-proseries #proseries-interest .btn-outline:hover {
-  background: var(--oh-cream-warm) !important;
-  color: var(--oh-green-ink) !important;
+  background: var(--forest) !important;
+  color: var(--pink) !important;
 }
 #page-proseries #proseries-interest .btn {
   display: inline-flex !important;
@@ -1373,8 +1405,8 @@
 /* Questions outro */
 #page-proseries .cta-banner {
   padding: 48px 64px !important;
-  background: var(--oh-green-ink) !important;
-  color: var(--oh-cream-warm) !important;
+  background: var(--forest) !important;
+  color: var(--ivory) !important;
   text-align: left !important;
   max-width: none !important;
   margin: 0 !important;
@@ -1388,17 +1420,18 @@
   text-transform: uppercase !important;
   letter-spacing: .005em !important;
   margin: 0 0 12px !important;
-  color: var(--oh-cream-warm) !important;
+  color: var(--pink) !important;
 }
 #page-proseries .cta-banner p {
   font-family: "Manrope", sans-serif !important;
   font-size: 15px !important;
   line-height: 1.6;
   max-width: 60ch;
-  color: var(--oh-cream-warm) !important;
+  color: var(--ivory) !important;
   opacity: .85;
   margin: 0 0 22px !important;
 }
+/* CTA on ps: pink bg + forest label (matches .arm-cta ps pattern in arms.css) */
 #page-proseries .cta-banner .btn,
 #page-proseries .cta-banner .btn-primary {
   display: inline-flex !important;
@@ -1411,11 +1444,11 @@
   letter-spacing: .24em;
   text-transform: uppercase;
   text-decoration: none;
-  background: var(--oh-coral) !important;
-  color: var(--oh-cream-warm) !important;
+  background: var(--pink) !important;
+  color: var(--forest) !important;
   border: 0 !important;
 }
-#page-proseries .cta-banner .btn-primary:hover { background: var(--oh-coral-ink) !important; }
+#page-proseries .cta-banner .btn-primary:hover { background: var(--forest) !important; color: var(--pink) !important; }
 
 /* ============================================================
    .amuse-feature  — A·Muse section now lives INSIDE #page-adult-company.
@@ -1943,8 +1976,8 @@
 .pf-hero-title em {
   font-style: normal;
   display: inline-block;
-  background: var(--oh-blush);
-  color: var(--oh-green-ink);
+  background: var(--pink);
+  color: var(--forest);
   padding: 0 14px 4px;
   margin-top: -2px;
   font-family: "Anton", sans-serif;
@@ -2258,10 +2291,11 @@
    (Summer Intensive + Competition Season — merged from old Performances)
    ============================================================ */
 
+/* Retired blush band -> Family Pink; heading flips to forest ink (pink-on-pink) */
 #page-proseries .ps-whatelse {
   padding: 56px 64px !important;
-  background: var(--oh-blush) !important;
-  color: var(--oh-green-ink) !important;
+  background: var(--pink) !important;
+  color: var(--forest) !important;
   text-align: left !important;
   margin: 0 !important;
 }
@@ -2273,7 +2307,7 @@
   line-height: 0.92 !important;
   letter-spacing: .005em !important;
   text-transform: uppercase !important;
-  color: var(--oh-coral-deep) !important;
+  color: var(--forest) !important;
   margin: 0 !important;
 }
 #page-proseries .ps-whatelse-grid {
@@ -2286,29 +2320,31 @@
 }
 #page-proseries .ps-whatelse-grid .coming-up-card {
   padding: 48px 56px !important;
-  background: var(--oh-cream-warm) !important;
-  color: var(--oh-green-ink) !important;
+  background: var(--ivory) !important;
+  color: var(--forest) !important;
   border: 0 !important;
   margin: 0 !important;
 }
 #page-proseries .ps-whatelse-grid .coming-up-card:nth-child(2) {
-  background: var(--oh-green-ink) !important;
-  color: var(--oh-cream-warm) !important;
+  background: var(--forest) !important;
+  color: var(--ivory) !important;
 }
+/* Card 1 sits on ivory (light, body-size label) -> terra-dark. Card 2 sits on
+   forest (dark, body-size label) -> pink. Rule 4/5 applied exactly. */
 #page-proseries .ps-whatelse-grid .coming-up-card .label {
   font-family: "Manrope", sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
-  color: var(--oh-coral-deep) !important;
+  color: var(--terra-dark) !important;
   background: none !important;
   padding: 0 !important;
   margin: 0 0 14px !important;
   border: 0 !important;
   display: inline-block !important;
 }
-#page-proseries .ps-whatelse-grid .coming-up-card:nth-child(2) .label { color: var(--oh-coral) !important; }
+#page-proseries .ps-whatelse-grid .coming-up-card:nth-child(2) .label { color: var(--pink) !important; }
 #page-proseries .ps-whatelse-grid .coming-up-card h3 {
   font-family: "Anton", sans-serif !important;
   font-size: clamp(32px, 3.6vw, 52px) !important;
@@ -2434,7 +2470,7 @@
   font-style: italic;
   font-family: "Cormorant Garamond", serif !important;
   font-weight: 500;
-  color: var(--oh-blush-soft);
+  color: var(--pink);
   text-transform: none;
   letter-spacing: .005em;
   display: inline-block;
