@@ -196,7 +196,8 @@
   top: 70px;
   z-index: 90;
   display: flex;
-  gap: 28px;
+  align-items: center;
+  gap: 10px;
   padding: 12px 32px;
   background: rgba(12, 31, 23, 0.88);
   backdrop-filter: blur(12px);
@@ -211,60 +212,62 @@
   display: none;
 }
 
+/* "Jump to" affordance label — makes the rail read as navigation, not a
+   breadcrumb. Non-interactive flex item. */
+.chapter-rail::before {
+  content: 'Jump to';
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(250, 243, 232, 0.55);
+  align-self: center;
+  flex: 0 0 auto;
+  margin-right: 4px;
+}
+
+/* Chip links: pill outline + hover fill so they read as clickable. The
+   active chip fills with the arm accent (contrast-checked pairs below). */
 .chapter-rail a {
   font-family: 'Outfit', sans-serif;
   font-size: 11px;
-  letter-spacing: 0.18em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
   text-decoration: none;
-  color: var(--ivory-dim, rgba(250, 243, 232, 0.65));
-  padding: 4px 0;
-  position: relative;
-  transition: color 0.25s ease;
+  color: rgba(250, 243, 232, 0.85);
+  padding: 6px 14px;
+  border: 1px solid rgba(250, 243, 232, 0.28);
+  border-radius: 999px;
+  flex: 0 0 auto;
+  transition: color 0.22s ease, background 0.22s ease, border-color 0.22s ease;
 }
 
-.chapter-rail a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--terra);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.chapter-rail a.active,
 .chapter-rail a:hover {
-  color: var(--terra-light);
+  border-color: var(--terra-light);
+  color: var(--ivory);
+  background: rgba(200, 97, 75, 0.14);
 }
 
-.chapter-rail a.active::after,
-.chapter-rail a:hover::after {
-  transform: scaleX(1);
+/* Active chip: filled. terra-light fill + forest ink = 5.39:1. */
+.chapter-rail a.active {
+  background: var(--terra-light);
+  border-color: var(--terra-light);
+  color: var(--forest);
 }
 
-[data-arm="ps"] .chapter-rail a.active,
+/* ps arm: pink chips. Pink fill + forest ink = 6.99:1. */
 [data-arm="ps"] .chapter-rail a:hover {
-  color: var(--pink);
+  border-color: var(--pink);
+  color: var(--ivory);
+  background: rgba(255, 122, 162, 0.14);
 }
 
-[data-arm="ps"] .chapter-rail a.active::after,
-[data-arm="ps"] .chapter-rail a:hover::after {
+[data-arm="ps"] .chapter-rail a.active {
   background: var(--pink);
-}
-
-[data-arm="c"] .chapter-rail a.active,
-[data-arm="c"] .chapter-rail a:hover {
-  color: var(--terra-light);
-}
-
-[data-arm="c"] .chapter-rail a.active::after,
-[data-arm="c"] .chapter-rail a:hover::after {
-  background: var(--terra);
+  border-color: var(--pink);
+  color: var(--forest);
 }
 
 /* Scroll offset so headings land clear of the fixed topnav + sticky rail */
@@ -288,7 +291,7 @@
 @media (max-width: 768px) {
   .chapter-rail {
     top: 64px;
-    gap: 20px;
+    gap: 8px;
     padding: 10px 16px;
   }
 
