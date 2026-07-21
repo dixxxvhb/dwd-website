@@ -11,15 +11,15 @@
   --rb-bg-elevated: #102b1f;
   --rb-bg-deep: #091a13;
 
-  /* Warm accents */
-  --rb-ivory: #FAF3E8;
-  --rb-ivory-dim: #ebe2d2;
+  /* Warm accents — aliased to styles.css canon so the two token sets can't drift */
+  --rb-ivory: var(--ivory);
+  --rb-ivory-dim: var(--ivory-dim);
   --rb-ivory-low: #a9a196;
-  --rb-pink: #f8d7c8;
-  --rb-terracotta: #C8614B;
+  --rb-pink: var(--pink);
+  --rb-terracotta: var(--terra);
   --rb-terracotta-deep: #9c4a39;
-  --rb-seafoam: #6BAF8A;
-  --rb-gold: #e2b955;
+  --rb-seafoam: var(--seafoam);
+  --rb-gold: var(--gold-tamara);
 
   /* Rules */
   --rb-rule: rgba(250,243,232,0.16);

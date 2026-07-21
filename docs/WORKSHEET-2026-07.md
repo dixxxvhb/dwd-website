@@ -38,9 +38,11 @@ fixes the instance AND the disease.
 - **Gold `#e2b955` = Tamara Mark only.** The mark: two UNFILLED circles, right one SMALLER and
   slightly HIGHER, rose-gold gradient stroke, animated when possible. It's the memorial for
   Dixon's mom — get it exactly right or don't touch it.
-- Brand: forest `#0c1f17` / pink `#f8d7c8` / terracotta `#C8614B` / ivory `#FAF3E8` (+ seafoam
-  `#6BAF8A` for dwdPS). Cormorant Garamond / Outfit / Bebas Neue. NO emojis (the `✦` ornaments
-  are fine). Casing: dwdPROSERIES / dwdCOLLECTIVE.
+- Brand: forest `#0c1f17` / Family Pink `#FF7AA2` (retired blush 2026-07-18) / terracotta `#C8614B`
+  / ivory `#FAF3E8` (+ seafoam `#6BAF8A` and soft pink `#FF8FAB` Prep-badge for dwdPS). Terracotta
+  = family signature thread; arms differ by volume via `[data-arm]` (house/ps/c), see
+  `REBRAND-ONE-HOUSE-2026-07.md`. Cormorant Garamond / Outfit / Bebas Neue. NO emojis (the `✦`
+  ornaments are fine). Casing: dwdPROSERIES / dwdCOLLECTIVE.
 - Copy: never "no extra fees" / "all-inclusive" / "sign up" for ProSeries ("apply" / "earn your
   spot"; "sign up" is acceptable for one-off events like intensives). Deposit framing if fees
   appear. Instagram = @dwdproseries / @dwd_collective only; @dancewithdixon is YouTube/email.

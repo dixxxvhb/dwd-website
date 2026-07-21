@@ -656,7 +656,7 @@ video.hero-logo {
   transition: color 0.2s;
 }
 .dwd-success-close:hover {
-  color: var(--cream, #f5f0e8);
+  color: var(--cream);
 }
 .dwd-success-logo {
   width: 80px;
@@ -1019,7 +1019,7 @@ button[type="submit"]:disabled {
   border: 1px solid var(--terra);
   border-radius: 8px;
   background: transparent;
-  color: var(--cream, #f5f0e8);
+  color: var(--cream);
   font-family: 'Outfit', sans-serif;
   font-size: 0.85rem;
   line-height: 1.25;
@@ -1485,7 +1485,7 @@ button[type="submit"]:disabled {
 }
 .a-title {
   font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600;
-  color: var(--cream, #f5f0e8); letter-spacing: 0.02em;
+  color: var(--cream); letter-spacing: 0.02em;
 }
 .a-refresh {
   position: absolute; right: 1.25rem; top: 1.25rem;
@@ -1499,7 +1499,7 @@ button[type="submit"]:disabled {
   cursor: pointer;
   transition: all 0.15s ease;
 }
-.a-refresh:hover { color: #f5f0e8; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.22); }
+.a-refresh:hover { color: var(--ivory); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.22); }
 .a-refresh:active { transform: scale(0.96); }
 .a-refresh svg { flex-shrink: 0; }
 @media (max-width: 480px) {
@@ -1595,7 +1595,7 @@ button[type="submit"]:disabled {
   text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap;
 }
 .a-badge-green { background: #6BAF8A; color: var(--forest, #0f1a14); }
-.a-badge-gold { background: var(--terra); color: var(--forest, #0f1a14); }
+.a-badge-terra { background: var(--terra); color: var(--forest, #0f1a14); }
 .a-badge-gray { background: rgba(255,255,255,0.15); color: #fff; }
 
 /* Funnel */
@@ -1648,7 +1648,7 @@ button[type="submit"]:disabled {
   letter-spacing: 0.01em;
 }
 .a-live-stat strong {
-  color: var(--cream, #f5f0e8); font-weight: 600; margin-right: 2px;
+  color: var(--cream); font-weight: 600; margin-right: 2px;
 }
 .a-live-page { color: rgba(245,240,232,0.55); font-size: 11px; }
 .a-live-sep { color: rgba(255,255,255,0.18); }
@@ -1713,7 +1713,7 @@ button[type="submit"]:disabled {
 .a-utm-field select {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
-  color: var(--cream, #f5f0e8);
+  color: var(--cream);
   padding: 8px 10px;
   border-radius: 6px;
   font-family: 'Outfit', sans-serif;
@@ -1972,7 +1972,7 @@ button[type="submit"]:disabled {
 }
 .ea-early-note strong { color: var(--terra); }
 .ea-early-note a { color: var(--terra); text-decoration: underline; text-underline-offset: 2px; }
-.ea-early-note a:hover { color: var(--gold-light); }
+.ea-early-note a:hover { color: var(--pink); }
 
 .ea-privacy {
   font-size: 0.7rem;
@@ -2074,7 +2074,7 @@ a:focus-visible,
 .form-group input:focus-visible,
 .form-group textarea:focus-visible,
 .form-group select:focus-visible {
-  outline: 2px solid var(--accent, #f8d7c8);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 

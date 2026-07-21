@@ -10,12 +10,11 @@ colors:
   terra-light: "#d4775f"
   terra: "#C8614B"
   terra-dark: "#a8503e"
-  pink: "#f8d7c8"
-  pink-light: "#fef0f0"
+  pink: "#FF7AA2"
+  pink-soft: "#FF8FAB"
   ivory: "#FAF3E8"
   ivory-dim: "#e8ddd0"
   seafoam: "#6BAF8A"
-  cream: "#f5f0e8"
   black: "#0a0a0a"
   white: "#ffffff"
 
@@ -209,7 +208,7 @@ Dance With Dixon (DWD) is a choreographer-run dance brand — not a boardroom pr
 A four-color palette grounded in forest and heated by terracotta.
 
 - **Primary — Midnight Forest Green (#0c1f17):** the primary surface. Deep, quiet, confident. Most UI starts here; ivory sits on top.
-- **Secondary — Blush Pink (#f8d7c8):** soft accent for taglines, accent cards, secondary text on dark. Never for primary CTAs.
+- **Secondary — Family Pink (#FF7AA2):** soft accent for taglines, accent cards, secondary text on dark. Never for primary CTAs. Display-only on ivory (2.2:1). Retired blush on 2026-07-18.
 - **Tertiary — Terracotta (#C8614B):** the accent that pulls the eye. Buttons, CTAs, active states, badges, hover emphasis. Terracotta replaced gold on April 15, 2026 — there is no gold in the UI anymore.
 - **Neutral — Warm Ivory (#FAF3E8):** replaces pure white for all text and light backgrounds. Warmer, more cohesive.
 - **Seafoam (#6BAF8A):** tertiary green used sparingly where forest is too dark to read. Elite track accent in dwdPS.

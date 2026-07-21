@@ -151,6 +151,7 @@
   <link rel="stylesheet" href="css/audition.css">
   <link rel="stylesheet" href="css/poster-pages.css">
   <link rel="stylesheet" href="css/tighten.css">
+  <link rel="stylesheet" href="css/arms.css">
 
   <!-- Supabase Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -230,7 +231,7 @@
   <main class="main" id="main-content">
 
     <!-- ══════════ HOME ══════════ -->
-    <section class="page active" id="page-home" aria-label="Home">
+    <section class="page active" id="page-home" data-arm="house" aria-label="Home">
       <!-- HERO — DUAL SPLIT -->
       <div class="hero">
         <div class="hero-photo">
@@ -835,7 +836,7 @@
          ProSeries (Teaching Philosophy). Hash redirect lives in main.js.) -->
 
     <!-- ══════════ ADULT COMPANY ══════════ -->
-    <section class="page" id="page-adult-company" aria-label="Adult Company">
+    <section class="page" id="page-adult-company" data-arm="c" aria-label="Adult Company">
       <div class="ac-hero ac-hero--split" style="background-image: linear-gradient(rgba(15,35,24,0.85), rgba(15,35,24,0.92)), url('images/photos/opt/a-06-06-25-4927-enhanced-nr-1600.webp'); background-size: cover; background-position: center;">
         <div class="ac-hero-text-stack">
           <div class="label">Orlando, Florida</div>
@@ -1030,7 +1031,7 @@
     </section>
 
     <!-- ══════════ PROSERIES ══════════ -->
-    <section class="page" id="page-proseries" aria-label="ProSeries">
+    <section class="page" id="page-proseries" data-arm="ps" aria-label="ProSeries">
       <div class="ps-hero">
         <div class="ps-hero-text">
           <div class="label">Ages 5&ndash;19 &middot; Competitive Training</div>
@@ -1389,7 +1390,7 @@
     </section>
 
     <!-- ══════════ TEACHERS ══════════ -->
-    <section class="page" id="page-teachers" aria-label="Teachers">
+    <section class="page" id="page-teachers" data-arm="house" aria-label="Teachers">
       <!-- Hero band -->
       <div class="tch-hero tch-hero--split">
         <div class="tch-hero-text">
@@ -1472,7 +1473,7 @@
     </section>
 
     <!-- ══════════ GALLERY ══════════ -->
-    <section class="page" id="page-gallery" aria-label="Gallery">
+    <section class="page" id="page-gallery" data-arm="house" aria-label="Gallery">
       <div class="gallery-hero gallery-hero--split">
         <div class="gallery-hero-text">
           <h1>Gallery</h1>
@@ -1579,7 +1580,7 @@
     </section>
 
     <!-- ══════════ SHOP ══════════ -->
-    <section class="page" id="page-shop" aria-label="Merch">
+    <section class="page" id="page-shop" data-arm="house" aria-label="Merch">
       <div class="merch-poll">
         <div class="merch-poll-hero">
           <video src="images/logos/ProSeries-pink-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="dwdPROSERIES animated logo" class="hero-logo-section" width="100" height="100" style="margin-bottom: 24px;">
@@ -1688,7 +1689,7 @@
     </section>
 
     <!-- ══════════ CONTACT ══════════ -->
-    <section class="page" id="page-contact" aria-label="Contact">
+    <section class="page" id="page-contact" data-arm="house" aria-label="Contact">
       <div class="contact-section">
         <div class="contact-form-side">
           <h1>Get in Touch</h1>
@@ -1761,7 +1762,7 @@
     </section>
 
     <!-- ══════════ CAMPAIGN COMMAND CENTER ══════════ -->
-    <section class="page" id="page-campaign" aria-label="Campaign Command Center">
+    <section class="page" id="page-campaign" data-arm="internal" aria-label="Campaign Command Center">
       <!-- Access Code Gate -->
       <div class="campaign-gate" id="campaign-gate">
         <div class="campaign-gate-inner">
@@ -1794,7 +1795,7 @@
     </section>
 
     <!-- ═════���════ ANALYTICS ══════════ -->
-    <section class="page" id="page-analytics" aria-label="Site Analytics">
+    <section class="page" id="page-analytics" data-arm="internal" aria-label="Site Analytics">
       <div class="campaign-gate" id="analytics-gate">
         <div class="campaign-gate-inner">
           <video src="images/logos/DWD-green-transparent.webm" autoplay muted loop playsinline disablePictureInPicture aria-label="DWD animated logo" width="80" height="80" style="margin-bottom: 1.5rem;">
@@ -1815,7 +1816,7 @@
     </section>
 
     <!-- ══════════ EARLY ACCESS / REGISTRATION OPEN ══════════ -->
-    <section class="page" id="page-early-access" aria-label="ProSeries Registration">
+    <section class="page" id="page-early-access" data-arm="ps" aria-label="ProSeries Registration">
       <!-- PRE-LAUNCH STATE — Be First In Line -->
       <div class="early-access-page" data-hide-after="2026-05-01T00:00:00-04:00">
         <div class="ea-container">
@@ -1983,7 +1984,7 @@
     </section>
 
     <!-- ══════════ PRIVACY ══════════ -->
-    <section class="page" id="page-privacy" aria-label="Privacy Policy">
+    <section class="page" id="page-privacy" data-arm="house" aria-label="Privacy Policy">
       <div class="content-section" style="padding-top: 3rem;">
         <h1>Privacy Policy</h1>
         <p class="privacy-date">Last updated: July 4, 2026</p>

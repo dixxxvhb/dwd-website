@@ -73,11 +73,11 @@
       "$value": {
         "colorSpace": "srgb",
         "components": [
-          0.973,
-          0.843,
-          0.784
+          1.0,
+          0.478,
+          0.635
         ],
-        "hex": "#f8d7c8"
+        "hex": "#FF7AA2"
       }
     },
     "pink-light": {
@@ -128,11 +128,11 @@
       "$value": {
         "colorSpace": "srgb",
         "components": [
-          0.961,
-          0.941,
+          0.98,
+          0.953,
           0.91
         ],
-        "hex": "#f5f0e8"
+        "hex": "#FAF3E8"
       }
     },
     "black": {
@@ -227,11 +227,11 @@
       "$value": {
         "colorSpace": "srgb",
         "components": [
-          0.973,
-          0.843,
-          0.784
+          1.0,
+          0.478,
+          0.635
         ],
-        "hex": "#f8d7c8"
+        "hex": "#FF7AA2"
       }
     },
     "tertiary": {

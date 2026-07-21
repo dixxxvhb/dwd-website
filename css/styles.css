@@ -10,26 +10,33 @@
   --footer-bg: #060a08;
   --black: #0a0a0a;
 
-  --cream: #f5f0e8;
-  --cream-faint: #d4cfc0;
+  /* Ivory is the only light neutral (cream/blush-lighter deprecated 2026-07-12) */
   --ivory: #FAF3E8;
+  --ivory-dim: #e8ddd0;
 
-  --blush: #f8d7c8;
-  --blush-light: #fbe8df;
+  /* Family Pink — secondary accent (retired blush on 2026-07-18) */
+  --pink: #FF7AA2;
+  --pink-soft: #FF8FAB;      /* dwdPS Prep track badge ONLY */
 
-  /* Terracotta — PRIMARY ACCENT (Apr 15, 2026) */
+  /* Terracotta — family signature thread / primary accent (Apr 15, 2026).
+     Display-only on forest/ivory; body text swaps to --terra-light (dark) / --terra-dark (light) */
   --terra: #C8614B;
   --terra-light: #d4775f;
   --terra-dark: #a8503e;
 
   --seafoam: #6BAF8A;
 
-  /* Tamara Mark gold — MEMORIAL USE ONLY. Do not use for UI accents. */
+  /* Tamara Mark gold — MEMORIAL USE ONLY. Do not use for UI accents.
+     Rose-gold gradient (SVG): #c9956c → #e8c49a → #d4a574; flat fallback below. */
   --gold-tamara: #e2b955;
 
-  /* Legacy aliases — deprecated, kept for compatibility. Migrate over time. */
-  --accent: var(--blush);
-  --accent-light: var(--blush-light);
+  /* ── Legacy aliases → new canon (retire on next full re-skin) ── */
+  --cream: var(--ivory);
+  --cream-faint: var(--ivory-dim);
+  --blush: var(--pink);
+  --blush-light: var(--pink-soft);
+  --accent: var(--pink);
+  --accent-light: var(--pink-soft);
 
   --font-display: 'Cormorant Garamond', serif;
   --font-body: 'Outfit', sans-serif;
@@ -558,7 +565,7 @@ a:hover {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--accent-light) 0%, #fbe8df 100%);
+  background: linear-gradient(135deg, var(--accent-light) 0%, var(--pink-soft) 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(248, 215, 200, 0.25);
   letter-spacing: 1.2px;
@@ -1586,7 +1593,7 @@ a:hover {
 
 .form-group select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f5f0e8' d='M1 4l5 4 5-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FAF3E8' d='M1 4l5 4 5-4'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   padding-right: 2.5rem;

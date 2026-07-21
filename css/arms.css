@@ -1,0 +1,64 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * DWD — Arm theming ("one house, three volumes", locked 2026-07-18)
+ * Loaded LAST. Scopes accent / CTA colors per brand arm via [data-arm].
+ *   house = parent DWD (balanced anchor)  ·  ps = dwdPROSERIES (loud)
+ *   c = dwdCOLLECTIVE (hushed)            ·  internal inherits house
+ * Volume is more than hue — see REBRAND-ONE-HOUSE-2026-07.md §3.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+/* Default / house: balanced anchor. Terracotta signature, ivory voice. */
+[data-arm] {
+  --arm-accent: var(--terra);        /* display accent (headlines, chips, rules) */
+  --arm-accent-body: var(--terra-light); /* body-safe accent on dark */
+  --arm-cta-bg: var(--terra);
+  --arm-cta-text: var(--ivory);
+  --arm-ring: rgba(200, 97, 75, 0.35);   /* terracotta @ low alpha */
+}
+
+/* dwdPROSERIES — LOUD. Family-Pink-forward, full chroma, pink CTAs. */
+[data-arm="ps"] {
+  --arm-accent: var(--pink);
+  --arm-accent-body: var(--pink);
+  --arm-cta-bg: var(--pink);
+  --arm-cta-text: var(--forest);
+  --arm-ring: rgba(255, 122, 162, 0.40);
+}
+
+/* dwdCOLLECTIVE — HUSHED. Muted, photography-led, thin terracotta rings,
+   ghost CTAs, more air. Accent stays terracotta but appears as line, not fill. */
+[data-arm="c"] {
+  --arm-accent: var(--terra);
+  --arm-accent-body: var(--terra-light);
+  --arm-cta-bg: transparent;
+  --arm-cta-text: var(--ivory);
+  --arm-ring: rgba(200, 97, 75, 0.30);
+}
+
+/* internal (campaign/analytics) inherits house defaults — no special styling */
+
+/* ── Shared arm-driven components ── */
+
+/* Primary CTA: fill on ps/house, ghost 1px-terracotta on c */
+.arm-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  background: var(--arm-cta-bg);
+  color: var(--arm-cta-text);
+  border: 1.5px solid var(--arm-cta-bg);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.85em 1.6em;
+  border-radius: var(--rb-radius-pill, 999px);
+  transition: transform var(--rb-dur-fast, 160ms) var(--rb-ease-out, ease),
+              box-shadow var(--rb-dur-fast, 160ms) var(--rb-ease-out, ease);
+}
+[data-arm="c"] .arm-cta {
+  border-color: var(--terra);
+  color: var(--ivory);
+}
+.arm-cta:hover { transform: translateY(-2px); box-shadow: var(--rb-shadow-2); }
+
+/* Section eyebrow / accent text takes the arm accent */
+.arm-eyebrow { color: var(--arm-accent-body); }

@@ -321,7 +321,7 @@
 }
 .site-footer a:hover,
 .footer-links a:hover {
-  color: var(--rb-pink, #f8d7c8);
+  color: var(--rb-pink);
   transform: translateX(2px);
 }
 
