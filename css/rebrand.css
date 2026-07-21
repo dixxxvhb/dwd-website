@@ -700,3 +700,27 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   /* Contact info stacked list: give each row breathing room, bigger hit */
   #page-contact .contact-info-item { padding: 4px 0; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * Amusing Spaces (2025) video embed — dwdCOLLECTIVE origin section.
+ * Hushed volume: thin terracotta rule, no chrome, no shadow theatrics.
+ * The clip is preload="none" so the 4.5MB only lands if someone hits play.
+ * ═══════════════════════════════════════════════════════════════════════ */
+.as-video-wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  border-top: 1px solid var(--arm-ring, rgba(200, 97, 75, 0.30));
+  padding-top: 20px;
+}
+.as-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1280 / 592;
+  background: #0a1610;
+  outline: 1px solid rgba(200, 97, 75, 0.22);
+  outline-offset: -1px;
+}
+@media (max-width: 768px) {
+  .as-video-wrap { padding-top: 14px; }
+}
