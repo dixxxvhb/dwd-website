@@ -280,10 +280,7 @@
   border-color: var(--terra-light);
   color: var(--forest);
   box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.35),
-              0 1px 3px rgba(4, 12, 8, 0.35),
-              0 0 8px rgba(212, 119, 95, 0.85),
-              0 0 22px rgba(212, 119, 95, 0.55),
-              0 0 40px rgba(200, 97, 75, 0.30);
+              0 1px 3px rgba(4, 12, 8, 0.35);
 }
 
 /* ps arm: pink chips. Pink fill + forest ink = 6.99:1. */
@@ -298,10 +295,49 @@
   border-color: var(--pink);
   color: var(--forest);
   box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.40),
-              0 1px 3px rgba(4, 12, 8, 0.35),
-              0 0 8px rgba(255, 122, 162, 0.90),
-              0 0 22px rgba(255, 122, 162, 0.60),
-              0 0 44px rgba(255, 122, 162, 0.32);
+              0 1px 3px rgba(4, 12, 8, 0.35);
+}
+
+/* ── Chip glow layer ──
+   The glow lives on a ::after underneath each chip (z-index:-1) instead of
+   extra box-shadow layers: it survives the rail's overflow context in every
+   browser, and opacity is cheap to animate for the breathe. --chip-glow is
+   raw R,G,B so one ruleset serves both arms via rgba(var(--chip-glow), a). */
+.chapter-rail a {
+  position: relative;
+  z-index: 0;
+  --chip-glow: 212, 119, 95;            /* terra-light: c + house */
+}
+[data-arm="ps"] .chapter-rail a { --chip-glow: 255, 122, 162; }  /* Family Pink */
+
+.chapter-rail a::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 999px;
+  box-shadow: 0 0 8px rgba(var(--chip-glow), 0.90),
+              0 0 22px rgba(var(--chip-glow), 0.60),
+              0 0 44px rgba(var(--chip-glow), 0.32);
+  opacity: 0.15;                         /* faint resting glow on every chip */
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.chapter-rail a:hover::after { opacity: 0.45; }
+
+.chapter-rail a.active::after {
+  opacity: 1;
+  animation: chip-breathe 3.2s ease-in-out infinite;
+}
+
+@keyframes chip-breathe {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-rail a.active::after { animation: none; opacity: 1; }
 }
 
 /* Scroll offset so headings land clear of the fixed topnav + sticky rail */
