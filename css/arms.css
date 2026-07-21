@@ -149,3 +149,38 @@
   border-color: var(--terra);
   box-shadow: none;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * dwdCOLLECTIVE — body-safe accent (added 2026-07-21)
+ * Terracotta #C8614B on forest measures 4.30:1, and the small label/eyebrow
+ * roles below sit under 18.66px, so they need 4.5:1. The palette already
+ * splits this: --terra-light #d4775f is the body-text terracotta on dark
+ * and measures 5.39:1. Display-size type keeps full-chroma --terra.
+ * Deliberately NOT done by redefining --terra on the arm: that would drag
+ * the display hue and the CTA/rule lines off canon too.
+ * ═══════════════════════════════════════════════════════════════════════ */
+[data-arm="c"] .label,
+[data-arm="c"] .tagline,
+[data-arm="c"] .gallery-section-label,
+[data-arm="c"] .chapter .no,
+[data-arm="c"] .chapter .no sup,
+[data-arm="c"] .chapter .lbl,
+[data-arm="c"] .cc-intro a {
+  color: var(--terra-light);
+}
+
+/* Inside the elevated cards (#1a3d2e) --terra-light drops to 3.77:1, so the
+   card-scoped small text steps up one tint. */
+[data-arm="c"] .collective-card h3,
+[data-arm="c"] .cc-section h3,
+[data-arm="c"] .cc-slot-time,
+[data-arm="c"] .cc-meta,
+[data-arm="c"] .collective-card a:not(.btn),
+[data-arm="c"] .cta-banner a:not(.btn) {
+  color: var(--terra-soft);
+}
+
+/* Chips carry their own fill, so the accent lands on a third ground and still
+   missed 4.5:1. Ivory on the chip is unambiguous and keeps them quiet. */
+[data-arm="c"] .payment-chip,
+[data-arm="c"] a.payment-chip:not(.btn) { color: var(--ivory); }

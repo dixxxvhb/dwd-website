@@ -710,7 +710,11 @@
   letter-spacing: .005em !important;
   text-transform: uppercase !important;
   margin: 0 0 24px !important;
-  color: var(--pink);
+  /* Ground ink on ivory. Family Pink on ivory measures 2.23:1 and fails even
+     the 3:1 large-text bar; forest is 15.56:1. Same call already made for the
+     Elite track heading (seafoam on ivory failed 3:1). Pink stays on .alt,
+     where it sits on forest at 6.99:1 and passes. */
+  color: var(--forest);
 }
 #page-proseries .content-section.alt h2 { color: var(--pink) !important; }
 #page-proseries .content-section p,
@@ -1306,7 +1310,9 @@
 #page-proseries .pricing-onetime *:not(h3),
 #page-proseries .pricing-notes,
 #page-proseries .pricing-notes *:not(h3) { color: var(--forest) !important; }
-#page-proseries .pricing-onetime h3 { color: var(--pink) !important; }
+/* Ivory ground: forest ink, matching .pricing-notes h3 directly below.
+   Family Pink here measured 2.23:1. */
+#page-proseries .pricing-onetime h3 { color: var(--forest) !important; }
 #page-proseries .pricing-notes h3 { color: var(--forest) !important; }
 #page-proseries .pricing-onetime .pot-amount,
 #page-proseries .pricing-onetime .pot-name { color: var(--forest) !important; }
@@ -1499,7 +1505,8 @@
   margin: 0 0 14px !important;
   display: inline-block !important;
 }
-.amuse-feature .ac-hero h1 {
+.amuse-feature .ac-hero h1,
+.amuse-feature .ac-hero h2.ac-hero-title {
   font-family: "Anton", sans-serif !important;
   font-size: clamp(64px, 8vw, 128px) !important;
   font-weight: 400 !important;
@@ -1510,7 +1517,8 @@
   margin: 0 !important;
   text-shadow: none !important;
 }
-.amuse-feature .ac-hero h1 .ac-block {
+.amuse-feature .ac-hero h1 .ac-block,
+.amuse-feature .ac-hero h2.ac-hero-title .ac-block {
   font-style: normal;
   display: inline-block;
   background: var(--oh-blush);
@@ -2788,3 +2796,7 @@
   .audition-ticker a,
   .audition-ticker button { min-height: 44px; }
 }
+
+/* Card meta on the ivory ground: #C8614B measured 3.62:1. Match the sibling
+   .label, which already uses --terra-dark (4.91:1). Added 2026-07-21. */
+#page-proseries .coming-up-card .meta { color: var(--terra-dark) !important; }

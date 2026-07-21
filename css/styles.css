@@ -22,6 +22,10 @@
      Display-only on forest/ivory; body text swaps to --terra-light (dark) / --terra-dark (light) */
   --terra: #C8614B;
   --terra-light: #d4775f;
+  /* Body terracotta for the ELEVATED card ground (#1a3d2e), not the base forest.
+     --terra-light only reaches 3.77:1 there; this hits 4.71:1 on the card and
+     6.73:1 on forest, so it is safe on both. Added 2026-07-21. */
+  --terra-soft: #e08d76;
   --terra-dark: #a8503e;
 
   --seafoam: #6BAF8A;
@@ -936,7 +940,8 @@ a:hover {
   border-bottom: 1px solid var(--forest-mid);
 }
 
-.ac-hero h1 {
+.ac-hero h1,
+.ac-hero h2.ac-hero-title {
   color: var(--cream);
   margin-bottom: 1rem;
 }
