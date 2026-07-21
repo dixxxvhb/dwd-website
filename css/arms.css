@@ -36,6 +36,21 @@
 
 /* internal (campaign/analytics) inherits house defaults — no special styling */
 
+/* dwdCOLLECTIVE is hushed: it carries NO pink except its logo star (an image
+   asset, unaffected by this). Remap every pink alias under the arm to
+   terracotta — quiet, warm, on-signature. All of these are declared at :root
+   (--accent/--blush as `var(--pink)`), so they pre-resolve to pink there and
+   inherit that fixed value; each must be redefined here, not just --pink.
+   The fixed .topnav lives outside the arm subtree, so its pink CTA is safe. */
+[data-arm="c"] {
+  --pink: var(--terra);
+  --rb-pink: var(--terra);
+  --accent: var(--terra);
+  --accent-light: var(--terra-light);
+  --blush: var(--terra);
+  --blush-light: var(--terra-light);
+}
+
 /* ── Shared arm-driven components ── */
 
 /* Primary CTA: fill on ps/house, ghost 1px-terracotta on c */
@@ -62,3 +77,36 @@
 
 /* Section eyebrow / accent text takes the arm accent */
 .arm-eyebrow { color: var(--arm-accent-body); }
+
+/* ══════════════════════════════════════════════════════════════════════
+ * HOME entry-door cards — the loud/hushed statement (REBRAND §5)
+ * Two cards side by side; the contrast between them IS the brand.
+ * These override rebrand.css (loads before arms.css).
+ * ════════════════════════════════════════════════════════════════════ */
+
+/* ── ProSeries card: LOUD, Family-Pink-forward ──
+   (rebrand.css:361-364 painted the identity seafoam; seafoam is now an Elite
+   BADGE accent only, never the dwdPS identity color — palette.md) */
+#page-home .entries .entry.proseries .tag,
+#page-home .entries .entry.proseries h3 em { color: var(--pink); }
+
+/* Track badges — badge-bounded track accents (Prep / Elite / Pro) */
+#page-home .entries .entry .track-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+#page-home .entries .entry .trk {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 11px; border-radius: 999px;
+  color: var(--forest);
+}
+#page-home .entries .entry .trk.prep  { background: var(--pink-soft); }
+#page-home .entries .entry .trk.elite { background: var(--seafoam); }
+#page-home .entries .entry .trk.pro   { background: var(--terra); color: var(--ivory); }
+
+/* ── Collective card: HUSHED, terracotta line, no pink ──
+   dwdC carries no pink except the logo star; quieter, photography-led. */
+#page-home .entries .entry.collective h3 em { color: var(--terra-light); }
+#page-home .entries .entry.collective .entry-hl { color: var(--terra-light); }
+#page-home .entries .entry.collective .f .v em { color: var(--terra-light); }
+/* thinner, warmer divider on the hushed card */
+#page-home .entries .entry.collective .foot { border-top-color: var(--arm-ring); }
