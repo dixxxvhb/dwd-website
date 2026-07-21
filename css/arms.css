@@ -281,7 +281,9 @@
   color: var(--forest);
   box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.35),
               0 1px 3px rgba(4, 12, 8, 0.35),
-              0 0 14px rgba(212, 119, 95, 0.45);
+              0 0 8px rgba(212, 119, 95, 0.85),
+              0 0 22px rgba(212, 119, 95, 0.55),
+              0 0 40px rgba(200, 97, 75, 0.30);
 }
 
 /* ps arm: pink chips. Pink fill + forest ink = 6.99:1. */
@@ -297,7 +299,9 @@
   color: var(--forest);
   box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.40),
               0 1px 3px rgba(4, 12, 8, 0.35),
-              0 0 16px rgba(255, 122, 162, 0.50);
+              0 0 8px rgba(255, 122, 162, 0.90),
+              0 0 22px rgba(255, 122, 162, 0.60),
+              0 0 44px rgba(255, 122, 162, 0.32);
 }
 
 /* Scroll offset so headings land clear of the fixed topnav + sticky rail */
