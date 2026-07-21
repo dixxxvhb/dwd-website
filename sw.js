@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v18';
+const CACHE_NAME = 'dwd-site-v19';
 const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',
@@ -11,6 +11,7 @@ const ASSETS = [
   '/css/audition.css',
   '/css/poster-pages.css',
   '/css/tighten.css',
+  '/css/arms.css',
   '/images/logos/DWD-green.png',
   '/images/icons/icon-192.png',
   '/images/icons/icon-512.png'

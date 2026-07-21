@@ -1258,7 +1258,7 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
   width: 100%;
   height: 100%;
   object-fit: contain;
-  mix-blend-mode: lighten; /* match hero — pink-transparent webm on dark green */
+  /* v2 logos carry true alpha — no blend-mode compositing hack needed */
 }
 
 .awrap-headline {

@@ -39,7 +39,7 @@ Home, About, ProSeries, DWDC (Adult Company), Merch, Contact, Gallery, FAQ, Earl
 
 ## Brand Rules
 - Brand colors defined as CSS variables (forest green #0c1f17, terracotta #C8614B, Family Pink #FF7AA2 [retired blush #f8d7c8 2026-07-18], ivory #FAF3E8, seafoam #6BAF8A, soft pink #FF8FAB dwdPS-Prep-badge). Gold (#e2b955 flat / rose-gold gradient #c9956c→#e8c49a→#d4a574) is Tamara Mark memorial only. Arms differ by volume via [data-arm] house/ps/c — see docs/REBRAND-ONE-HOUSE-2026-07.md.
-- Animated WebM logo on hero (1050px desktop, 420px mobile) with `mix-blend-mode: screen` for iOS transparency
+- Logos: static true-alpha PNGs from `images/logos/v2/` (downscaled from `_brand/animated-logos/output-v2/merch-alpha/`). NEVER `*-transparent.webm` (banned fake-alpha) and NO `mix-blend-mode` compositing hacks — v2 PNGs carry real alpha. Animated web logo (live HTML embed) returns in a later PR; nav mark stays static PNG.
 - Tamara Mark included
 - No emojis ever
 
