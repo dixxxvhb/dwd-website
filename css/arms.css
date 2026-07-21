@@ -216,6 +216,11 @@
    breadcrumb. Non-interactive flex item. */
 .chapter-rail::before {
   content: 'Jump to';
+  /* Pushes the whole row right so chips sit under the topnav links, reading
+     as its second row. margin-left:auto (not justify-content:flex-end) so
+     when chips overflow at narrow widths the row falls back to left-aligned
+     and stays scrollable instead of clipping the leftmost chips. */
+  margin-left: auto;
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: 13px;
@@ -289,11 +294,8 @@
 }
 
 @media (max-width: 768px) {
-  .chapter-rail {
-    top: 64px;
-    gap: 8px;
-    padding: 10px 16px;
-  }
+  .chapter-rail { top: 64px; gap: 8px; padding: 10px 16px; }
+  .chapter-rail::before { margin-left: 0; }
 
   #ps-program,
   #ps-why,
