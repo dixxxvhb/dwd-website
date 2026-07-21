@@ -844,6 +844,14 @@
         </div>
       </div>
 
+      <nav class="chapter-rail" aria-label="Collective sections">
+        <a href="#col-about">The Collective</a>
+        <a href="#col-who">Who It's For</a>
+        <a href="#dwdc-next">August 2026</a>
+        <a href="#amuse">A&middot;Muse</a>
+        <a href="#amusing-spaces">Origin</a>
+      </nav>
+
       <div class="content-section reveal">
         <div class="chapter">
           <span class="no"><sup>No.</sup>02</span>
@@ -852,7 +860,7 @@
       </div>
 
       <!-- Consolidated Collective card -->
-      <section class="collective-card reveal" aria-label="DWD Collective · overview">
+      <section class="collective-card reveal" id="col-about" aria-label="DWD Collective · overview">
         <div class="cc-intro">
           <h2>The Collective</h2>
           <p>I didn't start dwdCOLLECTIVE to run a drop-in class. I started it because adults 18 and up deserve what competitive dancers get: real training, real choreography, a real stage. Whether you danced your whole life or you've never set foot in a studio, this is your company.</p>
@@ -917,7 +925,7 @@
         </div>
       </section>
 
-      <div class="content-section reveal">
+      <div class="content-section reveal" id="col-who">
         <h2>Who This Is For</h2>
         <ul class="audience-list">
           <li>Adults 18+ who danced growing up and want to get back into it</li>
@@ -1088,7 +1096,16 @@
         </div>
       </div>
 
-      <div class="content-section reveal">
+      <nav class="chapter-rail" aria-label="ProSeries sections">
+        <a href="#ps-program">Program</a>
+        <a href="#ps-why">Why</a>
+        <a href="#ps-philosophy">Philosophy</a>
+        <a href="#ps-tracks">Tracks</a>
+        <a href="#ps-calendar">Calendar</a>
+        <a href="#ps-apply">Apply</a>
+      </nav>
+
+      <div class="content-section reveal" id="ps-program">
         <div class="chapter">
           <span class="no"><sup>No.</sup>01</span>
           <span class="lbl">ProSeries · Youth Training</span>
@@ -1100,7 +1117,7 @@
       </div>
 
       <!-- Why ProSeries -->
-      <div class="content-section alt reveal">
+      <div class="content-section alt reveal" id="ps-why">
         <h2>Why ProSeries</h2>
         <p class="section-lead">I spent five years as a competition director inside the traditional studio model. I saw what worked. I saw a lot more of what didn't. ProSeries is what I'd build if I could start from zero. So that's exactly what I'm doing.</p>
         <div class="why-grid">
@@ -1125,12 +1142,16 @@
 
 
       <!-- Teaching Philosophy (merged from former About page) -->
-      <div class="content-section alt reveal">
+      <div class="content-section alt reveal" id="ps-philosophy">
         <h2>Teaching Philosophy</h2>
         <p>I believe in rigor with heart. Every class should challenge you, every rehearsal should push you, and every piece of choreography should mean something. I don't do filler. I don't do lazy. But I also don't do fear-based teaching. My dancers work hard because they want to. Because they feel invested, not intimidated.</p>
       </div>
 
       <!-- Three Tracks — full detail per card -->
+      <!-- id="ps-tracks" is a standalone anchor (not on the section itself) because
+           the section already carries id="proseries-tracks-full", used elsewhere;
+           an element can only have one id, so the rail target sits just above it. -->
+      <div id="ps-tracks"></div>
       <section class="track-detail-section reveal" id="proseries-tracks-full" aria-label="ProSeries tracks · full detail">
         <div class="td-intro">
           <h2>The Three Tracks</h2>
@@ -1374,7 +1395,7 @@
 
 
       <!-- What else is coming — Summer Intensive + Competition Season (merged from old Performances) -->
-      <div class="content-section reveal ps-whatelse">
+      <div class="content-section reveal ps-whatelse" id="ps-calendar">
         <h2>Also on the calendar</h2>
       </div>
       <div class="coming-up three-up ps-whatelse-grid" style="grid-template-columns: repeat(2, 1fr);">
@@ -1408,6 +1429,10 @@
            Reveals Jul 11 and stays up (no hide-after): rolling placement is the
            permanent post-audition state for the rest of the season. campaign.js keys
            the ProSeries hero CTA off this element's display (see applyProSeriesReveal). -->
+      <!-- id="ps-apply" is a standalone anchor (not on this section) because the
+           section already carries id="proseries-interest", referenced by CTAs
+           elsewhere; an element can only have one id. -->
+      <div id="ps-apply"></div>
       <div data-reveal-after="2026-07-11T00:00:00-04:00" class="content-section alt" id="proseries-interest" style="display:none">
         <h2>Auditions are done. The door is still open.</h2>
         <p>Our June audition set the core of Season One, but spots remain in all three tracks. Here is how it works: fill out a short form about your dancer. No fee, no audition day to wait for. I read every submission myself, and within a few days I'll reach out directly with placement options and next steps. That's it. One form, then a real conversation about whether ProSeries is the right home for your dancer.</p>

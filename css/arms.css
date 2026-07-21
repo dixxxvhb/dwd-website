@@ -184,3 +184,125 @@
    missed 4.5:1. Ivory on the chip is unambiguous and keeps them quiet. */
 [data-arm="c"] .payment-chip,
 [data-arm="c"] a.payment-chip:not(.btn) { color: var(--ivory); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * Chapter rail — sticky in-page section nav (added 2026-07-21)
+ * Used on #page-proseries and #page-adult-company only. Lives here (not
+ * additions.css) because its active/hover accent is arm-scoped like the
+ * rest of this file: pink on ps, terracotta on c/house.
+ * ═══════════════════════════════════════════════════════════════════════ */
+.chapter-rail {
+  position: sticky;
+  top: 70px;
+  z-index: 90;
+  display: flex;
+  gap: 28px;
+  padding: 12px 32px;
+  background: rgba(12, 31, 23, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(250, 243, 232, 0.10);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.chapter-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.chapter-rail a {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--ivory-dim, rgba(250, 243, 232, 0.65));
+  padding: 4px 0;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.chapter-rail a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--terra);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.chapter-rail a.active,
+.chapter-rail a:hover {
+  color: var(--terra-light);
+}
+
+.chapter-rail a.active::after,
+.chapter-rail a:hover::after {
+  transform: scaleX(1);
+}
+
+[data-arm="ps"] .chapter-rail a.active,
+[data-arm="ps"] .chapter-rail a:hover {
+  color: var(--pink);
+}
+
+[data-arm="ps"] .chapter-rail a.active::after,
+[data-arm="ps"] .chapter-rail a:hover::after {
+  background: var(--pink);
+}
+
+[data-arm="c"] .chapter-rail a.active,
+[data-arm="c"] .chapter-rail a:hover {
+  color: var(--terra-light);
+}
+
+[data-arm="c"] .chapter-rail a.active::after,
+[data-arm="c"] .chapter-rail a:hover::after {
+  background: var(--terra);
+}
+
+/* Scroll offset so headings land clear of the fixed topnav + sticky rail */
+#ps-program,
+#ps-why,
+#ps-philosophy,
+#ps-tracks,
+#ps-calendar,
+#ps-apply,
+#col-about,
+#col-who,
+#dwdc-next,
+#amuse,
+#amusing-spaces {
+  /* 160 = 70 topnav + ~45 rail + breathing room + 30px absorbed from the
+     .reveal entrance (targets sit at translateY(30px) when the scroll
+     destination is computed, then shift up as they reveal). */
+  scroll-margin-top: 160px;
+}
+
+@media (max-width: 768px) {
+  .chapter-rail {
+    top: 64px;
+    gap: 20px;
+    padding: 10px 16px;
+  }
+
+  #ps-program,
+  #ps-why,
+  #ps-philosophy,
+  #ps-tracks,
+  #ps-calendar,
+  #ps-apply,
+  #col-about,
+  #col-who,
+  #dwdc-next,
+  #amuse,
+  #amusing-spaces {
+    scroll-margin-top: 148px;
+  }
+}

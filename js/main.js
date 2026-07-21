@@ -757,3 +757,51 @@
   });
 })();
 
+// ── CHAPTER RAIL SCROLLSPY (added 2026-07-21) ──
+// Highlights the active link in a .chapter-rail as its target section scrolls
+// through view. Rail links keep default anchor behavior (no preventDefault) —
+// the hashchange handler above already smooth-scrolls + activates the page.
+// Selection is geometric (last target above the 40% viewport line) rather than
+// trusting IntersectionObserver entries: short targets (e.g. the #dwdc-next
+// banner) share the observer band with their tall neighbors and lose.
+(function () {
+  var rails = document.querySelectorAll('.chapter-rail');
+  if (!rails.length) return;
+
+  rails.forEach(function (rail) {
+    var pairs = Array.from(rail.querySelectorAll('a[href^="#"]'))
+      .map(function (link) {
+        var target = document.getElementById(link.getAttribute('href').slice(1));
+        return target ? { link: link, target: target } : null;
+      })
+      .filter(Boolean);
+    if (!pairs.length) return;
+
+    function setActive(link) {
+      pairs.forEach(function (p) {
+        p.link.classList.toggle('active', p.link === link);
+      });
+    }
+
+    function update() {
+      if (!rail.getClientRects().length) return; // page not active
+      var line = window.innerHeight * 0.4;
+      var current = pairs[0];
+      pairs.forEach(function (p) {
+        if (p.target.getBoundingClientRect().top <= line) current = p;
+      });
+      setActive(current.link);
+    }
+
+    update();
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; update(); });
+    }, { passive: true });
+    window.addEventListener('hashchange', function () {
+      setTimeout(update, 60);
+    });
+  });
+})();
