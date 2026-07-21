@@ -246,20 +246,42 @@
   border: 1px solid rgba(250, 243, 232, 0.28);
   border-radius: 999px;
   flex: 0 0 auto;
-  transition: color 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+  /* Button depth: raised ground + a hairline inner top highlight, deepening
+     shadow on hover with a slight lift, pressed state on :active. Shadows
+     forest-tinted per the rebrand shadow scale, never black. */
+  background: linear-gradient(180deg, rgba(250, 243, 232, 0.07), rgba(250, 243, 232, 0.02));
+  box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.14),
+              0 1px 2px rgba(4, 12, 8, 0.35),
+              0 2px 6px rgba(4, 12, 8, 0.22);
+  transition: color 0.22s ease, background 0.22s ease, border-color 0.22s ease,
+              box-shadow 0.22s ease, transform 0.22s var(--rb-ease-out, ease);
 }
 
 .chapter-rail a:hover {
   border-color: var(--terra-light);
   color: var(--ivory);
-  background: rgba(200, 97, 75, 0.14);
+  background: rgba(200, 97, 75, 0.16);
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.16),
+              0 2px 4px rgba(4, 12, 8, 0.35),
+              0 6px 14px rgba(4, 12, 8, 0.30);
 }
 
-/* Active chip: filled. terra-light fill + forest ink = 5.39:1. */
+.chapter-rail a:active {
+  transform: translateY(0);
+  box-shadow: inset 0 1px 2px rgba(4, 12, 8, 0.35);
+  transition-duration: 0.08s;
+}
+
+/* Active chip: filled + a soft glow in the arm accent so the current
+   section reads lit, not just colored. terra-light fill + forest ink = 5.39:1. */
 .chapter-rail a.active {
   background: var(--terra-light);
   border-color: var(--terra-light);
   color: var(--forest);
+  box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.35),
+              0 1px 3px rgba(4, 12, 8, 0.35),
+              0 0 14px rgba(212, 119, 95, 0.45);
 }
 
 /* ps arm: pink chips. Pink fill + forest ink = 6.99:1. */
@@ -273,6 +295,9 @@
   background: var(--pink);
   border-color: var(--pink);
   color: var(--forest);
+  box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.40),
+              0 1px 3px rgba(4, 12, 8, 0.35),
+              0 0 16px rgba(255, 122, 162, 0.50);
 }
 
 /* Scroll offset so headings land clear of the fixed topnav + sticky rail */
