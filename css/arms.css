@@ -110,3 +110,42 @@
 #page-home .entries .entry.collective .f .v em { color: var(--terra-light); }
 /* thinner, warmer divider on the hushed card */
 #page-home .entries .entry.collective .foot { border-top-color: var(--arm-ring); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * dwdCOLLECTIVE — hushed CTAs (added 2026-07-21)
+ * The arm spec calls for ghost buttons: 1.5px terracotta line, no fill.
+ * The page was built on .btn-primary / .btn-blush, which resolve to a
+ * FILLED terracotta once the pink aliases are remapped above — loud, and
+ * wrong for the hushed volume. Rather than reclass every button, scope the
+ * ghost treatment to the arm. .topnav sits outside the arm subtree, so the
+ * nav's Express Interest CTA is untouched.
+ * ═══════════════════════════════════════════════════════════════════════ */
+[data-arm="c"] .btn-primary,
+[data-arm="c"] .btn-blush {
+  background: transparent;
+  background-color: transparent;
+  color: var(--ivory);
+  border: 1.5px solid var(--terra);
+}
+[data-arm="c"] .btn-primary:hover,
+[data-arm="c"] .btn-blush:hover:not(.btn-disabled) {
+  background: rgba(200, 97, 75, 0.14);
+  background-color: rgba(200, 97, 75, 0.14);
+  color: var(--ivory);
+  border-color: var(--terra-light);
+  box-shadow: none;
+}
+
+/* .btn-outline is already a line button — just warm it to the arm accent
+   and stop its hover from flooding to a solid fill. */
+[data-arm="c"] .btn-outline {
+  color: var(--ivory);
+  border: 1.5px solid var(--arm-ring);
+}
+[data-arm="c"] .btn-outline:hover {
+  background: rgba(200, 97, 75, 0.14);
+  background-color: rgba(200, 97, 75, 0.14);
+  color: var(--ivory);
+  border-color: var(--terra);
+  box-shadow: none;
+}
