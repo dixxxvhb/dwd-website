@@ -2742,8 +2742,11 @@
     overflow-wrap: anywhere;
   }
 
-  /* ProSeries Track tabs (Prep/Elite/Pro) — drop the long meta line on phones */
-  #page-proseries .track-tab .tt-meta { display: none; }
+  /* ProSeries Track tabs (Prep/Elite/Pro) — keep the PRICE on phones (parents
+     compare here); only the ages/hours prefix is dropped, not the whole line. */
+  #page-proseries .track-tab .tt-meta { display: block; font-size: 11px; margin-top: 3px; opacity: .9; }
+  #page-proseries .track-tab .tt-meta-pre { display: none; }
+  #page-proseries .track-tab .tt-price { font-weight: 700; }
   #page-proseries .track-tab {
     padding: 14px 10px !important;
     min-height: 56px;

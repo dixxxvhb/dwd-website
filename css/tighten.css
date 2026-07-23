@@ -506,13 +506,15 @@ html {
 }
 
 /* :focus-visible ring — replaces default/blue outlines site-wide */
+/* Focus ring is terracotta — the family thread color, and (unlike the old seafoam,
+   ~2.35:1 on ivory) it clears the 3:1 UI floor on BOTH forest and ivory grounds. */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
 [role="button"]:focus-visible {
-  outline: 2px solid var(--rb-seafoam) !important;
+  outline: 2px solid var(--rb-terracotta) !important;
   outline-offset: 3px !important;
 }
 

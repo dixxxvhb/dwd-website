@@ -447,10 +447,12 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 @keyframes rb-slide { to { transform: translateX(-50%); } }
 
 /* ═══ HOME — PULL QUOTE (ivory landmark) ═══ */
+/* Memorial band sits on FOREST, not ivory — the Tamara Mark is gold, and gold
+   never goes on ivory. Flipping the ground keeps the tribute legible and on-rule. */
 #page-home .pull-quote {
   padding: 180px 32px;
-  background: var(--rb-ivory);
-  color: var(--rb-bg-base);
+  background: var(--rb-bg-base);
+  color: var(--rb-ivory);
   text-align: center;
   position: relative; overflow: hidden;
 }
@@ -484,7 +486,7 @@ body.has-topnav main.main > .page.active:not(#page-home) {
   font-size: clamp(32px, 4.5vw, 72px);
   line-height: 1.15; letter-spacing: -0.01em;
   max-width: 1100px; margin: 0 auto;
-  color: var(--rb-bg-base);
+  color: var(--rb-ivory);
 }
 #page-home .pull-quote blockquote .hl {
   font-style: italic; color: var(--rb-terracotta);
@@ -493,9 +495,12 @@ body.has-topnav main.main > .page.active:not(#page-home) {
   display: block; margin-top: 48px;
   font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
   font-style: normal;
-  color: rgba(12,31,23,0.6);
+  color: rgba(250,243,232,0.6);
 }
 #page-home .pull-quote cite span { color: var(--rb-terracotta); }
+/* Generous negative space should scale with the viewport, not stay a desktop constant. */
+@media (max-width: 900px) { #page-home .pull-quote { padding: 96px 22px; } }
+@media (max-width: 520px) { #page-home .pull-quote { padding: 64px 20px; } }
 
 /* ═══ HOME — EMAIL SIGNUP ═══ */
 #page-home .email-signup {
@@ -619,6 +624,11 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 #page-home .reveal.visible,
 #page-home .reveal.in { opacity: 1; transform: translateY(0); }
+/* Safety net: never trap content invisible if the observer/JS fails, and show
+   reveals without animation for reduced-motion users. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, #page-home .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
 
 /* ═══ HOME — RESPONSIVE ═══ */
 /* Nav drawer engages at 1150px (mirrors editorial.css). rebrand.css loads
@@ -692,10 +702,12 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   #page-early-access a[href="#privacy"],
   .site-footer .footer-legal-link {
     display: inline-block;
-    padding: 8px 0;
-    min-height: 40px;
+    padding: 10px 0;
+    min-height: 44px;
     line-height: 1.5;
   }
+  /* Footer nav links were never bumped — ~28px targets stacked close. Floor them too. */
+  .site-footer .footer-links a { min-height: 44px; padding-top: 11px; padding-bottom: 11px; }
 
   /* Contact info stacked list: give each row breathing room, bigger hit */
   #page-contact .contact-info-item { padding: 4px 0; }

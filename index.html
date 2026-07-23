@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Dance With Dixon | Orlando Dance Company</title>
   <meta name="description" content="DWD is an Orlando-based dance collective. Adult modern dance company and elite youth training program. Founded by choreographer Dixon Bowles.">
-  <meta name="keywords" content="dance, Orlando, modern dance, contemporary, adult dance class, youth dance training, competition dance, Dixon Bowles, DWD, DWDC">
+  <meta name="keywords" content="dance, Orlando, modern dance, contemporary, adult dance class, youth dance training, competition dance, Dixon Bowles, DWD">
   <meta name="author" content="Dance With Dixon LLC">
 
   <!-- Google Search Console -->
@@ -19,6 +19,7 @@
   <!-- LCP hero preload (home page first paint). imagesrcset matches the
        `<picture>` element below so the browser picks the right variant. -->
   <link rel="preload" as="image"
+        href="images/photos/hero-1600.webp"
         imagesrcset="images/photos/hero-800.webp 800w, images/photos/hero-1600.webp 1600w"
         imagesizes="(max-width: 768px) 100vw, 60vw"
         type="image/webp"
@@ -57,7 +58,7 @@
         "@type": "Organization",
         "@id": "https://dancewithdixon.com/#organization",
         "name": "Dance With Dixon LLC",
-        "alternateName": ["DWD", "DWD Collective", "DWDC", "DWD ProSeries"],
+        "alternateName": ["DWD", "DWD Collective", "DWD ProSeries"],
         "url": "https://dancewithdixon.com",
         "logo": "https://dancewithdixon.com/images/logos/DWD-green.png",
         "description": "Orlando-based dance company offering elite youth competitive training for ages 5-19 (DWD ProSeries) and adult modern dance for ages 18+ (DWD Collective). Founded by choreographer and director Dixon Bowles.",
@@ -123,11 +124,9 @@
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0c1f17">
 
   <!-- iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="DWD">
   <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
 
@@ -154,8 +153,13 @@
   <link rel="stylesheet" href="css/tighten.css">
   <link rel="stylesheet" href="css/arms.css">
 
-  <!-- Supabase Client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <!-- No-JS safety: reveals must never trap content invisible if JS/observer fails -->
+  <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+
+  <!-- Supabase Client — deferred so it no longer blocks first paint. The app
+       scripts (main/campaign/analytics) are also deferred, so document order
+       still guarantees this runs first and window.supabase is ready in time. -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body class="has-topnav has-audition-ticker">
 
@@ -256,7 +260,7 @@
           </div>
         </div>
         <div class="hero-logo-mark" aria-hidden="false">
-          <img src="images/logos/v2/DWD-pink-640.png" srcset="images/logos/v2/DWD-pink-640.png 1x, images/logos/v2/DWD-pink.png 2x" alt="Dance With Dixon" loading="eager">
+          <img src="images/logos/v2/DWD-green.png" alt="Dance With Dixon" loading="eager">
         </div>
       </div>
 
@@ -277,7 +281,7 @@
         <div class="awrap-inner">
           <span class="awrap-eyebrow">dwdPROSERIES &middot; Season One Auditions</span>
           <div class="awrap-logo">
-            <img src="images/logos/v2/DWD-pink-640.png" srcset="images/logos/v2/DWD-pink-640.png 1x, images/logos/v2/DWD-pink.png 2x" alt="Dance With Dixon" loading="lazy">
+            <img src="images/logos/v2/DWD-green.png" alt="Dance With Dixon" loading="lazy">
           </div>
           <h2 class="awrap-headline">That&rsquo;s a wrap.</h2>
           <p class="awrap-sub">Auditions for ProSeries Season One are complete. To every dancer who showed up and gave it everything today: thank you. The hard part is done.</p>
@@ -1089,8 +1093,8 @@
           <div class="label">Ages 5&ndash;19 &middot; Competitive Training</div>
           <h1>Pro<em class="ps-block">Series</em></h1>
           <div class="sub">Elite dance training for the convention and competition circuit</div>
-          <div class="tagline">Season 1 begins August 10, 2026.</div>
-          <a href="#proseries-interest" class="btn btn-blush" id="ps-hero-cta" data-track="proseries-hero-cta">Express Interest</a>
+          <div class="tagline">Season One begins August 10, 2026.</div>
+          <a href="https://dwd-director.netlify.app/register" class="btn btn-blush" id="ps-hero-cta" data-track="proseries-hero-cta">Express Interest</a>
         </div>
         <div class="ps-hero-logo">
           <img src="images/logos/v2/ProSeries-green-640.png" srcset="images/logos/v2/ProSeries-green-640.png 1x, images/logos/v2/ProSeries-green.png 2x" alt="dwdPROSERIES" loading="lazy">
@@ -1163,17 +1167,17 @@
           <button class="track-tab" data-track-tab="prep" aria-selected="true" role="tab" id="tab-prep" aria-controls="panel-prep">
             <span class="tt-num">Track One</span>
             <span class="tt-name">Prep</span>
-            <span class="tt-meta">Ages 5&ndash;8 &middot; 4 hrs/wk &middot; $195/mo</span>
+            <span class="tt-meta"><span class="tt-meta-pre">Ages 5&ndash;8 &middot; 4 hrs/wk &middot; </span><span class="tt-price">$195/mo</span></span>
           </button>
           <button class="track-tab" data-track-tab="elite" aria-selected="false" role="tab" id="tab-elite" aria-controls="panel-elite">
             <span class="tt-num">Track Two</span>
             <span class="tt-name">Elite</span>
-            <span class="tt-meta">Ages 8&ndash;12 &middot; 8 hrs/wk &middot; $310/mo</span>
+            <span class="tt-meta"><span class="tt-meta-pre">Ages 8&ndash;12 &middot; 8 hrs/wk &middot; </span><span class="tt-price">$310/mo</span></span>
           </button>
           <button class="track-tab" data-track-tab="pro" aria-selected="false" role="tab" id="tab-pro" aria-controls="panel-pro">
             <span class="tt-num">Track Three</span>
             <span class="tt-name">Pro</span>
-            <span class="tt-meta">Ages 12+ &middot; 10 hrs/wk &middot; $360/mo</span>
+            <span class="tt-meta"><span class="tt-meta-pre">Ages 12+ &middot; 10 hrs/wk &middot; </span><span class="tt-price">$360/mo</span></span>
           </button>
         </div>
         <div class="track-detail-grid">
@@ -1472,7 +1476,7 @@
           <p class="tch-hero-sub">Every class designed by a working director, supported by a rotation of working artists.</p>
         </div>
         <div class="hero-logo-big">
-          <img src="images/logos/v2/DWD-pink-640.png" srcset="images/logos/v2/DWD-pink-640.png 1x, images/logos/v2/DWD-pink.png 2x" alt="Dance With Dixon" loading="lazy">
+          <img src="images/logos/v2/DWD-green.png" alt="Dance With Dixon" loading="lazy">
         </div>
       </div>
 
@@ -1550,7 +1554,7 @@
           <p>Movement captured. Community in action.</p>
         </div>
         <div class="hero-logo-big">
-          <img src="images/logos/v2/DWD-pink-640.png" srcset="images/logos/v2/DWD-pink-640.png 1x, images/logos/v2/DWD-pink.png 2x" alt="Dance With Dixon" loading="lazy">
+          <img src="images/logos/v2/DWD-green.png" alt="Dance With Dixon" loading="lazy">
         </div>
       </div>
 
@@ -1643,7 +1647,7 @@
       </div>
 
       <div class="content-section reveal" style="text-align: center; padding: 52px;">
-        <p style="font-style: italic; color: var(--cream-faint); margin: 0 auto;">Gallery will grow as the company grows. After our first performance, this page will really come alive.</p>
+        <p style="font-style: italic; color: var(--cream-faint); margin: 0 auto;">The company took its first stage in June 2026. This gallery grows with every show.</p>
       </div>
     </section>
 
@@ -1759,7 +1763,7 @@
       <div class="contact-section">
         <div class="contact-form-side">
           <h1>Get in Touch</h1>
-          <div class="sub">Whether you want to join a class, audition for ProSeries, book Dixon for choreography, or just say hey.</div>
+          <div class="sub">Whether you want to join a class, express interest in ProSeries, book Dixon for choreography, or just say hey.</div>
           <form data-form="contact" novalidate>
             <div class="form-group">
               <label for="contact-name">Name</label>
@@ -1769,6 +1773,11 @@
               <label for="contact-email">Email</label>
               <input type="email" id="contact-email" placeholder="your@email.com" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false">
             </div>
+            <div class="form-group">
+              <label for="contact-phone">Phone <span style="opacity:.6;font-weight:400;">(optional)</span></label>
+              <input type="tel" id="contact-phone" placeholder="(407) 555-0142" inputmode="tel" autocomplete="tel">
+            </div>
+            <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
             <fieldset class="form-group" style="border:none;padding:0;margin:0;">
               <legend style="font-size:0.85rem;font-weight:500;color:var(--cream-faint);margin-bottom:0.5rem;">What's this about?</legend>
               <div class="toggle-group" data-name="reason" role="radiogroup" aria-label="Message topic">
@@ -1906,6 +1915,7 @@
           <div class="ea-form-wrap">
             <form data-form="signup-proseries-early-access" class="ea-form" novalidate>
               <input type="email" placeholder="Your email address" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" aria-label="Email address" aria-describedby="ea-privacy-note">
+              <input type="text" class="hp-field" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
               <button type="submit" class="btn btn-blush" data-track="early-access-signup">Get Early Access</button>
             </form>
             <div class="form-success" aria-live="polite">You're on the list. You'll hear from us before anyone else.</div>
@@ -2141,9 +2151,10 @@
     <img class="lightbox-img" id="lightbox-img" src="" alt="">
   </div>
 
-  <script src="js/main.js"></script>
-  <script src="js/campaign.js"></script>
-  <script src="js/analytics.js"></script>
+  <div id="route-announce" class="sr-only" role="status" aria-live="polite"></div>
+  <script defer src="js/main.js"></script>
+  <script defer src="js/campaign.js"></script>
+  <script defer src="js/analytics.js"></script>
   <!-- AUDITION STICKY TICKER — sitewide, hides after Jun 6, 1pm ET -->
   <aside class="audition-ticker" data-hide-after="2026-06-06T13:00:00-04:00" aria-label="ProSeries auditions · June 6">
     <span class="at-tag">
@@ -2162,7 +2173,24 @@
     </a>
     <button type="button" class="at-close" data-audition-action="ticker-dismiss" data-track="audition-ticker-dismiss" aria-label="Dismiss audition ticker">&times;</button>
   </aside>
-  <script src="js/analytics-dashboard.js?v=4"></script>
+  <!-- Internal analytics dashboard: only fetched on the #analytics route, not on
+       every public visit (it is access-code gated and does nothing elsewhere). -->
+  <script>
+    (function () {
+      var done = false;
+      function loadDash() {
+        if (done) return;
+        if ((location.hash || '').indexOf('analytics') === -1) return;
+        done = true;
+        var s = document.createElement('script');
+        s.defer = true;
+        s.src = 'js/analytics-dashboard.js?v=4';
+        document.body.appendChild(s);
+      }
+      loadDash();
+      window.addEventListener('hashchange', loadDash);
+    })();
+  </script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {

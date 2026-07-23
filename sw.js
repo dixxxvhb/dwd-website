@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v19';
+const CACHE_NAME = 'dwd-site-v20';
 const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',
@@ -19,7 +19,11 @@ const ASSETS = [
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    // allSettled so one missing/404 asset degrades gracefully instead of
+    // rejecting the whole install and silently killing offline for everyone.
+    caches.open(CACHE_NAME).then((cache) =>
+      Promise.allSettled(ASSETS.map((u) => cache.add(u).catch(function () {})))
+    )
   );
   self.skipWaiting();
 });

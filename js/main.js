@@ -86,6 +86,16 @@
       'early-access': 'ProSeries Early Access | DWD'
     };
     document.title = titles[name] || titles['home'];
+
+    // A11y: move focus into the new page and announce the route change so
+    // keyboard + screen-reader users get a landing point and a signal.
+    if (target) {
+      var focusEl = target.querySelector('h1, h2') || target;
+      focusEl.setAttribute('tabindex', '-1');
+      focusEl.focus({ preventScroll: true });
+    }
+    var announce = document.getElementById('route-announce');
+    if (announce) announce.textContent = (titles[name] || 'Home').split('|')[0].trim() + ' — loaded';
   }
 
   // Listen for hash changes
@@ -571,13 +581,19 @@
   if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
+
+      // Honeypot: silently drop bot submissions (hidden field filled).
+      var hp = document.getElementById('contact-website');
+      if (hp && hp.value) { contactForm.reset(); showFormSuccess(contactForm); return; }
+
       if (!validateForm(contactForm)) return;
 
       var activeToggle = contactForm.querySelector('.toggle-group .toggle-btn.active');
+      var phoneEl = document.getElementById('contact-phone');
       var payload = {
         name: document.getElementById('contact-name').value.trim(),
         email: document.getElementById('contact-email').value.trim(),
-        phone: '',
+        phone: phoneEl ? phoneEl.value.trim() : '',
         reason: activeToggle ? activeToggle.dataset.value : 'general',
         how_heard: '',
         message: document.getElementById('contact-message').value.trim() || ''
@@ -606,6 +622,11 @@
   document.querySelectorAll('[data-form^="signup"]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+
+      // Honeypot: silently drop bot submissions.
+      var hp = form.querySelector('.hp-field');
+      if (hp && hp.value) { form.reset(); showFormSuccess(form); return; }
+
       if (!validateForm(form)) return;
 
       var emailInput = form.querySelector('input[type="email"]');
@@ -777,10 +798,19 @@
       .filter(Boolean);
     if (!pairs.length) return;
 
+    var lastActive = null;
     function setActive(link) {
       pairs.forEach(function (p) {
         p.link.classList.toggle('active', p.link === link);
       });
+      // Keep the active chip visible in the horizontal mobile rail — but only when
+      // it changes, so we never fight the user's own scroll.
+      if (link && link !== lastActive) {
+        lastActive = link;
+        if (link.scrollIntoView) {
+          try { link.scrollIntoView({ inline: 'center', block: 'nearest' }); } catch (e) {}
+        }
+      }
     }
 
     function update() {

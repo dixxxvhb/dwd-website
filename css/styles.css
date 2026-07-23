@@ -52,6 +52,7 @@
   box-sizing: border-box;
 }
 
+html { overflow-x: clip; }
 body {
   background-color: var(--black);
   color: var(--cream);
@@ -60,7 +61,10 @@ body {
   line-height: 1.6;
   letter-spacing: 0.3px;
   position: relative;
+  overflow-x: clip;
 }
+/* Global backstop: no oversized clamp() display headline can force sideways scroll. */
+h1, h2, h3 { overflow-wrap: break-word; }
 
 /* Ambient background glow */
 body::before {
