@@ -630,6 +630,31 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   .reveal, #page-home .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
+/* ═══ HOME — FORK LEAD-IN ═══
+   Frames the two-program choice (now directly under the hero) as the primary
+   decision, so the arm cards read as "the fork" rather than a stray pair. */
+#page-home .entries-lead {
+  max-width: 1100px; margin: 84px auto 30px; padding: 0 32px; text-align: center;
+}
+#page-home .entries-eyebrow {
+  display: inline-block;
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--rb-terracotta); margin-bottom: 16px;
+}
+#page-home .entries-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(40px, 6vw, 76px); line-height: 1.02; letter-spacing: -0.01em;
+  color: var(--rb-ivory); margin: 0;
+}
+#page-home .entries-title em { font-style: italic; color: var(--rb-terracotta); }
+#page-home .entries-sub {
+  font-family: 'Outfit', sans-serif; font-size: 16px; line-height: 1.55;
+  color: var(--rb-ivory-dim); margin: 16px auto 0; max-width: 52ch;
+}
+@media (max-width: 640px) {
+  #page-home .entries-lead { margin: 52px auto 24px; }
+}
+
 /* ═══ HOME — RESPONSIVE ═══ */
 /* Nav drawer engages at 1150px (mirrors editorial.css). rebrand.css loads
    LAST, so it must re-assert the drawer hide + toggle show here, or its own
