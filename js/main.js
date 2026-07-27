@@ -367,7 +367,7 @@
   var supabase = (window.supabase && window.supabase.createClient)
     ? window.supabase.createClient(supabaseUrl, supabaseKey)
     : null;
-  window.__dwd_sb = supabase; // expose for analytics.js / analytics-dashboard.js
+  window.__dwd_sb = supabase; // expose for analytics.js (the tracker)
 
   // ── LIVE PRICING FROM PROSERIES CONFIG ──
   // Fetches active config from proseries_config table (anon RLS allows read)

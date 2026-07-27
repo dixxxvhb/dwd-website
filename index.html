@@ -1825,26 +1825,7 @@
       </div>
     </section>
 
-    <!-- ═════���════ ANALYTICS ══════════ -->
-    <section class="page" id="page-analytics" data-arm="internal" aria-label="Site Analytics">
-      <div class="campaign-gate" id="analytics-gate">
-        <div class="campaign-gate-inner">
-          <img src="images/logos/v2/DWD-green-160.png" alt="Dance With Dixon" width="80" height="80" style="margin-bottom: 1.5rem;" loading="lazy">
-          <h2>Site Analytics</h2>
-          <p>Enter access code to view website analytics.</p>
-          <form id="analytics-auth-form" class="campaign-auth-form">
-            <input type="password" id="analytics-code-input" placeholder="Access code" autocomplete="off" required>
-            <button type="submit" class="btn btn-blush">Enter</button>
-          </form>
-          <div id="analytics-auth-error" class="campaign-auth-error" style="display:none;">Wrong code. Try again.</div>
-        </div>
-      </div>
-      <div id="analytics-dashboard" style="display:none;">
-        <!-- Rendered by analytics-dashboard.js -->
-      </div>
-    </section>
-
-    <!-- ══════════ EARLY ACCESS / REGISTRATION OPEN ══════════ -->
+        <!-- ══════════ EARLY ACCESS / REGISTRATION OPEN ══════════ -->
     <section class="page" id="page-early-access" data-arm="ps" aria-label="ProSeries Registration">
       <!-- PRE-LAUNCH STATE — Be First In Line -->
       <div class="early-access-page" data-hide-after="2026-05-01T00:00:00-04:00">
@@ -2135,22 +2116,6 @@
   </aside>
   <!-- Internal analytics dashboard: only fetched on the #analytics route, not on
        every public visit (it is access-code gated and does nothing elsewhere). -->
-  <script>
-    (function () {
-      var done = false;
-      function loadDash() {
-        if (done) return;
-        if ((location.hash || '').indexOf('analytics') === -1) return;
-        done = true;
-        var s = document.createElement('script');
-        s.defer = true;
-        s.src = 'js/analytics-dashboard.js?v=4';
-        document.body.appendChild(s);
-      }
-      loadDash();
-      window.addEventListener('hashchange', loadDash);
-    })();
-  </script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {

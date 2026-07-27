@@ -39,7 +39,7 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   var url = e.request.url;
-  // Match on pathname so query-stringed assets (e.g. analytics-dashboard.js?v=4,
+  // Match on pathname so query-stringed assets (e.g. main.js?v=4,
   // styles.css?v=2) still take the network-first path and never freeze in cache.
   var path;
   try { path = new URL(url).pathname; } catch (err) { path = url; }
