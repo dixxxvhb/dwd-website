@@ -1,4 +1,5 @@
 {
+  "id": "/",
   "name": "Dance With Dixon",
   "short_name": "DWD",
   "description": "Orlando-based dance collective — adult modern dance company and elite youth training.",
@@ -22,7 +23,7 @@
       "purpose": "any"
     },
     {
-      "src": "images/icons/icon-512.png",
+      "src": "images/icons/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
