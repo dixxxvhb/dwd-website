@@ -11,6 +11,7 @@
   --s1-sky: #7EC4F8;
   --s1-silver: #C9D4CE;
   --s1-gloss: linear-gradient(135deg, #4FA8EE, #9AD5FF, #E4F4FF, #7EC4F8, #5FB2F2);
+  --s1-gloss-btn: linear-gradient(135deg, #4FA8EE, #9AD5FF, #7EC4F8);
 }
 
 /* ------------------------------------------------------------
@@ -827,4 +828,64 @@
   #s1-home-teaser .s1ht-actions {
     width: 100%;
   }
+}
+
+/* ============================================================
+   SKY BLUE — the working accent on Season One CTAs + interaction
+   highlights (2026-08-03, Dixon's call, overrides the pink-CTA default
+   for these specific surfaces only). Pink stays the brand mark
+   everywhere else — the "Series." chip, star SVGs, .btn-blush default
+   used by non-Season-One flows, etc. Applied via .s1-cta-sky added
+   alongside .btn.btn-blush (base .btn layout/shape kept) on:
+     - #s1-hero-cta       (the folded-in premiere band CTA)
+     - the #s1-home-teaser Express Interest button
+     - the #proseries-interest ("Now casting.") Express Interest button
+     - #ps-hero-cta       (the pre-fold .ps-hero CTA)
+     - the topnav Express Interest .nav-cta
+   Each context has its own pre-existing pink rule at a different
+   specificity (some !important, some carrying 1-2 ids), so the
+   selectors below are written to match or exceed each one exactly
+   rather than relying on one generic rule + hoping it wins the cascade. */
+#page-proseries .ps-hero .btn.s1-cta-sky,
+#page-proseries #proseries-interest .s1-cta-sky,
+#page-proseries .s1-cta-sky,
+#s1-home-teaser .s1-cta-sky,
+.topnav .nav-cta.s1-cta-sky {
+  background: var(--s1-sky) !important;
+  color: var(--forest, #0c1f17) !important;
+}
+#page-proseries .ps-hero .btn.s1-cta-sky:hover,
+#page-proseries #proseries-interest .s1-cta-sky:hover,
+#page-proseries .s1-cta-sky:hover,
+#s1-home-teaser .s1-cta-sky:hover,
+.topnav .nav-cta.s1-cta-sky:hover {
+  background: var(--s1-gloss-btn) !important;
+  color: var(--forest, #0c1f17) !important;
+}
+
+/* Secondary buttons next to a sky CTA (Contact Us outlines, "See the
+   season" links) are deliberately untouched — no selector added for them. */
+
+/* Text selection inside Season One surfaces */
+#page-proseries ::selection,
+#s1-home-teaser ::selection {
+  background: var(--s1-sky);
+  color: var(--forest, #0c1f17);
+}
+
+/* Chapter-rail active accent — sky in the NORMAL (non-takeover) state too,
+   not just under .s1-premiere-window (which already had this). Scoped to
+   the ps arm only; the house/collective rail keeps its terracotta accent. */
+[data-arm="ps"] .chapter-rail a.active {
+  background: var(--s1-sky) !important;
+  border-color: var(--s1-sky) !important;
+  color: var(--forest) !important;
+}
+[data-arm="ps"] .chapter-rail a:hover {
+  border-color: var(--s1-sky) !important;
+  background: rgba(126, 196, 248, 0.14) !important;
+  color: var(--ivory) !important;
+}
+[data-arm="ps"] .chapter-rail a {
+  --chip-glow: 126, 196, 248;
 }
