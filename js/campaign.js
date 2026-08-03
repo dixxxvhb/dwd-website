@@ -781,9 +781,9 @@
     // below ignores the preview flag entirely and checks real dates only, so
     // priority is correct in both preview and production — the preview still
     // visually shows every section, it just no longer wins the CTA fight.
-    //   1. Intensive sign-up actually open (real dates) → fullout page.
-    //   2. Standing interest era actually open (real dates) → express-interest.
-    //   3. Otherwise (pre-launch) → early-access email capture.
+    //   1. Standing interest era actually open (real dates) → express-interest.
+    //   2. Otherwise (pre-launch) → early-access email capture.
+    // (The intensive branch was removed 2026-08-03 along with #proseries-intensive.)
     function isEraActuallyLive(el) {
       if (!el) return false;
       var revealAttr = el.dataset.revealAfter;
@@ -794,12 +794,8 @@
     }
     var heroCta = document.getElementById('ps-hero-cta');
     var interestForm = document.getElementById('proseries-interest');
-    var intensiveForm = document.getElementById('proseries-intensive');
     if (heroCta) {
-      if (isEraActuallyLive(intensiveForm)) {
-        heroCta.href = 'https://dancewithdixon.com/fullout';
-        heroCta.innerHTML = 'FULL OUT Takeover Intensive <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
-      } else if (isEraActuallyLive(interestForm)) {
+      if (isEraActuallyLive(interestForm)) {
         heroCta.href = 'https://dwd-director.netlify.app/register';
         heroCta.innerHTML = 'Express Interest <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
       } else {
