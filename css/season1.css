@@ -368,3 +368,73 @@
   background: var(--pink, #FF7AA2);
   color: var(--forest, #0c1f17);
 }
+
+/* ------------------------------------------------------------
+   HERO DE-PINK UNDER TAKEOVER (2026-08-03 restructure)
+   .ps-hero is Family Pink + forest ink permanently (poster-pages.css,
+   all !important) — under the premiere window it goes midnight-family
+   like the rest of the page. The pink "Series" chip (h1 em.ps-block,
+   forest bg / pink text) and the CTA button are the brand mark + CTA
+   exception and are left alone on purpose — everything else around
+   them (label, sub, tagline) drops to ivory/silver.
+   ------------------------------------------------------------ */
+#page-proseries.s1-premiere-window .ps-hero {
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: var(--ivory, #FAF3E8) !important;
+}
+#page-proseries.s1-premiere-window .ps-hero h1 {
+  color: var(--ivory, #FAF3E8) !important;
+}
+#page-proseries.s1-premiere-window .ps-hero .sub {
+  color: var(--ivory, #FAF3E8) !important;
+}
+#page-proseries.s1-premiere-window .ps-hero .label,
+#page-proseries.s1-premiere-window .ps-hero .tagline {
+  color: var(--s1-silver) !important;
+}
+/* h1 em.ps-block: intentionally untouched — brand mark stays forest bg / pink text */
+/* .ps-hero .btn: intentionally untouched — CTA exception stays Family Pink */
+
+/* ------------------------------------------------------------
+   TRACKS SERIES-BRANDING (permanent — both takeover and non-takeover
+   states, since .td-intro's ground is forest either way: forest always
+   per poster-pages.css, midnight-family only during the takeover via
+   .track-detail-section's override above). Mission Silver + sky read
+   fine against both dark grounds, so one rule covers both. Framing
+   only — prep/elite/pro accent colors, pricing and deposit copy are
+   untouched.
+   ------------------------------------------------------------ */
+#page-proseries .td-cast-eyebrow {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--s1-silver);
+  margin-bottom: 10px;
+}
+
+#page-proseries .td-cast-subline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ivory, #FAF3E8);
+  opacity: .85;
+  margin: 0 0 18px;
+}
+
+/* Track code chip — s1-ep-code styling (Bebas, sky pill) dropped into each
+   track tab alongside its existing "Track One/Two/Three" label. */
+#page-proseries .track-tab .tt-code {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: .06em;
+  font-size: 11px;
+  color: var(--s1-sky);
+  border: 1px solid var(--s1-sky);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 2px;
+  opacity: 1;
+}

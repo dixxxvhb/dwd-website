@@ -1049,22 +1049,11 @@
 
     <!-- ══════════ PROSERIES ══════════ -->
     <section class="page" id="page-proseries" data-arm="ps" aria-label="ProSeries">
-      <div class="ps-hero">
-        <div class="ps-hero-text">
-          <div class="label">Ages 5&ndash;19 &middot; Competitive Training</div>
-          <h1>Pro<em class="ps-block">Series</em></h1>
-          <div class="sub">Elite dance training for the convention and competition circuit</div>
-          <div class="tagline">Season One begins August 10, 2026.</div>
-          <a href="https://dwd-director.netlify.app/register" class="btn btn-blush" id="ps-hero-cta" data-track="proseries-hero-cta">Express Interest</a>
-        </div>
-        <div class="ps-hero-logo">
-          <img src="images/logos/v2/ProSeries-green-640.png" srcset="images/logos/v2/ProSeries-green-640.png 1x, images/logos/v2/ProSeries-green.png 2x" alt="dwdPROSERIES" loading="lazy">
-        </div>
-      </div>
-
       <!-- SEASON ONE PREMIERE ANNOUNCE BAND — permanent once revealed. Reuses the
            site's global data-reveal-after gate (campaign.js applyProSeriesReveal),
-           same mechanism as #season-underway-cta above. -->
+           same mechanism as #season-underway-cta above. Moved to the very top of
+           the page (2026-08-03 restructure) so the Series brand is the first
+           thing seen, not the pink hero. -->
       <section class="s1-premiere" id="s1-premiere" data-reveal-after="2026-08-10T04:00:00-04:00" style="display:none" aria-label="Season One premiere">
         <div class="s1-premiere-inner">
           <div class="s1-eyebrow">dwdPROSERIES presents</div>
@@ -1079,85 +1068,62 @@
         </div>
       </section>
 
+      <div class="ps-hero">
+        <div class="ps-hero-text">
+          <div class="label">Ages 5&ndash;19 &middot; Competitive Training</div>
+          <h1>Pro<em class="ps-block">Series</em></h1>
+          <div class="sub">Elite dance training for the convention and competition circuit</div>
+          <div class="tagline">Season One begins August 10, 2026.</div>
+          <a href="https://dwd-director.netlify.app/register" class="btn btn-blush" id="ps-hero-cta" data-track="proseries-hero-cta">Express Interest</a>
+        </div>
+        <div class="ps-hero-logo">
+          <img src="images/logos/v2/ProSeries-green-640.png" srcset="images/logos/v2/ProSeries-green-640.png 1x, images/logos/v2/ProSeries-green.png 2x" alt="dwdPROSERIES" loading="lazy">
+        </div>
+      </div>
+
+      <!-- Rail link order matches document order top-to-bottom (required by the
+           scrollspy in main.js, which walks pairs in rail order and keeps the
+           last one whose target has scrolled above the 40% line — order here
+           MUST mirror section order below or the highlight picks the wrong link). -->
       <nav class="chapter-rail" aria-label="ProSeries sections">
+        <a href="#ps-tracks">Tracks</a>
         <a href="#ps-program">Program</a>
         <a href="#ps-why">Why</a>
         <a href="#ps-philosophy">Philosophy</a>
-        <a href="#ps-tracks">Tracks</a>
         <a href="#ps-calendar">Calendar</a>
         <a href="#ps-apply">Apply</a>
       </nav>
 
-      <div class="content-section reveal" id="ps-program">
-        <div class="chapter">
-          <span class="no"><sup>No.</sup>01</span>
-          <span class="lbl">ProSeries · Youth Training</span>
-        </div>
-        <h2>The Program</h2>
-        <div class="s1-slate" aria-hidden="false">
-          <div class="s1-slate-item"><span class="s1-slate-num">3</span><span class="s1-slate-lbl">Tracks</span></div>
-          <div class="s1-slate-item"><span class="s1-slate-num">40</span><span class="s1-slate-lbl">Weeks</span></div>
-          <div class="s1-slate-item"><span class="s1-slate-num">1</span><span class="s1-slate-lbl">Season</span></div>
-        </div>
-        <p>ProSeries is a full-spectrum competitive training program for dancers ages 5 to 19. Three tracks: Prep, Elite, and Pro. Each built around serious technique, artistry, and performance. This is your dancer's home for training, not an add-on.</p>
-        <p>Dancers train across all styles (jazz technique, ballet, contemporary, lyrical, hip hop, tap, acro, musical theatre) with an emphasis on jazz and ballet technique as the foundation for everything else. Every class is designed by a working choreographer and director, not pulled from a syllabus.</p>
-        <p>This isn't a recreational program and it isn't a studio. ProSeries is a company. A dedicated training environment built to develop well-rounded, professional-level dancers who are as strong in artistry as they are in technique.</p>
-      </div>
-
-      <!-- Why ProSeries -->
-      <div class="content-section alt reveal" id="ps-why">
-        <h2>Why ProSeries</h2>
-        <p class="section-lead">I spent five years as a competition director inside the traditional studio model. I saw what worked. I saw a lot more of what didn't. ProSeries is what I'd build if I could start from zero. So that's exactly what I'm doing.</p>
-        <div class="why-grid">
-          <div class="why-item">
-            <h4>Not a Studio</h4>
-            <p>Traditional studios make their money from recreational classes and little kids. The competitive team is an afterthought, a revenue add-on, not the mission. ProSeries flips that. Competitive training <em>is</em> the mission. Every hour, every dollar, every decision is pointed at developing serious dancers.</p>
-          </div>
-          <div class="why-item">
-            <h4>Built by a Director</h4>
-            <p>Every class, every rehearsal, every piece of choreography. That's me in the room. Not a guest teacher, not a rotating staff. I built this program and I'm the one running it. That's what "Dance With Dixon" means.</p>
-          </div>
-          <div class="why-item">
-            <h4>Full Training in All Styles</h4>
-            <p>Jazz technique. Ballet. Contemporary. Lyrical. Hip hop. Tap. Acro. Musical theatre. Your dancer won't specialize too early or miss entire genres. The emphasis is on jazz and ballet technique (the foundation that makes everything else possible) with real depth across every style.</p>
-          </div>
-          <div class="why-item">
-            <h4>Artists First</h4>
-            <p>Trophies are great. I've won plenty. But I'm not training your kid to collect hardware. I'm training them to walk into any room and be the most prepared, most expressive, most professional dancer there. The trophies follow.</p>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- Teaching Philosophy (merged from former About page) -->
-      <div class="content-section alt reveal" id="ps-philosophy">
-        <h2>Teaching Philosophy</h2>
-        <p>I believe in rigor with heart. Every class should challenge you, every rehearsal should push you, and every piece of choreography should mean something. I don't do filler. I don't do lazy. But I also don't do fear-based teaching. My dancers work hard because they want to. Because they feel invested, not intimidated.</p>
-      </div>
-
-      <!-- Three Tracks — full detail per card -->
+      <!-- Three Tracks — full detail per card. Moved to the top of the section
+           flow (2026-08-03 restructure) per Dixon: tracks are the next thing
+           after the Series brand, not buried under Program/Why/Philosophy. -->
       <!-- id="ps-tracks" is a standalone anchor (not on the section itself) because
            the section already carries id="proseries-tracks-full", used elsewhere;
            an element can only have one id, so the rail target sits just above it. -->
       <div id="ps-tracks"></div>
       <section class="track-detail-section reveal" id="proseries-tracks-full" aria-label="ProSeries tracks · full detail">
         <div class="td-intro">
+          <div class="td-cast-eyebrow">The Cast</div>
+          <p class="td-cast-subline">three tracks. one company. every dancer credited.</p>
           <h2>The Three Tracks</h2>
           <p>Everything in one place: schedule, training, and pricing for each track. Season runs August 2026 &ndash; May 2027.</p>
         </div>
 
         <div class="track-tabs" role="tablist" aria-label="Choose a track">
           <button class="track-tab" data-track-tab="prep" aria-selected="true" role="tab" id="tab-prep" aria-controls="panel-prep">
+            <span class="tt-code">Track 01</span>
             <span class="tt-num">Track One</span>
             <span class="tt-name">Prep</span>
             <span class="tt-meta"><span class="tt-meta-pre">Ages 5&ndash;8 &middot; 4 hrs/wk &middot; </span><span class="tt-price">$195/mo</span></span>
           </button>
           <button class="track-tab" data-track-tab="elite" aria-selected="false" role="tab" id="tab-elite" aria-controls="panel-elite">
+            <span class="tt-code">Track 02</span>
             <span class="tt-num">Track Two</span>
             <span class="tt-name">Elite</span>
             <span class="tt-meta"><span class="tt-meta-pre">Ages 8&ndash;12 &middot; 8 hrs/wk &middot; </span><span class="tt-price">$310/mo</span></span>
           </button>
           <button class="track-tab" data-track-tab="pro" aria-selected="false" role="tab" id="tab-pro" aria-controls="panel-pro">
+            <span class="tt-code">Track 03</span>
             <span class="tt-num">Track Three</span>
             <span class="tt-name">Pro</span>
             <span class="tt-meta"><span class="tt-meta-pre">Ages 12+ &middot; 10 hrs/wk &middot; </span><span class="tt-price">$360/mo</span></span>
@@ -1381,6 +1347,52 @@
         </div>
       </section>
 
+      <div class="content-section reveal" id="ps-program">
+        <div class="chapter">
+          <span class="no"><sup>No.</sup>01</span>
+          <span class="lbl">ProSeries · Youth Training</span>
+        </div>
+        <h2>The Program</h2>
+        <div class="s1-slate" aria-hidden="false">
+          <div class="s1-slate-item"><span class="s1-slate-num">3</span><span class="s1-slate-lbl">Tracks</span></div>
+          <div class="s1-slate-item"><span class="s1-slate-num">40</span><span class="s1-slate-lbl">Weeks</span></div>
+          <div class="s1-slate-item"><span class="s1-slate-num">1</span><span class="s1-slate-lbl">Season</span></div>
+        </div>
+        <p>ProSeries is a full-spectrum competitive training program for dancers ages 5 to 19. Three tracks: Prep, Elite, and Pro. Each built around serious technique, artistry, and performance. This is your dancer's home for training, not an add-on.</p>
+        <p>Dancers train across all styles (jazz technique, ballet, contemporary, lyrical, hip hop, tap, acro, musical theatre) with an emphasis on jazz and ballet technique as the foundation for everything else. Every class is designed by a working choreographer and director, not pulled from a syllabus.</p>
+        <p>This isn't a recreational program and it isn't a studio. ProSeries is a company. A dedicated training environment built to develop well-rounded, professional-level dancers who are as strong in artistry as they are in technique.</p>
+      </div>
+
+      <!-- Why ProSeries -->
+      <div class="content-section alt reveal" id="ps-why">
+        <h2>Why ProSeries</h2>
+        <p class="section-lead">I spent five years as a competition director inside the traditional studio model. I saw what worked. I saw a lot more of what didn't. ProSeries is what I'd build if I could start from zero. So that's exactly what I'm doing.</p>
+        <div class="why-grid">
+          <div class="why-item">
+            <h4>Not a Studio</h4>
+            <p>Traditional studios make their money from recreational classes and little kids. The competitive team is an afterthought, a revenue add-on, not the mission. ProSeries flips that. Competitive training <em>is</em> the mission. Every hour, every dollar, every decision is pointed at developing serious dancers.</p>
+          </div>
+          <div class="why-item">
+            <h4>Built by a Director</h4>
+            <p>Every class, every rehearsal, every piece of choreography. That's me in the room. Not a guest teacher, not a rotating staff. I built this program and I'm the one running it. That's what "Dance With Dixon" means.</p>
+          </div>
+          <div class="why-item">
+            <h4>Full Training in All Styles</h4>
+            <p>Jazz technique. Ballet. Contemporary. Lyrical. Hip hop. Tap. Acro. Musical theatre. Your dancer won't specialize too early or miss entire genres. The emphasis is on jazz and ballet technique (the foundation that makes everything else possible) with real depth across every style.</p>
+          </div>
+          <div class="why-item">
+            <h4>Artists First</h4>
+            <p>Trophies are great. I've won plenty. But I'm not training your kid to collect hardware. I'm training them to walk into any room and be the most prepared, most expressive, most professional dancer there. The trophies follow.</p>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Teaching Philosophy (merged from former About page) -->
+      <div class="content-section alt reveal" id="ps-philosophy">
+        <h2>Teaching Philosophy</h2>
+        <p>I believe in rigor with heart. Every class should challenge you, every rehearsal should push you, and every piece of choreography should mean something. I don't do filler. I don't do lazy. But I also don't do fear-based teaching. My dancers work hard because they want to. Because they feel invested, not intimidated.</p>
+      </div>
 
       <!-- Episode Guide — reworked from "Also on the calendar" for the Season One
            theme. Section id + reveal class kept so existing routing/scrollspy JS
