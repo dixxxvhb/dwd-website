@@ -670,3 +670,161 @@
   margin-bottom: 2px;
   opacity: 1;
 }
+
+/* ============================================================
+   SEASON ONE HOME TEASER — #s1-home-teaser (2026-08-03)
+   A slim cinematic midnight strip on the home page: a keyhole into the
+   Series branding, not a takeover. Home stays forest everywhere else —
+   this is the one midnight band on the page. Reuses #season-underway-cta's
+   DOM slot and data-reveal-after gate (Aug 10, no hide-after) verbatim;
+   nothing in campaign.js referenced that id directly, so it was safe to
+   rename. Reveal/fade itself rides the site's ordinary .reveal
+   IntersectionObserver (main.js) — no bespoke entrance sequence needed for
+   a mid-page band like the premiere one gets.
+   ============================================================ */
+#s1-home-teaser {
+  position: relative;
+  background: var(--s1-midnight);
+  background-image: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(27,42,74,0) 55%, rgba(10,16,30,0.6) 100%);
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 6vw, 64px);
+  overflow: hidden;
+}
+
+#s1-home-teaser .s1ht-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 4vw, 48px);
+}
+
+#s1-home-teaser .s1ht-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+#s1-home-teaser .s1ht-eyebrow {
+  font-family: 'Bebas Neue', 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.75rem;
+  color: var(--s1-silver);
+}
+
+#s1-home-teaser .s1ht-lockup {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1.5vw, 1rem);
+  margin: 0.35rem 0;
+}
+
+#s1-home-teaser .s1ht-star {
+  width: clamp(10px, 1.4vw, 15px);
+  height: clamp(10px, 1.4vw, 15px);
+  flex: none;
+}
+
+#s1-home-teaser .s1ht-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  background: var(--s1-gloss);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--ivory, #FAF3E8);
+  display: inline-block;
+}
+
+@supports not (background-clip: text) {
+  #s1-home-teaser .s1ht-title {
+    -webkit-text-fill-color: initial;
+    color: var(--s1-sky);
+    background: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #s1-home-teaser .s1ht-title {
+    animation: s1-sweep 6s ease-in-out infinite;
+  }
+}
+
+#s1-home-teaser .s1ht-meta {
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  color: var(--s1-silver);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Episode-guide chip, reused here — that rule is scoped under
+   #page-proseries so it doesn't reach the home page; same declarations,
+   new scope. */
+#s1-home-teaser .s1-ep-code {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+  color: var(--s1-sky);
+  border: 1px solid var(--s1-sky);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  flex: none;
+  white-space: nowrap;
+  text-transform: none;
+}
+
+#s1-home-teaser .s1ht-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  flex: none;
+}
+
+#s1-home-teaser .s1ht-link {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--s1-silver);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(201, 212, 206, 0.4);
+  padding-bottom: 1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+#s1-home-teaser .s1ht-link:hover {
+  color: var(--s1-sky);
+  border-color: var(--s1-sky);
+}
+
+@media (max-width: 720px) {
+  #s1-home-teaser .s1ht-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  #s1-home-teaser .s1ht-main {
+    align-items: center;
+    text-align: center;
+  }
+  #s1-home-teaser .s1ht-meta {
+    justify-content: center;
+    text-align: center;
+  }
+  #s1-home-teaser .s1ht-actions {
+    width: 100%;
+  }
+}

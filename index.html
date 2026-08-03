@@ -429,21 +429,33 @@
         </div>
       </section>
 
-      <!-- SEASON ONE CTA — season-underway variant (Aug 10 onward). Same CTA pair,
-           no countdown. Reveals itself the moment the block above hides, so Aug 10
-           flips with nobody remembering. -->
-      <section class="audition-cta season-cta" id="season-underway-cta"
-               aria-label="Season One is underway"
+      <!-- SEASON ONE HOME TEASER — replaces the season-underway-cta variant
+           (2026-08-03: cinematic midnight strip, a keyhole into the Series
+           branding rather than a full page takeover — that's what #page-proseries
+           carries). Same slot in the DOM, same reveal gate (Aug 10, no hide-after
+           — verified nothing in campaign.js referenced the old
+           #season-underway-cta id directly, only the generic
+           data-reveal-after/data-hide-after loop + [data-season-clock] selector,
+           which only matches #season-one-cta above, not this one — safe to
+           rename). Home stays forest everywhere else; this is the one midnight
+           strip on the page. -->
+      <section class="reveal" id="s1-home-teaser"
+               aria-label="Season One is rolling"
                data-reveal-after="2026-08-10T04:00:00-04:00"
                style="display:none">
-        <div class="audition-cta-card season-cta-card">
-          <div class="ac-stack">
-            <span class="ac-eyebrow">dwdPROSERIES &middot; Season One</span>
-            <span class="ac-headline">Season One is rolling.</span>
-            <span class="ac-meta">First day of classes is behind us and the first episodes are on the board. Spots remain in all three tracks.</span>
+        <div class="s1ht-inner">
+          <div class="s1ht-main">
+            <div class="s1ht-eyebrow">dwdPROSERIES presents</div>
+            <div class="s1ht-lockup">
+              <svg class="s1ht-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF7AA2" d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
+              <span class="s1ht-title">SEASON ONE</span>
+              <svg class="s1ht-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF7AA2" d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
+            </div>
+            <div class="s1ht-meta"><span class="s1-ep-code">S1:E1</span> The Premiere &middot; August 10 &middot; Exchange Dance, Orlando</div>
           </div>
-          <div class="season-cta-actions">
-            <a class="ac-cta" href="https://dwd-director.netlify.app/register" data-track="season-underway-cta-express-interest">Express Interest <em>&rarr;</em></a>
+          <div class="s1ht-actions">
+            <a class="btn btn-blush" href="https://dwd-director.netlify.app/register" data-track="s1-home-teaser-express">Express Interest <em>&rarr;</em></a>
+            <a class="s1ht-link" href="#proseries">See the season &rarr;</a>
           </div>
         </div>
       </section>
