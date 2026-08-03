@@ -779,6 +779,36 @@
     }
   };
 
+  // ── SEASON ONE PREMIERE TAKEOVER WINDOW (Aug 10–24, 2026) ──
+  // A date-window class toggler (start AND end, unlike the single-moment
+  // data-reveal-after/data-hide-after attrs above) — applies .s1-premiere-window
+  // to #page-proseries while "now" is inside the window, removes it outside.
+  // Same preview override as applyProSeriesReveal: ?launched=1 / window.__dwdLaunchPreview
+  // forces the window on so Dixon can eyeball the takeover without waiting for the date.
+  var S1_WINDOW_START_MS = new Date('2026-08-10T00:00:00-04:00').getTime();
+  var S1_WINDOW_END_MS = new Date('2026-08-24T23:59:59-04:00').getTime();
+  var S1_HERO_TAGLINE = 'Now premiering. Season One is rolling.';
+  var s1HeroTaglineOriginal = null;
+
+  window.applyS1PremiereWindow = function () {
+    var page = document.getElementById('page-proseries');
+    if (!page) return;
+    var preview = isLaunchPreview();
+    var now = Date.now();
+    var inWindow = preview || (now >= S1_WINDOW_START_MS && now <= S1_WINDOW_END_MS);
+    page.classList.toggle('s1-premiere-window', inWindow);
+
+    var tagline = page.querySelector('.ps-hero .tagline');
+    if (tagline) {
+      if (inWindow) {
+        if (s1HeroTaglineOriginal === null) s1HeroTaglineOriginal = tagline.textContent;
+        tagline.textContent = S1_HERO_TAGLINE;
+      } else if (s1HeroTaglineOriginal !== null) {
+        tagline.textContent = s1HeroTaglineOriginal;
+      }
+    }
+  };
+
   // Re-check every 30s so visitors on the page at an era boundary still see it
   // flip within the minute. These are marketing gates, not live event clocks —
   // they don't need a 2s reflow forever. The function is cheap (a few
@@ -786,6 +816,9 @@
   setInterval(function () {
     if (typeof window.applyProSeriesReveal === 'function') {
       window.applyProSeriesReveal();
+    }
+    if (typeof window.applyS1PremiereWindow === 'function') {
+      window.applyS1PremiereWindow();
     }
   }, 30000);
 
@@ -797,6 +830,9 @@
       initCampaignAuth();
     }
     window.applyProSeriesReveal();
+    if (typeof window.applyS1PremiereWindow === 'function') {
+      window.applyS1PremiereWindow();
+    }
   }
 
   // Set campaign unlock flag if previously authenticated

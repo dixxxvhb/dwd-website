@@ -1,0 +1,370 @@
+/* ============================================================
+   SEASON ONE: THE SERIES — brand pass, ProSeries page + home
+   Scoped under #page-proseries and the home #season-underway-cta
+   selectors named in the plan. New tokens live here; house colors
+   (forest/pink/terracotta/ivory) are untouched and still come from
+   css/styles.css. No gold anywhere in this file.
+   ============================================================ */
+
+:root {
+  --s1-midnight: #1B2A4A;
+  --s1-sky: #7EC4F8;
+  --s1-silver: #C9D4CE;
+  --s1-gloss: linear-gradient(135deg, #4FA8EE, #9AD5FF, #E4F4FF, #7EC4F8, #5FB2F2);
+}
+
+/* ------------------------------------------------------------
+   Shared: the SEASON ONE gloss lockup. One shine per frame — this
+   class is only ever applied to the announce-band title below.
+   ------------------------------------------------------------ */
+#page-proseries .s1-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1;
+  background: var(--s1-gloss);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--ivory, #FAF3E8); /* fallback paint before @supports below wins */
+  position: relative;
+  display: inline-block;
+}
+
+@supports not (background-clip: text) {
+  #page-proseries .s1-title {
+    -webkit-text-fill-color: initial;
+    color: var(--s1-sky);
+    background: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #page-proseries .s1-title {
+    animation: s1-sweep 6s ease-in-out infinite;
+  }
+}
+
+@keyframes s1-sweep {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ------------------------------------------------------------
+   PREMIERE ANNOUNCE BAND — #s1-premiere
+   ------------------------------------------------------------ */
+#page-proseries .s1-premiere {
+  background: var(--s1-midnight);
+  background-image: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(27,42,74,0) 55%, rgba(10,16,30,0.55) 100%);
+  padding: clamp(3rem, 8vw, 6rem) 1.5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+#page-proseries .s1-premiere-inner {
+  max-width: 60ch;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+#page-proseries .s1-eyebrow {
+  font-family: 'Bebas Neue', 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.85rem;
+  color: var(--s1-silver);
+}
+
+#page-proseries .s1-lockup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  margin: 0.25rem 0;
+}
+
+#page-proseries .s1-star {
+  width: clamp(14px, 2vw, 22px);
+  height: clamp(14px, 2vw, 22px);
+  flex: none;
+}
+
+#page-proseries .s1-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--ivory, #FAF3E8);
+}
+
+#page-proseries .s1-credits {
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  color: var(--s1-silver);
+  margin-top: 0.25rem;
+}
+
+#page-proseries .s1-blurb {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ivory, #FAF3E8);
+  max-width: 55ch;
+  margin-top: 0.5rem;
+}
+
+/* ------------------------------------------------------------
+   METADATA SLATE — .s1-slate (doc-mode stat strip, forest ground)
+   ------------------------------------------------------------ */
+#page-proseries .s1-slate {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0;
+  margin: 1.25rem 0 1.75rem;
+}
+
+#page-proseries .s1-slate-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1.5rem;
+  border-right: 1px solid rgba(201, 212, 206, 0.3);
+}
+
+#page-proseries .s1-slate-item:last-child {
+  border-right: none;
+}
+
+#page-proseries .s1-slate-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--ivory, #FAF3E8);
+  line-height: 1;
+}
+
+#page-proseries .s1-slate-lbl {
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.7rem;
+  color: var(--s1-silver);
+  margin-top: 0.35rem;
+}
+
+/* ------------------------------------------------------------
+   EPISODE GUIDE — #ps-calendar (stays on forest ground)
+   ------------------------------------------------------------ */
+#page-proseries .s1-cormorant-italic {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+}
+
+#page-proseries #ps-calendar .s1-cormorant-italic.section-lead {
+  color: var(--s1-silver);
+}
+
+#page-proseries .s1-season-dates {
+  color: var(--s1-silver);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+#page-proseries .s1-episode-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+  max-width: 70ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#page-proseries .s1-ep {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid rgba(126, 196, 248, 0.25);
+  border-radius: 6px;
+}
+
+#page-proseries .s1-ep-code {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.06em;
+  font-size: 1rem;
+  color: var(--s1-sky);
+  border: 1px solid var(--s1-sky);
+  border-radius: 4px;
+  padding: 0.2rem 0.55rem;
+  flex: none;
+  white-space: nowrap;
+}
+
+#page-proseries .s1-ep-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ivory, #FAF3E8);
+  flex: 1 1 auto;
+}
+
+#page-proseries .s1-ep--tba .s1-ep-title {
+  text-transform: none;
+  font-weight: 400;
+  color: var(--s1-silver);
+}
+
+#page-proseries .s1-ep-meta {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  color: var(--s1-silver);
+  text-align: right;
+  flex: none;
+  white-space: nowrap;
+}
+
+#page-proseries .s1-ep--finale {
+  border: 1px solid var(--s1-sky);
+  padding: 1.1rem 1.3rem;
+}
+
+#page-proseries .s1-ep--finale .s1-ep-title {
+  font-size: 1.05rem;
+}
+
+@media (max-width: 560px) {
+  #page-proseries .s1-ep {
+    flex-wrap: wrap;
+  }
+  #page-proseries .s1-ep-code {
+    order: 1;
+  }
+  #page-proseries .s1-ep-title {
+    order: 2;
+    flex: 1 1 100%;
+  }
+  #page-proseries .s1-ep-meta {
+    order: 3;
+    flex: 1 1 100%;
+    text-align: left;
+  }
+}
+
+/* ------------------------------------------------------------
+   PREMIERE TAKEOVER OVERLAY — .s1-premiere-window on #page-proseries
+   Launch window only (Aug 10–24, 2026), toggled by campaign.js.
+   Accents only: sky replaces pink for rules/underlines. CTA buttons
+   (.btn, .btn-blush, .ac-cta etc.) are explicitly excluded and stay
+   Family Pink.
+   ------------------------------------------------------------ */
+#page-proseries.s1-premiere-window {
+  background: var(--s1-midnight);
+  background-image: radial-gradient(ellipse at top, rgba(255,255,255,0.05) 0%, rgba(27,42,74,0) 60%);
+}
+
+/* poster-pages.css locks .content-section (and friends) to ivory/forest with
+   !important for the non-takeover design — every rule below needs !important
+   too, plus the extra .s1-premiere-window class for specificity, or the
+   takeover loses the cascade and text goes invisible on its own background. */
+#page-proseries.s1-premiere-window .content-section,
+#page-proseries.s1-premiere-window .content-section.alt,
+#page-proseries.s1-premiere-window .track-detail-section,
+#page-proseries.s1-premiere-window .ps-whatelse {
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: var(--ivory, #FAF3E8) !important;
+}
+
+#page-proseries.s1-premiere-window .content-section p,
+#page-proseries.s1-premiere-window .content-section.alt p {
+  color: var(--ivory, #FAF3E8) !important;
+}
+
+/* .why-item (inside the Why ProSeries grid) and .td-description/.td-meta
+   (inside the per-track detail panels) each keep their own solid background
+   and pre-audited text color (terra/ivory/forest alternation; per-track
+   ivory-or-forest) regardless of the midnight page ground underneath — don't
+   let the broad ".content-section p" rule above bleed into them. */
+/* The blanket ".content-section.alt p { color: ivory }" rule above (same
+   file, equal specificity, but declared first) otherwise wins the tie over a
+   plain descendant override — so the ivory/pink why-items get their own
+   nth-child-qualified selector (extra specificity) to force forest ink back. */
+#page-proseries.s1-premiere-window .content-section.alt .why-item:nth-child(2) p,
+#page-proseries.s1-premiere-window .content-section.alt .why-item:nth-child(3) p {
+  color: var(--forest) !important;
+}
+
+#page-proseries.s1-premiere-window .content-section h2,
+#page-proseries.s1-premiere-window .content-section.alt h2,
+#page-proseries.s1-premiere-window .ps-whatelse h2 {
+  color: var(--ivory, #FAF3E8) !important;
+}
+
+/* Chapter eyebrow ("No.01 · Program") reads as terra-dark on ivory and pink
+   on forest normally — neither survives on midnight, so it goes silver. */
+#page-proseries.s1-premiere-window .content-section .chapter,
+#page-proseries.s1-premiere-window .content-section.alt .chapter {
+  color: var(--s1-silver) !important;
+}
+
+#page-proseries.s1-premiere-window .section-lead {
+  color: var(--s1-silver) !important;
+}
+
+/* Chapter rail: Mission Silver at rest, Sky Blue hover/active. The rest-state
+   rail already sits on its own dark scrim, but the active/hover states
+   normally fill with Family Pink behind forest ink (arms.css) — that pairing
+   would make sky text unreadable, so the fill swaps to a sky-tinted scrim too. */
+#page-proseries.s1-premiere-window .chapter-rail a {
+  color: var(--s1-silver) !important;
+}
+#page-proseries.s1-premiere-window .chapter-rail a:hover,
+#page-proseries.s1-premiere-window .chapter-rail a.active {
+  color: var(--s1-sky) !important;
+  background: rgba(126, 196, 248, 0.14) !important;
+  border-color: var(--s1-sky) !important;
+}
+
+/* chapter-rail + heading accents swap to sky, CTAs untouched */
+#page-proseries.s1-premiere-window .chapter-rail a.active::after,
+#page-proseries.s1-premiere-window .chapter-rail a:hover::after {
+  background: var(--s1-sky);
+}
+
+#page-proseries.s1-premiere-window h2::after,
+#page-proseries.s1-premiere-window .td-name-row::after {
+  background: var(--s1-sky);
+}
+
+#page-proseries.s1-premiere-window .track-tab[aria-selected="true"] {
+  border-color: var(--s1-sky);
+}
+
+/* Keep pricing panels legible on midnight ground */
+#page-proseries.s1-premiere-window .track-detail {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+#page-proseries.s1-premiere-window .td-fees li,
+#page-proseries.s1-premiere-window .td-included li {
+  color: var(--ivory, #FAF3E8);
+}
+
+/* CTA buttons stay Family Pink — explicit no-op guard so future edits above
+   don't accidentally catch them via inheritance. */
+#page-proseries.s1-premiere-window .btn,
+#page-proseries.s1-premiere-window .btn-blush,
+#page-proseries.s1-premiere-window .ac-cta {
+  background: var(--pink, #FF7AA2);
+  color: var(--forest, #0c1f17);
+}

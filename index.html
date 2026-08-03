@@ -140,8 +140,8 @@
        in the fallback face until the web font is ready (no FOIT). -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cinzel:wght@700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cinzel:wght@700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
@@ -152,6 +152,7 @@
   <link rel="stylesheet" href="css/poster-pages.css">
   <link rel="stylesheet" href="css/tighten.css">
   <link rel="stylesheet" href="css/arms.css">
+  <link rel="stylesheet" href="css/season1.css">
 
   <!-- No-JS safety: reveals must never trap content invisible if JS/observer fails -->
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
@@ -438,8 +439,8 @@
         <div class="audition-cta-card season-cta-card">
           <div class="ac-stack">
             <span class="ac-eyebrow">dwdPROSERIES &middot; Season One</span>
-            <span class="ac-headline">Season One is underway.</span>
-            <span class="ac-meta">The company is in the studio, and placement stays open while tracks have room. Express interest and Dixon will reach out personally.</span>
+            <span class="ac-headline">Season One is rolling.</span>
+            <span class="ac-meta">First day of classes is behind us and the first episodes are on the board. Spots remain in all three tracks.</span>
           </div>
           <div class="season-cta-actions">
             <a class="ac-cta" href="https://dwd-director.netlify.app/register" data-track="season-underway-cta-express-interest">Express Interest <em>&rarr;</em></a>
@@ -1061,6 +1062,23 @@
         </div>
       </div>
 
+      <!-- SEASON ONE PREMIERE ANNOUNCE BAND — permanent once revealed. Reuses the
+           site's global data-reveal-after gate (campaign.js applyProSeriesReveal),
+           same mechanism as #season-underway-cta above. -->
+      <section class="s1-premiere" id="s1-premiere" data-reveal-after="2026-08-10T04:00:00-04:00" style="display:none" aria-label="Season One premiere">
+        <div class="s1-premiere-inner">
+          <div class="s1-eyebrow">dwdPROSERIES presents</div>
+          <div class="s1-lockup">
+            <svg class="s1-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF7AA2" d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
+            <span class="s1-title">SEASON ONE</span>
+            <svg class="s1-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF7AA2" d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
+          </div>
+          <div class="s1-subtitle">the name was always a series.</div>
+          <div class="s1-credits">A Dance With Dixon Production &middot; Premieres August 10</div>
+          <p class="s1-blurb">Every competition this year is an episode. Every showcase, a special. The May recital is the finale. You didn't join a program &mdash; you were cast in a show. Welcome to Season One.</p>
+        </div>
+      </section>
+
       <nav class="chapter-rail" aria-label="ProSeries sections">
         <a href="#ps-program">Program</a>
         <a href="#ps-why">Why</a>
@@ -1076,6 +1094,11 @@
           <span class="lbl">ProSeries · Youth Training</span>
         </div>
         <h2>The Program</h2>
+        <div class="s1-slate" aria-hidden="false">
+          <div class="s1-slate-item"><span class="s1-slate-num">3</span><span class="s1-slate-lbl">Tracks</span></div>
+          <div class="s1-slate-item"><span class="s1-slate-num">40</span><span class="s1-slate-lbl">Weeks</span></div>
+          <div class="s1-slate-item"><span class="s1-slate-num">1</span><span class="s1-slate-lbl">Season</span></div>
+        </div>
         <p>ProSeries is a full-spectrum competitive training program for dancers ages 5 to 19. Three tracks: Prep, Elite, and Pro. Each built around serious technique, artistry, and performance. This is your dancer's home for training, not an add-on.</p>
         <p>Dancers train across all styles (jazz technique, ballet, contemporary, lyrical, hip hop, tap, acro, musical theatre) with an emphasis on jazz and ballet technique as the foundation for everything else. Every class is designed by a working choreographer and director, not pulled from a syllabus.</p>
         <p>This isn't a recreational program and it isn't a studio. ProSeries is a company. A dedicated training environment built to develop well-rounded, professional-level dancers who are as strong in artistry as they are in technique.</p>
@@ -1359,34 +1382,46 @@
       </section>
 
 
-      <!-- What else is coming — Summer Intensive + Competition Season (merged from old Performances) -->
+      <!-- Episode Guide — reworked from "Also on the calendar" for the Season One
+           theme. Section id + reveal class kept so existing routing/scrollspy JS
+           still targets it. Summer Intensive cards are date-retired forever (both
+           already past their hide-after), so they come out entirely rather than
+           sitting under the guide unseen. -->
       <div class="content-section reveal ps-whatelse" id="ps-calendar">
-        <h2>Also on the calendar</h2>
-      </div>
-      <div class="coming-up three-up ps-whatelse-grid" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="coming-up-card reveal" data-hide-after="2026-06-12T17:00:00-04:00">
-          <div class="label">Summer 2026</div>
-          <h3>Summer Intensive</h3>
-          <div class="meta">Details TBA</div>
-          <p>Pre-season summer intensive details coming soon. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for the announcement.</p>
-        </div>
-        <div class="coming-up-card" data-reveal-after="2026-06-12T17:00:00-04:00" data-hide-after="2026-07-11T00:00:00-04:00" style="display:none">
-          <div class="label">Summer 2026 &middot; Sign-Up Open</div>
-          <h3>Summer Intensive</h3>
-          <div class="meta">July 6&ndash;10 &middot; 10am&ndash;1pm daily</div>
-          <p>Five days of technique, choreography, and artistry at Exchange Dance Academy before Season One. Open to all dancers, no audition needed. Half day 10am&ndash;12pm (ages 5+) $200 &middot; full day 10am&ndash;1pm (ages 9+) $300. <a href="https://dancewithdixon.com/fullout" data-track="proseries-intensive-card-signup">Full details &amp; sign-up &rarr;</a></p>
-        </div>
-        <div class="coming-up-card reveal">
-          <div class="label">Season One</div>
-          <h3>Training Begins</h3>
-          <div class="meta">August 10, 2026</div>
-          <p>Season One runs August 10, 2026 to May 25, 2027. Weekly training in all three tracks starts the week of August 10 at Exchange Dance in Orlando.</p>
-        </div>
-        <div class="coming-up-card reveal" data-delay="1">
-          <div class="label">Fall 2026 to Spring 2027</div>
-          <h3>Competition Season</h3>
-          <div class="meta">Regional &amp; National Events</div>
-          <p>ProSeries dancers compete at regional and national competitions throughout the season.</p>
+        <h2>The Episode Guide</h2>
+        <p class="section-lead s1-cormorant-italic">one season. every episode. no reruns.</p>
+        <p class="s1-season-dates">Season One runs August 10, 2026 to May 25, 2027.</p>
+        <div class="s1-episode-list">
+          <div class="s1-ep">
+            <span class="s1-ep-code">S1:E1</span>
+            <span class="s1-ep-title">The Premiere</span>
+            <span class="s1-ep-meta">August 10 &middot; first day of classes</span>
+          </div>
+          <div class="s1-ep">
+            <span class="s1-ep-code">S1:E2</span>
+            <span class="s1-ep-title">The First Showcase</span>
+            <span class="s1-ep-meta">date to be announced</span>
+          </div>
+          <div class="s1-ep s1-ep--tba">
+            <span class="s1-ep-code">S1:E3</span>
+            <span class="s1-ep-title s1-cormorant-italic">episode title to be announced</span>
+            <span class="s1-ep-meta">competition slate locks this fall</span>
+          </div>
+          <div class="s1-ep s1-ep--tba">
+            <span class="s1-ep-code">S1:E4</span>
+            <span class="s1-ep-title s1-cormorant-italic">episode title to be announced</span>
+            <span class="s1-ep-meta">competition slate locks this fall</span>
+          </div>
+          <div class="s1-ep s1-ep--tba">
+            <span class="s1-ep-code">S1:E5</span>
+            <span class="s1-ep-title s1-cormorant-italic">episode title to be announced</span>
+            <span class="s1-ep-meta">competition slate locks this fall</span>
+          </div>
+          <div class="s1-ep s1-ep--finale">
+            <span class="s1-ep-code">S1:FINALE</span>
+            <span class="s1-ep-title">The Finale</span>
+            <span class="s1-ep-meta">May 25, 2027 &middot; that's a wrap on Season One</span>
+          </div>
         </div>
       </div>
 
