@@ -756,20 +756,50 @@
       }
     });
 
-    // Update hero CTA by era, in priority order — keyed off section display so
-    // the CTA always matches what the page actually shows:
-    //   1. Intensive sign-up open (#proseries-intensive visible) → fullout page.
-    //   2. Standing interest era (#proseries-interest visible, Jul 11 on,
-    //      auditions wrapped) → straight to the express-interest form (one click).
+    // Fold the old .ps-hero away the instant the Season One premiere band is
+    // itself revealed (2026-08-03: the band absorbed the hero's identity —
+    // logo, label, CTA — so showing both back to back read as a repeat).
+    // #s1-premiere's display was just decided by the loop above using the
+    // same data-reveal-after gate (and the same preview override), so this
+    // naturally follows it under ?launched=1 too: before Aug 10 the hero
+    // shows exactly as before, from Aug 10 (or under preview) it's hidden
+    // and the band is the one true opener.
+    var s1PremiereEl = document.getElementById('s1-premiere');
+    var psPage = document.getElementById('page-proseries');
+    if (psPage && s1PremiereEl) {
+      psPage.classList.toggle('s1-hero-folded', s1PremiereEl.style.display !== 'none');
+    }
+
+    // Update hero CTA by era, in priority order. Bug fixed 2026-08-03: this
+    // used to key off el.style.display, which under the `?launched=1`
+    // preview is meaningless for era PRIORITY — the preview forces every
+    // gated section to display (so Dixon can review every era at once),
+    // including ones whose data-hide-after has long since passed. That made
+    // a retired era (#proseries-intensive, hidden every real day since Jul 11)
+    // outrank the live one under preview, so the hero CTA read "FULL OUT
+    // Takeover Intensive" weeks after that intensive ended. isEraActuallyLive()
+    // below ignores the preview flag entirely and checks real dates only, so
+    // priority is correct in both preview and production — the preview still
+    // visually shows every section, it just no longer wins the CTA fight.
+    //   1. Intensive sign-up actually open (real dates) → fullout page.
+    //   2. Standing interest era actually open (real dates) → express-interest.
     //   3. Otherwise (pre-launch) → early-access email capture.
+    function isEraActuallyLive(el) {
+      if (!el) return false;
+      var revealAttr = el.dataset.revealAfter;
+      var hideAttr = el.dataset.hideAfter;
+      var revealed = !revealAttr || dateHasPassed(revealAttr);
+      var hidden = !!hideAttr && dateHasPassed(hideAttr);
+      return revealed && !hidden;
+    }
     var heroCta = document.getElementById('ps-hero-cta');
     var interestForm = document.getElementById('proseries-interest');
     var intensiveForm = document.getElementById('proseries-intensive');
     if (heroCta) {
-      if (intensiveForm && intensiveForm.style.display !== 'none') {
+      if (isEraActuallyLive(intensiveForm)) {
         heroCta.href = 'https://dancewithdixon.com/fullout';
         heroCta.innerHTML = 'FULL OUT Takeover Intensive <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
-      } else if (interestForm && interestForm.style.display !== 'none') {
+      } else if (isEraActuallyLive(interestForm)) {
         heroCta.href = 'https://dwd-director.netlify.app/register';
         heroCta.innerHTML = 'Express Interest <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
       } else {

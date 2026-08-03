@@ -18,6 +18,7 @@
    class is only ever applied to the announce-band title below.
    ------------------------------------------------------------ */
 #page-proseries .s1-title {
+  margin: 0; /* now an <h1> (2026-08-03 hero fold) — kill the UA block margin */
   font-family: 'Cinzel', serif;
   font-weight: 800;
   text-transform: uppercase;
@@ -133,6 +134,23 @@
   gap: 0.9rem;
 }
 
+/* Circular ProSeries mark — the folded-in hero identity, reusing the exact
+   image the old .ps-hero-logo used, just modest-sized (this is a lead-in
+   beat above the eyebrow, not the hero-sized 480px circle). */
+#page-proseries .s1-logo {
+  width: clamp(96px, 10vw, 120px);
+  height: clamp(96px, 10vw, 120px);
+  margin-bottom: 0.25rem;
+}
+
+#page-proseries .s1-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.35));
+}
+
 #page-proseries .s1-eyebrow {
   font-family: 'Bebas Neue', 'Outfit', sans-serif;
   text-transform: uppercase;
@@ -180,6 +198,22 @@
   margin-top: 0.5rem;
 }
 
+/* Folded-in hero identity, part two: the "Ages 5-19" meta label + primary
+   CTA that used to live in .ps-hero, now closing out the band itself. */
+#page-proseries .s1-meta {
+  font-family: 'Manrope', 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--s1-silver);
+  margin-top: 0.75rem;
+}
+
+#page-proseries .s1-cta {
+  margin-top: 0.5rem;
+}
+
 /* ------------------------------------------------------------
    ENTRANCE SEQUENCE — plays once, gated by .s1-cue (added by the
    IntersectionObserver in campaign.js the first time the band is both
@@ -189,53 +223,70 @@
    waiting for the gate + observer; prefers-reduced-motion forces the
    final state immediately below, no keyframes involved.
    ------------------------------------------------------------ */
+#page-proseries .s1-logo,
 #page-proseries .s1-eyebrow,
 #page-proseries .s1-star,
 #page-proseries .s1-title,
 #page-proseries .s1-subtitle,
 #page-proseries .s1-credits,
-#page-proseries .s1-blurb {
+#page-proseries .s1-blurb,
+#page-proseries .s1-meta,
+#page-proseries .s1-cta {
   opacity: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Logo leads — fades/rises in first, ahead of the eyebrow. */
+  #page-proseries .s1-premiere.s1-cue .s1-logo {
+    animation: s1-rise-fade-sm 0.5s ease-out 0.15s forwards;
+  }
   #page-proseries .s1-premiere.s1-cue .s1-eyebrow {
-    animation: s1-eyebrow-in 0.6s ease-out 0.4s forwards;
+    animation: s1-eyebrow-in 0.5s ease-out 0.5s forwards;
   }
   #page-proseries .s1-premiere.s1-cue .s1-star {
-    animation: s1-star-pop 0.4s cubic-bezier(.2, .8, .3, 1) 0.7s forwards;
+    animation: s1-star-pop 0.4s cubic-bezier(.2, .8, .3, 1) 0.8s forwards;
   }
   #page-proseries .s1-premiere.s1-cue .s1-star:last-of-type {
-    animation-delay: 0.8s;
+    animation-delay: 0.9s;
   }
   /* Two animations on one declaration: the one-shot rise/fade entrance,
      plus the ambient gloss sweep picking up right after it finishes
-     (0.9s delay + 0.6s duration = settles at 1.5s; sweep starts 1.9s to
+     (1.1s delay + 0.5s duration = settles at 1.6s; sweep starts 2.0s to
      give it a beat of stillness first). Must stay a single declaration —
      see the note above the (now-removed) standalone sweep rule. */
   #page-proseries .s1-premiere.s1-cue .s1-title {
     animation:
-      s1-rise-fade 0.6s ease-out 0.9s forwards,
-      s1-sweep 6s ease-in-out infinite 1.9s;
+      s1-rise-fade 0.5s ease-out 1.1s forwards,
+      s1-sweep 6s ease-in-out infinite 2s;
   }
   #page-proseries .s1-premiere.s1-cue .s1-subtitle {
-    animation: s1-rise-fade-sm 0.5s ease-out 1.5s forwards;
+    animation: s1-rise-fade-sm 0.4s ease-out 1.6s forwards;
   }
   #page-proseries .s1-premiere.s1-cue .s1-credits {
-    animation: s1-rise-fade-sm 0.5s ease-out 1.62s forwards;
+    animation: s1-rise-fade-sm 0.4s ease-out 1.7s forwards;
   }
   #page-proseries .s1-premiere.s1-cue .s1-blurb {
-    animation: s1-rise-fade-sm 0.5s ease-out 1.74s forwards;
+    animation: s1-rise-fade-sm 0.4s ease-out 1.8s forwards;
+  }
+  #page-proseries .s1-premiere.s1-cue .s1-meta {
+    animation: s1-rise-fade-sm 0.4s ease-out 1.9s forwards;
+  }
+  /* CTA closes the sequence, ~2.0s in. */
+  #page-proseries .s1-premiere.s1-cue .s1-cta {
+    animation: s1-rise-fade-sm 0.5s ease-out 2s forwards;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  #page-proseries .s1-logo,
   #page-proseries .s1-eyebrow,
   #page-proseries .s1-star,
   #page-proseries .s1-title,
   #page-proseries .s1-subtitle,
   #page-proseries .s1-credits,
-  #page-proseries .s1-blurb {
+  #page-proseries .s1-blurb,
+  #page-proseries .s1-meta,
+  #page-proseries .s1-cta {
     opacity: 1;
     transform: none;
   }
@@ -544,6 +595,22 @@
 }
 /* h1 em.ps-block: intentionally untouched — brand mark stays forest bg / pink text */
 /* .ps-hero .btn: intentionally untouched — CTA exception stays Family Pink */
+
+/* HERO FOLD (2026-08-03): the moment #s1-premiere is itself revealed (its
+   own data-reveal-after gate, same one applyProSeriesReveal already checks
+   every element against), campaign.js adds .s1-hero-folded to #page-proseries
+   and the old .ps-hero disappears entirely — the band absorbed its logo,
+   label, and CTA, so showing both back to back read as a duplicate opener.
+   Before Aug 10 (or without ?launched=1) this class is absent and the hero
+   renders exactly as it always has. All the de-pink overrides just above
+   become inert once this fires — harmless, since the hero isn't visible to
+   need them. Deliberately UNCONDITIONAL (not scoped to .s1-premiere-window)
+   since the fold follows the band's own reveal state, not the takeover
+   window class — the two happen to start the same day but are two
+   different toggles. */
+#page-proseries.s1-hero-folded .ps-hero {
+  display: none;
+}
 
 /* #proseries-interest ("Now casting.") is styled by an ID selector in
    poster-pages.css (2 ids: #page-proseries #proseries-interest) — always
