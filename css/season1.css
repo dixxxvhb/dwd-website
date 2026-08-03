@@ -22,7 +22,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(3.5rem, 9vw, 9rem);
   line-height: 1;
   background: var(--s1-gloss);
   background-size: 200% 200%;
@@ -42,11 +42,15 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  #page-proseries .s1-title {
-    animation: s1-sweep 6s ease-in-out infinite;
-  }
-}
+/* The ambient sweep loop (delay 1.9s, after the entrance's rise/fade
+   finishes at 1.5s) is combined with the rise/fade into ONE animation
+   shorthand declaration further down, on the same selector — two separate
+   rules targeting the same selector's `animation` sub-properties don't
+   layer, the later one wins per-longhand and silently drops whichever
+   longhand it doesn't restate (that dropped the entrance duration/delay
+   here on first pass and left the rise/fade looping forever). Keeping
+   both animations in one declaration avoids that trap. See the
+   ENTRANCE SEQUENCE block below for the actual rule. */
 
 @keyframes s1-sweep {
   0%   { background-position: 0% 50%; }
@@ -58,14 +62,69 @@
    PREMIERE ANNOUNCE BAND — #s1-premiere
    ------------------------------------------------------------ */
 #page-proseries .s1-premiere {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88svh;
   background: var(--s1-midnight);
-  background-image: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(27,42,74,0) 55%, rgba(10,16,30,0.55) 100%);
+  /* Deeper vignette — darker, tighter edges than the flat radial used
+     elsewhere in the takeover, so the top of the page reads as a real
+     premiere room, not just a dark section. */
+  background-image:
+    radial-gradient(ellipse at center, rgba(255,255,255,0.07) 0%, rgba(27,42,74,0) 45%, rgba(6,10,20,0.85) 100%),
+    radial-gradient(ellipse at center, rgba(27,42,74,0) 55%, #05070d 130%);
   padding: clamp(3rem, 8vw, 6rem) 1.5rem;
   text-align: center;
   overflow: hidden;
 }
 
+/* Film-grain texture — a static, CSS-only SVG turbulence data-URI, extremely
+   low opacity, blended over the vignette. No JS, no image request, and
+   subtle enough to read as texture rather than a pattern. */
+#page-proseries .s1-premiere::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ground blackout — fades up to reveal the vignette as the very first
+   entrance beat. Sits above the grain, below the content. */
+#page-proseries .s1-premiere::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #page-proseries .s1-premiere.s1-cue::before {
+    animation: s1-ground-fade 0.6s ease-out forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #page-proseries .s1-premiere::before {
+    opacity: 0;
+  }
+}
+
+@keyframes s1-ground-fade {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
 #page-proseries .s1-premiere-inner {
+  position: relative;
+  z-index: 3;
   max-width: 60ch;
   margin: 0 auto;
   display: flex;
@@ -91,8 +150,8 @@
 }
 
 #page-proseries .s1-star {
-  width: clamp(14px, 2vw, 22px);
-  height: clamp(14px, 2vw, 22px);
+  width: clamp(16px, 2.4vw, 26px);
+  height: clamp(16px, 2.4vw, 26px);
   flex: none;
 }
 
@@ -119,6 +178,97 @@
   color: var(--ivory, #FAF3E8);
   max-width: 55ch;
   margin-top: 0.5rem;
+}
+
+/* ------------------------------------------------------------
+   ENTRANCE SEQUENCE — plays once, gated by .s1-cue (added by the
+   IntersectionObserver in campaign.js the first time the band is both
+   revealed by its data-reveal-after gate AND actually on-screen).
+   Total sequence ~2.2s, ease-out, cinematic not bouncy. Elements sit
+   hidden by default so there's no flash of unstyled content while
+   waiting for the gate + observer; prefers-reduced-motion forces the
+   final state immediately below, no keyframes involved.
+   ------------------------------------------------------------ */
+#page-proseries .s1-eyebrow,
+#page-proseries .s1-star,
+#page-proseries .s1-title,
+#page-proseries .s1-subtitle,
+#page-proseries .s1-credits,
+#page-proseries .s1-blurb {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #page-proseries .s1-premiere.s1-cue .s1-eyebrow {
+    animation: s1-eyebrow-in 0.6s ease-out 0.4s forwards;
+  }
+  #page-proseries .s1-premiere.s1-cue .s1-star {
+    animation: s1-star-pop 0.4s cubic-bezier(.2, .8, .3, 1) 0.7s forwards;
+  }
+  #page-proseries .s1-premiere.s1-cue .s1-star:last-of-type {
+    animation-delay: 0.8s;
+  }
+  /* Two animations on one declaration: the one-shot rise/fade entrance,
+     plus the ambient gloss sweep picking up right after it finishes
+     (0.9s delay + 0.6s duration = settles at 1.5s; sweep starts 1.9s to
+     give it a beat of stillness first). Must stay a single declaration —
+     see the note above the (now-removed) standalone sweep rule. */
+  #page-proseries .s1-premiere.s1-cue .s1-title {
+    animation:
+      s1-rise-fade 0.6s ease-out 0.9s forwards,
+      s1-sweep 6s ease-in-out infinite 1.9s;
+  }
+  #page-proseries .s1-premiere.s1-cue .s1-subtitle {
+    animation: s1-rise-fade-sm 0.5s ease-out 1.5s forwards;
+  }
+  #page-proseries .s1-premiere.s1-cue .s1-credits {
+    animation: s1-rise-fade-sm 0.5s ease-out 1.62s forwards;
+  }
+  #page-proseries .s1-premiere.s1-cue .s1-blurb {
+    animation: s1-rise-fade-sm 0.5s ease-out 1.74s forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #page-proseries .s1-eyebrow,
+  #page-proseries .s1-star,
+  #page-proseries .s1-title,
+  #page-proseries .s1-subtitle,
+  #page-proseries .s1-credits,
+  #page-proseries .s1-blurb {
+    opacity: 1;
+    transform: none;
+  }
+  #page-proseries .s1-eyebrow {
+    letter-spacing: 0.28em;
+  }
+}
+
+@keyframes s1-eyebrow-in {
+  from { opacity: 0; letter-spacing: 0.6em; }
+  to   { opacity: 1; letter-spacing: 0.28em; }
+}
+
+@keyframes s1-star-pop {
+  0%   { opacity: 0; transform: scale(0) rotate(-24deg); }
+  70%  { opacity: 1; transform: scale(1.12) rotate(4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes s1-rise-fade {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes s1-rise-fade-sm {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  #page-proseries .s1-premiere {
+    min-height: 70svh;
+  }
 }
 
 /* ------------------------------------------------------------
@@ -394,6 +544,21 @@
 }
 /* h1 em.ps-block: intentionally untouched — brand mark stays forest bg / pink text */
 /* .ps-hero .btn: intentionally untouched — CTA exception stays Family Pink */
+
+/* #proseries-interest ("Now casting.") is styled by an ID selector in
+   poster-pages.css (2 ids: #page-proseries #proseries-interest) — always
+   Family Pink bg / forest text, in both takeover and non-takeover states;
+   the generic .content-section.alt midnight override above can't reach it
+   (class specificity loses to an id+id selector) and isn't meant to, since
+   this band was never part of the midnight-ify pass. The chapter eyebrow
+   added with the 2026-08-03 copy rewrite needs to match that same
+   self-contained pink/forest pairing rather than inherit the generic
+   .content-section .chapter silver rule (which assumes a midnight/forest
+   ground this section doesn't have). */
+#page-proseries #proseries-interest .chapter,
+#page-proseries #proseries-interest .lbl {
+  color: var(--forest, #0c1f17) !important;
+}
 
 /* ------------------------------------------------------------
    TRACKS SERIES-BRANDING (permanent — both takeover and non-takeover

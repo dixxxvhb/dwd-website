@@ -809,6 +809,34 @@
     }
   };
 
+  // ── S1 PREMIERE ENTRANCE CUE (added 2026-08-03) ──
+  // One-shot: adds .s1-cue to #s1-premiere the first time it's actually
+  // visible AND on-screen, which triggers the CSS entrance sequence in
+  // season1.css. The band starts display:none behind its data-reveal-after
+  // gate (applyProSeriesReveal flips that later, possibly long after this
+  // script runs) — IntersectionObserver recalculates whenever the target's
+  // box changes for ANY reason, including a display:none -> '' flip driven
+  // by another script, so wiring this once at load (no polling) is enough;
+  // it also fires correctly the moment ?launched=1 / the preview override
+  // reveals the band immediately on page load.
+  (function () {
+    var s1el = document.getElementById('s1-premiere');
+    if (!s1el) return;
+    if (!('IntersectionObserver' in window)) {
+      s1el.classList.add('s1-cue');
+      return;
+    }
+    var s1io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          s1el.classList.add('s1-cue');
+          s1io.unobserve(s1el);
+        }
+      });
+    }, { threshold: 0.2 });
+    s1io.observe(s1el);
+  })();
+
   // Re-check every 30s so visitors on the page at an era boundary still see it
   // flip within the minute. These are marketing gates, not live event clocks —
   // they don't need a 2s reflow forever. The function is cheap (a few
