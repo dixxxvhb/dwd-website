@@ -889,3 +889,102 @@
 [data-arm="ps"] .chapter-rail a {
   --chip-glow: 126, 196, 248;
 }
+
+/* ============================================================
+   SEASON ONE STATE MACHINE (added 2026-08-16)
+   Season One is the ProSeries identity for the whole 40-week
+   season, not a two-week takeover. campaign.js writes the current
+   state to <html data-s1-state> — premiere | midseason | finale |
+   wrapped — and everything below keys off that.
+
+   Why <html> and not #page-proseries: the nav "Express Interest"
+   CTA carries .s1-cta-sky and lives outside the ProSeries page.
+   Scoping the retirement at the document root is what lets sky
+   leave cleanly at 'wrapped' instead of stranding sky buttons on
+   a page whose accents have gone back to Family Pink — the exact
+   half-undressed state the old binary window class produced on
+   Aug 25.
+   ============================================================ */
+
+/* ── State-gated copy ──
+   Every .s1-when element is hidden by default and revealed only
+   when its data-s1-when list contains the live state. Multi-state
+   elements list them space-separated and match via ~=. Nesting is
+   intentional: a .s1-when span inside a .s1-when paragraph needs
+   BOTH to match, which is how the blurb's closing sentence varies
+   inside a paragraph that itself only shows for three states. */
+.s1-when { display: none; }
+[data-s1-state="premiere"]  .s1-when[data-s1-when~="premiere"],
+[data-s1-state="midseason"] .s1-when[data-s1-when~="midseason"],
+[data-s1-state="finale"]    .s1-when[data-s1-when~="finale"],
+[data-s1-state="wrapped"]   .s1-when[data-s1-when~="wrapped"] {
+  display: inline;
+}
+/* Block-level variants (the two .s1-blurb paragraphs) opt in explicitly —
+   `display: revert` would hand the value back to whatever author rule
+   sat below in the cascade, which is not the same thing as "block". */
+[data-s1-state="premiere"]  .s1-when--block[data-s1-when~="premiere"],
+[data-s1-state="midseason"] .s1-when--block[data-s1-when~="midseason"],
+[data-s1-state="finale"]    .s1-when--block[data-s1-when~="finale"],
+[data-s1-state="wrapped"]   .s1-when--block[data-s1-when~="wrapped"] {
+  display: block;
+}
+
+/* ── MIDSEASON: sky accents, normal page ground ──
+   The full midnight takeover (.s1-premiere-window) belongs to the
+   premiere and the finale. Between them the page returns to its
+   own ivory/forest design, but keeps the season's accent so the
+   identity doesn't evaporate for eight months. The chapter rail
+   already runs sky unconditionally under [data-arm="ps"] further
+   up this file; these are the three accents that used to live
+   ONLY inside the takeover block and vanished with it. */
+[data-s1-state="midseason"] #page-proseries h2::after,
+[data-s1-state="midseason"] #page-proseries .td-name-row::after {
+  background: var(--s1-sky);
+}
+[data-s1-state="midseason"] #page-proseries .track-tab[aria-selected="true"] {
+  border-color: var(--s1-sky);
+}
+
+/* ── WRAPPED: sky retires ──
+   Season over. The band drops to archive copy (markup side), the
+   hero unfolds (campaign.js), and every sky surface hands back to
+   Family Pink so the ProSeries page is coherent again while Season
+   Two is written. These need to out-specify the unconditional sky
+   rules above, hence the doubled attribute selector on the root. */
+[data-s1-state="wrapped"][data-s1-state] .s1-cta-sky,
+[data-s1-state="wrapped"][data-s1-state] .btn.s1-cta-sky {
+  background: var(--pink, #FF7AA2) !important;
+  color: var(--forest, #0c1f17) !important;
+}
+[data-s1-state="wrapped"] #page-proseries .s1-ep-code,
+[data-s1-state="wrapped"] #page-proseries .track-tab .tt-code {
+  color: var(--pink, #FF7AA2);
+  border-color: var(--pink, #FF7AA2);
+}
+[data-s1-state="wrapped"] #page-proseries .s1-ep--finale {
+  border-color: var(--pink, #FF7AA2);
+}
+[data-s1-state="wrapped"] [data-arm="ps"] .chapter-rail a.active {
+  background: var(--pink, #FF7AA2) !important;
+  border-color: var(--pink, #FF7AA2) !important;
+}
+[data-s1-state="wrapped"] [data-arm="ps"] .chapter-rail a:hover {
+  border-color: var(--pink, #FF7AA2) !important;
+  background: rgba(255, 122, 162, 0.14) !important;
+}
+[data-s1-state="wrapped"] [data-arm="ps"] .chapter-rail a {
+  --chip-glow: 255, 122, 162;
+}
+
+/* ── Chapter-rail tap targets (audit M1, 2026-08-16) ──
+   The chips measured 32px tall at 375px, under the 44px minimum.
+   The rail is a horizontal scroller, so height is the only axis
+   that can grow without pushing chips off-screen — padding alone
+   can't get there, so min-height carries it and the flex centering
+   keeps the label optically centred in the taller pill. */
+.chapter-rail a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}

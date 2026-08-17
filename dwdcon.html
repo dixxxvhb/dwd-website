@@ -68,7 +68,15 @@
         <p class="dc-hero-meta">Sunday, July 26, 2026 · 10am<span class="dash">&ndash;</span>2pm</p>
         <p class="dc-hero-meta">Exchange Dance Studio · Orlando</p>
         <p class="dc-hero-sub">All levels. Ages 8+. Open to the public. No audition, no experience required &mdash; just show up ready to move.</p>
-        <div class="dc-hero-cta">
+        <!-- ARCHIVE GATE (added 2026-08-16). dwdCON ran July 26, 2026. This page
+             kept three live "Get Your Badge" CTAs pointing at the registration
+             endpoint for three weeks after the fact, with no date gates of any
+             kind, while still sitting in sitemap.xml. Same treatment fullout.html
+             already had: the banner reveals the day after the event and every
+             purchase path hides at the same instant. campaign.js is loaded at
+             the bottom of this page, so its reveal/hide engine drives these. -->
+        <p class="dc-archive-banner" data-reveal-after="2026-07-27T00:00:00-04:00" style="display:none">dwdCON ran July 26, 2026 at Exchange Dance Studio. Thanks to everyone who showed up and moved with us.</p>
+        <div class="dc-hero-cta" data-hide-after="2026-07-27T00:00:00-04:00">
           <a class="dc-btn" href="https://dwd-director.netlify.app/dwdcon" data-track="dwdcon-hero-register">Get Your Badge</a>
           <span class="dc-hero-cta-note">Pre-register online · walk-ins welcome, space permitting</span>
         </div>
@@ -165,8 +173,10 @@
 
       <!-- CTA -->
       <section class="dc-cta-band">
-        <h2 class="dc-cta-head dc-display">Get your <span>badge.</span></h2>
-        <a class="dc-btn" href="https://dwd-director.netlify.app/dwdcon" data-track="dwdcon-register">Get Your Badge</a>
+        <h2 class="dc-cta-head dc-display" data-hide-after="2026-07-27T00:00:00-04:00">Get your <span>badge.</span></h2>
+        <h2 class="dc-cta-head dc-display" data-reveal-after="2026-07-27T00:00:00-04:00" style="display:none">That's a <span>wrap.</span></h2>
+        <a class="dc-btn" href="https://dwd-director.netlify.app/dwdcon" data-track="dwdcon-register" data-hide-after="2026-07-27T00:00:00-04:00">Get Your Badge</a>
+        <a class="dc-btn" href="/#proseries" data-track="dwdcon-archive-proseries" data-reveal-after="2026-07-27T00:00:00-04:00" style="display:none">See what's next &rarr;</a>
         <p class="dc-cta-fine">Questions? <a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a></p>
       </section>
     </main>
@@ -176,8 +186,8 @@
     </footer>
   </div>
 
-  <!-- Mobile sticky badge bar -->
-  <a class="dc-sticky-cta" href="https://dwd-director.netlify.app/dwdcon" data-track="dwdcon-sticky-register">
+  <!-- Mobile sticky badge bar — retires with the event (2026-08-16) -->
+  <a class="dc-sticky-cta" href="https://dwd-director.netlify.app/dwdcon" data-track="dwdcon-sticky-register" data-hide-after="2026-07-27T00:00:00-04:00">
     <span class="dc-sticky-label">dwdCON · Jul 26</span>
     <span class="dc-sticky-btn">Get Your Badge</span>
   </a>

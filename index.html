@@ -6,8 +6,12 @@
   <meta name="theme-color" content="#0c1f17">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Dance With Dixon | Orlando Dance Company</title>
-  <meta name="description" content="DWD is an Orlando-based dance collective. Adult modern dance company and elite youth training program. Founded by choreographer Dixon Bowles.">
-  <meta name="keywords" content="dance, Orlando, modern dance, contemporary, adult dance class, youth dance training, competition dance, Dixon Bowles, DWD">
+  <!-- Description/OG carry Season One for the 2026-27 season (audit M3,
+       2026-08-16). Update or retire this line when the season wraps in
+       May 2027 — it is season-bound copy sitting in a static tag, which is
+       exactly the kind of thing that goes stale unnoticed. -->
+  <meta name="description" content="DWD is an Orlando-based dance collective. Adult modern dance company and elite youth training program. ProSeries Season One runs August 2026 to May 2027. Founded by choreographer Dixon Bowles.">
+  <meta name="keywords" content="dance, Orlando, modern dance, contemporary, adult dance class, youth dance training, competition dance, Dixon Bowles, DWD, ProSeries Season One">
   <meta name="author" content="Dance With Dixon LLC">
 
   <!-- Google Search Console -->
@@ -27,7 +31,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Dance With Dixon | Orlando Dance Company">
-  <meta property="og:description" content="An Orlando-based dance collective. Elite youth training. Adult company. Real stages. Real work.">
+  <meta property="og:description" content="An Orlando-based dance collective. Elite youth training. Adult company. Real stages. Real work. ProSeries Season One is on the air.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dancewithdixon.com">
   <meta property="og:image" content="https://dancewithdixon.com/images/photos/hero-og-1200x630.jpg">
@@ -50,10 +54,42 @@
        treatment the past A-Muse JSON-LD got in the Jul 1 fix pass: retired events
        come out of the graph entirely rather than getting relabeled EventCompleted,
        since nothing links to or needs the past listing once it's over. -->
+  <!-- Season One is an EventSeries node (added 2026-08-16, audit M4) rather than
+       an Event, because the whole conceit is that the season IS a series of
+       episodes. HEED the lesson from the retired #event-intensive-2026 node: an
+       event left at EventScheduled past its end date advertises a finished event
+       as upcoming, which is why that one was deleted outright. This series ends
+       2027-05-25 — when that passes, drop the node or restate its status. It is
+       logged in docs/ERAS.md so it doesn't rot unnoticed. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "EventSeries",
+        "@id": "https://dancewithdixon.com/#season-one",
+        "name": "dwdPROSERIES Season One",
+        "description": "The 2026-27 dwdPROSERIES competitive training season. Every competition is an episode, every showcase a special, and the May recital is the finale.",
+        "url": "https://dancewithdixon.com/#proseries",
+        "startDate": "2026-08-10",
+        "endDate": "2027-05-25",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "image": "https://dancewithdixon.com/images/photos/hero-og-1200x630.jpg",
+        "location": {
+          "@type": "Place",
+          "name": "Exchange Dance Studio",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "7409 Chancery Lane",
+            "addressLocality": "Orlando",
+            "addressRegion": "FL",
+            "addressCountry": "US"
+          }
+        },
+        "organizer": { "@id": "https://dancewithdixon.com/#organization" },
+        "performer": { "@id": "https://dancewithdixon.com/#organization" }
+      },
       {
         "@type": "Organization",
         "@id": "https://dancewithdixon.com/#organization",
@@ -153,6 +189,23 @@
   <link rel="stylesheet" href="css/tighten.css">
   <link rel="stylesheet" href="css/arms.css">
   <link rel="stylesheet" href="css/season1.css">
+  <!-- Display-type preview. Inert unless ?type=canon|house is in the URL —
+       see the header of the file for what each candidate is and why. -->
+  <link rel="stylesheet" href="css/type-preview.css">
+  <script>
+    /* Runs before first paint so the preview never flashes the Anton baseline
+       first. Sets both the switch attribute and the badge label. */
+    (function () {
+      try {
+        var t = new URLSearchParams(location.search).get('type');
+        if (t === 'canon' || t === 'house') {
+          var r = document.documentElement;
+          r.setAttribute('data-type', t);
+          r.setAttribute('data-type-label', t === 'canon' ? 'Preview: Cormorant heavy' : 'Preview: house voice');
+        }
+      } catch (e) {}
+    })();
+  </script>
 
   <!-- No-JS safety: reveals must never trap content invisible if JS/observer fails -->
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
@@ -763,8 +816,14 @@
             <svg class="s1-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF7AA2" d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
           </div>
           <div class="s1-subtitle">the name was always a series.</div>
-          <div class="s1-credits">A Dance With Dixon Production &middot; Premieres August 10</div>
-          <p class="s1-blurb">Every competition this year is an episode. Every showcase, a special. The May recital is the finale. You didn't join a program &mdash; you were cast in a show. Welcome to Season One.</p>
+          <!-- Credits line is state-driven (2026-08-16). It used to read a flat
+               "Premieres August 10", which was already stale the day after the
+               band revealed and had no end gate to retire it. Each span shows
+               only under its own <html data-s1-state> — see the state machine
+               in campaign.js and the .s1-when rules in season1.css. -->
+          <div class="s1-credits">A Dance With Dixon Production &middot;<span class="s1-when" data-s1-when="premiere"> Now premiering</span><span class="s1-when" data-s1-when="midseason"> Now playing</span><span class="s1-when" data-s1-when="finale"> The Finale &middot; May 25, 2027</span><span class="s1-when" data-s1-when="wrapped"> August 2026 &ndash; May 2027</span></div>
+          <p class="s1-blurb s1-when s1-when--block" data-s1-when="premiere midseason finale">Every competition this year is an episode. Every showcase, a special. The May recital is the finale. You didn't join a program &mdash; you were cast in a show.<span class="s1-when" data-s1-when="premiere"> Welcome to Season One.</span><span class="s1-when" data-s1-when="midseason"> Season One is on the air.</span><span class="s1-when" data-s1-when="finale"> One episode left.</span></p>
+          <p class="s1-blurb s1-when s1-when--block" data-s1-when="wrapped">Every competition was an episode. Every showcase, a special. The recital was the finale. Season One ran forty weeks, and every dancer in it was credited. Season Two is being written.</p>
           <div class="s1-meta">Ages 5&ndash;19 &middot; Competitive Training</div>
           <a href="https://dwd-director.netlify.app/register" class="btn btn-blush s1-cta s1-cta-sky" id="s1-hero-cta" data-track="s1-hero-cta-express">Express Interest <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
         </div>

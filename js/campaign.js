@@ -764,10 +764,18 @@
     // naturally follows it under ?launched=1 too: before Aug 10 the hero
     // shows exactly as before, from Aug 10 (or under preview) it's hidden
     // and the band is the one true opener.
+    // 2026-08-16: the fold now ends with the season. While Season One is live
+    // (premiere/midseason/finale) the band IS the ProSeries hero and the old
+    // .ps-hero stays folded away. Once the season wraps, the band drops to
+    // archive copy and the evergreen hero comes back — otherwise the page
+    // would lose its own opener permanently, which is what the old
+    // unconditional fold actually did.
     var s1PremiereEl = document.getElementById('s1-premiere');
     var psPage = document.getElementById('page-proseries');
     if (psPage && s1PremiereEl) {
-      psPage.classList.toggle('s1-hero-folded', s1PremiereEl.style.display !== 'none');
+      var bandUp = s1PremiereEl.style.display !== 'none';
+      var seasonLive = s1CurrentState() !== 'wrapped';
+      psPage.classList.toggle('s1-hero-folded', bandUp && seasonLive);
     }
 
     // Update hero CTA by era, in priority order. Bug fixed 2026-08-03: this
@@ -805,34 +813,71 @@
     }
   };
 
-  // ── SEASON ONE PREMIERE TAKEOVER WINDOW (Aug 10–24, 2026) ──
-  // A date-window class toggler (start AND end, unlike the single-moment
-  // data-reveal-after/data-hide-after attrs above) — applies .s1-premiere-window
-  // to #page-proseries while "now" is inside the window, removes it outside.
-  // Same preview override as applyProSeriesReveal: ?launched=1 / window.__dwdLaunchPreview
-  // forces the window on so Dixon can eyeball the takeover without waiting for the date.
-  var S1_WINDOW_START_MS = new Date('2026-08-10T00:00:00-04:00').getTime();
-  var S1_WINDOW_END_MS = new Date('2026-08-24T23:59:59-04:00').getTime();
-  var S1_HERO_TAGLINE = 'Now premiering. Season One is rolling.';
-  var s1HeroTaglineOriginal = null;
+  // ── SEASON ONE STATE MACHINE (rewritten 2026-08-16) ──
+  // Season One is the ProSeries identity for the whole 40-week season, not a
+  // two-week costume. Replaces the old binary premiere-window toggler, which
+  // had no exit: it dropped the takeover on Aug 25 but left the announce band
+  // up forever reading "Premieres August 10", the hero permanently folded, and
+  // the sky accents only half-retreated (the .s1-cta-sky / .s1-ep-code rules
+  // are class-based in the markup, so they survived the class going away while
+  // the heading and track-tab accents reverted to pink). Four dated states now:
+  //
+  //   premiere    Aug 10 – Aug 24 2026   full midnight takeover
+  //   midseason   Aug 25 – Apr 30 2027   sky accents only, normal page ground
+  //   finale      May  1 – May 25 2027   takeover returns for the last stretch
+  //   wrapped     after May 25 2027      archive tense, sky retires entirely
+  //
+  // The state lands on <html data-s1-state> — not just #page-proseries — so
+  // surfaces outside the ProSeries page (the nav Express Interest CTA, which
+  // carries .s1-cta-sky) can scope off it too. That is what makes sky retire
+  // cleanly at 'wrapped' instead of stranding sky buttons on a pink page.
+  //
+  // #page-proseries still gets the .s1-premiere-window class for premiere AND
+  // finale. That class is the expensive, heavily-tuned midnight takeover CSS
+  // below — reusing it for the finale is deliberate, not a shortcut: the last
+  // three weeks of the season earn the same volume as the first two.
+  //
+  // Preview: ?launched=1 / window.__dwdLaunchPreview forces 'premiere' as
+  // before. ?s1state=midseason|finale|wrapped forces any single state so each
+  // one can be reviewed without waiting months for the date.
+  var S1_PREMIERE_START_MS = new Date('2026-08-10T00:00:00-04:00').getTime();
+  var S1_PREMIERE_END_MS   = new Date('2026-08-24T23:59:59-04:00').getTime();
+  var S1_FINALE_START_MS   = new Date('2027-05-01T00:00:00-04:00').getTime();
+  var S1_SEASON_END_MS     = new Date('2027-05-25T23:59:59-04:00').getTime();
+  var S1_STATES = ['premiere', 'midseason', 'finale', 'wrapped'];
+
+  function s1StateOverride() {
+    try {
+      var q = new URLSearchParams(window.location.search).get('s1state');
+      return q && S1_STATES.indexOf(q) !== -1 ? q : null;
+    } catch (e) { return null; }
+  }
+
+  function s1CurrentState() {
+    var forced = s1StateOverride();
+    if (forced) return forced;
+    if (isLaunchPreview()) return 'premiere';
+    var now = Date.now();
+    if (now < S1_PREMIERE_START_MS) return null;          // season hasn't opened
+    if (now <= S1_PREMIERE_END_MS) return 'premiere';
+    if (now < S1_FINALE_START_MS) return 'midseason';
+    if (now <= S1_SEASON_END_MS) return 'finale';
+    return 'wrapped';
+  }
 
   window.applyS1PremiereWindow = function () {
     var page = document.getElementById('page-proseries');
-    if (!page) return;
-    var preview = isLaunchPreview();
-    var now = Date.now();
-    var inWindow = preview || (now >= S1_WINDOW_START_MS && now <= S1_WINDOW_END_MS);
-    page.classList.toggle('s1-premiere-window', inWindow);
+    var state = s1CurrentState();
 
-    var tagline = page.querySelector('.ps-hero .tagline');
-    if (tagline) {
-      if (inWindow) {
-        if (s1HeroTaglineOriginal === null) s1HeroTaglineOriginal = tagline.textContent;
-        tagline.textContent = S1_HERO_TAGLINE;
-      } else if (s1HeroTaglineOriginal !== null) {
-        tagline.textContent = s1HeroTaglineOriginal;
-      }
+    if (state) {
+      document.documentElement.setAttribute('data-s1-state', state);
+    } else {
+      document.documentElement.removeAttribute('data-s1-state');
     }
+    if (!page) return;
+
+    // Full takeover volume for the two bookend states only.
+    page.classList.toggle('s1-premiere-window', state === 'premiere' || state === 'finale');
   };
 
   // ── S1 PREMIERE ENTRANCE CUE (added 2026-08-03) ──

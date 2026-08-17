@@ -75,7 +75,10 @@
     var titles = {
       'home': 'Dance With Dixon | Orlando Dance Company',
       'adult-company': 'Adult Company | DWD',
-      'proseries': 'ProSeries | DWD',
+      // Season One is the ProSeries identity for the 2026-27 season, so the
+      // route title carries it (audit M3, 2026-08-16 — the season appeared 22
+      // times in the page body and zero times in any metadata).
+      'proseries': 'ProSeries: Season One | DWD',
       'teachers': 'Teachers | DWD',
 
       'gallery': 'Gallery | DWD',
