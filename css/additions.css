@@ -2555,7 +2555,8 @@ a:focus-visible,
   position: absolute;
   top: 16px;
   z-index: 3;
-  font-family: "Anton", "Archivo Narrow", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -2617,7 +2618,8 @@ a:focus-visible,
   margin-top: 12px;
 }
 .dcc-stick {
-  font-family: "Anton", "Archivo Narrow", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 15px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -2662,7 +2664,8 @@ a:focus-visible,
   transform: rotate(-7deg);
 }
 .dcc-burst span {
-  font-family: "Anton", "Archivo Narrow", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 15px;
   line-height: 1.05;
   letter-spacing: 0.03em;
@@ -2672,13 +2675,14 @@ a:focus-visible,
   transform: rotate(2deg);
 }
 .dcc-date {
-  font-family: "Bebas Neue", "Anton", sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: 20px;
   letter-spacing: 0.06em;
   color: var(--dcc-ivory);
 }
 .dcc-cta {
-  font-family: "Anton", "Archivo Narrow", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 22px;
   letter-spacing: 0.10em;
   text-transform: uppercase;

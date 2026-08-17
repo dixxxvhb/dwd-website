@@ -631,7 +631,9 @@ body::after {
   border-radius: 999px;
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-weight: 600;
+  /* 500, not 600: Cormorant italic is only loaded at 400/500, so 600 italic gets
+     synthesised as a faux-bold oblique. 500 is the real face. */
+  font-weight: 500;
   font-size: 1.4rem;
   letter-spacing: 0.01em;
   cursor: pointer;

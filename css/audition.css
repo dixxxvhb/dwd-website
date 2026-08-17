@@ -32,7 +32,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 .oh-serif { font-family: "Cormorant Garamond", "Cormorant", Georgia, serif; }
-.oh-block { font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif; }
+.oh-block { font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700; }
 
 /* Square corners everywhere on these surfaces. */
 .audition-cta-card,
@@ -250,7 +251,8 @@
   text-align: center;
 }
 .ac-date-day {
-  font-family: "Anton", "Archivo Narrow", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 24px;
   letter-spacing: .04em;
   color: var(--oh-cream);
@@ -468,14 +470,16 @@
   line-height: 1;
 }
 .tri-date-mon {
-  font-family: "Anton", sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 22px;
   letter-spacing: .04em;
   color: var(--oh-cream);
   opacity: .92;
 }
 .tri-date-day {
-  font-family: "Anton", sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: clamp(64px, 5vw, 84px);
   line-height: 0.85;
   color: var(--oh-cream);
@@ -1081,7 +1085,8 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
 .audition-clock * { border-radius: 0 !important; }
 
 .aclk-eyebrow {
-  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: clamp(13px, 1.4vw, 17px);
   letter-spacing: .28em;
   text-transform: uppercase;
@@ -1111,14 +1116,16 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
   left: calc(-1 * (clamp(14px, 4vw, 56px) / 2));
   top: 0;
   transform: translateX(-50%);
-  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: clamp(40px, 8vw, 88px);
   line-height: 1;
   color: rgba(244, 216, 196, 0.3);
 }
 
 .aclk-num {
-  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: clamp(52px, 12vw, 110px);
   line-height: .9;
   color: var(--oh-coral);
@@ -1134,7 +1141,8 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
 }
 
 .aclk-now {
-  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: clamp(40px, 8vw, 88px);
   line-height: 1;
   color: var(--oh-coral);
@@ -1150,7 +1158,8 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
 }
 
 .aclk-cta {
-  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 13px;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -1238,7 +1247,8 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
 }
 
 .awrap-eyebrow {
-  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: clamp(13px, 1.4vw, 17px);
   letter-spacing: .28em;
   text-transform: uppercase;
@@ -1262,7 +1272,8 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
 }
 
 .awrap-headline {
-  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: clamp(48px, 8vw, 104px);
   line-height: .88;
   letter-spacing: .01em;
@@ -1281,7 +1292,8 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
 }
 
 .awrap-next {
-  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: clamp(18px, 2.4vw, 26px);
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -1298,7 +1310,8 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
   padding: 14px 28px;
   background: var(--oh-blush);
   color: var(--oh-green-ink);
-  font-family: "Anton", "Archivo Narrow", "Oswald", Impact, sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 13px;
   letter-spacing: .2em;
   text-transform: uppercase;
