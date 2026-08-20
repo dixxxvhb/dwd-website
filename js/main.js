@@ -45,7 +45,10 @@
 
     // Sticky mobile CTA bar (item M1): only on the conversion-relevant pages.
     var mob = document.getElementById('mob-cta');
-    if (mob) mob.hidden = !['home', 'proseries', 'early-access'].includes(name);
+    if (mob) {
+      mob.hidden = !['home', 'proseries', 'early-access'].includes(name);
+      document.body.classList.toggle('mob-cta-on', !mob.hidden);
+    }
 
     // Update nav (sidebar — hidden but kept for compat — and topnav)
     document.querySelectorAll('.sidebar nav a, .topnav nav a, .topnav .brand, .topnav .nav-cta').forEach(function (a) {
@@ -77,6 +80,7 @@
 
     // Update page title
     var titles = {
+    'privacy': 'Privacy Policy | DWD',
       'home': 'Dance With Dixon | Orlando Dance Company',
       'adult-company': 'Adult Company | DWD',
       // Season One is the ProSeries identity for the 2026-27 season, so the
@@ -734,6 +738,9 @@
   if (initialPage !== 'home') {
     showPage(initialPage);
   } else {
+    // Fresh no-hash load never calls showPage, so init the mobile CTA bar here.
+    var mobInit = document.getElementById('mob-cta');
+    if (mobInit) { mobInit.hidden = false; document.body.classList.add('mob-cta-on'); }
     // Trigger reveals on initial home page
     setTimeout(function () {
       var activePage = document.querySelector('.page.active');

@@ -264,3 +264,18 @@
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
 }
+
+/* Tracks intro: placement/age-flex reassurance line */
+#proseries-tracks-full .td-placement-note {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--pink);
+  margin-top: 6px;
+}
+
+/* Bar must never entomb the footer's last row on small screens */
+@media (max-width: 1150px) {
+  body.mob-cta-on { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+}
+/* Teachers hero: grid item floors at min-content and clips 27px at 390px */
+.tch-hero--split .tch-hero-text { min-width: 0; }
