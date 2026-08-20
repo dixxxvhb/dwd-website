@@ -284,3 +284,145 @@
 #ps-story, #ps-cast { scroll-margin-top: 160px; }
 /* ar-34 must out-rank the 9/16 default that appears earlier with equal specificity */
 #ps-story .ps-scene-media img.ar-34:not(.span2) { aspect-ratio: 3 / 4; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Motion layer: #ps-story + #ps-cast
+   Entrance animation only. Every keyframe/transition here runs once per
+   reveal, except the ambient logo float (explicitly ambient by design).
+   All of it is gated behind prefers-reduced-motion: no-preference so the
+   base, unguarded state below is always the final resting state.
+   Added 2026-08-19.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Story header row: eyebrow/h2/lead on the left, floating mark on the right ── */
+#ps-story .ps-story-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+#ps-story .ps-story-header-copy { flex: 1 1 auto; min-width: 0; }
+#ps-story .ps-story-mark {
+  width: 140px;
+  height: auto;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* ── Ghost episode numbers in the scene-text dead space ─────────────────
+   Excluded from .ps-scene--card on purpose (no [data-num] attribute is
+   ever set on that scene, so the ::after never gets content there). */
+#ps-story .ps-scene-text { position: relative; }
+#ps-story .ps-scene-text h3,
+#ps-story .ps-scene-text p,
+#ps-story .ps-scene-text .ps-scene-slate {
+  position: relative;
+  z-index: 1;
+}
+#ps-story .ps-scene-text::after {
+  content: attr(data-num);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(140px, 16vw, 240px);
+  line-height: 1;
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  color: rgba(255, 122, 162, 0.05);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.16;
+}
+@supports (-webkit-text-stroke: 1px black) or (text-stroke: 1px black) {
+  #ps-story .ps-scene-text::after {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--scene-accent, var(--pink));
+    text-stroke: 1.5px var(--scene-accent, var(--pink));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* Ambient float for the floating ps mark, the one intentionally-looping
+     exception to the "runs once" rule. */
+  #ps-story .ps-story-mark {
+    animation: ps-mark-float 7s ease-in-out infinite;
+  }
+  @keyframes ps-mark-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Clapper clap: the hinged top-bar swings shut once the story section
+     has fully revealed. */
+  #ps-story .ps-clapper-arm {
+    transform: rotate(-22deg);
+    transform-origin: 1px 7px;
+  }
+  #ps-story.visible .ps-clapper-arm {
+    transform: rotate(0deg);
+    transition: transform 0.5s ease-out 0.3s;
+  }
+
+  /* Per-scene staggered entrance: collage items rise+fade in first,
+     staggered by position, then the text column (and its chip) follow. */
+  #ps-story .ps-scene-media > img,
+  #ps-story .ps-scene-media > .ps-scene-video {
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  #ps-story .ps-scene.reveal:not(.visible) .ps-scene-media > img,
+  #ps-story .ps-scene.reveal:not(.visible) .ps-scene-media > .ps-scene-video {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  #ps-story .ps-scene-media > img:nth-child(1),
+  #ps-story .ps-scene-media > .ps-scene-video:nth-child(1) { transition-delay: 0.08s; }
+  #ps-story .ps-scene-media > img:nth-child(2),
+  #ps-story .ps-scene-media > .ps-scene-video:nth-child(2) { transition-delay: 0.16s; }
+  #ps-story .ps-scene-media > img:nth-child(3),
+  #ps-story .ps-scene-media > .ps-scene-video:nth-child(3) { transition-delay: 0.24s; }
+  #ps-story .ps-scene-media > img:nth-child(4),
+  #ps-story .ps-scene-media > .ps-scene-video:nth-child(4) { transition-delay: 0.32s; }
+  #ps-story .ps-scene-media > img:nth-child(5),
+  #ps-story .ps-scene-media > .ps-scene-video:nth-child(5) { transition-delay: 0.4s; }
+
+  #ps-story .ps-scene-text {
+    transition: opacity 0.6s ease-out 0.35s, transform 0.6s ease-out 0.35s;
+  }
+  #ps-story .ps-scene.reveal:not(.visible) .ps-scene-text {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  /* Chip snap: the S#:E# slate chip pops in synced with the text delay. */
+  #ps-story .ps-scene.reveal .s1-ep-code {
+    transition: transform 0.35s ease-out 0.35s, opacity 0.35s ease-out 0.35s;
+  }
+  #ps-story .ps-scene.reveal:not(.visible) .s1-ep-code {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+/* Hide the ghost numbers and the floating mark below 900px, matching the
+   existing single-column breakpoint for the story scenes. */
+@media (max-width: 900px) {
+  #ps-story .ps-scene-text::after { display: none; }
+  #ps-story .ps-story-mark { display: none; }
+}
+
+/* ── Cast hover swap: portrait -> Dixon two-shot ─────────────────────── */
+/* #ps-cast .ps-cast-card img (above) already sizes both the portrait and
+   the alt img identically via a descendant selector, wrapper div or not. */
+#ps-cast .ps-cast-photo { position: relative; }
+#ps-cast .ps-cast-alt {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  #ps-cast .ps-cast-card:hover .ps-cast-alt,
+  #ps-cast .ps-cast-card:focus-within .ps-cast-alt {
+    opacity: 1;
+  }
+}
