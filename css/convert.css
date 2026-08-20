@@ -1,0 +1,266 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   convert.css — Conversion overhaul (2026-08-19)
+   New CTA rows, scarcity chips, the home story grid, and the sticky
+   mobile CTA bar. Linked AFTER story.css. Square corners throughout;
+   any new motion is gated behind prefers-reduced-motion: no-preference,
+   same pattern as css/story.css.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── H1: Hero CTA row ─────────────────────────────────────────────────── */
+.hero-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.hero-cta-row .btn {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.hero-cta-secondary {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ivory);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.35);
+  padding-bottom: 2px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.hero-cta-secondary:hover { border-color: var(--pink); color: var(--pink); }
+
+/* ── H4: Story grid header + closing link ─────────────────────────────── */
+#page-home .photo-grid-section .story-grid-head {
+  max-width: 640px;
+  margin: 0 0 32px;
+}
+#page-home .story-grid-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 12px;
+}
+#page-home .photo-grid-section .story-grid-head h2 {
+  font-family: var(--font-display);
+  color: var(--ivory);
+  margin: 0 0 10px;
+}
+#page-home .photo-grid-section .story-grid-head p {
+  font-family: var(--font-body);
+  color: var(--ivory-dim);
+  margin: 0;
+  text-align: left;
+}
+.story-grid-link {
+  display: inline-block;
+  margin-top: 28px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--pink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 122, 162, 0.4);
+  padding-bottom: 2px;
+}
+.story-grid-link:hover { color: var(--ivory); border-color: var(--ivory); }
+
+/* ── P1: Conversion band after pricing ────────────────────────────────── */
+.ps-conv-band {
+  background: var(--forest-light);
+  padding: 56px 32px;
+  text-align: center;
+  margin-top: 40px;
+}
+.ps-conv-band h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ivory);
+  font-size: clamp(24px, 3.4vw, 34px);
+  margin: 0 0 24px;
+}
+.ps-conv-chairs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.conv-chip {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  padding: 6px 12px;
+  border: 1px solid;
+  background: transparent;
+}
+.conv-chip--prep  { color: var(--pink-soft); border-color: var(--pink-soft); }
+.conv-chip--elite { color: var(--seafoam); border-color: var(--seafoam); }
+.conv-chip--pro   { color: var(--terra-soft); border-color: var(--terra-soft); }
+.ps-conv-line {
+  font-family: var(--font-body);
+  color: var(--ivory-dim);
+  font-size: 0.95rem;
+  margin: 0 0 28px;
+  text-align: center;
+}
+.ps-conv-band .btn { min-height: 44px; }
+.ps-conv-micro {
+  font-family: var(--font-body);
+  color: var(--ivory-dim);
+  font-size: 13px;
+  margin: 14px 0 0;
+  text-align: center;
+}
+
+/* ── P2: Scarcity chips in the track tabs ─────────────────────────────── */
+.conv-tab-chip {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid;
+  background: transparent;
+  display: inline-block;
+  width: fit-content;
+  margin-top: 6px;
+}
+#page-proseries .track-tab[data-track-tab="prep"] .conv-tab-chip  { color: var(--pink-soft); border-color: var(--pink-soft); }
+#page-proseries .track-tab[data-track-tab="elite"] .conv-tab-chip { color: var(--seafoam); border-color: var(--seafoam); }
+#page-proseries .track-tab[data-track-tab="pro"] .conv-tab-chip   { color: var(--terra-soft); border-color: var(--terra-soft); }
+@media (max-width: 600px) {
+  .conv-tab-chip { display: none; }
+}
+
+/* ── P3: "Now casting" three-step row ─────────────────────────────────── */
+.conv-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  max-width: 900px;
+  margin: 36px auto 0;
+  text-align: left;
+}
+.conv-step {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.conv-step-chip {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--forest);
+  border: 1px solid rgba(12, 31, 23, 0.45);
+  padding: 3px 8px;
+  align-self: flex-start;
+}
+.conv-step-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--forest);
+}
+.conv-step-line {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: rgba(12, 31, 23, 0.78);
+}
+.conv-ask-first {
+  text-align: center;
+  margin-top: 14px;
+}
+.conv-ask-first a {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: rgba(12, 31, 23, 0.8);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(12, 31, 23, 0.4);
+}
+.conv-ask-first a:hover { color: var(--forest); border-color: var(--forest); }
+@media (max-width: 720px) {
+  .conv-steps { grid-template-columns: 1fr; }
+}
+
+/* ── P4: cta-banner secondary text link ───────────────────────────────── */
+.conv-ask-first-link {
+  display: inline-block;
+  margin-left: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--cream, var(--ivory-dim));
+  text-decoration: none;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.3);
+}
+.conv-ask-first-link:hover { color: var(--pink); border-color: var(--pink); }
+
+/* ── M1: Sticky mobile CTA bar ─────────────────────────────────────────── */
+.mob-cta {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--sidebar-bg, #080e0b);
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  z-index: 150; /* above nav (100), below the lightbox (200) */
+}
+.mob-cta-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--ivory-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mob-cta-btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--pink);
+  color: var(--forest);
+  min-height: 44px;
+  padding-inline: 18px;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.mob-cta-btn:hover { transform: translateY(-1px); }
+
+@media (max-width: 1149px) {
+  .mob-cta:not([hidden]) { display: flex; }
+  #page-home,
+  #page-proseries {
+    padding-bottom: 72px;
+  }
+}
+
+/* ── Reduced-motion guard (mirrors css/story.css pattern) ─────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-cta-row .btn,
+  .story-grid-link,
+  .mob-cta-btn {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+}

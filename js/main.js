@@ -43,6 +43,10 @@
     var target = document.getElementById('page-' + name);
     if (target) target.classList.add('active');
 
+    // Sticky mobile CTA bar (item M1): only on the conversion-relevant pages.
+    var mob = document.getElementById('mob-cta');
+    if (mob) mob.hidden = !['home', 'proseries', 'early-access'].includes(name);
+
     // Update nav (sidebar — hidden but kept for compat — and topnav)
     document.querySelectorAll('.sidebar nav a, .topnav nav a, .topnav .brand, .topnav .nav-cta').forEach(function (a) {
       a.classList.toggle('active', a.dataset.page === name);

@@ -190,6 +190,7 @@
   <link rel="stylesheet" href="css/arms.css">
   <link rel="stylesheet" href="css/season1.css">
   <link rel="stylesheet" href="css/story.css">
+  <link rel="stylesheet" href="css/convert.css">
 
   <!-- No-JS safety: reveals must never trap content invisible if JS/observer fails -->
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
@@ -296,6 +297,10 @@
           <div class="hero-foot">
             <span>Season One &middot; 2026 / 2027</span>
           </div>
+          <div class="hero-cta-row">
+            <a class="btn btn-blush" href="https://dwd-director.netlify.app/register?ref=home-hero" data-track="home-hero-express">Express Interest <em>&rarr;</em></a>
+            <a class="hero-cta-secondary" href="#proseries" data-track="home-hero-see-season">See Season One &rarr;</a>
+          </div>
         </div>
         <div class="hero-logo-mark" aria-hidden="false">
           <img src="images/logos/v2/DWD-green.png" alt="Dance With Dixon" loading="eager">
@@ -312,16 +317,19 @@
       <div class="entries reveal">
         <a class="entry proseries" href="#proseries" data-arm="ps" data-track="home-entry-proseries">
           <div class="thumb">
-            <img class="bg-img" src="images/photos/opt/287_lime-in-the-coconut_88-1600.webp" srcset="images/photos/opt/287_lime-in-the-coconut_88-800.webp 800w, images/photos/opt/287_lime-in-the-coconut_88-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="ProSeries dancer" loading="lazy">
+            <img class="bg-img" src="images/photos/opt/story-si-firebird-1600.webp" srcset="images/photos/opt/story-si-firebird-800.webp 800w, images/photos/opt/story-si-firebird-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Daisy mid-air in a firebird jump at the Summer Intensive showcase" loading="lazy">
           </div>
           <div class="body">
             <div class="tag">Ages 5&ndash;19 &middot; Competitive</div>
             <h3>Pro<em>Series.</em></h3>
+            <div class="entry-hl">Season One is filming now.</div>
             <div class="entry-desc">Three tracks: Prep, Elite, Pro. Audition-based. Every class designed by a working director.</div>
           </div>
           <div class="foot">
             <div class="facts">
               <div class="f"><div class="k">Tracks</div><div class="v track-badges"><span class="trk prep">Prep</span><span class="trk elite">Elite</span><span class="trk pro">Pro</span></div></div>
+              <div class="f"><div class="k">Chairs open</div><div class="v"><em>Prep 5 &middot; Elite 4 &middot; Pro 4</em></div></div>
+              <div class="f"><div class="k">Next step</div><div class="v"><em>Placement class</em></div></div>
               <!-- "Register to Audition" (hide-after Jun 12) and "Summer Intensive"
                    (reveal Jun 12 / hide Jul 11) facts deleted 2026-08-03 — both
                    permanently past. See git history for prior markup. -->
@@ -406,10 +414,10 @@
               <span class="s1ht-title">SEASON ONE</span>
               <svg class="s1ht-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF7AA2" d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
             </div>
-            <div class="s1ht-meta"><span class="s1-ep-code">S1:E1</span> The Premiere &middot; August 10 &middot; Exchange Dance, Orlando</div>
+            <div class="s1ht-meta"><span class="s1-ep-code">S1:E1</span> <span class="s1-when" data-s1-when="premiere">The Premiere &middot; August 10 &middot; Exchange Dance, Orlando</span><span class="s1-when" data-s1-when="midseason finale">Now filming &middot; Exchange Dance, Orlando &middot; new dancers join by placement class</span></div>
           </div>
           <div class="s1ht-actions">
-            <a class="btn btn-blush s1-cta-sky" href="https://dwd-director.netlify.app/register" data-track="s1-home-teaser-express">Express Interest <em>&rarr;</em></a>
+            <a class="btn btn-blush s1-cta-sky" href="https://dwd-director.netlify.app/register?ref=home-teaser" data-track="s1-home-teaser-express">Express Interest <em>&rarr;</em></a>
             <a class="s1ht-link" href="#proseries">See the season &rarr;</a>
           </div>
         </div>
@@ -474,6 +482,39 @@
            past (hide-after Jun 28, 2026, the show was Jun 27). See git history
            for prior markup. -->
 
+      <!-- PHOTO GRID / STORY GRID · rebuilt as the conversion story block
+           2026-08-19 (item H4). Moved ahead of the featured video and the
+           standing-interest CTA moved to sit directly after it (item H5),
+           so the order is now: track-record, creds-strip, story grid,
+           spots-remain CTA, featured video, pull quote. -->
+      <div class="photo-grid-section reveal">
+        <div class="story-grid-head">
+          <div class="story-grid-eyebrow">The First Four Months</div>
+          <h2>Already a company.</h2>
+          <p>Open house to signing day in one summer. Seventeen dancers strong, chairs still open.</p>
+        </div>
+        <div class="photo-grid">
+          <figure class="ph g1"><img src="images/photos/opt/story-si-trio-1600.webp" srcset="images/photos/opt/story-si-trio-800.webp 800w, images/photos/opt/story-si-trio-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="John, Evie and Daisy holding their First Trio certificates" loading="lazy"></figure>
+          <figure class="ph g2"><img src="images/photos/opt/story-con-badges-1600.webp" srcset="images/photos/opt/story-con-badges-800.webp 800w, images/photos/opt/story-con-badges-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Custom comic-book name badges made for every dwdCON dancer" loading="lazy"></figure>
+          <figure class="ph g3"><img src="images/photos/opt/story-ko-pool-1600.webp" srcset="images/photos/opt/story-ko-pool-800.webp 800w, images/photos/opt/story-ko-pool-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Marilynn on John's shoulders in the pool at the kickoff sleepover" loading="lazy"></figure>
+          <figure class="ph g4"><img src="images/photos/opt/story-con-tilt-1600.webp" srcset="images/photos/opt/story-con-tilt-800.webp 800w, images/photos/opt/story-con-tilt-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="A dancer hits a full tilt extension at dwdCON" loading="lazy"></figure>
+          <figure class="ph g5"><img src="images/photos/opt/story-sign-first-1600.webp" srcset="images/photos/opt/story-sign-first-800.webp 800w, images/photos/opt/story-sign-first-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Dixon with Athena, the first dancer to sign for Season One" loading="lazy"></figure>
+          <figure class="ph g6"><img src="images/photos/opt/story-sign-group-1600.webp" srcset="images/photos/opt/story-sign-group-800.webp 800w, images/photos/opt/story-sign-group-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="All seventeen Season One dancers together on signing day" loading="lazy"></figure>
+        </div>
+        <a class="story-grid-link" href="#proseries" data-track="home-story-grid-cta">See the whole story &rarr;</a>
+      </div>
+
+      <!-- LAUNCH CTA ("Register Now" audition version, hide-after Jun 12) and
+           INTENSIVE CTA ("Sign Up Now", reveal Jun 12 / hide Jul 11) deleted
+           2026-08-03 — both permanently past. See git history for prior markup. -->
+      <!-- STANDING INTEREST CTA — takes the slot Jul 11 onward, no hide-after -->
+      <div class="email-signup email-signup-launch" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">
+        <div class="kicker">dwdPROSERIES &middot; Season One</div>
+        <h3>Spots <em>Remain.</em></h3>
+        <p>Auditions have wrapped, but all three tracks have room. Fill out a short form about your dancer and Dixon will personally reach out with placement options and next steps. No fee to express interest.</p>
+        <a href="https://dwd-director.netlify.app/register?ref=home-standing" class="btn btn-blush" data-track="home-standing-interest-cta">Express Interest &rarr;</a>
+      </div>
+
       <!-- FEATURED VIDEO -->
       <div class="video-featured reveal">
         <div class="wrap">
@@ -490,18 +531,6 @@
         </div>
       </div>
 
-      <!-- PHOTO GRID -->
-      <div class="photo-grid-section reveal">
-        <div class="photo-grid">
-          <figure class="ph g1"><img src="images/photos/opt/dixon-award-groove-solo-1600.webp" srcset="images/photos/opt/dixon-award-groove-solo-800.webp 800w, images/photos/opt/dixon-award-groove-solo-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Dixon on stage receiving award at competition" loading="lazy"></figure>
-          <figure class="ph g2"><img src="images/photos/opt/dwdc-7i6a3760-1600.webp" srcset="images/photos/opt/dwdc-7i6a3760-800.webp 800w, images/photos/opt/dwdc-7i6a3760-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="DWD Collective · adult company photoshoot" loading="lazy"></figure>
-          <figure class="ph g3"><img src="images/photos/opt/img_1859-1600.webp" srcset="images/photos/opt/img_1859-800.webp 800w, images/photos/opt/img_1859-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="DWD company members" loading="lazy"></figure>
-          <figure class="ph g4"><img src="images/photos/opt/121_sisters_30-1600.webp" srcset="images/photos/opt/121_sisters_30-800.webp 800w, images/photos/opt/121_sisters_30-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Competition performance moment" loading="lazy"></figure>
-          <figure class="ph g5"><img src="images/photos/opt/img_2908-1600.webp" srcset="images/photos/opt/img_2908-800.webp 800w, images/photos/opt/img_2908-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Dixon · career moment" loading="lazy"></figure>
-          <figure class="ph g6"><img src="images/photos/opt/dwdc-7i6a3724-1600.webp" srcset="images/photos/opt/dwdc-7i6a3724-800.webp 800w, images/photos/opt/dwdc-7i6a3724-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="DWD Collective rehearsal" loading="lazy"></figure>
-        </div>
-      </div>
-
       <!-- PULL QUOTE — IVORY LANDMARK -->
       <div class="pull-quote reveal">
         <div class="bg-tamara"></div>
@@ -512,17 +541,6 @@
           </blockquote>
           <cite>Dixon Bowles <span>· Director &amp; Choreographer</span></cite>
         </div>
-      </div>
-
-      <!-- LAUNCH CTA ("Register Now" audition version, hide-after Jun 12) and
-           INTENSIVE CTA ("Sign Up Now", reveal Jun 12 / hide Jul 11) deleted
-           2026-08-03 — both permanently past. See git history for prior markup. -->
-      <!-- STANDING INTEREST CTA — takes the slot Jul 11 onward, no hide-after -->
-      <div class="email-signup email-signup-launch" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">
-        <div class="kicker">dwdPROSERIES &middot; Season One</div>
-        <h3>Spots <em>Remain.</em></h3>
-        <p>Auditions have wrapped, but all three tracks have room. Fill out a short form about your dancer and Dixon will personally reach out with placement options and next steps. No fee to express interest.</p>
-        <a href="https://dwd-director.netlify.app/register" class="btn btn-blush" data-track="home-standing-interest-cta">Express Interest &rarr;</a>
       </div>
     </section>
 
@@ -1208,18 +1226,21 @@
             <span class="tt-num">Track One</span>
             <span class="tt-name">Prep</span>
             <span class="tt-meta"><span class="tt-meta-pre">Ages 5&ndash;9 &middot; 4 hrs/wk &middot; </span><span class="tt-price">$195/mo</span></span>
+            <span class="conv-tab-chip conv-tab-chip--prep">5 of 10 chairs</span>
           </button>
           <button class="track-tab" data-track-tab="elite" aria-selected="false" role="tab" id="tab-elite" aria-controls="panel-elite">
             <span class="tt-code">Track 02</span>
             <span class="tt-num">Track Two</span>
             <span class="tt-name">Elite</span>
             <span class="tt-meta"><span class="tt-meta-pre">Ages 8&ndash;12 &middot; 8+ hrs/wk &middot; </span><span class="tt-price">$310/mo</span></span>
+            <span class="conv-tab-chip conv-tab-chip--elite">6 of 10 chairs</span>
           </button>
           <button class="track-tab" data-track-tab="pro" aria-selected="false" role="tab" id="tab-pro" aria-controls="panel-pro">
             <span class="tt-code">Track 03</span>
             <span class="tt-num">Track Three</span>
             <span class="tt-name">Pro</span>
             <span class="tt-meta"><span class="tt-meta-pre">Ages 12+ &middot; 10+ hrs/wk &middot; </span><span class="tt-price">$360/mo</span></span>
+            <span class="conv-tab-chip conv-tab-chip--pro">6 of 10 chairs</span>
           </button>
         </div>
         <div class="track-detail-grid">
@@ -1439,6 +1460,19 @@
           <p><strong>Deposits are per routine.</strong> Both deposits are $25 per month for each routine your dancer is cast in, so the monthly total moves with the number of routines. The routine counts above are typical ranges, not fixed &mdash; casting is the director&rsquo;s call, and families get written notice before a change affects the bill.</p>
           <p class="pricing-notes-fine">Tuition, admin, and deposit rates shown are confirmed. Monthly totals vary with routines cast. Final balances vary based on the costumes selected and the specific competitions on the season slate, and are billed on top of the monthly amounts above &mdash; full detail is in the ProSeries Handbook and Exhibit A of the Parent Agreement.</p>
         </div>
+
+        <!-- CONVERSION BAND (item P1, added 2026-08-19) -->
+        <div class="ps-conv-band">
+          <h3>A few chairs are still open.</h3>
+          <div class="ps-conv-chairs">
+            <span class="conv-chip conv-chip--prep">PREP &middot; 5 of 10</span>
+            <span class="conv-chip conv-chip--elite">ELITE &middot; 6 of 10</span>
+            <span class="conv-chip conv-chip--pro">PRO &middot; 6 of 10</span>
+          </div>
+          <p class="ps-conv-line">Exchange Dance &middot; 7409 Chancery Lane, Orlando &middot; weeknight classes by track</p>
+          <a class="btn btn-blush" href="https://dwd-director.netlify.app/register?ref=ps-pricing" data-track="ps-pricing-express">Express Interest <em>&rarr;</em></a>
+          <p class="ps-conv-micro">One short form, about two minutes. Dixon replies personally to set up a placement class.</p>
+        </div>
       </section>
 
       <div class="content-section reveal" id="ps-program">
@@ -1468,7 +1502,7 @@
           </div>
           <div class="why-item">
             <h4>Built by a Director</h4>
-            <p>Every class, every rehearsal, every piece of choreography. That's me in the room. Not a guest teacher, not a rotating staff. I built this program and I'm the one running it. That's what "Dance With Dixon" means.</p>
+            <p>Every class, every rehearsal, every piece of choreography. That's me in the room. Not a guest teacher, not a rotating staff. I built this program and I'm the one running it. That's what "Dance With Dixon" means. 100+ competition pieces, 9 years directing, and every class here is designed by the person whose name is on the door.</p>
           </div>
           <div class="why-item">
             <h4>Full Training in All Styles</h4>
@@ -1501,7 +1535,7 @@
           <div class="s1-ep">
             <span class="s1-ep-code">S1:E1</span>
             <span class="s1-ep-title">The Premiere</span>
-            <span class="s1-ep-meta">August 10 &middot; first day of classes</span>
+            <span class="s1-ep-meta">Aired August 10</span>
           </div>
           <div class="s1-ep">
             <span class="s1-ep-code">S1:E2</span>
@@ -1509,19 +1543,9 @@
             <span class="s1-ep-meta">date to be announced</span>
           </div>
           <div class="s1-ep s1-ep--tba">
-            <span class="s1-ep-code">S1:E3</span>
-            <span class="s1-ep-title s1-cormorant-italic">episode title to be announced</span>
-            <span class="s1-ep-meta">competition slate locks this fall</span>
-          </div>
-          <div class="s1-ep s1-ep--tba">
-            <span class="s1-ep-code">S1:E4</span>
-            <span class="s1-ep-title s1-cormorant-italic">episode title to be announced</span>
-            <span class="s1-ep-meta">competition slate locks this fall</span>
-          </div>
-          <div class="s1-ep s1-ep--tba">
-            <span class="s1-ep-code">S1:E5</span>
-            <span class="s1-ep-title s1-cormorant-italic">episode title to be announced</span>
-            <span class="s1-ep-meta">competition slate locks this fall</span>
+            <span class="s1-ep-code">S1:E3-E5</span>
+            <span class="s1-ep-title s1-cormorant-italic">The competition slate</span>
+            <span class="s1-ep-meta">Three episodes lock this fall</span>
           </div>
           <div class="s1-ep s1-ep--finale">
             <span class="s1-ep-code">S1:FINALE</span>
@@ -1544,11 +1568,28 @@
       <div data-reveal-after="2026-07-11T00:00:00-04:00" class="content-section alt" id="proseries-interest" style="display:none">
         <div class="chapter"><span class="lbl">dwdPROSERIES &middot; Season One</span></div>
         <h2>Now casting.</h2>
-        <p>Season One is rolling, and spots remain in all three tracks. Express interest and Dixon will reach out personally about a placement class. No fee, no waiting on a tryout date &mdash; one short form, then a real conversation about whether ProSeries is the right home for your dancer.</p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
-          <a href="https://dwd-director.netlify.app/register" class="btn btn-blush s1-cta-sky" data-track="proseries-interest-express">Express Interest &rarr;</a>
-          <a href="#contact" class="btn btn-outline">Contact Us</a>
+        <p>Season One is rolling and a few chairs remain in every track. Here's exactly how it works.</p>
+        <div class="conv-steps">
+          <div class="conv-step">
+            <span class="conv-step-chip">STEP 01</span>
+            <span class="conv-step-title">Express interest</span>
+            <span class="conv-step-line">One short form, about two minutes.</span>
+          </div>
+          <div class="conv-step">
+            <span class="conv-step-chip">STEP 02</span>
+            <span class="conv-step-title">Placement class</span>
+            <span class="conv-step-line">Your dancer takes a real class with the company. No prep, no pressure.</span>
+          </div>
+          <div class="conv-step">
+            <span class="conv-step-chip">STEP 03</span>
+            <span class="conv-step-title">Take your chair</span>
+            <span class="conv-step-line">Dixon calls with a track offer and your dancer signs, mid-season.</span>
+          </div>
         </div>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+          <a href="https://dwd-director.netlify.app/register?ref=ps-now-casting" class="btn btn-blush s1-cta-sky" data-track="proseries-interest-express">Express Interest &rarr;</a>
+        </div>
+        <p class="conv-ask-first"><a href="#contact" data-track="proseries-interest-contact">or ask a question first &rarr;</a></p>
       </div>
 
       <!-- Summer Intensive sign-up section removed 2026-08-03 — era permanently
@@ -1556,9 +1597,10 @@
            Restore from git history if a future intensive needs the pattern. -->
 
       <div class="cta-banner">
-        <h3>Questions? Ask me.</h3>
-        <p>Reach out anytime. I'm happy to talk through the program with you.</p>
-        <a href="#contact" class="btn btn-primary" data-track="proseries-contact-us">Contact Us</a>
+        <h3>Season One is still casting.</h3>
+        <p>The story is being written every week. Get your dancer in it.</p>
+        <a href="https://dwd-director.netlify.app/register?ref=ps-footer" class="btn btn-primary" data-track="ps-footer-express">Express Interest &rarr;</a>
+        <a href="#contact" class="conv-ask-first-link" data-track="proseries-contact-us">Questions? Ask Dixon &rarr;</a>
       </div>
     </section>
 
@@ -2229,6 +2271,11 @@
   </div>
 
   <div id="route-announce" class="sr-only" role="status" aria-live="polite"></div>
+
+  <!-- STICKY MOBILE CTA BAR (item M1, added 2026-08-19). Hidden by default;
+       js/main.js toggles [hidden] in showPage() for home/proseries/early-access. -->
+  <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label">Season One &middot; chairs open</span><a class="mob-cta-btn" href="https://dwd-director.netlify.app/register?ref=mobile-bar" data-track="mobile-sticky-express">Express Interest &rarr;</a></div>
+
   <script defer src="js/main.js"></script>
   <script defer src="js/campaign.js"></script>
   <script defer src="js/analytics.js"></script>
