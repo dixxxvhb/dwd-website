@@ -426,3 +426,14 @@
     opacity: 1;
   }
 }
+
+/* Scene 7 ghost numeral matches its sky chip */
+#ps-story .scene--s1 { --scene-accent: #7EC4F8; }
+
+/* Touch devices never show the hover two-shot; display:none keeps the
+   lazy loader from ever fetching the 17 cast2 images on phones */
+@media (hover: none), (pointer: coarse) {
+  #ps-cast .ps-cast-alt { display: none; }
+}
+#ps-cast .ps-cast-alt-pic { position: absolute; inset: 0; }
+#ps-cast .ps-cast-alt-pic .ps-cast-alt { position: static; width: 100%; height: 100%; }
