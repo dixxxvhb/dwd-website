@@ -279,3 +279,160 @@
 }
 /* Teachers hero: grid item floors at min-content and clips 27px at 390px */
 .tch-hero--split .tch-hero-text { min-width: 0; }
+
+/* Teachers hero: "Dixon Bowles" was rendering as "DIXON Bowles" because
+   poster-pages.css sets text-transform: uppercase !important on .tch-name
+   and only resets it (text-transform: none) on the nested <em> that wraps
+   "Bowles" — so the plain-text "Dixon" outside the <em> stayed uppercased
+   while "Bowles" did not. Overriding text-transform back to none on the
+   whole element (still !important to win the cascade) restores natural
+   casing for both words; the <em> keeps its own italic/pink treatment. */
+#page-teachers .tch-name { text-transform: none !important; }
+
+/* ══════════ Teachers — rotation faculty roster ══════════
+   Full-roster replacement for the old single-teacher stub. Scoped rf-
+   classes live here (not poster-pages.css) per the "new styles go in
+   convert.css" convention. Initial tiles stand in for headshots: forest-
+   light ground, large ivory Cormorant initials — never gray, never gold
+   (gold is reserved for the Tamara Mark memorial). */
+#page-teachers .rf-intro {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(16px, 1.4vw, 19px);
+  color: var(--ivory);
+  opacity: .82;
+  margin: 0;
+  padding: 0 64px 28px;
+  max-width: 60ch;
+}
+
+#page-teachers .rf-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  padding: 0 64px 48px;
+}
+
+#page-teachers .rf-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#page-teachers .rf-tile {
+  aspect-ratio: 4 / 5;
+  background: var(--forest-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#page-teachers .rf-initials {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(64px, 9vw, 104px);
+  line-height: .78;
+  color: var(--ivory);
+}
+
+#page-teachers .rf-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(21px, 2.2vw, 27px);
+  line-height: 1.15;
+  color: var(--ivory);
+  margin: 0;
+}
+
+#page-teachers .rf-disc {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: var(--terra-soft);
+}
+
+#page-teachers .rf-line {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ivory);
+  opacity: .78;
+  margin: 0;
+  max-width: 42ch;
+}
+
+/* Company assistants: same idiom, lighter/smaller second tier */
+#page-teachers .rf-assist-head {
+  padding: 8px 64px 4px;
+}
+
+#page-teachers .rf-grid--assist {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 620px;
+  padding-bottom: 56px;
+}
+
+#page-teachers .rf-tile--assist {
+  aspect-ratio: 16 / 9;
+}
+
+#page-teachers .rf-initials--assist {
+  font-size: clamp(44px, 6vw, 64px);
+}
+
+@media (max-width: 1100px) {
+  #page-teachers .rf-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  #page-teachers .rf-grid,
+  #page-teachers .rf-grid--assist { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  #page-teachers .rf-intro,
+  #page-teachers .rf-grid,
+  #page-teachers .rf-assist-head { padding-left: 24px !important; padding-right: 24px !important; }
+}
+
+/* Rotation faculty photo cards (headshots recovered from the IG card art) */
+#page-teachers .rf-photo { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
+#page-teachers .rf-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--ivory);
+  margin: 10px 0 4px;
+}
+#page-teachers .rf-cred {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--terra-soft, #e08d76);
+  margin: 0;
+}
+
+/* Parent voices (staged; renders only when the block above is uncommented) */
+#proseries-interest .conv-quote blockquote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(18px, 2vw, 24px);
+  color: var(--forest);
+  max-width: 46ch;
+  margin: 18px 0 6px;
+}
+#proseries-interest .conv-quote-attr {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(12, 31, 23, 0.7);
+}
