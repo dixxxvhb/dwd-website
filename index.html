@@ -189,6 +189,7 @@
   <link rel="stylesheet" href="css/tighten.css">
   <link rel="stylesheet" href="css/arms.css">
   <link rel="stylesheet" href="css/season1.css">
+  <link rel="stylesheet" href="css/story.css">
 
   <!-- No-JS safety: reveals must never trap content invisible if JS/observer fails -->
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
@@ -830,6 +831,8 @@
            last one whose target has scrolled above the 40% line — order here
            MUST mirror section order below or the highlight picks the wrong link). -->
       <nav class="chapter-rail" aria-label="ProSeries sections">
+        <a href="#ps-story">Story</a>
+        <a href="#ps-cast">Cast</a>
         <a href="#ps-tracks">Tracks</a>
         <a href="#ps-program">Program</a>
         <a href="#ps-why">Why</a>
@@ -837,6 +840,294 @@
         <a href="#ps-calendar">Calendar</a>
         <a href="#ps-apply">Apply</a>
       </nav>
+
+      <!-- The Preseason story — 7-scene scrapbook of May-August 2026, ahead of
+           the Three Tracks block per Dixon's spec (2026-08-19). -->
+      <div class="content-section alt reveal" id="ps-story">
+        <div class="ps-story-eyebrow">
+          <svg class="ps-clapper" viewBox="0 0 24 20" aria-hidden="true">
+            <rect x="1" y="7" width="22" height="12" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M1 7 L4 1 L8 1 L6 7 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8 7 L11 1 L15 1 L13 7 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M15 7 L18 1 L22 1 L20 7 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+          <span>The Preseason</span>
+        </div>
+        <h2>The story so far.</h2>
+        <p class="section-lead">Season One didn't start in August. Here's what the first four months actually looked like.</p>
+
+        <div class="ps-scenes">
+
+          <!-- Scene 1: Open House -->
+          <div class="ps-scene">
+            <div class="ps-scene-media">
+              <img class="span2" src="images/photos/opt/story-oh-lift-1600.webp" srcset="images/photos/opt/story-oh-lift-800.webp 800w, images/photos/opt/story-oh-lift-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="John lifts Athena overhead at the ProSeries open house" loading="lazy" data-lightbox>
+              <img src="images/photos/opt/story-oh-recap-a-800.webp" alt="Young dancers mid-combo at the open house" loading="lazy" data-lightbox>
+              <img src="images/photos/opt/story-oh-recap-b-800.webp" alt="Wide shot of the open house floor at Exchange Dance" loading="lazy" data-lightbox>
+            </div>
+            <div class="ps-scene-text">
+              <div class="ps-scene-slate">
+                <span class="s1-ep-code">S0:E1</span>
+                <span class="scene-when">OPEN HOUSE &middot; MAY 23</span>
+              </div>
+              <h3>Doors open.</h3>
+              <p>One open studio and a room full of curious dancers. By the end of the night people were asking when auditions were. That was the day this stopped being an idea.</p>
+            </div>
+          </div>
+
+          <!-- Scene 2: Auditions (title card, no photos) -->
+          <div class="ps-scene ps-scene--card">
+            <div class="ps-scene-slate">
+              <span class="s1-ep-code">S0:E2</span>
+              <span class="scene-when">AUDITIONS &middot; JUN 6</span>
+            </div>
+            <div class="ps-card-num">17</div>
+            <p class="ps-card-line">Spots earned, not signed up for.</p>
+            <p class="ps-card-sub">One Saturday in June. No sign-up sheet existed. Every spot was earned in the room.</p>
+          </div>
+
+          <!-- Scene 3: Summer Intensive -->
+          <div class="ps-scene">
+            <div class="ps-scene-media">
+              <img class="span2" src="images/photos/opt/story-si-firebird-1600.webp" srcset="images/photos/opt/story-si-firebird-800.webp 800w, images/photos/opt/story-si-firebird-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Daisy mid-air in a firebird jump at the Summer Intensive showcase" loading="lazy" data-lightbox>
+              <img src="images/photos/opt/story-si-trio-800.webp" alt="John, Evie and Daisy holding their First Trio certificates" loading="lazy" data-lightbox>
+              <img src="images/photos/opt/story-si-group-800.webp" alt="The Summer Intensive class with Dixon, certificates in hand" loading="lazy" data-lightbox>
+              <div class="ps-scene-video span2">
+                <video controls preload="none" playsinline poster="images/photos/opt/story-si-remi-poster.webp" aria-label="Remi's Summer Intensive showcase solo">
+                  <source src="video/story-si-remi.mp4" type="video/mp4">
+                  Your browser doesn't support embedded video.
+                </video>
+                <p class="ps-video-credit">Remi &middot; showcase solo &middot; Summer Intensive, July 2026</p>
+              </div>
+            </div>
+            <div class="ps-scene-text">
+              <div class="ps-scene-slate">
+                <span class="s1-ep-code">S0:E3</span>
+                <span class="scene-when">SUMMER INTENSIVE &middot; JUL 6 TO 10</span>
+              </div>
+              <h3>Five days that set the standard.</h3>
+              <p>A full week of technique and choreography, capped with a showcase for the families. First certificates went home. Our first trio was cast. It stopped feeling like a group of dancers and started feeling like a company.</p>
+            </div>
+          </div>
+
+          <!-- Scene 4: dwdCON -->
+          <div class="ps-scene ps-scene--flip scene--con">
+            <div class="ps-scene-media">
+              <img class="span2" src="images/photos/opt/story-con-everyone-1600.webp" srcset="images/photos/opt/story-con-everyone-800.webp 800w, images/photos/opt/story-con-everyone-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="The full dwdCON group at the end of the day, badges on" loading="lazy" data-lightbox>
+              <img src="images/photos/opt/story-con-badges-800.webp" alt="Custom comic-book name badges made for every dwdCON dancer" loading="lazy" data-lightbox>
+              <img src="images/photos/opt/story-con-tilt-800.webp" alt="A dancer hits a full tilt extension at dwdCON" loading="lazy" data-lightbox>
+              <img src="images/photos/opt/story-con-coach-800.webp" alt="Dixon coaching a young dancer at dwdCON" loading="lazy" data-lightbox>
+              <div class="ps-scene-video">
+                <video controls preload="none" playsinline poster="images/photos/opt/story-con-tiltjumps-poster.webp" aria-label="Tilt jumps, last round of the day at dwdCON">
+                  <source src="video/story-con-tiltjumps.mp4" type="video/mp4">
+                  Your browser doesn't support embedded video.
+                </video>
+                <p class="ps-video-credit">Tilt jumps, last round of the day &middot; dwdCON, July 2026</p>
+              </div>
+            </div>
+            <div class="ps-scene-text">
+              <div class="ps-scene-slate">
+                <span class="s1-ep-code">S0:E4</span>
+                <span class="scene-when">dwdCON &middot; JUL 26</span>
+              </div>
+              <h3>We threw our own convention.</h3>
+              <p>A one-day convention at our home studio. Guest teachers, every age in the same room, and custom name badges for every dancer, because details are kind of our thing. dwdCON returns this season.</p>
+            </div>
+          </div>
+
+          <!-- Scene 5: Signing Day -->
+          <div class="ps-scene">
+            <div class="ps-scene-media">
+              <img class="span2" src="images/photos/opt/story-sign-group-1600.webp" srcset="images/photos/opt/story-sign-group-800.webp 800w, images/photos/opt/story-sign-group-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="All seventeen Season One dancers together on signing day" loading="lazy" data-lightbox>
+              <img class="span2" src="images/photos/opt/story-sign-first-1600.webp" srcset="images/photos/opt/story-sign-first-800.webp 800w, images/photos/opt/story-sign-first-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Dixon with Athena, the first dancer to sign for Season One" loading="lazy" data-lightbox>
+            </div>
+            <div class="ps-scene-text">
+              <div class="ps-scene-slate">
+                <span class="s1-ep-code">S0:E5</span>
+                <span class="scene-when">SIGNING DAY &middot; AUGUST</span>
+              </div>
+              <h3>Seventeen signatures.</h3>
+              <p>Every Season One dancer signed their contract at the pink table, under the marquee letters, one at a time. Some added a smiley face. You only get a first season once, so we made it an event.</p>
+            </div>
+          </div>
+
+          <!-- Scene 6: Kickoff Sleepover -->
+          <div class="ps-scene ps-scene--flip">
+            <div class="ps-scene-media">
+              <img class="span2" src="images/photos/opt/story-ko-pool-1600.webp" srcset="images/photos/opt/story-ko-pool-800.webp 800w, images/photos/opt/story-ko-pool-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Marilynn on John's shoulders in the pool at the kickoff sleepover" loading="lazy" data-lightbox>
+              <img src="images/photos/opt/story-ko-design-800.webp" alt="Dixon and dancers reviewing season designs around the table" loading="lazy" data-lightbox>
+              <img src="images/photos/opt/story-ko-dinner-800.webp" alt="The company at dinner during the kickoff sleepover" loading="lazy" data-lightbox>
+              <div class="ps-scene-video">
+                <video controls preload="none" playsinline poster="images/photos/opt/story-ko-party-poster.webp" aria-label="Pajama dance party at the kickoff sleepover">
+                  <source src="video/story-ko-party.mp4" type="video/mp4">
+                  Your browser doesn't support embedded video.
+                </video>
+                <p class="ps-video-credit">Pajama dance party. Obviously. &middot; August 2026</p>
+              </div>
+            </div>
+            <div class="ps-scene-text">
+              <div class="ps-scene-slate">
+                <span class="s1-ep-code">S0:E6</span>
+                <span class="scene-when">THE KICKOFF SLEEPOVER &middot; AUGUST</span>
+              </div>
+              <h3>Team building, but make it a sleepover.</h3>
+              <p>Pool, movie room, pajama dance party, and the whole company around one table designing their season. If you're wondering whether these kids actually like each other, yes. Loudly.</p>
+            </div>
+          </div>
+
+          <!-- Scene 7: Week One, Now Airing -->
+          <div class="ps-scene">
+            <div class="ps-scene-media">
+              <img src="images/photos/opt/story-w1-contemp-800.webp" alt="Elite and Pro dancers in contemporary class, week one of Season One" loading="lazy" data-lightbox>
+              <div class="ps-scene-video">
+                <video controls preload="none" playsinline poster="images/photos/opt/story-w1-contemp-poster.webp" aria-label="Contemporary class, Elite and Pro, week one of Season One">
+                  <source src="video/story-w1-contemp.mp4" type="video/mp4">
+                  Your browser doesn't support embedded video.
+                </video>
+                <p class="ps-video-credit">Contemporary &middot; Elite and Pro &middot; week one</p>
+              </div>
+            </div>
+            <div class="ps-scene-text">
+              <div class="ps-scene-slate">
+                <span class="s1-ep-code ps-chip--sky">S1:E1</span>
+                <span class="scene-when">WEEK ONE &middot; NOW AIRING</span>
+              </div>
+              <h3>And now it's on.</h3>
+              <p>Season One is filming now. First lifts went up in week one, the first choreography is already being set, and there are 38 more weeks on the schedule. Scroll down for the episode guide.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- The Cast: all 17 Season One dancers by track, photographed signing day -->
+      <div class="content-section reveal" id="ps-cast">
+        <div class="ps-story-eyebrow ps-story-eyebrow--ivory">
+          <svg class="ps-clapper" viewBox="0 0 24 20" aria-hidden="true">
+            <rect x="1" y="7" width="22" height="12" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M1 7 L4 1 L8 1 L6 7 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8 7 L11 1 L15 1 L13 7 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M15 7 L18 1 L22 1 L20 7 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+          <span>The Cast</span>
+        </div>
+        <h2>Seventeen dancers. One company.</h2>
+        <p class="section-lead">Photographed the day they signed.</p>
+
+        <div class="ps-cast-track">
+          <div class="ps-cast-track-head">
+            <span class="ps-cast-track-name">Prep</span>
+            <span class="ps-cast-chip ps-cast-chip--prep">5 of 10 chairs filled</span>
+          </div>
+          <div class="ps-cast-grid">
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-athena-960.webp" srcset="images/photos/opt/cast-athena-480.webp 480w, images/photos/opt/cast-athena-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Athena, Prep track, on signing day">
+              <div class="ps-cast-name">Athena</div>
+              <div class="ps-cast-code ps-cast-code--prep">PREP</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-finnie-960.webp" srcset="images/photos/opt/cast-finnie-480.webp 480w, images/photos/opt/cast-finnie-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Finnie, Prep track, on signing day">
+              <div class="ps-cast-name">Finnie</div>
+              <div class="ps-cast-code ps-cast-code--prep">PREP</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-kimarie-960.webp" srcset="images/photos/opt/cast-kimarie-480.webp 480w, images/photos/opt/cast-kimarie-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Ki'Marie, Prep track, on signing day">
+              <div class="ps-cast-name">Ki'Marie</div>
+              <div class="ps-cast-code ps-cast-code--prep">PREP</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-marilynn-960.webp" srcset="images/photos/opt/cast-marilynn-480.webp 480w, images/photos/opt/cast-marilynn-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Marilynn, Prep track, on signing day">
+              <div class="ps-cast-name">Marilynn</div>
+              <div class="ps-cast-code ps-cast-code--prep">PREP</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-piper-960.webp" srcset="images/photos/opt/cast-piper-480.webp 480w, images/photos/opt/cast-piper-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Piper, Prep track, on signing day">
+              <div class="ps-cast-name">Piper</div>
+              <div class="ps-cast-code ps-cast-code--prep">PREP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ps-cast-track">
+          <div class="ps-cast-track-head">
+            <span class="ps-cast-track-name">Elite</span>
+            <span class="ps-cast-chip ps-cast-chip--elite">6 of 10 chairs filled</span>
+          </div>
+          <div class="ps-cast-grid">
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-audrey-960.webp" srcset="images/photos/opt/cast-audrey-480.webp 480w, images/photos/opt/cast-audrey-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Audrey, Elite track, on signing day">
+              <div class="ps-cast-name">Audrey</div>
+              <div class="ps-cast-code ps-cast-code--elite">ELITE</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-beatriz-960.webp" srcset="images/photos/opt/cast-beatriz-480.webp 480w, images/photos/opt/cast-beatriz-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Beatriz, Elite track, on signing day">
+              <div class="ps-cast-name">Beatriz</div>
+              <div class="ps-cast-code ps-cast-code--elite">ELITE</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-belle-960.webp" srcset="images/photos/opt/cast-belle-480.webp 480w, images/photos/opt/cast-belle-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Belle, Elite track, on signing day">
+              <div class="ps-cast-name">Belle</div>
+              <div class="ps-cast-code ps-cast-code--elite">ELITE</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-haylie-960.webp" srcset="images/photos/opt/cast-haylie-480.webp 480w, images/photos/opt/cast-haylie-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Haylie, Elite track, on signing day">
+              <div class="ps-cast-name">Haylie</div>
+              <div class="ps-cast-code ps-cast-code--elite">ELITE</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-keeley-960.webp" srcset="images/photos/opt/cast-keeley-480.webp 480w, images/photos/opt/cast-keeley-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Keeley, Elite track, on signing day">
+              <div class="ps-cast-name">Keeley</div>
+              <div class="ps-cast-code ps-cast-code--elite">ELITE</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-laylianna-960.webp" srcset="images/photos/opt/cast-laylianna-480.webp 480w, images/photos/opt/cast-laylianna-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Laylianna, Elite track, on signing day">
+              <div class="ps-cast-name">Laylianna</div>
+              <div class="ps-cast-code ps-cast-code--elite">ELITE</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ps-cast-track">
+          <div class="ps-cast-track-head">
+            <span class="ps-cast-track-name">Pro</span>
+            <span class="ps-cast-chip ps-cast-chip--pro">6 of 10 chairs filled</span>
+          </div>
+          <div class="ps-cast-grid">
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-adelyn-960.webp" srcset="images/photos/opt/cast-adelyn-480.webp 480w, images/photos/opt/cast-adelyn-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Adelyn, Pro track, on signing day">
+              <div class="ps-cast-name">Adelyn</div>
+              <div class="ps-cast-code ps-cast-code--pro">PRO</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-daisy-960.webp" srcset="images/photos/opt/cast-daisy-480.webp 480w, images/photos/opt/cast-daisy-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Daisy, Pro track, on signing day">
+              <div class="ps-cast-name">Daisy</div>
+              <div class="ps-cast-code ps-cast-code--pro">PRO</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-evie-960.webp" srcset="images/photos/opt/cast-evie-480.webp 480w, images/photos/opt/cast-evie-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Evie, Pro track, on signing day">
+              <div class="ps-cast-name">Evie</div>
+              <div class="ps-cast-code ps-cast-code--pro">PRO</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-john-960.webp" srcset="images/photos/opt/cast-john-480.webp 480w, images/photos/opt/cast-john-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="John, Pro track, on signing day">
+              <div class="ps-cast-name">John</div>
+              <div class="ps-cast-code ps-cast-code--pro">PRO</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-remi-960.webp" srcset="images/photos/opt/cast-remi-480.webp 480w, images/photos/opt/cast-remi-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Remi, Pro track, on signing day">
+              <div class="ps-cast-name">Remi</div>
+              <div class="ps-cast-code ps-cast-code--pro">PRO</div>
+            </div>
+            <div class="ps-cast-card">
+              <img src="images/photos/opt/cast-yessa-960.webp" srcset="images/photos/opt/cast-yessa-480.webp 480w, images/photos/opt/cast-yessa-960.webp 960w" sizes="(max-width: 768px) 50vw, 16vw" loading="lazy" alt="Yessa, Pro track, on signing day">
+              <div class="ps-cast-name">Yessa</div>
+              <div class="ps-cast-code ps-cast-code--pro">PRO</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="ps-cast-footer">Prep has five chairs open. Elite has four. Pro has four. <a href="#ps-apply" class="ps-cast-footer-link">Express interest before the slate fills</a></p>
+      </div>
 
       <!-- Three Tracks — full detail per card. Moved to the top of the section
            flow (2026-08-03 restructure) per Dixon: tracks are the next thing
