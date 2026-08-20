@@ -212,134 +212,41 @@
   display: none;
 }
 
-/* "Jump to" affordance label — makes the rail read as navigation, not a
-   breadcrumb. Non-interactive flex item. */
-.chapter-rail::before {
-  content: 'Jump to';
-  /* Pushes the whole row right so chips sit under the topnav links, reading
-     as its second row. margin-left:auto (not justify-content:flex-end) so
-     when chips overflow at narrow widths the row falls back to left-aligned
-     and stays scrollable instead of clipping the leftmost chips. */
-  margin-left: auto;
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  color: rgba(250, 243, 232, 0.55);
-  align-self: center;
-  flex: 0 0 auto;
-  margin-right: 4px;
-}
+/* Quiet editorial jump strip: small tracked-caps text links, active gets the
+   arm accent + a thin underline. No pills, no borders, no glow. The bar
+   centers on desktop; below 900px it left-aligns so overflow stays
+   scrollable (centered overflow clips the leftmost links). */
+.chapter-rail { justify-content: center; gap: 28px; padding: 0 32px; }
 
-/* Chip links: pill outline + hover fill so they read as clickable. The
-   active chip fills with the arm accent (contrast-checked pairs below). */
 .chapter-rail a {
   font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   white-space: nowrap;
   text-decoration: none;
-  color: rgba(250, 243, 232, 0.85);
-  padding: 6px 14px;
-  border: 1px solid rgba(250, 243, 232, 0.28);
-  border-radius: 999px;
+  color: rgba(250, 243, 232, 0.52);
+  padding: 15px 0 13px;
+  border-bottom: 2px solid transparent;
   flex: 0 0 auto;
-  /* Button depth: raised ground + a hairline inner top highlight, deepening
-     shadow on hover with a slight lift, pressed state on :active. Shadows
-     forest-tinted per the rebrand shadow scale, never black. */
-  background: linear-gradient(180deg, rgba(250, 243, 232, 0.07), rgba(250, 243, 232, 0.02));
-  box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.14),
-              0 1px 2px rgba(4, 12, 8, 0.35),
-              0 2px 6px rgba(4, 12, 8, 0.22);
-  transition: color 0.22s ease, background 0.22s ease, border-color 0.22s ease,
-              box-shadow 0.22s ease, transform 0.22s var(--rb-ease-out, ease);
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.chapter-rail a:hover {
-  border-color: var(--terra-light);
-  color: var(--ivory);
-  background: rgba(200, 97, 75, 0.16);
-  transform: translateY(-1px);
-  box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.16),
-              0 2px 4px rgba(4, 12, 8, 0.35),
-              0 6px 14px rgba(4, 12, 8, 0.30);
-}
+.chapter-rail a:hover { color: var(--ivory); }
 
-.chapter-rail a:active {
-  transform: translateY(0);
-  box-shadow: inset 0 1px 2px rgba(4, 12, 8, 0.35);
-  transition-duration: 0.08s;
-}
-
-/* Active chip: filled + a soft glow in the arm accent so the current
-   section reads lit, not just colored. terra-light fill + forest ink = 5.39:1. */
 .chapter-rail a.active {
-  background: var(--terra-light);
-  border-color: var(--terra-light);
-  color: var(--forest);
-  box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.35),
-              0 1px 3px rgba(4, 12, 8, 0.35);
-}
-
-/* ps arm: pink chips. Pink fill + forest ink = 6.99:1. */
-[data-arm="ps"] .chapter-rail a:hover {
-  border-color: var(--pink);
-  color: var(--ivory);
-  background: rgba(255, 122, 162, 0.14);
+  color: var(--terra-light);
+  border-bottom-color: var(--terra-light);
 }
 
 [data-arm="ps"] .chapter-rail a.active {
-  background: var(--pink);
-  border-color: var(--pink);
-  color: var(--forest);
-  box-shadow: inset 0 1px 0 rgba(250, 243, 232, 0.40),
-              0 1px 3px rgba(4, 12, 8, 0.35);
+  color: var(--pink);
+  border-bottom-color: var(--pink);
 }
 
-/* ── Chip glow layer ──
-   The glow lives on a ::after underneath each chip (z-index:-1) instead of
-   extra box-shadow layers: it survives the rail's overflow context in every
-   browser, and opacity is cheap to animate for the breathe. --chip-glow is
-   raw R,G,B so one ruleset serves both arms via rgba(var(--chip-glow), a). */
-.chapter-rail a {
-  position: relative;
-  z-index: 0;
-  --chip-glow: 212, 119, 95;            /* terra-light: c + house */
-}
-[data-arm="ps"] .chapter-rail a { --chip-glow: 255, 122, 162; }  /* Family Pink */
-
-.chapter-rail a::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 999px;
-  box-shadow: 0 0 6px rgba(var(--chip-glow), 1),
-              0 0 14px rgba(var(--chip-glow), 0.95),
-              0 0 30px rgba(var(--chip-glow), 0.80),
-              0 0 60px rgba(var(--chip-glow), 0.55),
-              0 0 100px rgba(var(--chip-glow), 0.35);
-  opacity: 0.30;                         /* resting glow on every chip */
-  transition: opacity 0.25s ease;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.chapter-rail a:hover::after { opacity: 0.75; }
-
-.chapter-rail a.active::after {
-  opacity: 1;
-  animation: chip-breathe 2.2s ease-in-out infinite;
-}
-
-@keyframes chip-breathe {
-  0%, 100% { opacity: 0.25; }
-  50%      { opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .chapter-rail a.active::after { animation: none; opacity: 1; }
+@media (max-width: 900px) {
+  .chapter-rail { justify-content: flex-start; }
 }
 
 /* Scroll offset so headings land clear of the fixed topnav + sticky rail */
@@ -361,8 +268,7 @@
 }
 
 @media (max-width: 768px) {
-  .chapter-rail { top: 64px; gap: 8px; padding: 10px 16px; }
-  .chapter-rail::before { margin-left: 0; }
+  .chapter-rail { top: 64px; gap: 20px; padding: 0 16px; }
 
   #ps-program,
   #ps-why,

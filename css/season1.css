@@ -530,11 +530,12 @@
 #page-proseries.s1-premiere-window .chapter-rail a {
   color: var(--s1-silver) !important;
 }
-#page-proseries.s1-premiere-window .chapter-rail a:hover,
+#page-proseries.s1-premiere-window .chapter-rail a:hover {
+  color: var(--s1-sky) !important;
+}
 #page-proseries.s1-premiere-window .chapter-rail a.active {
   color: var(--s1-sky) !important;
-  background: rgba(126, 196, 248, 0.14) !important;
-  border-color: var(--s1-sky) !important;
+  border-bottom-color: var(--s1-sky) !important;
 }
 
 /* chapter-rail + heading accents swap to sky, CTAs untouched */
@@ -877,17 +878,13 @@
    not just under .s1-premiere-window (which already had this). Scoped to
    the ps arm only; the house/collective rail keeps its terracotta accent. */
 [data-arm="ps"] .chapter-rail a.active {
-  background: var(--s1-sky) !important;
-  border-color: var(--s1-sky) !important;
-  color: var(--forest) !important;
+  color: var(--s1-sky) !important;
+  border-bottom-color: var(--s1-sky) !important;
+  background: none !important;
 }
 [data-arm="ps"] .chapter-rail a:hover {
-  border-color: var(--s1-sky) !important;
-  background: rgba(126, 196, 248, 0.14) !important;
   color: var(--ivory) !important;
-}
-[data-arm="ps"] .chapter-rail a {
-  --chip-glow: 126, 196, 248;
+  background: none !important;
 }
 
 /* ============================================================
@@ -966,15 +963,9 @@
   border-color: var(--pink, #FF7AA2);
 }
 [data-s1-state="wrapped"] [data-arm="ps"] .chapter-rail a.active {
-  background: var(--pink, #FF7AA2) !important;
-  border-color: var(--pink, #FF7AA2) !important;
-}
-[data-s1-state="wrapped"] [data-arm="ps"] .chapter-rail a:hover {
-  border-color: var(--pink, #FF7AA2) !important;
-  background: rgba(255, 122, 162, 0.14) !important;
-}
-[data-s1-state="wrapped"] [data-arm="ps"] .chapter-rail a {
-  --chip-glow: 255, 122, 162;
+  color: var(--pink, #FF7AA2) !important;
+  border-bottom-color: var(--pink, #FF7AA2) !important;
+  background: none !important;
 }
 
 /* ── Chapter-rail tap targets (audit M1, 2026-08-16) ──
