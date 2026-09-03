@@ -148,8 +148,8 @@ Session C (CSS): 3.2 alone, with before/after tiles.
 Deploy is never part of these sessions. `main` merge = Dixon's word.
 
 ## Open on Dixon (the plan does not block on these)
-1. Put the next dwdCOLLECTIVE class in the Director calendar (program adult) so 1.2 lights up.
+1. Put the next dwdCOLLECTIVE class in the Director calendar (program adult) so 1.2 lights up. (Dixon 09-02: none scheduled yet, coming soon — the empty state in 1.2 is the launch state.)
 2. Jill's yes on the quote; two more parent quotes.
-3. Merch: poll off-nav (default) or a real store?
+3. ~~Merch~~ DECIDED 2026-09-02: ditch Merch for now (poll off nav; §1.3 default stands, no store).
 4. DNS alias so `register.dancewithdixon.com` → Netlify (still useful for the app even after 1.1).
-5. Hero clip pick (default: Daisy firebird) — say if you want a different face.
+5. ~~Hero clip~~ DECIDED 2026-09-02: Daisy firebird for now.
