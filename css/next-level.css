@@ -1101,3 +1101,159 @@
     flex-wrap: wrap;
   }
 }
+
+
+/* ============================================================
+   2.3  SEASON ONE IN PHOTOS
+   ============================================================ */
+
+/* Instagram handles are lowercase, always. poster-pages.css uppercases the
+   .igf-handle, which printed @DWDPROSERIES and @DWD_COLLECTIVE on the Gallery.
+   The markup was already correct. (The same uppercase transform prints
+   DWDPROSERIES in the chapter labels and the Season One eyebrow elsewhere on
+   the site; those are flagged for Dixon rather than changed here, because
+   fixing them is a sitewide typographic decision, not a gallery one.) */
+#page-gallery .igf-handle {
+  text-transform: none;
+}
+
+/* 3rem is the gallery's own gutter (.gallery-grid in additions.css). Everything
+   new here lines up with the photographs rather than inventing a second edge. */
+#page-gallery .gallery-lead {
+  padding: 56px 3rem 8px;
+  max-width: 60ch;
+}
+
+#page-gallery .gallery-lead-eyebrow {
+  display: block;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pink, #FF7AA2);
+  margin-bottom: 10px;
+}
+
+#page-gallery .gallery-lead-title {
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(34px, 4.6vw, 62px);
+  line-height: 1.02;
+  color: var(--ivory, #FAF3E8);
+  margin: 0 0 12px;
+}
+
+#page-gallery .gallery-lead-sub {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #c4baa8;
+  margin: 0;
+}
+
+/* Episode groups. The header is a name and a date on one rule, not a card:
+   the photographs are the content and a chrome-heavy header would compete. */
+#page-gallery .gallery-episode {
+  margin-top: 34px;
+}
+
+#page-gallery .gallery-episode-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+  margin: 0 3rem 18px;
+}
+
+#page-gallery .gallery-episode-name {
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.1;
+  color: var(--ivory, #FAF3E8);
+}
+
+#page-gallery .gallery-episode-when {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--terra-soft, #e08d76);
+  white-space: nowrap;
+}
+
+/* The archive fold. Everything from the CAA years lives behind one click. */
+#page-gallery .gallery-archive {
+  margin: 56px 3rem 0;
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+}
+
+#page-gallery .gallery-archive-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 22px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+#page-gallery .gallery-archive-summary::-webkit-details-marker { display: none; }
+
+#page-gallery .gallery-archive-label {
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(20px, 2.2vw, 28px);
+  color: var(--ivory, #FAF3E8);
+}
+
+/* The affordance has to be visible, not implied: a details summary that looks
+   like a heading does not read as clickable. */
+#page-gallery .gallery-archive-label::after {
+  content: ' +';
+  color: var(--terra-soft, #e08d76);
+}
+
+#page-gallery .gallery-archive[open] .gallery-archive-label::after {
+  content: ' –';
+}
+
+#page-gallery .gallery-archive-hint {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 13px;
+  color: #a89c8a;
+}
+
+#page-gallery .gallery-archive-summary:focus-visible {
+  outline: 2px solid var(--terra, #C8614B);
+  outline-offset: 4px;
+}
+
+#page-gallery .gallery-archive-body {
+  padding-bottom: 24px;
+}
+
+/* The grids inside the fold already carry their own page padding, which would
+   double up inside this container. */
+#page-gallery .gallery-archive-body .gallery-grid,
+#page-gallery .gallery-archive-body .gallery-section-label {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (max-width: 640px) {
+  #page-gallery .gallery-lead { padding: 36px 1.5rem 4px; }
+  #page-gallery .gallery-episode-head { margin: 0 1.5rem 14px; }
+  #page-gallery .gallery-archive { margin: 40px 1.5rem 0; }
+  #page-gallery .gallery-episode-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
