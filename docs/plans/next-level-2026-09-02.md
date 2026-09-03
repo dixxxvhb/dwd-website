@@ -6,6 +6,82 @@ for an Opus implementation session (or two). Branch: `rebrand/one-house` (merge-
 separate decision. This document is the spec. The Opus prompt that points here lives at
 `~/.claude/next-sessions/dwd-website-next-level-PROMPT.md`.
 
+## Build log
+
+A checkpoint per session. A fresh session resumes from the last entry.
+
+### Session A — conversion (2026-09-02)
+
+Branch `rebrand/one-house`, from `9fb74c4` to the tip listed below. Nothing
+deployed. Six commits, one per plan item, in the prescribed order.
+
+| Item | Commit | State |
+|---|---|---|
+| 2.5 chair counts | `4125dd6` | done. `js/season.js` owns all twelve strings across the five sites. The parent-quotes half of 2.5 is untouched: the Jill block stays commented until she says yes, and the component is not built yet, so nothing renders an empty box. |
+| 1.1 interest form | `bdeff1c` | done. On-site form, real insert accepted by RLS. |
+| 1.2 Collective next class | `4dc76e1` | done, shipping the empty state. The view returns zero rows because there is no adult class on the Director calendar yet, which Dixon confirmed is the launch state. Populated state verified by intercepting the view read. |
+| 1.3 Merch off nav | `81a5dbe` | done. `#shop` route alive, poll linked from the ProSeries page end. |
+| 1.4 faces in heroes | `cb1a8f0` | done for Teachers, Gallery, Contact, Collective. **Merch skipped on purpose**: its hero is a type lockup, never logo-only, and merch left the nav in 1.3 on Dixon's call. |
+| 2.4 email capture | `32f3e90` | done. Early-access page deleted, two recap bands in, real insert accepted. |
+
+**Three bugs found and fixed that were not in the plan.**
+
+1. `campaign.js` rewrote `#ps-hero-cta`'s href back to `dwd-director.netlify.app`
+   at runtime, so that one button kept leaving the site regardless of the markup.
+   Fixed in 2.4; `scripts/qa/shoot.js` now fails the build on any unexpected
+   off-domain anchor so it cannot recur silently.
+2. Anchor scrolling never worked to a far target. `#interest` sits ~14,700px down
+   a page that keeps growing (date-gated bands revealing, lazy images with no
+   width/height resolving), so a `scrollIntoView` on the next frame aimed at a
+   stale layout: deep links landed 1,514px short, CTA clicks dead-stopped at
+   y=137. Replaced with `scrollToAnchor()` in `main.js`. This also fixed
+   first-load deep links to any element anchor, which never resolved at all.
+3. The site-wide terracotta focus ring measures 1.62:1 on Family Pink, under the
+   3:1 UI floor. Overridden to forest inside the interest band only.
+
+**Deliberate deviations from the plan.**
+
+- Experience-level options are `beginner` / `intermediate` / `advanced` / `elite`,
+  the real `EXPERIENCE_OPTIONS` values, not the `none` / `recreational` /
+  `competitive` the plan's prose guessed at. The plan said to read the React page
+  for exact values, so that is what shipped.
+- The interest form carries one thing the plan does not specify: a live line
+  under each dancer naming the track that birthday lands in, and saying Dixon
+  confirms it at the placement class.
+- New CSS went into a new `css/next-level.css` loaded after `convert.css`, rather
+  than appended to `convert.css`. Session C folds both into `site.css`.
+- Contact's mark sits beside the "Connect with DWD" heading rather than tucked
+  into the portrait's corner. In the corner it landed on skin at some crops and
+  went muddy, and a plate behind it would have been pure decoration.
+
+**Flagged, not fixed (outside these items, wants Dixon's call).**
+
+- Brand casing: CSS `text-transform: uppercase` prints `DWDPROSERIES`,
+  `@DWDPROSERIES` and `@DWD_COLLECTIVE` in the chapter labels, the Season One
+  eyebrow, and the Gallery Instagram cards. The markup is correct in every case;
+  the uppercase is applied in CSS. Brand casing is `dwdPROSERIES`. Fixing it is a
+  sitewide typographic change, so it is not smuggled into a conversion item. The
+  Gallery instances are in scope for 2.3.
+- The Collective H1 reads "DWD Collective" while the body copy on the same page
+  says `dwdCOLLECTIVE`.
+- ProSeries lazy images carry no `width`/`height`, which is the layout shift that
+  broke anchor scrolling and makes tiling unreliable. A real fix is a pass over
+  every `<img>` on that page.
+
+**QA.** `scripts/qa/` now holds the Puppeteer harness the plan described, so no
+future session has to rebuild it: `shoot.js` (all routes at 1280 and 390, fails
+on console errors, failed requests, broken images, overflow, dead anchors,
+stray off-domain links), `contrast.js` (measures text-over-photo contrast on
+rendered pixels), `shot-element.js` (one component at one width). Session A
+ended `ALL CLEAN` on every route at both widths. `sw.js` at `v28`.
+
+**Test rows for Dixon to delete.** Two real submissions were made to prove the
+writes land:
+- `audition_registrations`, parent "TEST Claude", `test-claude@dancewithdixon.com`,
+  id `1feb5045-92cd-422b-b12f-32abef655b07`. Delete from the Director interest
+  queue.
+- `email_signups`, `test-claude@dancewithdixon.com`, source `episode-recaps-home`.
+
 ## 0. Ground truth the implementer must not re-derive
 
 | Fact | Value |

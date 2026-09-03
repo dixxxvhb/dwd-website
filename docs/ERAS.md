@@ -44,16 +44,15 @@ was closed.
 |---|---|---|---|
 | Nav "Register →" | — | 2026-06-12T17:00 | retired |
 | Nav "Summer Intensive →" | 2026-06-12T17:00 | 2026-07-11T00:00 | retired |
-| Nav "Express Interest →" | 2026-07-11T00:00 | — (standing) | **live**. One element serves desktop nav AND mobile menu; `.nav-cta-launch` items show/hide together via `.topnav.is-open`. Carries `.s1-cta-sky`, so it retires its sky fill at Season One state `wrapped` — see `css/season1.css`. |
+| Nav "Express Interest →" | 2026-07-11T00:00 | — (standing) | **live**. One element serves desktop nav AND mobile menu; `.nav-cta-launch` items show/hide together via `.topnav.is-open`. Carries `.s1-cta-sky`, so it retires its sky fill at Season One state `wrapped` — see `css/season1.css`. **Points at `#interest` since 2026-09-02 (item 1.1)**, like every other Express Interest CTA on the site. |
+| `#interest` — the Express Interest form | — | — | **live, ungated by design** (item 1.1), but read this before touching the band it lives in. The form sits inside `#proseries-interest`, which IS gated (reveal 2026-07-11, standing), so the form inherits that section's era. If `#proseries-interest` ever gets a `data-hide-after`, the form hides with it and every Express Interest CTA on the site becomes a dead anchor at once. If you add that gate, the CTAs need somewhere else to land in the same commit. |
 | `#season-one-cta` hero block | 2026-07-11T00:00 | 2026-08-10T04:00 | retired (superseded by `#season-underway-cta`) |
 | `#season-underway-cta` hero block | 2026-08-10T04:00 | — (standing) | **live** |
 | `.email-signup-launch` | 2026-07-11T00:00 | — (standing) | **live** |
 | `#s1-premiere` Season One announce band | 2026-08-10T04:00 | — (permanent by design) | **live**. Deliberately has no hide-gate: it is not a promo, it is the ProSeries opener for the whole season. Its *copy* is state-driven instead — see below. |
 | `#proseries-interest` "Now casting." | 2026-07-11T00:00 | — (standing) | **live**. `campaign.js` keys the ProSeries hero CTA off this element's era. |
-| Early-access — pre-launch state | — | 2026-05-01T00:00 | retired |
-| Early-access — audition state | — | 2026-06-12T17:00 | retired |
-| Early-access — intensive state | 2026-06-12T17:00 | 2026-07-11T00:00 | retired |
-| Early-access — standing state | 2026-07-11T00:00 | — (standing) | **live**. Fourth state exists so `/#early-access` never renders empty. |
+| ~~Early-access, all four states~~ | — | — | **DELETED 2026-09-02** (item 2.4). The whole `#page-early-access` section is gone from the DOM along with its four era variants. Its promise was the audition registration link 24 hours early, and that audition was June 6, 2026. The fourth "standing" state existed only so the retired route would not render empty; deleting the route removes the need for it. `/#early-access` now redirects to `#interest` via `legacyHashRedirects` in `js/main.js`. Prior markup is in git history. |
+| `#ep-recaps-home`, `#ep-recaps-ps` | — | — | **live, ungated by design** (item 2.4). The site's one email capture, on Home and ProSeries. No date gate: "one email per episode" stays true for as long as there are episodes, and the copy names no date. If Season One wraps and nothing replaces it, this is the band to revisit. Listed here for that reason, not because it expires. |
 
 ## Registry — standalone event pages
 
@@ -73,6 +72,16 @@ July 26 and the page carried three live "Get Your Badge" CTAs pointing at the re
 registration endpoint, ticket prices, and a sticky mobile bar for three weeks afterward,
 with zero date gates of any kind, while still listed in `sitemap.xml`. If you add another
 event page, copy fullout.html's gate structure, not dwdcon.html's original one.
+
+## Non-gate behaviour that reads like a gate
+
+`applyProSeriesReveal()` in `campaign.js` also swaps the **copy** of
+`#ps-hero-cta` depending on whether `#proseries-interest` is in its live era.
+Until 2026-09-02 it swapped the **href** too, handing that one button to
+`dwd-director.netlify.app` at runtime no matter what the markup said, with a
+pre-launch branch pointing at the now-deleted `#early-access`. Both branches
+point at `#interest` now and only the label changes. If a CTA on this site ever
+appears to ignore its own href again, look here first.
 
 ## Season One state machine
 
