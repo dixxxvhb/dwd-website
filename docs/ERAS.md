@@ -1,8 +1,15 @@
 # ERAS.md — dancewithdixon.com date-gate registry
 
 Every `data-reveal-after` / `data-hide-after` element on the site, plus the Season One
-state machine, in one table. The attribute engine lives in `js/campaign.js`
-(`applyProSeriesReveal()`, polled every 30s). Format: full ISO timestamp with explicit
+state machine, in one table. The attribute engine lives in `js/eras.js`
+(`applyProSeriesReveal()`, polled every 30s).
+
+**The engine moved on 2026-09-02 (item 3.4).** It used to live in
+`js/campaign.js`, alongside ~950 lines of password-gated dashboard for the
+April-to-May 2026 launch campaign. That dashboard and its `#page-campaign` route
+are deleted; the engine, the Season One state machine, the premiere entrance cue
+and the season clock were extracted to `js/eras.js` unchanged. If you are
+reading an old comment that says `campaign.js`, it means this file. Format: full ISO timestamp with explicit
 `-04:00` offset (America/New_York, EDT).
 
 **Rewritten 2026-08-16.** The previous version had drifted badly: it still documented ten
@@ -50,7 +57,7 @@ was closed.
 | `#season-underway-cta` hero block | 2026-08-10T04:00 | — (standing) | **live** |
 | `.email-signup-launch` | 2026-07-11T00:00 | — (standing) | **live** |
 | `#s1-premiere` Season One announce band | 2026-08-10T04:00 | — (permanent by design) | **live**. Deliberately has no hide-gate: it is not a promo, it is the ProSeries opener for the whole season. Its *copy* is state-driven instead — see below. |
-| `#proseries-interest` "Now casting." | 2026-07-11T00:00 | — (standing) | **live**. `campaign.js` keys the ProSeries hero CTA off this element's era. |
+| `#proseries-interest` "Now casting." | 2026-07-11T00:00 | — (standing) | **live**. `eras.js` keys the ProSeries hero CTA off this element's era. |
 | ~~Early-access, all four states~~ | — | — | **DELETED 2026-09-02** (item 2.4). The whole `#page-early-access` section is gone from the DOM along with its four era variants. Its promise was the audition registration link 24 hours early, and that audition was June 6, 2026. The fourth "standing" state existed only so the retired route would not render empty; deleting the route removes the need for it. `/#early-access` now redirects to `#interest` via `legacyHashRedirects` in `js/main.js`. Prior markup is in git history. |
 | `#ep-recaps-home`, `#ep-recaps-ps` | — | — | **live, ungated by design** (item 2.4). The site's one email capture, on Home and ProSeries. No date gate: "one email per episode" stays true for as long as there are episodes, and the copy names no date. If Season One wraps and nothing replaces it, this is the band to revisit. Listed here for that reason, not because it expires. |
 
@@ -75,7 +82,7 @@ event page, copy fullout.html's gate structure, not dwdcon.html's original one.
 
 ## Non-gate behaviour that reads like a gate
 
-`applyProSeriesReveal()` in `campaign.js` also swaps the **copy** of
+`applyProSeriesReveal()` in `eras.js` also swaps the **copy** of
 `#ps-hero-cta` depending on whether `#proseries-interest` is in its live era.
 Until 2026-09-02 it swapped the **href** too, handing that one button to
 `dwd-director.netlify.app` at runtime no matter what the markup said, with a
@@ -86,7 +93,7 @@ appears to ignore its own href again, look here first.
 ## Season One state machine
 
 Not an attribute gate — a computed state written to `<html data-s1-state>` by
-`applyS1PremiereWindow()` in `campaign.js`, consumed by `css/season1.css`. Replaced the
+`applyS1PremiereWindow()` in `eras.js`, consumed by `css/season1.css`. Replaced the
 binary `.s1-premiere-window` toggler on 2026-08-16.
 
 | State | Window | Volume | Band copy |

@@ -10,7 +10,7 @@
   const validPages = [
     'home', 'adult-company', 'proseries',
     'teachers',
-    'gallery', 'shop', 'contact', 'campaign', 'analytics', 'privacy'
+    'gallery', 'shop', 'contact', 'privacy'
   ];
 
   // Legacy hash redirects — Performances was merged into Collective (#adult-company),
@@ -41,7 +41,7 @@
 
   // ── ANCHOR SCROLLING ──
   // #interest sits roughly 14,700px down the ProSeries page, and that page is
-  // still growing while we scroll: campaign.js flips date-gated bands from
+  // still growing while we scroll: eras.js flips date-gated bands from
   // display:none to block, and lazy images resolve their real heights. A single
   // scrollIntoView() fired on the next frame therefore aims at a layout that no
   // longer exists — measured landings were 1,514px short on a deep link and a
@@ -125,8 +125,8 @@
       document.body.classList.toggle('mob-cta-on', !mob.hidden);
     }
 
-    // Update nav (sidebar — hidden but kept for compat — and topnav)
-    document.querySelectorAll('.sidebar nav a, .topnav nav a, .topnav .brand, .topnav .nav-cta').forEach(function (a) {
+    // Update nav
+    document.querySelectorAll('.topnav nav a, .topnav .brand, .topnav .nav-cta').forEach(function (a) {
       a.classList.toggle('active', a.dataset.page === name);
     });
 
@@ -166,9 +166,7 @@
 
       'gallery': 'Gallery | DWD',
       'shop': 'Merch | DWD',
-      'contact': 'Contact | DWD',
-      'campaign': 'Campaign HQ | DWD',
-      'analytics': 'Analytics | DWD'
+      'contact': 'Contact | DWD'
     };
     document.title = titles[name] || titles['home'];
 
@@ -255,45 +253,18 @@
   });
 
   // ── MOBILE MENU ──
-  var hamburger = document.getElementById('hamburger');
-  var sidebar = document.getElementById('sidebar');
-  var overlay = document.getElementById('sidebar-overlay');
-
-  function openMobileMenu() {
-    sidebar.classList.add('open');
-    hamburger.classList.add('open');
-    hamburger.setAttribute('aria-expanded', 'true');
-    overlay.classList.add('visible');
-    document.body.style.overflow = 'hidden';
-  }
-
+  // The topnav toggle is the only menu. The old <aside class="sidebar">, its
+  // hamburger and its overlay were deleted from the markup on 2026-09-02
+  // (item 3.4) along with the openMobileMenu/hamburger/overlay branches that
+  // used to live here; they had been aria-hidden and unreachable since the
+  // rebrand.
   function closeMobileMenu() {
-    if (sidebar) sidebar.classList.remove('open');
-    if (hamburger) {
-      hamburger.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-    }
-    if (overlay) overlay.classList.remove('visible');
     var topnav = document.getElementById('topnav');
     var toggle = document.getElementById('topnav-toggle');
     if (topnav) topnav.classList.remove('is-open');
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
     document.documentElement.classList.remove('menu-open');
     document.body.style.overflow = '';
-  }
-
-  if (hamburger) {
-    hamburger.addEventListener('click', function () {
-      if (sidebar.classList.contains('open')) {
-        closeMobileMenu();
-      } else {
-        openMobileMenu();
-      }
-    });
-  }
-
-  if (overlay) {
-    overlay.addEventListener('click', closeMobileMenu);
   }
 
   // ── TOPNAV MOBILE TOGGLE ──

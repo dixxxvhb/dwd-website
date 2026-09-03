@@ -11,7 +11,6 @@
        May 2027 — it is season-bound copy sitting in a static tag, which is
        exactly the kind of thing that goes stale unnoticed. -->
   <meta name="description" content="DWD is an Orlando-based dance collective. Adult modern dance company and elite youth training program. ProSeries Season One runs August 2026 to May 2027. Founded by choreographer Dixon Bowles.">
-  <meta name="keywords" content="dance, Orlando, modern dance, contemporary, adult dance class, youth dance training, competition dance, Dixon Bowles, DWD, ProSeries Season One">
   <meta name="author" content="Dance With Dixon LLC">
 
   <!-- Google Search Console -->
@@ -277,29 +276,6 @@
   <!-- Skip to content -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- SIDEBAR NAVIGATION -->
-  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation" aria-hidden="true">
-    <div class="sidebar-brand">
-      <img src="images/logos/v2/DWD-green-160.png" alt="Dance With Dixon" width="100" height="100">
-      <h3>Dance with<br>Dixon</h3>
-    </div>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-label">Pages</div>
-    <nav>
-      <a href="#home" class="active" data-page="home">Home</a>
-      <a href="#proseries" data-page="proseries">ProSeries</a>
-      <a href="#adult-company" data-page="adult-company">Adult Company</a>
-      <a href="#teachers" data-page="teachers">Teachers</a>
-      <a href="#gallery" data-page="gallery">Gallery</a>
-      <a href="#contact" data-page="contact">Contact</a>
-      <a href="#privacy" data-page="privacy">Privacy</a>
-    </nav>
-    <div class="sidebar-footer">
-      dancewithdixon.com<br>
-      &copy; 2026 Dance With Dixon LLC
-    </div>
-  </aside>
-
   <!-- TOP NAV (new — replaces sidebar + mobile header visually) -->
   <header class="topnav" id="topnav">
     <a href="#home" class="brand" data-page="home">
@@ -328,19 +304,12 @@
     <button class="topnav-toggle" id="topnav-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
   </header>
 
-  <!-- MOBILE HEADER (hidden — kept for legacy JS) -->
-  <header class="mobile-header" id="mobile-header" aria-hidden="true">
-    <img src="images/logos/v2/DWD-green-160.png" alt="DWD" class="mobile-logo" width="36" height="36">
-    <span class="mobile-brand">DWD</span>
-    <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </header>
-
-  <!-- MOBILE OVERLAY -->
-  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <!-- The legacy <aside class="sidebar">, <header class="mobile-header"> and
+       the .sidebar-overlay were deleted 2026-09-02 (item 3.4). The topnav
+       replaced them visually in the rebrand; all three had been sitting in the
+       DOM behind aria-hidden ever since, carrying a duplicate copy of the whole
+       nav — including the Merch link that item 1.3 removed from the two lists
+       anyone can see. Their handlers are gone from js/main.js too. -->
 
   <!-- MAIN CONTENT -->
   <main class="main" id="main-content">
@@ -459,7 +428,7 @@
            closes. Auditions have wrapped; placement stays open while Dixon reaches out
            personally. Retires the instant Season One begins, handing off to the
            season-underway variant below (same moment, no gap). Live countdown rendered
-           by the self-contained IIFE at the bottom of campaign.js — NOT the June 6
+           by the self-contained IIFE at the bottom of eras.js — NOT the June 6
            audition countdown machinery (that stays retired with the audition era). -->
       <section class="audition-cta season-cta" id="season-one-cta"
                aria-label="Season One begins August 10"
@@ -488,7 +457,7 @@
            (2026-08-03: cinematic midnight strip, a keyhole into the Series
            branding rather than a full page takeover — that's what #page-proseries
            carries). Same slot in the DOM, same reveal gate (Aug 10, no hide-after
-           — verified nothing in campaign.js referenced the old
+           — verified nothing in eras.js referenced the old
            #season-underway-cta id directly, only the generic
            data-reveal-after/data-hide-after loop + [data-season-clock] selector,
            which only matches #season-one-cta above, not this one — safe to
@@ -934,7 +903,7 @@
     <!-- ══════════ PROSERIES ══════════ -->
     <section class="page" id="page-proseries" data-arm="ps" aria-label="ProSeries">
       <!-- SEASON ONE PREMIERE ANNOUNCE BAND — permanent once revealed. Reuses the
-           site's global data-reveal-after gate (campaign.js applyProSeriesReveal),
+           site's global data-reveal-after gate (eras.js applyProSeriesReveal),
            same mechanism as #season-underway-cta above. Moved to the very top of
            the page (2026-08-03 restructure) so the Series brand is the first
            thing seen, not the pink hero. -->
@@ -954,7 +923,7 @@
                "Premieres August 10", which was already stale the day after the
                band revealed and had no end gate to retire it. Each span shows
                only under its own <html data-s1-state> — see the state machine
-               in campaign.js and the .s1-when rules in season1.css. -->
+               in eras.js and the .s1-when rules in season1.css. -->
           <div class="s1-credits">A Dance With Dixon Production &middot;<span class="s1-when" data-s1-when="premiere"> Now premiering</span><span class="s1-when" data-s1-when="midseason"> Now playing</span><span class="s1-when" data-s1-when="finale"> The Finale &middot; May 25, 2027</span><span class="s1-when" data-s1-when="wrapped"> August 2026 &ndash; May 2027</span></div>
           <p class="s1-blurb s1-when s1-when--block" data-s1-when="premiere midseason finale">Every competition this year is an episode. Every showcase, a special. The May recital is the finale. You didn't join a program &mdash; you were cast in a show.<span class="s1-when" data-s1-when="premiere"> Welcome to Season One.</span><span class="s1-when" data-s1-when="midseason"> Season One is on the air.</span><span class="s1-when" data-s1-when="finale"> One episode left.</span></p>
           <p class="s1-blurb s1-when s1-when--block" data-s1-when="wrapped">Every competition was an episode. Every showcase, a special. The recital was the finale. Season One ran forty weeks, and every dancer in it was credited. Season Two is being written.</p>
@@ -1777,7 +1746,7 @@
       <!-- STANDING INTEREST STATE — re-voiced 2026-08-03 to drop the June-audition
            framing (Dixon: "way outdated"). Reveals Jul 11 and stays up (no
            hide-after): rolling placement is the permanent state for the rest of
-           the season. campaign.js keys the ProSeries hero CTA off this element's
+           the season. eras.js keys the ProSeries hero CTA off this element's
            display (see applyProSeriesReveal) — id, gating attrs, and CTA
            href/classes are unchanged. -->
       <!-- id="ps-apply" is a standalone anchor (not on this section) because the
@@ -2419,36 +2388,12 @@
       </div>
     </section>
 
-    <!-- ══════════ CAMPAIGN COMMAND CENTER ══════════ -->
-    <section class="page" id="page-campaign" data-arm="internal" aria-label="Campaign Command Center">
-      <!-- Access Code Gate -->
-      <div class="campaign-gate" id="campaign-gate">
-        <div class="campaign-gate-inner">
-          <img src="images/logos/v2/ProSeries-green-640.png" srcset="images/logos/v2/ProSeries-green-640.png 1x, images/logos/v2/ProSeries-green.png 2x" alt="dwdPROSERIES" width="80" height="80" style="margin-bottom: 1.5rem;" loading="lazy">
-          <h2>Campaign Command Center</h2>
-          <p>Enter access code to view the ProSeries launch campaign.</p>
-          <form id="campaign-auth-form" class="campaign-auth-form">
-            <input type="password" id="campaign-code-input" placeholder="Access code" autocomplete="off" required>
-            <button type="submit" class="btn btn-blush">Enter</button>
-          </form>
-          <div id="campaign-auth-error" class="campaign-auth-error" style="display:none;">Wrong code. Try again.</div>
-        </div>
-      </div>
-
-      <!-- Dashboard (hidden until authenticated) -->
-      <div id="campaign-dashboard" style="display:none;">
-        <div class="campaign-header">
-          <div>
-            <h1>ProSeries Launch Campaign</h1>
-            <p class="sub">April 1 &ndash; May 1, 2026 &middot; 25-post rollout across @dwdproseries &amp; @dwd_collective</p>
-          </div>
-        </div>
-
-        <div id="campaign-progress"></div>
-        <div id="campaign-highlights"></div>
-        <div id="campaign-weeks"></div>
-      </div>
-    </section>
+    <!-- CAMPAIGN COMMAND CENTER (#page-campaign) deleted 2026-09-02, item 3.4.
+         A password-gated dashboard for the April 1 to May 1, 2026 launch
+         campaign, four months finished. Its 950 lines of post data and render
+         code shipped to every visitor on every page, with the access code in
+         the source. The date-gate engine and the Season One state machine that
+         WERE in the same file are now js/eras.js. Git history has the rest. -->
 
         <!-- EARLY ACCESS (#page-early-access) deleted 2026-09-02, item 2.4. Four
          era states of an email capture whose promise ("the audition link 24
@@ -2561,12 +2506,12 @@
        js/main.js toggles [hidden] in showPage() for home/proseries/early-access. -->
   <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label"><span class="s1-when" data-s1-when="premiere midseason">Season One &middot; chairs open</span><span class="s1-when" data-s1-when="finale wrapped">Dance With Dixon</span></span><a class="mob-cta-btn" href="#interest" data-ref="mobile-bar" data-track="mobile-sticky-express">Express Interest &rarr;</a></div>
 
-  <!-- season.js first: it owns the chair numbers main.js/campaign.js never touch. -->
+  <!-- season.js first: it owns the chair numbers main.js/eras.js never touch. -->
   <script defer src="js/season.js"></script>
   <script defer src="js/main.js"></script>
   <script defer src="js/dwdc-next.js"></script>
   <script defer src="js/episodes.js"></script>
-  <script defer src="js/campaign.js"></script>
+  <script defer src="js/eras.js"></script>
   <script defer src="js/analytics.js"></script>
   <!-- Audition sticky ticker removed 2026-08-03 — June 6 audition long past;
        deleted outright so preview mode stops resurrecting it. Pattern lives in
