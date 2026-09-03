@@ -228,6 +228,35 @@ all three, at 49%, 4,263px and 9% respectively.
 `prune-css.mjs`, `prune-important.mjs`, `orphan-css.js`, `dead-css.js`, all
 documented in `scripts/qa/README.md`.
 
+### Post-launch QA — live site (2026-09-03, 1:35am)
+
+Site launched on `main`. Swept the live domain with `shoot.js` (16 route/viewport
+combos), `live.js` and `routes.js` locally, a page-weight/LCP probe, an HTTP status
+pass on every URL, the mobile menu, and `pg_policies` on every anon-insert table.
+Fixed and deployed in `3a6c249`:
+
+| What | Fix |
+|---|---|
+| Canonical, `og:url`, sitemap and nav hrefs pointed at `/proseries` etc., which Pages 301s to `/proseries/` | Trailing slash everywhere: `ROUTE_PATH` in `js/main.js`, `build-routes.mjs`, hrefs in every `.html`, `routes.js` expectations |
+| `js/episodes.js` fetched `data/episodes.json` relative to the document; a direct load of `/proseries/` resolved it to `/proseries/data/...` (404) and silently dropped every recap | Absolute `/data/episodes.json`; same for `/images/comps/` |
+| `teacher-yahia-640.webp` carried a baked-in black rectangle | Regenerated from the clean cutout in `DWD/.../rotation-teachers/source/yahiateacher.png` |
+| Returning visitors would keep the old JS | `sw.js` cache `v38` |
+| `http://` served the site without redirecting | GitHub Pages `https_enforced` turned on (`gh api -X PUT .../pages`) |
+
+Four QA test rows deleted from `audition_registrations` (3) and `email_signups` (1).
+Clean: every route under 2.5 MB and LCP under 1 s; RLS insert-only for anon on all
+form tables; zero console errors; 404 page, robots, sitemap, manifest all 200.
+
+**Tooling notes.** `shoot.js --tiles` needs the routes argument first
+(`shoot.js <out> <routes> --tiles`), and tiles beyond roughly 10,000 px repeat the
+same section because `scroll-behavior: smooth` outruns the tiler. `shot-element.js`
+is the reliable way to see a deep section. `#ps-tracks` and `#ps-apply` are zero-height
+anchors; shoot `#proseries-tracks-full` and `#interest` instead.
+
+**Still open on Dixon** (unchanged from Sessions A/B): brand casing under CSS
+uppercase (`DWDPROSERIES`, `@DWD_COLLECTIVE`), the Collective H1 "DWD Collective",
+lazy images without width/height on ProSeries, comp logos, the dwdC next-class date.
+
 ## 0. Ground truth the implementer must not re-derive
 
 | Fact | Value |
