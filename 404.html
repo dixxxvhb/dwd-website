@@ -7,17 +7,21 @@
   <meta name="robots" content="noindex">
   <title>Dance With Dixon</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="images/icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192.png">
   <script>
-    // GitHub Pages SPA redirect — preserves hash routing
-    // Works with both custom domain and /dwd-website repo path
+    // GitHub Pages serves this for any path with no file behind it. The
+    // sections have real directories since 2026-09-02 (item 3.1), so a valid
+    // section URL never lands here; anything that does is genuinely unknown and
+    // goes home. The '#home' this used to append is redundant now that '/' is
+    // itself a route. Works with the custom domain and the /dwd-website repo
+    // path alike.
     var path = window.location.pathname;
     var repo = '/dwd-website';
     if (path.startsWith(repo)) {
-      window.location.replace(repo + '/#home');
+      window.location.replace(repo + '/');
     } else {
-      window.location.replace('/#home');
+      window.location.replace('/');
     }
   </script>
 </head>

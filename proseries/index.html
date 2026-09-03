@@ -5,47 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0c1f17">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Dance With Dixon | Orlando Dance Company</title>
+  <title>ProSeries: Season One | DWD</title>
   <!-- Description/OG carry Season One for the 2026-27 season (audit M3,
        2026-08-16). Update or retire this line when the season wraps in
        May 2027 — it is season-bound copy sitting in a static tag, which is
        exactly the kind of thing that goes stale unnoticed. -->
-  <meta name="description" content="DWD is an Orlando-based dance collective. Adult modern dance company and elite youth training program. ProSeries Season One runs August 2026 to May 2027. Founded by choreographer Dixon Bowles.">
+  <meta name="description" content="dwdPROSERIES is elite youth competitive dance training in Orlando, ages 5 to 19, in three tracks: Prep, Elite and Pro. Season One runs August 2026 to May 2027. Placement is rolling all season.">
   <meta name="author" content="Dance With Dixon LLC">
 
   <!-- Google Search Console -->
   <meta name="google-site-verification" content="v-fPxA3o3QT7Qztq5E06hEZONiWyUT8Ij6N75qeDPl8" />
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://dancewithdixon.com">
+  <link rel="canonical" href="https://dancewithdixon.com/proseries">
 
-  <!-- LCP hero preload (home page first paint). imagesrcset matches the
-       `<picture>` element below so the browser picks the right variant. -->
-  <link rel="preload" as="image"
-        href="/images/photos/hero-1600.webp"
-        imagesrcset="/images/photos/hero-800.webp 800w, /images/photos/hero-1600.webp 1600w"
-        imagesizes="(max-width: 768px) 100vw, 60vw"
-        type="image/webp"
-        fetchpriority="high">
+  <!-- The home hero LCP preload is dropped on this route: its hero is not
+       what paints here. See scripts/build-routes.mjs. -->
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Dance With Dixon | Orlando Dance Company">
-  <meta property="og:description" content="An Orlando-based dance collective. Elite youth training. Adult company. Real stages. Real work. ProSeries Season One is on the air.">
+  <meta property="og:title" content="dwdPROSERIES · Season One">
+  <meta property="og:description" content="Elite youth training in Orlando. Three tracks, rolling placement, and a season built like a series. Chairs remain in all three tracks.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://dancewithdixon.com">
-  <meta property="og:image" content="https://dancewithdixon.com/images/photos/hero-og-1200x630.jpg">
+  <meta property="og:url" content="https://dancewithdixon.com/proseries">
+  <meta property="og:image" content="https://dancewithdixon.com/images/og/proseries.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="DWD dancer mid-pose on stage.">
+  <meta property="og:image:alt" content="A ProSeries dancer mid-leap at the Summer Intensive showcase.">
   <meta property="og:site_name" content="Dance With Dixon">
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Dance With Dixon | Orlando Dance Company">
-  <meta name="twitter:description" content="Elite youth training program &amp; adult modern dance company in Orlando. Founded by choreographer Dixon Bowles.">
-  <meta name="twitter:image" content="https://dancewithdixon.com/images/photos/hero-og-1200x630.jpg">
-  <meta name="twitter:image:alt" content="DWD dancer mid-pose on stage.">
+  <meta name="twitter:title" content="dwdPROSERIES · Season One">
+  <meta name="twitter:description" content="Elite youth training in Orlando. Three tracks, rolling placement, and a season built like a series. Chairs remain in all three tracks.">
+  <meta name="twitter:image" content="https://dancewithdixon.com/images/og/proseries.jpg">
+  <meta name="twitter:image:alt" content="A ProSeries dancer mid-leap at the Summer Intensive showcase.">
 
   <!-- Structured Data. The Summer Intensive Event node (@id #event-intensive-2026)
        used to live in this @graph. Removed 2026-07-10 — the event ran Jul 6-10,
@@ -2506,6 +2500,9 @@
        js/main.js toggles [hidden] in showPage() for home/proseries/early-access. -->
   <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label"><span class="s1-when" data-s1-when="premiere midseason">Season One &middot; chairs open</span><span class="s1-when" data-s1-when="finale wrapped">Dance With Dixon</span></span><a class="mob-cta-btn" href="#interest" data-ref="mobile-bar" data-track="mobile-sticky-express">Express Interest &rarr;</a></div>
 
+  <!-- Generated shell: scripts/build-routes.mjs. Do not edit by hand,
+       edit index.html and re-run. -->
+  <script>window.__dwd_route = "proseries";</script>
   <!-- season.js first: it owns the chair numbers main.js/eras.js never touch. -->
   <script defer src="/js/season.js"></script>
   <script defer src="/js/main.js"></script>

@@ -56,3 +56,19 @@ two elements on different grounds. When the ground is a flat colour, cross-check
 by reading the computed `color` of the text and the `background-color` of its
 section and doing the arithmetic. The tool is at its best for text over
 photographs, which is what it was written for.
+
+## routes.js
+
+Exercises the real URLs built by `scripts/build-routes.mjs`: a direct load of
+every shell (right section, right title, stylesheet actually applied, no console
+errors, no failed requests), client-side nav with back and forward, the old
+`#hash` links upgrading themselves to paths, `#shop` correctly staying a hash
+because it has no shell, an element anchor resolving from inside a shell, and
+`/fullout` NOT being intercepted by the click handler.
+
+```bash
+node scripts/qa/routes.js
+```
+
+Exits non-zero on any failure. Run it after touching `js/main.js` routing or
+`scripts/build-routes.mjs`.

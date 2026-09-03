@@ -32,6 +32,46 @@
     }
   })();
 
+  // ── PATH ROUTES (item 3.1) ──
+  // Each of these has a real directory built by scripts/build-routes.mjs, so
+  // /proseries is a page a search engine can index and a link preview can
+  // describe. #shop is deliberately absent: merch left the nav in item 1.3 and
+  // has no shell, so it stays hash-only.
+  //
+  // The old #hash links keep working forever. When one names a section that
+  // HAS a path, the hash handler swaps the URL for the path with replaceState,
+  // so a shared link is always the good kind.
+  var ROUTE_PATH = {
+    'home': '/',
+    'proseries': '/proseries',
+    'adult-company': '/collective',
+    'teachers': '/teachers',
+    'gallery': '/gallery',
+    'contact': '/contact',
+    'privacy': '/privacy'
+  };
+
+  var PATH_ROUTE = {};
+  Object.keys(ROUTE_PATH).forEach(function (route) {
+    var seg = ROUTE_PATH[route].replace(/^\/|\/$/g, '');
+    if (seg) PATH_ROUTE[seg] = route;
+  });
+
+  var supportsPathRouting = !!(window.history && window.history.pushState);
+
+  // The last non-empty path segment, lowercased, with any trailing slash or
+  // index.html removed. Handles a project-page prefix (/dwd-website/proseries)
+  // as well as the custom domain.
+  function lastSegment(pathname) {
+    var parts = String(pathname || '/').split('/').filter(Boolean);
+    var last = parts.length ? parts[parts.length - 1].toLowerCase() : '';
+    return last === 'index.html' ? (parts.length > 1 ? parts[parts.length - 2].toLowerCase() : '') : last;
+  }
+
+  function routeFromPath() {
+    return PATH_ROUTE[lastSegment(window.location.pathname)] || null;
+  }
+
   var routedByAnchor = false;
 
   function getPageFromHash() {
@@ -157,7 +197,7 @@
     var titles = {
     'privacy': 'Privacy Policy | DWD',
       'home': 'Dance With Dixon | Orlando Dance Company',
-      'adult-company': 'Adult Company | DWD',
+      'adult-company': 'The Collective | DWD',
       // Season One is the ProSeries identity for the 2026-27 season, so the
       // route title carries it (audit M3, 2026-08-16 — the season appeared 22
       // times in the page body and zero times in any metadata).
@@ -169,6 +209,18 @@
       'contact': 'Contact | DWD'
     };
     document.title = titles[name] || titles['home'];
+
+    // Keep the canonical link and og:url pointing at the URL the visitor is
+    // actually on. A crawler that executes JS and follows the nav would
+    // otherwise read every section as canonical to the home page, which is the
+    // exact problem item 3.1 exists to fix.
+    if (ROUTE_PATH[name]) {
+      var canonical = document.querySelector('link[rel="canonical"]');
+      var ogUrl = document.querySelector('meta[property="og:url"]');
+      var abs = 'https://dancewithdixon.com' + (ROUTE_PATH[name] === '/' ? '' : ROUTE_PATH[name]);
+      if (canonical) canonical.setAttribute('href', abs || 'https://dancewithdixon.com/');
+      if (ogUrl) ogUrl.setAttribute('content', abs || 'https://dancewithdixon.com/');
+    }
 
     // A11y: move focus into the new page and announce the route change so
     // keyboard + screen-reader users get a landing point and a signal.
@@ -191,9 +243,15 @@
       return;
     }
 
-    // If hash matches a valid page, route to it
+    // If hash matches a valid page, route to it. If that page has a real path,
+    // swap the URL for it so what gets shared and bookmarked is the good kind
+    // of link. replaceState, not pushState: the hash change already made a
+    // history entry, and this rewrites that entry rather than adding a second.
     if (validPages.includes(hash)) {
       showPage(hash);
+      if (supportsPathRouting && ROUTE_PATH[hash]) {
+        try { window.history.replaceState({ route: hash }, '', ROUTE_PATH[hash]); } catch (e) {}
+      }
       return;
     }
 
@@ -1085,6 +1143,61 @@
     }, 5000);
   });
 
+  // ── PATH NAVIGATION ──
+  // Intercept clicks on in-site path links so the SPA keeps its state instead
+  // of re-downloading the whole shell. Anything this does not recognise —
+  // /fullout, /dwdcon, a PDF, an external host — is left alone and navigates
+  // normally, which is the point: this is an enhancement, not a router that
+  // owns every link on the page.
+  if (supportsPathRouting) {
+    document.addEventListener('click', function (e) {
+      if (e.defaultPrevented) return;
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      var a = e.target && e.target.closest ? e.target.closest('a') : null;
+      if (!a) return;
+      if (a.target && a.target !== '_self') return;
+      if (a.hasAttribute('download')) return;
+      if (a.origin && a.origin !== window.location.origin) return;
+
+      var href = a.getAttribute('href');
+      if (!href || href.charAt(0) !== '/') return;
+
+      var base = href.split('#')[0].split('?')[0];
+      var route = PATH_ROUTE[lastSegment(base)] || (base === '/' ? 'home' : null);
+      if (!route) return;
+
+      e.preventDefault();
+      closeMobileMenu();
+
+      var target = ROUTE_PATH[route];
+      if (window.location.pathname.replace(/\/$/, '') === target.replace(/\/$/, '') &&
+          !window.location.hash) {
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      try { window.history.pushState({ route: route }, '', target); } catch (err) {}
+      showPage(route);
+    });
+
+    window.addEventListener('popstate', function () {
+      var hash = window.location.hash.replace('#', '').split('?')[0];
+      if (hash) {
+        if (validPages.includes(hash)) { showPage(hash); return; }
+        var el = document.getElementById(hash);
+        if (el) {
+          var owning = el.closest('.page');
+          var name = owning ? (owning.id || '').replace(/^page-/, '') : '';
+          if (validPages.includes(name)) showPage(name);
+          scrollToAnchor(hash);
+          return;
+        }
+      }
+      showPage(routeFromPath() || 'home');
+    });
+  }
+
   // ── INIT: Load correct page from hash ──
   // A hash that names an ELEMENT rather than a page (e.g. /#interest, which
   // lives inside #page-proseries) has to resolve on first load too, not only
@@ -1106,9 +1219,19 @@
 
   applyContactReasonFromHash();
 
+  // A generated shell sets window.__dwd_route; deriving it from the path as
+  // well means a pushState URL still resolves after a hard reload, and that the
+  // two can never disagree.
+  var pathRoute = routeFromPath() || (validPages.includes(window.__dwd_route) ? window.__dwd_route : null);
+
   var initialPage = getPageFromHash();
   if (routedByAnchor) {
     // handled above
+  } else if (!window.location.hash && pathRoute) {
+    showPage(pathRoute);
+    if (supportsPathRouting) {
+      try { window.history.replaceState({ route: pathRoute }, '', ROUTE_PATH[pathRoute]); } catch (e) {}
+    }
   } else if (initialPage !== 'home') {
     showPage(initialPage);
   } else {

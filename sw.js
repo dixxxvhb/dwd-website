@@ -1,8 +1,17 @@
-const CACHE_NAME = 'dwd-site-v33';
+const CACHE_NAME = 'dwd-site-v34';
 const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',
   '/index.html',
+  // The six route shells (item 3.1). Each is a copy of index.html with its own
+  // metadata; precaching them keeps a deep link working offline the same way
+  // "/" already did.
+  '/proseries/',
+  '/collective/',
+  '/teachers/',
+  '/gallery/',
+  '/contact/',
+  '/privacy/',
   '/offline.html',
   '/css/styles.css',
   '/css/additions.css',
