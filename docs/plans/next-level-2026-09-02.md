@@ -253,9 +253,14 @@ same section because `scroll-behavior: smooth` outruns the tiler. `shot-element.
 is the reliable way to see a deep section. `#ps-tracks` and `#ps-apply` are zero-height
 anchors; shoot `#proseries-tracks-full` and `#interest` instead.
 
-**Still open on Dixon** (unchanged from Sessions A/B): brand casing under CSS
-uppercase (`DWDPROSERIES`, `@DWD_COLLECTIVE`), the Collective H1 "DWD Collective",
-lazy images without width/height on ProSeries, comp logos, the dwdC next-class date.
+**Casing closed the same night** (`0feb87b`, Dixon: "you decide"): a `.brand-case`
+span holds the token's case inside the five uppercase labels; the two "presents"
+eyebrows moved from Bebas Neue (caps-only, numerals-only by brand rule) to Outfit
+600; the Collective H1 is now "The Collective", the name the nav, title and section
+heading already used.
+
+**Still open on Dixon:** lazy images without width/height on ProSeries, comp
+logos, the dwdC next-class date.
 
 ## 0. Ground truth the implementer must not re-derive
 
