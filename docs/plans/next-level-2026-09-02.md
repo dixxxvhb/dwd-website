@@ -154,6 +154,66 @@ direct shell loads, client-side nav, back and forward, hash-to-path upgrades,
 element anchors from inside a shell, and zero document fetches during
 client-side navigation. `sw.js` at `v34`.
 
+### Session C — CSS consolidation (2026-09-03)
+
+Item 3.2, in the five bisectable commits the plan asked for, from `7d00cf2` to
+the tip below. Nothing deployed.
+
+| Step | Commit | What |
+|---|---|---|
+| tooling | `d064fd2` | `snap.js` + `pixdiff.js`, verified bit-exact on unchanged code before being trusted as a gate. |
+| 3.2a | *(see below)* | Manrope retired, 98 declarations to Outfit, one body face instead of two. |
+| 3.2b | `89fd27f` | Cinzel was already confined to the two lockups; what was wasteful was fetching weight 700, which nothing uses. |
+| 3.2c | `20c08d4` | 962 rules deleted. 458 KB raw / 98 KB gzip to 310 KB / 76 KB. |
+| 3.2d | `b9e469a` | Twelve stylesheets merged into `css/site.css`. 317 KB / 67 KB, one request. |
+| 3.2e | `2168083` | 187 of 815 `!important` removed as provably inert. |
+
+**The result the plan asked for.** Start-to-finish pixel comparison across
+Session C: the only pages that moved are the ones Manrope touched, by exactly
+the amount step (a) moved them. Steps b through e contributed zero pixels
+between them — home, privacy and the Collective are bit-identical from first
+snapshot to last. Every step was additionally verified across all four Season
+One states and `?launched=1`.
+
+**Where I did not follow the plan, and why.**
+
+- 3.2c does not use `page.coverage.startCSSCoverage()`. Coverage reports which
+  bytes were exercised in one session, so every `:hover` rule, every unmatched
+  media query and every state you fail to trigger comes back "unused"; acting on
+  that deletes working code. `scripts/qa/prune-css.mjs` asks a question with no
+  blind spots instead: does this selector require a class or id name that is
+  written down nowhere else in the repo? If the string does not exist, nothing
+  can add it, and no state can bring the rule to life.
+- 3.2e therefore could not satisfy the plan's stated precondition ("where the
+  coverage pass proves the override is the only rule left"), so it is proved
+  empirically instead: strip all 815, see which of ~100 computed properties move
+  across 26,272 elements, keep `!important` only on those.
+- The standalone pages keep their stylesheets where they are rather than moving
+  to `css/pages/`. That would mean editing three live archive pages for no
+  benefit.
+- Gzipped CSS is 67 KB, not under the 65 KB the plan hoped for. Saying so
+  plainly: 98 KB down to 67 KB, one request instead of twelve.
+
+**Three bugs I wrote and the gate caught.** Worth recording because each one
+looked like it had worked:
+
+1. The prune parser tracked prelude offsets with one shared cursor, so rules
+   inside `@media` cut from a stale position and swallowed the rule above them.
+2. It then read the comment above a rule as part of the selector. "not
+   .gallery-item wrapper" above ".gallery-grid img" made a live rule look dead
+   and grew the Gallery by 4,263px.
+3. Stripping the `@import` from styles.css with `/^@import[^;]+;/` stopped at
+   the first semicolon — that font URL is full of them — leaving stray CSS that
+   swallowed the `:root` block and every custom property with it. Every page
+   rendered near-black text.
+
+None of these would have been caught by "it looks fine". The pixel differ found
+all three, at 49%, 4,263px and 9% respectively.
+
+**New tooling.** `scripts/qa/`: `snap.js`, `pixdiff.js`, `computed.js`,
+`prune-css.mjs`, `prune-important.mjs`, `orphan-css.js`, `dead-css.js`, all
+documented in `scripts/qa/README.md`.
+
 ## 0. Ground truth the implementer must not re-derive
 
 | Fact | Value |
