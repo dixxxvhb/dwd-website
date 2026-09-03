@@ -72,3 +72,28 @@ node scripts/qa/routes.js
 
 Exits non-zero on any failure. Run it after touching `js/main.js` routing or
 `scripts/build-routes.mjs`.
+
+## snap.js + pixdiff.js
+
+The pair used to prove a CSS refactor changed nothing it was not supposed to.
+
+```bash
+node scripts/qa/snap.js /tmp/before          # before the change
+# ... edit CSS ...
+node scripts/qa/snap.js /tmp/after
+node scripts/qa/pixdiff.js /tmp/before /tmp/after /tmp/diff
+```
+
+`snap.js` pins everything that would otherwise differ between two identical
+runs: reveal animations forced to their end state, the hero video removed so its
+poster shows rather than a random frame, the teacher slideshow forced to slide
+one, all animation and transition durations zeroed, lazy images made eager and
+awaited, fonts awaited, sticky chrome taken out of the flow. Two consecutive
+runs on unchanged code are bit-for-bit identical, which is what makes it usable
+as a gate.
+
+`pixdiff.js` decodes both PNGs in headless Chrome via canvas (no image
+dependency), compares per channel with a small tolerance for antialiasing noise,
+and writes a diff image with changed pixels in magenta over a dimmed original.
+Exits non-zero when more than 0.1% of a page's pixels moved. Both thresholds are
+overridable: `PIX_THRESHOLD`, `PIX_FAIL_RATIO`.
