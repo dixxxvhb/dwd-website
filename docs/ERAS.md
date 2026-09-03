@@ -61,6 +61,19 @@ was closed.
 | ~~Early-access, all four states~~ | — | — | **DELETED 2026-09-02** (item 2.4). The whole `#page-early-access` section is gone from the DOM along with its four era variants. Its promise was the audition registration link 24 hours early, and that audition was June 6, 2026. The fourth "standing" state existed only so the retired route would not render empty; deleting the route removes the need for it. `/#early-access` now redirects to `#interest` via `legacyHashRedirects` in `js/main.js`. Prior markup is in git history. |
 | `#ep-recaps-home`, `#ep-recaps-ps` | — | — | **live, ungated by design** (item 2.4). The site's one email capture, on Home and ProSeries. No date gate: "one email per episode" stays true for as long as there are episodes, and the copy names no date. If Season One wraps and nothing replaces it, this is the band to revisit. Listed here for that reason, not because it expires. |
 
+## Content that is date-bound without a gate
+
+Not every dated thing on this site is an attribute gate. These are the ones a
+future session will otherwise trip over.
+
+| What | Where | Why it is not gated, and when to revisit |
+|---|---|---|
+| The Episode Guide's live rows | `#ps-calendar`, rendered by `js/episodes.js` | Rendered from `public_site_episodes` in date order and self-retiring: a competition whose `end_date` has passed re-renders as "Aired" and steps back, and "Up next" moves on by itself. Nothing here needs a hide-gate because nothing here is hardcoded. The premiere row (S1:E1, Aug 10) and the finale row (May 25, 2027) ARE hardcoded and outlive the season; they retire with Season One. |
+| Episode recap bands | `#ep-recaps-home`, `#ep-recaps-ps` | "One email per episode" stays true while there are episodes. No date in the copy. Revisit if Season One wraps and nothing replaces it. |
+| The Collective's next class | `#dwdc-next-class`, rendered by `js/dwdc-next.js` | Same shape: the view only returns upcoming, non-cancelled events, so a past class disappears on its own. The empty state is the markup default and is correct at any time. |
+| The home hero loop | `video/hero-loop.*`, caption "Daisy · Summer Intensive Showcase · 2026" | The caption names a 2026 event and will read as old footage eventually. Not gated, because a hero with no video is worse than a hero with last season's video. Re-cut with `scripts/encode-hero-loop.sh` when there is better footage. |
+| The parent FAQ | `#ps-faq` | Carries season pricing and the Season One competition counts. When Season Two pricing lands, these answers and the generated JSON-LD both change: edit the markup, re-run `scripts/build-faq-jsonld.mjs`. |
+
 ## Registry — standalone event pages
 
 Both retired events follow the same shape: an archive banner reveals the day after the

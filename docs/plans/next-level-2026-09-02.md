@@ -82,6 +82,78 @@ writes land:
   queue.
 - `email_signups`, `test-claude@dancewithdixon.com`, source `episode-recaps-home`.
 
+### Session B — excitement and plumbing (2026-09-02)
+
+Six commits, one per plan item, from `0611842` to the tip below. Nothing
+deployed.
+
+| Item | Commit | State |
+|---|---|---|
+| 2.1 hero loop | `31f243b` | done, with two substitutions. See below. |
+| 2.2 Episode Guide | `771adb3` | done. Live from `public_site_episodes`, five real comps. Competition marks hooked up but no logo files ship. |
+| 2.3 Gallery | `7dda45d` | done. Five episode groups (of the plan's seven; two have no photos). |
+| 3.3 Parent FAQ | `7df918b` | done. Eight questions, JSON-LD generated from the markup. |
+| 3.4 hygiene | `90776cb` | done. Campaign HQ deleted, era engine extracted to `js/eras.js`, legacy sidebar and keywords meta gone. |
+| 3.1 real URLs | `6b36eeb` | done. Six route directories, generated shells, path routing, per-route OG cards. |
+
+**2.1 needs Dixon's eye, and here is exactly why.** He chose "Daisy firebird"
+from a list the plan itself called clips. `beautiful_daisy_firebird_jump` is a
+PHOTO — the Summer Intensive catalogue files it under stills, and no video of
+that jump exists. Everything else failed a rule: the CAA and Dynamic clips are
+dancers who are not released Season One dancers, and the plan's own fallback is
+Dixon teaching at Movez with masks in frame. What shipped is the SI jazz
+showcase, five stars in the catalogue, Daisy featured, live audience. The crop
+is also portrait rather than the landscape the plan specifies, because the home
+hero photo is a tall column (0.65:1 at 1280), not a band, and a landscape loop
+lost about 70% of itself to `object-fit`. `SS`, `DUR` and `CROP` at the top of
+`scripts/encode-hero-loop.sh` are the whole interface for changing it.
+
+**Three more accessibility bugs found and fixed in passing.** The Episode Guide
+was ivory-on-Family-Pink at 2.23:1, its meta at 1.61:1 and its sky chips at
+1.30:1 — the section was effectively unreadable and had been. The rows are drawn
+for a forest ground in `season1.css` and `poster-pages.css` put them on pink;
+they now get their forest back as cards. The section lead above them had the
+same problem. The Gallery's Instagram tiles printed `@DWDPROSERIES` and
+`@DWD_COLLECTIVE`.
+
+**One near miss worth remembering.** The first version of the FAQ JSON-LD
+generator wrote a `/* */` comment into the `application/ld+json` block to mark
+its own output. A comment there would have silently voided the entire `@graph`
+— Organization, LocalBusiness, EventSeries, all of it. The generator now splices
+by brace-matching and refuses to write anything that does not `JSON.parse`.
+
+**Deliberate deviations.**
+
+- Gallery ships five episode groups, not seven. There are no audition stills and
+  Week One exists only as a video poster; a group header over an empty grid is
+  worse than no group.
+- The seventeen cast portraits are not duplicated into the Gallery. They are the
+  ProSeries cast wall and do a different job.
+- No competition logos ship in `images/comps/`. Those are third-party marks and
+  putting them on Dixon's site is his call. The hook is an explicit allowlist in
+  `js/episodes.js` (`COMP_MARKS`) rather than an `onerror` fallback, which would
+  cost a 404 per episode in the console.
+- The campaign HQ was deleted rather than moved to `campaign.html`. It is a
+  dashboard for a rollout that ended in May 2026.
+- `#shop` has no route directory and stays hash-only, consistent with 1.3.
+
+**Still flagged for Dixon (unchanged from Session A, plus one).** The sitewide
+`text-transform: uppercase` still prints `DWDPROSERIES` in chapter labels and
+the Season One eyebrow; the Gallery instances were fixed because 2.3 owned that
+page. The Collective H1 still reads "DWD Collective" while the body copy says
+`dwdCOLLECTIVE`. ProSeries images still carry no `width`/`height`, which is the
+layout shift that made anchor scrolling hard in Session A.
+
+**New tooling in the repo.** `scripts/build-routes.mjs` (route shells + sitemap,
+with `--check`), `scripts/build-faq-jsonld.mjs` (`--check` too),
+`scripts/encode-hero-loop.sh`, and `scripts/qa/routes.js`. All four are
+documented where they live.
+
+**QA.** Full sweep green at 1280 and 390 on every route, plus the routing suite:
+direct shell loads, client-side nav, back and forward, hash-to-path upgrades,
+element anchors from inside a shell, and zero document fetches during
+client-side navigation. `sw.js` at `v34`.
+
 ## 0. Ground truth the implementer must not re-derive
 
 | Fact | Value |
