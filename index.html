@@ -588,6 +588,21 @@
           <p>In June 2026 we took our first stage. <em>A&middot;Muse in Space</em> at Orlando Ballet, presented by Aric Barrow. Original contemporary modern choreography, danced by adults of all levels, in front of a full house. That was the proof. Now we build the next one. <a href="#amuse">See how it went &rarr;</a></p>
         </div>
 
+        <!-- NEXT CLASS (item 1.2, 2026-09-02). Rendered from the anon-readable
+             view public_site_dwdc_events: upcoming, non-cancelled adult-program
+             events straight out of the Director calendar. The empty state below
+             is the markup default and is the launch state today, because there
+             is no Collective class on the calendar yet. Put one there (program
+             adult) and this block fills itself in. See js/dwdc-next.js. -->
+        <div class="dnc" id="dwdc-next-class" data-state="empty">
+          <span class="dnc-eyebrow">Next class</span>
+          <div class="dnc-main" data-dnc-main>
+            <p class="dnc-empty">The next class date is being set. Follow <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a>, or get on the list and I will text you the moment it is on the calendar.</p>
+            <a class="btn btn-outline dnc-cta" href="#contact?reason=adult" data-track="dwdc-next-class-list">Get on the list <em>&rarr;</em></a>
+          </div>
+          <ul class="dnc-more" data-dnc-more hidden></ul>
+        </div>
+
         <div class="cc-grid">
 
           <div class="cc-section">
@@ -658,7 +673,9 @@
       </div>
 
       <div class="cta-banner" id="dwdc-next">
-        <h3>The next project is coming.</h3>
+        <!-- Headline is replaced by js/dwdc-next.js when the calendar has an
+             upcoming adult class; this is the no-rows copy. -->
+        <h3 data-dnc-band-title>The next project is coming.</h3>
         <p>Classes and the next round of performances run out of Exchange Dance this season. Dates, times, and casting calls go up on Instagram first. Follow <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a> so you don't miss the call.</p>
         <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener" class="btn btn-primary" data-track="adult-follow-ig">Follow @dwd_collective</a>
         <a href="#contact" class="btn btn-outline" data-track="adult-join-us">Get on the List</a>
@@ -2406,6 +2423,7 @@
   <!-- season.js first: it owns the chair numbers main.js/campaign.js never touch. -->
   <script defer src="js/season.js"></script>
   <script defer src="js/main.js"></script>
+  <script defer src="js/dwdc-next.js"></script>
   <script defer src="js/campaign.js"></script>
   <script defer src="js/analytics.js"></script>
   <!-- Audition sticky ticker removed 2026-08-03 — June 6 audition long past;

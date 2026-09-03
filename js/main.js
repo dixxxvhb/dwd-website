@@ -640,6 +640,33 @@
     }
   }
 
+  // ── CONTACT REASON FROM THE HASH QUERY ──
+  // Links like #contact?reason=adult arrive from the Collective page. The
+  // routing already strips the query (getPageFromHash splits on "?"), so the
+  // only job here is to flip the matching toggle before the visitor reads the
+  // form. Unknown values are ignored and the default toggle stands.
+  function applyContactReasonFromHash() {
+    var parts = window.location.hash.replace('#', '').split('?');
+    if (parts[0] !== 'contact' || !parts[1]) return;
+    var reason = null;
+    parts[1].split('&').forEach(function (kv) {
+      var pair = kv.split('=');
+      if (pair[0] === 'reason') reason = decodeURIComponent(pair[1] || '');
+    });
+    if (!reason) return;
+    var group = document.querySelector('.toggle-group[data-name="reason"]');
+    if (!group) return;
+    var btn = group.querySelector('.toggle-btn[data-value="' + reason.replace(/"/g, '') + '"]');
+    if (!btn) return;
+    group.querySelectorAll('.toggle-btn').forEach(function (b) {
+      b.classList.remove('active');
+      b.setAttribute('aria-checked', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-checked', 'true');
+  }
+  window.addEventListener('hashchange', applyContactReasonFromHash);
+
   // ── TOGGLE GROUPS ──
   document.querySelectorAll('.toggle-group').forEach(function (group) {
     group.querySelectorAll('.toggle-btn').forEach(function (btn) {
@@ -1063,6 +1090,8 @@
     scrollToAnchor(raw);
     routedByAnchor = true;
   })();
+
+  applyContactReasonFromHash();
 
   var initialPage = getPageFromHash();
   if (routedByAnchor) {
