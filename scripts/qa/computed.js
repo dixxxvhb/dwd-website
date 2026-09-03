@@ -72,7 +72,11 @@ async function capture() {
         document.querySelectorAll('.reveal').forEach((e) => e.classList.add('visible'));
         document.querySelectorAll('video').forEach((v) => { try { v.pause(); } catch (e) {} });
         const s = document.createElement('style');
-        s.textContent = '*,*::before,*::after{animation:none !important;transition:none !important}';
+        // animation-duration:0s, NOT animation:none. "none" reverts an element to
+        // its pre-animation state, which for the home hero's H1 lines means
+        // opacity 0 — they vanish. Zero duration snaps them to the END state,
+        // which is what a visitor actually sees.
+        s.textContent = '*,*::before,*::after{animation-duration:0s !important;animation-delay:0s !important;transition-duration:0s !important}';
         document.head.appendChild(s);
         document.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; });
       });

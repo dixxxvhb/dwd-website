@@ -10703,3 +10703,26 @@ footer.site-footer .footer-brand img {
 @media (prefers-reduced-motion: reduce) {
   #page-proseries #ps-faq .ps-faq-q::after { transition: none; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * HOME HERO: CLEAR THE FIXED NAV
+ * Found 2026-09-03 during the pre-merge walkthrough. Pre-existing — it came in
+ * with the rebrand, not the next-level work — but it would have shipped.
+ *
+ * At 1025px and up the .hero-text column's content measures exactly its
+ * content box, so `justify-content: center` has no slack and packs to the top.
+ * The first child, "Est. 2025 · Orlando, FL", sat at y=56 with 16px of height,
+ * and the fixed topnav's band ends at y=71. The line was completely invisible
+ * at every desktop width.
+ *
+ * The fix is slack: enough top padding to clear the nav, and the hero row grows
+ * to fit (the photo's max-height leaves room). Below 1025 the hero stacks with
+ * the photo on top and nothing there needs changing.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 1025px) {
+  #page-home .hero-text {
+    padding-top: 96px !important;
+  }
+}
