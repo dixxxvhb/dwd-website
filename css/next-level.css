@@ -527,3 +527,277 @@
 #page-proseries .ps-merch-poll-line a:hover {
   color: var(--ivory, #FAF3E8);
 }
+
+
+/* ============================================================
+   1.4  A FACE IN EVERY HERO
+   Four heroes were a wordmark on a flat band. People are the
+   product here; the logo is already in the nav, the footer and
+   the tab. Merch is deliberately not in this pass: it left the
+   nav in 1.3 and its type lockup hero was never logo-only.
+   ============================================================ */
+
+/* ── Teachers: photo replaces the 400px mark on the right ──── */
+
+/* The hero used to be sized by the 400px logo block. With that gone it needs
+   its own height, or the portrait source's own 2:3 aspect stretches the band
+   to 916px. */
+#page-teachers .tch-hero--split {
+  min-height: 520px;
+}
+
+#page-teachers .tch-hero--split .tch-hero-photo {
+  position: relative;
+  align-self: stretch;
+  min-height: 520px;
+  overflow: hidden;
+}
+
+/* Absolute fill: a percentage height on the img inside a stretch-sized grid
+   cell resolves against the image's own aspect instead, which is what blew the
+   band up. */
+#page-teachers .tch-hero--split .tch-hero-photo picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+#page-teachers .tch-hero--split .tch-hero-photo img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Dixon sits upper-centre in the frame; centring the crop would
+     cut his head off at this aspect. */
+  object-position: 50% 24%;
+}
+
+/* The H1 always overflowed its column by ~47px; nobody saw it because the
+   right half was the same terracotta. A photograph there makes the clip
+   visible, so the display size now fits the column it lives in. */
+#page-teachers .tch-hero--split h1 {
+  font-size: clamp(64px, 7.2vw, 128px) !important;
+}
+
+#page-teachers .tch-hero-brandline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+#page-teachers .tch-hero-mark {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+#page-teachers .tch-hero-brandline .tch-hero-eyebrow {
+  margin: 0 !important;
+}
+
+@media (max-width: 980px) {
+  #page-teachers .tch-hero--split {
+    grid-template-columns: 1fr !important;
+  }
+  #page-teachers .tch-hero--split { min-height: 0; }
+  #page-teachers .tch-hero--split .tch-hero-photo {
+    order: -1;
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  #page-teachers .tch-hero-brandline {
+    justify-content: center;
+  }
+  #page-teachers .tch-hero-mark { width: 56px; height: 56px; }
+}
+
+/* ── Gallery: full-bleed photograph, type over a forest scrim ── */
+
+#page-gallery .gallery-hero--photo {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 440px;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+}
+
+#page-gallery .gallery-hero-bg,
+#page-gallery .gallery-hero-bg img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+/* The scrim. Two stops rather than a flat wash: the type sits at the
+   bottom, so that is where the ground needs to be solid. Measured on the
+   rendered pixels, the ivory H1 clears 4.5:1 over the lightest patch it
+   covers. */
+#page-gallery .gallery-hero--photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(12, 31, 23, 0.14) 0%,
+    rgba(12, 31, 23, 0.26) 38%,
+    rgba(12, 31, 23, 0.78) 100%);
+  pointer-events: none;
+}
+
+#page-gallery .gallery-hero--photo .gallery-hero-text {
+  position: relative;
+  z-index: 1;
+  padding: 44px 64px 40px;
+  max-width: 40ch;
+}
+
+#page-gallery .gallery-hero--photo .gallery-hero-text h1 {
+  color: var(--ivory, #FAF3E8);
+  text-shadow: 0 2px 18px rgba(12, 31, 23, 0.6);
+  margin: 0 0 8px;
+}
+
+#page-gallery .gallery-hero--photo .gallery-hero-text p {
+  color: rgba(250, 243, 232, 0.9);
+  text-shadow: 0 1px 12px rgba(12, 31, 23, 0.7);
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  #page-gallery .gallery-hero--photo {
+    min-height: 340px;
+  }
+  #page-gallery .gallery-hero--photo .gallery-hero-text {
+    padding: 32px 24px 28px;
+  }
+}
+
+/* ── Contact: a portrait, with the mark tucked into its corner ── */
+
+#page-contact .contact-portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin: 0 0 28px;
+  overflow: hidden;
+  background: var(--forest, #0c1f17);
+}
+
+#page-contact .contact-portrait picture,
+#page-contact .contact-portrait > picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 14%;
+}
+
+/* The mark sits beside the heading rather than inside the photo. In the corner
+   it landed on skin at some crops and went muddy, and a plate to fix that would
+   be pure decoration. On the forest ground it is legible at every width, and it
+   matches the brandline treatment on the Teachers hero. */
+#page-contact .contact-brandline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+#page-contact .contact-mark {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+#page-contact .contact-brandline h3 {
+  margin: 0 !important;
+}
+
+/* ── Collective hero: photo forward, mark demoted ───────────── */
+
+#page-adult-company .ac-hero--photo-forward .hero-logo-big {
+  position: absolute;
+  right: 28px;
+  bottom: 22px;
+  width: 200px;
+  height: 200px;
+  padding: 0;
+  min-height: 0;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#page-adult-company .ac-hero--photo-forward .hero-logo-big img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+#page-adult-company .ac-hero--photo-forward {
+  position: relative;
+  grid-template-columns: 1fr !important;
+}
+
+/* Directional wash behind the type. Lifting the flat scrim let the dancers
+   read but dropped the terracotta eyebrow to 2.79:1 and the terracotta tagline
+   to 3.70:1 on the warm patches of the floor. A flat scrim heavy enough to fix
+   that would put the photo right back in the mud, so the treatment goes where
+   the words are and leaves the dancers alone. */
+#page-adult-company .ac-hero--photo-forward::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right,
+    rgba(12, 31, 23, 0.94) 0%,
+    rgba(12, 31, 23, 0.88) 26%,
+    rgba(12, 31, 23, 0.4) 52%,
+    rgba(12, 31, 23, 0) 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#page-adult-company .ac-hero--photo-forward .ac-hero-text-stack {
+  position: relative;
+  z-index: 1;
+  max-width: 44ch;
+}
+
+@media (max-width: 980px) {
+  #page-adult-company .ac-hero--photo-forward::before {
+    background: linear-gradient(to bottom,
+      rgba(12, 31, 23, 0.9) 0%,
+      rgba(12, 31, 23, 0.86) 55%,
+      rgba(12, 31, 23, 0.74) 100%);
+  }
+  #page-adult-company .ac-hero--photo-forward .hero-logo-big {
+    order: 0;
+    right: 12px;
+    bottom: 12px;
+    opacity: 0.45;
+  }
+  #page-adult-company .ac-hero--photo-forward .hero-logo-big {
+    width: 116px;
+    height: 116px;
+  }
+  #page-adult-company .ac-hero--photo-forward .hero-logo-big img {
+    width: 116px !important;
+    height: 116px !important;
+    max-width: 40vw !important;
+  }
+  #page-adult-company .ac-hero--photo-forward .ac-hero-text-stack {
+    text-align: left !important;
+    max-width: none;
+  }
+}

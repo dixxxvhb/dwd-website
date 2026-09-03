@@ -553,7 +553,11 @@
 
     <!-- ══════════ ADULT COMPANY ══════════ -->
     <section class="page" id="page-adult-company" data-arm="c" aria-label="Adult Company">
-      <div class="ac-hero ac-hero--split" style="background-image: linear-gradient(rgba(15,35,24,0.85), rgba(15,35,24,0.92)), url('images/photos/opt/a-06-06-25-4927-enhanced-nr-1600.webp'); background-size: cover; background-position: center;">
+      <!-- Item 1.4: the scrim was 0.85 to 0.92 and flattened the A-Muse photo to
+           mud, while a 400px logo took the right half. Scrim down to 0.55/0.78 so
+           the dancers read; mark down to 200px, bottom right, 60% opacity, so the
+           people are the hero. Ivory H1 measured over the lightest patch. -->
+      <div class="ac-hero ac-hero--split ac-hero--photo-forward" style="background-image: linear-gradient(rgba(15,35,24,0.34), rgba(15,35,24,0.62)), url('images/photos/opt/a-06-06-25-4927-enhanced-nr-1600.webp'); background-size: cover; background-position: center;">
         <div class="ac-hero-text-stack">
           <div class="label">Orlando, Florida</div>
           <h1>DWD Collective</h1>
@@ -1732,14 +1736,23 @@
     <!-- ══════════ TEACHERS ══════════ -->
     <section class="page" id="page-teachers" data-arm="house" aria-label="Teachers">
       <!-- Hero band -->
+      <!-- Item 1.4: the right half was a 400px logo. A page about the people
+           you train with now shows one of them working. Mark drops to 72px
+           beside the eyebrow, where it identifies without dominating. -->
       <div class="tch-hero tch-hero--split">
         <div class="tch-hero-text">
-          <span class="tch-hero-eyebrow">Director &middot; Rotation Faculty</span>
+          <div class="tch-hero-brandline">
+            <img class="tch-hero-mark" src="images/logos/v2/DWD-green-160.png" alt="" aria-hidden="true" width="72" height="72" loading="eager">
+            <span class="tch-hero-eyebrow">Director &middot; Rotation Faculty</span>
+          </div>
           <h1>Teachers</h1>
           <p class="tch-hero-sub">Every class designed by a working director, supported by a rotation of working artists.</p>
         </div>
-        <div class="hero-logo-big">
-          <img src="images/logos/v2/DWD-green.png" alt="Dance With Dixon" loading="lazy">
+        <div class="tch-hero-photo">
+          <picture>
+            <source type="image/webp" srcset="images/photos/opt/story-con-coach-800.webp 800w, images/photos/opt/story-con-coach-1600.webp 1600w" sizes="(max-width: 980px) 100vw, 46vw">
+            <img src="images/photos/opt/story-con-coach-1600.webp" alt="Dixon coaching on the floor at dwdCON" loading="lazy" decoding="async">
+          </picture>
         </div>
       </div>
 
@@ -1834,13 +1847,17 @@
 
     <!-- ══════════ GALLERY ══════════ -->
     <section class="page" id="page-gallery" data-arm="house" aria-label="Gallery">
-      <div class="gallery-hero gallery-hero--split">
+      <!-- Item 1.4: was a split with a 400px logo on a flat forest band. A
+           gallery hero should be a photograph. Daisy at the Summer Intensive,
+           under a forest scrim heavy enough to carry ivory type. -->
+      <div class="gallery-hero gallery-hero--photo">
+        <picture class="gallery-hero-bg">
+          <source type="image/webp" srcset="images/photos/opt/story-si-firebird-800.webp 800w, images/photos/opt/story-si-firebird-1600.webp 1600w" sizes="100vw">
+          <img src="images/photos/opt/story-si-firebird-1600.webp" alt="Daisy mid-air in a firebird jump at the Summer Intensive showcase" loading="eager" decoding="async">
+        </picture>
         <div class="gallery-hero-text">
           <h1>Gallery</h1>
           <p>Movement captured. Community in action.</p>
-        </div>
-        <div class="hero-logo-big">
-          <img src="images/logos/v2/DWD-green.png" alt="Dance With Dixon" loading="lazy">
         </div>
       </div>
 
@@ -2081,8 +2098,20 @@
           </form>
         </div>
         <div class="contact-info-side">
-          <img src="images/logos/v2/DWD-green-160.png" alt="Dance With Dixon" width="80" height="80" style="margin-bottom: 24px;" loading="lazy">
-          <h3>Connect with DWD</h3>
+          <!-- Item 1.4: the only thing in this column used to be an 80px logo.
+               You are writing to a person, so the person is here. Mark stays,
+               tucked into the corner of the portrait as one composed unit
+               rather than a second object stacked above it. -->
+          <div class="contact-portrait">
+            <picture>
+              <source type="image/webp" srcset="images/photos/opt/bw-headshot-800.webp 800w, images/photos/opt/bw-headshot-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 380px">
+              <img src="images/photos/opt/bw-headshot-1600.webp" alt="Dixon Bowles" loading="lazy" decoding="async">
+            </picture>
+          </div>
+          <div class="contact-brandline">
+            <img class="contact-mark" src="images/logos/v2/DWD-green-160.png" alt="Dance With Dixon" width="44" height="44" loading="lazy">
+            <h3>Connect with DWD</h3>
+          </div>
           <div class="contact-detail">
             <div class="dlabel">Email</div>
             <div class="value"><a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a></div>
