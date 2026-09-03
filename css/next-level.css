@@ -987,3 +987,117 @@
   #page-home .hero-photo .caption--loop { display: none !important; }
   #page-home .hero-photo .caption--still { display: block !important; }
 }
+
+
+/* ============================================================
+   2.2  EPISODE GUIDE
+   The rows in season1.css are drawn for a forest ground: ivory
+   title, silver meta, sky chip. poster-pages.css puts the whole
+   section on Family Pink, so on the live site they measure
+   2.23:1, 1.61:1 and 1.30:1 — the guide is effectively
+   unreadable. Rather than repaint every colour, the rows get
+   the ground they were designed for back. A forest card on the
+   pink band also gives the guide the thing it is describing:
+   a list of episodes.
+   ============================================================ */
+
+/* Same bug one line up: the section lead is Season One silver on Family Pink
+   at 1.61:1. It sits on the pink, not on a card, so it takes forest ink.
+   Solid forest (6.99:1) rather than a softened 0.78 alpha (4.89:1, which does
+   pass) — the line is already set apart by being italic Cormorant at 15px, and
+   it matches .s1-season-dates two lines below it. Hierarchy from size and
+   style, not from colour. */
+#page-proseries #ps-calendar .section-lead {
+  color: var(--forest, #0c1f17) !important;
+  opacity: 1;
+}
+
+#page-proseries #ps-calendar .s1-ep {
+  background: var(--forest, #0c1f17);
+  border-color: rgba(126, 196, 248, 0.32);
+  border-radius: 4px;
+}
+
+/* Titles and meta inherit forest from .ps-whatelse otherwise. */
+#page-proseries #ps-calendar .s1-ep-title {
+  color: var(--ivory, #FAF3E8) !important;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+#page-proseries #ps-calendar .s1-ep-meta {
+  color: var(--s1-silver, #c9d4ce) !important;
+}
+
+#page-proseries #ps-calendar .s1-ep--tba .s1-ep-title {
+  color: var(--s1-silver, #c9d4ce) !important;
+}
+
+/* Competition mark, if one is ever dropped into images/comps/. */
+#page-proseries #ps-calendar .s1-ep-mark {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* "Up next" — the one row that should catch the eye. Sky is the Season One
+   accent, and on forest it clears every floor. */
+#page-proseries #ps-calendar .s1-ep--next {
+  border-color: var(--s1-sky, #7EC4F8);
+  box-shadow: inset 0 0 0 1px rgba(126, 196, 248, 0.35);
+}
+
+#page-proseries #ps-calendar .s1-ep-flag {
+  flex: 0 0 auto;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--forest, #0c1f17);
+  background: var(--s1-sky, #7EC4F8);
+  border-radius: 2px;
+  padding: 3px 7px;
+}
+
+/* An episode that has already happened steps back. */
+#page-proseries #ps-calendar .s1-ep--aired {
+  opacity: 0.72;
+}
+
+/* Optional recap line, merged in from data/episodes.json. */
+#page-proseries #ps-calendar .s1-ep-recap {
+  flex: 1 1 100%;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 13px !important;
+  line-height: 1.5;
+  color: var(--s1-silver, #c9d4ce) !important;
+  margin: 8px 0 0 !important;
+  padding-top: 8px;
+  border-top: 1px solid rgba(250, 243, 232, 0.12);
+}
+
+#page-proseries #ps-calendar .s1-ep-recap-link {
+  color: var(--s1-sky, #7EC4F8);
+  white-space: nowrap;
+}
+
+/* Meta carries a date AND a location now, which does not fit the original
+   nowrap column at anything under a desktop width. */
+#page-proseries #ps-calendar .s1-ep--live .s1-ep-meta {
+  white-space: normal;
+  max-width: 22ch;
+}
+
+@media (max-width: 560px) {
+  #page-proseries #ps-calendar .s1-ep--live .s1-ep-meta {
+    max-width: none;
+    text-align: left;
+  }
+  #page-proseries #ps-calendar .s1-ep-title {
+    flex-wrap: wrap;
+  }
+}

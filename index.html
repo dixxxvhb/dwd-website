@@ -1602,23 +1602,32 @@
         <h2>The Episode Guide</h2>
         <p class="section-lead s1-cormorant-italic">one season. every episode. no reruns.</p>
         <p class="s1-season-dates">Season One runs August 10, 2026 to May 25, 2027.</p>
-        <div class="s1-episode-list">
-          <div class="s1-ep">
+        <!-- EPISODE GUIDE (item 2.2, 2026-09-02). js/episodes.js replaces the
+             [data-ep-static] rows below with one row per competition in the
+             public_site_episodes view, in date order, numbered from E2. The
+             premiere and the finale are hardcoded and never touched.
+
+             The static rows ARE the fallback, not a placeholder: if the fetch
+             fails, the CDN is blocked, or the view is empty, they stay and the
+             section reads exactly as it did before this item. Keep them
+             truthful for that reason. -->
+        <div class="s1-episode-list" data-episode-list>
+          <div class="s1-ep" data-ep-fixed="first">
             <span class="s1-ep-code">S1:E1</span>
             <span class="s1-ep-title">The Premiere</span>
             <span class="s1-ep-meta">Aired August 10</span>
           </div>
-          <div class="s1-ep">
+          <div class="s1-ep" data-ep-static>
             <span class="s1-ep-code">S1:E2</span>
             <span class="s1-ep-title">The First Showcase</span>
             <span class="s1-ep-meta">date to be announced</span>
           </div>
-          <div class="s1-ep s1-ep--tba">
+          <div class="s1-ep s1-ep--tba" data-ep-static>
             <span class="s1-ep-code">S1:E3-E5</span>
             <span class="s1-ep-title s1-cormorant-italic">The competition slate</span>
             <span class="s1-ep-meta">Three episodes lock this fall</span>
           </div>
-          <div class="s1-ep s1-ep--finale">
+          <div class="s1-ep s1-ep--finale" data-ep-fixed="last">
             <span class="s1-ep-code">S1:FINALE</span>
             <span class="s1-ep-title">The Finale</span>
             <span class="s1-ep-meta">May 25, 2027 &middot; that's a wrap on Season One</span>
@@ -2351,6 +2360,7 @@
   <script defer src="js/season.js"></script>
   <script defer src="js/main.js"></script>
   <script defer src="js/dwdc-next.js"></script>
+  <script defer src="js/episodes.js"></script>
   <script defer src="js/campaign.js"></script>
   <script defer src="js/analytics.js"></script>
   <!-- Audition sticky ticker removed 2026-08-03 — June 6 audition long past;

@@ -26,18 +26,37 @@ function ratio(l1, l2) {
   });
   await new Promise(r => setTimeout(r, 900));
 
+  // Measure in ABSOLUTE page coordinates and screenshot with
+  // captureBeyondViewport, rather than scrolling the element into view first.
+  // Programmatic scrolling is unreliable on these very tall pages (the same
+  // problem item 1.1 hit), and a clip taken at coordinates the element does not
+  // actually occupy makes this tool cheerfully report the contrast of whatever
+  // else happens to be there.
   const info = await p.evaluate((sel) => {
     const el = document.querySelector(sel);
+    if (!el) return null;
     const r = el.getBoundingClientRect();
     const cs = getComputedStyle(el);
-    return { x: r.x, y: r.y, w: r.width, h: r.height, color: cs.color, size: cs.fontSize, weight: cs.fontWeight };
+    return {
+      x: r.x + window.pageXOffset, y: r.y + window.pageYOffset,
+      w: r.width, h: r.height,
+      color: cs.color, size: cs.fontSize, weight: cs.fontWeight,
+    };
   }, SEL);
+
+  if (!info) { console.log('NOT FOUND', SEL); await b.close(); return; }
+  if (info.w < 1 || info.h < 1) {
+    console.log('SKIP: element has no box', JSON.stringify(info));
+    await b.close();
+    return;
+  }
 
   // Hide the text (and any shadow) so we photograph only what sits behind it.
   await p.evaluate((sel) => { document.querySelector(sel).style.visibility = 'hidden'; }, SEL);
   await new Promise(r => setTimeout(r, 200));
 
   const buf = await p.screenshot({
+    captureBeyondViewport: true,
     clip: { x: Math.max(0, info.x), y: Math.max(0, info.y), width: Math.max(1, info.w), height: Math.max(1, info.h) },
   });
 

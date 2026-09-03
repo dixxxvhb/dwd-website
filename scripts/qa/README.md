@@ -47,3 +47,12 @@ One element, one file. For reviewing a single component at a given width.
 ```bash
 node scripts/qa/shot-element.js <out.png> <route> <selector> <width>
 ```
+
+**Limitation.** `contrast.js` screenshots the element's rectangle in absolute
+page coordinates. On very tall pages (ProSeries is ~18,000px) that capture can
+land off target, in which case the reported ground will be obviously wrong — a
+forest reading for something you know sits on pink, or an identical result for
+two elements on different grounds. When the ground is a flat colour, cross-check
+by reading the computed `color` of the text and the `background-color` of its
+section and doing the arithmetic. The tool is at its best for text over
+photographs, which is what it was written for.

@@ -1,0 +1,25 @@
+{
+  "_readme": [
+    "Episode recaps for the Season One Episode Guide on dancewithdixon.com.",
+    "Keyed by the competition's id in the public_site_episodes view (the same",
+    "id the Director app uses). Every field is optional; a key with no entry",
+    "here simply renders the episode without a recap.",
+    "",
+    "  \"<comp id>\": {",
+    "    \"line\": \"One sentence. What happened, in Dixon's voice.\",",
+    "    \"recap_url\": \"https://instagram.com/p/...\",",
+    "    \"photo\": \"images/photos/opt/<file>.webp\"",
+    "  }",
+    "",
+    "Edit this file by hand after a comp. There is deliberately no admin UI:",
+    "one JSON file that survives contact with reality beats a form nobody",
+    "opens. JSON has no comments, which is why this note is a key.",
+    "",
+    "Ids as of 2026-09-02, for convenience:",
+    "  afe1e827-23d4-4b8d-9a91-ac7e7c7e8e68  Titans One Day Convention, Sep 20",
+    "  e43124d1-a76d-4b76-9bef-baecd55bf361  JUMP Dance Convention, Oct 16-18",
+    "  02c516f8-8ea3-4774-be5f-aa819af1eeab  StarQuest (Orlando I), Feb 5-7",
+    "  1811ca9c-dfc6-44f0-a8fd-22588bbba9d1  DreamMaker, Mar 5-7",
+    "  1876ae5b-c7ec-4bcb-93a6-1349af26bf88  Showstopper, Apr 16-18"
+  ]
+}
