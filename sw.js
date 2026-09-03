@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v35';
+const CACHE_NAME = 'dwd-site-v36';
 const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',

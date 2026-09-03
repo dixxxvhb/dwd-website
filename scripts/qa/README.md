@@ -97,3 +97,39 @@ dependency), compares per channel with a small tolerance for antialiasing noise,
 and writes a diff image with changed pixels in magenta over a dimmed original.
 Exits non-zero when more than 0.1% of a page's pixels moved. Both thresholds are
 overridable: `PIX_THRESHOLD`, `PIX_FAIL_RATIO`.
+
+## computed.js
+
+Fingerprints the computed style and geometry of every element on every route, at
+both widths, and compares two captures.
+
+```bash
+node scripts/qa/computed.js /tmp/before.json
+# ... edit CSS ...
+node scripts/qa/computed.js /tmp/after.json
+node scripts/qa/computed.js --compare /tmp/before.json /tmp/after.json
+```
+
+Stricter than `pixdiff.js`, because it sees changes a screenshot cannot: a
+colour behind an opaque element, a property that only bites at another
+breakpoint. It also names every property that moved, which is what makes it
+useful for deciding what a change actually did rather than just that it did
+something. It does not replace `pixdiff.js` — that one compares what a person
+would see. Use both.
+
+## prune-css.mjs, prune-important.mjs, orphan-css.js, dead-css.js
+
+The CSS refactor tools, in the order they are useful:
+
+- `orphan-css.js` — reports rules whose class or id names appear nowhere outside
+  `css/`. Read-only.
+- `prune-css.mjs` — applies that (`--write`), or lists what it would cut
+  (`--list`).
+- `prune-important.mjs` — `--report` counts `!important` by property; `--all`
+  strips them; `--keep a,b,c` keeps them only on the named properties and their
+  shorthands. Pair with `computed.js`: strip everything, see which properties
+  moved, keep only those, verify identical.
+- `dead-css.js` — the DOM-matching alternative to `orphan-css.js`. Drives the
+  site through every state and reports selectors that matched nothing. More
+  thorough in principle, but it has blind spots (a class added on scroll, or
+  only when a query returns a row), so it is a report to read, never an edit.

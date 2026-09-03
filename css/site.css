@@ -18,6 +18,19 @@
  *
  * Adding new rules: the bottom of this file is the end of the cascade, so that
  * is where an override goes. Put a component with its neighbours if it has any.
+ *
+ * On !important (item 3.2e, 2026-09-03): 187 of the 815 that used to be here
+ * were doing nothing at all and are gone. The 628 that remain were each shown
+ * to be load-bearing — remove them and a computed value actually moves. They
+ * survive on exactly these properties, which are the ones this stylesheet
+ * genuinely fights itself over: colour, background, border colour and radius,
+ * outline colour, the font properties, line-height, padding, margin, width,
+ * height, min-height, top/bottom, grid-template-rows, transform-origin,
+ * text-decoration-color.
+ *
+ * If you are tempted to add another one, that list is the honest picture of
+ * where this stylesheet's specificity conflicts actually live. The method is in
+ * scripts/qa/prune-important.mjs and scripts/qa/computed.js.
  * ═══════════════════════════════════════════════════════════════════════ */
 
 
@@ -382,7 +395,7 @@ a:hover {
 
 /* Ken Burns slow zoom on hero background images */
 .hero[style*="background-image"] {
-  background-size: cover !important;
+  background-size: cover;
   animation: kenBurns 25s ease-in-out infinite alternate;
 }
 
@@ -2655,14 +2668,14 @@ a:focus-visible,
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+    scroll-behavior: auto;
   }
   /* Hide autoplay WebM logos; fall back to sibling PNG */
-  video[autoplay] { display: none !important; }
-  video[autoplay] + img { display: inline-block !important; }
+  video[autoplay] { display: none; }
+  video[autoplay] + img { display: inline-block; }
 }
 
 /* ── TRACK RECORD landmark (homepage, between EA banner and two-entry split) ── */
@@ -3027,7 +3040,7 @@ a:focus-visible,
 @media (min-width: 901px) {
   .sidebar,
   .mobile-header,
-  .sidebar-overlay { display: none !important; }
+  .sidebar-overlay { display: none; }
 }
 
 body.has-topnav .main {
@@ -3248,7 +3261,7 @@ body.has-topnav .main {
      row entirely while the menu is open, via opacity/pointer-events + zero
      dimensions — NOT display, since campaign.js sets this element's
      display inline on its own date-driven schedule and we don't want to race
-     that (an !important display:none here would still "win" today, but would
+     that (an display:none here would still "win" today, but would
      silently stop working the moment campaign.js's own inline value order
      changes). */
   .topnav.is-open .nav-cta-launch {
@@ -3581,7 +3594,7 @@ body.has-topnav {
 @media (min-width: 769px) {
   body.has-topnav .sidebar,
   body.has-topnav .mobile-header,
-  body.has-topnav .sidebar-overlay { display: none !important; }
+  body.has-topnav .sidebar-overlay { display: none; }
 }
 
 /* Only the active .page shows (mirrors main.js behavior, keeps preview clean) */
@@ -3764,9 +3777,9 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 #page-home .entries .entry:hover .thumb .bg { transform: scale(1.06); }
 
 /* Per-entry crop tuning — lift ProSeries dancer so her face clears the foot bar */
-#page-home .entries .entry .thumb .bg { background-repeat: no-repeat !important; }
+#page-home .entries .entry .thumb .bg { background-repeat: no-repeat; }
 #page-home .entries .entry[href="#adult-company"] .thumb .bg {
-  background-position: center 40% !important;
+  background-position: center 40%;
 }
 
 /* <img> variant for ProSeries — full pixel control with object-position */
@@ -4088,7 +4101,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 /* Safety net: never trap content invisible if the observer/JS fails, and show
    reveals without animation for reduced-motion users. */
 @media (prefers-reduced-motion: reduce) {
-  .reveal, #page-home .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .reveal, #page-home .reveal { opacity: 1; transform: none; transition: none; }
 }
 
 /* ═══ HOME — FORK LEAD-IN ═══
@@ -4145,8 +4158,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   #page-home .entries { grid-template-columns: 1fr; min-height: auto; }
   #page-home .entries .entry { min-height: 70vh; padding: 56px 24px 48px; }
   #page-home .photo-grid .ph {
-    grid-column: span 12 !important;
-    aspect-ratio: 3/2 !important;
+    grid-column: span 12;
+    aspect-ratio: 3/2;
     margin-top: 0 !important;
   }
 
@@ -4387,14 +4400,14 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 #page-home .hero-foot { margin-top: 12px; }
 #page-home .hero::before,
-#page-home .hero::after { display: none !important; }
+#page-home .hero::after { display: none; }
 
 @media (max-width: 1024px) {
   #page-home .hero { grid-template-columns: 1fr; }
   #page-home .hero-photo {
     min-height: 320px; max-height: 420px; order: 1;
   }
-  #page-home .hero-photo img { object-position: 55% 35% !important; }
+  #page-home .hero-photo img { object-position: 55% 35%; }
   #page-home .hero-text { order: 2; padding: 40px 32px 40px; gap: 18px; align-items: center; text-align: center; }
   #page-home .hero-text::before { display: none; }
   #page-home .hero h1 { font-size: clamp(44px, 10vw, 72px); }
@@ -4760,7 +4773,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
    ============================================================ */
 
 #page-proseries { padding: 0; }
-#page-proseries > * { max-width: none !important; }
+#page-proseries > * { max-width: none; }
 
 /* PS HERO — Family Pink band, forest ink (loud dwdPS volume) */
 #page-proseries .ps-hero {
@@ -4769,41 +4782,41 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   background: var(--pink) !important;
   padding: 0 !important;
   min-height: 540px;
-  text-align: left !important;
+  text-align: left;
   color: var(--forest) !important;
 }
 #page-proseries .ps-hero::before,
-#page-proseries .ps-hero::after { display: none !important; }
-#page-proseries .ps-hero .hero-logo-section { display: none !important; }
+#page-proseries .ps-hero::after { display: none; }
+#page-proseries .ps-hero .hero-logo-section { display: none; }
 #page-proseries .ps-hero .label {
   font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
-  letter-spacing: .26em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .26em;
+  text-transform: uppercase;
   color: var(--forest) !important;
   opacity: .85;
   margin: 0 !important;
   padding: 0 !important;
   background: none !important;
   border: 0 !important;
-  display: inline-block !important;
+  display: inline-block;
 }
 #page-proseries .ps-hero h1 {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-weight: 700 !important;
   font-size: clamp(88px, 12vw, 184px) !important;
   line-height: 0.84 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   color: var(--forest) !important;
   margin: 18px 0 0 !important;
   padding: 0 !important;
-  text-shadow: none !important;
+  text-shadow: none;
 }
 #page-proseries .ps-hero h1 em,
 #page-proseries .ps-hero h1 .ps-block {
-  font-style: normal !important;
+  font-style: normal;
   display: inline-block;
   background: var(--forest);
   color: var(--pink);
@@ -4814,7 +4827,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 #page-proseries .ps-hero .sub {
   font-family: "Cormorant Garamond", serif !important;
-  font-style: italic !important;
+  font-style: italic;
   font-size: clamp(18px, 1.6vw, 24px) !important;
   font-weight: 500 !important;
   color: var(--forest) !important;
@@ -4826,24 +4839,24 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-family: 'Outfit', sans-serif !important;
   font-size: 13px !important;
   font-weight: 600 !important;
-  letter-spacing: .14em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .14em;
+  text-transform: uppercase;
   color: var(--forest) !important;
   opacity: .82;
   margin: 0 !important;
-  display: inline-block !important;
+  display: inline-block;
 }
 #page-proseries .ps-hero .btn {
   margin-top: 30px !important;
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 16px 26px !important;
   font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700 !important;
-  letter-spacing: .24em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .24em;
+  text-transform: uppercase;
   text-decoration: none !important;
   background: var(--forest) !important;
   color: var(--ivory) !important;
@@ -4902,12 +4915,12 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
    Split heroes: Collective / Teachers / Gallery
    ============================================================ */
 #page-adult-company .ac-hero--split {
-  display: grid !important;
-  grid-template-columns: 1.1fr 1fr !important;
-  gap: 0 !important;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 0;
   padding: 0 !important;
-  text-align: left !important;
-  align-items: center !important;
+  text-align: left;
+  align-items: center;
   min-height: 540px;
 }
 #page-adult-company .ac-hero--split .ac-hero-text-stack {
@@ -4915,10 +4928,10 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 
 #page-teachers .tch-hero--split {
-  display: grid !important;
-  grid-template-columns: 1.1fr 1fr !important;
-  gap: 0 !important;
-  align-items: center !important;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 0;
+  align-items: center;
 }
 #page-teachers .tch-hero--split .tch-hero-text {
   padding: 44px 64px 36px !important;
@@ -5032,8 +5045,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(48px, 5.5vw, 88px) !important;
   line-height: 0.96 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   margin: 0 0 12px !important;
   color: var(--oh-cream-warm) !important;
 }
@@ -5052,8 +5065,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-weight: 700 !important;
   font-size: clamp(28px, 2.6vw, 38px) !important;
-  text-transform: uppercase !important;
-  letter-spacing: .005em !important;
+  text-transform: uppercase;
+  letter-spacing: .005em;
   color: var(--oh-cream-warm) !important;
   margin: 0 0 18px !important;
 }
@@ -5062,15 +5075,15 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
-  letter-spacing: .22em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .22em;
+  text-transform: uppercase;
 }
 #page-contact .btn-primary {
   font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700 !important;
-  letter-spacing: .22em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .22em;
+  text-transform: uppercase;
 }
 
 #page-early-access { position: relative; }
@@ -5086,17 +5099,17 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700 !important;
-  letter-spacing: .22em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .22em;
+  text-transform: uppercase;
 }
 
 @media (max-width: 980px) {
   #page-adult-company .ac-hero--split,
   #page-teachers .tch-hero--split,
   .gallery-hero.gallery-hero--split {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
     min-height: 0;
-    max-height: none !important;
+    max-height: none;
   }
   #page-adult-company .ac-hero--split .ac-hero-text-stack,
   #page-teachers .tch-hero--split .tch-hero-text,
@@ -5119,7 +5132,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   .gallery-hero.gallery-hero--split .hero-logo-big img {
     width: 160px !important;
     height: 160px !important;
-    max-width: 50vw !important;
+    max-width: 50vw;
     object-fit: contain;
   }
 }
@@ -5127,12 +5140,12 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 
 /* The Program · Why ProSeries — full-bleed bands replacing .content-section */
 #page-proseries .content-section {
-  max-width: none !important;
+  max-width: none;
   margin: 0 !important;
   padding: 64px 64px !important;
   background: var(--ivory) !important;
   color: var(--forest) !important;
-  text-align: left !important;
+  text-align: left;
   width: 100% !important;
 }
 #page-proseries .content-section.alt {
@@ -5141,7 +5154,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 #page-proseries .content-section.alt h2 { color: var(--pink) !important; }
 #page-proseries .content-section .chapter {
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   gap: 12px;
   font-family: 'Outfit', sans-serif !important;
@@ -5155,7 +5168,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 #page-proseries .content-section.alt .chapter { color: var(--pink) !important; } /* small accent on the dark (forest) ground */
 #page-proseries .content-section .chapter::before,
-#page-proseries .content-section .chapter::after { display: none !important; }
+#page-proseries .content-section .chapter::after { display: none; }
 #page-proseries .content-section .chapter .no {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-weight: 700 !important;
@@ -5169,8 +5182,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(48px, 6vw, 96px) !important;
   line-height: 0.92 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   margin: 0 0 24px !important;
   /* Ground ink on ivory. Family Pink on ivory measures 2.23:1 and fails even
      the 3:1 large-text bar; forest is 15.56:1. Same call already made for the
@@ -5192,9 +5205,9 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 
 /* Why ProSeries — 4-item grid as alternating coral / blush / forest / cream blocks */
 #page-proseries .why-grid {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 2px !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
   margin-top: 32px !important;
   background: var(--forest);
   border: 1px solid var(--oh-rule);
@@ -5225,8 +5238,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(26px, 2.4vw, 38px) !important;
   line-height: 0.96 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   margin: 0 0 14px !important;
   color: inherit !important;
 }
@@ -5246,7 +5259,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 
 /* The Three Tracks — full poster panels */
 #page-proseries .track-detail-section {
-  max-width: none !important;
+  max-width: none;
   padding: 0 !important;
   background: var(--forest);
 }
@@ -5261,8 +5274,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(56px, 7vw, 112px) !important;
   line-height: 0.9 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   margin: 0 0 20px !important;
   color: var(--pink) !important;
 }
@@ -5338,19 +5351,19 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 #page-proseries .track-tab:focus-visible { outline: 2px solid var(--pink); outline-offset: -2px; }
 
 /* Hide non-active panels */
-#page-proseries .track-detail[data-active="false"] { display: none !important; }
+#page-proseries .track-detail[data-active="false"] { display: none; }
 
 #page-proseries .track-detail-grid {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 0 !important;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
 }
 
 #page-proseries .track-detail {
   position: relative;
   padding: 32px 56px !important;
   border: 0 !important;
-  display: grid !important;
+  display: grid;
   /* Wide screens: head/desc in col 1, then Schedule | Training | Pricing as cols 2-4 */
   grid-template-columns: 1.05fr 1.4fr 1fr 1fr;
   grid-template-areas:
@@ -5434,15 +5447,15 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
-  letter-spacing: .26em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .26em;
+  text-transform: uppercase;
   color: inherit !important;
   opacity: .8;
   margin-bottom: 12px !important;
 }
 #page-proseries .td-name-row {
-  display: flex !important;
-  align-items: baseline !important;
+  display: flex;
+  align-items: baseline;
   flex-wrap: wrap;
   gap: 14px 24px;
 }
@@ -5456,11 +5469,11 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
      you earn, not asides. Note document.fonts.check('italic 700 ...') returns
      TRUE here even though the face does not exist — it reports what the family
      can render, synthesis included, so it cannot be used to detect this. */
-  font-style: normal !important;
+  font-style: normal;
   font-size: clamp(56px, 6.4vw, 104px) !important;
   line-height: 0.86 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   margin: 0 !important;
   color: inherit !important;
 }
@@ -5479,7 +5492,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
    slanted and slightly cheap. Pre-existing, not introduced by the font swap. */
 #page-proseries .td-price-amount {
   font-family: "Bebas Neue", sans-serif !important;
-  font-style: normal !important;
+  font-style: normal;
   font-size: clamp(36px, 4vw, 56px) !important;
   font-weight: 400 !important;
   letter-spacing: .005em;
@@ -5505,7 +5518,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 #page-proseries .td-description {
   font-family: "Cormorant Garamond", serif !important;
-  font-style: italic !important;
+  font-style: italic;
   font-size: 17px !important;
   line-height: 1.4 !important;
   max-width: 38ch;
@@ -5538,8 +5551,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   border: 0 !important;
 }
 #page-proseries .td-day-head {
-  display: flex !important;
-  align-items: baseline !important;
+  display: flex;
+  align-items: baseline;
   gap: 10px;
   margin-bottom: 2px !important;
 }
@@ -5560,7 +5573,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   opacity: .65;
 }
 #page-proseries .td-slots {
-  list-style: none !important;
+  list-style: none;
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -5605,7 +5618,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   color: inherit !important;
 }
 #page-proseries .td-included {
-  list-style: none !important;
+  list-style: none;
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -5623,12 +5636,12 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 
 #page-proseries .td-fees {
-  list-style: none !important;
+  list-style: none;
   padding: 0 !important;
   margin: 0 !important;
 }
 #page-proseries .td-fees li {
-  display: flex !important;
+  display: flex;
   justify-content: space-between;
   align-items: baseline;
   padding: 3px 0;
@@ -5667,7 +5680,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 #page-proseries .td-allin-amount {
   font-family: "Bebas Neue", sans-serif !important;
-  font-style: normal !important;
+  font-style: normal;
   /* Bebas Neue ships weight 400 only — anything heavier is faux-bolded. */
   font-weight: 400 !important;
   font-size: 32px !important;
@@ -5689,7 +5702,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 #page-proseries .pricing-notes {
   padding: 48px 64px !important;
   margin: 0 !important;
-  max-width: none !important;
+  max-width: none;
   border: 0 !important;
 }
 #page-proseries .pricing-onetime {
@@ -5708,8 +5721,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(40px, 5vw, 64px) !important;
   line-height: 0.94 !important;
-  text-transform: uppercase !important;
-  letter-spacing: .005em !important;
+  text-transform: uppercase;
+  letter-spacing: .005em;
   margin: 0 0 22px !important;
   color: var(--pink);
 }
@@ -5717,12 +5730,12 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 #page-proseries .pricing-onetime-rows {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0 !important;
+  gap: 0;
   border-top: 1px solid var(--forest);
   border-bottom: 1px solid var(--forest);
 }
 #page-proseries .pricing-onetime .pot-row {
-  display: grid !important;
+  display: grid;
   grid-template-columns: 1fr 1.4fr auto;
   gap: 16px 24px;
   align-items: baseline;
@@ -5747,7 +5760,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 #page-proseries .pricing-onetime .pot-amount {
   font-family: "Bebas Neue", sans-serif !important;
-  font-style: normal !important;
+  font-style: normal;
   font-size: 36px;
   letter-spacing: .005em;
 }
@@ -5806,7 +5819,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   padding: 56px 64px !important;
   background: var(--ivory) !important;
   color: var(--forest) !important;
-  max-width: none !important;
+  max-width: none;
   border: 0 !important;
 }
 
@@ -5815,8 +5828,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(40px, 5vw, 72px) !important;
   line-height: 0.94 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   margin: 0 0 16px !important;
   color: var(--pink) !important;
 }
@@ -5833,8 +5846,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   padding: 64px 64px !important;
   background: var(--pink) !important;
   color: var(--forest) !important;
-  text-align: left !important;
-  max-width: none !important;
+  text-align: left;
+  max-width: none;
   margin: 0 !important;
 }
 #page-proseries #proseries-interest h2 {
@@ -5842,8 +5855,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(56px, 7vw, 112px) !important;
   line-height: 0.9 !important;
-  text-transform: uppercase !important;
-  letter-spacing: .005em !important;
+  text-transform: uppercase;
+  letter-spacing: .005em;
   margin: 0 0 24px !important;
   color: var(--forest) !important;
 }
@@ -5870,7 +5883,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   color: var(--pink) !important;
 }
 #page-proseries #proseries-interest .btn {
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 16px 26px !important;
@@ -5888,8 +5901,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   padding: 48px 64px !important;
   background: var(--forest) !important;
   color: var(--ivory) !important;
-  text-align: left !important;
-  max-width: none !important;
+  text-align: left;
+  max-width: none;
   margin: 0 !important;
   border: 0 !important;
 }
@@ -5898,8 +5911,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(32px, 3.6vw, 48px) !important;
   line-height: 0.96 !important;
-  text-transform: uppercase !important;
-  letter-spacing: .005em !important;
+  text-transform: uppercase;
+  letter-spacing: .005em;
   margin: 0 0 12px !important;
   color: var(--pink) !important;
 }
@@ -5915,7 +5928,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 /* CTA on ps: pink bg + forest label (matches .arm-cta ps pattern in arms.css) */
 #page-proseries .cta-banner .btn,
 #page-proseries .cta-banner .btn-primary {
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 16px 26px !important;
@@ -5952,8 +5965,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(72px, 10vw, 168px) !important;
   line-height: 0.86 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   margin: 0 !important;
   color: var(--oh-cream-warm) !important;
 }
@@ -5962,43 +5975,43 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(40px, 5vw, 64px) !important;
   line-height: 0.94 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   margin: 0 0 22px !important;
 }
 #page-shop h3 {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-weight: 700 !important;
   font-size: clamp(22px, 2.2vw, 30px) !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
 }
 
-#page-shop > * { max-width: none !important; }
+#page-shop > * { max-width: none; }
 
 /* Merch hero — coral band with poster type */
 #page-shop .merch-poll-hero {
   padding: 56px 64px !important;
   background: var(--oh-coral-deep) !important;
   color: var(--oh-cream-warm) !important;
-  text-align: left !important;
-  max-width: none !important;
+  text-align: left;
+  max-width: none;
   margin: 0 !important;
 }
-#page-shop .merch-poll-hero .hero-logo-section { display: none !important; }
+#page-shop .merch-poll-hero .hero-logo-section { display: none; }
 #page-shop .merch-poll-hero h1 {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-weight: 700 !important;
   font-size: clamp(64px, 9vw, 144px) !important;
   line-height: 0.86 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   color: var(--oh-cream-warm) !important;
   margin: 0 !important;
 }
 #page-shop .merch-poll-hero .sub {
   font-family: "Cormorant Garamond", serif !important;
-  font-style: italic !important;
+  font-style: italic;
   font-size: clamp(16px, 1.3vw, 20px) !important;
   font-weight: 500 !important;
   color: var(--oh-cream-warm) !important;
@@ -6008,14 +6021,14 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 
 /* Merch form wrapper */
-#page-shop .merch-poll { padding: 0 !important; margin: 0 !important; max-width: none !important; }
-#page-shop .merch-poll-form { padding: 0 !important; margin: 0 !important; max-width: none !important; }
+#page-shop .merch-poll { padding: 0 !important; margin: 0 !important; max-width: none; }
+#page-shop .merch-poll-form { padding: 0 !important; margin: 0 !important; max-width: none; }
 
 /* Category cards — 3 poster panels w/ alternating accents */
 #page-shop .merch-categories {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr 1fr !important;
-  gap: 2px !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
   background: var(--oh-rule);
   padding: 0 !important;
   margin: 0 !important;
@@ -6107,12 +6120,12 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 #page-shop .merch-extras {
   padding: 48px 64px !important;
   background: var(--oh-green-ink) !important;
-  text-align: left !important;
+  text-align: left;
   margin: 0 !important;
 }
 #page-shop .merch-extras .btn,
 #page-shop .merch-extras .btn-blush {
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 16px 26px !important;
@@ -6149,7 +6162,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 
 /* Responsive */
 @media (max-width: 980px) {
-  #page-shop .merch-categories { grid-template-columns: 1fr !important; }
+  #page-shop .merch-categories { grid-template-columns: 1fr; }
   #page-shop .merch-poll-hero { padding: 44px 28px !important; }
   #page-shop .merch-category-card { padding: 32px 28px !important; }
   #page-shop .merch-extras { padding: 36px 28px !important; }
@@ -6165,17 +6178,17 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   padding: 56px 64px !important;
   background: var(--pink) !important;
   color: var(--forest) !important;
-  text-align: left !important;
+  text-align: left;
   margin: 0 !important;
 }
 #page-proseries .ps-whatelse h2 {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-weight: 700 !important;
   font-size: clamp(48px, 6vw, 88px) !important;
-  text-align: left !important;
+  text-align: left;
   line-height: 0.92 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   color: var(--forest) !important;
   margin: 0 !important;
 }
@@ -6193,7 +6206,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
    ============================================================ */
 
 #page-teachers { padding: 0; background: var(--oh-green-deep); color: var(--oh-cream); }
-#page-teachers > * { max-width: none !important; }
+#page-teachers > * { max-width: none; }
 #page-teachers * { border-radius: 0 !important; }
 
 /* Hero band */
@@ -6224,8 +6237,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(72px, 10vw, 168px) !important;
   line-height: 0.86 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   color: var(--oh-cream-warm) !important;
   margin: 0 !important;
 }
@@ -6268,8 +6281,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(56px, 7vw, 112px) !important;
   line-height: 0.88 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
+  letter-spacing: .005em;
+  text-transform: uppercase;
   color: var(--oh-cream-warm) !important;
   margin: 0 !important;
 }
@@ -6285,7 +6298,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 .tch-role {
   font-family: "Cormorant Garamond", serif !important;
-  font-style: italic !important;
+  font-style: italic;
   font-size: 20px !important;
   color: var(--oh-cream-warm) !important;
   opacity: .9;
@@ -6353,7 +6366,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 .tch-rotation-title {
   font-family: "Cormorant Garamond", serif !important;
-  font-style: italic !important;
+  font-style: italic;
   font-size: clamp(28px, 3vw, 42px) !important;
   font-weight: 500 !important;
   color: var(--oh-cream-warm) !important;
@@ -6373,8 +6386,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   font-weight: 700 !important;
   font-size: clamp(32px, 3.6vw, 56px) !important;
   line-height: 0.96 !important;
-  text-transform: uppercase !important;
-  letter-spacing: .005em !important;
+  text-transform: uppercase;
+  letter-spacing: .005em;
   color: var(--oh-cream-warm) !important;
   margin: 0 0 12px !important;
 }
@@ -6389,7 +6402,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 }
 .tch-outro .btn,
 .tch-outro .btn-primary {
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 16px 26px !important;
@@ -6438,7 +6451,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 
   #page-proseries .content-section { padding: 48px 28px !important; }
   #page-proseries .track-detail { grid-template-columns: 1fr; gap: 28px; padding: 44px 28px !important; }
-  #page-proseries .why-grid { grid-template-columns: 1fr !important; }
+  #page-proseries .why-grid { grid-template-columns: 1fr; }
   #page-proseries .td-intro,
   #page-proseries .pricing-onetime,
   #page-proseries .pricing-notes,
@@ -6464,7 +6477,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 @media (max-width: 720px) {
   /* ProSeries hero — collapse to single column, tighten the giant circle */
   #page-proseries .ps-hero {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
     min-height: 0 !important;
     padding-top: 16px !important;
   }
@@ -6505,11 +6518,11 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   #page-proseries .track-tab {
     padding: 14px 10px !important;
     min-height: 56px;
-    gap: 4px !important;
+    gap: 4px;
   }
   #page-proseries .track-tab .tt-num {
     font-size: 9px !important;
-    letter-spacing: .2em !important;
+    letter-spacing: .2em;
   }
   #page-proseries .track-tab .tt-name {
     font-size: clamp(22px, 6.5vw, 30px) !important;
@@ -6649,7 +6662,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 
 
 /* ─── Gallery grid ──────────────────────────────────────────── */
-.gallery-grid { margin-top: 16px !important; gap: 12px !important; }
+.gallery-grid { margin-top: 16px !important; gap: 12px; }
 
 /* ─── Mobile: even tighter ──────────────────────────────────── */
 @media (max-width: 720px) {
@@ -6753,7 +6766,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 
 /* ── REGISTER topnav CTA: pulse like the audition pill ── */
 .topnav .nav-cta {
-  transition: background 0.25s ease, color 0.25s ease, transform 0.25s var(--ease-spring), box-shadow 0.25s ease !important;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s var(--ease-spring), box-shadow 0.25s ease;
   animation: nav-cta-pulse 3s ease-in-out infinite;
 }
 .topnav .nav-cta:hover,
@@ -6781,14 +6794,14 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 
 /* ── Generic .btn: bouncier curve + soft shadow + tiny scale ── */
 .btn {
-  transition: transform 0.25s var(--ease-spring), background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, letter-spacing 0.25s ease !important;
+  transition: transform 0.25s var(--ease-spring), background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, letter-spacing 0.25s ease;
 }
 .btn:hover {
   transform: translateY(-2px) scale(1.02);
 }
 .btn:active {
   transform: translateY(0) scale(0.98);
-  transition-duration: 0.08s !important;
+  transition-duration: 0.08s;
 }
 
 /* ── Top nav links: animated underline ── */
@@ -6878,8 +6891,8 @@ textarea:focus {
   #page-home .photo-grid .ph,
   .gallery-grid .gallery-item,
   .track-record .tr-stat {
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
-    animation: none !important;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    animation: none;
   }
   .topnav .nav-cta:hover,
   .tri-card:hover,
@@ -6893,9 +6906,9 @@ textarea:focus {
   #page-home .photo-grid .ph:hover,
   .gallery-grid .gallery-item:hover,
   .track-record .tr-stat:hover {
-    transform: none !important;
+    transform: none;
   }
-  .footer-links a:hover svg { transform: none !important; }
+  .footer-links a:hover svg { transform: none; }
 }
 
 /* ───── Anchor scroll offset for fixed topnav ─────
@@ -6934,8 +6947,8 @@ textarea:focus {
    identically to a filter on .topnav itself. */
 .topnav {
   background: transparent !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 .topnav::before {
   content: "";
@@ -6999,7 +7012,7 @@ html {
 .tch-card:active,
 .topnav .nav-cta:active {
   transform: scale(0.985);
-  transition-duration: var(--rb-dur-fast) !important;
+  transition-duration: var(--rb-dur-fast);
 }
 
 /* :focus-visible ring — replaces default/blue outlines site-wide */
@@ -7012,7 +7025,7 @@ textarea:focus-visible,
 select:focus-visible,
 [role="button"]:focus-visible {
   outline: 2px solid var(--rb-terracotta) !important;
-  outline-offset: 3px !important;
+  outline-offset: 3px;
 }
 
 /* Themed thin scrollbar (desktop) */
@@ -7078,9 +7091,9 @@ footer.site-footer .footer-brand img {
    end-states so nothing "settles" into an offset position. */
 @media (prefers-reduced-motion: reduce) {
   .topnav nav a {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
   .btn:active,
   .tri-card:active,
@@ -7092,7 +7105,7 @@ footer.site-footer .footer-brand img {
   .tch-card:active,
   .topnav .nav-cta:active,
   .track-detail:hover {
-    transform: none !important;
+    transform: none;
   }
 }
 
@@ -8245,7 +8258,7 @@ footer.site-footer .footer-brand img {
      - #ps-hero-cta       (the pre-fold .ps-hero CTA)
      - the topnav Express Interest .nav-cta
    Each context has its own pre-existing pink rule at a different
-   specificity (some !important, some carrying 1-2 ids), so the
+   specificity (some, some carrying 1-2 ids), so the
    selectors below are written to match or exceed each one exactly
    rather than relying on one generic rule + hoping it wins the cascade. */
 #page-proseries .ps-hero .btn.s1-cta-sky,
@@ -8660,13 +8673,13 @@ footer.site-footer .footer-brand img {
 }
 
 /* Title-card centering must out-rank #page-proseries .content-section p */
-#ps-story .ps-scene--card p.ps-card-line { text-align: center !important; margin: 0 0 10px; }
-#ps-story .ps-scene--card p.ps-card-sub { text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
+#ps-story .ps-scene--card p.ps-card-line { text-align: center; margin: 0 0 10px; }
+#ps-story .ps-scene--card p.ps-card-sub { text-align: center; margin-left: auto !important; margin-right: auto !important; }
 
 /* Cast stays on the forest ground in every Season One state (poster-pages
    paints non-.alt content-sections ivory; our ivory text needs dark) */
 #page-proseries #ps-cast { background: var(--forest) !important; color: var(--ivory) !important; }
-#ps-story .ps-scene--card p.ps-card-line { margin-left: auto !important; margin-right: auto !important; max-width: max-content !important; }
+#ps-story .ps-scene--card p.ps-card-line { margin-left: auto !important; margin-right: auto !important; max-width: max-content; }
 #page-proseries #ps-cast h2 { color: var(--ivory) !important; }
 #page-proseries #ps-cast .ps-cast-lead, #page-proseries #ps-cast > p { color: var(--ivory-dim, #e8ddd0) !important; }
 
@@ -9118,13 +9131,13 @@ footer.site-footer .footer-brand img {
 .tch-hero--split .tch-hero-text { min-width: 0; }
 
 /* Teachers hero: "Dixon Bowles" was rendering as "DIXON Bowles" because
-   poster-pages.css sets text-transform: uppercase !important on .tch-name
+   poster-pages.css sets text-transform: uppercase on .tch-name
    and only resets it (text-transform: none) on the nested <em> that wraps
    "Bowles" — so the plain-text "Dixon" outside the <em> stayed uppercased
    while "Bowles" did not. Overriding text-transform back to none on the
-   whole element (still !important to win the cascade) restores natural
+   whole element (still to win the cascade) restores natural
    casing for both words; the <em> keeps its own italic/pink treatment. */
-#page-teachers .tch-name { text-transform: none !important; }
+#page-teachers .tch-name { text-transform: none; }
 
 /* ══════════ Teachers — rotation faculty roster ══════════
    Full-roster replacement for the old single-teacher stub. Scoped rf-
@@ -9288,7 +9301,7 @@ footer.site-footer .footer-brand img {
 .page h2[tabindex="-1"]:focus,
 .page[tabindex="-1"]:focus {
   outline: none !important;
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 /* 2. "The Program" stat slate sits on the IVORY section but its numerals were
@@ -9312,7 +9325,7 @@ footer.site-footer .footer-brand img {
 /* 5. Merch hero: uppercase forced "DWDPROSERIES" (brand casing is dwdPROSERIES)
       and the word broke mid-string at 390px. Casing comes from the markup now. */
 #page-shop .merch-poll-hero h1 {
-  text-transform: none !important;
+  text-transform: none;
   font-size: clamp(44px, 9vw, 144px) !important;
   overflow-wrap: anywhere;
 }
@@ -9693,7 +9706,7 @@ footer.site-footer .footer-brand img {
 }
 
 /* Focus ring. tighten.css sets a terracotta :focus-visible ring site-wide
-   with !important, chosen for the forest and ivory grounds. Nobody checked it
+   with, chosen for the forest and ivory grounds. Nobody checked it
    against Family Pink: #C8614B on #FF7AA2 measures 1.62:1, under the 3:1 UI
    floor and visually just brown mud. Forest on pink is 6.99:1. Overridden here
    for this band only; the site-wide ring is untouched everywhere else. */
@@ -9708,7 +9721,7 @@ footer.site-footer .footer-brand img {
 #page-proseries #proseries-interest .ps-if-submit:focus-visible,
 #page-proseries #proseries-interest .ps-if-follow:focus-visible {
   outline: 2px solid var(--forest, #0c1f17) !important;
-  outline-offset: 2px !important;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -9936,7 +9949,7 @@ footer.site-footer .footer-brand img {
 
 @media (max-width: 980px) {
   #page-teachers .tch-hero--split {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
   }
   #page-teachers .tch-hero--split { min-height: 0; }
   #page-teachers .tch-hero--split .tch-hero-photo {
@@ -10082,7 +10095,7 @@ footer.site-footer .footer-brand img {
 
 #page-adult-company .ac-hero--photo-forward {
   position: relative;
-  grid-template-columns: 1fr !important;
+  grid-template-columns: 1fr;
 }
 
 /* Directional wash behind the type. Lifting the flat scrim let the dancers
@@ -10129,10 +10142,10 @@ footer.site-footer .footer-brand img {
   #page-adult-company .ac-hero--photo-forward .hero-logo-big img {
     width: 116px !important;
     height: 116px !important;
-    max-width: 40vw !important;
+    max-width: 40vw;
   }
   #page-adult-company .ac-hero--photo-forward .ac-hero-text-stack {
-    text-align: left !important;
+    text-align: left;
     max-width: none;
   }
 }
@@ -10158,7 +10171,7 @@ footer.site-footer .footer-brand img {
   border-top: 1px solid rgba(250, 243, 232, 0.14);
   border-bottom: 1px solid rgba(250, 243, 232, 0.14);
   margin: 0 !important;
-  text-align: left !important;
+  text-align: left;
 }
 
 .ep-recaps-eyebrow {
@@ -10269,7 +10282,7 @@ footer.site-footer .footer-brand img {
    looked ready to submit again. */
 .ep-recaps-form[hidden],
 .ps-if-form[hidden] {
-  display: none !important;
+  display: none;
 }
 
 
@@ -10319,8 +10332,8 @@ footer.site-footer .footer-brand img {
   /* Belt and braces: main.js never starts the video under this preference, and
      if it somehow did it would stay invisible. */
   #page-home .hero-photo .hero-loop { display: none; }
-  #page-home .hero-photo .caption--loop { display: none !important; }
-  #page-home .hero-photo .caption--still { display: block !important; }
+  #page-home .hero-photo .caption--loop { display: none; }
+  #page-home .hero-photo .caption--still { display: block; }
 }
 
 
