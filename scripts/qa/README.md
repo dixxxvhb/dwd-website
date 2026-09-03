@@ -133,3 +133,22 @@ The CSS refactor tools, in the order they are useful:
   site through every state and reports selectors that matched nothing. More
   thorough in principle, but it has blind spots (a class added on scroll, or
   only when a query returns a row), so it is a report to read, never an edit.
+
+## live.js
+
+End-to-end behaviour check of everything dynamic: the Episode Guide rendering
+from its view, the Collective's empty state, the hero loop playing and crediting
+the right dancer, chair counts following a single edit, the interest form's
+validation, its live track preview, its success state, the exact payload it
+sends, and the absence of any off-domain CTA on any route.
+
+```bash
+node scripts/qa/live.js
+```
+
+**It disables the service worker before submitting anything, and aborts if one
+is still in control.** Puppeteer's page-level request interception cannot see
+fetches made by a controlling service worker, so a stubbed INSERT sails straight
+past it into the live database. That is how two junk rows ended up in
+`audition_registrations` on 2026-09-03. If this check ever aborts, do not
+"just try again" — find out why the worker is still there.
