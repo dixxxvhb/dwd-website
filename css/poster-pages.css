@@ -8,13 +8,13 @@
 
 /* All H1/H2/H3/H4 on the three poster pages start from a clean slate.
    Anton is the workhorse for big block lines. Cormorant italic for accents.
-   Outfit/Manrope for body copy. */
+   Outfit for body copy. (Manrope was retired sitewide 2026-09-02, item 3.2.) */
 #page-proseries,
 .amuse-feature,
 #page-shop {
   background: var(--oh-green-deep);
   color: var(--oh-cream);
-  font-family: "Manrope", "Outfit", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Outfit', "Outfit", "Helvetica Neue", Arial, sans-serif;
 }
 
 #page-proseries *,
@@ -39,7 +39,7 @@
 .pp-band--green { background: var(--oh-green-deep); color: var(--oh-cream); border-top: 1px solid var(--oh-rule); border-bottom: 1px solid var(--oh-rule); }
 
 .pp-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .26em;
@@ -116,7 +116,7 @@
 }
 
 .pp-body {
-  font-family: "Manrope", "Outfit", sans-serif;
+  font-family: 'Outfit', "Outfit", sans-serif;
   font-size: 15px;
   line-height: 1.6;
   letter-spacing: .005em;
@@ -125,7 +125,7 @@
 .pp-body p:last-child { margin-bottom: 0; }
 
 .pp-meta {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: .08em;
@@ -139,7 +139,7 @@
   align-items: center;
   gap: 10px;
   padding: 16px 26px;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .24em;
@@ -240,7 +240,7 @@
 #page-proseries .ps-hero::after { display: none !important; }
 #page-proseries .ps-hero .hero-logo-section { display: none !important; }
 #page-proseries .ps-hero .label {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: .26em !important;
@@ -287,7 +287,7 @@
   margin: 22px 0 12px !important;
 }
 #page-proseries .ps-hero .tagline {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 13px !important;
   font-weight: 600 !important;
   letter-spacing: .14em !important;
@@ -303,7 +303,7 @@
   align-items: center;
   gap: 10px;
   padding: 16px 26px !important;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700 !important;
   letter-spacing: .24em !important;
@@ -448,7 +448,7 @@
   background: var(--oh-green-deep);
 }
 .ig-follow .igf-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .26em;
@@ -496,7 +496,7 @@
   color: var(--oh-cream);
 }
 .igf-sub {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: .2em;
@@ -545,7 +545,7 @@
 #page-contact .contact-form-side::before {
   content: "Reach out";
   display: block;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .26em;
@@ -564,14 +564,14 @@
 }
 #page-contact .contact-detail .dlabel {
   color: var(--oh-coral) !important;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
 }
 #page-contact .btn-primary {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700 !important;
   letter-spacing: .22em !important;
@@ -596,7 +596,7 @@
 }
 #page-early-access .ea-detail-label,
 #page-early-access .ea-live-badge {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-weight: 700 !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
@@ -610,7 +610,7 @@
   line-height: 1 !important;
 }
 #page-early-access .btn-blush {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700 !important;
   letter-spacing: .22em !important;
@@ -688,7 +688,7 @@
   display: inline-flex !important;
   align-items: center;
   gap: 12px;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700;
   letter-spacing: .26em;
@@ -725,7 +725,7 @@
 #page-proseries .content-section.alt h2 { color: var(--pink) !important; }
 #page-proseries .content-section p,
 #page-proseries .content-section .section-lead {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: clamp(15px, 1.05vw, 17px) !important;
   line-height: 1.65 !important;
   max-width: 70ch;
@@ -775,7 +775,7 @@
   color: inherit !important;
 }
 #page-proseries .why-item p {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 14px !important;
   line-height: 1.6 !important;
   color: inherit !important;
@@ -811,7 +811,7 @@
   color: var(--pink) !important;
 }
 #page-proseries .td-intro p {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 15px !important;
   max-width: 60ch;
   color: var(--ivory);
@@ -837,7 +837,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   position: relative;
   transition: background .22s ease, color .22s ease;
 }
@@ -975,7 +975,7 @@
   background: transparent !important;
 }
 #page-proseries .td-eyebrow {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: .26em !important;
@@ -1031,7 +1031,7 @@
   color: inherit !important;
 }
 #page-proseries .td-price-unit {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 13px !important;
   font-weight: 700;
   letter-spacing: .12em;
@@ -1039,7 +1039,7 @@
   opacity: .8;
 }
 #page-proseries .td-meta {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 13px !important;
   font-weight: 600;
   letter-spacing: .08em;
@@ -1064,7 +1064,7 @@
   border-top: 1px solid currentColor !important;
 }
 #page-proseries .td-section h4 {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 10.5px !important;
   font-weight: 700;
   letter-spacing: .26em;
@@ -1096,7 +1096,7 @@
   color: inherit !important;
 }
 #page-proseries .td-day-hours {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: .14em;
@@ -1112,7 +1112,7 @@
   display: flex;
   gap: 10px;
   padding: 1px 0;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12.5px !important;
   line-height: 1.35;
   color: inherit !important;
@@ -1124,7 +1124,7 @@
   flex: 0 0 74px;
 }
 #page-proseries .td-tag {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 9px;
   font-weight: 700;
   letter-spacing: .18em;
@@ -1141,7 +1141,7 @@
 #page-proseries .track-detail[data-track="elite"] .td-tag { background: rgba(10,31,23,.12); }
 
 #page-proseries .td-genres {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 13px !important;
   font-weight: 600;
   letter-spacing: .04em;
@@ -1154,7 +1154,7 @@
   margin: 0 !important;
 }
 #page-proseries .td-included li {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12.5px !important;
   line-height: 1.45;
   padding: 1px 0;
@@ -1177,7 +1177,7 @@
   align-items: baseline;
   padding: 3px 0;
   border-bottom: 1px solid currentColor !important;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12.5px !important;
   color: inherit !important;
   opacity: .92;
@@ -1202,7 +1202,7 @@
    not the old light-on-light overlay (that pairing was for the blush ground). */
 #page-proseries .track-detail[data-track="elite"] .td-allin { background: rgba(10,31,23,.10) !important; }
 #page-proseries .td-allin-label {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 10.5px !important;
   font-weight: 700;
   letter-spacing: .22em;
@@ -1219,7 +1219,7 @@
   color: inherit !important;
 }
 #page-proseries .td-allin-amount span {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700;
   letter-spacing: .14em;
@@ -1282,7 +1282,7 @@
   text-transform: uppercase;
 }
 #page-proseries .pricing-onetime .pot-meta {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: .12em;
@@ -1296,7 +1296,7 @@
   letter-spacing: .005em;
 }
 #page-proseries .pricing-notes p {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 15px !important;
   line-height: 1.6 !important;
   margin: 0 0 14px !important;
@@ -1309,7 +1309,7 @@
   margin: 0 0 18px;
 }
 #page-proseries .pricing-notes li {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 14px;
   line-height: 1.6;
   padding: 4px 0;
@@ -1354,7 +1354,7 @@
   border: 0 !important;
 }
 #page-proseries .coming-soon-eyebrow {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .26em;
@@ -1373,7 +1373,7 @@
   color: var(--pink) !important;
 }
 #page-proseries .coming-soon-banner p {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 15px !important;
   line-height: 1.6;
   max-width: 62ch;
@@ -1400,7 +1400,7 @@
   color: var(--forest) !important;
 }
 #page-proseries #proseries-interest p {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 16px !important;
   line-height: 1.6;
   max-width: 64ch;
@@ -1426,7 +1426,7 @@
   align-items: center;
   gap: 10px;
   padding: 16px 26px !important;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700;
   letter-spacing: .24em;
@@ -1456,7 +1456,7 @@
   color: var(--pink) !important;
 }
 #page-proseries .cta-banner p {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 15px !important;
   line-height: 1.6;
   max-width: 60ch;
@@ -1471,7 +1471,7 @@
   align-items: center;
   gap: 10px;
   padding: 16px 26px !important;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700;
   letter-spacing: .24em;
@@ -1519,7 +1519,7 @@
   text-align: left;
 }
 .amuse-feature .ac-hero .label {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: .26em !important;
@@ -1565,7 +1565,7 @@
   margin: 22px 0 4px !important;
 }
 .amuse-feature .ac-hero .tagline {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700 !important;
   letter-spacing: .22em !important;
@@ -1614,7 +1614,7 @@
   display: inline-flex !important;
   align-items: center;
   gap: 12px;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700;
   letter-spacing: .26em;
@@ -1711,7 +1711,7 @@
   color: inherit !important;
 }
 .amuse-feature .cc-slot-name {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 15px !important;
   font-weight: 700 !important;
   display: block !important;
@@ -1720,7 +1720,7 @@
   background: none !important;
 }
 .amuse-feature .cc-slot-desc {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 13px !important;
   margin: 4px 0 0 !important;
   opacity: .8;
@@ -1743,7 +1743,7 @@
 .amuse-feature .cc-section h3 { color: inherit !important; }
 .amuse-feature .cc-meta {
   margin-top: 22px !important;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 600;
   letter-spacing: .12em;
@@ -1755,7 +1755,7 @@
   display: inline-flex;
   align-items: center;
   padding: 10px 16px;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700;
   letter-spacing: .22em;
@@ -1768,7 +1768,7 @@
 }
 .amuse-feature .payment-chip:hover { background: currentColor; color: var(--oh-coral-deep) !important; }
 .amuse-feature .cc-payment-label {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700;
   letter-spacing: .22em;
@@ -1783,7 +1783,7 @@
   gap: 10px;
   padding: 16px 26px !important;
   margin-top: 22px !important;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700;
   letter-spacing: .24em;
@@ -1863,7 +1863,7 @@
   background: var(--oh-blush) !important;
 }
 .amuse-feature .coming-up-card .label {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: .26em !important;
@@ -1885,7 +1885,7 @@
   line-height: 0.95 !important;
 }
 .amuse-feature .coming-up-card .meta {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 600;
   letter-spacing: .14em;
@@ -1925,7 +1925,7 @@
 }
 .amuse-feature .ce-teaser:nth-child(2):hover { background: var(--oh-coral-ink) !important; }
 .amuse-feature .ce-teaser-eyebrow {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .26em;
@@ -1950,7 +1950,7 @@
   margin: 6px 0 14px !important;
 }
 .amuse-feature .ce-teaser-arrow {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700;
   letter-spacing: .22em;
@@ -1992,7 +1992,7 @@
   text-align: left;
 }
 .pf-hero-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .26em;
@@ -2030,7 +2030,7 @@
   opacity: .92;
 }
 .pf-hero-tagline {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .22em;
@@ -2100,7 +2100,7 @@
   margin: 0 0 12px !important;
 }
 .amuse-feature p {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 15px !important;
   line-height: 1.6 !important;
   margin: 0 0 14px !important;
@@ -2251,7 +2251,7 @@
   color: inherit !important;
 }
 #page-shop .merch-cat-items {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 600;
   letter-spacing: .08em;
@@ -2286,7 +2286,7 @@
   align-items: center;
   gap: 10px;
   padding: 16px 26px !important;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700;
   letter-spacing: .24em;
@@ -2312,7 +2312,7 @@
 #page-shop .merch-vote-success .small { font-size: 13px; }
 
 #page-shop p {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 15px !important;
   line-height: 1.6;
 }
@@ -2371,7 +2371,7 @@
 /* Card 1 sits on ivory (light, body-size label) -> terra-dark. Card 2 sits on
    forest (dark, body-size label) -> pink. Rule 4/5 applied exactly. */
 #page-proseries .ps-whatelse-grid .coming-up-card .label {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: .26em !important;
@@ -2395,7 +2395,7 @@
   margin: 0 0 14px !important;
 }
 #page-proseries .ps-whatelse-grid .coming-up-card .meta {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 600;
   letter-spacing: .14em;
@@ -2404,7 +2404,7 @@
   margin: 0 0 14px !important;
 }
 #page-proseries .ps-whatelse-grid .coming-up-card p {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   color: inherit !important;
   opacity: .85;
   font-size: 14.5px !important;
@@ -2442,7 +2442,7 @@
   align-items: flex-start;
 }
 .tch-hero-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .28em;
@@ -2488,7 +2488,7 @@
   gap: 14px;
 }
 .tch-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .28em;
@@ -2524,7 +2524,7 @@
   margin: 4px 0 0 !important;
 }
 .tch-bio {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 14.5px !important;
   line-height: 1.6 !important;
   color: var(--oh-cream) !important;
@@ -2586,7 +2586,7 @@
   flex-wrap: wrap;
 }
 .tch-rotation-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .28em;
@@ -2649,7 +2649,7 @@
   margin: 0 0 12px !important;
 }
 .tch-outro p {
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 15px !important;
   line-height: 1.6;
   color: var(--oh-cream-warm) !important;
@@ -2663,7 +2663,7 @@
   align-items: center;
   gap: 10px;
   padding: 16px 26px !important;
-  font-family: "Manrope", sans-serif !important;
+  font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700;
   letter-spacing: .24em;

@@ -2588,7 +2588,7 @@ a:focus-visible,
   z-index: 2;
 }
 .dcc-presents {
-  font-family: "Outfit", "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.30em;
@@ -2606,7 +2606,7 @@ a:focus-visible,
   text-shadow: 4px 4px 0 var(--dcc-terra);
 }
 .dcc-tag {
-  font-family: "Outfit", "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.26em;
@@ -2712,7 +2712,7 @@ a:focus-visible,
   padding: 10px 40px;
   background: var(--dcc-ivory);
   color: var(--dcc-forest);
-  font-family: "Outfit", "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.14em;

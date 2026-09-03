@@ -27,7 +27,7 @@
 .audition-cta-card,
 .audition-band,
 .audition-ticker {
-  font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Outfit', "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -211,7 +211,7 @@
   z-index: 2;
 }
 .ac-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: .22em;
@@ -229,7 +229,7 @@
   letter-spacing: .005em;
 }
 .ac-meta {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 13.5px;
   font-weight: 500;
   letter-spacing: .02em;
@@ -259,7 +259,7 @@
   line-height: 1;
 }
 .ac-date-time {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .18em;
@@ -267,7 +267,7 @@
   text-transform: uppercase;
 }
 .ac-date-note {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .12em;
@@ -294,7 +294,7 @@
   padding: 16px 28px;
   background: var(--oh-coral);
   color: var(--oh-cream);
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .22em;
@@ -318,7 +318,7 @@
   flex-wrap: wrap;
   max-width: 1100px;
   margin: 14px auto 0;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 12px;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -379,7 +379,7 @@
   margin-bottom: 22px;
 }
 .triptych-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .28em;
@@ -439,7 +439,7 @@
   gap: 12px;
 }
 .tri-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: .24em;
@@ -452,7 +452,7 @@
   padding: 4px 9px;
   background: rgba(217,119,87,.12);
   color: var(--oh-coral);
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .18em;
@@ -496,7 +496,7 @@
   letter-spacing: .005em;
 }
 .tri-meta {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 13px;
   line-height: 1.45;
   color: var(--oh-mute);
@@ -508,7 +508,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: .22em;
@@ -591,7 +591,7 @@
   display: block;
   margin: 40px 0 0;
   color: var(--oh-green-ink);
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 /* --- Band 1 · Coral header (AUDITION / DAY) ------------------- */
@@ -610,7 +610,7 @@
   justify-content: center;
 }
 .ab-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .24em;
@@ -727,7 +727,7 @@
   letter-spacing: .005em;
 }
 .ab-plan-desc {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .04em;
@@ -759,7 +759,7 @@
   letter-spacing: .005em;
 }
 .ab-slot-label {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .18em;
@@ -787,7 +787,7 @@
   letter-spacing: .005em;
 }
 .ab-dropin-row {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 13.5px;
   font-weight: 500;
   display: flex;
@@ -819,7 +819,7 @@
   align-items: center;
   gap: 8px;
   padding: 14px 22px;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: .22em;
@@ -854,7 +854,7 @@
   gap: 0;
 }
 .ab-win-eyebrow {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: .22em;
@@ -879,7 +879,7 @@
   opacity: .85;
 }
 .ab-win-url {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 12.5px;
   font-weight: 600;
   letter-spacing: .08em;
@@ -948,7 +948,7 @@
   color: var(--oh-cream-warm);
   border-top: 1px solid rgba(0,0,0,.35);
   box-shadow: 0 -6px 18px rgba(0,0,0,.35);
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   padding-bottom: env(safe-area-inset-bottom);
 }
 /* Compensator so submit buttons / page-foot don't get covered */
@@ -1016,7 +1016,7 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
   background: var(--oh-blush);
   color: var(--oh-green-ink);
   padding: 0 22px;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: .22em;
@@ -1066,7 +1066,7 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
    Deep-green band, coral numerals (Anton), cream labels.
    ============================================================ */
 .audition-clock {
-  font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Outfit', "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
@@ -1192,7 +1192,7 @@ body.has-audition-ticker { padding-bottom: calc(56px + env(safe-area-inset-botto
 .audition-wrap {
   position: relative;
   overflow: hidden;
-  font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Outfit', "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
