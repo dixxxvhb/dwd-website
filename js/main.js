@@ -1098,10 +1098,12 @@
     var loaded = false;
     function begin() {
       if (video.readyState >= 3) { start(); return; }
+      // play() on a preload="none" video starts the fetch itself. The old
+      // load()-then-play() pair made Chrome open the file twice (2026-09-03:
+      // 1.3 MB of range requests for a 700 KB loop on every home load).
       if (!loaded) {
         loaded = true;
-        video.addEventListener('canplay', start, { once: true });
-        video.load();
+        start();
       }
     }
 
@@ -1136,9 +1138,22 @@
     var slides = document.querySelectorAll(sel);
     if (slides.length < 2) return;
     var i = 0;
+    // Slides after the first carry data-src/data-srcset (2026-09-03) so a
+    // Teachers visit fetches one photo, not twelve. Hydrate the slide that
+    // is about to show, and the one after it so the fade never waits.
+    function hydrate(el) {
+      if (!el || !el.dataset.src) return;
+      if (el.dataset.srcset) el.srcset = el.dataset.srcset;
+      el.src = el.dataset.src;
+      delete el.dataset.src;
+      delete el.dataset.srcset;
+    }
+    hydrate(slides[1]);
     setInterval(function () {
       slides[i].classList.remove('active');
       i = (i + 1) % slides.length;
+      hydrate(slides[i]);
+      hydrate(slides[(i + 1) % slides.length]);
       slides[i].classList.add('active');
     }, 5000);
   });

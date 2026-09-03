@@ -262,6 +262,29 @@ heading already used.
 **Still open on Dixon:** lazy images without width/height on ProSeries, comp
 logos, the dwdC next-class date.
 
+### Fresh-eyes pass on the live site (2026-09-03, Fable)
+
+Walked dancewithdixon.com cold on a phone and a desktop, then measured what a
+first visit actually downloads (`bypass SW`, DPR 2). Five fixes, all on `main`.
+
+| Found | Fix |
+|---|---|
+| ProSeries opener too slow. On a direct `/proseries/` load the entrance cue landed ~0.8s in (IntersectionObserver waits for a rendering opportunity), then the CSS delays put the headline at 2.4s and the button past 3s. On a phone that is a dark, empty first screen. | `eras.js` cues on the same tick the reveal gate opens (800ms safety pass keeps the observer path). Delays halved in `site.css`: logo 0.05s, headline 0.55s, CTA 1.3s. Repeat views in a session get `.s1-cue--fast` (everything lands in 0.35s). Measured: headline visible at 1.5s, was 2.5s. |
+| Logo PNGs at 280-300 KB each. The home hero mark was the 1280px `DWD-green.png` (284 KB) rendered at 360px and loaded eagerly on every route because `#page-home` is in every shell. ProSeries opened with three of them (870 KB). | WebP set in `images/logos/v2/` at render sizes: `DWD-green-400/800`, `DWDC-green-640/1280`, `ProSeries-green-640/1280`, `ProSeries-pink-320`, `DWD-pink-160/320`, `DWDPS-*-320/640`. PNG masters stay. Home hero mark 284 KB to 59 KB (2x). |
+| Hero loop fetched twice. `load()` then `play()` on a `preload="none"` video opened two range requests: 1.3 MB for a 700 KB file, phones included. | `play()` alone starts the fetch. One request now. |
+| `poster="hero-1600.jpg"` (57 KB) downloaded on every route, never shown (the still sits under the loop at opacity 0). | Poster removed. |
+| Teachers photo shuffle loaded all twelve 1600px slides at once (2.7 MB of images on desktop); `loading="lazy"` cannot defer stacked in-viewport images. | Slides 2-12 carry `data-src`/`data-srcset` behind a 1px placeholder; the cycler in `main.js` hydrates the next slide and the one after. Desktop images 2.76 MB to 1.15 MB. |
+
+Cold first-visit images: home 642 KB to 370 KB (phone), ProSeries 1.42 MB to
+0.66 MB (desktop). `sw.js` v39. `scripts/qa/shoot.js` all clean on every route
+at both widths after the change.
+
+**Left alone, for Dixon:** the Collective page's A·Muse card says "Adult
+dancers · ages 16+" while the rest of the page says 18+ (a fact question, not
+a copy fix). The footer mark is the pink colourway at 60px, where the ivory
+disc reads more like a sticker than the nav's green ring; a design call, not a
+bug. The 139 lazy images with no width/height remain the one open perf item.
+
 ## 0. Ground truth the implementer must not re-derive
 
 | Fact | Value |

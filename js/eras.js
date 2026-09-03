@@ -259,15 +259,54 @@
       s1el.classList.add('s1-cue');
       return;
     }
+    // Second look in the same session plays the short version of the
+    // sequence (see .s1-cue--fast in site.css). Set before the cue lands so
+    // the CSS is already in place when it does.
+    try {
+      if (window.sessionStorage && sessionStorage.getItem('dwd-s1-seen')) {
+        s1el.classList.add('s1-cue--fast');
+      }
+    } catch (e) { /* storage blocked: full sequence, no harm */ }
+
+    function cue() {
+      if (s1el.classList.contains('s1-cue')) return;
+      s1el.classList.add('s1-cue');
+      try { sessionStorage.setItem('dwd-s1-seen', '1'); } catch (e) { /* ignore */ }
+    }
+
     var s1io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          s1el.classList.add('s1-cue');
+          cue();
           s1io.unobserve(s1el);
         }
       });
     }, { threshold: 0.2 });
     s1io.observe(s1el);
+
+    // Direct loads of /proseries/ (2026-09-03): the observer only reports
+    // after the next rendering opportunity, which on a cold phone load
+    // landed the cue ~0.8s after the band was already on screen. Once
+    // initEras has opened the gate, cue on the same tick if the band is
+    // showing; the 800ms pass is the safety net for a late gate.
+    function cueIfShowing() {
+      if (s1el.classList.contains('s1-cue')) return;
+      if (s1el.style.display === 'none') return;
+      var page = document.getElementById('page-proseries');
+      if (!page || !page.classList.contains('active')) return;
+      var r = s1el.getBoundingClientRect();
+      if (r.height === 0 || r.top > window.innerHeight * 0.8) return;
+      cue();
+    }
+    function afterInit() {
+      setTimeout(cueIfShowing, 0);
+      setTimeout(cueIfShowing, 800);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', afterInit);
+    } else {
+      afterInit();
+    }
   })();
 
   // Re-check every 30s so visitors on the page at an era boundary still see it
