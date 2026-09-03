@@ -48,7 +48,14 @@ const FREEZE = `
       const errors = [], failed = [];
       page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
       page.on('pageerror', e => errors.push('pageerror: ' + e.message));
-      page.on('requestfailed', r => failed.push(r.url() + ' :: ' + (r.failure() || {}).errorText));
+      // A media file aborted mid-download is not a failure: this script loads
+      // "/" first to clear the service worker, then navigates to the route, and
+      // navigating away from a playing <video> always cancels its range request.
+      page.on('requestfailed', r => {
+        const err = (r.failure() || {}).errorText || '';
+        if (err === 'net::ERR_ABORTED' && /\.(mp4|webm|mov|m4v)(\?|$)/i.test(r.url())) return;
+        failed.push(r.url() + ' :: ' + err);
+      });
       page.on('response', r => { if (r.status() >= 400) failed.push(r.status() + ' ' + r.url()); });
 
       const url = BASE + '/#' + route;

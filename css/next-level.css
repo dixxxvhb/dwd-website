@@ -936,3 +936,54 @@
 .ps-if-form[hidden] {
   display: none !important;
 }
+
+
+/* ============================================================
+   2.1  HOME HERO LOOP
+   The video sits above the still and only becomes visible once
+   it is actually playing (js/main.js adds .hero-loop-on). Every
+   failure mode — reduced motion, refused autoplay, no JS, codec
+   miss, blocked media — leaves the still and its own caption in
+   place, which is the page exactly as it shipped before this.
+   ============================================================ */
+
+#page-home .hero-photo .hero-loop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 2:3 source in a 0.65:1 to 0.93:1 container: cover crops the top and
+     bottom, and the dancer sits slightly above centre in the frame. */
+  object-position: 50% 38%;
+  opacity: 0;
+  transition: opacity 420ms ease-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#page-home .hero-photo.hero-loop-on .hero-loop {
+  opacity: 1;
+}
+
+/* One thing animates. With the loop up, the still's Ken Burns drift is a
+   second motion nobody can see anyway, so it stops. */
+#page-home .hero-photo.hero-loop-on img {
+  animation: none;
+}
+
+/* Captions swap with the state. Both are in the markup so the right credit is
+   present even with JS off. */
+#page-home .hero-photo .caption--loop { display: none; }
+#page-home .hero-photo.hero-loop-on .caption--still { display: none; }
+#page-home .hero-photo.hero-loop-on .caption--loop { display: block; }
+
+#page-home .hero-photo .caption { z-index: 2; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Belt and braces: main.js never starts the video under this preference, and
+     if it somehow did it would stay invisible. */
+  #page-home .hero-photo .hero-loop { display: none; }
+  #page-home .hero-photo .caption--loop { display: none !important; }
+  #page-home .hero-photo .caption--still { display: block !important; }
+}

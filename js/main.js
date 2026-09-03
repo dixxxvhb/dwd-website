@@ -1032,6 +1032,74 @@
     });
   });
 
+  // ── HOME HERO LOOP (item 2.1) ──
+  // Plays only when the visitor has not asked for reduced motion, and only
+  // once the browser says it can actually play through. Until then the still
+  // underneath is what shows, which is also what a no-JS, no-video or
+  // blocked-media visitor gets. The caption swaps with the state rather than
+  // crediting one dancer over footage of another.
+  (function heroLoop() {
+    var video = document.getElementById('hero-loop');
+    if (!video) return;
+
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduced && reduced.matches) return;
+
+    var photo = video.closest('.hero-photo');
+
+    function on() {
+      if (photo) photo.classList.add('hero-loop-on');
+    }
+    function off() {
+      if (photo) photo.classList.remove('hero-loop-on');
+    }
+
+    video.addEventListener('playing', on);
+    video.addEventListener('error', off);
+    video.addEventListener('stalled', off);
+
+    function start() {
+      var attempt = video.play();
+      // Autoplay can be refused (Low Power Mode, data saver, a per-site
+      // setting). That is a normal outcome, not an error to log: the still
+      // stays and the page is unchanged.
+      if (attempt && attempt.catch) attempt.catch(function () { off(); });
+    }
+
+    var loaded = false;
+    function begin() {
+      if (video.readyState >= 3) { start(); return; }
+      if (!loaded) {
+        loaded = true;
+        video.addEventListener('canplay', start, { once: true });
+        video.load();
+      }
+    }
+
+    // Only fetch and play while the hero is actually on screen. The video lives
+    // on #page-home, which is display:none on every other route, so an
+    // unconditional load meant every visit to /#proseries still pulled the file
+    // and then aborted the request. An observer never fires for an element with
+    // no box, so this costs nothing off Home and pauses on scroll-away.
+    if ('IntersectionObserver' in window && photo) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) begin();
+          else if (!video.paused) video.pause();
+        });
+      }, { threshold: 0.15 }).observe(photo);
+    } else {
+      begin();
+    }
+
+    // If the visitor turns reduced motion on mid-session, stop.
+    if (reduced && reduced.addEventListener) {
+      reduced.addEventListener('change', function (e) {
+        if (e.matches) { video.pause(); off(); }
+      });
+    }
+  })();
+
   // ── TEACHERS / ABOUT PHOTO SLIDESHOW ──
   // (.about-slide was the original About page; .tch-slide is the new Teachers
   //  Dixon-director photo column. Same shuffle cycler handles both.)
