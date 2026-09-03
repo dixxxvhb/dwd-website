@@ -75,12 +75,26 @@ stray off-domain links), `contrast.js` (measures text-over-photo contrast on
 rendered pixels), `shot-element.js` (one component at one width). Session A
 ended `ALL CLEAN` on every route at both widths. `sw.js` at `v28`.
 
-**Test rows for Dixon to delete.** Two real submissions were made to prove the
-writes land:
-- `audition_registrations`, parent "TEST Claude", `test-claude@dancewithdixon.com`,
-  id `1feb5045-92cd-422b-b12f-32abef655b07`. Delete from the Director interest
-  queue.
-- `email_signups`, `test-claude@dancewithdixon.com`, source `episode-recaps-home`.
+**Test rows for Dixon to delete.** CORRECTED 2026-09-03 — there are four, not
+two. Three sit in the interest queue:
+
+- `audition_registrations`, "TEST Claude", `test-claude@dancewithdixon.com`,
+  id `1feb5045-92cd-422b-b12f-32abef655b07`. Deliberate, to prove RLS accepts
+  the payload.
+- `audition_registrations`, "Walkthrough Check", `walkthrough@example.com`.
+  Accidental.
+- `audition_registrations`, "Payload Shape Check", `shape@example.com`.
+  Accidental.
+- `email_signups`, `test-claude@dancewithdixon.com`, source
+  `episode-recaps-home`. Deliberate.
+
+Both accidental rows came from one wrong assumption, worth recording because it
+is not obvious: **Puppeteer's page-level request interception does not see
+fetches made by a controlling service worker.** A stubbed INSERT that was meant
+to be captured instead sailed past the stub into the live database, twice, while
+the run reported success either way. `scripts/qa/live.js` now neuters service
+worker registration before any page script runs, and hard-aborts rather than
+submit if a worker is still in control.
 
 ### Session B — excitement and plumbing (2026-09-02)
 
