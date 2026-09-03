@@ -7567,10 +7567,12 @@ footer.site-footer .footer-brand img {
 }
 
 #page-proseries .s1-eyebrow {
-  font-family: 'Bebas Neue', 'Outfit', sans-serif;
+  /* Outfit, not Bebas: Bebas is caps-only and the brand token reads dwdPROSERIES. */
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.28em;
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   color: var(--s1-silver);
 }
 
@@ -8125,10 +8127,11 @@ footer.site-footer .footer-brand img {
 }
 
 #s1-home-teaser .s1ht-eyebrow {
-  font-family: 'Bebas Neue', 'Outfit', sans-serif;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.28em;
-  font-size: 0.75rem;
+  font-size: 0.62rem;
   color: var(--s1-silver);
 }
 
@@ -10726,3 +10729,6 @@ footer.site-footer .footer-brand img {
     padding-top: 96px !important;
   }
 }
+
+/* Brand casing survives uppercase labels: dwdPROSERIES, never DWDPROSERIES. */
+.brand-case { text-transform: none; }
