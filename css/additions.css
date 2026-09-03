@@ -1821,9 +1821,11 @@ button[type="submit"]:disabled {
   margin-left: 8px;
 }
 
-/* Fix footer hidden behind fixed sidebar on desktop */
+/* Fix footer hidden behind fixed sidebar on desktop. Scoped to the legacy
+   sidebar layout only (2026-09-02): the topnav layout has no sidebar, and this
+   rule was indenting the footer 240px on every desktop page. */
 @media (min-width: 769px) {
-  .site-footer {
+  body:not(.has-topnav) .site-footer {
     margin-left: 240px;
   }
 }

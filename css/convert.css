@@ -436,3 +436,55 @@
   text-transform: uppercase;
   color: rgba(12, 31, 23, 0.7);
 }
+
+
+/* ============================================================
+   MERGE-READINESS FIXES (2026-09-02) — defects found in the full
+   desktop + 390px visual pass before the rebrand went live.
+   ============================================================ */
+
+/* 1. Route change moves focus to the page's first heading (main.js showPage)
+      for screen-reader users. Chrome paints a focus ring on that programmatic
+      focus on any fresh deep-linked load (/#teachers etc.), which drew a box
+      around every page H1. Headings are not interactive; no ring. */
+.page h1[tabindex="-1"]:focus,
+.page h2[tabindex="-1"]:focus,
+.page[tabindex="-1"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 2. "The Program" stat slate sits on the IVORY section but its numerals were
+      ivory (season1.css assumes a forest ground) — 3 / 40 / 1 were invisible. */
+#page-proseries #ps-program .s1-slate-num { color: var(--forest, #0c1f17); }
+#page-proseries #ps-program .s1-slate-lbl { color: #5f6f66; }
+#page-proseries #ps-program .s1-slate-item { border-right-color: rgba(12, 31, 23, 0.18); }
+
+/* 3. Cast wall footer line was jammed against the Pro row: poster-pages'
+      `#page-proseries .content-section p { margin: 0 0 14px !important }`
+      outranks story.css. */
+#page-proseries #ps-cast .ps-cast-footer { margin: 44px 0 0 !important; }
+
+/* 4. Home pull-quote: the two terracotta hairlines are absolutely positioned
+      at 50% height and cut straight through the quote text at phone widths. */
+@media (max-width: 640px) {
+  .pull-quote::before,
+  .pull-quote::after { display: none; }
+}
+
+/* 5. Merch hero: uppercase forced "DWDPROSERIES" (brand casing is dwdPROSERIES)
+      and the word broke mid-string at 390px. Casing comes from the markup now. */
+#page-shop .merch-poll-hero h1 {
+  text-transform: none !important;
+  font-size: clamp(44px, 9vw, 144px) !important;
+  overflow-wrap: anywhere;
+}
+/* The vote button sat in a half-width darker box under the three cards. */
+#page-shop .merch-extras {
+  background: transparent !important;
+  padding: 40px 64px 56px !important;
+}
+@media (max-width: 640px) {
+  #page-shop .merch-extras { padding: 32px 24px 48px !important; }
+}
+#page-shop .merch-poll-hero .merch-h1-word { display: block; }
