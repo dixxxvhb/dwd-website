@@ -151,5 +151,5 @@ Deploy is never part of these sessions. `main` merge = Dixon's word.
 1. Put the next dwdCOLLECTIVE class in the Director calendar (program adult) so 1.2 lights up. (Dixon 09-02: none scheduled yet, coming soon — the empty state in 1.2 is the launch state.)
 2. Jill's yes on the quote; two more parent quotes.
 3. ~~Merch~~ DECIDED 2026-09-02: ditch Merch for now (poll off nav; §1.3 default stands, no store).
-4. DNS alias so `register.dancewithdixon.com` → Netlify (still useful for the app even after 1.1).
+4. Register alias, PARTIAL 2026-09-02: DNS CNAME `register.dancewithdixon.com → dwd-director.netlify.app` is LIVE in the Wix zone. Netlify refused the alias: "cannot update domain aliases while primary custom domain is not set" — the app has no primary custom domain. Setting one moves the whole Director/Parent app to that name (netlify.app redirects to the primary) and requires updating Supabase auth redirect URLs and every emailed link. Decision for Dixon: name the app `app.dancewithdixon.com` (recommended, its own short session) or drop the alias, since 1.1 puts the form on the site anyway. Do NOT set `register.dancewithdixon.com` as the app's primary.
 5. ~~Hero clip~~ DECIDED 2026-09-02: Daisy firebird for now.
