@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v34';
+const CACHE_NAME = 'dwd-site-v35';
 const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',
@@ -13,18 +13,7 @@ const ASSETS = [
   '/contact/',
   '/privacy/',
   '/offline.html',
-  '/css/styles.css',
-  '/css/additions.css',
-  '/css/editorial.css',
-  '/css/rebrand.css',
-  '/css/audition.css',
-  '/css/poster-pages.css',
-  '/css/tighten.css',
-  '/css/arms.css',
-  '/css/season1.css',
-  '/css/story.css',
-  '/css/convert.css',
-  '/css/next-level.css',
+  '/css/site.css',
   '/images/logos/DWD-green.png',
   '/images/icons/icon-192.png',
   '/images/icons/icon-512.png'
