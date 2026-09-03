@@ -1257,3 +1257,101 @@
     gap: 4px;
   }
 }
+
+
+/* ============================================================
+   3.3  PARENT FAQ
+   #ps-faq sits between "Why ProSeries" and "Teaching
+   Philosophy", both .content-section.alt. Cormorant question,
+   Outfit answer, one row per question. No "only one open at a
+   time": a parent comparing the cost answer against the deposit
+   answer should not have to keep reopening one of them.
+   ============================================================ */
+
+#page-proseries #ps-faq .ps-faq-list {
+  max-width: 74ch;
+  margin: 26px 0 0;
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+}
+
+#page-proseries #ps-faq .ps-faq-item {
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+
+#page-proseries #ps-faq .ps-faq-q {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(19px, 2vw, 25px);
+  line-height: 1.25;
+  color: var(--ivory, #FAF3E8);
+}
+
+#page-proseries #ps-faq .ps-faq-q::-webkit-details-marker { display: none; }
+
+/* The affordance is a real mark, not a hover surprise. */
+#page-proseries #ps-faq .ps-faq-q::after {
+  content: '+';
+  flex: 0 0 auto;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--terra-soft, #e08d76);
+  transition: transform 160ms ease-out;
+}
+
+#page-proseries #ps-faq .ps-faq-item[open] .ps-faq-q::after {
+  content: '–';
+}
+
+#page-proseries #ps-faq .ps-faq-q:hover {
+  color: var(--terra-soft, #e08d76);
+}
+
+#page-proseries #ps-faq .ps-faq-q:focus-visible {
+  outline: 2px solid var(--terra, #C8614B);
+  outline-offset: 3px;
+}
+
+#page-proseries #ps-faq .ps-faq-a p {
+  font-family: var(--font-body), 'Outfit', sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: #c4baa8 !important;
+  max-width: 68ch;
+  margin: 0 0 20px !important;
+  padding-right: 40px;
+}
+
+#page-proseries #ps-faq .ps-faq-more {
+  margin: 26px 0 0 !important;
+}
+
+#page-proseries #ps-faq .ps-faq-more a {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  color: var(--terra-soft, #e08d76);
+  border-bottom: 1px solid rgba(224, 141, 118, 0.5);
+  padding-bottom: 2px;
+}
+
+#page-proseries #ps-faq .ps-faq-more a:hover {
+  color: var(--ivory, #FAF3E8);
+  border-bottom-color: var(--ivory, #FAF3E8);
+}
+
+@media (max-width: 640px) {
+  #page-proseries #ps-faq .ps-faq-q { padding: 16px 0; gap: 14px; }
+  #page-proseries #ps-faq .ps-faq-a p { padding-right: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #page-proseries #ps-faq .ps-faq-q::after { transition: none; }
+}
