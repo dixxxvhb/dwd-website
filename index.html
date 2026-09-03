@@ -328,7 +328,8 @@
           <div class="foot">
             <div class="facts">
               <div class="f"><div class="k">Tracks</div><div class="v track-badges"><span class="trk prep">Prep</span><span class="trk elite">Elite</span><span class="trk pro">Pro</span></div></div>
-              <div class="f"><div class="k">Chairs open</div><div class="v"><em>Prep 5 &middot; Elite 4 &middot; Pro 4</em></div></div>
+              <!-- Chair counts render from js/season.js (data-chairs). Edit there, not here. -->
+              <div class="f"><div class="k">Chairs open</div><div class="v"><em data-chairs="fork-open">Prep 5 &middot; Elite 4 &middot; Pro 4</em></div></div>
               <div class="f"><div class="k">Next step</div><div class="v"><em>Placement class</em></div></div>
               <!-- "Register to Audition" (hide-after Jun 12) and "Summer Intensive"
                    (reveal Jun 12 / hide Jul 11) facts deleted 2026-08-03 — both
@@ -1042,7 +1043,7 @@
         <div class="ps-cast-track">
           <div class="ps-cast-track-head">
             <span class="ps-cast-track-name">Prep</span>
-            <span class="ps-cast-chip ps-cast-chip--prep">5 of 10 chairs filled</span>
+            <span class="ps-cast-chip ps-cast-chip--prep" data-chairs="filled" data-chairs-track="prep">5 of 10 chairs filled</span>
           </div>
           <div class="ps-cast-grid">
             <div class="ps-cast-card">
@@ -1091,7 +1092,7 @@
         <div class="ps-cast-track">
           <div class="ps-cast-track-head">
             <span class="ps-cast-track-name">Elite</span>
-            <span class="ps-cast-chip ps-cast-chip--elite">6 of 10 chairs filled</span>
+            <span class="ps-cast-chip ps-cast-chip--elite" data-chairs="filled" data-chairs-track="elite">6 of 10 chairs filled</span>
           </div>
           <div class="ps-cast-grid">
             <div class="ps-cast-card">
@@ -1148,7 +1149,7 @@
         <div class="ps-cast-track">
           <div class="ps-cast-track-head">
             <span class="ps-cast-track-name">Pro</span>
-            <span class="ps-cast-chip ps-cast-chip--pro">6 of 10 chairs filled</span>
+            <span class="ps-cast-chip ps-cast-chip--pro" data-chairs="filled" data-chairs-track="pro">6 of 10 chairs filled</span>
           </div>
           <div class="ps-cast-grid">
             <div class="ps-cast-card">
@@ -1202,7 +1203,8 @@
           </div>
         </div>
 
-        <p class="ps-cast-footer">Prep has five chairs open. Elite has four. Pro has four. <a href="#ps-apply" class="ps-cast-footer-link">Express interest before the slate fills</a></p>
+        <!-- Sentence rendered from js/season.js (data-chairs="cast-footer"). -->
+        <p class="ps-cast-footer"><span data-chairs="cast-footer">Prep has five chairs open. Elite has four. Pro has four.</span> <a href="#ps-apply" class="ps-cast-footer-link">Express interest before the slate fills</a></p>
       </div>
 
       <!-- Three Tracks — full detail per card. Moved to the top of the section
@@ -1227,21 +1229,21 @@
             <span class="tt-num">Track One</span>
             <span class="tt-name">Prep</span>
             <span class="tt-meta"><span class="tt-meta-pre">Ages 5&ndash;9 &middot; 4 hrs/wk &middot; </span><span class="tt-price">$195/mo</span></span>
-            <span class="conv-tab-chip conv-tab-chip--prep">5 of 10 chairs</span>
+            <span class="conv-tab-chip conv-tab-chip--prep" data-chairs="short" data-chairs-track="prep">5 of 10 chairs</span>
           </button>
           <button class="track-tab" data-track-tab="elite" aria-selected="false" role="tab" id="tab-elite" aria-controls="panel-elite">
             <span class="tt-code">Track 02</span>
             <span class="tt-num">Track Two</span>
             <span class="tt-name">Elite</span>
             <span class="tt-meta"><span class="tt-meta-pre">Ages 8&ndash;12 &middot; 8+ hrs/wk &middot; </span><span class="tt-price">$310/mo</span></span>
-            <span class="conv-tab-chip conv-tab-chip--elite">6 of 10 chairs</span>
+            <span class="conv-tab-chip conv-tab-chip--elite" data-chairs="short" data-chairs-track="elite">6 of 10 chairs</span>
           </button>
           <button class="track-tab" data-track-tab="pro" aria-selected="false" role="tab" id="tab-pro" aria-controls="panel-pro">
             <span class="tt-code">Track 03</span>
             <span class="tt-num">Track Three</span>
             <span class="tt-name">Pro</span>
             <span class="tt-meta"><span class="tt-meta-pre">Ages 12+ &middot; 10+ hrs/wk &middot; </span><span class="tt-price">$360/mo</span></span>
-            <span class="conv-tab-chip conv-tab-chip--pro">6 of 10 chairs</span>
+            <span class="conv-tab-chip conv-tab-chip--pro" data-chairs="short" data-chairs-track="pro">6 of 10 chairs</span>
           </button>
         </div>
         <div class="track-detail-grid">
@@ -1470,11 +1472,12 @@
 
         <!-- CONVERSION BAND (item P1, added 2026-08-19) -->
         <div class="ps-conv-band">
-          <h3>Thirteen chairs remain.</h3>
+          <!-- Heading + chips render from js/season.js (data-chairs). -->
+          <h3 data-chairs="remain-title">Thirteen chairs remain.</h3>
           <div class="ps-conv-chairs">
-            <span class="conv-chip conv-chip--prep">PREP &middot; 5 of 10</span>
-            <span class="conv-chip conv-chip--elite">ELITE &middot; 6 of 10</span>
-            <span class="conv-chip conv-chip--pro">PRO &middot; 6 of 10</span>
+            <span class="conv-chip conv-chip--prep" data-chairs="band" data-chairs-track="prep">PREP &middot; 5 of 10</span>
+            <span class="conv-chip conv-chip--elite" data-chairs="band" data-chairs-track="elite">ELITE &middot; 6 of 10</span>
+            <span class="conv-chip conv-chip--pro" data-chairs="band" data-chairs-track="pro">PRO &middot; 6 of 10</span>
           </div>
           <p class="ps-conv-line">Exchange Dance &middot; 7409 Chancery Lane, Orlando &middot; weeknight classes by track</p>
           <a class="btn btn-blush" href="https://dwd-director.netlify.app/register?ref=ps-pricing" data-track="ps-pricing-express">Express Interest <em>&rarr;</em></a>
@@ -2312,6 +2315,8 @@
        js/main.js toggles [hidden] in showPage() for home/proseries/early-access. -->
   <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label"><span class="s1-when" data-s1-when="premiere midseason">Season One &middot; chairs open</span><span class="s1-when" data-s1-when="finale wrapped">Dance With Dixon</span></span><a class="mob-cta-btn" href="https://dwd-director.netlify.app/register?ref=mobile-bar" data-track="mobile-sticky-express">Express Interest &rarr;</a></div>
 
+  <!-- season.js first: it owns the chair numbers main.js/campaign.js never touch. -->
+  <script defer src="js/season.js"></script>
   <script defer src="js/main.js"></script>
   <script defer src="js/campaign.js"></script>
   <script defer src="js/analytics.js"></script>
