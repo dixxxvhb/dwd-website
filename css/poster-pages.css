@@ -23,201 +23,6 @@
   border-radius: 0 !important;
 }
 
-/* ───── Reusable atoms ───────────────────────────────────────── */
-
-.pp-band {
-  position: relative;
-  padding: 56px 64px;
-  isolation: isolate;
-}
-.pp-band--tight { padding: 36px 64px; }
-.pp-band--coral { background: var(--oh-coral-deep); color: var(--oh-cream-warm); }
-.pp-band--coral-light { background: var(--oh-coral); color: var(--oh-cream-warm); }
-.pp-band--blush { background: var(--oh-blush); color: var(--oh-green-ink); }
-.pp-band--cream { background: var(--oh-cream-warm); color: var(--oh-green-ink); }
-.pp-band--forest { background: var(--oh-green-ink); color: var(--oh-cream-warm); }
-.pp-band--green { background: var(--oh-green-deep); color: var(--oh-cream); border-top: 1px solid var(--oh-rule); border-bottom: 1px solid var(--oh-rule); }
-
-.pp-eyebrow {
-  font-family: 'Outfit', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  opacity: .85;
-  display: inline-block;
-  margin-bottom: 14px;
-}
-
-.pp-block,
-.pp-block * {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  letter-spacing: .01em;
-  line-height: 0.92;
-  text-transform: uppercase;
-}
-
-.pp-display {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700;
-  font-size: clamp(72px, 11vw, 168px);
-  line-height: 0.84;
-  letter-spacing: .005em;
-  text-transform: uppercase;
-  display: block;
-}
-.pp-display--split {
-  display: inline-block;
-  background: var(--oh-blush);
-  color: var(--oh-green-ink);
-  padding: 0 16px 6px;
-  margin-top: -2px;
-}
-.pp-display--row {
-  display: flex;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 6px 10px;
-}
-
-.pp-h2 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700;
-  font-size: clamp(40px, 5vw, 72px);
-  line-height: 0.92;
-  letter-spacing: .005em;
-  text-transform: uppercase;
-  margin: 0 0 18px;
-}
-.pp-h3 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700;
-  font-size: clamp(28px, 3vw, 44px);
-  line-height: 0.94;
-  letter-spacing: .005em;
-  text-transform: uppercase;
-  margin: 0 0 12px;
-}
-.pp-h4 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700;
-  font-size: clamp(22px, 2vw, 28px);
-  line-height: 1.0;
-  letter-spacing: .02em;
-  text-transform: uppercase;
-  margin: 0 0 10px;
-}
-
-.pp-italic {
-  font-family: "Cormorant Garamond", serif;
-  font-style: italic;
-  font-weight: 500;
-}
-
-.pp-body {
-  font-family: 'Outfit', "Outfit", sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
-  letter-spacing: .005em;
-}
-.pp-body p { margin: 0 0 16px; }
-.pp-body p:last-child { margin-bottom: 0; }
-
-.pp-meta {
-  font-family: 'Outfit', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  opacity: .8;
-}
-
-/* CTA buttons — square, tracked caps */
-.pp-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 26px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: background .2s ease, color .2s ease, transform .2s ease;
-  cursor: pointer;
-  border: 0;
-}
-.pp-cta em {
-  font-family: "Cormorant Garamond", serif;
-  font-style: italic;
-  font-size: 16px;
-  letter-spacing: 0;
-}
-.pp-cta--primary {
-  background: var(--oh-green-ink);
-  color: var(--oh-cream-warm);
-}
-.pp-cta--primary:hover { background: #000; transform: translateY(-1px); }
-.pp-cta--coral {
-  background: var(--oh-coral);
-  color: var(--oh-cream-warm);
-}
-.pp-cta--coral:hover { background: var(--oh-coral-ink); transform: translateY(-1px); }
-.pp-cta--outline {
-  background: transparent;
-  color: var(--oh-cream-warm);
-  border: 1px solid var(--oh-cream-warm);
-}
-.pp-cta--outline:hover { background: var(--oh-cream-warm); color: var(--oh-green-ink); }
-.pp-cta--outline-dark {
-  background: transparent;
-  color: var(--oh-green-ink);
-  border: 1px solid var(--oh-green-ink);
-}
-.pp-cta--outline-dark:hover { background: var(--oh-green-ink); color: var(--oh-cream-warm); }
-
-/* Hairline rules */
-.pp-rule {
-  display: block;
-  width: 60px;
-  height: 1px;
-  background: currentColor;
-  opacity: .35;
-  margin: 22px 0;
-}
-
-/* Photo slot — used inside coral/blush bands (replaces the IG ad's right-side photo) */
-.pp-photo {
-  position: relative;
-  overflow: hidden;
-  background: #1a0a14;
-  min-height: 320px;
-}
-.pp-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.pp-photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.45));
-}
-.pp-photo-caption {
-  position: absolute;
-  left: 24px;
-  bottom: 22px;
-  font-family: "SF Mono", Menlo, ui-monospace, monospace;
-  color: rgba(255,255,255,.65);
-  font-size: 10px;
-  letter-spacing: .2em;
-  z-index: 1;
-  text-transform: uppercase;
-}
 
 /* ============================================================
    PAGE: #page-proseries
@@ -391,47 +196,6 @@
   background: transparent;
 }
 
-.gallery-hero.gallery-hero--split {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 0;
-  align-items: center;
-  /* Compact — Gallery is browse content, so the hero stays thin and the IG strip
-     below lands above the fold on most desktop viewports.
-     `!important` defeats `tighten.css` which sets a 56px-vertical padding on the
-     generic `.gallery-hero` selector. The split variant manages its own padding
-     via the inner cells. */
-  padding: 0 !important;
-  min-height: 220px !important;
-  max-height: 260px !important;
-}
-.gallery-hero.gallery-hero--split .gallery-hero-text {
-  padding: 28px 48px 28px 64px;
-  text-align: left;
-}
-.gallery-hero.gallery-hero--split .gallery-hero-text h1 {
-  font-size: clamp(40px, 4.4vw, 64px) !important;
-  margin: 0 0 6px !important;
-  line-height: 1;
-}
-.gallery-hero.gallery-hero--split .gallery-hero-text p {
-  margin: 0 !important;
-  font-size: 14px;
-  color: var(--oh-mute);
-}
-.gallery-hero.gallery-hero--split .hero-logo-big {
-  min-height: 0;
-  padding: 16px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.gallery-hero.gallery-hero--split .hero-logo-big video,
-.gallery-hero.gallery-hero--split .hero-logo-big img {
-  width: min(260px, 100%);
-  height: auto;
-  display: block;
-}
 
 /* ============================================================
    Instagram "Follow Along" card on Gallery
@@ -585,30 +349,8 @@
   height: 6px;
   background: var(--pink);
 }
-#page-early-access .ea-headline {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(48px, 6vw, 96px) !important;
-  line-height: 0.94 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
-  margin: 16px 0 !important;
-}
-#page-early-access .ea-detail-label,
-#page-early-access .ea-live-badge {
-  font-family: 'Outfit', sans-serif !important;
-  font-weight: 700 !important;
-  letter-spacing: .22em !important;
-  text-transform: uppercase !important;
-}
-#page-early-access .ea-detail-value {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(20px, 2vw, 28px) !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
-  line-height: 1 !important;
-}
+
+
 #page-early-access .btn-blush {
   font-family: 'Outfit', sans-serif !important;
   font-size: 12px !important;
@@ -651,23 +393,6 @@
   }
 }
 
-/* PS GREEN BAR — under hero, Anton meta line (currently unused in markup) */
-.ps-meta-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px 28px;
-  padding: 22px 64px;
-  background: var(--forest);
-  color: var(--ivory);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700;
-  font-size: clamp(20px, 2vw, 28px);
-  letter-spacing: .005em;
-  text-transform: uppercase;
-  line-height: 1;
-}
-.ps-meta-bar .pp-dot { opacity: .5; }
 
 /* The Program · Why ProSeries — full-bleed bands replacing .content-section */
 #page-proseries .content-section {
@@ -1353,15 +1078,7 @@
   max-width: none !important;
   border: 0 !important;
 }
-#page-proseries .coming-soon-eyebrow {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--terra-dark);
-  margin-bottom: 14px;
-}
+
 #page-proseries .coming-soon-banner h2 {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-weight: 700 !important;
@@ -1483,34 +1200,7 @@
 }
 #page-proseries .cta-banner .btn-primary:hover { background: var(--forest) !important; color: var(--pink) !important; }
 
-/* ============================================================
-   .amuse-feature  — A·Muse section now lives INSIDE #page-adult-company.
-   Selectors below were originally scoped to .amuse-feature; this
-   sibling scope applies the same poster styling at the new home.
-   ============================================================ */
 
-.amuse-feature { display: block; max-width: none !important; }
-
-/* ============================================================
-   PAGE: .amuse-feature (legacy redirect target — kept for any
-   stragglers; the scope below is reused via .amuse-feature)
-   ============================================================ */
-
-.amuse-feature { padding: 0; }
-.amuse-feature > * { max-width: none !important; }
-
-/* AC HERO — split layout, photo right */
-.amuse-feature .ac-hero {
-  display: grid !important;
-  grid-template-columns: 1.2fr 1fr !important;
-  background: var(--oh-coral-deep) !important;
-  background-image: none !important;
-  padding: 0 !important;
-  min-height: 520px;
-  color: var(--oh-cream-warm) !important;
-}
-.amuse-feature .ac-hero::before,
-.amuse-feature .ac-hero::after { display: none !important; }
 .ac-hero-text {
   padding: 56px 56px 52px;
   display: flex;
@@ -1518,598 +1208,7 @@
   justify-content: center;
   text-align: left;
 }
-.amuse-feature .ac-hero .label {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: .26em !important;
-  text-transform: uppercase !important;
-  color: var(--oh-cream-warm) !important;
-  opacity: .85;
-  background: none !important;
-  border: 0 !important;
-  padding: 0 !important;
-  margin: 0 0 14px !important;
-  display: inline-block !important;
-}
-.amuse-feature .ac-hero h1,
-.amuse-feature .ac-hero h2.ac-hero-title {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(64px, 8vw, 128px) !important;
-  line-height: 0.88 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
-  color: var(--oh-cream-warm) !important;
-  margin: 0 !important;
-  text-shadow: none !important;
-}
-.amuse-feature .ac-hero h1 .ac-block,
-.amuse-feature .ac-hero h2.ac-hero-title .ac-block {
-  font-style: normal;
-  display: inline-block;
-  background: var(--oh-blush);
-  color: var(--oh-green-ink);
-  padding: 0 14px 4px;
-  margin-top: -2px;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700;
-}
-.amuse-feature .ac-hero .sub {
-  font-family: "Cormorant Garamond", serif !important;
-  font-style: italic !important;
-  font-size: clamp(18px, 1.5vw, 22px) !important;
-  font-weight: 500 !important;
-  color: var(--oh-cream-warm) !important;
-  opacity: .92;
-  margin: 22px 0 4px !important;
-}
-.amuse-feature .ac-hero .tagline {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-  letter-spacing: .22em !important;
-  text-transform: uppercase !important;
-  color: var(--oh-cream-warm) !important;
-  opacity: .82;
-  margin: 0 !important;
-}
-.ac-hero-photo {
-  position: relative;
-  background: #1a0a14;
-  overflow: hidden;
-  min-height: 360px;
-}
-.ac-hero-photo img {
-  width: 100%; height: 100%;
-  object-fit: cover; display: block;
-}
-.ac-hero-photo::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.5));
-}
-.ac-hero-photo-caption {
-  position: absolute;
-  left: 24px;
-  bottom: 22px;
-  font-family: "SF Mono", Menlo, ui-monospace, monospace;
-  color: rgba(255,255,255,.65);
-  font-size: 10px;
-  letter-spacing: .2em;
-  z-index: 1;
-  text-transform: uppercase;
-}
 
-/* Chapter eyebrow on Performances */
-.amuse-feature .content-section {
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 32px 64px !important;
-  background: var(--oh-green-ink) !important;
-  color: var(--oh-cream-warm) !important;
-  border: 0 !important;
-}
-.amuse-feature .content-section .chapter {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 12px;
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 700;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--oh-coral) !important;
-}
-.amuse-feature .content-section .chapter::before,
-.amuse-feature .content-section .chapter::after { display: none !important; }
-.amuse-feature .content-section .chapter .no {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: 22px !important;
-}
-.amuse-feature .content-section h2 {
-  color: var(--oh-coral) !important;
-}
-
-/* The Show / Want to dance — color-blocked split */
-.amuse-feature .collective-card {
-  padding: 0 !important;
-  background: var(--oh-cream-warm) !important;
-  color: var(--oh-green-ink) !important;
-  max-width: none !important;
-  margin: 0 !important;
-}
-.amuse-feature .cc-intro {
-  padding: 56px 64px 40px !important;
-  background: var(--oh-cream-warm);
-  color: var(--oh-green-ink);
-}
-.amuse-feature .cc-intro h2 {
-  color: var(--oh-coral-deep) !important;
-}
-.amuse-feature .cc-intro p {
-  color: var(--oh-green-ink) !important;
-}
-.amuse-feature .cc-intro em {
-  font-family: "Cormorant Garamond", serif !important;
-  font-style: italic;
-  font-weight: 500;
-}
-.amuse-feature .cc-grid {
-  display: grid !important;
-  grid-template-columns: 1.3fr 1fr !important;
-  gap: 0 !important;
-  background: var(--oh-rule);
-  border-top: 1px solid rgba(10,31,24,.18);
-}
-.amuse-feature .cc-section {
-  padding: 48px 56px !important;
-  background: var(--oh-blush);
-  color: var(--oh-green-ink) !important;
-  margin: 0 !important;
-  border: 0 !important;
-}
-.amuse-feature .cc-section.cc-pricing-block {
-  background: var(--oh-coral-deep);
-  color: var(--oh-cream-warm) !important;
-}
-.amuse-feature .cc-section h3 {
-  color: inherit !important;
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(32px, 3.6vw, 48px) !important;
-  margin: 0 0 22px !important;
-  text-transform: uppercase;
-  letter-spacing: .005em;
-  line-height: 0.96;
-}
-.amuse-feature .cc-section p { color: inherit !important; opacity: .92; }
-.amuse-feature .cc-slots {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 18px;
-}
-.amuse-feature .cc-slots li {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 14px 20px;
-  padding: 12px 0;
-  border-top: 1px solid currentColor;
-  color: inherit !important;
-}
-.amuse-feature .cc-slots li:first-child { border-top: 0; padding-top: 0; }
-.amuse-feature .cc-slot-time {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: 22px !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
-  line-height: 1 !important;
-  color: inherit !important;
-}
-.amuse-feature .cc-slot-name {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 15px !important;
-  font-weight: 700 !important;
-  display: block !important;
-  margin-bottom: 4px !important;
-  color: inherit !important;
-  background: none !important;
-}
-.amuse-feature .cc-slot-desc {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 13px !important;
-  margin: 4px 0 0 !important;
-  opacity: .8;
-  color: inherit !important;
-}
-
-/* Force per-section text on the cc-section variants so the existing
-   .cc-slot-name green colors don't leak through */
-.amuse-feature .cc-section,
-.amuse-feature .cc-section *:not(.cc-cta):not(.cc-cta *):not(.payment-chip):not(.payment-chip *) { color: var(--oh-green-ink) !important; }
-.amuse-feature .cc-section.cc-pricing-block,
-.amuse-feature .cc-section.cc-pricing-block *:not(.cc-cta):not(.cc-cta *):not(.payment-chip):not(.payment-chip *) { color: var(--oh-cream-warm) !important; }
-.amuse-feature .cc-pricing-block .cc-cta { color: var(--oh-green-ink) !important; }
-.amuse-feature .cc-pricing-block .payment-chip { color: var(--oh-cream-warm) !important; }
-.amuse-feature .cc-pricing-block .payment-chip:hover { color: var(--oh-coral-deep) !important; }
-.amuse-feature .cc-intro,
-.amuse-feature .cc-intro * { color: var(--oh-green-ink) !important; }
-.amuse-feature .cc-intro h2 { color: var(--oh-coral-deep) !important; }
-.amuse-feature .cc-intro em { color: var(--oh-coral-deep) !important; }
-.amuse-feature .cc-section h3 { color: inherit !important; }
-.amuse-feature .cc-meta {
-  margin-top: 22px !important;
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 600;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  opacity: .7;
-}
-.amuse-feature .payment-methods { display: flex; flex-wrap: wrap; gap: 10px; }
-.amuse-feature .payment-chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 16px;
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 700;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  text-decoration: none;
-  background: transparent;
-  color: inherit !important;
-  border: 1px solid currentColor;
-  transition: background .2s ease;
-}
-.amuse-feature .payment-chip:hover { background: currentColor; color: var(--oh-coral-deep) !important; }
-.amuse-feature .cc-payment-label {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 700;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  opacity: .8;
-  margin: 0 0 10px !important;
-}
-.amuse-feature .cc-cta,
-.amuse-feature .btn {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 26px !important;
-  margin-top: 22px !important;
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 700;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  text-decoration: none;
-  background: var(--oh-cream-warm) !important;
-  color: var(--oh-green-ink) !important;
-  border: 0 !important;
-}
-.amuse-feature .cc-cta:hover { background: var(--oh-blush) !important; }
-
-/* "Want to come watch?" cta-banner */
-.amuse-feature .cta-banner {
-  padding: 48px 64px !important;
-  background: var(--oh-green-ink) !important;
-  color: var(--oh-cream-warm) !important;
-  text-align: left !important;
-  max-width: none !important;
-  margin: 0 !important;
-  border: 0 !important;
-}
-.amuse-feature .cta-banner h3 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(32px, 3.6vw, 48px) !important;
-  text-transform: uppercase;
-  letter-spacing: .005em;
-  line-height: 0.96;
-  color: var(--oh-cream-warm) !important;
-  margin: 0 0 12px !important;
-}
-.amuse-feature .cta-banner p {
-  color: var(--oh-cream-warm) !important;
-  opacity: .85;
-  max-width: 64ch;
-  margin: 0 !important;
-}
-
-/* "Also on the calendar" header */
-.amuse-feature .content-section[style*="margin-top"] {
-  background: var(--oh-coral-deep) !important;
-  color: var(--oh-cream-warm) !important;
-  padding: 56px 64px !important;
-  margin-top: 0 !important;
-  text-align: left !important;
-}
-.amuse-feature .content-section[style*="margin-top"] h2 {
-  color: var(--oh-cream-warm) !important;
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(48px, 6vw, 88px) !important;
-  line-height: 0.92 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
-  margin: 0 !important;
-  text-align: left !important;
-}
-
-/* "Coming up" 2-up + ce-teasers grid */
-.amuse-feature .coming-up,
-.amuse-feature .coming-up.three-up {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 2px !important;
-  background: var(--oh-rule);
-  margin: 0 !important;
-  padding: 0 !important;
-  max-width: none !important;
-}
-.amuse-feature .coming-up-card {
-  padding: 48px 56px !important;
-  background: var(--oh-cream-warm) !important;
-  color: var(--oh-green-ink) !important;
-  border: 0 !important;
-}
-.amuse-feature .coming-up-card:nth-child(2) {
-  background: var(--oh-blush) !important;
-}
-.amuse-feature .coming-up-card .label {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: .26em !important;
-  text-transform: uppercase !important;
-  color: var(--oh-coral-deep) !important;
-  background: none !important;
-  padding: 0 !important;
-  margin: 0 0 14px !important;
-  border: 0 !important;
-}
-.amuse-feature .coming-up-card h3 {
-  color: var(--oh-green-ink) !important;
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(28px, 3vw, 44px) !important;
-  margin: 0 0 12px !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
-  line-height: 0.95 !important;
-}
-.amuse-feature .coming-up-card .meta {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  opacity: .65;
-  margin: 0 0 14px !important;
-}
-.amuse-feature .coming-up-card p {
-  color: var(--oh-green-ink) !important;
-  opacity: .85;
-  max-width: 60ch;
-}
-
-.amuse-feature .ce-teasers {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 2px !important;
-  background: var(--oh-rule);
-  margin: 0 !important;
-  padding: 0 !important;
-  max-width: none !important;
-}
-.amuse-feature .ce-teaser {
-  padding: 48px 56px !important;
-  background: var(--oh-green-ink) !important;
-  color: var(--oh-cream-warm) !important;
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  border: 0 !important;
-  transition: background .25s ease;
-}
-.amuse-feature .ce-teaser:hover { background: #061812 !important; }
-.amuse-feature .ce-teaser:nth-child(2) {
-  background: var(--oh-coral-deep) !important;
-}
-.amuse-feature .ce-teaser:nth-child(2):hover { background: var(--oh-coral-ink) !important; }
-.amuse-feature .ce-teaser-eyebrow {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--oh-coral) !important;
-  margin-bottom: 6px;
-}
-.amuse-feature .ce-teaser:nth-child(2) .ce-teaser-eyebrow { color: var(--oh-blush) !important; }
-.amuse-feature .ce-teaser h3 {
-  color: inherit !important;
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(32px, 3.6vw, 48px) !important;
-  text-transform: uppercase;
-  letter-spacing: .005em;
-  margin: 0 !important;
-}
-.amuse-feature .ce-teaser p {
-  color: inherit !important;
-  opacity: .9;
-  font-size: 14px;
-  margin: 6px 0 14px !important;
-}
-.amuse-feature .ce-teaser-arrow {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 700;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  margin-top: auto;
-  border-top: 1px solid currentColor;
-  padding-top: 14px;
-  opacity: .92;
-}
-
-/* A·Muse hero — big poster, photo backdrop, color band overlay */
-.amuse-feature .hero,
-.amuse-feature > section:first-of-type > div:first-child {
-  padding: 0 !important;
-  background: var(--oh-coral-deep) !important;
-  min-height: auto !important;
-  max-height: none !important;
-}
-.amuse-feature .hero h1,
-.amuse-feature .hero .hero-eyebrow,
-.amuse-feature .hero .subtitle,
-.amuse-feature .hero p {
-  /* let the page-specific styling below take over */
-}
-
-/* New Performances hero markup applied via classes; styling here */
-.pf-hero {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  background: var(--oh-coral-deep);
-  color: var(--oh-cream-warm);
-  min-height: 520px;
-}
-.pf-hero-text {
-  padding: 56px 56px 52px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: left;
-}
-.pf-hero-eyebrow {
-  font-family: 'Outfit', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--oh-cream-warm);
-  opacity: .85;
-  margin-bottom: 14px;
-}
-.pf-hero-title {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(72px, 10vw, 168px);
-  line-height: 0.86;
-  letter-spacing: .005em;
-  text-transform: uppercase;
-  color: var(--oh-cream-warm);
-  margin: 0;
-}
-.pf-hero-title em {
-  font-style: normal;
-  display: inline-block;
-  background: var(--pink);
-  color: var(--forest);
-  padding: 0 14px 4px;
-  margin-top: -2px;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700;
-}
-.pf-hero-sub {
-  font-family: "Cormorant Garamond", serif;
-  font-style: italic;
-  font-size: clamp(18px, 1.5vw, 22px);
-  font-weight: 500;
-  margin: 22px 0 4px;
-  opacity: .92;
-}
-.pf-hero-tagline {
-  font-family: 'Outfit', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  opacity: .8;
-}
-.pf-hero-photo {
-  background: #1a0a14;
-  position: relative;
-  overflow: hidden;
-  min-height: 360px;
-}
-.pf-hero-photo img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.pf-hero-photo::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.5));
-}
-
-/* Performances inner content sections */
-.amuse-feature .content-section,
-.amuse-feature .section-card,
-.amuse-feature > section > div,
-.amuse-feature .upcoming-grid {
-  /* see overrides below */
-}
-
-/* A·Muse details card — band */
-.amuse-feature .section-card[aria-label="A·Muse show details"],
-.amuse-feature .amuse-details {
-  background: var(--oh-cream-warm) !important;
-  color: var(--oh-green-ink) !important;
-  padding: 56px 64px !important;
-  max-width: none !important;
-  margin: 0 !important;
-  border: 0 !important;
-}
-
-/* Make every direct content child of the Performances page full-bleed band-style */
-.amuse-feature > section:first-of-type > section,
-.amuse-feature > section:first-of-type > div {
-  max-width: none !important;
-  margin: 0 !important;
-}
-
-/* Headlines on Performances page */
-.amuse-feature h2 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(44px, 5.5vw, 88px) !important;
-  line-height: 0.92 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
-  margin: 0 0 22px !important;
-}
-.amuse-feature h3 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(26px, 2.6vw, 38px) !important;
-  line-height: 1 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
-  margin: 0 0 12px !important;
-}
-.amuse-feature p {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 15px !important;
-  line-height: 1.6 !important;
-  margin: 0 0 14px !important;
-}
-.amuse-feature .upcoming-card {
-  border: 1px solid var(--oh-rule) !important;
-  background: var(--oh-green-ink) !important;
-  padding: 28px !important;
-}
 
 /* ============================================================
    PAGE: #page-shop (Merch)
@@ -2349,73 +1448,11 @@
   color: var(--forest) !important;
   margin: 0 !important;
 }
-#page-proseries .ps-whatelse-grid {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 2px !important;
-  background: rgba(10,31,24,.18);
-  padding: 0 !important;
-  margin: 0 !important;
-}
-#page-proseries .ps-whatelse-grid .coming-up-card {
-  padding: 48px 56px !important;
-  background: var(--ivory) !important;
-  color: var(--forest) !important;
-  border: 0 !important;
-  margin: 0 !important;
-}
-#page-proseries .ps-whatelse-grid .coming-up-card:nth-child(2) {
-  background: var(--forest) !important;
-  color: var(--ivory) !important;
-}
-/* Card 1 sits on ivory (light, body-size label) -> terra-dark. Card 2 sits on
-   forest (dark, body-size label) -> pink. Rule 4/5 applied exactly. */
-#page-proseries .ps-whatelse-grid .coming-up-card .label {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: .26em !important;
-  text-transform: uppercase !important;
-  color: var(--terra-dark) !important;
-  background: none !important;
-  padding: 0 !important;
-  margin: 0 0 14px !important;
-  border: 0 !important;
-  display: inline-block !important;
-}
-#page-proseries .ps-whatelse-grid .coming-up-card:nth-child(2) .label { color: var(--pink) !important; }
-#page-proseries .ps-whatelse-grid .coming-up-card h3 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(32px, 3.6vw, 52px) !important;
-  line-height: 0.94 !important;
-  letter-spacing: .005em !important;
-  text-transform: uppercase !important;
-  color: inherit !important;
-  margin: 0 0 14px !important;
-}
-#page-proseries .ps-whatelse-grid .coming-up-card .meta {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  opacity: .7;
-  margin: 0 0 14px !important;
-}
-#page-proseries .ps-whatelse-grid .coming-up-card p {
-  font-family: 'Outfit', sans-serif !important;
-  color: inherit !important;
-  opacity: .85;
-  font-size: 14.5px !important;
-  line-height: 1.6 !important;
-  margin: 0 !important;
-  max-width: 56ch;
-}
+
 
 @media (max-width: 980px) {
-  #page-proseries .ps-whatelse-grid { grid-template-columns: 1fr !important; }
-  #page-proseries .ps-whatelse-grid .coming-up-card { padding: 36px 28px !important; }
+
+
   #page-proseries .ps-whatelse { padding: 40px 28px !important; }
 }
 
@@ -2560,17 +1597,7 @@
   position: absolute; inset: 0;
   background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.5));
 }
-.tch-photo-caption {
-  position: absolute;
-  left: 22px;
-  bottom: 22px;
-  font-family: "SF Mono", Menlo, ui-monospace, monospace;
-  color: rgba(255,255,255,.65);
-  font-size: 10px;
-  letter-spacing: .2em;
-  z-index: 1;
-  text-transform: uppercase;
-}
+
 
 /* Rotation faculty band */
 .tch-rotation-band {
@@ -2602,35 +1629,7 @@
   margin: 0 !important;
   letter-spacing: .005em;
 }
-.tch-rotation-grid {
-  display: grid;
-  /* 4 cards: 4-up on wide screens, stepping down 4 → 2 → 1. */
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
-  background: var(--oh-rule);
-}
-@media (max-width: 1100px) {
-  /* 2 x 2 */
-  .tch-rotation-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 560px) {
-  .tch-rotation-grid { grid-template-columns: 1fr; }
-}
 
-/* Card — composite-image only (the PNG already includes name, role, quote, credits) */
-.tch-card {
-  position: relative;
-  background: var(--oh-green-ink);
-  overflow: hidden;
-  display: block;
-  transition: transform .3s ease;
-}
-.tch-card:hover { transform: translateY(-2px); }
-.tch-card--composite img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
 
 /* Outro */
 .tch-outro {
@@ -2682,36 +1681,30 @@
   .tch-director-photo { min-height: 280px; order: 1; }
   .tch-director-text { order: 2; padding: 44px 28px; }
   .tch-rotation-head { padding: 40px 28px 22px; flex-direction: column; align-items: flex-start; gap: 10px; }
-  .tch-rotation-grid { grid-template-columns: 1fr 1fr; }
+
   .tch-outro { padding: 44px 28px; }
 }
-@media (max-width: 720px) {
-  .tch-rotation-grid { grid-template-columns: 1fr; }
-}
+
 
 @media (max-width: 1024px) {
-  .amuse-feature .ac-hero { grid-template-columns: 1fr !important; }
-  .ac-hero-photo { min-height: 240px; order: 1; }
+
+
   .ac-hero-text { order: 2; padding: 40px 28px; }
-  .amuse-feature .content-section { padding: 28px !important; }
-  .amuse-feature .cc-intro { padding: 40px 28px !important; }
-  .amuse-feature .cc-grid { grid-template-columns: 1fr !important; }
-  .amuse-feature .cc-section { padding: 40px 28px !important; }
-  .amuse-feature .cta-banner,
-  .amuse-feature .content-section[style*="margin-top"] { padding: 36px 28px !important; }
-  .amuse-feature .coming-up,
-  .amuse-feature .coming-up.three-up,
-  .amuse-feature .ce-teasers { grid-template-columns: 1fr !important; }
-  .amuse-feature .coming-up-card,
-  .amuse-feature .ce-teaser { padding: 36px 28px !important; }
+
+
+
+
+
+
+
 }
 
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
   #page-proseries .ps-hero { grid-template-columns: 1fr; }
-  #page-proseries .ps-hero-photo { min-height: 280px; order: 1; }
+
   #page-proseries .ps-hero-text { order: 2; padding: 40px 28px 36px; }
-  .ps-meta-bar { padding: 18px 28px; font-size: 16px; }
+
   #page-proseries .content-section { padding: 48px 28px !important; }
   #page-proseries .track-detail { grid-template-columns: 1fr; gap: 28px; padding: 44px 28px !important; }
   #page-proseries .why-grid { grid-template-columns: 1fr !important; }
@@ -2721,10 +1714,10 @@
   #page-proseries .coming-soon-banner,
   #page-proseries #proseries-interest,
   #page-proseries .cta-banner { padding: 44px 28px !important; }
-  .pf-hero { grid-template-columns: 1fr; }
-  .pf-hero-photo { min-height: 240px; order: 1; }
-  .pf-hero-text { order: 2; padding: 40px 28px; }
-  .merch-hero-band { padding: 44px 28px; }
+
+
+
+
 }
 @media (max-width: 560px) {
   #page-proseries .td-name-row { flex-direction: column; gap: 8px; }
@@ -2810,27 +1803,4 @@
   }
 }
 
-/* Triptych CTA tap-target floor (DETAILS / REGISTER / LEARN MORE rows) */
-@media (max-width: 720px) {
-  .triptych-card .btn-link,
-  .triptych-card a.tri-cta,
-  .tri-card .tri-cta,
-  .tri-card a[href^="#"] { min-height: 44px; display: inline-flex; align-items: center; }
-}
 
-/* Ticker buttons + close X — ensure 44px Apple HIG tap-target floor */
-@media (max-width: 720px) {
-  .audition-ticker { min-height: 44px; }
-  .audition-ticker .at-close,
-  .audition-ticker [data-audition-action="ticker-dismiss"],
-  .audition-ticker button.close {
-    min-width: 44px;
-    min-height: 44px;
-  }
-  .audition-ticker a,
-  .audition-ticker button { min-height: 44px; }
-}
-
-/* Card meta on the ivory ground: #C8614B measured 3.62:1. Match the sibling
-   .label, which already uses --terra-dark (4.91:1). Added 2026-07-21. */
-#page-proseries .coming-up-card .meta { color: var(--terra-dark) !important; }

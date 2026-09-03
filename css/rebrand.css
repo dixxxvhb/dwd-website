@@ -166,11 +166,7 @@ body.has-topnav main.main > .page.active:not(#page-home) {
   background: linear-gradient(180deg, transparent, var(--rb-pink) 30%, var(--rb-pink) 70%, transparent);
   opacity: 0.5;
 }
-#page-home .hero-text .tamara-mark--hero {
-  position: absolute; top: 48px; right: 48px;
-  width: 46px; height: 42px;
-  opacity: 0.65;
-}
+
 #page-home .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 16px;
   font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
@@ -205,36 +201,9 @@ body.has-topnav main.main > .page.active:not(#page-home) {
   margin: 0;
 }
 
-/* ═══ HOME — AUDITION CHIP ═══ */
-#page-home .audition-chip {
-  display: inline-flex; align-items: center; gap: 18px; flex-wrap: wrap;
-  padding: 16px 24px;
-  background: rgba(250,243,232,0.05);
-  border: 1px solid var(--rb-pink);
-  align-self: flex-start;
-  text-decoration: none;
-  transition: background 0.3s ease;
-}
-#page-home .audition-chip:hover { background: rgba(248,215,200,0.12); }
-#page-home .audition-chip .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--rb-pink);
-  animation: rb-pulse 2.4s ease-in-out infinite;
-}
+
 @keyframes rb-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-#page-home .audition-chip .label {
-  font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--rb-pink);
-}
-#page-home .audition-chip .date {
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
-  font-size: 17px; color: var(--rb-ivory);
-}
-#page-home .audition-chip .meta {
-  font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
-  color: var(--rb-ivory-dim);
-  padding-left: 16px; border-left: 1px solid var(--rb-rule);
-}
+
 
 /* ═══ HOME — HERO FOOT ═══ */
 #page-home .hero-foot {
@@ -249,25 +218,6 @@ body.has-topnav main.main > .page.active:not(#page-home) {
   letter-spacing: 0; text-transform: none; font-size: 14px;
 }
 
-/* ═══ HOME — EARLY ACCESS BANNER ═══ */
-#page-home .ea-banner {
-  display: flex; align-items: center; gap: 20px;
-  padding: 24px 32px;
-  background: var(--rb-terracotta); color: var(--rb-ivory);
-  text-decoration: none;
-  transition: background 0.3s ease;
-}
-#page-home .ea-banner:hover { background: var(--rb-terracotta-deep); }
-#page-home .ea-banner .ea-banner-tag {
-  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
-  padding: 6px 12px; background: rgba(250,243,232,0.18);
-}
-#page-home .ea-banner .ea-banner-text {
-  flex: 1;
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
-  font-size: clamp(16px, 1.4vw, 20px);
-}
-#page-home .ea-banner .ea-banner-arrow { font-size: 22px; }
 
 /* ═══ HOME — TWO ENTRIES ═══ */
 #page-home .entries {
@@ -430,20 +380,7 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 #page-home .photo-grid .g5 { grid-column: span 4; aspect-ratio: 3/4; }
 #page-home .photo-grid .g6 { grid-column: span 12; aspect-ratio: 21/9; margin-top: 24px; }
 
-/* ═══ HOME — TICKER ═══ */
-#page-home .ticker-bar {
-  overflow: hidden; white-space: nowrap;
-  padding: 22px 0;
-  background: var(--rb-pink); color: var(--rb-bg-base);
-}
-#page-home .ticker-track {
-  display: inline-flex; gap: 56px;
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
-  font-size: 22px; animation: rb-slide 50s linear infinite;
-}
-#page-home .ticker-track span::before {
-  content: "✦"; margin-right: 56px; color: var(--rb-terracotta);
-}
+
 @keyframes rb-slide { to { transform: translateX(-50%); } }
 
 /* ═══ HOME — PULL QUOTE (ivory landmark) ═══ */
@@ -678,7 +615,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
     padding: 48px 24px; order: 2; gap: 24px;
   }
   #page-home .hero-text::before { display: none; }
-  #page-home .hero-text .tamara-mark--hero { top: 24px; right: 24px; }
+
   #page-home .hero h1 { font-size: clamp(56px, 15vw, 120px); }
 
   #page-home .entries { grid-template-columns: 1fr; min-height: auto; }
@@ -734,8 +671,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   /* Footer nav links were never bumped — ~28px targets stacked close. Floor them too. */
   .site-footer .footer-links a { min-height: 44px; padding-top: 11px; padding-bottom: 11px; }
 
-  /* Contact info stacked list: give each row breathing room, bigger hit */
-  #page-contact .contact-info-item { padding: 4px 0; }
+
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

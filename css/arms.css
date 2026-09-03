@@ -75,8 +75,6 @@
 }
 .arm-cta:hover { transform: translateY(-2px); box-shadow: var(--rb-shadow-2); }
 
-/* Section eyebrow / accent text takes the arm accent */
-.arm-eyebrow { color: var(--arm-accent-body); }
 
 /* ══════════════════════════════════════════════════════════════════════
  * HOME entry-door cards — the loud/hushed statement (REBRAND §5)

@@ -28,8 +28,7 @@
   min-height: 0 !important;
 }
 .gallery-hero { padding: 56px 40px !important; }
-.contact-hero,
-.shop-hero { padding: 48px 40px !important; }
+
 
 /* ─── Chapter eyebrow bands ─────────────────────────────────── */
 /* The "No.04 · PERFORMANCES — UP NEXT ON STAGE" band was 64+64 padding
@@ -101,17 +100,10 @@
 /* ─── Performances (now A·Muse inside Collective) ──────────── */
 #amuse > .cta-banner { padding: 32px 40px !important; margin: 8px 0 16px !important; }
 
-/* ─── Home: tighten extras around the upnext card ───────────── */
-.upnext-card { margin: 28px auto !important; }
 
 /* ─── Track Record on home ──────────────────────────────────── */
 .track-record { padding: 36px 40px !important; }
 
-/* ─── About / Contact / Privacy / Early-access — generic ────── */
-.about-content,
-.contact-content,
-.privacy-content,
-.early-access-content { padding: 40px 40px !important; }
 
 /* ─── Gallery grid ──────────────────────────────────────────── */
 .gallery-grid { margin-top: 16px !important; gap: 12px !important; }
@@ -233,15 +225,6 @@
   50%      { box-shadow: 0 0 0 6px rgba(200, 97, 75, 0.15); }
 }
 
-/* ── Triptych cards: punch up the existing lift ── */
-.tri-card {
-  transition: transform 0.32s var(--ease-spring), box-shadow 0.32s ease, background 0.32s ease !important;
-}
-.tri-card:hover {
-  transform: translateY(-4px) scale(1.012) !important;
-  box-shadow: var(--rb-shadow-3);
-}
-.tri-card:active { transform: translateY(-1px) scale(0.998) !important; transition-duration: 0.1s !important; }
 
 /* ── Home entries (ProSeries / Collective): lift + soft glow ── */
 #page-home .entries .entry {
@@ -252,35 +235,6 @@
   box-shadow: var(--rb-shadow-3);
 }
 
-/* ── Up-next / amuse feature card on home ── */
-.upnext-card {
-  transition: transform 0.32s var(--ease-spring), box-shadow 0.32s ease;
-}
-.upnext-card:hover {
-  transform: translateY(-3px) scale(1.005);
-  box-shadow: var(--rb-shadow-3);
-}
-
-/* ── ProSeries track-detail cards ── */
-.track-detail-card,
-.td-card {
-  transition: transform 0.32s var(--ease-spring), box-shadow 0.32s ease;
-}
-.track-detail-card:hover,
-.td-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--rb-shadow-2);
-}
-
-/* ── Teacher rotation cards ── */
-.tch-card {
-  transition: transform 0.32s var(--ease-spring), box-shadow 0.32s ease, filter 0.32s ease !important;
-}
-.tch-card:hover {
-  transform: translateY(-4px) scale(1.015) !important;
-  box-shadow: var(--rb-shadow-3);
-  filter: brightness(1.06);
-}
 
 /* ── Generic .btn: bouncier curve + soft shadow + tiny scale ── */
 .btn {
@@ -544,16 +498,6 @@ html {
   color: var(--rb-ivory);
 }
 
-/* ── F. Card depth — tonal layering normalized across the main card
-       components. Overrides only (bases live in audition.css / poster-
-       pages.css / additions.css / styles.css, which this pass doesn't
-       touch). ── */
-.tri-card {
-  background: linear-gradient(180deg, var(--rb-bg-elevated) 0%, var(--rb-bg-base) 100%) !important;
-  border-color: var(--rb-rule-soft) !important;
-  border-radius: var(--rb-radius-m) !important;
-  box-shadow: var(--rb-shadow-1);
-}
 
 /* .track-detail on the live ProSeries page is poster-pages.css's
    #page-proseries-scoped, !important, solid-color-per-track design
@@ -571,17 +515,6 @@ html {
   box-shadow: var(--rb-shadow-2);
 }
 
-/* No border-radius here: #page-teachers * { border-radius: 0 } is a
-   deliberate sharp-corner poster-page reset in poster-pages.css (higher
-   specificity via the ID + universal selector) — square corners are the
-   intentional look on this page, so only border + shadow layer on top. */
-.tch-card {
-  border: 1px solid var(--rb-rule-soft);
-  box-shadow: var(--rb-shadow-1);
-}
-.tch-card:hover {
-  box-shadow: var(--rb-shadow-3);
-}
 
 .track-record {
   border: 1px solid var(--rb-rule-soft);
