@@ -499,3 +499,31 @@
   #page-adult-company .dnc-cta { width: 100%; justify-content: center; }
   #page-adult-company .dnc-more-item { flex-wrap: wrap; gap: 4px 12px; }
 }
+
+
+/* ============================================================
+   1.3  MERCH POLL LINK
+   Merch left the nav; the poll keeps one quiet way in from the
+   ProSeries page end, where its actual audience already is.
+   Text link, not a third button: the banner already has a
+   primary and a secondary.
+   ============================================================ */
+
+#page-proseries .ps-merch-poll-line {
+  margin: 18px 0 0 !important;
+  font-size: 13px !important;
+}
+
+#page-proseries .ps-merch-poll-line a {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--terra-soft, #e08d76);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+#page-proseries .ps-merch-poll-line a:hover {
+  color: var(--ivory, #FAF3E8);
+}
