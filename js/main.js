@@ -10,8 +10,7 @@
   const validPages = [
     'home', 'adult-company', 'proseries',
     'teachers',
-    'gallery', 'shop', 'contact', 'campaign', 'analytics', 'privacy',
-    'early-access'
+    'gallery', 'shop', 'contact', 'campaign', 'analytics', 'privacy'
   ];
 
   // Legacy hash redirects — Performances was merged into Collective (#adult-company),
@@ -19,7 +18,12 @@
   const legacyHashRedirects = {
     'classes-events': 'adult-company',
     'performances':   'adult-company',
-    'about':          'teachers'
+    'about':          'teachers',
+    // #early-access retired 2026-09-02 (item 2.4). Its whole job was capturing
+    // emails for a registration link that went out in June; the on-site interest
+    // form is what those visitors actually want now. Not a page name: the
+    // element-anchor branch below resolves #interest to its owning page.
+    'early-access':   'interest'
   };
   (function applyLegacyRedirect() {
     var raw = window.location.hash.replace('#', '').split('?')[0];
@@ -117,7 +121,7 @@
     // Sticky mobile CTA bar (item M1): only on the conversion-relevant pages.
     var mob = document.getElementById('mob-cta');
     if (mob) {
-      mob.hidden = !['home', 'proseries', 'early-access'].includes(name);
+      mob.hidden = !['home', 'proseries'].includes(name);
       document.body.classList.toggle('mob-cta-on', !mob.hidden);
     }
 
@@ -164,8 +168,7 @@
       'shop': 'Merch | DWD',
       'contact': 'Contact | DWD',
       'campaign': 'Campaign HQ | DWD',
-      'analytics': 'Analytics | DWD',
-      'early-access': 'ProSeries Early Access | DWD'
+      'analytics': 'Analytics | DWD'
     };
     document.title = titles[name] || titles['home'];
 
@@ -564,54 +567,25 @@
     }
   }, true);
 
+  // Inline success everywhere. The "You're on the list" modal this used to
+  // raise for signup forms had exactly two triggers: the early-access form,
+  // deleted in item 2.4, and a [data-form="proseries-interest"] that never
+  // existed in the markup. A [data-persist] success stays up and takes the
+  // form's place instead of flashing for five seconds and restoring an empty
+  // field, which reads as though the submission did not take.
   function showFormSuccess(form) {
-    // Show modal for email signup forms, fall back to inline for contact/other
-    var isEmailForm = form.dataset.form && form.dataset.form.indexOf('signup') !== -1;
-    var isPSInterest = form.dataset.form === 'proseries-interest';
-    if (isEmailForm || isPSInterest) {
-      showSuccessModal();
-      return;
-    }
     var successEl = form.parentElement.querySelector('.form-success') ||
                     form.querySelector('.form-success') ||
                     form.nextElementSibling;
-    if (successEl && successEl.classList.contains('form-success')) {
-      successEl.classList.add('show');
-      setTimeout(function () { successEl.classList.remove('show'); }, 5000);
-    }
-  }
-
-  function showSuccessModal() {
-    // Don't create duplicates
-    if (document.getElementById('dwd-success-modal')) {
-      document.getElementById('dwd-success-modal').classList.add('open');
+    if (!successEl || !successEl.classList.contains('form-success')) return;
+    successEl.classList.add('show');
+    if (successEl.hasAttribute('data-persist')) {
+      form.hidden = true;
+      successEl.setAttribute('tabindex', '-1');
+      successEl.focus({ preventScroll: true });
       return;
     }
-
-    var modal = document.createElement('div');
-    modal.id = 'dwd-success-modal';
-    modal.className = 'dwd-success-modal';
-    modal.innerHTML = '<div class="dwd-success-backdrop"></div>' +
-      '<div class="dwd-success-card">' +
-        '<button class="dwd-success-close" aria-label="Close">&times;</button>' +
-        '<img src="images/logos/DWDPS-pink.png" alt="dwdPS" class="dwd-success-logo">' +
-        '<h2 class="dwd-success-title">You\'re on the list.</h2>' +
-        '<p class="dwd-success-sub">We\'ll reach out when it\'s time. In the meantime, follow along.</p>' +
-        '<a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="dwd-success-btn">Follow @dwdproseries</a>' +
-      '</div>';
-
-    document.body.appendChild(modal);
-
-    // Animate in
-    requestAnimationFrame(function () { modal.classList.add('open'); });
-
-    // Close handlers
-    modal.querySelector('.dwd-success-close').addEventListener('click', function () {
-      modal.classList.remove('open');
-    });
-    modal.querySelector('.dwd-success-backdrop').addEventListener('click', function () {
-      modal.classList.remove('open');
-    });
+    setTimeout(function () { successEl.classList.remove('show'); }, 5000);
   }
 
   function showFormError(form, msg) {

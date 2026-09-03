@@ -800,16 +800,18 @@
       var hidden = !!hideAttr && dateHasPassed(hideAttr);
       return revealed && !hidden;
     }
+    // Both destinations are now the on-site form. This block used to hand the
+    // hero CTA back to dwd-director.netlify.app at runtime, which silently
+    // undid item 1.1 for this one button no matter what the markup said; the
+    // else branch pointed at #early-access, retired in item 2.4. What is left
+    // is the copy swap, which still earns its keep.
     var heroCta = document.getElementById('ps-hero-cta');
     var interestForm = document.getElementById('proseries-interest');
     if (heroCta) {
-      if (isEraActuallyLive(interestForm)) {
-        heroCta.href = 'https://dwd-director.netlify.app/register';
-        heroCta.innerHTML = 'Express Interest <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
-      } else {
-        heroCta.href = '#early-access';
-        heroCta.innerHTML = 'Get Early Access <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
-      }
+      heroCta.href = '#interest';
+      heroCta.innerHTML = isEraActuallyLive(interestForm)
+        ? 'Express Interest <span class="btn-arrow" aria-hidden="true">&rarr;</span>'
+        : 'Tell me about your dancer <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
     }
   };
 

@@ -427,6 +427,25 @@
         </div>
       </section>
 
+      <!-- EPISODE RECAPS (item 2.4, 2026-09-02). The site's only email capture.
+           It replaced the four-state #page-early-access block, whose promise
+           ("the audition link 24 hours early") expired in June 2026 and whose
+           four era variants existed to keep a retired page from rendering empty.
+           One list, one promise, stated plainly. Source: episode-recaps-home. -->
+      <section class="ep-recaps reveal" id="ep-recaps-home" aria-label="Episode recaps email list">
+        <div class="ep-recaps-copy">
+          <span class="ep-recaps-eyebrow">Episode recaps</span>
+          <p class="ep-recaps-line">One email per episode. Photos, results, what&rsquo;s next. Nothing else.</p>
+        </div>
+        <form class="ep-recaps-form" data-form="signup-episode-recaps-home" novalidate>
+          <label class="sr-only" for="ep-recaps-home-email">Email address</label>
+          <input type="email" id="ep-recaps-home-email" placeholder="you@email.com" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send">
+          <input type="text" class="hp-field" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
+          <button type="submit" class="btn btn-blush" data-track="episode-recaps-home-signup">Send me the recaps</button>
+        </form>
+        <div class="form-success" data-persist aria-live="polite">Done. First recap lands after the next episode.</div>
+      </section>
+
       <!-- BIG AUDITION COUNTDOWN (#audition-clock), AUDITION CTA (#audition-cta),
            and the .triptych "What's Happening" grid all deleted 2026-08-03 — all
            permanently past (audition clock + CTA: hide-after Jun 6; triptych
@@ -1589,6 +1608,25 @@
         </div>
       </div>
 
+      <!-- EPISODE RECAPS (item 2.4, 2026-09-02). The site's only email capture.
+           It replaced the four-state #page-early-access block, whose promise
+           ("the audition link 24 hours early") expired in June 2026 and whose
+           four era variants existed to keep a retired page from rendering empty.
+           One list, one promise, stated plainly. Source: episode-recaps-ps. -->
+      <section class="ep-recaps reveal" id="ep-recaps-ps" aria-label="Episode recaps email list">
+        <div class="ep-recaps-copy">
+          <span class="ep-recaps-eyebrow">Episode recaps</span>
+          <p class="ep-recaps-line">One email per episode. Photos, results, what&rsquo;s next. Nothing else.</p>
+        </div>
+        <form class="ep-recaps-form" data-form="signup-episode-recaps-ps" novalidate>
+          <label class="sr-only" for="ep-recaps-ps-email">Email address</label>
+          <input type="email" id="ep-recaps-ps-email" placeholder="you@email.com" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send">
+          <input type="text" class="hp-field" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
+          <button type="submit" class="btn btn-blush" data-track="episode-recaps-ps-signup">Send me the recaps</button>
+        </form>
+        <div class="form-success" data-persist aria-live="polite">Done. First recap lands after the next episode.</div>
+      </section>
+
       <!-- STANDING INTEREST STATE — re-voiced 2026-08-03 to drop the June-audition
            framing (Dixon: "way outdated"). Reveals Jul 11 and stays up (no
            hide-after): rolling placement is the permanent state for the rest of
@@ -2180,174 +2218,13 @@
       </div>
     </section>
 
-        <!-- ══════════ EARLY ACCESS / REGISTRATION OPEN ══════════ -->
-    <section class="page" id="page-early-access" data-arm="ps" aria-label="ProSeries Registration">
-      <!-- PRE-LAUNCH STATE — Be First In Line -->
-      <div class="early-access-page" data-hide-after="2026-05-01T00:00:00-04:00">
-        <div class="ea-container">
-          <img src="images/logos/DWDPS-pink.png" alt="DWD ProSeries" class="ea-logo" width="120" height="120">
-          <h1 class="ea-headline">Be First In Line</h1>
-          <p class="ea-subhead">DWD ProSeries registration opens <strong>May 1, 2026</strong>.<br>Email list gets to register for auditions <em>before</em> anyone else.</p>
-
-          <div class="ea-details">
-            <div class="ea-detail">
-              <span class="ea-detail-label">3 Tracks</span>
-              <span class="ea-detail-value">Prep / Elite / Pro</span>
-            </div>
-            <div class="ea-detail">
-              <span class="ea-detail-label">Ages</span>
-              <span class="ea-detail-value">5&ndash;19</span>
-            </div>
-            <div class="ea-detail">
-              <span class="ea-detail-label">Max Roster</span>
-              <span class="ea-detail-value">30 dancers total</span>
-            </div>
-            <div class="ea-detail">
-              <span class="ea-detail-label">Season</span>
-              <span class="ea-detail-value">Aug 2026 – May 2027</span>
-            </div>
-          </div>
-
-          <div class="ea-form-wrap">
-            <form data-form="signup-proseries-early-access" class="ea-form" novalidate>
-              <input type="email" placeholder="Your email address" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" aria-label="Email address" aria-describedby="ea-privacy-note">
-              <input type="text" class="hp-field" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
-              <button type="submit" class="btn btn-blush" data-track="early-access-signup">Get Early Access</button>
-            </form>
-            <div class="form-success" aria-live="polite">You're on the list. You'll hear from us before anyone else.</div>
-            <p class="ea-early-note">You'll get the audition registration link <strong>24 hours before it goes public</strong>. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for program details as they drop.</p>
-            <p class="ea-privacy" id="ea-privacy-note">We'll only email you about ProSeries registration. No spam. <a href="#privacy">Privacy policy</a>.</p>
-          </div>
-
-          <div class="ea-bullets">
-            <div class="ea-bullet">
-              <strong>One artistic director.</strong> Every piece choreographed and coached by Dixon Bowles. 15 years of professional experience.
-            </div>
-            <div class="ea-bullet">
-              <strong>Company model, not a class.</strong> Your dancer joins a training company. 4-6 competitions, 2+ conventions, end-of-year production.
-            </div>
-            <div class="ea-bullet">
-              <strong>Limited spots.</strong> 10 per track, 30 total. Email list registers for auditions first.
-            </div>
-          </div>
-
-          <div class="ea-social">
-            <p>Follow the countdown:</p>
-            <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="ea-ig-link">@dwdproseries</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- LAUNCH STATE — Registration is Open (audition era; retires at the intensive launch moment) -->
-      <div class="early-access-page early-access-page-launch" data-hide-after="2026-06-12T17:00:00-04:00">
-        <div class="ea-container">
-          <img src="images/logos/DWDPS-pink.png" alt="DWD ProSeries" class="ea-logo" width="120" height="120">
-          <div class="ea-live-badge"><span class="ea-live-dot"></span> Live Now</div>
-          <h1 class="ea-headline">Registration is Open</h1>
-          <p class="ea-subhead">Audition for DWD ProSeries.<br>Saturday, <strong>June 6, 2026</strong><br>Doors open 10:30am for check-in &amp; warm-up &middot; audition 11am&ndash;1pm<br>Exchange Dance Studio &middot; Orlando, FL</p>
-
-          <div class="ea-details">
-            <div class="ea-detail">
-              <span class="ea-detail-label">3 Tracks</span>
-              <span class="ea-detail-value">Prep / Elite / Pro</span>
-            </div>
-            <div class="ea-detail">
-              <span class="ea-detail-label">Ages</span>
-              <span class="ea-detail-value">5&ndash;19</span>
-            </div>
-            <div class="ea-detail">
-              <span class="ea-detail-label">Max Roster</span>
-              <span class="ea-detail-value">30 dancers total</span>
-            </div>
-            <div class="ea-detail">
-              <span class="ea-detail-label">Audition Fee</span>
-              <span class="ea-detail-value">$25</span>
-            </div>
-          </div>
-
-          <div class="ea-cta-wrap">
-            <a href="#interest" data-ref="ea-launch" class="btn btn-blush ea-launch-cta" data-track="ea-launch-register">Register for Audition &rarr;</a>
-            <p class="ea-early-note">You're registering to <strong>audition</strong>, not to enroll. Spots are filled by audition placement, not first-come. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for daily updates.</p>
-          </div>
-
-          <div class="ea-bullets">
-            <div class="ea-bullet">
-              <strong>One artistic director.</strong> Every piece choreographed and coached by Dixon Bowles. 15 years of professional experience.
-            </div>
-            <div class="ea-bullet">
-              <strong>Company model, not a class.</strong> Your dancer joins a training company. 4-6 competitions, 2+ conventions, end-of-year production.
-            </div>
-            <div class="ea-bullet">
-              <strong>Limited spots.</strong> 10 per track, 30 total. Audition is the only way in.
-            </div>
-          </div>
-
-          <div class="ea-social">
-            <p>Stay close:</p>
-            <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="ea-ig-link">@dwdproseries</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- INTENSIVE STATE — Summer Intensive sign-up (takes the slot at 5pm ET, Jun 12) -->
-      <div class="early-access-page early-access-page-launch" data-reveal-after="2026-06-12T17:00:00-04:00" data-hide-after="2026-07-11T00:00:00-04:00" style="display:none">
-        <div class="ea-container">
-          <img src="images/logos/DWDPS-pink.png" alt="DWD ProSeries" class="ea-logo" width="120" height="120">
-          <div class="ea-live-badge"><span class="ea-live-dot"></span> Sign-Up Open</div>
-          <h1 class="ea-headline">Summer Intensive</h1>
-          <p class="ea-subhead">Five days in the studio before Season One.<br><strong>July 6&ndash;10, 2026</strong> &middot; 10am&ndash;1pm<br>Exchange Dance Academy &middot; Orlando, FL</p>
-
-          <div class="ea-details">
-            <div class="ea-detail">
-              <span class="ea-detail-label">Who</span>
-              <span class="ea-detail-value">All dancers 5+</span>
-            </div>
-            <div class="ea-detail">
-              <span class="ea-detail-label">Audition</span>
-              <span class="ea-detail-value">Not required</span>
-            </div>
-            <div class="ea-detail">
-              <span class="ea-detail-label">Half Day (5+)</span>
-              <span class="ea-detail-value">$200</span>
-            </div>
-            <div class="ea-detail">
-              <span class="ea-detail-label">Full Day (9+)</span>
-              <span class="ea-detail-value">$300</span>
-            </div>
-          </div>
-
-          <div class="ea-cta-wrap">
-            <a href="https://dwd-director.netlify.app/summer-intensive" class="btn btn-blush ea-launch-cta" data-track="ea-intensive-signup">Sign Up Now &rarr;</a>
-            <p class="ea-early-note">Half-day dancers finish at 12pm. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for updates.</p>
-          </div>
-
-          <div class="ea-social">
-            <p>Stay close:</p>
-            <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="ea-ig-link">@dwdproseries</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- STANDING INTEREST STATE — reveals Jul 11, no hide (permanent for the rest
-           of the season). Prevents the page from rendering empty once the intensive
-           state above hides itself. -->
-      <div class="early-access-page early-access-page-launch" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">
-        <div class="ea-container">
-          <img src="images/logos/DWDPS-pink.png" alt="DWD ProSeries" class="ea-logo" width="120" height="120">
-          <h1 class="ea-headline">Auditions are done. The door is still open.</h1>
-          <p class="ea-subhead">Spots remain in all three tracks for Season One. Tell us about your dancer and Dixon will personally reach out with options on how to move forward.</p>
-
-          <div class="ea-cta-wrap">
-            <a href="#interest" data-ref="ea-interest" class="btn btn-blush ea-launch-cta" data-track="ea-interest-express">Express Interest &rarr;</a>
-          </div>
-
-          <div class="ea-social">
-            <p>Stay close:</p>
-            <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" class="ea-ig-link">@dwdproseries</a>
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- EARLY ACCESS (#page-early-access) deleted 2026-09-02, item 2.4. Four
+         era states of an email capture whose promise ("the audition link 24
+         hours early") expired with the June 6 audition; the fourth state existed
+         only so the retired route would not render empty. /#early-access now
+         redirects to the on-site interest form (js/main.js legacyHashRedirects),
+         and the one live email list is the Episode Recaps band on Home and
+         ProSeries. See git history for the prior markup. -->
 
     <!-- ══════════ PRIVACY ══════════ -->
     <section class="page" id="page-privacy" data-arm="house" aria-label="Privacy Policy">

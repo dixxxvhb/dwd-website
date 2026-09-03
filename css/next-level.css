@@ -801,3 +801,138 @@
     max-width: none;
   }
 }
+
+
+/* ============================================================
+   2.4  EPISODE RECAPS — the one email capture
+   Deliberately quiet. Express Interest is the ask on these
+   pages; this is the second-best thing a visitor can do, and it
+   should read that way. Forest ground on both hosts: on Home it
+   is a ruled strip on the same ground, and on ProSeries it lands
+   between the pink Episode Guide and the pink "Now casting."
+   band, where a dark strip is the breath between two shouts.
+   ============================================================ */
+
+.ep-recaps {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 24px 48px;
+  padding: 30px 64px !important;
+  background: var(--forest, #0c1f17) !important;
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+.ep-recaps-eyebrow {
+  display: block;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pink, #FF7AA2);
+  margin-bottom: 6px;
+}
+
+/* The Collective arm is hushed; [data-arm="c"] already remaps --pink to
+   terracotta, so this needs no separate rule if the band ever lands there. */
+
+.ep-recaps .ep-recaps-line {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 15px !important;
+  line-height: 1.5;
+  color: var(--ivory, #FAF3E8) !important;
+  max-width: 46ch;
+  margin: 0 !important;
+}
+
+.ep-recaps-form {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.ep-recaps-form input[type="email"] {
+  width: 260px;
+  padding: 12px 14px;
+  background: rgba(250, 243, 232, 0.06);
+  border: 1px solid rgba(250, 243, 232, 0.28);
+  border-radius: 2px;
+  color: var(--ivory, #FAF3E8);
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.ep-recaps-form input[type="email"]::placeholder {
+  color: rgba(250, 243, 232, 0.45);
+}
+
+.ep-recaps-form input[type="email"]:hover {
+  border-color: rgba(250, 243, 232, 0.45);
+}
+
+.ep-recaps-form input[type="email"]:focus,
+.ep-recaps-form input[type="email"]:focus-visible {
+  outline: 2px solid var(--terra, #C8614B);
+  outline-offset: 2px;
+  background: rgba(250, 243, 232, 0.1);
+  border-color: rgba(250, 243, 232, 0.5);
+}
+
+.ep-recaps-form button {
+  white-space: nowrap;
+}
+
+.ep-recaps .form-success {
+  grid-column: 1 / -1;
+  display: none;
+  background: transparent;
+  border: none;
+  border-left: 3px solid var(--pink, #FF7AA2);
+  padding: 4px 0 4px 14px;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 15px;
+  color: var(--ivory, #FAF3E8);
+}
+
+.ep-recaps .form-success.show {
+  display: block;
+}
+
+.ep-recaps .form-error {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 860px) {
+  .ep-recaps {
+    grid-template-columns: 1fr;
+    padding: 26px 24px !important;
+    gap: 18px;
+  }
+  .ep-recaps-form {
+    flex-direction: column;
+  }
+  .ep-recaps-form input[type="email"] {
+    width: 100%;
+  }
+  .ep-recaps-form button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ep-recaps-form input[type="email"] { transition: none; }
+}
+
+/* [hidden] is only `display: none` in the UA sheet, so any class rule that sets
+   display beats it. main.js hides these forms on success by setting the
+   attribute, and without this the "Done" message appeared under a form that
+   looked ready to submit again. */
+.ep-recaps-form[hidden],
+.ps-if-form[hidden] {
+  display: none !important;
+}
