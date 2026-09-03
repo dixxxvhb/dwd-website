@@ -28,9 +28,80 @@
     }
   })();
 
+  var routedByAnchor = false;
+
   function getPageFromHash() {
     const hash = window.location.hash.replace('#', '').split('?')[0];
     return validPages.includes(hash) ? hash : 'home';
+  }
+
+  // ── ANCHOR SCROLLING ──
+  // #interest sits roughly 14,700px down the ProSeries page, and that page is
+  // still growing while we scroll: campaign.js flips date-gated bands from
+  // display:none to block, and lazy images resolve their real heights. A single
+  // scrollIntoView() fired on the next frame therefore aims at a layout that no
+  // longer exists — measured landings were 1,514px short on a deep link and a
+  // dead stop at y=137 on a CTA click.
+  //
+  // So: jump instantly (a 14,700px smooth scroll is nauseating anyway), then
+  // re-aim until the target position stops moving. Bail the moment the visitor
+  // takes over the scroll themselves.
+  var settleTimer = null;
+
+  function topnavOffset() {
+    var nav = document.getElementById('topnav');
+    if (!nav) return 12;
+    var pos = window.getComputedStyle(nav).position;
+    return (pos === 'fixed' || pos === 'sticky') ? nav.offsetHeight + 12 : 12;
+  }
+
+  function scrollToAnchor(id) {
+    if (settleTimer) { clearTimeout(settleTimer); settleTimer = null; }
+
+    var attempts = 0;
+    var stable = 0;
+    var last = null;
+    var cancelled = false;
+
+    function cancel() { cancelled = true; }
+    ['wheel', 'touchstart', 'keydown'].forEach(function (evt) {
+      window.addEventListener(evt, cancel, { once: true, passive: true });
+    });
+
+    // Re-aim on this schedule (ms between reads). The long tail matters: the
+    // ProSeries page's lazy images carry no width/height, so a batch of them
+    // can resolve a second or more after the jump and shove the target by
+    // upwards of 1,500px. Measured drift settled by ~2.5s; the schedule runs
+    // to ~4s with room to spare.
+    var DELAYS = [0, 50, 50, 90, 150, 220, 300, 380, 460, 550, 650, 750];
+    var started = Date.now();
+
+    function step() {
+      if (cancelled) return;
+      var el = document.getElementById(id);
+      if (!el) return;
+      var y = Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - topnavOffset());
+      if (last !== null && Math.abs(y - last) <= 2) {
+        stable++;
+      } else {
+        stable = 0;
+      }
+      last = y;
+      window.scrollTo(0, y);
+
+      var done = attempts >= DELAYS.length - 1 ||
+                 (stable >= 3 && Date.now() - started > 900);
+      if (done) {
+        ['wheel', 'touchstart', 'keydown'].forEach(function (evt) {
+          window.removeEventListener(evt, cancel);
+        });
+        return;
+      }
+      attempts++;
+      settleTimer = setTimeout(step, DELAYS[attempts]);
+    }
+
+    requestAnimationFrame(step);
   }
 
   function showPage(name) {
@@ -136,17 +207,13 @@
         var pageName = (owningPage.id || '').replace(/^page-/, '');
         if (validPages.includes(pageName)) {
           showPage(pageName);
-          // showPage scrolls to top — wait a tick, then scroll to the anchor.
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () {
-              var el = document.getElementById(hash);
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            });
-          });
+          // showPage scrolls to top; scrollToAnchor takes it from there and
+          // keeps re-aiming while the new page's layout settles.
+          scrollToAnchor(hash);
           return;
         }
       }
-      target.scrollIntoView({ behavior: 'smooth' });
+      scrollToAnchor(hash);
       return;
     }
 
@@ -668,6 +735,251 @@
     });
   });
 
+  // -- EXPRESS INTEREST FORM (on-site, item 1.1) --
+  // Writes the same audition_registrations row the Director app's /register
+  // page writes. RLS (mig 136) only accepts an anon INSERT when
+  // source='interest' AND payment_status='comped' AND amount_cents=0 -- any
+  // other combination is rejected outright. Do not "simplify" this payload.
+  (function interestForm() {
+    var form = document.querySelector('[data-form="ps-interest"]');
+    if (!form) return;
+
+    var MAX_DANCERS = 4;
+    var dancersWrap = document.getElementById('if-dancers');
+    var addBtn = document.getElementById('if-add-dancer');
+    var doneEl = document.getElementById('if-done');
+
+    // Track cutoffs mirror the Director app's ProSeries config defaults
+    // (track_elite_age_cutoff 8, track_pro_age_cutoff 12). The app reads them
+    // live from proseries_config; the site carries the defaults so the form
+    // never blocks on a fetch. Dixon confirms the real track at the placement
+    // class, so a stale cutoff costs a slightly wrong preview line, nothing more.
+    var ELITE_CUTOFF = 8;
+    var PRO_CUTOFF = 12;
+    var TRACK_NAME = { prep: 'Prep', elite: 'Elite', pro: 'Pro' };
+
+    function easternTodayString() {
+      return new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/New_York',
+        year: 'numeric', month: '2-digit', day: '2-digit'
+      }).format(new Date());
+    }
+
+    function ageAsOf(dob, referenceDateISO) {
+      if (!dob) return null;
+      var birth = new Date(dob);
+      var reference = new Date(referenceDateISO);
+      if (isNaN(birth.getTime())) return null;
+      var age = reference.getFullYear() - birth.getFullYear();
+      var monthDiff = reference.getMonth() - birth.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && reference.getDate() < birth.getDate())) age--;
+      return age;
+    }
+
+    function assignTrack(dob) {
+      var age = ageAsOf(dob, easternTodayString());
+      if (age === null) return null;
+      if (age < ELITE_CUTOFF) return 'prep';
+      if (age < PRO_CUTOFF) return 'elite';
+      return 'pro';
+    }
+
+    // Live "here is where that birthday starts them" line under each dancer.
+    function updateTrackNote(fieldset) {
+      var note = fieldset.querySelector('[data-track-note]');
+      var dobEl = fieldset.querySelector('[data-child="date_of_birth"]');
+      if (!note || !dobEl) return;
+      var track = assignTrack(dobEl.value);
+      var age = ageAsOf(dobEl.value, easternTodayString());
+      if (!track || age === null || age < 3 || age > 25) {
+        note.hidden = true;
+        note.textContent = '';
+        return;
+      }
+      var nameEl = fieldset.querySelector('[data-child="name"]');
+      var who = (nameEl && nameEl.value.trim()) ? nameEl.value.trim() : 'That birthday';
+      var verb = (nameEl && nameEl.value.trim()) ? ' starts in ' : ' starts them in ';
+      note.textContent = who + verb + TRACK_NAME[track] +
+        '. Dixon confirms the track at the placement class.';
+      note.hidden = false;
+    }
+
+    function renumber() {
+      var sets = dancersWrap.querySelectorAll('.ps-if-dancer');
+      sets.forEach(function (fs, i) {
+        fs.dataset.dancerIndex = String(i);
+        var n = fs.querySelector('.ps-if-dancer-n');
+        if (n) n.textContent = String(i + 1);
+        fs.setAttribute('aria-label', 'Dancer ' + (i + 1));
+      });
+      if (addBtn) addBtn.hidden = sets.length >= MAX_DANCERS;
+    }
+
+    function addDancer() {
+      var sets = dancersWrap.querySelectorAll('.ps-if-dancer');
+      if (sets.length >= MAX_DANCERS) return;
+      var i = sets.length;
+      var fs = document.createElement('div');
+      fs.className = 'ps-if-dancer';
+      fs.setAttribute('role', 'group');
+      fs.setAttribute('aria-label', 'Dancer ' + (i + 1));
+      fs.dataset.dancerIndex = String(i);
+      fs.innerHTML =
+        '<div class="ps-if-legend">' +
+          '<span class="ps-if-legend-txt">Dancer <span class="ps-if-dancer-n">' + (i + 1) + '</span></span>' +
+          '<button type="button" class="ps-if-remove">Remove</button>' +
+        '</div>' +
+        '<div class="ps-if-row">' +
+          '<div class="form-group">' +
+            '<label for="if-child-name-' + i + '">First name</label>' +
+            '<input type="text" id="if-child-name-' + i + '" data-child="name" required autocomplete="off" autocapitalize="words" placeholder="Dancer’s first name">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label for="if-child-dob-' + i + '">Date of birth</label>' +
+            '<input type="date" id="if-child-dob-' + i + '" data-child="date_of_birth" required min="1990-01-01" max="2026-12-31">' +
+          '</div>' +
+        '</div>' +
+        '<div class="form-group">' +
+          '<label for="if-child-exp-' + i + '">Experience</label>' +
+          '<select id="if-child-exp-' + i + '" data-child="experience_level" required>' +
+            '<option value="">Select...</option>' +
+            '<option value="beginner">0–2 years</option>' +
+            '<option value="intermediate">3–5 years</option>' +
+            '<option value="advanced">6–8 years</option>' +
+            '<option value="elite">9+ years</option>' +
+          '</select>' +
+        '</div>' +
+        '<p class="ps-if-track-note" data-track-note aria-live="polite" hidden></p>';
+      dancersWrap.appendChild(fs);
+      renumber();
+      var first = fs.querySelector('input');
+      if (first) first.focus();
+    }
+
+    if (addBtn) addBtn.addEventListener('click', addDancer);
+
+    dancersWrap.addEventListener('click', function (e) {
+      var rm = e.target.closest('.ps-if-remove');
+      if (!rm) return;
+      var fs = rm.closest('.ps-if-dancer');
+      if (fs && dancersWrap.querySelectorAll('.ps-if-dancer').length > 1) {
+        fs.remove();
+        renumber();
+      }
+    });
+
+    dancersWrap.addEventListener('input', function (e) {
+      var fs = e.target.closest && e.target.closest('.ps-if-dancer');
+      if (fs) updateTrackNote(fs);
+    });
+    dancersWrap.addEventListener('change', function (e) {
+      var fs = e.target.closest && e.target.closest('.ps-if-dancer');
+      if (fs) updateTrackNote(fs);
+    });
+
+    renumber();
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Honeypot: silently drop bot submissions.
+      var hp = form.querySelector('.hp-field');
+      if (hp && hp.value) { showInterestDone(); return; }
+
+      if (!validateForm(form)) return;
+
+      var sets = Array.prototype.slice.call(dancersWrap.querySelectorAll('.ps-if-dancer'));
+      var children = sets.map(function (fs) {
+        var val = function (k) {
+          var el = fs.querySelector('[data-child="' + k + '"]');
+          return el ? el.value.trim() : '';
+        };
+        var dob = val('date_of_birth');
+        return {
+          name: val('name'),
+          date_of_birth: dob,
+          experience_level: val('experience_level'),
+          preferred_track: assignTrack(dob) || 'prep',
+          years_training: null,
+          current_studios: '',
+          medical_notes: '',
+          allergies: '',
+          additional_notes: '',
+          status: 'registered'
+        };
+      });
+
+      var phone = document.getElementById('if-parent-phone').value.trim();
+      var howHeard = document.getElementById('if-how-heard').value;
+      var note = document.getElementById('if-note').value.trim();
+
+      var payload = {
+        id: (window.crypto && window.crypto.randomUUID)
+          ? window.crypto.randomUUID()
+          : String(Date.now()) + '-' + Math.random().toString(16).slice(2),
+        parent_name: document.getElementById('if-parent-name').value.trim(),
+        parent_email: document.getElementById('if-parent-email').value.trim(),
+        parent_phone: phone || null,
+        address: null,
+        emergency_contact_name: null,
+        emergency_contact_phone: null,
+        emergency_contact_relationship: null,
+        payment_method_preference: null,
+        how_heard: howHeard || null,
+        children: children,
+        is_early_access: false,
+        is_waitlisted: false,
+        terms_agreed_at: null,
+        source: 'interest',
+        family_note: note || null,
+        status: 'registered',
+        payment_status: 'comped',
+        amount_cents: 0
+      };
+
+      if (!supabase) {
+        showFormError(form, 'Our form service is temporarily unavailable. Please email dancewithdixon@gmail.com and I’ll get right back to you.');
+        return;
+      }
+
+      setSubmitLoading(form, true);
+      // No .select() -- anon has no SELECT policy on audition_registrations
+      // (mig 033), and asking for the row back turns a successful insert into
+      // a misleading RLS error. The client-generated id above is the receipt.
+      supabase.from('audition_registrations').insert(payload)
+        .then(function (res) {
+          setSubmitLoading(form, false);
+          if (res.error) {
+            console.error('Interest form error:', res.error);
+            showFormError(form, 'Something went wrong. Please email dancewithdixon@gmail.com and I’ll get you on the list myself.');
+            return;
+          }
+          window.__dwd_last_interest_id = payload.id; // QA receipt
+          showInterestDone();
+        });
+    });
+
+    function showInterestDone() {
+      form.hidden = true;
+      var wrap = document.getElementById('interest');
+      if (wrap) {
+        var title = wrap.querySelector(':scope > .ps-if-title');
+        var sub = wrap.querySelector(':scope > .ps-if-sub');
+        if (title) title.hidden = true;
+        if (sub) sub.hidden = true;
+      }
+      if (doneEl) {
+        doneEl.hidden = false;
+        var h = doneEl.querySelector('.ps-if-title');
+        if (h) {
+          h.setAttribute('tabindex', '-1');
+          h.focus({ preventScroll: true });
+          h.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+      }
+    }
+  })();
+
   // ── MERCH POLL FORM ──
   var merchForm = document.querySelector('[data-form="merch-poll"]');
   if (merchForm) {
@@ -734,8 +1046,28 @@
   });
 
   // ── INIT: Load correct page from hash ──
+  // A hash that names an ELEMENT rather than a page (e.g. /#interest, which
+  // lives inside #page-proseries) has to resolve on first load too, not only
+  // on hashchange — otherwise a shared or bookmarked deep link silently lands
+  // on Home. Resolve the owning page first, then scroll to the anchor.
+  (function routeInitialAnchor() {
+    var raw = window.location.hash.replace('#', '').split('?')[0];
+    if (!raw || validPages.includes(raw) || legacyHashRedirects[raw]) return;
+    var el = document.getElementById(raw);
+    if (!el) return;
+    var owning = el.closest('.page');
+    if (!owning) return;
+    var pageName = (owning.id || '').replace(/^page-/, '');
+    if (!validPages.includes(pageName)) return;
+    showPage(pageName);
+    scrollToAnchor(raw);
+    routedByAnchor = true;
+  })();
+
   var initialPage = getPageFromHash();
-  if (initialPage !== 'home') {
+  if (routedByAnchor) {
+    // handled above
+  } else if (initialPage !== 'home') {
     showPage(initialPage);
   } else {
     // Fresh no-hash load never calls showPage, so init the mobile CTA bar here.

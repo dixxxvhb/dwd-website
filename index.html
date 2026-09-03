@@ -191,6 +191,8 @@
   <link rel="stylesheet" href="css/season1.css">
   <link rel="stylesheet" href="css/story.css">
   <link rel="stylesheet" href="css/convert.css">
+  <!-- next-level.css is LAST: the 2026-09-02 build's own components. -->
+  <link rel="stylesheet" href="css/next-level.css">
 
   <!-- No-JS safety: reveals must never trap content invisible if JS/observer fails -->
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
@@ -244,14 +246,14 @@
       <a href="#shop" data-page="shop">Merch</a>
       <a href="#contact" data-page="contact">Contact</a>
     </nav>
-    <a href="https://dwd-director.netlify.app/register" class="nav-cta nav-cta-launch" data-track="nav-register" data-hide-after="2026-06-12T17:00:00-04:00">Register &rarr;</a>
+    <a href="#interest" data-ref="nav-register" class="nav-cta nav-cta-launch" data-track="nav-register" data-hide-after="2026-06-12T17:00:00-04:00">Register &rarr;</a>
     <a href="https://dancewithdixon.com/fullout" class="nav-cta nav-cta-launch" data-track="nav-intensive" data-reveal-after="2026-06-12T17:00:00-04:00" data-hide-after="2026-07-11T00:00:00-04:00" style="display:none">Summer Intensive &rarr;</a>
     <!-- Standing interest era — reveals Jul 11, no hide (permanent nav CTA for the
          rest of the season). Same element serves desktop nav AND the mobile menu
          (CSS shows/hides .nav-cta-launch together via .topnav.is-open — there is no
          separate mobile-only nav CTA element on this site, see the "Summer
          Intensive" item above for the same pattern). -->
-    <a href="https://dwd-director.netlify.app/register" class="nav-cta nav-cta-launch s1-cta-sky" data-track="nav-express-interest" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">Express Interest &rarr;</a>
+    <a href="#interest" data-ref="nav-express-interest" class="nav-cta nav-cta-launch s1-cta-sky" data-track="nav-express-interest" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">Express Interest &rarr;</a>
     <button class="topnav-toggle" id="topnav-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
   </header>
 
@@ -298,7 +300,7 @@
             <span>Season One &middot; 2026 / 2027</span>
           </div>
           <div class="hero-cta-row">
-            <a class="btn btn-blush" href="https://dwd-director.netlify.app/register?ref=home-hero" data-track="home-hero-express">Express Interest <em>&rarr;</em></a>
+            <a class="btn btn-blush" href="#interest" data-ref="home-hero" data-track="home-hero-express">Express Interest <em>&rarr;</em></a>
             <a class="hero-cta-secondary" href="#proseries" data-track="home-hero-see-season">See Season One &rarr;</a>
           </div>
         </div>
@@ -388,7 +390,7 @@
             <div class="aclk-unit"><span class="aclk-num" data-clk-secs>--</span><span class="aclk-lbl">Sec</span></div>
           </div>
           <div class="season-cta-actions">
-            <a class="ac-cta" href="https://dwd-director.netlify.app/register" data-track="season-cta-express-interest">Express Interest <em>&rarr;</em></a>
+            <a class="ac-cta" href="#interest" data-ref="season-cta" data-track="season-cta-express-interest">Express Interest <em>&rarr;</em></a>
           </div>
         </div>
       </section>
@@ -418,7 +420,7 @@
             <div class="s1ht-meta"><span class="s1-ep-code">S1:E1</span> <span class="s1-when" data-s1-when="premiere">The Premiere &middot; August 10 &middot; Exchange Dance, Orlando</span><span class="s1-when" data-s1-when="midseason finale">Season One is underway &middot; Exchange Dance, Orlando &middot; new dancers join by placement class</span></div>
           </div>
           <div class="s1ht-actions">
-            <a class="btn btn-blush s1-cta-sky" href="https://dwd-director.netlify.app/register?ref=home-teaser" data-track="s1-home-teaser-express">Express Interest <em>&rarr;</em></a>
+            <a class="btn btn-blush s1-cta-sky" href="#interest" data-ref="home-teaser" data-track="s1-home-teaser-express">Express Interest <em>&rarr;</em></a>
             <a class="s1ht-link" href="#proseries">See the season &rarr;</a>
           </div>
         </div>
@@ -513,7 +515,7 @@
         <div class="kicker">dwdPROSERIES &middot; Season One</div>
         <h3>Spots <em>Remain.</em></h3>
         <p>Auditions have wrapped, but all three tracks have room. Fill out a short form about your dancer and Dixon will personally reach out with placement options and next steps. No fee to express interest.</p>
-        <a href="https://dwd-director.netlify.app/register?ref=home-standing" class="btn btn-blush" data-track="home-standing-interest-cta">Express Interest &rarr;</a>
+        <a href="#interest" data-ref="home-standing" class="btn btn-blush" data-track="home-standing-interest-cta">Express Interest &rarr;</a>
       </div>
 
       <!-- FEATURED VIDEO -->
@@ -828,7 +830,7 @@
           <p class="s1-blurb s1-when s1-when--block" data-s1-when="premiere midseason finale">Every competition this year is an episode. Every showcase, a special. The May recital is the finale. You didn't join a program &mdash; you were cast in a show.<span class="s1-when" data-s1-when="premiere"> Welcome to Season One.</span><span class="s1-when" data-s1-when="midseason"> Season One is on the air.</span><span class="s1-when" data-s1-when="finale"> One episode left.</span></p>
           <p class="s1-blurb s1-when s1-when--block" data-s1-when="wrapped">Every competition was an episode. Every showcase, a special. The recital was the finale. Season One ran forty weeks, and every dancer in it was credited. Season Two is being written.</p>
           <div class="s1-meta">Ages 5&ndash;19 &middot; Competitive Training</div>
-          <a href="https://dwd-director.netlify.app/register" class="btn btn-blush s1-cta s1-cta-sky" id="s1-hero-cta" data-track="s1-hero-cta-express">Express Interest <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
+          <a href="#interest" data-ref="s1-hero" class="btn btn-blush s1-cta s1-cta-sky" id="s1-hero-cta" data-track="s1-hero-cta-express">Express Interest <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </section>
 
@@ -838,7 +840,7 @@
           <h1>Pro<em class="ps-block">Series</em></h1>
           <div class="sub">Elite dance training for the convention and competition circuit</div>
           <div class="tagline">Season One begins August 10, 2026.</div>
-          <a href="https://dwd-director.netlify.app/register" class="btn btn-blush s1-cta-sky" id="ps-hero-cta" data-track="proseries-hero-cta">Express Interest</a>
+          <a href="#interest" data-ref="ps-hero" class="btn btn-blush s1-cta-sky" id="ps-hero-cta" data-track="proseries-hero-cta">Express Interest</a>
         </div>
         <div class="ps-hero-logo">
           <img src="images/logos/v2/ProSeries-green-640.png" srcset="images/logos/v2/ProSeries-green-640.png 1x, images/logos/v2/ProSeries-green.png 2x" alt="dwdPROSERIES" loading="lazy">
@@ -1480,7 +1482,7 @@
             <span class="conv-chip conv-chip--pro" data-chairs="band" data-chairs-track="pro">PRO &middot; 6 of 10</span>
           </div>
           <p class="ps-conv-line">Exchange Dance &middot; 7409 Chancery Lane, Orlando &middot; weeknight classes by track</p>
-          <a class="btn btn-blush" href="https://dwd-director.netlify.app/register?ref=ps-pricing" data-track="ps-pricing-express">Express Interest <em>&rarr;</em></a>
+          <a class="btn btn-blush" href="#interest" data-ref="ps-pricing" data-track="ps-pricing-express">Express Interest <em>&rarr;</em></a>
           <p class="ps-conv-micro">One short form, about two minutes. Dixon replies personally to set up a placement class.</p>
         </div>
       </section>
@@ -1602,8 +1604,94 @@
             <span class="conv-step-line">Dixon calls with a track offer and the chair is theirs.</span>
           </div>
         </div>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
-          <a href="https://dwd-director.netlify.app/register?ref=ps-now-casting" class="btn btn-blush s1-cta-sky" data-track="proseries-interest-express">Express Interest &rarr;</a>
+
+        <!-- ON-SITE EXPRESS INTEREST FORM (item 1.1, 2026-09-02). Replaces the
+             button row that used to send parents to dwd-director.netlify.app at
+             the exact moment they decided to commit. Inserts straight into
+             audition_registrations with source='interest' — the same row the
+             Director app's /register page writes. The payload shape is fixed by
+             RLS (comped / $0 / source=interest); see js/main.js. -->
+        <div class="ps-if" id="interest">
+          <h3 class="ps-if-title">Tell me about your dancer.</h3>
+          <p class="ps-if-sub">Two minutes. No fee, no commitment. I read every one of these myself and reply to set up a placement class.</p>
+
+          <form class="ps-if-form" data-form="ps-interest" novalidate>
+            <div class="ps-if-row">
+              <div class="form-group">
+                <label for="if-parent-name">Your name</label>
+                <input type="text" id="if-parent-name" name="parent_name" required autocomplete="name" autocapitalize="words" placeholder="Parent or guardian">
+              </div>
+              <div class="form-group">
+                <label for="if-parent-email">Email</label>
+                <input type="email" id="if-parent-email" name="parent_email" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" placeholder="you@email.com">
+              </div>
+            </div>
+            <div class="ps-if-row">
+              <div class="form-group">
+                <label for="if-parent-phone">Phone <span class="ps-if-opt">(optional)</span></label>
+                <input type="tel" id="if-parent-phone" name="parent_phone" inputmode="tel" autocomplete="tel" placeholder="(407) 555-0142">
+              </div>
+              <div class="form-group">
+                <label for="if-how-heard">How did you hear about us? <span class="ps-if-opt">(optional)</span></label>
+                <select id="if-how-heard" name="how_heard">
+                  <option value="">Select...</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="Word of mouth">Word of mouth</option>
+                  <option value="Dance studio">Dance studio</option>
+                  <option value="DWD Website">DWD Website</option>
+                  <option value="Web search">Web search</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Dancer blocks. The first is in the markup; "Add another dancer"
+                 clones it (max 4, matching the Director app's own form). -->
+            <div class="ps-if-dancers" id="if-dancers">
+              <div class="ps-if-dancer" data-dancer-index="0" role="group" aria-label="Dancer 1">
+                <div class="ps-if-legend"><span class="ps-if-legend-txt">Dancer <span class="ps-if-dancer-n">1</span></span></div>
+                <div class="ps-if-row">
+                  <div class="form-group">
+                    <label for="if-child-name-0">First name</label>
+                    <input type="text" id="if-child-name-0" data-child="name" required autocomplete="off" autocapitalize="words" placeholder="Dancer's first name">
+                  </div>
+                  <div class="form-group">
+                    <label for="if-child-dob-0">Date of birth</label>
+                    <input type="date" id="if-child-dob-0" data-child="date_of_birth" required min="1990-01-01" max="2026-12-31">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="if-child-exp-0">Experience</label>
+                  <select id="if-child-exp-0" data-child="experience_level" required>
+                    <option value="">Select...</option>
+                    <option value="beginner">0&ndash;2 years</option>
+                    <option value="intermediate">3&ndash;5 years</option>
+                    <option value="advanced">6&ndash;8 years</option>
+                    <option value="elite">9+ years</option>
+                  </select>
+                </div>
+                <p class="ps-if-track-note" data-track-note aria-live="polite" hidden></p>
+              </div>
+            </div>
+            <button type="button" class="ps-if-add" id="if-add-dancer">+ Add another dancer</button>
+
+            <div class="form-group ps-if-note">
+              <label for="if-note">Anything you want Dixon to know? <span class="ps-if-opt">(optional)</span></label>
+              <textarea id="if-note" name="family_note" rows="3" placeholder="Schedule, past training, questions, anything."></textarea>
+            </div>
+
+            <input type="text" id="if-website" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
+
+            <button type="submit" class="btn btn-blush s1-cta-sky ps-if-submit" data-track="interest-form-submit">Express Interest <em>&rarr;</em></button>
+            <p class="ps-if-consent">Dixon replies personally, usually within a day. No fee to express interest. Your information is only used to reach you about ProSeries. <a href="#privacy">Privacy</a>.</p>
+          </form>
+
+          <div class="ps-if-done" id="if-done" hidden>
+            <h3 class="ps-if-title">You&rsquo;re in the queue.</h3>
+            <p class="ps-if-sub">Dixon will text or email you to set up a placement class. Watch for a 407 number.</p>
+            <a class="ps-if-follow" href="https://instagram.com/dwdproseries" target="_blank" rel="noopener" data-track="interest-form-follow">Follow @dwdproseries &rarr;</a>
+          </div>
         </div>
         <p class="conv-ask-first"><a href="#contact" data-track="proseries-interest-contact">or ask a question first &rarr;</a></p>
       </div>
@@ -1615,7 +1703,7 @@
       <div class="cta-banner">
         <h3>Season One is still casting.</h3>
         <p>The story is being written every week. Get your dancer in it.</p>
-        <a href="https://dwd-director.netlify.app/register?ref=ps-footer" class="btn btn-primary" data-track="ps-footer-express">Express Interest &rarr;</a>
+        <a href="#interest" data-ref="ps-footer" class="btn btn-primary" data-track="ps-footer-express">Express Interest &rarr;</a>
         <a href="#contact" class="conv-ask-first-link" data-track="proseries-contact-us">Questions? Ask Dixon &rarr;</a>
       </div>
     </section>
@@ -2128,7 +2216,7 @@
           </div>
 
           <div class="ea-cta-wrap">
-            <a href="https://dwd-director.netlify.app/register" class="btn btn-blush ea-launch-cta" data-track="ea-launch-register">Register for Audition &rarr;</a>
+            <a href="#interest" data-ref="ea-launch" class="btn btn-blush ea-launch-cta" data-track="ea-launch-register">Register for Audition &rarr;</a>
             <p class="ea-early-note">You're registering to <strong>audition</strong>, not to enroll. Spots are filled by audition placement, not first-come. Follow <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> for daily updates.</p>
           </div>
 
@@ -2200,7 +2288,7 @@
           <p class="ea-subhead">Spots remain in all three tracks for Season One. Tell us about your dancer and Dixon will personally reach out with options on how to move forward.</p>
 
           <div class="ea-cta-wrap">
-            <a href="https://dwd-director.netlify.app/register" class="btn btn-blush ea-launch-cta" data-track="ea-interest-express">Express Interest &rarr;</a>
+            <a href="#interest" data-ref="ea-interest" class="btn btn-blush ea-launch-cta" data-track="ea-interest-express">Express Interest &rarr;</a>
           </div>
 
           <div class="ea-social">
@@ -2313,7 +2401,7 @@
 
   <!-- STICKY MOBILE CTA BAR (item M1, added 2026-08-19). Hidden by default;
        js/main.js toggles [hidden] in showPage() for home/proseries/early-access. -->
-  <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label"><span class="s1-when" data-s1-when="premiere midseason">Season One &middot; chairs open</span><span class="s1-when" data-s1-when="finale wrapped">Dance With Dixon</span></span><a class="mob-cta-btn" href="https://dwd-director.netlify.app/register?ref=mobile-bar" data-track="mobile-sticky-express">Express Interest &rarr;</a></div>
+  <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label"><span class="s1-when" data-s1-when="premiere midseason">Season One &middot; chairs open</span><span class="s1-when" data-s1-when="finale wrapped">Dance With Dixon</span></span><a class="mob-cta-btn" href="#interest" data-ref="mobile-bar" data-track="mobile-sticky-express">Express Interest &rarr;</a></div>
 
   <!-- season.js first: it owns the chair numbers main.js/campaign.js never touch. -->
   <script defer src="js/season.js"></script>

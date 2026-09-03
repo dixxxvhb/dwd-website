@@ -1,0 +1,378 @@
+/* ═══════════════════════════════════════════════════════════════
+   next-level.css — the 2026-09-02 "next level" build.
+   Loads AFTER convert.css, so this is the last word in the cascade.
+   Everything here is scoped to a new component; nothing in this file
+   restyles an existing surface.
+
+   Contents:
+     1.1  #interest — on-site Express Interest form (Family Pink ground)
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ============================================================
+   1.1  EXPRESS INTEREST FORM
+   Sits inside #proseries-interest, which is a full-bleed Family
+   Pink band with forest ink (poster-pages.css). Every form
+   primitive on this site assumes the opposite (cream ink on
+   forest), so the whole component is re-inked here rather than
+   inheriting and fighting.
+
+   No card, no panel: the form sits directly on the pink. The page
+   is already a stack of flat colour bands and a floating white
+   box would be the only one of its kind. Depth stays at one.
+   ============================================================ */
+
+#page-proseries #proseries-interest .ps-if {
+  max-width: 620px;
+  margin: 44px 0 0;
+  text-align: left;
+}
+
+#page-proseries #proseries-interest .ps-if-title {
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 42px);
+  line-height: 1.05;
+  color: var(--forest, #0c1f17);
+  margin: 0 0 10px;
+}
+
+#page-proseries #proseries-interest .ps-if-sub {
+  font-size: 15px !important;
+  line-height: 1.55;
+  color: rgba(12, 31, 23, 0.82) !important;
+  max-width: 52ch;
+  margin: 0 0 28px !important;
+}
+
+/* ── Fields ─────────────────────────────────────────────────── */
+
+#page-proseries #proseries-interest .ps-if .form-group {
+  margin-bottom: 20px;
+}
+
+#page-proseries #proseries-interest .ps-if label {
+  display: block;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(12, 31, 23, 0.72);
+  margin-bottom: 6px;
+}
+
+#page-proseries #proseries-interest .ps-if .ps-if-opt {
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  opacity: 0.62;
+  text-transform: none;
+}
+
+#page-proseries #proseries-interest .ps-if input,
+#page-proseries #proseries-interest .ps-if select,
+#page-proseries #proseries-interest .ps-if textarea {
+  width: 100%;
+  padding: 11px 12px;
+  background: rgba(250, 243, 232, 0.92);
+  border: 1px solid rgba(12, 31, 23, 0.22);
+  border-radius: 2px;
+  color: var(--forest, #0c1f17);
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  /* 16px floor is enforced globally by styles.css to stop iOS zoom-on-focus. */
+  line-height: 1.4;
+  transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+#page-proseries #proseries-interest .ps-if input::placeholder,
+#page-proseries #proseries-interest .ps-if textarea::placeholder {
+  color: rgba(12, 31, 23, 0.6);
+}
+
+#page-proseries #proseries-interest .ps-if input:hover,
+#page-proseries #proseries-interest .ps-if select:hover,
+#page-proseries #proseries-interest .ps-if textarea:hover {
+  border-color: rgba(12, 31, 23, 0.45);
+}
+
+#page-proseries #proseries-interest .ps-if input:focus,
+#page-proseries #proseries-interest .ps-if select:focus,
+#page-proseries #proseries-interest .ps-if textarea:focus {
+  outline: none;
+  background: #FAF3E8;
+  border-color: var(--forest, #0c1f17);
+  box-shadow: 0 0 0 2px rgba(12, 31, 23, 0.32);
+}
+
+/* The base select arrow is drawn ivory for the forest ground. Forest here. */
+#page-proseries #proseries-interest .ps-if select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230c1f17' d='M1 4l5 4 5-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 34px;
+}
+
+#page-proseries #proseries-interest .ps-if textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+/* Date inputs render a native calendar glyph that is invisible on a light
+   ground in some Chrome themes; force it dark and give it a hit target. */
+#page-proseries #proseries-interest .ps-if input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: none;
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+/* Invalid state (set by validateForm in main.js) */
+#page-proseries #proseries-interest .ps-if .invalid {
+  border-color: #8f2f1c;
+  background: #FAF3E8;
+}
+
+#page-proseries #proseries-interest .ps-if .form-field-error {
+  display: none;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 13px;
+  color: #8f2f1c;
+  margin-top: 5px;
+}
+
+#page-proseries #proseries-interest .ps-if .form-field-error.show {
+  display: block;
+}
+
+/* ── Two-up rows collapse to one column on phones ───────────── */
+
+#page-proseries #proseries-interest .ps-if-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+}
+
+/* Inside a dancer block the three fields are one thought, so they sit on one
+   line at desktop width instead of leaving Experience stranded full-bleed. */
+@media (min-width: 721px) {
+  #page-proseries #proseries-interest .ps-if-dancer .ps-if-row {
+    grid-template-columns: 1.3fr 1fr;
+  }
+}
+@media (min-width: 921px) {
+  #page-proseries #proseries-interest .ps-if-dancer {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 0 20px;
+    align-items: start;
+  }
+  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-legend { grid-column: 1 / -1; }
+  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-row {
+    display: contents;
+  }
+  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-track-note { grid-column: 1 / -1; }
+}
+
+/* ── Dancer blocks ──────────────────────────────────────────── */
+
+#page-proseries #proseries-interest .ps-if-dancer {
+  border: none;
+  border-top: 1px solid rgba(12, 31, 23, 0.22);
+  padding: 20px 0 0;
+  margin: 8px 0 0;
+}
+
+#page-proseries #proseries-interest .ps-if-legend {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--forest, #0c1f17);
+  padding: 0;
+  margin-bottom: 14px;
+}
+
+#page-proseries #proseries-interest .ps-if-remove {
+  background: none;
+  border: none;
+  padding: 4px 2px;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(12, 31, 23, 0.62);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+#page-proseries #proseries-interest .ps-if-remove:hover {
+  color: var(--forest, #0c1f17);
+}
+
+/* The live track preview: the one thing on this form that answers the
+   question every parent asks before they ask it. */
+#page-proseries #proseries-interest .ps-if-track-note {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 13px !important;
+  line-height: 1.45;
+  color: rgba(12, 31, 23, 0.8) !important;
+  margin: -8px 0 4px !important;
+  padding-left: 12px;
+  border-left: 2px solid var(--forest, #0c1f17);
+}
+
+#page-proseries #proseries-interest .ps-if-add {
+  display: inline-block;
+  background: none;
+  border: 1px solid rgba(12, 31, 23, 0.45);
+  border-radius: 2px;
+  padding: 9px 14px;
+  margin: 18px 0 24px;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--forest, #0c1f17);
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+#page-proseries #proseries-interest .ps-if-add:hover {
+  background: rgba(12, 31, 23, 0.08);
+  border-color: var(--forest, #0c1f17);
+}
+
+/* ── Submit + consent ───────────────────────────────────────── */
+
+#page-proseries #proseries-interest .ps-if-submit {
+  margin-top: 6px;
+}
+
+#page-proseries #proseries-interest .ps-if-submit:active {
+  transform: scale(0.98);
+}
+
+#page-proseries #proseries-interest .ps-if-consent {
+  font-size: 13px !important;
+  line-height: 1.5;
+  color: rgba(12, 31, 23, 0.72) !important;
+  max-width: 46ch;
+  margin: 14px 0 0 !important;
+}
+
+#page-proseries #proseries-interest .ps-if-consent a {
+  color: var(--forest, #0c1f17);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+#page-proseries #proseries-interest .ps-if .form-error {
+  display: none;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #7a1f10;
+  background: rgba(250, 243, 232, 0.7);
+  border-left: 3px solid #8f2f1c;
+  padding: 10px 14px;
+  margin-top: 14px;
+}
+
+#page-proseries #proseries-interest .ps-if .form-error.show {
+  display: block;
+}
+
+/* ── Success state (replaces the form in place, no modal) ───── */
+
+#page-proseries #proseries-interest .ps-if-done .ps-if-title {
+  margin-top: 0;
+}
+
+/* No text-transform: uppercasing this would print "DWDPROSERIES", and the
+   brand casing is dwdPROSERIES. Handles stay exactly as written. */
+#page-proseries #proseries-interest .ps-if-follow {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--forest, #0c1f17);
+  border-bottom: 1px solid rgba(12, 31, 23, 0.45);
+  padding-bottom: 3px;
+}
+
+#page-proseries #proseries-interest .ps-if-follow:hover {
+  border-bottom-color: var(--forest, #0c1f17);
+}
+
+/* ── Phones ─────────────────────────────────────────────────── */
+
+@media (max-width: 720px) {
+  #page-proseries #proseries-interest .ps-if {
+    max-width: none;
+    margin-top: 32px;
+  }
+  #page-proseries #proseries-interest .ps-if-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  #page-proseries #proseries-interest .ps-if-submit {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #page-proseries #proseries-interest .ps-if input,
+  #page-proseries #proseries-interest .ps-if select,
+  #page-proseries #proseries-interest .ps-if textarea,
+  #page-proseries #proseries-interest .ps-if-add,
+  #page-proseries #proseries-interest .ps-if-submit {
+    transition: none;
+  }
+}
+
+/* ── Band alignment ─────────────────────────────────────────────
+   The three steps and the "or ask a question first" link were each
+   centred in their own max-width box while the h2 sat hard left, so
+   the band had two competing spines. With a form in here the spine
+   has to be one thing. Everything lines up under "Now casting."
+   These two components appear nowhere else on the site.
+   ─────────────────────────────────────────────────────────────── */
+
+#page-proseries #proseries-interest .conv-steps {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#page-proseries #proseries-interest .conv-ask-first {
+  text-align: left;
+  margin-top: 26px;
+}
+
+/* Focus ring. tighten.css sets a terracotta :focus-visible ring site-wide
+   with !important, chosen for the forest and ivory grounds. Nobody checked it
+   against Family Pink: #C8614B on #FF7AA2 measures 1.62:1, under the 3:1 UI
+   floor and visually just brown mud. Forest on pink is 6.99:1. Overridden here
+   for this band only; the site-wide ring is untouched everywhere else. */
+#page-proseries #proseries-interest .ps-if input:focus,
+#page-proseries #proseries-interest .ps-if select:focus,
+#page-proseries #proseries-interest .ps-if textarea:focus,
+#page-proseries #proseries-interest .ps-if input:focus-visible,
+#page-proseries #proseries-interest .ps-if select:focus-visible,
+#page-proseries #proseries-interest .ps-if textarea:focus-visible,
+#page-proseries #proseries-interest .ps-if-add:focus-visible,
+#page-proseries #proseries-interest .ps-if-remove:focus-visible,
+#page-proseries #proseries-interest .ps-if-submit:focus-visible,
+#page-proseries #proseries-interest .ps-if-follow:focus-visible {
+  outline: 2px solid var(--forest, #0c1f17) !important;
+  outline-offset: 2px !important;
+  box-shadow: none;
+}

@@ -15,6 +15,7 @@ const ASSETS = [
   '/css/season1.css',
   '/css/story.css',
   '/css/convert.css',
+  '/css/next-level.css',
   '/images/logos/DWD-green.png',
   '/images/icons/icon-192.png',
   '/images/icons/icon-512.png'
