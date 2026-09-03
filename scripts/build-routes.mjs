@@ -170,7 +170,7 @@ function esc(s) {
 
 function buildShell(r) {
   let out = src;
-  const url = `${SITE}/${r.dir}`;
+  const url = `${SITE}/${r.dir}/`;
 
   const replacements = [
     [/<title>[\s\S]*?<\/title>/, `<title>${esc(r.title)}</title>`],
@@ -221,7 +221,7 @@ function buildSitemap() {
   const entries = [
     { loc: `${SITE}/`, priority: '1.0', changefreq: 'weekly' },
     ...ROUTES.map((r) => ({
-      loc: `${SITE}/${r.dir}`,
+      loc: `${SITE}/${r.dir}/`,
       priority: r.dir === 'proseries' ? '0.9' : r.dir === 'privacy' ? '0.3' : '0.7',
       changefreq: r.dir === 'privacy' ? 'yearly' : 'weekly',
     })),

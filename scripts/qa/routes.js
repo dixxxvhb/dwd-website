@@ -22,12 +22,12 @@ const probe = () => ({
 
   // ── 1. Direct loads of each shell ──
   const shells = [
-    ['/proseries', 'page-proseries', 'ProSeries: Season One | DWD'],
-    ['/collective', 'page-adult-company', 'The Collective | DWD'],
-    ['/teachers', 'page-teachers', 'Teachers | DWD'],
-    ['/gallery', 'page-gallery', 'Gallery | DWD'],
-    ['/contact', 'page-contact', 'Contact | DWD'],
-    ['/privacy', 'page-privacy', 'Privacy Policy | DWD'],
+    ['/proseries/', 'page-proseries', 'ProSeries: Season One | DWD'],
+    ['/collective/', 'page-adult-company', 'The Collective | DWD'],
+    ['/teachers/', 'page-teachers', 'Teachers | DWD'],
+    ['/gallery/', 'page-gallery', 'Gallery | DWD'],
+    ['/contact/', 'page-contact', 'Contact | DWD'],
+    ['/privacy/', 'page-privacy', 'Privacy Policy | DWD'],
     ['/', 'page-home', 'Dance With Dixon | Orlando Dance Company'],
   ];
   for (const [path, page, title] of shells) {
@@ -69,22 +69,22 @@ const probe = () => ({
     await p.click('.topnav nav a[data-page="proseries"]');
     await new Promise((r) => setTimeout(r, 800));
     check('click nav -> /proseries', await p.evaluate(probe),
-      { page: 'page-proseries', path: '/proseries', title: 'ProSeries: Season One | DWD' });
+      { page: 'page-proseries', path: '/proseries/', title: 'ProSeries: Season One | DWD' });
 
     await p.click('.topnav nav a[data-page="gallery"]');
     await new Promise((r) => setTimeout(r, 800));
     check('click nav -> /gallery', await p.evaluate(probe),
-      { page: 'page-gallery', path: '/gallery' });
+      { page: 'page-gallery', path: '/gallery/' });
 
     await p.goBack();
     await new Promise((r) => setTimeout(r, 900));
     check('back -> /proseries', await p.evaluate(probe),
-      { page: 'page-proseries', path: '/proseries' });
+      { page: 'page-proseries', path: '/proseries/' });
 
     await p.goForward();
     await new Promise((r) => setTimeout(r, 900));
     check('forward -> /gallery', await p.evaluate(probe),
-      { page: 'page-gallery', path: '/gallery' });
+      { page: 'page-gallery', path: '/gallery/' });
 
     console.log('     (document fetches during SPA clicks: ' + navigations + ', want 0)');
     if (navigations !== 0) fails++;
@@ -93,11 +93,11 @@ const probe = () => ({
 
   // ── 3. Old hash links still work, and upgrade themselves to paths ──
   for (const [hash, page, path] of [
-    ['#proseries', 'page-proseries', '/proseries'],
-    ['#adult-company', 'page-adult-company', '/collective'],
-    ['#teachers', 'page-teachers', '/teachers'],
-    ['#performances', 'page-adult-company', '/collective'],
-    ['#about', 'page-teachers', '/teachers'],
+    ['#proseries', 'page-proseries', '/proseries/'],
+    ['#adult-company', 'page-adult-company', '/collective/'],
+    ['#teachers', 'page-teachers', '/teachers/'],
+    ['#performances', 'page-adult-company', '/collective/'],
+    ['#about', 'page-teachers', '/teachers/'],
   ]) {
     const p = await b.newPage();
     await p.setViewport({ width: 1280, height: 900 });

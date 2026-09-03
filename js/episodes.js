@@ -90,7 +90,7 @@
     if (!slug || COMP_MARKS.indexOf(slug) === -1) return null;
     var img = document.createElement('img');
     img.className = 's1-ep-mark';
-    img.src = 'images/comps/' + slug + '.svg';
+    img.src = '/images/comps/' + slug + '.svg';
     img.alt = '';
     img.setAttribute('aria-hidden', 'true');
     img.width = 20;
@@ -178,7 +178,7 @@
   }
 
   // Recaps are optional and must never block or break the guide.
-  var recapsPromise = fetch('data/episodes.json', { cache: 'no-cache' })
+  var recapsPromise = fetch('/data/episodes.json', { cache: 'no-cache' })
     .then(function (r) { return r.ok ? r.json() : {}; })
     .catch(function () { return {}; });
 

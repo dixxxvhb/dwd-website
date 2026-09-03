@@ -43,12 +43,12 @@
   // so a shared link is always the good kind.
   var ROUTE_PATH = {
     'home': '/',
-    'proseries': '/proseries',
-    'adult-company': '/collective',
-    'teachers': '/teachers',
-    'gallery': '/gallery',
-    'contact': '/contact',
-    'privacy': '/privacy'
+    'proseries': '/proseries/',
+    'adult-company': '/collective/',
+    'teachers': '/teachers/',
+    'gallery': '/gallery/',
+    'contact': '/contact/',
+    'privacy': '/privacy/'
   };
 
   var PATH_ROUTE = {};
