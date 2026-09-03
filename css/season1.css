@@ -18,6 +18,10 @@
    Shared: the SEASON ONE gloss lockup. One shine per frame — this
    class is only ever applied to the announce-band title below.
    ------------------------------------------------------------ */
+/* Cinzel is loaded for exactly two elements: this lockup and .s1ht-title on
+   the home teaser. Both use weight 800, which is why only 800 is fetched
+   (item 3.2b, 2026-09-02). If you reach for Cinzel anywhere else, add the
+   weight to the font URL in index.html and re-run scripts/build-routes.mjs. */
 #page-proseries .s1-title {
   margin: 0; /* now an <h1> (2026-08-03 hero fold) — kill the UA block margin */
   font-family: 'Cinzel', serif;
