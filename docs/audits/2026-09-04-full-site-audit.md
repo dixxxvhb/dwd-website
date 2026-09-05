@@ -50,3 +50,6 @@ Scope: functionality, content correctness, navigation/redundancy, responsive/a11
 3. ProSeries mobile length + mobile CTA on every page + Teachers contrast — one build, one deploy.
 4. Redundancy pass: one Express Interest per screen, one credentials block, one recaps form, Collective → Contact once, gallery lightbox scoped, carousel gets controls or goes.
 5. Perf: purge/minify site.css, scope scripts per route, phone-sized hero loop.
+
+## Resolution — 2026-09-05, commit 800095d (live)
+Every high and medium item above is fixed and deployed, plus the lows except the PWA/service-worker one (kept, harmless). Deviations from the report's recommendations: ProSeries at 390 is 14,526px (not ≤12,000) — prices sit one screen down and the form at ~5,100px, story collapsed behind a phone-only disclosure; Collective keeps ghost buttons per the hushed-volume rule; served CSS is 192KB raw / 31KB gzipped (a 120KB raw target needs a refactor, not a prune). Briefs: docs/plans/2026-09-04-audit-fixes.md. Blunt reset `#page-proseries * { padding:0 }` noted, untouched.
