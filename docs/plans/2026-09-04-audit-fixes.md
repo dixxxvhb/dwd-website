@@ -1,4 +1,5 @@
 # Audit fixes + upgrade — builder briefs
+n**STATUS: ALL PHASES DONE — shipped in 800095d (2026-09-05). See docs/STATUS.md.**
 Date: 2026-09-04 · Repo: C:/Users/bowle/Code/dwd-website · Branch: audit-fixes-2026-09-04 (already checked out — stay on it) · Author: Fable
 Source of findings: docs/audits/2026-09-04-full-site-audit.md (read it first, in full).
 Scratch: C:/Users/bowle/AppData/Local/Temp/claude/C--Users-bowle/6348c57c-dc52-4d10-bf9a-f040f1516631/scratchpad/fix-<phase>/
