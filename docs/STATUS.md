@@ -16,3 +16,7 @@
 ## Done
 - 2026-09-05 800095d — full audit fixes + upgrade, LIVE. Plan: docs/plans/2026-09-04-audit-fixes.md (Phases 1, 2, 2-followup, 3 all done). Audit + resolution: docs/audits/2026-09-04-full-site-audit.md.
 - 2026-09-04 9bf120f — full-site audit (64 findings) committed, findings only.
+
+## Done (2026-09-05, hero rotation)
+- Home hero rotation: 12 approved entries (A-K, M; L rejected by Dixon), one random pick per visit, `?hero=<letter>` QA override. Plan: docs/plans/2026-09-05-hero-rotation.md. Assets: images/photos/hero/ + video/hero-k*, hero-m*. Rebuild stills with scripts/build-hero-images.py; loops with scripts/encode-hero-loop.sh (recipes in comments).
+- Open: J is a motion-blurred frame (Dixon kept it); K is a 2.4s ping-pong loop from a 4s 720p master; Collective adults have no written release on file (Dixon cleared verbally 2026-09-05).

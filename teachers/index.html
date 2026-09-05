@@ -19,6 +19,45 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://dancewithdixon.com/teachers/">
 
+  <!-- Hero rotation (2026-09-05). The home hero holds one of twelve approved
+       entries for the visit: nine stills and three muted loops. This table and
+       the picker under it live OUTSIDE the preload block below, because
+       scripts/build-routes.mjs strips that block from the six route shells and
+       the hero still has to render on Home when a visitor arrives via a shell
+       and navigates in. -->
+  <script type="application/json" id="hero-entries">[{"l":"A","s":[[800,800],[1600,1600]],"w":1600,"h":726,"c":"John Nuzzi · Solo Work · Tremaine","d":"65% 60%","p":"55% 35%"},{"l":"B","s":[[800,800],[1600,1400]],"w":1400,"h":2100,"c":"Daisy · Summer Intensive Showcase · 2026","d":"75% 45%","p":"70% 40%","v":"hero-loop"},{"l":"C","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"John Nuzzi · Aura · Groove 2025","d":"62% 25%","p":"65% 15%"},{"l":"D","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"John Nuzzi · Heart of Gold · Groove 2025","d":"66% 40%","p":"68% 18%"},{"l":"E","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"John Nuzzi · Aura · Groove 2025","d":"30% 45%","p":"30% 42%"},{"l":"F","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"45% 30%","p":"45% 32%"},{"l":"G","s":[[800,800],[1600,1600]],"w":1600,"h":1138,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"70% 55%","p":"70% 45%"},{"l":"H","s":[[800,800],[1600,1600]],"w":1600,"h":1314,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"50% 55%","p":"50% 38%"},{"l":"I","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"35% 50%","p":"35% 45%"},{"l":"J","s":[[800,800],[1600,1600]],"w":1600,"h":900,"c":"Daisy · Summer Intensive Showcase · 2026","d":"48% 40%","p":"45% 38%"},{"l":"K","s":[[1600,720]],"w":720,"h":1080,"c":"Dixon · In the room","d":"50% 30%","p":"50% 12%","v":"hero-k"},{"l":"M","s":[[800,800],[1600,900]],"w":900,"h":1350,"c":"Summer Intensive Showcase · 2026","d":"76% 40%","p":"76% 26%","v":"hero-m"}]</script>
+  <script>
+  /* Pick one entry per visit and hold it: no carousel, no crossfade, no timer.
+     The loop entries are the only thing on this page that moves, and two moving
+     things is one too many. ?hero=<letter> forces an entry for QA. */
+  (function () {
+    var E;
+    try { E = JSON.parse(document.getElementById('hero-entries').textContent); }
+    catch (err) { return; }
+
+    var pick = null, m = /[?&]hero=([A-Za-z])(?:&|$)/.exec(location.search || '');
+    if (m) {
+      for (var i = 0; i < E.length; i++) {
+        if (E[i].l === m[1].toUpperCase()) pick = E[i];
+      }
+    }
+    if (!pick) {
+      /* Avoid repeating the entry this browser saw last, so a reload actually
+         looks like a different site rather than a coin flip that landed the
+         same way. localStorage throws in a locked-down Safari; that is a
+         degraded rotation, not an error. */
+      var last = null;
+      try { last = localStorage.getItem('dwd-hero-last'); } catch (err) {}
+      var pool = [];
+      for (var j = 0; j < E.length; j++) { if (E[j].l !== last) pool.push(E[j]); }
+      if (!pool.length) pool = E;
+      pick = pool[Math.floor(Math.random() * pool.length)];
+      try { localStorage.setItem('dwd-hero-last', pick.l); } catch (err) {}
+    }
+    window.__hero = pick;
+
+  })();
+  </script>
   <!-- The home hero LCP preload is dropped on this route: its hero is not
        what paints here. See scripts/build-routes.mjs. -->
 
@@ -309,36 +348,63 @@
       <!-- HERO — DUAL SPLIT -->
       <div class="hero">
         <div class="hero-photo">
-          <!-- HERO LOOP (item 2.1, 2026-09-02). Seven seconds of the Summer
-               Intensive showcase, 1.75x into the 4K master so the dancers read
-               at hero scale. No `autoplay` attribute on purpose: js/main.js
-               calls play() only after checking prefers-reduced-motion, which is
-               reliable in a way that removing the attribute after parse is not.
-               The <picture> below stays as the poster, the LCP image, and the
-               no-JS fallback, so the hero is never empty. Re-encode with
-               scripts/encode-hero-loop.sh. -->
-          <video class="hero-loop" id="hero-loop" muted loop playsinline
-                 preload="none"
-                 aria-hidden="true" tabindex="-1">
-            <!-- Phone pair FIRST. <source> is first-match-wins, so the two
-                 480-wide files have to sit above the 800-wide ones or the
-                 media query never gets consulted. A 390px column was pulling
-                 the 719 KB desktop webm; it now pulls 183 KB. -->
-            <source media="(max-width: 767px)" src="/video/hero-loop-480.webm" type="video/webm">
-            <source media="(max-width: 767px)" src="/video/hero-loop-480.mp4" type="video/mp4">
-            <source src="/video/hero-loop.webm" type="video/webm">
-            <source src="/video/hero-loop.mp4" type="video/mp4">
-          </video>
-          <picture>
-            <source type="image/webp" srcset="/images/photos/hero-800.webp 800w, /images/photos/hero-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 60vw">
-            <source type="image/jpeg" srcset="/images/photos/hero-800.jpg 800w, /images/photos/hero-1600.jpg 1600w" sizes="(max-width: 768px) 100vw, 60vw">
-            <img src="/images/photos/hero-1600.jpg" alt="DWD dancer on stage" loading="eager" fetchpriority="high" width="1600" height="726">
-          </picture>
-          <!-- Two captions, one per state. The still is John and the loop is
-               Daisy, so the credit has to follow whichever is actually on
-               screen; a single caption would be wrong half the time. -->
-          <div class="caption caption--still">John Nuzzi · Solo Work · 2024</div>
-          <div class="caption caption--loop">Daisy · Summer Intensive Showcase · 2026</div>
+          <!-- The hero is rendered here rather than written out twelve times.
+               The entry was chosen in the head; this writes its picture, its
+               caption, and its loop if it has one, and hangs the entry's two
+               focal points on the container as custom properties so the CSS
+               can crop to the dancer at both the tall desktop column and the
+               short phone band. Poster, LCP image and reduced-motion fallback
+               are all the same <img>, exactly as before.
+
+               <noscript> below keeps entry A, the original hero, as the render
+               a visitor with JS off gets. -->
+          <script>
+          (function () {
+            var e = window.__hero, ph = document.currentScript.parentNode;
+            if (!e) return;
+            ph.style.setProperty('--hf-d', e.d);
+            ph.style.setProperty('--hf-p', e.p);
+
+            var base = '/images/photos/hero/' + e.l + '-', sw = [], sj = [], i;
+            for (i = 0; i < e.s.length; i++) {
+              sw.push(base + e.s[i][0] + '.webp ' + e.s[i][1] + 'w');
+              sj.push(base + e.s[i][0] + '.jpg ' + e.s[i][1] + 'w');
+            }
+            var big = e.s[e.s.length - 1][0];
+            var sizes = '(max-width: 768px) 100vw, 60vw';
+            var h = '';
+
+            if (e.v) {
+              /* No autoplay attribute on purpose: js/main.js calls play() only
+                 after checking prefers-reduced-motion and only while the hero
+                 is on screen. The phone pair is first because <source> is
+                 first-match-wins. */
+              h += '<video class="hero-loop" id="hero-loop" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">'
+                +  '<source media="(max-width: 767px)" src="/video/' + e.v + '-480.webm" type="video/webm">'
+                +  '<source media="(max-width: 767px)" src="/video/' + e.v + '-480.mp4" type="video/mp4">'
+                +  '<source src="/video/' + e.v + '.webm" type="video/webm">'
+                +  '<source src="/video/' + e.v + '.mp4" type="video/mp4">'
+                +  '</video>';
+            }
+
+            h += '<picture>'
+              +  '<source type="image/webp" srcset="' + sw.join(', ') + '" sizes="' + sizes + '">'
+              +  '<source type="image/jpeg" srcset="' + sj.join(', ') + '" sizes="' + sizes + '">'
+              +  '<img src="' + base + big + '.jpg" alt="' + e.c + '" loading="eager" fetchpriority="high" width="' + e.w + '" height="' + e.h + '">'
+              +  '</picture>'
+              +  '<div class="caption">' + e.c + '</div>';
+
+            document.write(h);
+          })();
+          </script>
+          <noscript>
+            <picture>
+              <source type="image/webp" srcset="/images/photos/hero/A-800.webp 800w, /images/photos/hero/A-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 60vw">
+              <source type="image/jpeg" srcset="/images/photos/hero/A-800.jpg 800w, /images/photos/hero/A-1600.jpg 1600w" sizes="(max-width: 768px) 100vw, 60vw">
+              <img src="/images/photos/hero/A-1600.jpg" alt="John Nuzzi · Solo Work · Tremaine" width="1600" height="726">
+            </picture>
+            <div class="caption">John Nuzzi · Solo Work · Tremaine</div>
+          </noscript>
         </div>
         <div class="hero-text">
           <!-- Tamara Mark removed — it's now baked into the animated DWD logo

@@ -3432,11 +3432,13 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 #page-home .hero-photo img {
   width: 100%; height: 100%;
   object-fit: cover;
-  /* Anchor to John's face (~65% horizontal, ~67% vertical of the 4608×2092 image).
-     This keeps his face in frame at all container aspect ratios — desktop dual-split,
-     tall-narrow resized windows, and mobile portrait alike. Default `center 62%` was
-     cutting off the face at narrow widths. */
-  object-position: 65% 60%;
+  /* Focal point, not a crop. Every hero entry ships as the full frame at 1600
+     wide, because the container is a tall column on desktop and a short band on
+     a phone and no single crop is right in both. index.html hangs the entry's
+     two focal points on .hero-photo as --hf-d (desktop column) and --hf-p
+     (phone band); the fallbacks are entry A's, which is what a visitor with JS
+     off sees. */
+  object-position: var(--hf-d, 65% 60%);
   animation: rb-kenburns 22s ease-in-out infinite alternate;
 }
 @keyframes rb-kenburns {
@@ -4166,7 +4168,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   #page-home .hero-photo {
     min-height: 320px; max-height: 420px; order: 1;
   }
-  #page-home .hero-photo img { object-position: 55% 35%; }
+  #page-home .hero-photo img { object-position: var(--hf-p, 55% 35%); }
   #page-home .hero-text { order: 2; padding: 40px 32px 40px; gap: 18px; align-items: center; text-align: center; }
   #page-home .hero-text::before { display: none; }
   #page-home .hero h1 { font-size: clamp(44px, 10vw, 72px); }
@@ -9696,8 +9698,8 @@ footer.site-footer .footer-brand img {
   height: 100%;
   object-fit: cover;
   /* 2:3 source in a 0.65:1 to 0.93:1 container: cover crops the top and
-     bottom, and the dancer sits slightly above centre in the frame. */
-  object-position: 50% 38%;
+     bottom. Each loop entry carries its own focal point, same as the stills. */
+  object-position: var(--hf-d, 50% 38%);
   opacity: 0;
   transition: opacity 420ms ease-out;
   pointer-events: none;
@@ -9708,26 +9710,25 @@ footer.site-footer .footer-brand img {
   opacity: 1;
 }
 
+@media (max-width: 1024px) {
+  #page-home .hero-photo .hero-loop { object-position: var(--hf-p, 50% 38%); }
+}
+
 /* One thing animates. With the loop up, the still's Ken Burns drift is a
    second motion nobody can see anyway, so it stops. */
 #page-home .hero-photo.hero-loop-on img {
   animation: none;
 }
 
-/* Captions swap with the state. Both are in the markup so the right credit is
-   present even with JS off. */
-#page-home .hero-photo .caption--loop { display: none; }
-#page-home .hero-photo.hero-loop-on .caption--still { display: none; }
-#page-home .hero-photo.hero-loop-on .caption--loop { display: block; }
-
+/* One caption. The rotation renders the credit that belongs to whichever entry
+   is on screen, so there is no longer a pair to swap between: a loop entry's
+   poster and its video are the same dancer at the same performance. */
 #page-home .hero-photo .caption { z-index: 2; }
 
 @media (prefers-reduced-motion: reduce) {
   /* Belt and braces: main.js never starts the video under this preference, and
-     if it somehow did it would stay invisible. */
+     if it somehow did it would stay invisible. The poster stays. */
   #page-home .hero-photo .hero-loop { display: none; }
-  #page-home .hero-photo .caption--loop { display: none; }
-  #page-home .hero-photo .caption--still { display: block; }
 }
 
 

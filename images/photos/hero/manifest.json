@@ -1,0 +1,316 @@
+{
+ "A": {
+  "files": {
+   "A-1600.jpg": {
+    "bytes": 58560,
+    "h": 726,
+    "w": 1600
+   },
+   "A-1600.webp": {
+    "bytes": 28930,
+    "h": 726,
+    "w": 1600
+   },
+   "A-800.jpg": {
+    "bytes": 21663,
+    "h": 363,
+    "w": 800
+   },
+   "A-800.webp": {
+    "bytes": 11238,
+    "h": 363,
+    "w": 800
+   }
+  },
+  "h": 726,
+  "src": "images/photos/high res pose \u2014 hero crop.jpeg",
+  "w": 1600
+ },
+ "B": {
+  "files": {
+   "B-1600.jpg": {
+    "bytes": 163757,
+    "h": 2100,
+    "w": 1400
+   },
+   "B-1600.webp": {
+    "bytes": 67332,
+    "h": 2100,
+    "w": 1400
+   },
+   "B-800.jpg": {
+    "bytes": 77848,
+    "h": 1200,
+    "w": 800
+   },
+   "B-800.webp": {
+    "bytes": 32964,
+    "h": 1200,
+    "w": 800
+   }
+  },
+  "h": 2100,
+  "src": "C:\\Users\\bowle/iCloudDrive/Desktop/DWD/dwdPROSERIES/season-1/events/2026-07-06-summer-intensive/source/from-phone-hires/video-masters/SHOW__jazz_daisy_remi_evie_belle_yessa_adelyn.MOV",
+  "w": 1400
+ },
+ "C": {
+  "files": {
+   "C-1600.jpg": {
+    "bytes": 132308,
+    "h": 1067,
+    "w": 1600
+   },
+   "C-1600.webp": {
+    "bytes": 65624,
+    "h": 1067,
+    "w": 1600
+   },
+   "C-800.jpg": {
+    "bytes": 49065,
+    "h": 534,
+    "w": 800
+   },
+   "C-800.webp": {
+    "bytes": 27240,
+    "h": 534,
+    "w": 800
+   }
+  },
+  "h": 1067,
+  "src": "C:\\Users\\bowle/iCloudDrive/Desktop/DWD/_library/caa-2021-2026/Seasons/Season-4/GROOVE/Groove Photos/John-Aura/131_Aura_10.JPG",
+  "w": 1600
+ },
+ "D": {
+  "files": {
+   "D-1600.jpg": {
+    "bytes": 137339,
+    "h": 1067,
+    "w": 1600
+   },
+   "D-1600.webp": {
+    "bytes": 64146,
+    "h": 1067,
+    "w": 1600
+   },
+   "D-800.jpg": {
+    "bytes": 51496,
+    "h": 534,
+    "w": 800
+   },
+   "D-800.webp": {
+    "bytes": 28832,
+    "h": 534,
+    "w": 800
+   }
+  },
+  "h": 1067,
+  "src": "C:\\Users\\bowle/iCloudDrive/Desktop/DWD/_library/caa-2021-2026/Seasons/Season-4/GROOVE/Groove Photos/John-Heart of Gold/176_Heart Of Gold_38.JPG",
+  "w": 1600
+ },
+ "E": {
+  "files": {
+   "E-1600.jpg": {
+    "bytes": 95263,
+    "h": 1067,
+    "w": 1600
+   },
+   "E-1600.webp": {
+    "bytes": 46618,
+    "h": 1067,
+    "w": 1600
+   },
+   "E-800.jpg": {
+    "bytes": 34826,
+    "h": 534,
+    "w": 800
+   },
+   "E-800.webp": {
+    "bytes": 18938,
+    "h": 534,
+    "w": 800
+   }
+  },
+  "h": 1067,
+  "src": "C:\\Users\\bowle/iCloudDrive/Desktop/DWD/_library/caa-2021-2026/Seasons/Season-4/GROOVE/Groove Photos/John-Aura/131_Aura_66.JPG",
+  "w": 1600
+ },
+ "F": {
+  "files": {
+   "F-1600.jpg": {
+    "bytes": 34959,
+    "h": 1067,
+    "w": 1600
+   },
+   "F-1600.webp": {
+    "bytes": 14890,
+    "h": 1067,
+    "w": 1600
+   },
+   "F-800.jpg": {
+    "bytes": 14718,
+    "h": 534,
+    "w": 800
+   },
+   "F-800.webp": {
+    "bytes": 6256,
+    "h": 534,
+    "w": 800
+   }
+  },
+  "h": 1067,
+  "src": "images/photos/dwdc-7I6A3762.jpg",
+  "w": 1600
+ },
+ "G": {
+  "files": {
+   "G-1600.jpg": {
+    "bytes": 75888,
+    "h": 1138,
+    "w": 1600
+   },
+   "G-1600.webp": {
+    "bytes": 26730,
+    "h": 1138,
+    "w": 1600
+   },
+   "G-800.jpg": {
+    "bytes": 24324,
+    "h": 569,
+    "w": 800
+   },
+   "G-800.webp": {
+    "bytes": 10546,
+    "h": 569,
+    "w": 800
+   }
+  },
+  "h": 1138,
+  "src": "images/photos/A-06-06-25~4993-Enhanced-NR.jpg",
+  "w": 1600
+ },
+ "H": {
+  "files": {
+   "H-1600.jpg": {
+    "bytes": 40292,
+    "h": 1314,
+    "w": 1600
+   },
+   "H-1600.webp": {
+    "bytes": 17896,
+    "h": 1314,
+    "w": 1600
+   },
+   "H-800.jpg": {
+    "bytes": 17030,
+    "h": 657,
+    "w": 800
+   },
+   "H-800.webp": {
+    "bytes": 6738,
+    "h": 657,
+    "w": 800
+   }
+  },
+  "h": 1314,
+  "src": "images/photos/opt/dwdc-amuse-08-1600.webp",
+  "w": 1600
+ },
+ "I": {
+  "files": {
+   "I-1600.jpg": {
+    "bytes": 66615,
+    "h": 1067,
+    "w": 1600
+   },
+   "I-1600.webp": {
+    "bytes": 27692,
+    "h": 1067,
+    "w": 1600
+   },
+   "I-800.jpg": {
+    "bytes": 27350,
+    "h": 534,
+    "w": 800
+   },
+   "I-800.webp": {
+    "bytes": 12192,
+    "h": 534,
+    "w": 800
+   }
+  },
+  "h": 1067,
+  "src": "images/photos/dwdc-7I6A3724.jpg",
+  "w": 1600
+ },
+ "J": {
+  "files": {
+   "J-1600.jpg": {
+    "bytes": 80090,
+    "h": 900,
+    "w": 1600
+   },
+   "J-1600.webp": {
+    "bytes": 40920,
+    "h": 900,
+    "w": 1600
+   },
+   "J-800.jpg": {
+    "bytes": 32323,
+    "h": 450,
+    "w": 800
+   },
+   "J-800.webp": {
+    "bytes": 17652,
+    "h": 450,
+    "w": 800
+   }
+  },
+  "h": 900,
+  "src": "images/photos/opt/story-si-firebird-1600.webp",
+  "w": 1600
+ },
+ "K": {
+  "files": {
+   "K-1600.jpg": {
+    "bytes": 33963,
+    "h": 1080,
+    "w": 720
+   },
+   "K-1600.webp": {
+    "bytes": 14330,
+    "h": 1080,
+    "w": 720
+   }
+  },
+  "h": 1080,
+  "src": "C:\\Users\\bowle/iCloudDrive/Desktop/DWD/dwdPROSERIES/library/clips/teach-05_hero-arms-wide.mp4",
+  "w": 720
+ },
+ "M": {
+  "files": {
+   "M-1600.jpg": {
+    "bytes": 67413,
+    "h": 1350,
+    "w": 900
+   },
+   "M-1600.webp": {
+    "bytes": 29618,
+    "h": 1350,
+    "w": 900
+   },
+   "M-800.jpg": {
+    "bytes": 61889,
+    "h": 1200,
+    "w": 800
+   },
+   "M-800.webp": {
+    "bytes": 25848,
+    "h": 1200,
+    "w": 800
+   }
+  },
+  "h": 1350,
+  "src": "C:\\Users\\bowle/iCloudDrive/Desktop/DWD/dwdPROSERIES/season-1/events/2026-07-06-summer-intensive/source/from-phone-hires/video-masters/SHOW__monotony_remi_daisy_evie_john_belle_adelyn.MOV",
+  "w": 900
+ }
+}

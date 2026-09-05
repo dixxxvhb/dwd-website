@@ -68,19 +68,23 @@ const CORS = {
     await p.close();
   }
 
-  /* ── 3. Hero loop plays ── */
+  /* ── 3. Hero loop plays ──
+     The home hero has been a twelve-entry rotation since 2026-09-05, so a plain
+     load of "/" gets a loop only three times in twelve. ?hero=B pins the entry
+     this check was written for. There is one caption now, not a still/loop
+     pair, because the rotation renders the credit for whatever it chose. */
   {
     const p = await browser.newPage();
     await p.setViewport({ width: 1280, height: 900 });
-    await p.goto(B + '/', { waitUntil: 'networkidle2' });
+    await p.goto(B + '/?hero=B', { waitUntil: 'networkidle2' });
     await new Promise((r) => setTimeout(r, 3500));
     const v = await p.evaluate(() => {
       const el = document.getElementById('hero-loop');
-      const cap = document.querySelector('.caption--loop');
+      const cap = document.querySelector('#page-home .hero-photo .caption');
       return {
         playing: !el.paused, t: +el.currentTime.toFixed(1),
         on: el.closest('.hero-photo').classList.contains('hero-loop-on'),
-        caption: getComputedStyle(cap).display !== 'none' ? cap.textContent.trim() : null,
+        caption: cap && getComputedStyle(cap).display !== 'none' ? cap.textContent.trim() : null,
       };
     });
     say(v.playing && v.on && v.t > 0.5, 'Home hero loop plays', `t=${v.t}s`);
