@@ -32,8 +32,11 @@ const BASE = process.env.QA_BASE || 'http://localhost:8790';
 const OUTFILE = process.argv[2] || null;
 
 const CSS_FILES = [
-  'styles', 'additions', 'editorial', 'rebrand', 'audition',
-  'poster-pages', 'tighten', 'arms', 'season1', 'story', 'convert', 'next-level',
+  // The twelve source sheets were concatenated into css/site.css on
+  // 2026-09-03. This list still named them until 2026-09-04, so every
+  // one of these tools was reading nothing and cheerfully reporting
+  // "0 dead rules". One name now, and it is the real file.
+  'site',
 ];
 
 const ROUTES = ['home', 'proseries', 'adult-company', 'teachers', 'gallery', 'shop', 'contact', 'privacy'];

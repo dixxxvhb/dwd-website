@@ -2,30 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0c1f17">
   <meta name="robots" content="noindex">
-  <title>Dance With Dixon</title>
+  <title>Not found · Dance With Dixon</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192.png">
-  <script>
-    // GitHub Pages serves this for any path with no file behind it. The
-    // sections have real directories since 2026-09-02 (item 3.1), so a valid
-    // section URL never lands here; anything that does is genuinely unknown and
-    // goes home. The '#home' this used to append is redundant now that '/' is
-    // itself a route. Works with the custom domain and the /dwd-website repo
-    // path alike.
-    var path = window.location.pathname;
-    var repo = '/dwd-website';
-    if (path.startsWith(repo)) {
-      window.location.replace(repo + '/');
-    } else {
-      window.location.replace('/');
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/site.css">
+  <style>
+    html, body { min-height: 100%; margin: 0; background: #0c1f17; }
+    .nf-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: #faf3e8;
+      font-family: 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
     }
-  </script>
+    .nf-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #faf3e8;
+    }
+    .nf-brand span {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.125rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(250, 243, 232, 0.82);
+    }
+    .nf-brand em { font-style: italic; }
+    .nf-page h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(2.5rem, 9vw, 4rem);
+      line-height: 1.05;
+      margin: 0;
+    }
+    .nf-page p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: rgba(250, 243, 232, 0.72);
+    }
+    .nf-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 2rem;
+    }
+    .nf-links a {
+      color: #faf3e8;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 122, 162, 0.7);
+      font-size: 0.9375rem;
+      letter-spacing: 0.06em;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .nf-links a:hover, .nf-links a:focus-visible { border-bottom-color: #ff7aa2; color: #ff7aa2; }
+  </style>
 </head>
 <body data-arm="house">
-  <p>Redirecting...</p>
+  <main class="nf-page">
+    <a class="nf-brand" href="/">
+      <span>Dance <em>With</em> Dixon</span>
+    </a>
+    <h1>Nothing here.</h1>
+    <p>That page moved or never existed.</p>
+    <nav class="nf-links" aria-label="Where to go next">
+      <a href="/">Home</a>
+      <a href="/proseries/">ProSeries</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </main>
 </body>
 </html>

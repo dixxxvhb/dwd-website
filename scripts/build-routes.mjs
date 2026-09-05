@@ -35,10 +35,24 @@ const SITE = 'https://dancewithdixon.com';
  * `dir` and `route` differ for the Collective on purpose: the section is
  * #adult-company for historical reasons, and /collective is what it is called
  * everywhere a human can see.
+ *
+ * supabase — load the supabase-js CDN bundle on this route. It is ~120KB, by
+ *   some distance the heaviest thing the site fetches, and only routes with a
+ *   form or a database-rendered list have any use for it. Everything that
+ *   touches `window.__dwd_sb` already guards on it being absent (js/main.js
+ *   :610, analytics.js:17, episodes.js:31, dwdc-next.js:23), so switching it
+ *   off degrades rather than breaks.
+ *   COST, stated plainly: analytics.js needs it too, so the routes below with
+ *   supabase:false record no page views. That is the trade this flag makes.
+ * feature — load the feature scripts (season/dwdc-next/episodes/analytics).
+ *   main.js is routing and eras.js is shared chrome (it un-hides the nav CTA),
+ *   so those two load everywhere.
  */
 const ROUTES = [
   {
     dir: 'proseries',
+    supabase: true,
+    feature: true,
     route: 'proseries',
     title: 'ProSeries: Season One | DWD',
     description:
@@ -54,6 +68,8 @@ const ROUTES = [
   },
   {
     dir: 'collective',
+    supabase: true,
+    feature: true,
     route: 'adult-company',
     title: 'The Collective | DWD',
     description:
@@ -68,6 +84,8 @@ const ROUTES = [
   },
   {
     dir: 'teachers',
+    supabase: true,
+    feature: true,
     route: 'teachers',
     title: 'Teachers | DWD',
     description:
@@ -81,6 +99,8 @@ const ROUTES = [
   },
   {
     dir: 'gallery',
+    supabase: true,
+    feature: true,
     route: 'gallery',
     title: 'Gallery | DWD',
     description:
@@ -93,6 +113,8 @@ const ROUTES = [
   },
   {
     dir: 'contact',
+    supabase: true,
+    feature: true,
     route: 'contact',
     title: 'Contact | DWD',
     description:
@@ -107,6 +129,8 @@ const ROUTES = [
   },
   {
     dir: 'privacy',
+    supabase: false,
+    feature: false,
     route: 'privacy',
     title: 'Privacy Policy | DWD',
     description: 'How Dance With Dixon LLC handles the information you share through this site.',
@@ -202,6 +226,44 @@ function buildShell(r) {
     '       what paints here. See scripts/build-routes.mjs. -->\n'
   );
 
+  /* Per-route script scoping (2026-09-04). Done here rather than by hand in
+     the shells because the shells are build output: hand-edit one and the next
+     `node scripts/build-routes.mjs` silently puts it back. */
+
+  /* index.html is CRLF in the working tree and LF in git (.gitattributes says
+     eol=lf). Match either, and emit whatever this copy already uses, so a shell
+     never ends up with one stray line ending in the middle of its head. */
+  const EOL = out.includes('\r\n') ? '\r\n' : '\n';
+
+  if (!r.supabase) {
+    const before = out;
+    out = out.replace(
+      /  <!-- Supabase Client[\s\S]*?supabase\.min\.js"><\/script>\r?\n/,
+      '  <!-- No Supabase bundle on this route: it carries no form and no' + EOL +
+        '       database-rendered list. See scripts/build-routes.mjs. -->' + EOL
+    );
+    if (out === before) {
+      console.error(`Refusing to build ${r.dir}: could not find the Supabase script tag.`);
+      process.exit(1);
+    }
+  }
+
+  if (!r.feature) {
+    for (const name of ['season', 'dwdc-next', 'episodes', 'analytics']) {
+      const re = new RegExp(`  <script defer src="/js/${name}\\.js"></script>\\r?\\n`);
+      if (!re.test(out)) {
+        console.error(`Refusing to build ${r.dir}: could not find /js/${name}.js.`);
+        process.exit(1);
+      }
+      out = out.replace(re, '');
+    }
+    out = out.replace(
+      /  <!-- season\.js first: it owns the chair numbers main\.js\/eras\.js never touch\. -->\r?\n/,
+      '  <!-- Feature scripts are dropped on this route (see build-routes.mjs).' + EOL +
+        '       main.js is the router and eras.js is shared chrome, so both stay. -->' + EOL
+    );
+  }
+
   // Tell main.js which section this shell is, before the deferred scripts run.
   out = out.replace(
     '  <!-- season.js first:',
@@ -225,12 +287,12 @@ function buildSitemap() {
       priority: r.dir === 'proseries' ? '0.9' : r.dir === 'privacy' ? '0.3' : '0.7',
       changefreq: r.dir === 'privacy' ? 'yearly' : 'weekly',
     })),
-    // The two standalone event pages. Both events are over and both pages are
-    // archives now (see docs/ERAS.md for their gates), but they are real URLs
-    // that have been shared and linked, so they stay in the sitemap at a
-    // priority that says "archive".
-    { loc: `${SITE}/fullout`, priority: '0.3', changefreq: 'yearly' },
-    { loc: `${SITE}/dwdcon`, priority: '0.3', changefreq: 'yearly' },
+    // /fullout and /dwdcon are now noindex redirect stubs pointing at
+    // /proseries/ — nothing for a crawler to index, so they are out of the
+    // sitemap. A·Muse in Space stays: it is a real archive page for a past
+    // show, with its own fixed lastmod (the show is over, so the page must not
+    // inherit today's date on every build).
+    { loc: `${SITE}/amuse-in-space.html`, priority: '0.3', changefreq: 'yearly', lastmod: '2026-09-04' },
   ];
   return (
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -240,7 +302,7 @@ function buildSitemap() {
         (e) =>
           '  <url>\n' +
           `    <loc>${e.loc}</loc>\n` +
-          `    <lastmod>${today}</lastmod>\n` +
+          `    <lastmod>${e.lastmod || today}</lastmod>\n` +
           `    <changefreq>${e.changefreq}</changefreq>\n` +
           `    <priority>${e.priority}</priority>\n` +
           '  </url>\n'

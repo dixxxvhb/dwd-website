@@ -24,8 +24,11 @@ const path = require('path');
 
 const CSS_DIR = 'css';
 const SITE_SHEETS = [
-  'styles', 'additions', 'editorial', 'rebrand', 'audition',
-  'poster-pages', 'tighten', 'arms', 'season1', 'story', 'convert', 'next-level',
+  // The twelve source sheets were concatenated into css/site.css on
+  // 2026-09-03. This list still named them until 2026-09-04, so every
+  // one of these tools was reading nothing and cheerfully reporting
+  // "0 dead rules". One name now, and it is the real file.
+  'site',
 ];
 
 /* ── Everything that could possibly name a class ─────────────────────── */

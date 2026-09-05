@@ -127,7 +127,7 @@
     frag.appendChild(el('p', 'dnc-price', priceLine(row)));
 
     var cta = el('a', 'btn btn-outline dnc-cta');
-    cta.href = '#contact?reason=adult';
+    cta.href = '/contact/?reason=adult';
     cta.setAttribute('data-track', 'dwdc-next-class-save');
     cta.innerHTML = 'Save my spot <em>&rarr;</em>';
     frag.appendChild(cta);

@@ -10,7 +10,7 @@
   const validPages = [
     'home', 'adult-company', 'proseries',
     'teachers',
-    'gallery', 'shop', 'contact', 'privacy'
+    'gallery', 'contact', 'privacy'
   ];
 
   // Legacy hash redirects — Performances was merged into Collective (#adult-company),
@@ -35,8 +35,7 @@
   // ── PATH ROUTES (item 3.1) ──
   // Each of these has a real directory built by scripts/build-routes.mjs, so
   // /proseries is a page a search engine can index and a link preview can
-  // describe. #shop is deliberately absent: merch left the nav in item 1.3 and
-  // has no shell, so it stays hash-only.
+  // describe. The #shop merch poll was removed 2026-09-04.
   //
   // The old #hash links keep working forever. When one names a section that
   // HAS a path, the hash handler swaps the URL for the path with replaceState,
@@ -158,12 +157,10 @@
     var target = document.getElementById('page-' + name);
     if (target) target.classList.add('active');
 
-    // Sticky mobile CTA bar (item M1): only on the conversion-relevant pages.
-    var mob = document.getElementById('mob-cta');
-    if (mob) {
-      mob.hidden = !['home', 'proseries'].includes(name);
-      document.body.classList.toggle('mob-cta-on', !mob.hidden);
-    }
+    // Sticky mobile CTA bar (item M1, rebuilt 2026-09-04): every route except
+    // Privacy. Visibility itself is driven by observers, not by the route —
+    // see setupMobCta.
+    setupMobCta(name);
 
     // Update nav
     document.querySelectorAll('.topnav nav a, .topnav .brand, .topnav .nav-cta').forEach(function (a) {
@@ -205,7 +202,6 @@
       'teachers': 'Teachers | DWD',
 
       'gallery': 'Gallery | DWD',
-      'shop': 'Merch | DWD',
       'contact': 'Contact | DWD'
     };
     document.title = titles[name] || titles['home'];
@@ -217,7 +213,7 @@
     if (ROUTE_PATH[name]) {
       var canonical = document.querySelector('link[rel="canonical"]');
       var ogUrl = document.querySelector('meta[property="og:url"]');
-      var abs = 'https://dancewithdixon.com' + (ROUTE_PATH[name] === '/' ? '' : ROUTE_PATH[name]);
+      var abs = 'https://dancewithdixon.com' + ROUTE_PATH[name];
       if (canonical) canonical.setAttribute('href', abs || 'https://dancewithdixon.com/');
       if (ogUrl) ogUrl.setAttribute('content', abs || 'https://dancewithdixon.com/');
     }
@@ -231,6 +227,81 @@
     }
     var announce = document.getElementById('route-announce');
     if (announce) announce.textContent = (titles[name] || 'Home').split('|')[0].trim() + ' — loaded';
+  }
+
+  // ── STICKY MOBILE CTA BAR ──
+  // The bar is the phone's primary CTA on every route but Privacy. It stays
+  // out of the way until the page's own first Express Interest button (or,
+  // failing that, the hero) has scrolled off, and it steps aside again while
+  // the interest form itself is on screen. IntersectionObserver, no timers.
+  var mobObservers = [];
+  var mobState = { passedLead: false, formVisible: false, enabled: false };
+
+  function paintMobCta() {
+    var mob = document.getElementById('mob-cta');
+    if (!mob) return;
+    var show = mobState.enabled && mobState.passedLead && !mobState.formVisible;
+    mob.hidden = !show;
+    document.body.classList.toggle('mob-cta-on', show);
+  }
+
+  // eras.js reveals the date-gated bands AFTER main.js runs, so the lead
+  // element can change once. Re-resolve it on load.
+  window.addEventListener('load', function () {
+    var active = document.querySelector('.page.active');
+    if (active) setupMobCta((active.id || '').replace(/^page-/, ''));
+  });
+
+  function setupMobCta(name) {
+    var mob = document.getElementById('mob-cta');
+    if (!mob) return;
+    mobObservers.forEach(function (o) { o.disconnect(); });
+    mobObservers = [];
+    mobState = { passedLead: false, formVisible: false, enabled: name !== 'privacy' };
+    paintMobCta();
+    if (!mobState.enabled || typeof IntersectionObserver !== 'function') {
+      if (mobState.enabled) { mobState.passedLead = true; paintMobCta(); }
+      return;
+    }
+
+    var page = document.getElementById('page-' + name);
+    if (!page) return;
+
+    // The lead: the page's own first Express Interest button, else its H1.
+    // The H1 fallback matters: on Teachers, Gallery and Contact the only
+    // Express Interest link is at the bottom of the page, and a page-sized
+    // container never leaves the viewport.
+    var lead = null;
+    var candidates = page.querySelectorAll('a[href="#interest"]');
+    for (var i = 0; i < candidates.length; i++) {
+      if (candidates[i].offsetParent !== null &&
+          candidates[i].getBoundingClientRect().height > 0) { lead = candidates[i]; break; }
+    }
+    if (!lead) lead = page.querySelector('h1');
+    if (!lead) lead = page.firstElementChild;
+    if (!lead) return;
+
+    var leadObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        // Passed = the lead has left the viewport upward.
+        mobState.passedLead = !e.isIntersecting && e.boundingClientRect.bottom < 0;
+        paintMobCta();
+      });
+    }, { threshold: 0 });
+    leadObs.observe(lead);
+    mobObservers.push(leadObs);
+
+    var form = document.getElementById('interest');
+    if (form && page.contains(form)) {
+      var formObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          mobState.formVisible = e.isIntersecting;
+          paintMobCta();
+        });
+      }, { threshold: 0 });
+      formObs.observe(form);
+      mobObservers.push(formObs);
+    }
   }
 
   // Listen for hash changes
@@ -316,11 +387,35 @@
   // (item 3.4) along with the openMobileMenu/hamburger/overlay branches that
   // used to live here; they had been aria-hidden and unreachable since the
   // rebrand.
+  // The era-gated launch CTA lives in the header row on desktop. Inside the
+  // open phone menu it has to be the last item in the LIST, so it moves into
+  // <nav> on open and back on close. Moving it (rather than styling it in
+  // place) is what makes it a full-width button at the bottom of the menu
+  // instead of an invisible flex item squeezed against the toggle.
+  function menuCta() {
+    var nav = document.querySelector('.topnav nav');
+    if (!nav) return null;
+    var ctas = document.querySelectorAll('.topnav .nav-cta-launch');
+    for (var i = 0; i < ctas.length; i++) {
+      if (ctas[i].style.display !== 'none') return ctas[i];
+    }
+    return null;
+  }
+  function restoreNavCta() {
+    var topnav = document.getElementById('topnav');
+    var toggle = document.getElementById('topnav-toggle');
+    if (!topnav || !toggle) return;
+    topnav.querySelectorAll('nav .nav-cta-launch').forEach(function (cta) {
+      topnav.insertBefore(cta, toggle);
+    });
+  }
+
   function closeMobileMenu() {
     var topnav = document.getElementById('topnav');
     var toggle = document.getElementById('topnav-toggle');
     if (topnav) topnav.classList.remove('is-open');
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    restoreNavCta();
     document.documentElement.classList.remove('menu-open');
     document.body.style.overflow = '';
   }
@@ -336,11 +431,33 @@
         topnav.classList.add('is-open');
         topnavToggle.setAttribute('aria-expanded', 'true');
         document.documentElement.classList.add('menu-open');
+        var cta = menuCta();
+        var navEl = topnav.querySelector('nav');
+        if (cta && navEl) navEl.appendChild(cta);
       }
     });
     topnav.querySelectorAll('nav a').forEach(function (a) {
       a.addEventListener('click', closeMobileMenu);
     });
+  }
+
+  // ── PROSERIES STORY DISCLOSURE ──
+  // The 7-scene Preseason story is 5,000px of phone. It collapses behind a
+  // native <details> at <=767px and stays fully open above that: the markup
+  // ships `open`, and this is the only thing that closes it. Media-query
+  // driven, so a rotation or a resize puts it back the way that width wants.
+  var storyMore = document.querySelector('.ps-story-more');
+  if (storyMore && window.matchMedia) {
+    var phone = window.matchMedia('(max-width: 767px)');
+    var syncStory = function (mq) {
+      // Only force it shut on the transition into phone width; leave a reader
+      // who opened it alone until the width actually changes.
+      if (mq.matches) storyMore.removeAttribute('open');
+      else storyMore.setAttribute('open', '');
+    };
+    syncStory(phone);
+    if (phone.addEventListener) phone.addEventListener('change', syncStory);
+    else if (phone.addListener) phone.addListener(syncStory);
   }
 
   // Close menu on Escape
@@ -358,16 +475,34 @@
   var lightboxIndex = 0;
   var lightboxPrevFocus = null; // store focus before opening
 
-  function collectLightboxImages() {
-    lightboxImages = Array.from(document.querySelectorAll('[data-lightbox]'));
+  // Prev/next must stay inside the section the visitor is actually looking at.
+  // The document carries 77 [data-lightbox] nodes across six sections; walking
+  // all of them meant "next" left the gallery and landed on a Collective
+  // rehearsal shot.
+  function collectLightboxImages(from) {
+    var scope = (from && from.closest && from.closest('.page')) ||
+                document.querySelector('.page.active') ||
+                document;
+    lightboxImages = Array.from(scope.querySelectorAll('[data-lightbox]'));
   }
 
-  function openLightbox(index) {
-    if (!lightboxImages.length) return;
+  // Serve the lightbox the same responsive set the thumbnail used, so a phone
+  // is not handed the 1600px original.
+  function paintLightboxImage(el) {
+    if (!el) return;
+    if (el.srcset) lightboxImg.srcset = el.srcset; else lightboxImg.removeAttribute('srcset');
+    lightboxImg.sizes = '100vw';
+    lightboxImg.src = el.src;
+    lightboxImg.alt = el.alt;
+  }
+
+  function openLightbox(el) {
+    collectLightboxImages(el);
+    var index = lightboxImages.indexOf(el);
+    if (index < 0) return;
     lightboxPrevFocus = document.activeElement; // remember where focus was
     lightboxIndex = index;
-    lightboxImg.src = lightboxImages[lightboxIndex].src;
-    lightboxImg.alt = lightboxImages[lightboxIndex].alt;
+    paintLightboxImage(lightboxImages[lightboxIndex]);
     lightbox.classList.add('open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -392,8 +527,7 @@
     lightboxImg.style.transform = 'scale(0.97)';
     setTimeout(function () {
       lightboxIndex = newIndex;
-      lightboxImg.src = lightboxImages[lightboxIndex].src;
-      lightboxImg.alt = lightboxImages[lightboxIndex].alt;
+      paintLightboxImage(lightboxImages[lightboxIndex]);
       lightboxImg.style.opacity = '1';
       lightboxImg.style.transform = 'scale(1)';
     }, 180);
@@ -408,18 +542,17 @@
   }
 
   // Bind gallery image clicks + keyboard
-  collectLightboxImages();
-  lightboxImages.forEach(function (img, i) {
+  Array.from(document.querySelectorAll('[data-lightbox]')).forEach(function (img) {
     img.setAttribute('tabindex', '0');
     img.setAttribute('role', 'button');
     img.setAttribute('aria-label', 'View larger: ' + (img.alt || 'image'));
     img.addEventListener('click', function () {
-      openLightbox(i);
+      openLightbox(img);
     });
     img.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        openLightbox(i);
+        openLightbox(img);
       }
     });
   });
@@ -643,32 +776,74 @@
     }
   }
 
-  // ── CONTACT REASON FROM THE HASH QUERY ──
-  // Links like #contact?reason=adult arrive from the Collective page. The
-  // routing already strips the query (getPageFromHash splits on "?"), so the
-  // only job here is to flip the matching toggle before the visitor reads the
-  // form. Unknown values are ignored and the default toggle stands.
-  function applyContactReasonFromHash() {
-    var parts = window.location.hash.replace('#', '').split('?');
-    if (parts[0] !== 'contact' || !parts[1]) return;
+  // ── CONTACT REASON ──
+  // /contact/?reason=adult (the Collective hand-off) and the legacy
+  // #contact?reason=adult both land here. Flipping the toggle is only half
+  // the job: the toggle has to do visible work, so it also swaps the heading
+  // and the helper line above the form, and it is what the submission's
+  // `reason` field is read from.
+  var REASON_COPY = {
+    proseries: {
+      title: 'Tell us about your dancer.',
+      help: 'Age, experience, and what you are hoping for. Dixon replies personally.'
+    },
+    adult: {
+      title: 'Tell us about you and your training.',
+      help: 'However much or little you have danced. No audition, no experience required.'
+    },
+    general: {
+      title: "What's on your mind?",
+      help: 'Choreography, workshops, judging, or anything else.'
+    }
+  };
+
+  function readReason() {
+    var q = (window.location.search || '').replace('?', '');
+    var hashParts = window.location.hash.replace('#', '').split('?');
+    if (hashParts[1]) q = q ? q + '&' + hashParts[1] : hashParts[1];
     var reason = null;
-    parts[1].split('&').forEach(function (kv) {
+    q.split('&').forEach(function (kv) {
       var pair = kv.split('=');
       if (pair[0] === 'reason') reason = decodeURIComponent(pair[1] || '');
     });
-    if (!reason) return;
+    return reason;
+  }
+
+  function paintReason(value) {
+    var copy = REASON_COPY[value] || REASON_COPY.general;
+    var h1 = document.querySelector('#page-contact .contact-form-side h1');
+    var help = document.getElementById('contact-reason-help');
+    var hidden = document.getElementById('contact-reason');
+    var sub = document.querySelector('#page-contact .contact-form-side .sub');
+    if (h1) h1.textContent = copy.title;
+    // The catch-all sub-line only earns its place on the catch-all reason.
+    if (sub) sub.hidden = (value === 'adult' || value === 'proseries');
+    if (help) help.textContent = copy.help;
+    if (hidden) hidden.value = value || 'general';
+  }
+
+  function applyContactReason(explicit) {
     var group = document.querySelector('.toggle-group[data-name="reason"]');
     if (!group) return;
-    var btn = group.querySelector('.toggle-btn[data-value="' + reason.replace(/"/g, '') + '"]');
-    if (!btn) return;
-    group.querySelectorAll('.toggle-btn').forEach(function (b) {
-      b.classList.remove('active');
-      b.setAttribute('aria-checked', 'false');
-    });
-    btn.classList.add('active');
-    btn.setAttribute('aria-checked', 'true');
+    // Also used as an event listener, so ignore anything that is not a string.
+    var reason = (typeof explicit === 'string' && explicit) || readReason();
+    if (reason) {
+      var btn = group.querySelector('.toggle-btn[data-value="' + reason.replace(/"/g, '') + '"]');
+      if (btn) {
+        group.querySelectorAll('.toggle-btn').forEach(function (b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+      }
+    }
+    var active = group.querySelector('.toggle-btn.active');
+    paintReason(active ? active.dataset.value : 'general');
   }
-  window.addEventListener('hashchange', applyContactReasonFromHash);
+  var applyContactReasonFromHash = applyContactReason;
+  window.addEventListener('hashchange', function () { applyContactReason(); });
+  window.addEventListener('popstate', function () { applyContactReason(); });
 
   // ── TOGGLE GROUPS ──
   document.querySelectorAll('.toggle-group').forEach(function (group) {
@@ -680,6 +855,7 @@
         });
         btn.classList.add('active');
         btn.setAttribute('aria-checked', 'true');
+        if (group.dataset.name === 'reason') applyContactReason(btn.dataset.value);
       });
     });
   });
@@ -1010,46 +1186,8 @@
     }
   })();
 
-  // ── MERCH POLL FORM ──
-  var merchForm = document.querySelector('[data-form="merch-poll"]');
-  if (merchForm) {
-    // Checkbox toggle → .is-selected on parent label (independent per card)
-    merchForm.querySelectorAll('input[name="category"]').forEach(function (cb) {
-      cb.addEventListener('change', function () {
-        var card = cb.closest('.merch-category-card');
-        if (!card) return;
-        card.classList.toggle('is-selected', cb.checked);
-      });
-    });
-
-    merchForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var checked = merchForm.querySelectorAll('input[name="category"]:checked');
-      if (!checked.length) {
-        showFormError(merchForm, 'Pick at least one category to vote.');
-        return;
-      }
-      var rows = Array.prototype.map.call(checked, function (cb) { return { category: cb.value }; });
-
-      if (!supabase) {
-        showFormError(merchForm, 'Voting is temporarily unavailable. Please try again shortly.');
-        return;
-      }
-      setSubmitLoading(merchForm, true);
-      supabase.from('merch_poll_responses').insert(rows)
-        .then(function (res) {
-          setSubmitLoading(merchForm, false);
-          if (res.error) {
-            console.error('Merch vote error:', res.error);
-            showFormError(merchForm, 'Something went wrong. Please try again.');
-            return;
-          }
-          merchForm.style.display = 'none';
-          var success = document.querySelector('.merch-vote-success');
-          if (success) success.style.display = 'block';
-        });
-    });
-  }
+  // The merch poll form handler lived here. The #page-shop section it drove
+  // was removed 2026-09-04 with the rest of the merch poll; see git history.
 
   // Clear invalid state on input
   document.querySelectorAll('.form-group input, .form-group select, .form-group textarea').forEach(function (field) {
@@ -1131,32 +1269,9 @@
     }
   })();
 
-  // ── TEACHERS / ABOUT PHOTO SLIDESHOW ──
-  // (.about-slide was the original About page; .tch-slide is the new Teachers
-  //  Dixon-director photo column. Same shuffle cycler handles both.)
-  ['.about-slide', '.tch-slide'].forEach(function (sel) {
-    var slides = document.querySelectorAll(sel);
-    if (slides.length < 2) return;
-    var i = 0;
-    // Slides after the first carry data-src/data-srcset (2026-09-03) so a
-    // Teachers visit fetches one photo, not twelve. Hydrate the slide that
-    // is about to show, and the one after it so the fade never waits.
-    function hydrate(el) {
-      if (!el || !el.dataset.src) return;
-      if (el.dataset.srcset) el.srcset = el.dataset.srcset;
-      el.src = el.dataset.src;
-      delete el.dataset.src;
-      delete el.dataset.srcset;
-    }
-    hydrate(slides[1]);
-    setInterval(function () {
-      slides[i].classList.remove('active');
-      i = (i + 1) % slides.length;
-      hydrate(slides[i]);
-      hydrate(slides[(i + 1) % slides.length]);
-      slides[i].classList.add('active');
-    }, 5000);
-  });
+  // The Teachers photo shuffle was removed 2026-09-04: a 12-slide ambient
+  // carousel with no controls, no pause and a 739KB idle fetch. The page now
+  // ships a static six-photo grid. (.about-slide went with the About page.)
 
   // ── PATH NAVIGATION ──
   // Intercept clicks on in-site path links so the SPA keeps its state instead
@@ -1185,15 +1300,23 @@
       e.preventDefault();
       closeMobileMenu();
 
-      var target = ROUTE_PATH[route];
-      if (window.location.pathname.replace(/\/$/, '') === target.replace(/\/$/, '') &&
-          !window.location.hash) {
+      // Keep the query string and the hash the link carried:
+      // /contact/?reason=adult has to still say reason=adult after the SPA
+      // swaps the section, or the deep link does nothing.
+      var query = (href.split('#')[0].split('?')[1] || '');
+      var frag = (href.split('#')[1] || '');
+      var target = ROUTE_PATH[route] + (query ? '?' + query : '') + (frag ? '#' + frag : '');
+
+      if (window.location.pathname.replace(/\/$/, '') === ROUTE_PATH[route].replace(/\/$/, '') &&
+          !window.location.hash && !query && !frag) {
         window.scrollTo(0, 0);
         return;
       }
 
       try { window.history.pushState({ route: route }, '', target); } catch (err) {}
       showPage(route);
+      applyContactReason();
+      if (frag) scrollToAnchor(frag);
     });
 
     window.addEventListener('popstate', function () {
@@ -1245,14 +1368,17 @@
   } else if (!window.location.hash && pathRoute) {
     showPage(pathRoute);
     if (supportsPathRouting) {
-      try { window.history.replaceState({ route: pathRoute }, '', ROUTE_PATH[pathRoute]); } catch (e) {}
+      try {
+        window.history.replaceState(
+          { route: pathRoute }, '', ROUTE_PATH[pathRoute] + window.location.search
+        );
+      } catch (e) {}
     }
   } else if (initialPage !== 'home') {
     showPage(initialPage);
   } else {
     // Fresh no-hash load never calls showPage, so init the mobile CTA bar here.
-    var mobInit = document.getElementById('mob-cta');
-    if (mobInit) { mobInit.hidden = false; document.body.classList.add('mob-cta-on'); }
+    setupMobCta('home');
     // Trigger reveals on initial home page
     setTimeout(function () {
       var activePage = document.querySelector('.page.active');

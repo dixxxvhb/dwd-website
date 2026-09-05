@@ -13,7 +13,11 @@ const ASSETS = [
   '/contact/',
   '/privacy/',
   '/offline.html',
-  '/css/site.css',
+  // The MINIFIED sheet, because that is the one the pages link (2026-09-04).
+  // Precaching site.css here would have downloaded 309KB nobody asks for and
+  // left the 192KB file everyone does ask for uncached — the exact opposite of
+  // what this list is for.
+  '/css/site.min.css',
   '/images/logos/DWD-green.png',
   '/images/icons/icon-192.png',
   '/images/icons/icon-512.png'

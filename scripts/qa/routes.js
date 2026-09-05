@@ -109,14 +109,14 @@ const probe = () => ({
     await p.close();
   }
 
-  // ── 4. #shop has no path and must stay a hash ──
+  // ── 4. #shop was removed (2026-09-04); an unknown hash falls back to Home ──
   {
     const p = await b.newPage();
     await p.setViewport({ width: 1280, height: 900 });
     await p.goto(BASE + '/#shop', { waitUntil: 'networkidle2' });
     await new Promise((r) => setTimeout(r, 1200));
-    check('hash #shop stays a hash', await p.evaluate(probe),
-      { page: 'page-shop', path: '/', hash: '#shop' });
+    check('retired #shop hash falls back to Home', await p.evaluate(probe),
+      { page: 'page-home', path: '/', hash: '#shop' });
     await p.close();
   }
 

@@ -7,7 +7,7 @@ const puppeteer = require('C:/Users/bowle/Code/DWDC-Instagram-Posts/node_modules
 
 const BASE = process.env.QA_BASE || 'http://localhost:8790';
 const OUT = process.argv[2] || path.join(__dirname, 'out');
-const ROUTES = (process.argv[3] || 'home,proseries,adult-company,teachers,gallery,shop,contact,privacy').split(',');
+const ROUTES = (process.argv[3] || 'home,proseries,adult-company,teachers,gallery,contact,privacy').split(',');
 const TILES = process.argv.includes('--tiles');
 const WIDTHS = [{ w: 1280, h: 900, tag: 'd' }, { w: 390, h: 844, tag: 'm' }];
 
