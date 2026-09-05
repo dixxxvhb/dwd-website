@@ -1,5 +1,5 @@
 # Home hero rotation — brief for builder hero-rotation
-n**STATUS: DONE — shipped 2026-09-05. Dixon approved A-K + M, rejected L. M re-cut at SS=34.5.**
+**STATUS: DONE — shipped 2026-09-05. Dixon approved A-K + M, rejected L. M re-cut at SS=34.5.**
 Date: 2026-09-05 · Repo: C:/Users/bowle/Code/dwd-website · Branch: create `hero-rotation` off main and stay on it · Author: Fable
 Scratch: C:/Users/bowle/AppData/Local/Temp/claude/C--Users-bowle/6348c57c-dc52-4d10-bf9a-f040f1516631/scratchpad/hero-build/
 Candidate list + verified source paths: `C:/Users/bowle/AppData/Local/Temp/claude/C--Users-bowle/6348c57c-dc52-4d10-bf9a-f040f1516631/scratchpad/hero/candidates.json` (use the `rank` numbers below to look up paths). Preview thumbnails you can Read: `.../scratchpad/hero/thumbs/<rank>.jpg`.
