@@ -7078,11 +7078,11 @@ html {
 }
 
 /* ── G. Footer logo tile — soften the flat pink-on-white square ── */
+/* The mark sits straight on the forest ground, no tile: a signature, not a sticker.
+   88px so the dancer's line work reads; the deep-forest ring melts into the footer on purpose. */
 footer.site-footer .footer-brand img {
-  background: var(--rb-ivory);
-  border: 1px solid var(--rb-rule-soft);
-  border-radius: var(--rb-radius-m);
-  box-shadow: var(--rb-shadow-1);
+  width: 88px; height: 88px; margin-bottom: 12px;
+  background: none; border: 0; border-radius: 0; box-shadow: none;
 }
 
 /* ── Reduced-motion coverage for the new pieces above ──
