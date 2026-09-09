@@ -1,4 +1,5 @@
 # DWD Website — dancewithdixon.com
+Repo: `~/Code/dwd-website`. Last verified: 2026-09-08.
 
 ## Stack
 - Vanilla HTML/CSS/JS (no framework)
@@ -41,15 +42,22 @@ Home, About, ProSeries, DWDC (Adult Company), Merch, Contact, Gallery, FAQ, Earl
 - Brand colors defined as CSS variables (forest green #0c1f17, terracotta #C8614B, Family Pink #FF7AA2 [retired blush #f8d7c8 2026-07-18], ivory #FAF3E8, seafoam #6BAF8A, soft pink #FF8FAB dwdPS-Prep-badge). Gold (#e2b955 flat / rose-gold gradient #c9956c→#e8c49a→#d4a574) is Tamara Mark memorial only. Arms differ by volume via [data-arm] house/ps/c — see docs/REBRAND-ONE-HOUSE-2026-07.md.
 - Logos: static true-alpha PNGs from `images/logos/v2/` (downscaled from `_brand/animated-logos/output-v2/merch-alpha/`). NEVER `*-transparent.webm` (banned fake-alpha) and NO `mix-blend-mode` compositing hacks — v2 PNGs carry real alpha. Animated web logo (live HTML embed) returns in a later PR; nav mark stays static PNG.
 - Tamara Mark included
-- No emojis ever
+- Visual + copy judgment: `~/.claude/design-taste.md` (it carries the no-emoji rule).
 
 ## Dev Server
+No package.json — the site is static, so just serve the repo root:
 ```bash
-cd ~/Desktop/DWD/Website && python3 -m http.server 8790
+cd ~/Code/dwd-website && python -m http.server 8790
 ```
+Then http://localhost:8790/. Build helpers are run directly, not via npm:
+`node scripts/build-css.mjs` (minifies css/site.css → css/site.min.css),
+`node scripts/build-routes.mjs`, `node scripts/build-faq-jsonld.mjs`,
+`python scripts/build-hero-images.py`, `bash scripts/encode-hero-loop.sh`.
+QA helpers live in `scripts/qa/`.
 
 ## Deploy
 ```bash
-cd ~/Desktop/DWD/Website && git add -A && git commit -m "message" && git push
+cd ~/Code/dwd-website && git add <explicit paths> && git commit -m "message" && git push
 ```
-GitHub Pages auto-deploys from main branch.
+GitHub Pages auto-deploys from `main` (CNAME dancewithdixon.com). Free — no Netlify,
+no deploy approval needed, but never `git add -A` in a repo two sessions may share.

@@ -76,5 +76,5 @@ Nothing was fixed during this audit. Test data (1 contact row, 2 merch votes) wa
 
 - Live SPA is one commit behind main (`de9e0c9` — the 07-13→07-06 fallback fix). Zero user impact (DB value is set); `dist/` is built and ready; deploys are ask-first.
 - Full raw findings (64 static + live-testing notes): workflow output at
-  `C:\Users\bowle\AppData\Local\Temp\claude\C--Users-bowle\a9264097-6a56-425a-a595-e60c0bbf9ee0\tasks\wld1rnpxc.output`
+  `C:/Users/bowle/AppData/Local/Temp/claude/C--Users-bowle/a9264097-6a56-425a-a595-e60c0bbf9ee0/tasks/wld1rnpxc.output`
 - Test data created during the audit was deleted from Supabase by id (verified).

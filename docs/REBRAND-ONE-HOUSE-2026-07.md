@@ -128,7 +128,7 @@ Volume is more than a hue swap — per-arm styling intent (applies in §5 sectio
 
 **Why the last attempt failed:** transparent webms were swapped for solid-ground videos whose ground didn't sit seamlessly on the section behind them (bg-seam), and the header logo paused on a blank frame when the mobile menu opened. Lesson: **a solid-ground video may only sit on a background that is EXACTLY its ground color** (`#0c1f17` for `solid`, `#FAF3E8` for `ivory`), with no gradient/texture behind it. Anywhere else: static transparent PNG.
 
-**Assets.** Copy from the canonical library `C:\Users\bowle\iCloud\iCloudDrive\Desktop\DWD\_brand\animated-logos\output-v2\` into `images/logos/v2/` (only the files actually referenced — this is a GitHub Pages repo, keep weight down; `idle` loops preferred for ambient placements, they're seamless):
+**Assets.** Copy from the canonical library `C:/Users/bowle/iCloud/iCloudDrive/Desktop/DWD/_brand/animated-logos/output-v2/` into `images/logos/v2/` (only the files actually referenced — this is a GitHub Pages repo, keep weight down; `idle` loops preferred for ambient placements, they're seamless):
 
 - `solid/DWD-green-idle-solid.mp4`, `solid/ProSeries-green-idle-solid.mp4`, `solid/Collective-green-idle-solid.mp4` (or `full` where a one-shot intro fits better — hero)
 - `still-solid/*.png` and `merch-alpha/*.png` as needed per the table below (merch-alpha = 4096² true-transparent; downscale to ≤1024px web copies, don't ship 4096 PNGs)
@@ -201,7 +201,7 @@ Restyle while in there: nav CTA = `--arm-cta` tokens (Family Pink bg + forest te
 
 ---
 
-## 8. Salvage manifest (from branch `version4`, clone at `C:\Users\bowle\Code\dwd-website-s1`)
+## 8. Salvage manifest (from branch `version4`, clone at `C:/Users/bowle/Code/dwd-website-s1`)
 
 Cherry-pick FILES (git checkout from the branch or plain copy) — not the concept:
 
