@@ -335,6 +335,7 @@
     <nav aria-label="Primary navigation">
       <a href="/" class="active" data-page="home">Home</a>
       <a href="/proseries/" data-page="proseries">ProSeries</a>
+      <a href="/schedule/" data-page="schedule">Schedule</a>
       <a href="/collective/" data-page="adult-company">Collective</a>
       <a href="/teachers/" data-page="teachers">Teachers</a>
       <a href="/gallery/" data-page="gallery">Gallery</a>
@@ -1072,6 +1073,7 @@
                   <li><span class="td-slot-time">5:00 &ndash; 6:00</span><span class="td-slot-name">Company Choreography <span class="td-tag td-tag-all">All</span></span></li>
                 </ul>
               </div>
+              <a href="/schedule/" class="td-schedule-link tap-44" data-track="td-schedule-link-prep">This week's schedule and drop-ins <span aria-hidden="true">&rarr;</span></a>
             </div>
 
             <div class="td-section">
@@ -1137,6 +1139,7 @@
                   <li><span class="td-slot-time">6:00 &ndash; 7:00</span><span class="td-slot-name">Competition Choreography</span></li>
                 </ul>
               </div>
+              <a href="/schedule/" class="td-schedule-link tap-44" data-track="td-schedule-link-elite">This week's schedule and drop-ins <span aria-hidden="true">&rarr;</span></a>
             </div>
 
             <div class="td-section">
@@ -1205,6 +1208,7 @@
                   <li><span class="td-slot-time">8:00 &ndash; 9:00</span><span class="td-slot-name">Competition Choreography <span class="td-tag">Pro Only</span></span></li>
                 </ul>
               </div>
+              <a href="/schedule/" class="td-schedule-link tap-44" data-track="td-schedule-link-pro">This week's schedule and drop-ins <span aria-hidden="true">&rarr;</span></a>
             </div>
 
             <div class="td-section">
@@ -1814,6 +1818,95 @@
       </div>
     </section>
 
+    <!-- ══════════ SCHEDULE + DROP-INS ══════════
+         Reads public_site_schedule via window.__dwd_sb (js/schedule.js). Not a
+         hardcoded weekly grid — see js/schedule.js for USE_STUB, the local
+         stub feed used until the app's Phase 1 RPCs are live. -->
+    <section class="page" id="page-schedule" data-arm="ps" aria-label="Schedule">
+      <div class="sched-wrap">
+        <div class="sched-header">
+          <div class="kicker">PROSERIES</div>
+          <h1 class="sched-h1" data-sched-h1>This week at ProSeries</h1>
+          <p class="sched-dek">Every class on the floor Monday to Thursday. The ones marked with a price are open for drop-ins: pay online, show up, dance.</p>
+          <div class="sched-week-switch" data-sched-week-switch>
+            <button type="button" class="sched-week-btn" data-sched-week="0">This week</button>
+            <button type="button" class="sched-week-btn" data-sched-week="1">Next week</button>
+            <button type="button" class="sched-week-btn" data-sched-week="2" data-sched-week-3-label>Week of &mdash;</button>
+          </div>
+        </div>
+
+        <div class="sched-notice" data-sched-notice hidden></div>
+
+        <div class="sched-list" data-sched-list aria-live="polite">
+          <div class="sched-skel">
+            <div class="sched-skel-row"></div>
+            <div class="sched-skel-row"></div>
+            <div class="sched-skel-row"></div>
+          </div>
+        </div>
+
+        <div class="sched-checkout" data-sched-checkout hidden>
+          <a href="#" class="sched-back tap-44" data-sched-back>&larr; Back to the schedule</a>
+          <div class="sched-checkout-grid">
+            <div class="sched-summary">
+              <h2 class="sched-h2">Your classes</h2>
+              <ul class="sched-summary-list" data-sched-summary-list></ul>
+              <div class="sched-summary-total"><span>Total</span><span data-sched-summary-total>$0</span></div>
+            </div>
+            <form class="sched-form" data-sched-form novalidate>
+              <div class="field">
+                <label for="sched-dancer-name">Dancer's name</label>
+                <input type="text" id="sched-dancer-name" name="dancer_name" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="sched-dancer-dob">Dancer's date of birth</label>
+                <input type="date" id="sched-dancer-dob" name="dancer_dob" required>
+              </div>
+              <div class="field">
+                <label for="sched-payer-name">Your name</label>
+                <input type="text" id="sched-payer-name" name="payer_name" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="sched-payer-email">Email</label>
+                <input type="email" id="sched-payer-email" name="payer_email" autocomplete="email" required>
+              </div>
+              <div class="field">
+                <label for="sched-payer-phone">Phone</label>
+                <input type="tel" id="sched-payer-phone" name="payer_phone" autocomplete="tel" required>
+              </div>
+              <label class="sched-waiver tap-44">
+                <input type="checkbox" id="sched-waiver" name="waiver_accepted" required>
+                <span>I have read and agree to the <a href="https://dwd-director.netlify.app/contracts/drop-in-waiver-printable.html" target="_blank" rel="noopener">Drop-In Class Waiver</a></span>
+              </label>
+              <p class="sched-stepup">Paying with Step Up For Students? <a href="https://dwd-director.netlify.app/drop-in" target="_blank" rel="noopener">Request your spot instead &rarr;</a></p>
+              <button type="submit" class="btn arm-cta sched-pay-btn tap-44" data-track="dropin_checkout_start" data-sched-pay-btn>Pay $0</button>
+              <p class="sched-error" data-sched-error hidden></p>
+              <p class="sched-fineprint">You'll pay on Stripe's secure page. Can't make it? Email <a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a> before class starts and we'll move you to another week. No refunds after the class has run.</p>
+            </form>
+          </div>
+        </div>
+
+        <div class="sched-thankyou" data-sched-thankyou hidden>
+          <div class="kicker">YOU'RE IN</div>
+          <h1 class="sched-h1" data-sched-ty-h1>See you soon.</h1>
+          <ul class="sched-summary-list" data-sched-ty-list></ul>
+          <div class="sched-summary-total"><span>Total</span><span data-sched-ty-total>$0</span></div>
+          <div class="sched-before">
+            <h2 class="sched-h2">Before class</h2>
+            <p data-sched-ty-address>Exchange Dance Studio &middot; 7409 Chancery Lane, Orlando, FL 32809</p>
+            <p>Arrive ten minutes early.</p>
+            <p>Dance clothes, no street shoes on the floor.</p>
+            <p>Bring water.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sched-cart-bar" data-sched-cart-bar hidden>
+        <span class="sched-cart-count" data-sched-cart-count>0 classes &middot; $0</span>
+        <button type="button" class="btn arm-cta tap-44" data-track="dropin_checkout_start" data-sched-checkout-btn>Check out</button>
+      </div>
+    </section>
+
     <!-- ══════════ TEACHERS ══════════ -->
     <section class="page" id="page-teachers" data-arm="house" aria-label="Teachers">
       <!-- Hero band -->
@@ -2332,6 +2425,7 @@
   <script defer src="/js/season.js"></script>
   <script defer src="/js/main.js"></script>
   <script defer src="/js/dwdc-next.js"></script>
+  <script defer src="/js/schedule.js"></script>
   <script defer src="/js/episodes.js"></script>
   <script defer src="/js/eras.js"></script>
   <script defer src="/js/analytics.js"></script>

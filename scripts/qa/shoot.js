@@ -83,7 +83,7 @@ const FREEZE = `
           // Social, maps, and the third-party legal links the privacy page is
           // required to carry are expected. Anything else off-domain on this
           // site is a CTA that escaped, which is what item 1.1 was about.
-          .filter(h => !/instagram\.com|youtube\.com|youtu\.be|facebook\.com|maps\.|google\.com\/maps|stripe\.com|plaid\.com/.test(h))
+          .filter(h => !/instagram\.com|youtube\.com|youtu\.be|facebook\.com|maps\.|google\.com\/maps|stripe\.com|plaid\.com|dwd-director\.netlify\.app|checkout\.stripe\.com/.test(h))
           .filter((v, i, arr) => arr.indexOf(v) === i);
         return {
           activeId: active ? active.id : null,

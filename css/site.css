@@ -10533,3 +10533,434 @@ html.menu-open body {
    the phone menu (which ends in its own pink CTA) is open. */
 html.menu-open #mob-cta,
 html.menu-open .mob-cta { display: none !important; }
+
+/* ── schedule + drop-ins ── */
+.tap-44 {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* This route sits on paper (ivory), unlike the dark base theme most other
+   pages use — see the brief's §4 "Page header on paper". */
+#page-schedule {
+  background: var(--ivory);
+  color: var(--forest);
+}
+
+#page-schedule .sched-wrap {
+  padding: 3rem 1.5rem 2rem;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  #page-schedule .sched-wrap {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.sched-header .kicker {
+  color: var(--terra);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.sched-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  color: var(--forest);
+  margin: 0.3rem 0 0.6rem;
+}
+
+.sched-dek {
+  font-family: var(--font-body);
+  color: rgba(12, 31, 23, 0.68);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 60ch;
+  margin: 0 0 1.5rem;
+}
+
+.sched-week-switch {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sched-week-btn {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background: none;
+  border: none;
+  padding: 0.4rem 0;
+  color: rgba(12, 31, 23, 0.55);
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.sched-week-btn.active {
+  color: var(--forest);
+  text-decoration: underline;
+  text-decoration-color: var(--arm-accent, var(--pink));
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.sched-notice {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--terra);
+  background: rgba(200, 97, 75, 0.08);
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.sched-day-head {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: rgba(12, 31, 23, 0.55);
+  margin: 1.75rem 0 0.5rem;
+}
+
+.sched-day-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.sched-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 72px 96px;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(12, 31, 23, 0.08);
+}
+
+.sched-row--closed .sched-row-name {
+  opacity: 0.55;
+}
+
+.sched-row-time {
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+  color: rgba(12, 31, 23, 0.7);
+}
+
+.sched-row-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--forest);
+}
+
+.sched-row-meta {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(12, 31, 23, 0.55);
+}
+
+.sched-row-price {
+  text-align: right;
+}
+
+.sched-row-price-amt {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--forest);
+}
+
+.sched-row-spots {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--terra);
+}
+
+.sched-row-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sched-row-full {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: rgba(12, 31, 23, 0.45);
+}
+
+.btn-ghost-arm {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid var(--arm-ring, rgba(200, 97, 75, 0.35));
+  color: var(--forest);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.btn-ghost-arm.is-added {
+  color: rgba(12, 31, 23, 0.55);
+  border-color: rgba(12, 31, 23, 0.2);
+}
+
+.sched-check {
+  display: inline-block;
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  margin-right: 0.4em;
+}
+
+.sched-empty-line {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: rgba(12, 31, 23, 0.6);
+  margin: 1.5rem 0;
+}
+
+.sched-empty-line a {
+  color: var(--terra);
+}
+
+.sched-skel-row {
+  height: 56px;
+  border-radius: 6px;
+  background: var(--arm-ring, rgba(255, 122, 162, 0.2));
+  opacity: 0.6;
+  margin-bottom: 0.6rem;
+}
+
+.sched-cart-bar[hidden] {
+  display: none;
+}
+
+.sched-cart-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64px;
+  background: var(--forest);
+  color: var(--ivory);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  z-index: 40;
+}
+
+.sched-cart-count {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.sched-cart-amt {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+}
+
+#page-schedule .sched-list {
+  padding-bottom: 88px;
+}
+
+.sched-back {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: rgba(12, 31, 23, 0.6);
+  display: inline-flex;
+  margin-bottom: 1.5rem;
+}
+
+.sched-checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+.sched-h2 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--forest);
+  margin: 0 0 0.75rem;
+}
+
+.sched-summary-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.sched-summary-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(12, 31, 23, 0.08);
+  gap: 0.75rem;
+}
+
+.sched-summary-line-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sched-remove-link {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--terra);
+}
+
+.sched-summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  color: var(--forest);
+  padding-top: 0.5rem;
+}
+
+.sched-form .field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.sched-form label {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: rgba(12, 31, 23, 0.6);
+  margin-bottom: 0.3rem;
+}
+
+.sched-form input {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid rgba(12, 31, 23, 0.2);
+  border-radius: 6px;
+  min-height: 44px;
+}
+
+.sched-waiver {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  margin: 1rem 0;
+}
+
+.sched-waiver input {
+  margin-top: 0.2rem;
+}
+
+.sched-waiver a {
+  color: var(--terra);
+}
+
+.sched-stepup {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: rgba(12, 31, 23, 0.6);
+  margin: 0 0 1rem;
+}
+
+.sched-stepup a {
+  color: var(--terra);
+}
+
+.sched-pay-btn {
+  width: 100%;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--pink);
+  color: var(--forest);
+}
+
+.sched-pay-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.sched-error {
+  color: var(--terra);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.sched-fineprint {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: rgba(12, 31, 23, 0.5);
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+.sched-fineprint a {
+  color: var(--terra);
+}
+
+.sched-thankyou .kicker {
+  color: var(--terra);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.sched-before {
+  margin-top: 1.5rem;
+}
+
+.sched-before p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: rgba(12, 31, 23, 0.7);
+  margin: 0.3rem 0;
+}
+
+.td-schedule-link {
+  display: inline-flex;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--terra);
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .sched-row {
+    grid-template-columns: 90px 1fr 96px;
+  }
+  .sched-row-price {
+    grid-column: 2;
+    text-align: left;
+  }
+  .sched-row-action {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .sched-checkout-grid {
+    grid-template-columns: 1fr;
+  }
+}

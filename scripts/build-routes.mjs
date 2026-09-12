@@ -67,6 +67,21 @@ const ROUTES = [
     imageAlt: 'A ProSeries dancer mid-leap at the Summer Intensive showcase.',
   },
   {
+    dir: 'schedule',
+    supabase: true,
+    feature: true,
+    route: 'schedule',
+    title: 'Schedule · Dance With Dixon',
+    description:
+      'Every ProSeries class on the floor Monday to Thursday, three weeks out. Classes open for ' +
+      'drop-in can be paid for online and added to your calendar in minutes.',
+    ogTitle: 'This week at ProSeries',
+    ogDescription:
+      'The live ProSeries schedule. Open classes take drop-ins: pay online, show up, dance.',
+    image: '/images/og/proseries.jpg',
+    imageAlt: 'A ProSeries dancer mid-leap at the Summer Intensive showcase.',
+  },
+  {
     dir: 'collective',
     supabase: true,
     feature: true,

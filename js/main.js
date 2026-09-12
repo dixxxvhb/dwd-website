@@ -9,7 +9,7 @@
   // ── HASH ROUTING ──
   const validPages = [
     'home', 'adult-company', 'proseries',
-    'teachers',
+    'teachers', 'schedule',
     'gallery', 'contact', 'privacy'
   ];
 
@@ -45,6 +45,7 @@
     'proseries': '/proseries/',
     'adult-company': '/collective/',
     'teachers': '/teachers/',
+    'schedule': '/schedule/',
     'gallery': '/gallery/',
     'contact': '/contact/',
     'privacy': '/privacy/'
@@ -200,6 +201,7 @@
       // times in the page body and zero times in any metadata).
       'proseries': 'ProSeries: Season One | DWD',
       'teachers': 'Teachers | DWD',
+      'schedule': 'Schedule · Dance With Dixon',
 
       'gallery': 'Gallery | DWD',
       'contact': 'Contact | DWD'
@@ -257,7 +259,10 @@
     if (!mob) return;
     mobObservers.forEach(function (o) { o.disconnect(); });
     mobObservers = [];
-    mobState = { passedLead: false, formVisible: false, enabled: name !== 'privacy' };
+    // Schedule carries its own fixed cart bar with the one pink fill the
+    // brief's hard rule allows per view; the mobile Express Interest bar
+    // would be a second one, so it stays off here like Privacy.
+    mobState = { passedLead: false, formVisible: false, enabled: name !== 'privacy' && name !== 'schedule' };
     paintMobCta();
     if (!mobState.enabled || typeof IntersectionObserver !== 'function') {
       if (mobState.enabled) { mobState.passedLead = true; paintMobCta(); }

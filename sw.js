@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v40';
+const CACHE_NAME = 'dwd-site-v41';
 const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',
@@ -7,6 +7,7 @@ const ASSETS = [
   // metadata; precaching them keeps a deep link working offline the same way
   // "/" already did.
   '/proseries/',
+  '/schedule/',
   '/collective/',
   '/teachers/',
   '/gallery/',
