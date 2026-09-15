@@ -27,6 +27,13 @@
   var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwdWxydmhpdXZnYnZyYWx5Ynh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2ODI0MzAsImV4cCI6MjA4NjI1ODQzMH0.O7MDYxkfqhQGNI58xyDq3HhsIm12OmgZRkJlyTXL0ug';
   var CART_KEY = 'dwd_dropin_cart';
   var MAX_LINES = 6;
+
+  // Four or more dates in one order re-price to the class's bulk price. The
+  // server is the authority (drop_in_order_create re-prices the lines); this
+  // constant only mirrors it so the button and the summary never disagree with
+  // Stripe. public_site_schedule carries drop_in_bulk_min, which overwrites it
+  // when present so the threshold is not hardcoded in two places.
+  var DROP_IN_BULK_MIN = 4;
   var EXCHANGE_ADDRESS = 'Exchange Dance Studio \u00b7 7409 Chancery Lane, Orlando, FL 32809';
 
   var DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
@@ -41,11 +48,13 @@
   var elList = page.querySelector('[data-sched-list]');
   var elCartBar = page.querySelector('[data-sched-cart-bar]');
   var elCartCount = page.querySelector('[data-sched-cart-count]');
+  var elCartBulkNote = page.querySelector('[data-sched-cart-bulk-note]');
   var elCartCheckoutBtn = page.querySelector('[data-sched-checkout-btn]');
   var elCheckout = page.querySelector('[data-sched-checkout]');
   var elBack = page.querySelector('[data-sched-back]');
   var elSummaryList = page.querySelector('[data-sched-summary-list]');
   var elSummaryTotal = page.querySelector('[data-sched-summary-total]');
+  var elBulkNote = page.querySelector('[data-sched-bulk-note]');
   var elForm = page.querySelector('[data-sched-form]');
   var elPayBtn = page.querySelector('[data-sched-pay-btn]');
   var elError = page.querySelector('[data-sched-error]');
@@ -53,6 +62,7 @@
   var elTyH1 = page.querySelector('[data-sched-ty-h1]');
   var elTyList = page.querySelector('[data-sched-ty-list]');
   var elTyTotal = page.querySelector('[data-sched-ty-total]');
+  var elTyBulkNote = page.querySelector('[data-sched-ty-bulk-note]');
   var elTyAddress = page.querySelector('[data-sched-ty-address]');
 
   if (elTyAddress) elTyAddress.textContent = EXCHANGE_ADDRESS;
@@ -144,7 +154,8 @@
       name: row.name,
       label: [row.track_label, row.age_band, row.room].filter(Boolean).join(' \u00b7 '),
       start_time: row.start_time,
-      fee_cents: row.drop_in_fee_cents
+      fee_cents: row.drop_in_fee_cents,
+      bulk_fee_cents: (typeof row.drop_in_bulk_fee_cents === 'number') ? row.drop_in_bulk_fee_cents : null
     });
     writeCart(cart);
     return 'ok';
@@ -156,8 +167,49 @@
     return cart;
   }
 
+  // The cart hit the threshold, so every line that has a bulk price takes it.
+  function bulkActive(cart) {
+    return cart.length >= DROP_IN_BULK_MIN;
+  }
+
+  function anyBulk(cart) {
+    return cart.some(function (l) { return typeof l.bulk_fee_cents === 'number'; });
+  }
+
+  function lineCents(line, active) {
+    if (active && typeof line.bulk_fee_cents === 'number') return line.bulk_fee_cents;
+    return line.fee_cents || 0;
+  }
+
   function cartTotalCents(cart) {
-    return cart.reduce(function (sum, l) { return sum + (l.fee_cents || 0); }, 0);
+    var active = bulkActive(cart);
+    return cart.reduce(function (sum, l) { return sum + lineCents(l, active); }, 0);
+  }
+
+  // One muted line: the discount that applied, or how many dates away it is.
+  function bulkNoteText(cart) {
+    if (!cart.length || !anyBulk(cart)) return '';
+    if (cart.length >= DROP_IN_BULK_MIN) return 'Four or more dates in one order. Each one costs less.';
+    if (cart.length < 2) return '';
+    var need = DROP_IN_BULK_MIN - cart.length;
+    return 'Add ' + need + ' more and every date drops in price.';
+  }
+
+  function renderBulkNote(node, text) {
+    if (!node) return;
+    if (!text) { node.hidden = true; node.textContent = ''; return; }
+    node.hidden = false;
+    node.textContent = text;
+  }
+
+  // public_site_schedule names the threshold once; the site mirrors it.
+  function applyBulkMin(rows) {
+    for (var i = 0; i < rows.length; i++) {
+      if (typeof rows[i].drop_in_bulk_min === 'number' && rows[i].drop_in_bulk_min > 0) {
+        DROP_IN_BULK_MIN = rows[i].drop_in_bulk_min;
+        return;
+      }
+    }
   }
 
   function money(cents) {
@@ -208,19 +260,22 @@
         class_id: 'stub-elite-ballet', occurrence_date: toIso(tue), date: toIso(tue),
         start_time: '16:45:00', end_time: '18:00:00', name: 'Ballet',
         track_label: 'Elite + Pro', age_band: 'ages 8 and up', room: 'Garage',
-        drop_in_open: true, drop_in_fee_cents: 2500, spots_left: 8
+        drop_in_open: true, drop_in_fee_cents: 2500, drop_in_bulk_fee_cents: 2250,
+        drop_in_bulk_min: 4, spots_left: 8
       },
       {
         class_id: 'stub-elite-rotation', occurrence_date: toIso(tue), date: toIso(tue),
         start_time: '19:00:00', end_time: '20:30:00', name: 'Rotation',
         track_label: 'Elite', age_band: 'ages 8 to 12', room: 'Studio A',
-        drop_in_open: true, drop_in_fee_cents: 2500, spots_left: 0
+        drop_in_open: true, drop_in_fee_cents: 2500, drop_in_bulk_fee_cents: 2250,
+        drop_in_bulk_min: 4, spots_left: 0
       },
       {
         class_id: 'stub-jazz-tech', occurrence_date: toIso(wed), date: toIso(wed),
         start_time: '16:00:00', end_time: '17:30:00', name: 'Jazz Technique',
         track_label: 'Elite + Pro', age_band: 'ages 8 and up', room: 'Studio A',
-        drop_in_open: true, drop_in_fee_cents: 2000, spots_left: 2
+        drop_in_open: true, drop_in_fee_cents: 2000, drop_in_bulk_fee_cents: 1750,
+        drop_in_bulk_min: 4, spots_left: 2
       },
       {
         class_id: 'stub-comp-choreo', occurrence_date: toIso(wed), date: toIso(movedActualDay),
@@ -302,6 +357,7 @@
     var totalCents = cartTotalCents(cart);
     elCartCount.innerHTML = cart.length + (cart.length === 1 ? ' class' : ' classes') +
       ' \u00b7 <span class="sched-cart-amt">' + money(totalCents) + '</span>';
+    renderBulkNote(elCartBulkNote, bulkNoteText(cart));
   }
 
   function renderLoading() {
@@ -381,6 +437,9 @@
         var priceWrap = el('div', 'sched-row-price');
         if (open) {
           priceWrap.appendChild(el('div', 'sched-row-price-amt', money(row.drop_in_fee_cents)));
+          if (typeof row.drop_in_bulk_fee_cents === 'number') {
+            priceWrap.appendChild(el('div', 'sched-row-bulk', money(row.drop_in_bulk_fee_cents) + ' each for 4+'));
+          }
           if (typeof row.spots_left === 'number' && row.spots_left >= 1 && row.spots_left <= 3) {
             priceWrap.appendChild(el('div', 'sched-row-spots', row.spots_left + ' spot' + (row.spots_left === 1 ? '' : 's') + ' left'));
           }
@@ -458,6 +517,7 @@
 
     fetchWeek(rpcFromIso, toIso_).then(function (rows) {
       currentRows = rows;
+      applyBulkMin(rows);
       var pruned = pruneCart(rows);
       renderCartBar();
       if (pruned.dropped.length) {
@@ -499,6 +559,7 @@
 
   function renderSummary() {
     var cart = readCart();
+    var active = bulkActive(cart);
     elSummaryList.innerHTML = '';
     cart.forEach(function (line) {
       var d = new Date(String(line.date).slice(0, 10) + 'T00:00:00');
@@ -506,7 +567,7 @@
       var left = el('span', '', DAY_NAMES_LONG[d.getDay()] + ' \u00b7 ' + shortDateLabel(d) + ' \u00b7 ' + timeRange(line.start_time, null).split(' ')[0] + ' \u00b7 ' + line.name);
       li.appendChild(left);
       var right = el('span', 'sched-summary-line-right');
-      right.appendChild(el('span', '', money(line.fee_cents)));
+      right.appendChild(el('span', '', money(lineCents(line, active))));
       var rm = el('a', 'sched-remove-link tap-44', 'Remove');
       rm.href = '#';
       rm.addEventListener('click', function (e) {
@@ -520,6 +581,7 @@
       elSummaryList.appendChild(li);
     });
     var total = cartTotalCents(cart);
+    renderBulkNote(elBulkNote, bulkNoteText(cart));
     elSummaryTotal.textContent = money(total);
     elPayBtn.textContent = 'Pay ' + money(total);
   }
@@ -618,6 +680,7 @@
       elTyList.appendChild(li);
     });
     var total = orderRows.reduce(function (s, r) { return s + (r.fee_cents != null ? r.fee_cents : (r.drop_in_fee_cents || 0)); }, 0);
+    renderBulkNote(elTyBulkNote, (orderRows[0] && orderRows[0].bulk_applied) ? 'Four or more dates in one order. Each one costs less.' : '');
     elTyTotal.textContent = money(total);
 
     writeCart([]);
@@ -647,7 +710,13 @@
           if (id !== 'stub') { resolve([]); return; }
           var cart = readCart();
           var rows = (cart.length ? cart : buildStubRows(toIso(mondayOf(0)), 0).filter(function (r) { return r.drop_in_open; }).slice(0, 2))
-            .map(function (l) { return Object.assign({ status: 'paid', dancer_first_name: 'Remi', room: 'Garage' }, l); });
+            .map(function (l) {
+              var active = bulkActive(cart);
+              return Object.assign({
+                status: 'paid', dancer_first_name: 'Remi', room: 'Garage',
+                bulk_applied: active
+              }, l, { fee_cents: lineCents(l, active) });
+            });
           resolve(rows);
         }, 200);
       });
