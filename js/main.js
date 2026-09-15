@@ -256,7 +256,10 @@
   var MOB_DEFAULT = {
     labelAttr: 'data-mob-dropin',
     href: '/schedule/',
-    text: 'Drop in →',
+    /* The bar quotes the price (addendum B). js/now.js sets
+       window.DWD_DROPIN_PRICE from the feed; $20 is the standing offer and the
+       correct answer when the feed is down. */
+    text: function () { return 'Drop in · ' + (window.DWD_DROPIN_PRICE || '$20') + ' →'; },
     track: 'mobile-sticky-dropin'
   };
 
@@ -282,7 +285,7 @@
     }
     if (btn) {
       btn.setAttribute('href', conf.href);
-      btn.textContent = conf.text;
+      btn.textContent = (typeof conf.text === 'function') ? conf.text() : conf.text;
       btn.setAttribute('data-track', conf.track);
     }
   }
@@ -396,6 +399,19 @@
 
     // Unknown hash — go home
     showPage('home');
+  });
+
+  /* The DROP IN panel on /schedule/ points at the list directly below it, so
+     it scrolls rather than navigating. The href stays a real fragment: with JS
+     off the browser jumps there on its own. */
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('[data-dropin-scroll]');
+    if (!a) return;
+    var target = document.querySelector(a.getAttribute('href') || '#sched-list');
+    if (!target) return;
+    e.preventDefault();
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   });
 
   // ── SCROLL ANIMATIONS (staggered reveals) ──

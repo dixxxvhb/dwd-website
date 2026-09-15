@@ -130,62 +130,77 @@
     });
   }
 
-  /* ── Row 1: the next open drop-in ─────────────────────────────────── */
+  /* ── The DROP IN panel (addendum B) ───────────────────────────────────
+     Was row 1 of the ledger; it is now the page's one focal point, rendered
+     into every .dropin-feature in the document (home, proseries, schedule —
+     same feed, same answer, different kicker and button). Same contract as
+     before: this only ever replaces a line with something truer, so a dead
+     feed leaves the static panel standing as a correct page. */
   function renderDropIn(rows) {
     var open = (rows || []).filter(function (r) {
-      return r && r.drop_in_open && r.occurrence_date;
+      return r && r.drop_in_open && (r.occurrence_date || r.date);
     });
     if (!open.length) return; // static fallback stands
 
-    open.sort(function (a, b) {
-      return (a.occurrence_date + ' ' + (a.start_time || ''))
-        .localeCompare(b.occurrence_date + ' ' + (b.start_time || ''));
-    });
+    function key(r) {
+      return (r.occurrence_date || r.date) + ' ' + (r.start_time || '');
+    }
+    open.sort(function (a, b) { return key(a).localeCompare(key(b)); });
 
     var next = open[0];
-    var d = localDate(next.occurrence_date);
+    var d = localDate(next.occurrence_date || next.date);
     if (!d) return;
+    var weekday = DAYS[d.getDay()];
+    var t = timeLabel(next.start_time);
+
+    var price = money(next.drop_in_fee_cents);
+    var bulk = money(next.drop_in_bulk_fee_cents);
+
+    /* A month of one weekday is four of them. The panel sells the month, not
+       the "each for 4+" arithmetic the schedule page already spells out. */
+    var bulkLine = null;
+    if (typeof next.drop_in_bulk_fee_cents === 'number' && next.drop_in_bulk_fee_cents > 0) {
+      var month = money(next.drop_in_bulk_fee_cents * 4);
+      if (month) bulkLine = month + ' for a month of ' + weekday + 's';
+    }
 
     var title = (next.name || 'Drop-in class') +
-      ' · ' + DAYS[d.getDay()] + ' ' + MONTHS_SHORT[d.getMonth()] + ' ' + d.getDate();
-    var t = timeLabel(next.start_time);
+      ' · ' + weekday + ' ' + MONTHS_SHORT[d.getMonth()] + ' ' + d.getDate();
     if (t) title += ' · ' + t;
 
-    /* Meta: only the pieces the feed actually carries. A null price or a null
-       spot count is a fact we do not have, never a zero to print. */
+    /* Meta: only the pieces the feed actually carries. A null age band or a
+       null spot count is a fact we do not have, never a zero to print. */
     var bits = [];
-    var price = money(next.drop_in_fee_cents);
-    if (price) bits.push(price + ' a class');
-    var bulk = money(next.drop_in_bulk_fee_cents);
-    var min = (typeof next.drop_in_bulk_min === 'number' && next.drop_in_bulk_min > 0)
-      ? next.drop_in_bulk_min : 4;
-    if (bulk) bits.push(bulk + ' each for ' + min + '+');
+    if (next.age_band) {
+      bits.push(String(next.age_band).charAt(0).toUpperCase() + String(next.age_band).slice(1));
+    }
+    if (next.room) bits.push(next.room);
     if (typeof next.spots_left === 'number' && next.spots_left > 0) {
       bits.push(next.spots_left + ' spots left');
     }
-    /* Distinct later DATES, not later rows: two open classes on one evening
-       are one more date to a parent, not two. */
-    var dates = {};
-    open.forEach(function (r) { dates[r.occurrence_date] = 1; });
-    var more = Object.keys(dates).length - 1;
-    if (more > 0) bits.push('+ ' + more + ' more open date' + (more === 1 ? '' : 's'));
 
-    var r = row('dropin');
-    if (r) {
-      setText(r, '[data-now-title]', title);
-      if (bits.length) setText(r, '[data-now-meta]', bits.join(' · '));
-      var link = r.querySelector('[data-now-link]');
-      if (link) link.textContent = 'Book it →';
-    }
+    var panels = document.querySelectorAll('.dropin-feature');
+    Array.prototype.forEach.call(panels, function (panel) {
+      if (price) setText(panel, '[data-dropin-price]', price);
+      if (bulkLine) setText(panel, '[data-dropin-bulk]', bulkLine);
+      setText(panel, '[data-dropin-title]', title);
+      if (bits.length) setText(panel, '[data-dropin-meta]', bits.join(' · '));
+      /* The schedule page's button scrolls to the list below it and keeps its
+         own words; only the away-links name the day. */
+      var btn = panel.querySelector('[data-dropin-btn]');
+      if (btn) btn.textContent = 'Book ' + weekday + ' →';
+    });
 
-    /* The phone sticky bar says the same true thing as row 1. main.js owns
-       which label is showing; this only hands it a better one. */
+    /* The sticky bar quotes the same price. main.js owns the bar's words; this
+       only hands it a truer number. */
+    if (price) window.DWD_DROPIN_PRICE = price;
+
     var label = document.querySelector('#mob-cta [data-mob-label]');
     if (label) {
       label.setAttribute('data-mob-dropin', 'This week · ' + (next.name || 'Drop-in') +
-        ' ' + DAYS[d.getDay()].slice(0, 3) + (t ? ' ' + t : ''));
-      if (window.DWD_MOB && window.DWD_MOB.repaint) window.DWD_MOB.repaint();
+        ' ' + weekday.slice(0, 3) + (t ? ' ' + t : ''));
     }
+    if (window.DWD_MOB && window.DWD_MOB.repaint) window.DWD_MOB.repaint();
   }
 
   /* ── Row 3: the Collective's next class ───────────────────────────── */
@@ -224,8 +239,12 @@
   var sb = window.__dwd_sb;
   if (!sb) return; // supabase-js unavailable — every static line stands
 
-  var block = document.getElementById('now');
-  if (!block) return;
+  /* #now and the panels all live in the DOM on every route shell, because
+     every shell is a copy of the same index.html with a different section
+     shown. Observe all of them: on /schedule/ and /proseries/ the panel is the
+     visible one and #now never comes near the viewport. */
+  var blocks = document.querySelectorAll('#now, .dropin-feature');
+  if (!blocks.length) return;
 
   /* #now lives in the DOM on every route shell, because every shell is a copy
      of the same index.html with a different section shown. Firing two queries
@@ -276,6 +295,6 @@
         if (entries[i].isIntersecting) { io.disconnect(); load(); return; }
       }
     }, { rootMargin: '600px 0px' });
-    io.observe(block);
+    Array.prototype.forEach.call(blocks, function (b) { io.observe(b); });
   }
 })();

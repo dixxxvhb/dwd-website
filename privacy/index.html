@@ -425,7 +425,7 @@
                One" is gone from the hero; the Season One tile below carries the
                only copy of that link now. -->
           <div class="hero-cta-row">
-            <a class="btn btn-blush" href="/schedule/" data-ref="home-hero" data-track="home-hero-dropin">Drop in this week <em>&rarr;</em></a>
+            <a class="btn btn-blush dropin-hero-btn" href="/schedule/" data-ref="home-hero" data-track="home-hero-dropin">Drop in this week <em>&rarr;</em></a>
             <a class="hero-cta-secondary" href="#interest" data-ref="home-hero-apply" data-track="home-hero-apply">Apply for a chair &rarr;</a>
           </div>
         </div>
@@ -433,6 +433,35 @@
           <img src="/images/logos/v2/DWD-green-400.webp" srcset="/images/logos/v2/DWD-green-400.webp 1x, /images/logos/v2/DWD-green-800.webp 2x" alt="Dance With Dixon" width="400" height="400" loading="eager" decoding="async">
         </div>
       </div>
+
+      <!-- DROP IN feature panel (2026-09-14, addendum B). Row 1 of THIS WEEK
+           was a hairline in a ledger; the drop-in is the push, so it is now the
+           one focal point under the hero. Same feed, same fallback contract as
+           the ledger below: the markup ships a correct static answer and
+           js/now.js only ever replaces a line with something truer. One ambient
+           layer on the page (the pink wash behind the numeral) and one authored
+           reveal. Nothing else moves. -->
+      <section class="dropin-feature reveal" id="dropin-feature" aria-label="Drop in this week">
+        <div class="dropin-wash" aria-hidden="true"></div>
+        <div class="dropin-inner">
+          <p class="dropin-kicker">DROP IN &middot; THIS WEEK</p>
+          <div class="dropin-grid">
+            <div class="dropin-price">
+              <span class="dropin-num" data-dropin-price>$20</span>
+              <span class="dropin-price-lines">
+                <span class="dropin-price-line">a class</span>
+                <span class="dropin-price-line" data-dropin-bulk>$70 for a month of Tuesdays</span>
+              </span>
+            </div>
+            <div class="dropin-body">
+              <p class="dropin-class" data-dropin-title>Prep Technique &middot; Tuesdays &middot; 4:45</p>
+              <p class="dropin-meta" data-dropin-meta>Ages 5 to 9 &middot; Garage at Exchange Dance</p>
+              <a class="dropin-btn" href="/schedule/" data-dropin-btn data-ref="home-dropin-panel" data-track="dropin-feature-book">Book a class &rarr;</a>
+              <p class="dropin-foot">Pay online, show up, dance. Move it to another week if you can&rsquo;t make it.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- THIS WEEK (2026-09-14 front door). Three live rows in the site's
            ledger grammar: hairlines, no boxes, one text link each. Rendered by
@@ -447,14 +476,6 @@
       <section class="fd-now reveal" id="now" aria-label="This week">
         <h2 class="fd-now-kicker">THIS WEEK</h2>
         <ul class="fd-rows">
-          <li class="fd-row" data-now="dropin">
-            <span class="fd-row-label">Drop in</span>
-            <span class="fd-row-main">
-              <span class="fd-row-title" data-now-title>Prep Technique &middot; Tuesdays &middot; 4:45</span>
-              <span class="fd-row-meta" data-now-meta>$20 a class, $70 for a month of Tuesdays</span>
-            </span>
-            <a class="fd-row-link" href="/schedule/" data-now-link data-track="now-dropin">See the schedule &rarr;</a>
-          </li>
           <li class="fd-row" data-now="proseries">
             <span class="fd-row-label">ProSeries</span>
             <span class="fd-row-main">
@@ -963,22 +984,30 @@
         </div>
       </div>
 
-      <!-- TRY A CLASS FIRST (2026-09-14 front door). The page used to ask for a
-           two-minute form as its only first step. This is the cheaper one, in
-           the same row grammar as THIS WEEK on Home: one row, one text link,
-           no card. Static on purpose — the open Tuesday class is a standing
-           offer, not a feed. -->
-      <section class="fd-door" aria-label="Try a class first">
-        <ul class="fd-rows">
-          <li class="fd-row">
-            <span class="fd-row-label">Try a class first</span>
-            <span class="fd-row-main">
-              <span class="fd-row-title">Prep Technique &middot; Tuesdays 4:45</span>
-              <span class="fd-row-meta">Open to dancers ages 5 to 9 who are not enrolled. $20 a class, $70 for the month. Then apply if it fits.</span>
-            </span>
-            <a class="fd-row-link" href="/schedule/" data-track="ps-try-first">Drop in &rarr;</a>
-          </li>
-        </ul>
+      <!-- TRY A CLASS FIRST (addendum B). Same panel as Home in its compact
+           form: one column, an 88px numeral, and the page's cheapest first step
+           stated as a price rather than a form. The §4.6 sentence became the
+           muted line under the button, which is where it now does its work. -->
+      <section class="dropin-feature dropin-feature--compact reveal" aria-label="Try a class first">
+        <div class="dropin-wash" aria-hidden="true"></div>
+        <div class="dropin-inner">
+          <p class="dropin-kicker">TRY A CLASS FIRST &middot; DROP IN</p>
+          <div class="dropin-grid">
+            <div class="dropin-price">
+              <span class="dropin-num" data-dropin-price>$20</span>
+              <span class="dropin-price-lines">
+                <span class="dropin-price-line">a class</span>
+                <span class="dropin-price-line" data-dropin-bulk>$70 for a month of Tuesdays</span>
+              </span>
+            </div>
+            <div class="dropin-body">
+              <p class="dropin-class" data-dropin-title>Prep Technique &middot; Tuesdays &middot; 4:45</p>
+              <p class="dropin-meta" data-dropin-meta>Ages 5 to 9 &middot; Garage at Exchange Dance</p>
+              <a class="dropin-btn" href="/schedule/" data-dropin-btn data-ref="ps-dropin-panel" data-track="ps-try-first">Book a class &rarr;</a>
+              <p class="dropin-foot">Open to dancers ages 5 to 9 who are not enrolled. $20 a class, $70 for the month. Then apply if it fits.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- Rail link order matches document order top-to-bottom (required by the
@@ -1827,6 +1856,29 @@
           <div class="kicker">PROSERIES</div>
           <h1 class="sched-h1" data-sched-h1>This week at ProSeries</h1>
           <p class="sched-dek">Every ProSeries class on the floor, Monday to Thursday. Rows with a price are open for drop-ins: pick your dates, pay online, show up. Four or more dates in one order and each one costs less.</p>
+          <!-- The same DROP IN panel, compact. Its button scrolls to the list
+               instead of navigating: the page you would link to IS this page. -->
+          <section class="dropin-feature dropin-feature--compact reveal" aria-label="Drop in">
+            <div class="dropin-wash" aria-hidden="true"></div>
+            <div class="dropin-inner">
+              <p class="dropin-kicker">DROP IN</p>
+              <div class="dropin-grid">
+                <div class="dropin-price">
+                  <span class="dropin-num" data-dropin-price>$20</span>
+                  <span class="dropin-price-lines">
+                    <span class="dropin-price-line">a class</span>
+                    <span class="dropin-price-line" data-dropin-bulk>$70 for a month of Tuesdays</span>
+                  </span>
+                </div>
+                <div class="dropin-body">
+                  <p class="dropin-class" data-dropin-title>Prep Technique &middot; Tuesdays &middot; 4:45</p>
+                  <p class="dropin-meta" data-dropin-meta>Ages 5 to 9 &middot; Garage at Exchange Dance</p>
+                  <a class="dropin-btn" href="#sched-list" data-dropin-scroll data-track="dropin-feature-book">Pick your dates &rarr;</a>
+                  <p class="dropin-foot">Pay online, show up, dance. Move it to another week if you can&rsquo;t make it.</p>
+                </div>
+              </div>
+            </div>
+          </section>
           <div class="sched-week-switch" data-sched-week-switch>
             <button type="button" class="sched-week-btn" data-sched-week="0">This week</button>
             <button type="button" class="sched-week-btn" data-sched-week="1">Next week</button>
@@ -1836,7 +1888,7 @@
 
         <div class="sched-notice" data-sched-notice hidden></div>
 
-        <div class="sched-list" data-sched-list aria-live="polite">
+        <div class="sched-list" id="sched-list" data-sched-list aria-live="polite">
           <div class="sched-skel">
             <div class="sched-skel-row"></div>
             <div class="sched-skel-row"></div>
@@ -2422,7 +2474,7 @@
        label below is the home/default text and the static fallback: js/now.js
        replaces it with the real open class when the feed has one. Hidden on
        /schedule/ and /contact/, where the page IS the action. -->
-  <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label" data-mob-label data-mob-static="This week &middot; Prep Technique Tue 4:45">This week &middot; Prep Technique Tue 4:45</span><a class="mob-cta-btn" href="/schedule/" data-mob-btn data-ref="mobile-bar" data-track="mobile-sticky-dropin">Drop in &rarr;</a></div>
+  <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label" data-mob-label data-mob-static="This week &middot; Prep Technique Tue 4:45">This week &middot; Prep Technique Tue 4:45</span><a class="mob-cta-btn" href="/schedule/" data-mob-btn data-ref="mobile-bar" data-track="mobile-sticky-dropin">Drop in &middot; $20 &rarr;</a></div>
 
   <!-- Feature scripts are dropped on this route (see build-routes.mjs).
        main.js is the router and eras.js is shared chrome, so both stay. -->

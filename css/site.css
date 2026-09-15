@@ -11237,3 +11237,328 @@ html.menu-open .mob-cta { display: none !important; }
     padding: 24px 0 16px;
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   front-door, addendum B — the DROP IN feature panel (2026-09-14)
+
+   Row 1 of the THIS WEEK ledger came out of the ledger and became the page's
+   one focal point: a forest-light band, a Bebas numeral doing the shouting,
+   one filled pink button. Nothing new was added to compete with it. The price
+   is the visual device — it is the cheapest true thing this business can say
+   to a stranger.
+
+   One ambient layer on the page (the pink wash behind the numeral) and one
+   authored reveal (numeral, class line, button). Nothing else loops, nothing
+   else moves, the button does not pulse.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dropin-feature {
+  position: relative;
+  overflow: hidden;
+  background: var(--forest-light, #1a3d2e);
+  margin: 40px 0 0;
+  padding: 40px 0;
+  /* The site's reveal mechanism (js/main.js adds .visible) is the trigger, but
+     the generic .reveal rise would move the whole band AND its children. The
+     band holds still; only the three authored elements travel. */
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.dropin-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* THE ambient layer. A single soft pink wash sitting up and left of the
+   numeral, so the price reads as lit rather than boxed. No border, no card. */
+.dropin-wash {
+  position: absolute;
+  /* Centred on the numeral's upper-left shoulder. Parked further out it was
+     technically present and visually nothing, which is the worst version of an
+     ambient layer: cost without effect. */
+  top: -140px;
+  left: -190px;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 122, 162, 0.14) 0%, rgba(255, 122, 162, 0.08) 45%, rgba(255, 122, 162, 0) 72%);
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dropin-kicker {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--pink, #FF7AA2);
+  margin: 0 0 20px;
+}
+
+.dropin-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.dropin-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  min-width: 0;
+}
+
+/* Bebas's one canon job: the big number. 120px at 390, 160px at 1280. */
+.dropin-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 120px;
+  line-height: 0.82;
+  letter-spacing: 0.01em;
+  color: var(--ivory, #FAF3E8);
+  display: block;
+}
+
+.dropin-price-lines {
+  display: block;
+  padding-bottom: 6px;
+}
+
+.dropin-price-line {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.4;
+  color: rgba(250, 243, 232, 0.86);
+}
+.dropin-price-line + .dropin-price-line { color: rgba(250, 243, 232, 0.66); }
+
+.dropin-class {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.15;
+  color: var(--ivory, #FAF3E8);
+  margin: 0;
+}
+
+.dropin-meta {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.45;
+  color: rgba(250, 243, 232, 0.68);
+  margin: 10px 0 0;
+}
+
+/* The one filled element in this band. On Home it and the hero button are the
+   only filled pink things in a 1280 frame, and they are the same action. */
+.dropin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  margin-top: 24px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 0;
+  background: var(--pink, #FF7AA2);
+  color: var(--forest, #0c1f17);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.12s ease;
+}
+.dropin-btn:hover,
+.dropin-btn:focus-visible {
+  background: var(--pink-soft, #FF8FAB);
+  color: var(--forest, #0c1f17);
+}
+/* Krehel press. No pulse, no glow. */
+.dropin-btn:active { transform: scale(0.96); }
+
+.dropin-foot {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(250, 243, 232, 0.55);
+  margin: 12px 0 0;
+  max-width: 46ch;
+}
+
+/* ── Desktop: two columns, vertically centred ─────────────────────────── */
+@media (min-width: 900px) {
+  .dropin-feature { margin-top: 56px; padding: 64px 0; }
+  .dropin-inner { padding: 0 32px; }
+  .dropin-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: 48px;
+  }
+  .dropin-num { font-size: 160px; }
+  /* The two lines sit beside the numeral and must not wrap mid-phrase:
+     "$70 for a month of / Tuesdays" reads as a broken sentence, and the whole
+     point of the line is that it is one easy sentence. */
+  .dropin-price { flex-wrap: nowrap; }
+  .dropin-price-lines { flex-shrink: 0; }
+  .dropin-price-line { white-space: nowrap; }
+  .dropin-btn { width: auto; min-width: 260px; }
+  .dropin-wash { top: -170px; left: -190px; width: 680px; height: 680px; }
+}
+
+/* ── Compact modifier: ProSeries + Schedule ───────────────────────────── */
+.dropin-feature--compact .dropin-num { font-size: 88px; }
+.dropin-feature--compact .dropin-grid {
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 900px) {
+  .dropin-feature--compact { padding: 40px 0; }
+  .dropin-feature--compact .dropin-num { font-size: 88px; }
+  .dropin-feature--compact .dropin-grid { grid-template-columns: 1fr; column-gap: 0; }
+  .dropin-feature--compact .dropin-btn { width: auto; }
+}
+
+/* ProSeries carries an ID-weight reset (`#page-proseries * { padding: 0 }`),
+   so the panel has to restate its padding at that weight or the band collapses
+   onto its own text. Same fix, same reason, as the .fd-door block above. */
+#page-proseries .dropin-feature { margin-top: 24px; padding: 32px 0; }
+#page-proseries .dropin-inner { padding: 0 32px; }
+#page-proseries .dropin-btn { padding: 0 28px; }
+@media (max-width: 719px) {
+  #page-proseries .dropin-inner { padding: 0 24px; }
+}
+
+/* On /schedule/ the panel already sits inside .sched-wrap's gutter, so it only
+   needs its own air, not a second one. */
+#page-schedule .dropin-feature { margin: 20px 0 24px; }
+#page-schedule .dropin-inner { padding: 0 20px; }
+
+/* ── Motion: one authored moment, once ────────────────────────────────── */
+.dropin-num,
+.dropin-class,
+.dropin-btn {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.dropin-feature.visible .dropin-num,
+.dropin-feature.visible .dropin-class,
+.dropin-feature.visible .dropin-btn {
+  animation: dropin-rise 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.dropin-feature.visible .dropin-class { animation-delay: 80ms; }
+.dropin-feature.visible .dropin-btn { animation-delay: 160ms; }
+
+@keyframes dropin-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Texture tier: a 6% drift on a 9s loop. The only looping thing on the page. */
+@media (prefers-reduced-motion: no-preference) {
+  .dropin-wash { animation: dropin-drift 9s ease-in-out infinite alternate; }
+}
+@keyframes dropin-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(6%, 4%, 0); }
+}
+
+/* No JS, no observer, no reveal: the band must never be a rectangle of
+   invisible text. */
+.no-js .dropin-num,
+.no-js .dropin-class,
+.no-js .dropin-btn { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dropin-num,
+  .dropin-class,
+  .dropin-btn { opacity: 0; transform: none; }
+  .dropin-feature.visible .dropin-num,
+  .dropin-feature.visible .dropin-class,
+  .dropin-feature.visible .dropin-btn {
+    animation: dropin-fade 200ms linear forwards;
+    animation-delay: 0ms;
+  }
+  .dropin-wash { animation: none; }
+  .dropin-btn { transition: none; }
+  .dropin-btn:active { transform: none; }
+}
+@keyframes dropin-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* The ledger follows the panel directly and its kicker repeats the words
+   "THIS WEEK". They need more air between them than two neighbouring ledger
+   blocks would. */
+.dropin-feature + .fd-now { margin-top: 56px; }
+
+/* ── The other drop-in surfaces ───────────────────────────────────────── */
+
+/* Hero primary: the same height and weight as the panel's button, so the two
+   copies of the one action read as one action. */
+.hero-cta-row .dropin-hero-btn {
+  min-height: 56px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: none;
+  padding-inline: 28px;
+}
+@media (max-width: 719px) {
+  .hero-cta-row .dropin-hero-btn { width: 100%; }
+}
+.hero-cta-row .dropin-hero-btn:active { transform: scale(0.96); }
+
+/* Sticky bar: 64px of bar, 44px of button, the price in the words. */
+@media (max-width: 1149px) {
+  .mob-cta { min-height: 64px; }
+  .mob-cta-btn { min-height: 44px; }
+  body.mob-cta-on { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+}
+
+/* Schedule rows that are actually open: the price in Bebas and the Add control
+   filled, so the open rows read as the offer and the closed ones stay the quiet
+   grid they already were. */
+.sched-row:not(.sched-row--closed) .sched-row-price-amt {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  /* NOT ivory: /schedule/ is the site's one light page, and the brief's "ivory"
+     was written for the forest panel. Ivory here is invisible. Forest ink is
+     the same idea on this ground: the price is the loudest thing in the row. */
+  color: var(--forest, #0c1f17);
+  letter-spacing: 0.01em;
+}
+.sched-row:not(.sched-row--closed) .sched-add-btn {
+  background: var(--pink, #FF7AA2);
+  border-color: var(--pink, #FF7AA2);
+  color: var(--forest, #0c1f17);
+  min-height: 44px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.12s ease;
+}
+.sched-row:not(.sched-row--closed) .sched-add-btn:hover {
+  background: var(--pink-soft, #FF8FAB);
+  border-color: var(--pink-soft, #FF8FAB);
+  color: var(--forest, #0c1f17);
+}
+.sched-row:not(.sched-row--closed) .sched-add-btn:active { transform: scale(0.96); }
+@media (prefers-reduced-motion: reduce) {
+  .sched-row:not(.sched-row--closed) .sched-add-btn { transition: none; }
+  .sched-row:not(.sched-row--closed) .sched-add-btn:active { transform: none; }
+}
