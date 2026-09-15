@@ -334,8 +334,8 @@
     </a>
     <nav aria-label="Primary navigation">
       <a href="/" class="active" data-page="home">Home</a>
-      <a href="/proseries/" data-page="proseries">ProSeries</a>
       <a href="/schedule/" data-page="schedule">Schedule</a>
+      <a href="/proseries/" data-page="proseries">ProSeries</a>
       <a href="/collective/" data-page="adult-company">Collective</a>
       <a href="/teachers/" data-page="teachers">Teachers</a>
       <a href="/gallery/" data-page="gallery">Gallery</a>
@@ -344,12 +344,14 @@
            the poll, and anything already shared keep working. -->
       <a href="/contact/" data-page="contact">Contact</a>
     </nav>
-    <!-- Standing interest era — reveals Jul 11, no hide (permanent nav CTA for the
-         rest of the season). Same element serves desktop nav AND the mobile menu
-         (CSS shows/hides .nav-cta-launch together via .topnav.is-open — there is no
-         separate mobile-only nav CTA element on this site, see the "Summer
-         Intensive" item above for the same pattern). -->
-    <a href="#interest" data-ref="nav-express-interest" class="nav-cta nav-cta-launch" data-track="nav-express-interest" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">Express Interest &rarr;</a>
+    <!-- The site-wide nav CTA is the drop-in door (2026-09-14 front-door pass).
+         Express Interest keeps living inside ProSeries and the home Apply line;
+         it is no longer the button every page carries. This element is the ONLY
+         one on the site whose era gate was dropped on purpose: the schedule is
+         not a season, it is always true, so there is nothing to reveal it.
+         Same element still serves desktop nav AND the mobile menu (main.js
+         menuCta moves it into <nav> on open). -->
+    <a href="/schedule/" data-ref="nav-this-week" class="nav-cta nav-cta-launch" data-track="nav-this-week">This week&rsquo;s classes &rarr;</a>
     <button class="topnav-toggle" id="topnav-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
   </header>
 
@@ -439,15 +441,61 @@
           <div class="hero-foot">
             <span>Season One &middot; 2026 / 2027</span>
           </div>
+          <!-- Front door (2026-09-14): the cheapest thing a parent can do this
+               week leads, and applying is the quiet second line. "See Season
+               One" is gone from the hero; the Season One tile below carries the
+               only copy of that link now. -->
           <div class="hero-cta-row">
-            <a class="btn btn-blush" href="#interest" data-ref="home-hero" data-track="home-hero-express">Express Interest <em>&rarr;</em></a>
-            <a class="hero-cta-secondary" href="#proseries" data-track="home-hero-see-season">See Season One &rarr;</a>
+            <a class="btn btn-blush" href="/schedule/" data-ref="home-hero" data-track="home-hero-dropin">Drop in this week <em>&rarr;</em></a>
+            <a class="hero-cta-secondary" href="#interest" data-ref="home-hero-apply" data-track="home-hero-apply">Apply for a chair &rarr;</a>
           </div>
         </div>
         <div class="hero-logo-mark" aria-hidden="false">
           <img src="/images/logos/v2/DWD-green-400.webp" srcset="/images/logos/v2/DWD-green-400.webp 1x, /images/logos/v2/DWD-green-800.webp 2x" alt="Dance With Dixon" width="400" height="400" loading="eager" decoding="async">
         </div>
       </div>
+
+      <!-- THIS WEEK (2026-09-14 front door). Three live rows in the site's
+           ledger grammar: hairlines, no boxes, one text link each. Rendered by
+           js/now.js from public_site_schedule + public_site_dwdc_events +
+           window.DWD_SEASON.
+
+           Progressive enhancement, same contract as season.js and dwdc-next.js:
+           the markup below ships a correct, current static answer for all three
+           rows. now.js only ever REPLACES a line with something truer. Feed
+           down, CDN blocked, JS off — the block still reads as a finished page
+           rather than an empty box. Do not "simplify" these fallbacks away. -->
+      <section class="fd-now reveal" id="now" aria-label="This week">
+        <h2 class="fd-now-kicker">THIS WEEK</h2>
+        <ul class="fd-rows">
+          <li class="fd-row" data-now="dropin">
+            <span class="fd-row-label">Drop in</span>
+            <span class="fd-row-main">
+              <span class="fd-row-title" data-now-title>Prep Technique &middot; Tuesdays &middot; 4:45</span>
+              <span class="fd-row-meta" data-now-meta>$20 a class, $70 for a month of Tuesdays</span>
+            </span>
+            <a class="fd-row-link" href="/schedule/" data-now-link data-track="now-dropin">See the schedule &rarr;</a>
+          </li>
+          <li class="fd-row" data-now="proseries">
+            <span class="fd-row-label">ProSeries</span>
+            <span class="fd-row-main">
+              <span class="fd-row-title">Season One is underway</span>
+              <!-- Chair numbers render from window.DWD_SEASON (js/season.js) via
+                   js/now.js. Edit them there, never here. -->
+              <span class="fd-row-meta" data-now-meta>13 chairs open &middot; Prep 5 &middot; Elite 4 &middot; Pro 4</span>
+            </span>
+            <a class="fd-row-link" href="#interest" data-now-link data-track="now-apply">Apply &rarr;</a>
+          </li>
+          <li class="fd-row" data-now="collective">
+            <span class="fd-row-label">Collective</span>
+            <span class="fd-row-main">
+              <span class="fd-row-title" data-now-title>Adult modern company</span>
+              <span class="fd-row-meta" data-now-meta>18 and up &middot; no audition &middot; $15 at the door</span>
+            </span>
+            <a class="fd-row-link" href="/collective/" data-now-link data-track="now-collective">About the Collective &rarr;</a>
+          </li>
+        </ul>
+      </section>
 
       <!-- THE FORK — the two programs, hoisted directly under the hero so the
            primary choice is the first thing a visitor makes (was buried 5th). -->
@@ -465,7 +513,7 @@
             <div class="tag">Ages 5&ndash;19 &middot; Competitive</div>
             <h3>Pro<em>Series.</em></h3>
             <div class="entry-hl">Season One is underway.</div>
-            <div class="entry-desc">Three tracks: Prep, Elite, Pro. Audition-based. Every class designed by a working director.</div>
+            <div class="entry-desc">Three tracks: Prep, Elite, Pro. By application. Every class designed by a working director.</div>
           </div>
           <div class="foot">
             <div class="facts">
@@ -506,34 +554,13 @@
            (audition wrap-up: Jun 6; intensive sign-up: hide-after Jul 11; dwdCON:
            hide-after Jul 26). See git history for prior markup. -->
 
-      <!-- SEASON ONE CTA — Jul 11 → Aug 10 era. Takes the hero slot once the intensive
-           closes. Auditions have wrapped; placement stays open while Dixon reaches out
-           personally. Retires the instant Season One begins, handing off to the
-           season-underway variant below (same moment, no gap). Live countdown rendered
-           by the self-contained IIFE at the bottom of eras.js — NOT the June 6
-           audition countdown machinery (that stays retired with the audition era). -->
-      <section class="audition-cta season-cta" id="season-one-cta"
-               aria-label="Season One begins August 10"
-               data-reveal-after="2026-07-11T00:00:00-04:00"
-               data-hide-after="2026-08-10T04:00:00-04:00"
-               style="display:none">
-        <div class="audition-cta-card season-cta-card">
-          <div class="ac-stack">
-            <span class="ac-eyebrow"><span class="brand-case">dwdPROSERIES</span> &middot; Season One</span>
-            <span class="ac-headline">Season One begins August 10.</span>
-            <span class="ac-meta">Auditions have wrapped, but spots remain in all three tracks. Express interest and Dixon will personally reach out with next steps.</span>
-          </div>
-          <div class="season-cta-clock aclk-grid" data-season-clock aria-live="off">
-            <div class="aclk-unit"><span class="aclk-num" data-clk-days>--</span><span class="aclk-lbl">Days</span></div>
-            <div class="aclk-unit"><span class="aclk-num" data-clk-hrs>--</span><span class="aclk-lbl">Hrs</span></div>
-            <div class="aclk-unit"><span class="aclk-num" data-clk-mins>--</span><span class="aclk-lbl">Min</span></div>
-            <div class="aclk-unit"><span class="aclk-num" data-clk-secs>--</span><span class="aclk-lbl">Sec</span></div>
-          </div>
-          <div class="season-cta-actions">
-            <a class="ac-cta" href="#interest" data-ref="season-cta" data-track="season-cta-express-interest">Express Interest <em>&rarr;</em></a>
-          </div>
-        </div>
-      </section>
+      <!-- The Season One CTA panel ("Spots remain" + the countdown to Aug 10)
+           was deleted 2026-09-14 in the front-door pass. THIS WEEK row 2 now
+           states the chair count live, from the same DWD_SEASON numbers, above
+           the fold — a second panel saying it again 1,200px down was the
+           duplicate. Its countdown clock was already spent (Aug 10 passed) and
+           the [data-season-clock] IIFE in eras.js simply finds nothing now.
+           See git history for the prior markup. -->
 
       <!-- SEASON ONE HOME TEASER — replaces the season-underway-cta variant
            (2026-08-03: cinematic midnight strip, a keyhole into the Series
@@ -577,28 +604,11 @@
       <!-- AUDITION DAY BAND (#audition) deleted 2026-08-03 — permanently past
            (hide-after Jun 6, 2026). See git history for prior markup. -->
 
-      <!-- TRACK RECORD — director's credentials at a glance -->
-      <section class="track-record reveal" aria-label="Director's track record">
-        <div class="tr-eyebrow">Track Record &middot; Director</div>
-        <div class="tr-grid">
-          <div class="tr-stat">
-            <div class="tr-num">100<span>+</span></div>
-            <div class="tr-label">Competition pieces choreographed</div>
-          </div>
-          <div class="tr-stat">
-            <div class="tr-num">5</div>
-            <div class="tr-label">Years as a competition director</div>
-          </div>
-          <div class="tr-stat">
-            <div class="tr-num">9<span class="tr-arrow">&rarr;</span>23</div>
-            <div class="tr-label">Team grown across five seasons</div>
-          </div>
-          <div class="tr-stat">
-            <div class="tr-num">1</div>
-            <div class="tr-label">Artistic director &middot; every class, every piece</div>
-          </div>
-        </div>
-      </section>
+      <!-- The standalone Track Record stat band was deleted 2026-09-14 in the
+           front-door pass. The numbers were not wrong, they were just a band of
+           four big numerals between a visitor and the thing they came to do.
+           They now ride as one meta line under the director byline at the
+           bottom of the page, where a credential belongs. See git history. -->
 
       <!-- The credentials strip was removed 2026-09-04: the same claims are told
            in full on /teachers/, and Home keeps the Track Record numbers. -->
@@ -607,27 +617,12 @@
            past (hide-after Jun 28, 2026, the show was Jun 27). See git history
            for prior markup. -->
 
-      <!-- PHOTO GRID / STORY GRID · rebuilt as the conversion story block
-           2026-08-19 (item H4). Moved ahead of the featured video and the
-           standing-interest CTA moved to sit directly after it (item H5),
-           so the order is now: track-record, creds-strip, story grid,
-           spots-remain CTA, featured video, pull quote. -->
-      <div class="photo-grid-section reveal">
-        <div class="story-grid-head">
-          <div class="story-grid-eyebrow">The First Four Months</div>
-          <h2>Already a company.</h2>
-          <p>Open house to signing day in one summer. Seventeen dancers strong, chairs still open.</p>
-        </div>
-        <div class="photo-grid">
-          <figure class="ph g1"><img width="1600" height="1200" src="/images/photos/opt/story-si-trio-1600.webp" srcset="/images/photos/opt/story-si-trio-800.webp 800w, /images/photos/opt/story-si-trio-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="John, Evie and Daisy holding their First Trio certificates" loading="lazy" data-lightbox></figure>
-          <figure class="ph g2"><img width="1600" height="2134" src="/images/photos/opt/story-con-badges-1600.webp" srcset="/images/photos/opt/story-con-badges-800.webp 800w, /images/photos/opt/story-con-badges-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Custom comic-book name badges made for every dwdCON dancer" loading="lazy" data-lightbox></figure>
-          <figure class="ph g3"><img width="1600" height="2134" src="/images/photos/opt/story-ko-pool-1600.webp" srcset="/images/photos/opt/story-ko-pool-800.webp 800w, /images/photos/opt/story-ko-pool-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Marilynn on John's shoulders in the pool at the kickoff sleepover" loading="lazy" data-lightbox></figure>
-          <figure class="ph g4"><img width="1600" height="2406" src="/images/photos/opt/story-con-tilt-1600.webp" srcset="/images/photos/opt/story-con-tilt-800.webp 800w, /images/photos/opt/story-con-tilt-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="A dancer hits a full tilt extension at dwdCON" loading="lazy" data-lightbox></figure>
-          <figure class="ph g5"><img width="1600" height="2134" src="/images/photos/opt/story-sign-first-1600.webp" srcset="/images/photos/opt/story-sign-first-800.webp 800w, /images/photos/opt/story-sign-first-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Dixon with Athena, the first dancer to sign for Season One" loading="lazy" data-lightbox></figure>
-          <figure class="ph g6"><img width="1600" height="1200" src="/images/photos/opt/story-sign-group-1600.webp" srcset="/images/photos/opt/story-sign-group-800.webp 800w, /images/photos/opt/story-sign-group-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="All seventeen Season One dancers together on signing day" loading="lazy" data-lightbox></figure>
-        </div>
-        <a class="story-grid-link" href="#proseries" data-track="home-story-grid-cta">See the whole story &rarr;</a>
-      </div>
+      <!-- The "Already a company" story grid was deleted 2026-09-14 in the
+           front-door pass (deletion pass 2). Squinted next to #s1-home-teaser
+           it said the same thing twice: both were Season One retrospectives,
+           and its "chairs still open" line was a third copy of a number THIS
+           WEEK and the standing-interest band each already carry. The six
+           photos all live on /gallery/. See git history for the prior markup. -->
 
       <!-- LAUNCH CTA ("Register Now" audition version, hide-after Jun 12) and
            INTENSIVE CTA ("Sign Up Now", reveal Jun 12 / hide Jul 11) deleted
@@ -636,7 +631,7 @@
       <div class="email-signup email-signup-launch" data-reveal-after="2026-07-11T00:00:00-04:00" style="display:none">
         <div class="kicker"><span class="brand-case">dwdPROSERIES</span> &middot; Season One</div>
         <h3>Spots <em>Remain.</em></h3>
-        <p>Auditions have wrapped, but all three tracks have room. Fill out a short form about your dancer and Dixon will personally reach out with placement options and next steps. No fee to express interest.</p>
+        <p>Placement classes run all season, and all three tracks have room. Fill out a short form about your dancer and Dixon will personally reach out with placement options and next steps. No fee to express interest.</p>
         <a href="#interest" data-ref="home-standing" class="btn btn-blush" data-track="home-standing-interest-cta">Express Interest &rarr;</a>
       </div>
 
@@ -665,6 +660,8 @@
             This isn't a studio. It's a <span class="hl">company</span>, built for youth dancers and adults who want the real thing.
           </blockquote>
           <cite>Dixon Bowles <span>· Director &amp; Choreographer</span></cite>
+          <!-- The Track Record band's numbers, folded in here 2026-09-14. -->
+          <p class="pq-record">100+ competition pieces &middot; 5 years a competition director &middot; a team grown 9 to 23</p>
         </div>
       </div>
     </section>
@@ -987,6 +984,24 @@
         </div>
       </div>
 
+      <!-- TRY A CLASS FIRST (2026-09-14 front door). The page used to ask for a
+           two-minute form as its only first step. This is the cheaper one, in
+           the same row grammar as THIS WEEK on Home: one row, one text link,
+           no card. Static on purpose — the open Tuesday class is a standing
+           offer, not a feed. -->
+      <section class="fd-door" aria-label="Try a class first">
+        <ul class="fd-rows">
+          <li class="fd-row">
+            <span class="fd-row-label">Try a class first</span>
+            <span class="fd-row-main">
+              <span class="fd-row-title">Prep Technique &middot; Tuesdays 4:45</span>
+              <span class="fd-row-meta">Open to dancers ages 5 to 9 who are not enrolled. $20 a class, $70 for the month. Then apply if it fits.</span>
+            </span>
+            <a class="fd-row-link" href="/schedule/" data-track="ps-try-first">Drop in &rarr;</a>
+          </li>
+        </ul>
+      </section>
+
       <!-- Rail link order matches document order top-to-bottom (required by the
            scrollspy in main.js, which walks pairs in rail order and keeps the
            last one whose target has scrolled above the 40% line — order here
@@ -1273,10 +1288,15 @@
         <div class="ps-conv-band">
           <!-- Heading + chips render from js/season.js (data-chairs). -->
           <h3 data-chairs="remain-title">Thirteen chairs remain.</h3>
+          <!-- "5 of 10" alone under a heading that says chairs REMAIN reads as
+               five remaining. The word "filled" is the whole fix (2026-09-14).
+               Rendered from window.DWD_SEASON by js/now.js rather than
+               js/season.js: same numbers, one extra format, and season.js was
+               not this pass's file. Edit the numbers in js/season.js. -->
           <div class="ps-conv-chairs">
-            <span class="conv-chip conv-chip--prep" data-chairs="band" data-chairs-track="prep">PREP &middot; 5 of 10</span>
-            <span class="conv-chip conv-chip--elite" data-chairs="band" data-chairs-track="elite">ELITE &middot; 6 of 10</span>
-            <span class="conv-chip conv-chip--pro" data-chairs="band" data-chairs-track="pro">PRO &middot; 6 of 10</span>
+            <span class="conv-chip conv-chip--prep" data-season-filled="prep">Prep 5 of 10 filled</span>
+            <span class="conv-chip conv-chip--elite" data-season-filled="elite">Elite 6 of 10 filled</span>
+            <span class="conv-chip conv-chip--pro" data-season-filled="pro">Pro 6 of 10 filled</span>
           </div>
           <p class="ps-conv-line">Exchange Dance &middot; 7409 Chancery Lane, Orlando &middot; weeknight classes by track</p>
           <a class="btn btn-blush" href="#interest" data-ref="ps-pricing" data-track="ps-pricing-express">Express Interest <em>&rarr;</em></a>
@@ -1827,7 +1847,7 @@
         <div class="sched-header">
           <div class="kicker">PROSERIES</div>
           <h1 class="sched-h1" data-sched-h1>This week at ProSeries</h1>
-          <p class="sched-dek">Every class on the floor Monday to Thursday. The ones marked with a price are open for drop-ins: pay online, show up, dance.</p>
+          <p class="sched-dek">Every ProSeries class on the floor, Monday to Thursday. Rows with a price are open for drop-ins: pick your dates, pay online, show up. Four or more dates in one order and each one costs less.</p>
           <div class="sched-week-switch" data-sched-week-switch>
             <button type="button" class="sched-week-btn" data-sched-week="0">This week</button>
             <button type="button" class="sched-week-btn" data-sched-week="1">Next week</button>
@@ -2417,14 +2437,22 @@
 
   <div id="route-announce" class="sr-only" role="status" aria-live="polite"></div>
 
-  <!-- STICKY MOBILE CTA BAR (item M1, added 2026-08-19). Hidden by default;
-       js/main.js toggles [hidden] in showPage() for home/proseries/early-access. -->
-  <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label"><span class="s1-when" data-s1-when="premiere midseason">Season One &middot; chairs open</span><span class="s1-when" data-s1-when="finale wrapped">Dance With Dixon</span></span><a class="mob-cta-btn" href="#interest" data-ref="mobile-bar" data-track="mobile-sticky-express">Express Interest &rarr;</a></div>
+  <!-- STICKY MOBILE CTA BAR (item M1, added 2026-08-19; re-pointed at the
+       drop-in door 2026-09-14). Hidden by default; js/main.js toggles [hidden]
+       and rewrites the label and the button per route in setupMobCta(). The
+       label below is the home/default text and the static fallback: js/now.js
+       replaces it with the real open class when the feed has one. Hidden on
+       /schedule/ and /contact/, where the page IS the action. -->
+  <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label" data-mob-label data-mob-static="This week &middot; Prep Technique Tue 4:45">This week &middot; Prep Technique Tue 4:45</span><a class="mob-cta-btn" href="/schedule/" data-mob-btn data-ref="mobile-bar" data-track="mobile-sticky-dropin">Drop in &rarr;</a></div>
 
   <!-- season.js first: it owns the chair numbers main.js/eras.js never touch. -->
   <script defer src="/js/season.js"></script>
   <script defer src="/js/main.js"></script>
   <script defer src="/js/dwdc-next.js"></script>
+  <!-- now.js after main.js (it needs window.__dwd_sb) and after season.js (it
+       needs window.DWD_SEASON). It only ever replaces markup with something
+       truer; every line it touches already reads correctly without it. -->
+  <script defer src="/js/now.js"></script>
   <script defer src="/js/schedule.js"></script>
   <script defer src="/js/episodes.js"></script>
   <script defer src="/js/eras.js"></script>

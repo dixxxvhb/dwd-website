@@ -11008,3 +11008,152 @@ html.menu-open .mob-cta { display: none !important; }
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   front-door.css — THIS WEEK + the ProSeries try-first door (2026-09-14)
+
+   One row grammar, used twice. It is deliberately NOT a card: hairlines
+   between rows, nothing around them, so it reads as a ledger of what is
+   happening rather than three more boxes on a page that already has cards
+   below it. Borrowed from .sched-row on /schedule/ (same column idea, same
+   Cormorant title over an Outfit meta line), re-voiced for the forest ground.
+   Two weights, three sizes, no color doing hierarchy's job.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.fd-now,
+.fd-door {
+  max-width: 1100px;
+  margin: 72px auto 0;
+  padding: 0 32px;
+}
+
+.fd-now-kicker {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--terra-light);
+  margin: 0 0 14px;
+}
+
+.fd-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+}
+
+.fd-row {
+  display: grid;
+  grid-template-columns: 150px 1fr auto;
+  align-items: baseline;
+  column-gap: 24px;
+  row-gap: 4px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+
+.fd-row-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  /* 0.5 ivory on forest measures 3.9:1 at 12px. 0.6 clears AA. */
+  color: rgba(250, 243, 232, 0.6);
+}
+
+.fd-row-main { min-width: 0; }
+
+.fd-row-title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 2.4vw, 28px);
+  line-height: 1.2;
+  color: var(--ivory);
+}
+
+.fd-row-meta {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.45;
+  /* Same reason as the label: 0.55 lands at 4.4:1, one notch under AA. */
+  color: rgba(250, 243, 232, 0.62);
+  margin-top: 4px;
+}
+
+/* A text link, never a second button: the hero already spent this page's one
+   filled CTA. 44px tall so a thumb can hit it. */
+.fd-row-link {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ivory);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.35);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+}
+.fd-row-link:hover { color: var(--pink); border-color: var(--pink); }
+
+/* Phone: the label stops being a column and becomes the row's kicker. Three
+   columns at 390 would leave the title six words wide. */
+@media (max-width: 719px) {
+  .fd-now,
+  .fd-door {
+    margin-top: 48px;
+    padding: 0 24px;
+  }
+  .fd-row {
+    grid-template-columns: 1fr;
+    padding: 18px 0 10px;
+  }
+  .fd-row-label {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+  /* The link stops competing with the meta line for the same 342px and takes
+     its own line. A right-hand column at this width cost the title a wrap and
+     the meta two, to save one line of height. */
+  .fd-row-title { font-size: 21px; }
+  .fd-row-link {
+    justify-self: start;
+    margin-top: 2px;
+  }
+}
+
+/* The Track Record band's numbers, now one muted line under the byline. The
+   pull quote sits on FOREST, not the ivory its comment in index.html claims,
+   so this is ivory ink. It inherits the block's centring because it reads as
+   the second half of the byline, not as body copy. */
+.pull-quote .pq-record {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(250, 243, 232, 0.62);
+  max-width: 34ch;
+  margin: 10px auto 0;
+}
+
+/* The ProSeries chips carry a longer sentence now ("Prep 5 of 10 filled"),
+   so they wrap instead of clipping at 390. */
+.ps-conv-chairs { flex-wrap: wrap; }
+
+/* ProSeries carries a sitewide-looking reset whose selector list runs
+   `#page-proseries *, ... { padding: 0 }` (see "PAGE: #page-proseries" above),
+   so an ID beats any plain class inside that page. The door block has to
+   restate its gutter at that weight or it sits flush against the screen edge
+   at 390. Not fixing the reset itself here: it is load-bearing for the whole
+   poster page and this pass does not own it. */
+#page-proseries .fd-door { padding: 0 32px; }
+@media (max-width: 719px) {
+  #page-proseries .fd-door { padding: 0 24px; }
+}

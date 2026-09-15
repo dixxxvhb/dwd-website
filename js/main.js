@@ -201,7 +201,7 @@
       // times in the page body and zero times in any metadata).
       'proseries': 'ProSeries: Season One | DWD',
       'teachers': 'Teachers | DWD',
-      'schedule': 'Schedule · Dance With Dixon',
+      'schedule': 'Drop-in dance classes this week | Dance With Dixon, Orlando',
 
       'gallery': 'Gallery | DWD',
       'contact': 'Contact | DWD'
@@ -239,12 +239,52 @@
   var mobObservers = [];
   var mobState = { passedLead: false, formVisible: false, enabled: false };
 
+  /* Per-route label + button (2026-09-14 front door). The bar's job is the
+     drop-in door everywhere except the Collective, whose own next class is the
+     thing worth showing there. js/now.js hands this the live text by hanging
+     data-mob-dropin / data-mob-collective on the label; both have a static
+     fallback in the markup, so a dead feed leaves a correct bar. */
+  var MOB_ROUTES = {
+    'adult-company': {
+      label: 'Next class',
+      labelAttr: 'data-mob-collective',
+      href: '#dwdc-next',
+      text: 'Details →',
+      track: 'mobile-sticky-collective'
+    }
+  };
+  var MOB_DEFAULT = {
+    labelAttr: 'data-mob-dropin',
+    href: '/schedule/',
+    text: 'Drop in →',
+    track: 'mobile-sticky-dropin'
+  };
+
   function paintMobCta() {
     var mob = document.getElementById('mob-cta');
     if (!mob) return;
     var show = mobState.enabled && mobState.passedLead && !mobState.formVisible;
     mob.hidden = !show;
     document.body.classList.toggle('mob-cta-on', show);
+
+    var conf = MOB_ROUTES[mobState.route] || MOB_DEFAULT;
+    var label = mob.querySelector('[data-mob-label]');
+    var btn = mob.querySelector('[data-mob-btn]');
+    if (label) {
+      // The live line if now.js found one, else the route's own words, else
+      // whatever the markup shipped with. Never an empty bar.
+      var live = label.getAttribute(conf.labelAttr);
+      if (live) label.textContent = live;
+      else if (conf.label) label.textContent = conf.label;
+      else if (label.getAttribute('data-mob-static')) {
+        label.textContent = label.getAttribute('data-mob-static');
+      }
+    }
+    if (btn) {
+      btn.setAttribute('href', conf.href);
+      btn.textContent = conf.text;
+      btn.setAttribute('data-track', conf.track);
+    }
   }
 
   // eras.js reveals the date-gated bands AFTER main.js runs, so the lead
@@ -259,10 +299,12 @@
     if (!mob) return;
     mobObservers.forEach(function (o) { o.disconnect(); });
     mobObservers = [];
-    // Schedule carries its own fixed cart bar with the one pink fill the
-    // brief's hard rule allows per view; the mobile Express Interest bar
-    // would be a second one, so it stays off here like Privacy.
-    mobState = { passedLead: false, formVisible: false, enabled: name !== 'privacy' && name !== 'schedule' };
+    // Off on Schedule and Contact: on both, the page IS the action, and the
+    // bar would be a second primary fill pointing at what is already on
+    // screen. Schedule also carries its own fixed cart bar. Privacy has
+    // nothing to sell.
+    var OFF = { privacy: 1, schedule: 1, contact: 1 };
+    mobState = { passedLead: false, formVisible: false, route: name, enabled: !OFF[name] };
     paintMobCta();
     if (!mobState.enabled || typeof IntersectionObserver !== 'function') {
       if (mobState.enabled) { mobState.passedLead = true; paintMobCta(); }
@@ -277,7 +319,7 @@
     // Express Interest link is at the bottom of the page, and a page-sized
     // container never leaves the viewport.
     var lead = null;
-    var candidates = page.querySelectorAll('a[href="#interest"]');
+    var candidates = page.querySelectorAll('a[href="/schedule/"], a[href="#interest"]');
     for (var i = 0; i < candidates.length; i++) {
       if (candidates[i].offsetParent !== null &&
           candidates[i].getBoundingClientRect().height > 0) { lead = candidates[i]; break; }

@@ -71,10 +71,10 @@ const ROUTES = [
     supabase: true,
     feature: true,
     route: 'schedule',
-    title: 'Schedule · Dance With Dixon',
+    title: 'Drop-in dance classes this week | Dance With Dixon, Orlando',
     description:
-      'Every ProSeries class on the floor Monday to Thursday, three weeks out. Classes open for ' +
-      'drop-in can be paid for online and added to your calendar in minutes.',
+      'Book a drop-in class at ProSeries in Orlando. $20 a class, less when you book four or ' +
+      'more dates. Ages 5 to 19, pay online, show up, dance.',
     ogTitle: 'This week at ProSeries',
     ogDescription:
       'The live ProSeries schedule. Open classes take drop-ins: pay online, show up, dance.',
