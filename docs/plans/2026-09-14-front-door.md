@@ -87,3 +87,46 @@ SCREENSHOTS: (the named paths)
 VERIFIED vs BELIEVED:
 OPEN / BLOCKED:
 ```
+
+---
+
+# Addendum B (2026-09-14, Dixon: "make DROP IN bigger, more exciting, animated") — brief for builder-opus
+Branch: `front-door-2` off main. Routing: **Krehel craft for the motion (one authored moment, 200 to 500 ms, 0.96 press) + Bebas numerals as the visual device; mode Persuade; why: the drop-in is the push, so it becomes the single focal point on every page it appears on, and nothing else gets louder.**
+
+## B1. Decision
+THIS WEEK row 1 is promoted out of the ledger into a **DROP IN feature panel** (`#dropin-feature`), placed directly under the home hero, above the remaining THIS WEEK ledger (which keeps rows 2 and 3 only). The same panel, in a compact modifier, replaces the ProSeries "TRY A CLASS FIRST" row and heads the schedule page above the week switcher. The hero's filled button stays but grows. Rejected: pink backgrounds, badges, multiple pulsing elements, confetti, a countdown clock (a clock creates false urgency for a weekly class), any second animated element on the same screen.
+
+## B2. Files you own
+`index.html`, `js/now.js` (the panel is rendered from the same feed and fallback), `js/main.js` (sticky bar copy only), `css/site.css` + rebuilt `site.min.css`, `sw.js` (bump to v43), regenerated route shells. Nothing else.
+
+## B3. The panel (`.dropin-feature`)
+Full-bleed band in `forest-light` (`#1a3d2e`) on the forest page, 24px inner gutter, max-width matching the site's content column. Layout at 390 (stacked, in this order):
+1. Kicker `DROP IN · THIS WEEK` in the existing kicker style, pink.
+2. **The price, Bebas Neue, 120px at 390, 160px at 1280**, ivory: `$20` (from the feed's `drop_in_fee_cents`; fallback `$20`). Directly to its right at desktop, below it at phone, two Outfit lines at 18px: `a class` and `$70 for a month of Tuesdays` (computed: bulk price × 4 when `drop_in_bulk_fee_cents` is present, else the fallback line). Max two font sizes besides the numeral.
+3. Cormorant 32px: `Prep Technique · Tuesday Sep 22 · 4:45` (feed; fallback `Prep Technique · Tuesdays · 4:45`).
+4. Outfit 16px muted: `Ages 5 to 9 · Garage at Exchange Dance · 6 spots left` (age band + room + spots from the feed; omit nulls).
+5. One filled pink button, full width at 390, `Book Tuesday →` (the weekday from the feed; fallback `Book a class →`), href `/schedule/`, `data-track="dropin-feature-book"`. Height 56px, Outfit 600 18px, letter-spacing as the existing `.btn`.
+6. Under the button, one muted line: `Pay online, show up, dance. Move it to another week if you can't make it.`
+Desktop: two columns, numeral + lines left, class/meta/button right, vertically centered. No border, no card inside, no icon.
+
+**The visual device**: behind the numeral a single soft radial pink wash (`#FF7AA2` at 14% alpha, 480px radius, blurred), offset up-left of the price. This is the ONE ambient layer the Persuade ruling allows.
+
+## B4. Motion (the only things that move on any page)
+- On scroll-reveal of the panel (use the site's existing reveal mechanism): the numeral rises 24px and fades in over 420ms with the site's ease; the class line and button follow at +80ms and +160ms. Runs once.
+- The pink wash drifts 6% on a 9s ease-in-out loop (ambient, texture tier). Nothing else loops.
+- Button: hover lifts the wash brightness, active scales 0.96 (Krehel). No pulse, no glow animation on the button.
+- `@media (prefers-reduced-motion: reduce)`: reveal becomes an instant fade, the wash holds still.
+- Hero and the THIS WEEK ledger: no new motion. The sticky bar keeps its existing behaviour.
+
+## B5. Other drop-in surfaces
+- Hero primary `Drop in this week →`: 56px tall, full width at 390, Outfit 600 18px. Secondary stays a text link.
+- Sticky bar button reads `Drop in · $20 →` (price from the feed, fallback $20). Bar height 64px, button 44px, pink filled.
+- ProSeries: replace the `TRY A CLASS FIRST` row with the panel in `.dropin-feature--compact` (numeral 88px, one column, kicker `TRY A CLASS FIRST · DROP IN`, the §4.6 meta sentence becomes the muted line under the button). Keep the 24px spacing rule and the ID-weight padding fix.
+- Schedule page: the panel in compact form sits between the dek and the week switcher, kicker `DROP IN`, button `Pick your dates →` which scrolls to the list (`#sched-list` or the list's id) instead of linking away. The schedule ROWS that are open: price in Bebas 28px ivory, the `Add` control becomes pink filled 44px (closed rows unchanged, muted). Only one panel per page.
+- Nav CTA stays outlined. Max one filled pink element per screen besides the panel's own button; if the hero button and the panel button can both be in one 1280 frame, that is accepted (they are the same action) but nothing else may be filled.
+
+## B6. Copy locked
+`DROP IN · THIS WEEK` · `a class` · `$70 for a month of Tuesdays` · `Book Tuesday →` / `Book a class →` · `Pay online, show up, dance. Move it to another week if you can't make it.` · `Drop in · $20 →` · `TRY A CLASS FIRST · DROP IN` · `DROP IN` · `Pick your dates →` · `spots left`.
+
+## B7. Verification
+Iterate the panel at 390 at least three times; run the squint test (the numeral must be the first thing the eye lands on, the button second, nothing else competes). Screenshots `<scratchpad>/shots/front-door-2/`: `01-home-panel-390.png`, `02-home-panel-1280.png`, `03-home-panel-reveal-midframe-390.png` (captured mid-animation, the ugliest frame), `04-sticky-390.png`, `05-proseries-compact-390.png`, `06-schedule-panel-390.png`, `07-schedule-open-row-390.png`, `08-reduced-motion-390.png`, `09-fallback-390.png`. Checks JSON: `{ "routes_check_passes", "css_check_passes", "no_horizontal_scroll_390", "one_ambient_layer_only", "reduced_motion_respected", "panel_live_and_fallback", "sticky_price_from_feed", "schedule_button_scrolls_not_navigates", "copy_verbatim", "sw_v43" }`. Report in the §6 format, commit on `front-door-2` with explicit paths, never push.
