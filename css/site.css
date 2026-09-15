@@ -11157,3 +11157,83 @@ html.menu-open .mob-cta { display: none !important; }
 @media (max-width: 719px) {
   #page-proseries .fd-door { padding: 0 24px; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   front-door, pass 2 (2026-09-14)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Phone hero: the first screen has to contain the ask ──────────────
+   At 390x844 the photo band ran 480px and pushed the wordmark and the
+   filled CTA below the fold, which is the exact failure this whole pass
+   exists to fix: a front door you have to scroll to find is not a front
+   door. Under 768 the band is a fraction of the SCREEN (vh) rather than a
+   pixel range, so the identity block and the button both land above the
+   fold on a phone. The caption chip stays. Desktop is untouched: these
+   rules do not exist above 767px. */
+@media (max-width: 767px) {
+  #page-home .hero { padding-top: 56px; }
+  #page-home .hero-photo {
+    height: 42vh;
+    min-height: 0;
+    max-height: none;
+  }
+  #page-home .hero-text { padding: 24px 24px 32px; gap: 16px; }
+  #page-home .hero h1 { font-size: clamp(40px, 9vw, 56px); }
+  #page-home .hero-foot { margin-top: 0; }
+  #page-home .hero-cta-row { margin-top: 8px; gap: 16px; }
+}
+
+/* ── 2. The nav CTA is an outline, not a second filled button ────────────
+   One filled button per view, and on Home the hero's own "Drop in this
+   week" is it. The topnav CTA carried a pink fill AND a pulse animation
+   left over from the audition-era Register pill, which put two identical
+   pink blocks in the same frame pointing at the same page. Hairline,
+   ivory text, transparent fill; pink only on hover. The pile of
+   !important below is not enthusiasm: the fill it overrides is itself
+   declared !important in four earlier blocks (the .btn-blush group, the
+   launch-CTA block, and the rebrand nav rules). */
+.topnav .nav-cta-launch,
+.topnav.is-open nav .nav-cta-launch {
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--ivory, #FAF3E8) !important;
+  border: 1px solid rgba(250, 243, 232, 0.38) !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+.topnav .nav-cta-launch:hover,
+.topnav .nav-cta-launch:focus-visible,
+.topnav.is-open nav .nav-cta-launch:hover {
+  background: transparent !important;
+  color: var(--pink, #FF7AA2) !important;
+  border-color: var(--pink, #FF7AA2) !important;
+  box-shadow: none !important;
+  transform: translateY(-1px);
+}
+
+/* ── 3. The ProSeries door needs air on both sides ───────────────────────
+   24px above the kicker so it is not flush against the fixed topnav, and
+   24px below the last hairline so it is not fused to the tab strip. Both
+   off the 8px scale (spacing.lg in DESIGN.md), not eyeballed. */
+#page-proseries .fd-door {
+  margin-top: 24px;
+  padding: 0 32px 24px;
+}
+/* The same ID-weight reset that eats the gutter (see the note above) also eats
+   the ROW's padding, which left the kicker welded to the top hairline. Restate
+   it here at ID weight: 24px of air above the kicker, 24px below the last
+   hairline, both off the 8px scale. */
+#page-proseries .fd-door .fd-row {
+  padding: 24px 0;
+}
+@media (max-width: 719px) {
+  #page-proseries .fd-door {
+    margin-top: 24px;
+    padding: 0 24px 24px;
+  }
+  #page-proseries .fd-door .fd-row {
+    padding: 24px 0 16px;
+  }
+}
