@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v43';
+const CACHE_NAME = 'dwd-site-v43-logov3';
 const OFFLINE_URL = '/offline.html';
 const ASSETS = [
   '/',
@@ -19,9 +19,9 @@ const ASSETS = [
   // left the 192KB file everyone does ask for uncached — the exact opposite of
   // what this list is for.
   '/css/site.min.css',
-  '/images/logos/DWD-green.png',
-  '/images/icons/icon-192.png',
-  '/images/icons/icon-512.png'
+  '/images/logos/v3/DWD-glyph-transparent.svg',
+  '/images/logos/v3/DWD-compact-dark-192.png',
+  '/images/logos/v3/DWD-compact-dark-512.png'
 ];
 
 self.addEventListener('install', (e) => {
