@@ -73,8 +73,8 @@ const ROUTES = [
     route: 'schedule',
     title: 'Drop-in dance classes this week | Dance With Dixon, Orlando',
     description:
-      'Book a drop-in class at ProSeries in Orlando. $20 a class, less when you book four or ' +
-      'more dates. Ages 5 to 19, pay online, show up, dance.',
+      'Drop in to a ProSeries class in Orlando. No audition. $20 to $25 a class, less when you ' +
+      'book four or more dates. Ages 5 to 19. Pay online, show up, dance.',
     ogTitle: 'This week at ProSeries',
     ogDescription:
       'The live ProSeries schedule. Open classes take drop-ins: pay online, show up, dance.',

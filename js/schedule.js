@@ -252,9 +252,10 @@
     return [
       {
         class_id: 'stub-prep-ballet', occurrence_date: toIso(monday), date: toIso(monday),
-        start_time: '17:00:00', end_time: '18:00:00', name: 'Ballet',
+        start_time: '17:00:00', end_time: '18:00:00', name: 'Technique & Flexibility',
         track_label: 'Prep', age_band: 'ages 5 to 9', room: 'Garage',
-        drop_in_open: false, drop_in_fee_cents: null, spots_left: null
+        drop_in_open: false, drop_in_fee_cents: null, spots_left: null,
+        drop_in_opens_on: toIso(new Date(monday.getFullYear(), monday.getMonth() + 1, 1))
       },
       {
         class_id: 'stub-elite-ballet', occurrence_date: toIso(tue), date: toIso(tue),
@@ -280,8 +281,9 @@
       {
         class_id: 'stub-comp-choreo', occurrence_date: toIso(wed), date: toIso(movedActualDay),
         start_time: '18:30:00', end_time: '19:30:00', name: 'Competition Choreography',
-        track_label: 'Pro Only', age_band: 'ages 12 and up', room: 'Studio A',
-        drop_in_open: false, drop_in_fee_cents: null, spots_left: null
+        track_label: 'Pro Only', age_band: 'ages 10 and up', room: 'Studio A',
+        drop_in_open: false, drop_in_fee_cents: null, spots_left: null,
+        drop_in_opens_on: toIso(new Date(monday.getFullYear(), monday.getMonth() + 1, 1))
       },
       {
         class_id: 'stub-company-choreo', occurrence_date: toIso(thu), date: toIso(thu),
@@ -442,6 +444,14 @@
           }
           if (typeof row.spots_left === 'number' && row.spots_left >= 1 && row.spots_left <= 3) {
             priceWrap.appendChild(el('div', 'sched-row-spots', row.spots_left + ' spot' + (row.spots_left === 1 ? '' : 's') + ' left'));
+          }
+        }
+        else if (row.drop_in_opens_on) {
+          /* Closed today only because it opens later. One muted line, same
+             weight as the row's other facts, and no button beside it. */
+          var opensOn = new Date(String(row.drop_in_opens_on).slice(0, 10) + 'T00:00:00');
+          if (!isNaN(opensOn.getTime())) {
+            priceWrap.appendChild(el('div', 'sched-row-bulk', 'Opens ' + shortDateLabel(opensOn)));
           }
         }
         rowEl.appendChild(priceWrap);
