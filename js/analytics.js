@@ -61,9 +61,16 @@
   var currentPage = '';
   var pageEnteredAt = 0;
 
+  // The site moved from hash routes to real paths (/schedule/, /proseries/…),
+  // so the page name comes from the path first; a hash still wins when one
+  // is set (in-page sections). '/' is 'home', '/schedule/' is 'schedule',
+  // '/proseries/apply/' is 'proseries-apply'.
   function getPage() {
     var h = location.hash.replace('#', '').split('?')[0];
-    return h || 'home';
+    if (h) return h;
+    var p = location.pathname.replace(/^\/+|\/+$/g, '').replace(/\/(index\.html)?$/, '');
+    if (p === 'index.html') p = '';
+    return p ? p.replace(/\//g, '-') : 'home';
   }
 
   function exitPage() {
