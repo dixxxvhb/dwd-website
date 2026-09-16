@@ -42,8 +42,11 @@
 
   // ── Elements ──
   var elH1 = page.querySelector('[data-sched-h1]');
-  var elWeekSwitch = page.querySelector('[data-sched-week-switch]');
-  var elWeek3Btn = page.querySelector('[data-sched-week-3-label]');
+  var elWeekLabel = page.querySelector('[data-sched-week-label]');
+  var elWeekPrev = page.querySelector('[data-sched-week-prev]');
+  var elWeekNext = page.querySelector('[data-sched-week-next]');
+  var elWeekJump = page.querySelector('[data-sched-week-jump]');
+  var elWeekJumpBtn = page.querySelector('[data-sched-week-jump-btn]');
   var elNotice = page.querySelector('[data-sched-notice]');
   var elList = page.querySelector('[data-sched-list]');
   var elCartBar = page.querySelector('[data-sched-cart-bar]');
@@ -68,6 +71,11 @@
   if (elTyAddress) elTyAddress.textContent = EXCHANGE_ADDRESS;
 
   var sb = window.__dwd_sb;
+
+  // How far ahead the pager reaches. Six weeks is enough to hold the whole
+  // October drop-in run in view from the middle of September; the RPC caps
+  // one CALL at 21 days, not how far ahead a call may look.
+  var MAX_WEEK_OFFSET = 6;
 
   var currentWeekOffset = 0;
   var currentRows = [];
@@ -344,12 +352,46 @@
     elNotice.textContent = text;
   }
 
+  function weekLabelFor(offset) {
+    if (offset === 0) return 'This week';
+    if (offset === 1) return 'Next week';
+    return 'Week of ' + shortDateLabel(mondayOf(offset));
+  }
+
+  // The offset of the first week inside the pager's reach whose Monday falls on
+  // or after October 1 — the week the drop-in classes are actually bookable in.
+  // The year comes from NY today, never a literal, so this keeps working in
+  // 2027. Returns -1 when October is out of reach (or already here).
+  function octoberJumpOffset() {
+    var year = Number(nyTodayIso().slice(0, 4));
+    var oct1 = new Date(year, 9, 1);
+    for (var o = 0; o <= MAX_WEEK_OFFSET; o++) {
+      if (mondayOf(o).getTime() >= oct1.getTime()) return o;
+    }
+    return -1;
+  }
+
+  // Only worth saying while October is still ahead of the visitor AND they are
+  // looking at a week before it.
+  function updateJumpLine() {
+    if (!elWeekJump || !elWeekJumpBtn) return;
+    var todayIso = nyTodayIso();
+    var oct1Iso = todayIso.slice(0, 4) + '-10-01';
+    var jump = octoberJumpOffset();
+    if (todayIso >= oct1Iso || jump < 0 || currentWeekOffset >= jump) {
+      elWeekJump.hidden = true;
+      return;
+    }
+    elWeekJump.hidden = false;
+    elWeekJumpBtn.textContent = 'Booking for October? Jump to the week of ' +
+      shortDateLabel(mondayOf(jump)) + ' \u2192';
+  }
+
   function updateWeekLabels() {
-    var m2 = mondayOf(2);
-    elWeek3Btn.textContent = 'Week of ' + shortDateLabel(m2);
-    Array.prototype.forEach.call(elWeekSwitch.querySelectorAll('[data-sched-week]'), function (btn) {
-      btn.classList.toggle('active', Number(btn.dataset.schedWeek) === currentWeekOffset);
-    });
+    if (elWeekLabel) elWeekLabel.textContent = weekLabelFor(currentWeekOffset);
+    if (elWeekPrev) elWeekPrev.hidden = currentWeekOffset <= 0;
+    if (elWeekNext) elWeekNext.hidden = currentWeekOffset >= MAX_WEEK_OFFSET;
+    updateJumpLine();
   }
 
   function renderCartBar() {
@@ -540,10 +582,19 @@
     });
   }
 
-  elWeekSwitch.querySelectorAll('[data-sched-week]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      loadWeek(Number(btn.dataset.schedWeek));
-    });
+  function stepWeek(delta) {
+    var next = currentWeekOffset + delta;
+    if (next < 0) next = 0;
+    if (next > MAX_WEEK_OFFSET) next = MAX_WEEK_OFFSET;
+    if (next === currentWeekOffset) return;
+    loadWeek(next);
+  }
+
+  if (elWeekPrev) elWeekPrev.addEventListener('click', function () { stepWeek(-1); });
+  if (elWeekNext) elWeekNext.addEventListener('click', function () { stepWeek(1); });
+  if (elWeekJumpBtn) elWeekJumpBtn.addEventListener('click', function () {
+    var jump = octoberJumpOffset();
+    if (jump >= 0) loadWeek(jump);
   });
 
   // ── Checkout view ──
