@@ -365,11 +365,9 @@ a:hover {
   animation-delay: 0.4s;
 }
 
-.page.active .hero .hero-btns,
-.page.active .hero .btn {
-  animation: curtainRise 0.8s ease-out both;
-  animation-delay: 0.55s;
-}
+/* Hero buttons do NOT animate in (2026-09-22). They arrived last, fully
+   visible only at ~1.6s, on a page whose median visit ends at 3.5s: the
+   primary action looked disabled while the secondary link was already there. */
 
 
 .section-label {
@@ -3484,11 +3482,8 @@ body.has-topnav main.main > .page.active:not(#page-home) {
      (phone band); the fallbacks are entry A's, which is what a visitor with JS
      off sees. */
   object-position: var(--hf-d, 65% 60%);
-  animation: rb-kenburns 22s ease-in-out infinite alternate;
-}
-@keyframes rb-kenburns {
-  0% { transform: scale(1.04); }
-  100% { transform: scale(1.14) translate(-2%, -1.5%); }
+  /* The slow Ken Burns zoom is gone: one thing animates per screen, and on
+     Home that is the DROP IN panel's drift. The photo holds still. */
 }
 #page-home .hero-photo .caption {
   position: absolute; bottom: 24px; left: 24px;
@@ -3527,14 +3522,15 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 #page-home .hero h1 .line {
   display: block;
   opacity: 0; transform: translateY(30px);
-  animation: rb-rise 1.2s cubic-bezier(.2,.8,.2,1) forwards;
+  animation: rb-rise 0.6s cubic-bezier(.2,.8,.2,1) forwards;
 }
-#page-home .hero h1 .line:nth-child(1) { animation-delay: 0.1s; }
+/* Tightened 2026-09-22: the three lines used to land at 1.66s. */
+#page-home .hero h1 .line:nth-child(1) { animation-delay: 0s; }
 #page-home .hero h1 .line:nth-child(2) {
-  animation-delay: 0.28s;
+  animation-delay: 0.08s;
   font-style: italic; color: var(--rb-pink); padding-left: 0.4em;
 }
-#page-home .hero h1 .line:nth-child(3) { animation-delay: 0.46s; }
+#page-home .hero h1 .line:nth-child(3) { animation-delay: 0.16s; }
 @keyframes rb-rise { to { opacity: 1; transform: translateY(0); } }
 
 #page-home .hero .subtitle {
@@ -4556,17 +4552,14 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
 /* All H1/H2/H3/H4 on the three poster pages start from a clean slate.
    Anton is the workhorse for big block lines. Cormorant italic for accents.
    Outfit for body copy. (Manrope was retired sitewide 2026-09-02, item 3.2.) */
-#page-proseries,
-.amuse-feature,
-
-#page-proseries *,
-.amuse-feature *,
-
-
 /* ============================================================
    PAGE: #page-proseries
    ============================================================ */
 
+/* A rule body deleted in the 09-03 one-stylesheet merge left its selector
+   list (#page-proseries *, .amuse-feature * ...) glued onto this rule, which
+   zeroed the padding of every element on the page: flush button text, a 22px
+   email field, bullets printed over words. Removed 2026-09-22. */
 #page-proseries { padding: 0; }
 #page-proseries > * { max-width: none; }
 
@@ -5424,11 +5417,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   padding: 1px 0;
   color: inherit !important;
 }
-#page-proseries .td-included li::before {
-  content: "—  ";
-  opacity: .55;
-  margin-right: 4px;
-}
+/* Bullets: the base .td-included li::before dot (hung in the 1rem indent). */
 
 #page-proseries .td-fees {
   list-style: none;
@@ -6518,6 +6507,15 @@ textarea:focus {
     background: rgba(12, 31, 23, 0.86);
   }
 }
+/* Solid forest (2026-09-22). The frosted glass tinted the bar grey-green over
+   the ivory schedule and brown over orange hero photos: the brand's darkest
+   colour turned into whatever scrolled under it. */
+.topnav::before,
+.topnav.scrolled::before {
+  background: #0c1f17;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
 
 /* ── D. Scroll lock while the mobile menu is open ──
    main.js toggles `menu-open` on <html> on every open/close path
@@ -7217,10 +7215,10 @@ footer.site-footer .footer-brand img {
      (1.1s delay + 0.5s duration = settles at 1.6s; sweep starts 2.0s to
      give it a beat of stillness first). Must stay a single declaration —
      see the note above the (now-removed) standalone sweep rule. */
+  /* The ambient gloss sweep that followed the entrance was removed
+     2026-09-22: the entrance is the motion, then the title holds still. */
   #page-proseries .s1-premiere.s1-cue .s1-title {
-    animation:
-      s1-rise-fade 0.5s ease-out 0.55s forwards,
-      s1-sweep 6s ease-in-out infinite 1.5s;
+    animation: s1-rise-fade 0.5s ease-out 0.55s forwards;
   }
   #page-proseries .s1-premiere.s1-cue .s1-subtitle {
     animation: s1-rise-fade-sm 0.4s ease-out 0.9s forwards;
@@ -7742,11 +7740,8 @@ footer.site-footer .footer-brand img {
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  #s1-home-teaser .s1ht-title {
-    animation: s1-sweep 6s ease-in-out infinite;
-  }
-}
+/* #s1-home-teaser .s1ht-title no longer loops the s1-sweep gloss
+   (2026-09-22): Home's one moving thing is the DROP IN panel. */
 
 #s1-home-teaser .s1ht-meta {
   font-family: 'Outfit', sans-serif;
@@ -8866,14 +8861,14 @@ footer.site-footer .footer-brand img {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(12, 31, 23, 0.72);
+  color: var(--forest, #0c1f17);
   margin-bottom: 6px;
 }
 
+/* Muted by weight, not opacity: forest at 62% on Family Pink was 2.4:1. */
 #page-proseries #proseries-interest .ps-if .ps-if-opt {
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.06em;
-  opacity: 0.62;
   text-transform: none;
 }
 
@@ -10243,6 +10238,28 @@ footer.site-footer .footer-brand img {
 .btn-outline:hover {
   background: rgba(255, 122, 162, 0.12) !important;
   color: var(--pink, #FF7AA2) !important;
+}
+
+/* The interest form sits on a Family Pink band, where the site-wide pink
+   primary and pink ghost vanish (the submit read as plain text, "+ Add
+   another dancer" as an empty gap). On this band they invert to forest. */
+#page-proseries #proseries-interest .ps-if-submit,
+#page-proseries #proseries-interest .btn-blush {
+  background: var(--forest, #0c1f17) !important;
+  color: var(--ivory, #FAF3E8) !important;
+}
+#page-proseries #proseries-interest .ps-if-submit:hover,
+#page-proseries #proseries-interest .btn-blush:hover {
+  background: #1a3d2e !important;
+  color: var(--ivory, #FAF3E8) !important;
+}
+#page-proseries #proseries-interest .ps-if-add {
+  color: var(--forest, #0c1f17) !important;
+  border-color: var(--forest, #0c1f17) !important;
+}
+#page-proseries #proseries-interest .ps-if-add:hover {
+  background: rgba(12, 31, 23, 0.08) !important;
+  color: var(--forest, #0c1f17) !important;
 }
 
 /* Form submit buttons carry the same floor at 390. */
@@ -11692,3 +11709,41 @@ html.menu-open .mob-cta { display: none !important; }
   .sched-row:not(.sched-row--closed) .sched-add-btn { transition: none; }
   .sched-row:not(.sched-row--closed) .sched-add-btn:active { transform: none; }
 }
+
+
+/* ═════════════════════════════════════════════════
+   2026-09-22 full-site audit, visual pass
+   ═════════════════════════════════════════════════ */
+
+/* Headlines break in balanced lines, no dangling last word ("SO / FAR."). */
+h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
+
+/* "Pick your dates" lands the list below the fixed nav, not under it. */
+#sched-list { scroll-margin-top: 96px; }
+
+/* Contrast: terracotta #C8614B is display-only; small text on ivory takes the
+   light-ground body shade, on forest the dark-ground one. */
+#page-schedule .sched-header .kicker,
+#page-schedule .sched-week-jump-btn { color: #a8503e !important; }
+#page-schedule .sched-row--closed .sched-row-name { opacity: 1; }
+#page-schedule .sched-row--closed,
+#page-schedule .sched-row--closed * { color: #646a62 !important; }
+.dropin-foot { color: #a9b5a8 !important; }
+#page-home cite > span { color: #d4775f !important; }
+#page-adult-company #col-who h2 { color: #d4775f !important; }
+#page-contact #contact-reason-help { color: #e3907a !important; }
+
+/* Gallery on a phone: two columns, not one 294px column (page was 11,700px). */
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 0 16px;
+  }
+  .gallery-grid img { height: auto; aspect-ratio: 4 / 5; }
+  .gallery-grid img.wide { grid-column: span 2; aspect-ratio: 4 / 3; }
+}
+
+/* Faculty photos: the width/height attributes out-ranked aspect-ratio, so the
+   squares rendered 342x640 (stretched). */
+#page-teachers .rf-photo { height: auto; object-position: 50% 25%; }

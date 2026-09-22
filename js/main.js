@@ -293,7 +293,7 @@
   function paintMobCta() {
     var mob = document.getElementById('mob-cta');
     if (!mob) return;
-    var show = mobState.enabled && mobState.passedLead && !mobState.formVisible;
+    var show = mobState.enabled && mobState.passedLead && !mobState.formVisible && !mobState.twinVisible;
     mob.hidden = !show;
     document.body.classList.toggle('mob-cta-on', show);
 
@@ -334,7 +334,7 @@
     // screen. Schedule also carries its own fixed cart bar. Privacy has
     // nothing to sell.
     var OFF = { privacy: 1, schedule: 1, contact: 1 };
-    mobState = { passedLead: false, formVisible: false, route: name, enabled: !OFF[name] };
+    mobState = { passedLead: false, formVisible: false, twinVisible: false, route: name, enabled: !OFF[name] };
     paintMobCta();
     if (!mobState.enabled || typeof IntersectionObserver !== 'function') {
       if (mobState.enabled) { mobState.passedLead = true; paintMobCta(); }
@@ -367,6 +367,23 @@
     }, { threshold: 0 });
     leadObs.observe(lead);
     mobObservers.push(leadObs);
+
+    // Step aside while ANY same-action link is on screen, not only the first:
+    // the DROP IN panel's "Book Tuesday" and the bar's "Drop in" used to share
+    // a viewport on Home and ProSeries (two primaries for one action).
+    var twins = Array.prototype.filter.call(candidates, function (c) { return c !== lead; });
+    if (twins.length) {
+      var onScreen = new Set();
+      var twinObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) onScreen.add(e.target); else onScreen.delete(e.target);
+        });
+        mobState.twinVisible = onScreen.size > 0;
+        paintMobCta();
+      }, { threshold: 0 });
+      twins.forEach(function (t) { twinObs.observe(t); });
+      mobObservers.push(twinObs);
+    }
 
     var form = document.getElementById('interest');
     if (form && page.contains(form)) {
