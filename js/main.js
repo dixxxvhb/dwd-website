@@ -241,6 +241,23 @@
     try { window.dispatchEvent(new CustomEvent('dwd:route', { detail: { page: name } })); } catch (e) {}
   }
 
+  // ── YouTube on tap ──
+  // The markup ships a thumbnail button; the player (and YouTube's cookies)
+  // only arrive when someone asks for the video.
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.yt-facade');
+    if (!btn) return;
+    var id = btn.getAttribute('data-yt');
+    if (!/^[A-Za-z0-9_-]+$/.test(id || '')) return;
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+    f.title = btn.getAttribute('data-yt-title') || 'Video';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    f.setAttribute('allowfullscreen', '');
+    btn.replaceWith(f);
+    f.focus();
+  });
+
   // ── STICKY MOBILE CTA BAR ──
   // The bar is the phone's primary CTA on every route but Privacy. It stays
   // out of the way until the page's own first Express Interest button (or,
@@ -1115,7 +1132,7 @@
           '</div>' +
           '<div class="form-group">' +
             '<label for="if-child-dob-' + i + '">Date of birth</label>' +
-            '<input type="date" id="if-child-dob-' + i + '" data-child="date_of_birth" required min="1990-01-01" max="2026-12-31">' +
+            '<input type="date" id="if-child-dob-' + i + '" data-child="date_of_birth" required min="1990-01-01" max="' + new Date().toISOString().slice(0, 10) + '">' +
           '</div>' +
         '</div>' +
         '<div class="form-group">' +

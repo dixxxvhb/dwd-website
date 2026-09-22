@@ -303,8 +303,15 @@
 
   <!-- Supabase Client — deferred so it no longer blocks first paint. The app
        scripts (main/campaign/analytics) are also deferred, so document order
-       still guarantees this runs first and window.supabase is ready in time. -->
-  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+       still guarantees this runs first and window.supabase is ready in time.
+       Pinned to an exact version with SRI (2026-09-22): "@2" floated, so a new
+       2.x release changed the live site without a commit. dist/umd/supabase.js
+       is the package's own (already minified) file; jsDelivr's .min.js is
+       generated on the fly and must not carry an integrity hash.
+       To upgrade: change the version, recompute with
+       openssl dgst -sha384 -binary supabase.js | openssl base64 -A -->
+  <link rel="preconnect" href="https://ipulrvhiuvgbvralybxx.supabase.co" crossorigin>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/dist/umd/supabase.js" integrity="sha384-xPW3QHswsICVC2mW6BFNwMbhpLkbZ133fKOhxNx3QGGgAOJfL3O9t8r2aWn1aez6" crossorigin="anonymous"></script>
 </head>
 <body class="has-topnav">
 
@@ -337,7 +344,7 @@
          Same element still serves desktop nav AND the mobile menu (main.js
          menuCta moves it into <nav> on open). -->
     <a href="/schedule/" data-ref="nav-this-week" class="nav-cta nav-cta-launch" data-track="nav-this-week">This week&rsquo;s classes &rarr;</a>
-    <button class="topnav-toggle" id="topnav-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
+    <button class="topnav-toggle" id="topnav-toggle" aria-controls="topnav" aria-expanded="false">Menu</button>
   </header>
 
   <!-- The legacy <aside class="sidebar">, <header class="mobile-header"> and
@@ -654,8 +661,12 @@
             </div>
             <div class="meta">Original choreography by Dixon Bowles · 2024 season.</div>
           </div>
+          <!-- YouTube loads on tap, not on page load (2026-09-22 audit): five
+               hidden-section iframes were pulling ~1MB of player JS, ad pings
+               and cookies onto every route, /privacy/ included. js/main.js
+               swaps the button for a youtube-nocookie iframe on click. -->
           <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/13yTeXaUc9U" title="Dixon Bowles choreography · Tokyo Sunrise" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <button type="button" class="yt-facade" data-yt="13yTeXaUc9U" data-yt-title="Dixon Bowles choreography · Tokyo Sunrise" aria-label="Play video: Dixon Bowles choreography · Tokyo Sunrise"><img src="https://i.ytimg.com/vi/13yTeXaUc9U/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360"><span class="yt-play" aria-hidden="true"></span></button>
           </div>
         </div>
       </div>
@@ -974,7 +985,7 @@
                only under its own <html data-s1-state> — see the state machine
                in eras.js and the .s1-when rules in season1.css. -->
           <div class="s1-credits">A Dance With Dixon Production &middot;<span class="s1-when" data-s1-when="premiere"> Now premiering</span><span class="s1-when" data-s1-when="midseason"> Now playing</span><span class="s1-when" data-s1-when="finale"> The Finale &middot; May 25, 2027</span><span class="s1-when" data-s1-when="wrapped"> August 2026 &ndash; May 2027</span></div>
-          <p class="s1-blurb s1-when s1-when--block" data-s1-when="premiere midseason finale">Every competition this year is an episode. Every showcase, a special. The May recital is the finale. You didn't join a program &mdash; you were cast in a show.<span class="s1-when" data-s1-when="premiere"> Welcome to Season One.</span><span class="s1-when" data-s1-when="midseason"> Season One is on the air.</span><span class="s1-when" data-s1-when="finale"> One episode left.</span></p>
+          <p class="s1-blurb s1-when s1-when--block" data-s1-when="premiere midseason finale">Every competition this year is an episode. Every showcase, a special. The May recital is the finale. You didn't join a program. You were cast in a show.<span class="s1-when" data-s1-when="premiere"> Welcome to Season One.</span><span class="s1-when" data-s1-when="midseason"> Season One is on the air.</span><span class="s1-when" data-s1-when="finale"> One episode left.</span></p>
           <p class="s1-blurb s1-when s1-when--block" data-s1-when="wrapped">Every competition was an episode. Every showcase, a special. The recital was the finale. Season One ran forty weeks, and every dancer in it was credited. Season Two is being written.</p>
           <div class="s1-meta">Ages 5&ndash;19 &middot; Competitive Training</div>
           <a href="#interest" data-ref="s1-hero" class="btn btn-blush s1-cta" id="s1-hero-cta" data-track="s1-hero-cta-express">Express Interest <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
@@ -1129,7 +1140,7 @@
             </div>
 
             <div class="td-allin">
-              <div class="td-allin-label">Peak months (Aug&ndash;Oct), total monthly &mdash; varies with routines cast</div>
+              <div class="td-allin-label">Peak months (Aug&ndash;Oct), total monthly, varies with routines cast</div>
               <div class="td-allin-amount">$370&ndash;470<span>/mo</span></div>
             </div>
           </article>
@@ -1196,7 +1207,7 @@
             </div>
 
             <div class="td-allin">
-              <div class="td-allin-label">Peak months (Aug&ndash;Oct), total monthly &mdash; varies with routines cast</div>
+              <div class="td-allin-label">Peak months (Aug&ndash;Oct), total monthly, varies with routines cast</div>
               <div class="td-allin-amount">$535&ndash;635<span>/mo</span></div>
             </div>
           </article>
@@ -1212,7 +1223,7 @@
               <div class="td-meta">Ages 12+ &middot; 10+ hrs/week &middot; 5&ndash;8 routines</div>
             </header>
 
-            <p class="td-description">The company. Exclusive Pro-only Rotation and Choreography blocks plus a dedicated Solo Hour every week. Every Pro dancer is offered a solo &mdash; accepting is your call. For serious dancers ready to represent DWD on every stage.</p>
+            <p class="td-description">The company. Exclusive Pro-only Rotation and Choreography blocks plus a dedicated Solo Hour every week. Every Pro dancer is offered a solo. Accepting is your call. For serious dancers ready to represent DWD on every stage.</p>
 
             <div class="td-section">
               <h4>Weekly Schedule</h4>
@@ -1265,7 +1276,7 @@
             </div>
 
             <div class="td-allin">
-              <div class="td-allin-label">Peak months (Aug&ndash;Oct), total monthly &mdash; varies with routines cast</div>
+              <div class="td-allin-label">Peak months (Aug&ndash;Oct), total monthly, varies with routines cast</div>
               <div class="td-allin-amount">$635&ndash;785<span>/mo</span></div>
             </div>
           </article>
@@ -1412,7 +1423,7 @@
                   </div>
                   <div class="form-group">
                     <label for="if-child-dob-0">Date of birth</label>
-                    <input type="date" id="if-child-dob-0" data-child="date_of_birth" required min="1990-01-01" max="2026-12-31">
+                    <input type="date" id="if-child-dob-0" data-child="date_of_birth" required min="1990-01-01">
                   </div>
                 </div>
                 <div class="form-group">
@@ -1992,7 +2003,7 @@
         <div class="tch-hero-photo">
           <picture>
             <source type="image/webp" srcset="/images/photos/opt/story-con-coach-800.webp 800w, /images/photos/opt/story-con-coach-1600.webp 1600w" sizes="(max-width: 980px) 100vw, 46vw">
-            <img src="/images/photos/opt/story-con-coach-800.webp" alt="Dixon coaching on the floor at dwdCON" width="800" height="1202" loading="lazy" decoding="async">
+            <img src="/images/photos/opt/story-con-coach-800.webp" alt="Dixon coaching on the floor at dwdCON" width="800" height="1202" loading="lazy" decoding="async" data-lcp="teachers">
           </picture>
         </div>
       </div>
@@ -2089,7 +2100,7 @@
       <div class="gallery-hero gallery-hero--photo">
         <picture class="gallery-hero-bg">
           <source type="image/webp" srcset="/images/photos/opt/a-06-06-25-5086-enhanced-nr-800.webp 800w, /images/photos/opt/a-06-06-25-5086-enhanced-nr-1600.webp 1600w" sizes="100vw">
-          <img src="/images/photos/opt/a-06-06-25-5086-enhanced-nr-1600.webp" srcset="/images/photos/opt/a-06-06-25-5086-enhanced-nr-800.webp 800w, /images/photos/opt/a-06-06-25-5086-enhanced-nr-1600.webp 1600w" sizes="100vw" alt="dwdCOLLECTIVE dancers mid-phrase on stage" loading="eager" decoding="async" data-lightbox>
+          <img src="/images/photos/opt/a-06-06-25-5086-enhanced-nr-1600.webp" srcset="/images/photos/opt/a-06-06-25-5086-enhanced-nr-800.webp 800w, /images/photos/opt/a-06-06-25-5086-enhanced-nr-1600.webp 1600w" sizes="100vw" alt="dwdCOLLECTIVE dancers mid-phrase on stage" width="1600" height="1342" loading="lazy" decoding="async" data-lcp="gallery" data-lightbox>
         </picture>
         <div class="gallery-hero-text">
           <h1>Gallery</h1>
@@ -2214,22 +2225,22 @@
       <div class="video-grid">
         <div class="video-card">
           <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/M0GmWaSe2mU" title="Dixon Bowles choreography" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <button type="button" class="yt-facade" data-yt="M0GmWaSe2mU" data-yt-title="Dixon Bowles choreography" aria-label="Play video: Dixon Bowles choreography"><img src="https://i.ytimg.com/vi/M0GmWaSe2mU/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360"><span class="yt-play" aria-hidden="true"></span></button>
           </div>
         </div>
         <div class="video-card">
           <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/13yTeXaUc9U" title="Dixon Bowles choreography" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <button type="button" class="yt-facade" data-yt="13yTeXaUc9U" data-yt-title="Dixon Bowles choreography" aria-label="Play video: Dixon Bowles choreography"><img src="https://i.ytimg.com/vi/13yTeXaUc9U/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360"><span class="yt-play" aria-hidden="true"></span></button>
           </div>
         </div>
         <div class="video-card">
           <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/vClrKuU3aL8" title="Dixon Bowles choreography" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <button type="button" class="yt-facade" data-yt="vClrKuU3aL8" data-yt-title="Dixon Bowles choreography" aria-label="Play video: Dixon Bowles choreography"><img src="https://i.ytimg.com/vi/vClrKuU3aL8/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360"><span class="yt-play" aria-hidden="true"></span></button>
           </div>
         </div>
         <div class="video-card">
           <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/Qy2siwSFMUs" title="Dixon Bowles choreography" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <button type="button" class="yt-facade" data-yt="Qy2siwSFMUs" data-yt-title="Dixon Bowles choreography" aria-label="Play video: Dixon Bowles choreography"><img src="https://i.ytimg.com/vi/Qy2siwSFMUs/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360"><span class="yt-play" aria-hidden="true"></span></button>
           </div>
         </div>
       </div>

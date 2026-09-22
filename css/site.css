@@ -2094,6 +2094,49 @@ video.hero-logo {
   height: 100%;
   border: none;
 }
+/* YouTube facade: the thumbnail stands in for the player until tapped. */
+.yt-facade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--forest-dark);
+  cursor: pointer;
+}
+.yt-facade img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.yt-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-radius: 50%;
+  background: rgba(12, 31, 23, 0.78);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.yt-play::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -11px 0 0 -7px;
+  border-style: solid;
+  border-width: 11px 0 11px 19px;
+  border-color: transparent transparent transparent #FAF3E8;
+}
+.yt-facade:hover .yt-play,
+.yt-facade:focus-visible .yt-play { background: #FF7AA2; }
+.yt-facade:active .yt-play { transform: scale(0.96); }
+.yt-facade:focus-visible { outline: 2px solid #FF7AA2; outline-offset: 2px; }
+
 .video-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2449,10 +2492,12 @@ a:focus-visible,
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms;
-    animation-iteration-count: 1;
-    transition-duration: 0.01ms;
-    scroll-behavior: auto;
+    /* !important because page rules (the home Ken Burns, the page fade) set
+       their own animation and out-rank a bare universal selector. */
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
   /* Hide autoplay WebM logos; fall back to sibling PNG */
   video[autoplay] { display: none; }

@@ -1,0 +1,10 @@
+# GitHub Pages runs Jekyll over this repo. Nothing here uses Jekyll features;
+# this file only keeps working notes and build tooling off the public site
+# (docs/STATUS.md, plans and QA scripts were all being served at 200).
+exclude:
+  - docs
+  - scripts
+  - DESIGN.md
+  - design_tokens.json
+  - tailwind.design-md.js
+  - css/site.css

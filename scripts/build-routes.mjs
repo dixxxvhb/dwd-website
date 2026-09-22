@@ -253,7 +253,7 @@ function buildShell(r) {
   if (!r.supabase) {
     const before = out;
     out = out.replace(
-      /  <!-- Supabase Client[\s\S]*?supabase\.min\.js"><\/script>\r?\n/,
+      /  <!-- Supabase Client[\s\S]*?supabase(?:\.min)?\.js"[^>]*><\/script>\r?\n/,
       '  <!-- No Supabase bundle on this route: it carries no form and no' + EOL +
         '       database-rendered list. See scripts/build-routes.mjs. -->' + EOL
     );
@@ -294,6 +294,13 @@ function buildShell(r) {
       process.exit(1);
     }
   }
+
+  // A route's own hero image is its LCP. index.html (the home page) ships it
+  // lazy, because there it sits in a hidden section; the route's shell makes
+  // it eager and high priority. Tag: data-lcp="<route>".
+  out = out.replace(new RegExp(`<img [^>]*data-lcp="${r.route}"[^>]*>`, 'g'), (tag) =>
+    tag.replace('loading="lazy"', 'loading="eager" fetchpriority="high"')
+  );
 
   // Paint the route's own section from the first byte. Before this every
   // shell shipped Home as the active section and main.js swapped it once the
