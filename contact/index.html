@@ -1882,11 +1882,18 @@
               </div>
             </div>
           </section>
+          <!-- A pager, not three fixed chips: the drop-in classes open in
+               October, so October has to be reachable from any day in
+               September. js/schedule.js owns the label, which arrow is
+               hidden, and the October jump line under it. -->
           <div class="sched-week-switch" data-sched-week-switch>
-            <button type="button" class="sched-week-btn" data-sched-week="0">This week</button>
-            <button type="button" class="sched-week-btn" data-sched-week="1">Next week</button>
-            <button type="button" class="sched-week-btn" data-sched-week="2" data-sched-week-3-label>Week of &mdash;</button>
+            <button type="button" class="sched-week-btn sched-week-nav" data-sched-week-prev hidden>&lsaquo; Earlier</button>
+            <span class="sched-week-now" data-sched-week-label>This week</span>
+            <button type="button" class="sched-week-btn sched-week-nav" data-sched-week-next hidden>Later &rsaquo;</button>
           </div>
+          <p class="sched-week-jump" data-sched-week-jump hidden>
+            <button type="button" class="sched-week-jump-btn" data-sched-week-jump-btn></button>
+          </p>
         </div>
 
         <div class="sched-notice" data-sched-notice hidden></div>
@@ -1949,8 +1956,8 @@
             <h2 class="sched-h2">Before class</h2>
             <p data-sched-ty-address>Exchange Dance Studio &middot; 7409 Chancery Lane, Orlando, FL 32809</p>
             <p>Arrive ten minutes early.</p>
-            <p>Dance clothes, no street shoes on the floor.</p>
-            <p>Bring water.</p>
+            <p>All black, form-fitting. Leotard and tights, or a fitted top and leggings. Hair pulled back off the face.</p>
+            <p>No street shoes on the floor. Bring water.</p>
           </div>
         </div>
       </div>
