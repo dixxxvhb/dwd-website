@@ -1,23 +1,17 @@
-const CACHE_NAME = 'dwd-site-v43-logov3';
+const CACHE_NAME = 'dwd-site-v44-audit';
+// Photos live in their own cache so a code deploy (CACHE_NAME bump) does not
+// throw away every image a returning visitor already has. Capped below.
+const IMG_CACHE = 'dwd-img-v1';
+const IMG_MAX = 150;
 const OFFLINE_URL = '/offline.html';
+// Only the shell a first visit actually needs offline. The route shells are
+// near-identical 180KB copies of index.html; precaching all eight cost a new
+// visitor ~390KB for pages they may never open. They are cached as they are
+// visited (network-first below), which is when offline access to them matters.
 const ASSETS = [
   '/',
-  '/index.html',
-  // The six route shells (item 3.1). Each is a copy of index.html with its own
-  // metadata; precaching them keeps a deep link working offline the same way
-  // "/" already did.
-  '/proseries/',
-  '/schedule/',
-  '/collective/',
-  '/teachers/',
-  '/gallery/',
-  '/contact/',
-  '/privacy/',
   '/offline.html',
-  // The MINIFIED sheet, because that is the one the pages link (2026-09-04).
-  // Precaching site.css here would have downloaded 309KB nobody asks for and
-  // left the 192KB file everyone does ask for uncached — the exact opposite of
-  // what this list is for.
+  // The MINIFIED sheet, because that is the one the pages link.
   '/css/site.min.css',
   '/images/logos/v3/DWD-glyph-transparent.svg',
   '/images/logos/v3/DWD-compact-dark-192.png',
@@ -38,40 +32,79 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+      Promise.all(keys.filter((k) => k !== CACHE_NAME && k !== IMG_CACHE).map((k) => caches.delete(k)))
     )
   );
   self.clients.claim();
 });
 
-self.addEventListener('fetch', (e) => {
-  var url = e.request.url;
-  // Match on pathname so query-stringed assets (e.g. main.js?v=4,
-  // styles.css?v=2) still take the network-first path and never freeze in cache.
-  var path;
-  try { path = new URL(url).pathname; } catch (err) { path = url; }
-  var isCodeFile = path.endsWith('.js') || path.endsWith('.css') || path.endsWith('.html');
+function trimImages() {
+  caches.open(IMG_CACHE).then((cache) =>
+    cache.keys().then((keys) => {
+      if (keys.length <= IMG_MAX) return;
+      return Promise.all(keys.slice(0, keys.length - IMG_MAX).map((k) => cache.delete(k)));
+    })
+  );
+}
 
-  if (e.request.mode === 'navigate' || isCodeFile) {
-    // Network-first for navigation + code files (always get latest)
+self.addEventListener('fetch', (e) => {
+  var req = e.request;
+  // Same-origin GETs only. Supabase inserts, the RPCs, the Stripe hand-off,
+  // YouTube and the CDN bundle go straight to the network untouched.
+  if (req.method !== 'GET') return;
+  var url;
+  try { url = new URL(req.url); } catch (err) { return; }
+  if (url.origin !== self.location.origin) return;
+
+  var path = url.pathname;
+  // Video is streamed with range requests; leave it to the browser.
+  if (/\.(mp4|webm|mov)$/i.test(path)) return;
+
+  if (req.mode === 'navigate') {
+    // Network-first. Cached under the bare path: a ?ref= link still resolves
+    // offline, and a Stripe return URL's order token never lands in storage.
     e.respondWith(
-      fetch(e.request).then((res) => {
-        var clone = res.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+      fetch(req).then((res) => {
+        if (res.ok) {
+          var clone = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(path, clone));
+        }
         return res;
-      }).catch(() => {
-        // Try cache, then fall through to offline page on navigations.
-        return caches.match(e.request).then((cached) => {
-          if (cached) return cached;
-          if (e.request.mode === 'navigate') return caches.match(OFFLINE_URL);
-          return caches.match('/index.html');
-        });
-      })
+      }).catch(() =>
+        caches.match(path).then((cached) => cached || caches.match(OFFLINE_URL))
+      )
     );
-  } else {
-    // Cache-first for images/fonts (rarely change)
-    e.respondWith(
-      caches.match(e.request).then((cached) => cached || fetch(e.request))
-    );
+    return;
   }
+
+  if (/\.(js|css|html|json)$/i.test(path)) {
+    // Network-first for code (always the latest deploy). Offline, the cached
+    // copy or nothing: never index.html standing in for a script.
+    e.respondWith(
+      fetch(req).then((res) => {
+        if (res.ok) {
+          var clone = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
+        }
+        return res;
+      }).catch(() => caches.match(req).then((cached) => cached || Response.error()))
+    );
+    return;
+  }
+
+  // Images, fonts, icons: stale-while-revalidate. Serve what we have at once,
+  // refresh it in the background, keep the newest IMG_MAX.
+  e.respondWith(
+    caches.open(IMG_CACHE).then((cache) =>
+      cache.match(req).then((cached) => {
+        var network = fetch(req).then((res) => {
+          if (res.ok && res.type === 'basic') {
+            cache.put(req, res.clone()).then(trimImages);
+          }
+          return res;
+        }).catch(() => cached || caches.match(req));
+        return cached || network;
+      })
+    )
+  );
 });

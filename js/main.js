@@ -12,6 +12,7 @@
     'teachers', 'schedule',
     'gallery', 'contact', 'privacy'
   ];
+  window.__dwd_pages = validPages;
 
   // Legacy hash redirects — Performances was merged into Collective (#adult-company),
   // About was merged into Teachers, and A·Muse content lives at #amuse.
@@ -148,6 +149,7 @@
     requestAnimationFrame(step);
   }
 
+  var initialRouteDone = false;
   function showPage(name) {
     if (!validPages.includes(name)) name = 'home';
 
@@ -168,8 +170,10 @@
       a.classList.toggle('active', a.dataset.page === name);
     });
 
-    // Scroll to top
-    window.scrollTo(0, 0);
+    // Scroll to top. Instant on purpose: the stylesheet sets
+    // scroll-behavior:smooth, which otherwise animates the OLD page's scroll
+    // position through the NEW page's content.
+    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch (e) { window.scrollTo(0, 0); }
 
     // Close mobile menu
     closeMobileMenu();
@@ -222,13 +226,19 @@
 
     // A11y: move focus into the new page and announce the route change so
     // keyboard + screen-reader users get a landing point and a signal.
-    if (target) {
+    // Not on the first load: there the skip link and the nav must stay the
+    // first things Tab reaches.
+    if (target && initialRouteDone) {
       var focusEl = target.querySelector('h1, h2') || target;
       focusEl.setAttribute('tabindex', '-1');
       focusEl.focus({ preventScroll: true });
     }
     var announce = document.getElementById('route-announce');
-    if (announce) announce.textContent = (titles[name] || 'Home').split('|')[0].trim() + ' — loaded';
+    if (announce && initialRouteDone) announce.textContent = (titles[name] || 'Home').split('|')[0].trim() + ' page';
+
+    // Analytics (js/analytics.js) listens for this: pushState navigation
+    // fires no hashchange, so without it in-site page views go unrecorded.
+    try { window.dispatchEvent(new CustomEvent('dwd:route', { detail: { page: name } })); } catch (e) {}
   }
 
   // ── STICKY MOBILE CTA BAR ──
@@ -1359,6 +1369,10 @@
       var base = href.split('#')[0].split('?')[0];
       var route = PATH_ROUTE[lastSegment(base)] || (base === '/' ? 'home' : null);
       if (!route) return;
+      // The privacy shell ships without supabase-js. Swapping sections from
+      // there would strand the schedule, forms and episode guide without a
+      // client, so let the browser load the real shell instead.
+      if (!window.__dwd_sb && route !== 'privacy') return;
 
       e.preventDefault();
       closeMobileMenu();
@@ -1455,6 +1469,7 @@
       }
     }, 100);
   }
+  initialRouteDone = true;
 
 })();
 
@@ -1522,8 +1537,10 @@
       // it changes, so we never fight the user's own scroll.
       if (link && link !== lastActive) {
         lastActive = link;
-        if (link.scrollIntoView) {
-          try { link.scrollIntoView({ inline: 'center', block: 'nearest' }); } catch (e) {}
+        // Scroll the RAIL, never the window: scrollIntoView also scrolled the
+        // page down to the rail, so /proseries/ opened ~370px down.
+        if (rail.scrollWidth > rail.clientWidth) {
+          rail.scrollLeft = link.offsetLeft - (rail.clientWidth - link.offsetWidth) / 2;
         }
       }
     }

@@ -385,6 +385,9 @@
           (function () {
             var e = window.__hero, ph = document.currentScript.parentNode;
             if (!e) return;
+            /* On any other route's shell Home is hidden: lazy means the hero
+               is never fetched there unless the visitor navigates Home. */
+            var away = window.__dwd_route && window.__dwd_route !== 'home';
             ph.style.setProperty('--hf-d', e.d);
             ph.style.setProperty('--hf-p', e.p);
 
@@ -413,7 +416,7 @@
             h += '<picture>'
               +  '<source type="image/webp" srcset="' + sw.join(', ') + '" sizes="' + sizes + '">'
               +  '<source type="image/jpeg" srcset="' + sj.join(', ') + '" sizes="' + sizes + '">'
-              +  '<img src="' + base + big + '.jpg" alt="' + e.c + '" loading="eager" fetchpriority="high" width="' + e.w + '" height="' + e.h + '">'
+              +  '<img src="' + base + big + '.jpg" alt="' + e.c + '" ' + (away ? 'loading="lazy"' : 'loading="eager" fetchpriority="high"') + ' width="' + e.w + '" height="' + e.h + '">'
               +  '</picture>'
               +  '<div class="caption">' + e.c + '</div>';
 

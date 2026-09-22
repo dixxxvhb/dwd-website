@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Generated shell: scripts/build-routes.mjs. Do not edit by hand,
+       edit index.html and re-run. -->
+  <script>window.__dwd_route = "proseries";</script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0c1f17">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -315,9 +318,9 @@
       <span class="wordmark">Dance <em>With</em> Dixon</span>
     </a>
     <nav aria-label="Primary navigation">
-      <a href="/" class="active" data-page="home">Home</a>
+      <a href="/" data-page="home">Home</a>
       <a href="/schedule/" data-page="schedule">Schedule</a>
-      <a href="/proseries/" data-page="proseries">ProSeries</a>
+      <a href="/proseries/" class="active" data-page="proseries">ProSeries</a>
       <a href="/collective/" data-page="adult-company">Collective</a>
       <a href="/teachers/" data-page="teachers">Teachers</a>
       <a href="/gallery/" data-page="gallery">Gallery</a>
@@ -348,7 +351,7 @@
   <main class="main" id="main-content">
 
     <!-- ══════════ HOME ══════════ -->
-    <section class="page active" id="page-home" data-arm="house" aria-label="Home">
+    <section class="page" id="page-home" data-arm="house" aria-label="Home">
       <!-- HERO — DUAL SPLIT -->
       <div class="hero">
         <div class="hero-photo">
@@ -366,6 +369,9 @@
           (function () {
             var e = window.__hero, ph = document.currentScript.parentNode;
             if (!e) return;
+            /* On any other route's shell Home is hidden: lazy means the hero
+               is never fetched there unless the visitor navigates Home. */
+            var away = window.__dwd_route && window.__dwd_route !== 'home';
             ph.style.setProperty('--hf-d', e.d);
             ph.style.setProperty('--hf-p', e.p);
 
@@ -394,7 +400,7 @@
             h += '<picture>'
               +  '<source type="image/webp" srcset="' + sw.join(', ') + '" sizes="' + sizes + '">'
               +  '<source type="image/jpeg" srcset="' + sj.join(', ') + '" sizes="' + sizes + '">'
-              +  '<img src="' + base + big + '.jpg" alt="' + e.c + '" loading="eager" fetchpriority="high" width="' + e.w + '" height="' + e.h + '">'
+              +  '<img src="' + base + big + '.jpg" alt="' + e.c + '" ' + (away ? 'loading="lazy"' : 'loading="eager" fetchpriority="high"') + ' width="' + e.w + '" height="' + e.h + '">'
               +  '</picture>'
               +  '<div class="caption">' + e.c + '</div>';
 
@@ -944,7 +950,7 @@
     </section>
 
     <!-- ══════════ PROSERIES ══════════ -->
-    <section class="page" id="page-proseries" data-arm="ps" aria-label="ProSeries">
+    <section class="page active" id="page-proseries" data-arm="ps" aria-label="ProSeries">
       <!-- SEASON ONE PREMIERE ANNOUNCE BAND — permanent once revealed. Reuses the
            site's global data-reveal-after gate (eras.js applyProSeriesReveal),
            same mechanism as #season-underway-cta above. Moved to the very top of
@@ -2486,9 +2492,6 @@
        /schedule/ and /contact/, where the page IS the action. -->
   <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label" data-mob-label data-mob-static="This week &middot; Technique &amp; Flexibility Tue 4:45">This week &middot; Technique &amp; Flexibility Tue 4:45</span><a class="mob-cta-btn" href="/schedule/" data-mob-btn data-ref="mobile-bar" data-track="mobile-sticky-dropin">Drop in &middot; $20 &rarr;</a></div>
 
-  <!-- Generated shell: scripts/build-routes.mjs. Do not edit by hand,
-       edit index.html and re-run. -->
-  <script>window.__dwd_route = "proseries";</script>
   <!-- season.js first: it owns the chair numbers main.js/eras.js never touch. -->
   <script defer src="/js/season.js"></script>
   <script defer src="/js/main.js"></script>

@@ -7,10 +7,16 @@
   'use strict';
 
   // Skip tracking in dev / localhost
-  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
+  if (location.hostname === 'localhost' || /^127\./.test(location.hostname)) return;
+
+  // Skip automated browsers (Lighthouse, Puppeteer, QA runs): one audit
+  // session wrote ~200 fake rows into site_analytics on 2026-09-22.
+  if (navigator.webdriver || /HeadlessChrome|Lighthouse/.test(navigator.userAgent)) return;
 
   // Skip tracking for admin (anyone who's entered the access code)
-  if (localStorage.getItem('dwd_analytics_auth') || localStorage.getItem('dwd_campaign_auth')) return;
+  // Storage can throw (Safari private mode, blocked site data): track without it.
+  function stored(storage, key) { try { return storage.getItem(key); } catch (e) { return null; } }
+  if (stored(localStorage, 'dwd_analytics_auth') || stored(localStorage, 'dwd_campaign_auth')) return;
 
   // Reuse the Supabase client exposed by main.js
   var sb = window.__dwd_sb;
@@ -18,10 +24,10 @@
 
   // ── Identity (anonymous) ──
   function getId(storage, key) {
-    var id = storage.getItem(key);
+    var id = stored(storage, key);
     if (!id) {
-      id = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36);
-      storage.setItem(key, id);
+      id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36);
+      try { storage.setItem(key, id); } catch (e) {}
     }
     return id;
   }
@@ -61,13 +67,12 @@
   var currentPage = '';
   var pageEnteredAt = 0;
 
-  // The site moved from hash routes to real paths (/schedule/, /proseries/…),
-  // so the page name comes from the path first; a hash still wins when one
-  // is set (in-page sections). '/' is 'home', '/schedule/' is 'schedule',
-  // '/proseries/apply/' is 'proseries-apply'.
+  // The page name comes from the path: '/' is 'home', '/schedule/' is
+  // 'schedule'. A hash only counts when it names a whole page (the legacy
+  // /#proseries links); in-page anchors like #ps-faq are sections, not pages.
   function getPage() {
     var h = location.hash.replace('#', '').split('?')[0];
-    if (h) return h;
+    if (h && (window.__dwd_pages || []).indexOf(h) !== -1) return h === 'adult-company' ? 'collective' : h;
     var p = location.pathname.replace(/^\/+|\/+$/g, '').replace(/\/(index\.html)?$/, '');
     if (p === 'index.html') p = '';
     return p ? p.replace(/\//g, '-') : 'home';
@@ -89,16 +94,19 @@
   }
 
   // ── Session start (once per session) ──
-  if (!sessionStorage.getItem('dwd_started')) {
-    sessionStorage.setItem('dwd_started', '1');
+  if (!stored(sessionStorage, 'dwd_started')) {
+    try { sessionStorage.setItem('dwd_started', '1'); } catch (e) {}
     send('session_start', { page: getPage() });
   }
 
   // ── Init: track first page ──
   enterPage();
 
-  // ── Hash change: exit old page, enter new ──
-  window.addEventListener('hashchange', function () {
+  // ── Route change: main.js fires dwd:route from showPage(), after the URL
+  // has been updated. The site navigates with pushState, which never fires
+  // hashchange, so this is the only signal that catches in-site navigation.
+  window.addEventListener('dwd:route', function () {
+    if (getPage() === currentPage) return;
     exitPage();
     enterPage();
   });
@@ -110,11 +118,13 @@
   });
 
   // ── Click tracking on [data-track] elements ──
+  // Capture phase: record the page the click happened ON, before the SPA
+  // router swaps the URL for the page the click leads to.
   document.addEventListener('click', function (e) {
-    var el = e.target.closest('[data-track]');
+    var el = e.target.closest && e.target.closest('[data-track]');
     if (el) {
-      send('click', { page: getPage(), element: el.dataset.track });
+      send('click', { page: currentPage || getPage(), element: el.dataset.track });
     }
-  });
+  }, true);
 
 })();

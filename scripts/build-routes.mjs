@@ -279,14 +279,45 @@ function buildShell(r) {
     );
   }
 
-  // Tell main.js which section this shell is, before the deferred scripts run.
-  out = out.replace(
-    '  <!-- season.js first:',
-    `  <!-- Generated shell: scripts/build-routes.mjs. Do not edit by hand,\n` +
-    `       edit index.html and re-run. -->\n` +
-    `  <script>window.__dwd_route = ${JSON.stringify(r.route)};</script>\n` +
-    '  <!-- season.js first:'
-  );
+  // Tell main.js (and the inline home-hero writer, which runs mid-body) which
+  // section this shell is. In <head>, so it exists before either reads it.
+  {
+    const before = out;
+    out = out.replace(
+      /(<meta charset="[^"]*">\r?\n)/,
+      `$1  <!-- Generated shell: scripts/build-routes.mjs. Do not edit by hand,${EOL}` +
+      `       edit index.html and re-run. -->${EOL}` +
+      `  <script>window.__dwd_route = ${JSON.stringify(r.route)};</script>${EOL}`
+    );
+    if (out === before) {
+      console.error(`Refusing to build ${r.dir}: could not find <meta charset> to hang __dwd_route on.`);
+      process.exit(1);
+    }
+  }
+
+  // Paint the route's own section from the first byte. Before this every
+  // shell shipped Home as the active section and main.js swapped it once the
+  // deferred scripts ran: ~0.9s of the wrong page on a phone, the wrong page
+  // for anything without JS, and Home's images downloaded on every route.
+  {
+    const homeOn = '<section class="page active" id="page-home"';
+    const mine = `<section class="page" id="page-${r.route}"`;
+    const navHome = '<a href="/" class="active" data-page="home">';
+    const navMine = `<a href="/${r.dir}/" data-page="${r.route}">`;
+    // Privacy has no top-nav link, so only the section and Home's link are
+    // required; the route's own link is swapped when it exists.
+    for (const needle of [homeOn, mine, navHome]) {
+      if (!out.includes(needle)) {
+        console.error(`Refusing to build ${r.dir}: index.html no longer contains ${needle}`);
+        process.exit(1);
+      }
+    }
+    out = out
+      .replace(homeOn, '<section class="page" id="page-home"')
+      .replace(mine, `<section class="page active" id="page-${r.route}"`)
+      .replace(navHome, '<a href="/" data-page="home">')
+      .replace(navMine, `<a href="/${r.dir}/" class="active" data-page="${r.route}">`);
+  }
 
   return out;
 }

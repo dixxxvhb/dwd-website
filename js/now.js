@@ -136,19 +136,38 @@
      same feed, same answer, different kicker and button). Same contract as
      before: this only ever replaces a line with something truer, so a dead
      feed leaves the static panel standing as a correct page. */
+  /* "YYYY-MM-DD HH:MM" in the studio's zone, to drop classes that have
+     already started (the panel said "Book Tuesday" at 6pm Tuesday). */
+  function nyNowStamp() {
+    var p = {};
+    try {
+      new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', hour12: false
+      }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+    } catch (e) { return ''; }
+    return p.year + '-' + p.month + '-' + p.day + ' ' + (p.hour === '24' ? '00' : p.hour) + ':' + p.minute;
+  }
+
   function renderDropIn(rows) {
+    var nowStamp = nyNowStamp();
+    /* The day a class actually runs is `date`; occurrence_date is the roll's
+       key and differs when a class moved. Started and full classes are not
+       for sale, so they never headline the panel. */
+    function key(r) {
+      return String(r.date || r.occurrence_date).slice(0, 10) + ' ' + String(r.start_time || '').slice(0, 5);
+    }
     var open = (rows || []).filter(function (r) {
-      return r && r.drop_in_open && (r.occurrence_date || r.date);
+      if (!r || !r.drop_in_open || !(r.date || r.occurrence_date)) return false;
+      if (r.spots_left === 0) return false;
+      return !nowStamp || key(r) >= nowStamp;
     });
     if (!open.length) return; // static fallback stands
 
-    function key(r) {
-      return (r.occurrence_date || r.date) + ' ' + (r.start_time || '');
-    }
     open.sort(function (a, b) { return key(a).localeCompare(key(b)); });
 
     var next = open[0];
-    var d = localDate(next.occurrence_date || next.date);
+    var d = localDate(next.date || next.occurrence_date);
     if (!d) return;
     var weekday = DAYS[d.getDay()];
     var t = timeLabel(next.start_time);
@@ -176,7 +195,7 @@
     }
     if (next.room) bits.push(next.room);
     if (typeof next.spots_left === 'number' && next.spots_left > 0) {
-      bits.push(next.spots_left + ' spots left');
+      bits.push(next.spots_left + (next.spots_left === 1 ? ' spot left' : ' spots left'));
     }
 
     var panels = document.querySelectorAll('.dropin-feature');

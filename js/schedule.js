@@ -111,11 +111,13 @@
     return stamp < nyNowStamp();
   }
 
-  // Monday of the week `offset` weeks from this week, computed off the
-  // visitor's local calendar date (the switcher labels are about which week,
-  // not a precise instant) but row-level "has this passed" always uses NY time.
+  // Monday of the week `offset` weeks from this week, off the studio's (NY)
+  // calendar date. The visitor's own zone is never used: on a Sunday night in
+  // California the local date is still Sunday while NY is already Monday, and
+  // mixing the two sent the RPC a p_from later than its p_to (a 400).
   function mondayOf(offset) {
-    var today = new Date();
+    var t = nyTodayIso().split('-');
+    var today = new Date(Number(t[0]), Number(t[1]) - 1, Number(t[2]));
     var day = today.getDay(); // 0 Sun .. 6 Sat
     var diffToMonday = (day === 0) ? -6 : (1 - day);
     var monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() + diffToMonday);
@@ -234,6 +236,9 @@
     rows.forEach(function (r) { byKey[r.class_id + '|' + r.occurrence_date] = r; });
     var dropped = [];
     var kept = cart.filter(function (l) {
+      // A date that has already started can never be bought, whichever week
+      // is on screen. Without this it sat in the cart forever.
+      if (isPast(l.date, l.start_time)) { dropped.push(l.name); return false; }
       var r = byKey[l.class_id + '|' + l.occurrence_date];
       // Only prune against rows we actually have data for this week; a line
       // for a different week is left alone here.
@@ -482,7 +487,7 @@
         if (open) {
           priceWrap.appendChild(el('div', 'sched-row-price-amt', money(row.drop_in_fee_cents)));
           if (typeof row.drop_in_bulk_fee_cents === 'number') {
-            priceWrap.appendChild(el('div', 'sched-row-bulk', money(row.drop_in_bulk_fee_cents) + ' each for 4+'));
+            priceWrap.appendChild(el('div', 'sched-row-bulk', money(row.drop_in_bulk_fee_cents) + ' each for ' + DROP_IN_BULK_MIN + '+'));
           }
           if (typeof row.spots_left === 'number' && row.spots_left >= 1 && row.spots_left <= 3) {
             priceWrap.appendChild(el('div', 'sched-row-spots', row.spots_left + ' spot' + (row.spots_left === 1 ? '' : 's') + ' left'));
@@ -491,8 +496,11 @@
         else if (row.drop_in_opens_on) {
           /* Closed today only because it opens later. One muted line, same
              weight as the row's other facts, and no button beside it. */
-          var opensOn = new Date(String(row.drop_in_opens_on).slice(0, 10) + 'T00:00:00');
-          if (!isNaN(opensOn.getTime())) {
+          // Only when it opens in time for THIS date: a Sep 29 class that
+          // "opens Oct 1" never opens, so the line would be a false promise.
+          var opensIso = String(row.drop_in_opens_on).slice(0, 10);
+          var opensOn = new Date(opensIso + 'T00:00:00');
+          if (!isNaN(opensOn.getTime()) && opensIso <= String(row.date).slice(0, 10)) {
             priceWrap.appendChild(el('div', 'sched-row-bulk', 'Opens ' + shortDateLabel(opensOn)));
           }
         }
@@ -542,7 +550,9 @@
     }
   }
 
+  var loadSeq = 0;
   function loadWeek(offset) {
+    var seq = ++loadSeq;
     currentWeekOffset = offset;
     updateWeekLabels();
     renderLoading();
@@ -568,6 +578,9 @@
     }
 
     fetchWeek(rpcFromIso, toIso_).then(function (rows) {
+      // A slower answer for a week the visitor already paged past must not
+      // paint its rows under the newer week's label.
+      if (seq !== loadSeq) return;
       currentRows = rows;
       applyBulkMin(rows);
       var pruned = pruneCart(rows);
@@ -577,6 +590,7 @@
       }
       renderRows(rows);
     }).catch(function (err) {
+      if (seq !== loadSeq) return;
       console.warn('schedule feed:', err && err.message);
       renderError();
     });
@@ -608,6 +622,18 @@
     elThankyou.hidden = true;
     elError.hidden = true;
     renderSummary();
+    // The cart bar sits at the bottom of a long list; without this a phone
+    // lands on the footer with the form above the screen.
+    jumpToTop(elCheckout.querySelector('h2'));
+  }
+
+  function jumpToTop(focusEl) {
+    var top = page.getBoundingClientRect().top + window.pageYOffset - 80;
+    try { window.scrollTo({ top: Math.max(0, top), behavior: 'instant' }); } catch (e) { window.scrollTo(0, Math.max(0, top)); }
+    if (focusEl) {
+      focusEl.setAttribute('tabindex', '-1');
+      try { focusEl.focus({ preventScroll: true }); } catch (e) {}
+    }
   }
 
   function closeCheckout() {
@@ -616,6 +642,7 @@
     elList.hidden = false;
     renderCartBar();
     loadWeek(currentWeekOffset);
+    jumpToTop(null);
   }
 
   function renderSummary() {
@@ -657,10 +684,30 @@
     var cart = readCart();
     if (!cart.length) return;
 
+    // Check every field here, in order, and send the parent to the first gap.
+    // The form is novalidate so the browser's own bubbles don't fight ours.
+    var checks = [
+      ['sched-dancer-name', "Add the dancer's name."],
+      ['sched-dancer-dob', "Add the dancer's date of birth."],
+      ['sched-payer-name', 'Add your name.'],
+      ['sched-payer-email', 'Add an email so the receipt reaches you.'],
+      ['sched-payer-phone', 'Add a phone number in case class moves.']
+    ];
+    var firstBad = null, firstMsg = '';
+    checks.forEach(function (c) {
+      var input = document.getElementById(c[0]);
+      if (!input) return;
+      var v = input.value.trim();
+      var bad = !v || (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+      if (bad) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+      if (bad && !firstBad) { firstBad = input; firstMsg = c[1]; }
+    });
     var waiverEl = document.getElementById('sched-waiver');
-    if (!waiverEl.checked) {
+    if (!firstBad && !waiverEl.checked) { firstBad = waiverEl; firstMsg = 'Check the waiver box to continue.'; }
+    if (firstBad) {
       elError.hidden = false;
-      elError.textContent = 'Check the waiver box to continue.';
+      elError.textContent = firstMsg;
+      firstBad.focus();
       return;
     }
 
@@ -701,9 +748,15 @@
         elPayBtn.textContent = prevLabel;
         elError.hidden = false;
         elError.textContent = (r.json && r.json.error) || 'Something went wrong. Try again.';
-        if (r.json && r.json.line) {
-          cartRemove(r.json.line, null);
-          renderNotice('That class closed since you added it, so it left your cart.');
+        // Past lines are pruned before checkout opens; if the server still
+        // names one, drop it only when it can actually be matched.
+        var bad = r.json && r.json.line;
+        if (bad && typeof bad === 'object' && bad.class_id) {
+          var before = readCart().length;
+          if (cartRemove(bad.class_id, bad.occurrence_date).length < before) {
+            renderNotice('That class closed since you added it, so it left your cart.');
+            if (!readCart().length) closeCheckout(); else renderSummary();
+          }
         }
       })
       .catch(function () {
@@ -803,8 +856,7 @@
     if (!order) return false;
 
     fetchOrder(order, token).then(function (rows) {
-      if (!rows.length) return; // wrong token — normal schedule stands
-      var status = rows[0].status;
+      var status = rows.length ? rows[0].status : null;
       if (status === 'paid') {
         renderThankyou(rows, rows[0].dancer_first_name || null);
       } else if (status === 'pending') {
@@ -813,9 +865,17 @@
         elList.innerHTML = '<p class="sched-empty-line">Payment received, saving your spot\u2026</p>';
         elList.hidden = false;
         pollPending(order, token, 1);
+      } else {
+        // Wrong token, expired or cancelled order: show the normal schedule
+        // instead of a skeleton that never resolves.
+        if (status === 'expired' || status === 'cancelled') {
+          renderNotice('That checkout timed out. Nothing was charged.');
+        }
+        loadWeek(0);
       }
     }).catch(function (err) {
       console.warn('order lookup:', err && err.message);
+      loadWeek(0);
     });
     return true;
   }
