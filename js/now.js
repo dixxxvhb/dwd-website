@@ -4,8 +4,8 @@
    elsewhere that have to agree with it.
 
    Three rows, three sources:
-     1. DROP IN    — public_site_schedule(today, today+13), rows where
-                     drop_in_open. The next open occurrence wins.
+     1. DROP IN    — public_site_schedule(today, today+20), rows where
+                     drop_in_open. Every weekly drop-in slot is listed.
      2. PROSERIES  — window.DWD_SEASON (js/season.js owns those numbers).
      3. COLLECTIVE — public_site_dwdc_events, the same next-row logic
                      js/dwdc-next.js uses.
@@ -26,7 +26,9 @@
   var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
                       'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var WINDOW_DAYS = 13;
+  // The RPC caps one call at 21 days. 20 keeps a class that opens next month
+  // (Oct 1 drop-ins seen from late September) in view.
+  var WINDOW_DAYS = 20;
 
   /* Parse YYYY-MM-DD as a LOCAL date. `new Date('2026-09-22')` is UTC
      midnight, which in Eastern is the evening of the 21st, so the row would
@@ -151,9 +153,10 @@
 
   function renderDropIn(rows) {
     var nowStamp = nyNowStamp();
+    var today = nyToday();
     /* The day a class actually runs is `date`; occurrence_date is the roll's
        key and differs when a class moved. Started and full classes are not
-       for sale, so they never headline the panel. */
+       for sale, so they never appear. */
     function key(r) {
       return String(r.date || r.occurrence_date).slice(0, 10) + ' ' + String(r.start_time || '').slice(0, 5);
     }
@@ -164,60 +167,113 @@
     });
     if (!open.length) return; // static fallback stands
 
+    /* Every drop-in, not one (Dixon, 2026-09-22: "advertise all drop ins").
+       One row per weekly slot (weekday + time + class + track), carrying the
+       slot's next bookable date. */
     open.sort(function (a, b) { return key(a).localeCompare(key(b)); });
+    var slots = {}, order = [];
+    open.forEach(function (r) {
+      var d = localDate(r.date || r.occurrence_date);
+      if (!d) return;
+      var k = d.getDay() + '|' + String(r.start_time).slice(0, 5) + '|' + r.name + '|' + (r.track_label || '');
+      if (slots[k]) return; // already holds the earliest date
+      slots[k] = { r: r, d: d };
+      order.push(k);
+    });
+    order.sort(function (a, b) {
+      var sa = slots[a], sb = slots[b];
+      return (sa.d.getDay() - sb.d.getDay()) ||
+        String(sa.r.start_time).localeCompare(String(sb.r.start_time));
+    });
+    if (!order.length) return;
 
-    var next = open[0];
-    var d = localDate(next.date || next.occurrence_date);
-    if (!d) return;
-    var weekday = DAYS[d.getDay()];
-    var t = timeLabel(next.start_time);
+    var fees = order.map(function (k) { return slots[k].r.drop_in_fee_cents; })
+      .filter(function (c) { return typeof c === 'number' && c > 0; });
+    var minFee = fees.length ? Math.min.apply(null, fees) : null;
+    var maxFee = fees.length ? Math.max.apply(null, fees) : null;
+    var anyBulk = order.some(function (k) {
+      var c = slots[k].r.drop_in_bulk_fee_cents;
+      return typeof c === 'number' && c > 0;
+    });
+    var bulkMin = 4;
+    order.forEach(function (k) {
+      var m = slots[k].r.drop_in_bulk_min;
+      if (typeof m === 'number' && m > 1) bulkMin = m;
+    });
+    var WORDS = { 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six' };
 
-    var price = money(next.drop_in_fee_cents);
-    var bulk = money(next.drop_in_bulk_fee_cents);
+    var price = money(minFee);
+    var rangeLine = (maxFee && maxFee > minFee) ? 'to ' + money(maxFee) + ' a class' : 'a class';
+    var bulkLine = anyBulk ? 'Less when you book ' + (WORDS[bulkMin] || bulkMin) + ' or more' : null;
+    /* A slot whose first bookable date is more than a week out says when it
+       starts, so "Tue 4:45 Ballet" in late September is not read as tonight. */
+    var soon = today ? addDays(today, 6) : null;
 
-    /* A month of one weekday is four of them. The panel sells the month, not
-       the "each for 4+" arithmetic the schedule page already spells out. */
-    var bulkLine = null;
-    if (typeof next.drop_in_bulk_fee_cents === 'number' && next.drop_in_bulk_fee_cents > 0) {
-      var month = money(next.drop_in_bulk_fee_cents * 4);
-      if (month) bulkLine = month + ' for a month of ' + weekday + 's';
-    }
-
-    var title = (next.name || 'Drop-in class') +
-      ' · ' + weekday + ' ' + MONTHS_SHORT[d.getMonth()] + ' ' + d.getDate();
-    if (t) title += ' · ' + t;
-
-    /* Meta: only the pieces the feed actually carries. A null age band or a
-       null spot count is a fact we do not have, never a zero to print. */
-    var bits = [];
-    if (next.age_band) {
-      bits.push(String(next.age_band).charAt(0).toUpperCase() + String(next.age_band).slice(1));
-    }
-    if (next.room) bits.push(next.room);
-    if (typeof next.spots_left === 'number' && next.spots_left > 0) {
-      bits.push(next.spots_left + (next.spots_left === 1 ? ' spot left' : ' spots left'));
+    function buildList(list) {
+      while (list.firstChild) list.removeChild(list.firstChild);
+      order.forEach(function (k) {
+        var r = slots[k].r, d = slots[k].d;
+        var li = document.createElement('li');
+        li.className = 'dropin-row';
+        var when = document.createElement('span');
+        when.className = 'dropin-when';
+        when.textContent = DAYS[d.getDay()].slice(0, 3) + ' ' + (timeLabel(r.start_time) || '');
+        var iso = String(r.date || r.occurrence_date).slice(0, 10);
+        if (soon && iso > soon) {
+          var starts = document.createElement('span');
+          starts.className = 'dropin-starts';
+          starts.textContent = 'from ' + MONTHS_SHORT[d.getMonth()] + ' ' + d.getDate();
+          when.appendChild(starts);
+        }
+        var what = document.createElement('span');
+        what.className = 'dropin-what';
+        var name = document.createElement('span');
+        name.className = 'dropin-name';
+        name.textContent = r.name || 'Drop-in class';
+        var who = document.createElement('span');
+        who.className = 'dropin-who';
+        var bits = [];
+        if (r.track_label) bits.push(r.track_label);
+        if (r.age_band) bits.push(r.age_band);
+        if (typeof r.spots_left === 'number' && r.spots_left > 0 && r.spots_left <= 3) {
+          bits.push(r.spots_left + (r.spots_left === 1 ? ' spot left' : ' spots left'));
+        }
+        who.textContent = bits.join(' · ');
+        what.appendChild(name);
+        if (bits.length) what.appendChild(who);
+        var cost = document.createElement('span');
+        cost.className = 'dropin-cost';
+        cost.textContent = money(r.drop_in_fee_cents) || '';
+        li.appendChild(when);
+        li.appendChild(what);
+        li.appendChild(cost);
+        list.appendChild(li);
+      });
     }
 
     var panels = document.querySelectorAll('.dropin-feature');
     Array.prototype.forEach.call(panels, function (panel) {
       if (price) setText(panel, '[data-dropin-price]', price);
-      if (bulkLine) setText(panel, '[data-dropin-bulk]', bulkLine);
-      setText(panel, '[data-dropin-title]', title);
-      if (bits.length) setText(panel, '[data-dropin-meta]', bits.join(' · '));
-      /* The schedule page's button scrolls to the list below it and keeps its
-         own words; only the away-links name the day. */
-      var btn = panel.querySelector('[data-dropin-btn]');
-      if (btn) btn.textContent = 'Book ' + weekday + ' →';
+      setText(panel, '[data-dropin-range]', rangeLine);
+      var bulkEl = panel.querySelector('[data-dropin-bulk]');
+      if (bulkEl) {
+        if (bulkLine) { bulkEl.textContent = bulkLine; bulkEl.hidden = false; }
+        else bulkEl.hidden = true;
+      }
+      var list = panel.querySelector('[data-dropin-list]');
+      if (list) buildList(list);
     });
 
-    /* The sticky bar quotes the same price. main.js owns the bar's words; this
-       only hands it a truer number. */
-    if (price) window.DWD_DROPIN_PRICE = price;
+    /* The sticky bar quotes the same floor price. main.js owns the bar's
+       words; this only hands it truer ones. */
+    if (price) window.DWD_DROPIN_PRICE = (maxFee > minFee ? 'from ' : '') + price;
 
     var label = document.querySelector('#mob-cta [data-mob-label]');
     if (label) {
-      label.setAttribute('data-mob-dropin', 'This week · ' + (next.name || 'Drop-in') +
-        ' ' + weekday.slice(0, 3) + (t ? ' ' + t : ''));
+      var only = order.length === 1 ? slots[order[0]] : null;
+      label.setAttribute('data-mob-dropin', only
+        ? (only.r.name || 'Drop-in') + ' · ' + DAYS[only.d.getDay()].slice(0, 3) + ' ' + (timeLabel(only.r.start_time) || '')
+        : order.length + ' drop-in classes every week');
     }
     if (window.DWD_MOB && window.DWD_MOB.repaint) window.DWD_MOB.repaint();
   }

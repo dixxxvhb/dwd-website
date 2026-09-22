@@ -34,7 +34,13 @@ Before/after sheet was sent in the session. Merge = fast-forward main to the bra
 - Gallery phone grid two columns (was one 294px column, 11,700px page); faculty headshots square instead of stretched 342x640.
 - `text-wrap: balance` on headlines; `#sched-list` clears the nav; footer nav gains Schedule; waiver page loses its "Generated from drop-in-waiver.md" toolbar text (that page is generated in the dwd repo: fix the template there too).
 
-## NEEDS DIXON'S RULING
+## DIXON'S RULINGS (2026-09-22, same session)
+- **1 → advertise all drop-ins.** The DROP IN panel (Home, ProSeries, Schedule) now lists every weekly drop-in slot from the feed (time, class, track + ages, price; "from Oct 6" under the time when a slot starts more than a week out), numeral = the lowest price with "to $25 a class"; sticky bar "5 drop-in classes every week · Drop in · from $20"; ProSeries footnote no longer names one age band. On branch `audit-0922`.
+- **2 → drop-in times match the Director feed.** Elite/Pro weekly blocks corrected: Tue 7:00 Contemporary (was "Rotation"), Pro Tue 6:00 Advanced Technique & Tricks (was "Rotation"), Wed Jazz 4:15 to 5:45 (was 4:00 to 5:30), Wed 5:45 Acro (was Competition Choreography 5:30); day hours recomputed; Pro description updated. On branch.
+- **3 → all photo releases are on file.** Item 5 closed; nothing to remove.
+- **4 → the gold sparkle in the v3 logo references Tamara.** Sanctioned; not a gold-rule violation.
+
+## NEEDS DIXON'S RULING (original list; 1, 2, 5 and 4-gold answered above)
 1. **October drop-in panel:** from Sep 30 the live feed makes Ballet ($25/$90, ages 10+) the next open class, so the panel and sticky bar switch to it, while the ProSeries footnote still says "$20, ages 5 to 9". Sell the next open class, or always Prep Technique & Flexibility?
 2. **Track schedules vs the Director app:** Prep says two days (Mon/Thu) but the Prep drop-in runs Tuesday 4:45; Elite/Pro Wednesday Jazz is 4:00 to 5:30 on the site vs 4:15 to 5:45 in the feed. Elite "4 to 6 routines" vs "5 routine minimum"; Pro "5 to 8" vs "6 minimum". Elite track says ages 8 to 12, some Elite+Pro feed classes say 10 and up.
 3. **Teachers bio:** claims not in the canonical bio (Fly Dance Tour Director, ADCC Studio of Excellence, judging/masterclasses, titles at Groove/Inferno/Tremaine/StarQuest); canon items missing (Weber State, UVU adjunct, Dynamic Dance).

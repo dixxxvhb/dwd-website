@@ -473,21 +473,26 @@
            js/now.js only ever replaces a line with something truer. One ambient
            layer on the page (the pink wash behind the numeral) and one authored
            reveal. Nothing else moves. -->
-      <section class="dropin-feature reveal" id="dropin-feature" aria-label="Drop in this week">
+      <section class="dropin-feature reveal" id="dropin-feature" aria-label="Drop-in classes">
         <div class="dropin-wash" aria-hidden="true"></div>
         <div class="dropin-inner">
-          <p class="dropin-kicker">DROP IN &middot; THIS WEEK</p>
+          <p class="dropin-kicker">DROP IN &middot; EVERY WEEK</p>
           <div class="dropin-grid">
             <div class="dropin-price">
               <span class="dropin-num" data-dropin-price>$20</span>
               <span class="dropin-price-lines">
-                <span class="dropin-price-line">a class</span>
-                <span class="dropin-price-line" data-dropin-bulk>$70 for a month of Tuesdays</span>
+                <span class="dropin-price-line" data-dropin-range>to $25 a class</span>
+                <span class="dropin-price-line" data-dropin-bulk>Less when you book four or more</span>
               </span>
             </div>
             <div class="dropin-body">
-              <p class="dropin-class" data-dropin-title>Technique &amp; Flexibility &middot; Tuesdays &middot; 4:45</p>
-              <p class="dropin-meta" data-dropin-meta>Ages 5 to 9 &middot; Garage at Exchange Dance</p>
+              <ul class="dropin-list" data-dropin-list>
+                <li class="dropin-row"><span class="dropin-when">Tue 4:45</span><span class="dropin-what"><span class="dropin-name">Technique &amp; Flexibility</span><span class="dropin-who">Prep &middot; ages 5 to 9</span></span><span class="dropin-cost">$20</span></li>
+                <li class="dropin-row"><span class="dropin-when">Tue 4:45</span><span class="dropin-what"><span class="dropin-name">Ballet</span><span class="dropin-who">Elite + Pro &middot; ages 10 and up</span></span><span class="dropin-cost">$25</span></li>
+                <li class="dropin-row"><span class="dropin-when">Tue 6:00</span><span class="dropin-what"><span class="dropin-name">Advanced Technique &amp; Tricks</span><span class="dropin-who">Pro &middot; ages 12 and up</span></span><span class="dropin-cost">$25</span></li>
+                <li class="dropin-row"><span class="dropin-when">Tue 7:00</span><span class="dropin-what"><span class="dropin-name">Contemporary</span><span class="dropin-who">Elite + Pro &middot; ages 10 and up</span></span><span class="dropin-cost">$25</span></li>
+                <li class="dropin-row"><span class="dropin-when">Wed 4:15</span><span class="dropin-what"><span class="dropin-name">Jazz</span><span class="dropin-who">Elite + Pro &middot; ages 10 and up</span></span><span class="dropin-cost">$25</span></li>
+              </ul>
               <a class="dropin-btn" href="/schedule/" data-dropin-btn data-ref="home-dropin-panel" data-track="dropin-feature-book">Book a class &rarr;</a>
               <p class="dropin-foot">Pay online, show up, dance. Move it to another week if you can&rsquo;t make it.</p>
             </div>
@@ -1030,15 +1035,20 @@
             <div class="dropin-price">
               <span class="dropin-num" data-dropin-price>$20</span>
               <span class="dropin-price-lines">
-                <span class="dropin-price-line">a class</span>
-                <span class="dropin-price-line" data-dropin-bulk>$70 for a month of Tuesdays</span>
+                <span class="dropin-price-line" data-dropin-range>to $25 a class</span>
+                <span class="dropin-price-line" data-dropin-bulk>Less when you book four or more</span>
               </span>
             </div>
             <div class="dropin-body">
-              <p class="dropin-class" data-dropin-title>Technique &amp; Flexibility &middot; Tuesdays &middot; 4:45</p>
-              <p class="dropin-meta" data-dropin-meta>Ages 5 to 9 &middot; Garage at Exchange Dance</p>
+              <ul class="dropin-list" data-dropin-list>
+                <li class="dropin-row"><span class="dropin-when">Tue 4:45</span><span class="dropin-what"><span class="dropin-name">Technique &amp; Flexibility</span><span class="dropin-who">Prep &middot; ages 5 to 9</span></span><span class="dropin-cost">$20</span></li>
+                <li class="dropin-row"><span class="dropin-when">Tue 4:45</span><span class="dropin-what"><span class="dropin-name">Ballet</span><span class="dropin-who">Elite + Pro &middot; ages 10 and up</span></span><span class="dropin-cost">$25</span></li>
+                <li class="dropin-row"><span class="dropin-when">Tue 6:00</span><span class="dropin-what"><span class="dropin-name">Advanced Technique &amp; Tricks</span><span class="dropin-who">Pro &middot; ages 12 and up</span></span><span class="dropin-cost">$25</span></li>
+                <li class="dropin-row"><span class="dropin-when">Tue 7:00</span><span class="dropin-what"><span class="dropin-name">Contemporary</span><span class="dropin-who">Elite + Pro &middot; ages 10 and up</span></span><span class="dropin-cost">$25</span></li>
+                <li class="dropin-row"><span class="dropin-when">Wed 4:15</span><span class="dropin-what"><span class="dropin-name">Jazz</span><span class="dropin-who">Elite + Pro &middot; ages 10 and up</span></span><span class="dropin-cost">$25</span></li>
+              </ul>
               <a class="dropin-btn" href="/schedule/" data-dropin-btn data-ref="ps-dropin-panel" data-track="ps-try-first">Book a class &rarr;</a>
-              <p class="dropin-foot">Open to dancers ages 5 to 9 who are not enrolled. $20 a class, $70 for the month. Then apply if it fits.</p>
+              <p class="dropin-foot">Open to dancers who are not enrolled yet. Take a class, then apply if it fits.</p>
             </div>
           </div>
         </div>
@@ -1178,14 +1188,14 @@
                 <div class="td-day-head"><span class="td-day-name">Tuesday</span><span class="td-day-hours">2.75 hrs</span></div>
                 <ul class="td-slots">
                   <li><span class="td-slot-time">4:45 &ndash; 6:00</span><span class="td-slot-name">Ballet</span></li>
-                  <li><span class="td-slot-time">7:00 &ndash; 8:30</span><span class="td-slot-name">Rotation</span></li>
+                  <li><span class="td-slot-time">7:00 &ndash; 8:30</span><span class="td-slot-name">Contemporary</span></li>
                 </ul>
               </div>
               <div class="td-day-block">
-                <div class="td-day-head"><span class="td-day-name">Wednesday</span><span class="td-day-hours">3.5 hrs</span></div>
+                <div class="td-day-head"><span class="td-day-name">Wednesday</span><span class="td-day-hours">3.25 hrs</span></div>
                 <ul class="td-slots">
-                  <li><span class="td-slot-time">4:00 &ndash; 5:30</span><span class="td-slot-name">Jazz Technique</span></li>
-                  <li><span class="td-slot-time">5:30 &ndash; 6:30</span><span class="td-slot-name">Competition Choreography</span></li>
+                  <li><span class="td-slot-time">4:15 &ndash; 5:45</span><span class="td-slot-name">Jazz</span></li>
+                  <li><span class="td-slot-time">5:45 &ndash; 6:30</span><span class="td-slot-name">Acro</span></li>
                   <li><span class="td-slot-time">6:30 &ndash; 7:30</span><span class="td-slot-name">Competition Choreography <span class="td-tag">Elite Only</span></span></li>
                 </ul>
               </div>
@@ -1237,7 +1247,7 @@
               <div class="td-meta">Ages 12+ &middot; 10+ hrs/week &middot; 5&ndash;8 routines</div>
             </header>
 
-            <p class="td-description">The company. Exclusive Pro-only Rotation and Choreography blocks plus a dedicated Solo Hour every week. Every Pro dancer is offered a solo. Accepting is your call. For serious dancers ready to represent DWD on every stage.</p>
+            <p class="td-description">The company. Exclusive Pro-only Advanced Technique &amp; Tricks and Choreography blocks plus a dedicated Solo Hour every week. Every Pro dancer is offered a solo. Accepting is your call. For serious dancers ready to represent DWD on every stage.</p>
 
             <div class="td-section">
               <h4>Weekly Schedule</h4>
@@ -1245,15 +1255,15 @@
                 <div class="td-day-head"><span class="td-day-name">Tuesday</span><span class="td-day-hours">3.75 hrs</span></div>
                 <ul class="td-slots">
                   <li><span class="td-slot-time">4:45 &ndash; 6:00</span><span class="td-slot-name">Ballet</span></li>
-                  <li><span class="td-slot-time">6:00 &ndash; 7:00</span><span class="td-slot-name">Rotation <span class="td-tag">Pro Only</span></span></li>
-                  <li><span class="td-slot-time">7:00 &ndash; 8:30</span><span class="td-slot-name">Rotation</span></li>
+                  <li><span class="td-slot-time">6:00 &ndash; 7:00</span><span class="td-slot-name">Advanced Technique &amp; Tricks <span class="td-tag">Pro Only</span></span></li>
+                  <li><span class="td-slot-time">7:00 &ndash; 8:30</span><span class="td-slot-name">Contemporary</span></li>
                 </ul>
               </div>
               <div class="td-day-block">
-                <div class="td-day-head"><span class="td-day-name">Wednesday</span><span class="td-day-hours">2.5 hrs</span></div>
+                <div class="td-day-head"><span class="td-day-name">Wednesday</span><span class="td-day-hours">2.25 hrs</span></div>
                 <ul class="td-slots">
-                  <li><span class="td-slot-time">4:00 &ndash; 5:30</span><span class="td-slot-name">Jazz Technique</span></li>
-                  <li><span class="td-slot-time">5:30 &ndash; 6:30</span><span class="td-slot-name">Competition Choreography</span></li>
+                  <li><span class="td-slot-time">4:15 &ndash; 5:45</span><span class="td-slot-name">Jazz</span></li>
+                  <li><span class="td-slot-time">5:45 &ndash; 6:30</span><span class="td-slot-name">Acro</span></li>
                 </ul>
               </div>
               <div class="td-day-block">
@@ -1900,13 +1910,18 @@
                 <div class="dropin-price">
                   <span class="dropin-num" data-dropin-price>$20</span>
                   <span class="dropin-price-lines">
-                    <span class="dropin-price-line">a class</span>
-                    <span class="dropin-price-line" data-dropin-bulk>$70 for a month of Tuesdays</span>
+                    <span class="dropin-price-line" data-dropin-range>to $25 a class</span>
+                    <span class="dropin-price-line" data-dropin-bulk>Less when you book four or more</span>
                   </span>
                 </div>
                 <div class="dropin-body">
-                  <p class="dropin-class" data-dropin-title>Technique &amp; Flexibility &middot; Tuesdays &middot; 4:45</p>
-                  <p class="dropin-meta" data-dropin-meta>Ages 5 to 9 &middot; Garage at Exchange Dance</p>
+                  <ul class="dropin-list" data-dropin-list>
+                    <li class="dropin-row"><span class="dropin-when">Tue 4:45</span><span class="dropin-what"><span class="dropin-name">Technique &amp; Flexibility</span><span class="dropin-who">Prep &middot; ages 5 to 9</span></span><span class="dropin-cost">$20</span></li>
+                    <li class="dropin-row"><span class="dropin-when">Tue 4:45</span><span class="dropin-what"><span class="dropin-name">Ballet</span><span class="dropin-who">Elite + Pro &middot; ages 10 and up</span></span><span class="dropin-cost">$25</span></li>
+                    <li class="dropin-row"><span class="dropin-when">Tue 6:00</span><span class="dropin-what"><span class="dropin-name">Advanced Technique &amp; Tricks</span><span class="dropin-who">Pro &middot; ages 12 and up</span></span><span class="dropin-cost">$25</span></li>
+                    <li class="dropin-row"><span class="dropin-when">Tue 7:00</span><span class="dropin-what"><span class="dropin-name">Contemporary</span><span class="dropin-who">Elite + Pro &middot; ages 10 and up</span></span><span class="dropin-cost">$25</span></li>
+                    <li class="dropin-row"><span class="dropin-when">Wed 4:15</span><span class="dropin-what"><span class="dropin-name">Jazz</span><span class="dropin-who">Elite + Pro &middot; ages 10 and up</span></span><span class="dropin-cost">$25</span></li>
+                  </ul>
                   <a class="dropin-btn" href="#sched-list" data-dropin-scroll data-track="dropin-feature-book">Pick your dates &rarr;</a>
                   <p class="dropin-foot">Pay online, show up, dance. Move it to another week if you can&rsquo;t make it.</p>
                 </div>
@@ -1968,7 +1983,7 @@
               </div>
               <label class="sched-waiver tap-44">
                 <input type="checkbox" id="sched-waiver" name="waiver_accepted" required>
-                <span>I have read and agree to the <a href="https://dwd-director.netlify.app/contracts/drop-in-waiver-printable.html" target="_blank" rel="noopener">Drop-In Class Waiver</a></span>
+                <span>I have read and agree to the <a href="/waiver/drop-in/" target="_blank" rel="noopener">Drop-In Class Waiver</a></span>
               </label>
               <p class="sched-stepup">Paying with Step Up For Students? <a href="https://dwd-director.netlify.app/drop-in" target="_blank" rel="noopener">Request your spot instead &rarr;</a></p>
               <button type="submit" class="btn arm-cta sched-pay-btn tap-44" data-track="dropin_checkout_start" data-sched-pay-btn>Pay $0</button>
@@ -2516,7 +2531,7 @@
        label below is the home/default text and the static fallback: js/now.js
        replaces it with the real open class when the feed has one. Hidden on
        /schedule/ and /contact/, where the page IS the action. -->
-  <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label" data-mob-label data-mob-static="This week &middot; Technique &amp; Flexibility Tue 4:45">This week &middot; Technique &amp; Flexibility Tue 4:45</span><a class="mob-cta-btn" href="/schedule/" data-mob-btn data-ref="mobile-bar" data-track="mobile-sticky-dropin">Drop in &middot; $20 &rarr;</a></div>
+  <div class="mob-cta" id="mob-cta" hidden><span class="mob-cta-label" data-mob-label data-mob-static="Drop-in classes every week">Drop-in classes every week</span><a class="mob-cta-btn" href="/schedule/" data-mob-btn data-ref="mobile-bar" data-track="mobile-sticky-dropin">Drop in &middot; from $20 &rarr;</a></div>
 
   <!-- season.js first: it owns the chair numbers main.js/eras.js never touch. -->
   <script defer src="/js/season.js"></script>

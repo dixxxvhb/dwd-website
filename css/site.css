@@ -11594,19 +11594,79 @@ html.menu-open .mob-cta { display: none !important; }
 #page-schedule .dropin-feature { margin: 20px 0 24px; }
 #page-schedule .dropin-inner { padding: 0 20px; }
 
+/* The list of every drop-in (2026-09-22). Ledger grammar: hairlines, no
+   boxes. Time, class, who, price; the class name is the line the eye reads. */
+.dropin-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+}
+.dropin-row {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  column-gap: 16px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+.dropin-when,
+.dropin-cost {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ivory, #FAF3E8);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.dropin-cost { text-align: right; }
+.dropin-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--ivory, #FAF3E8);
+}
+.dropin-who {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.4;
+  color: rgba(250, 243, 232, 0.72);
+  margin-top: 2px;
+}
+/* "from Oct 6" sits under the time: when a weekly slot starts is a time fact,
+   and in the meta line it wrapped every phone row to three lines. */
+.dropin-starts {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(250, 243, 232, 0.72);
+  margin-top: 2px;
+}
+@media (max-width: 480px) {
+  .dropin-row { grid-template-columns: 68px minmax(0, 1fr) auto; column-gap: 12px; }
+  .dropin-name { font-size: 20px; }
+  .dropin-who { font-size: 14px; }
+}
+#page-proseries .dropin-list,
+#page-proseries .dropin-row { padding-left: 0; padding-right: 0; }
+#page-proseries .dropin-row { padding-top: 12px; padding-bottom: 12px; }
+
 /* ── Motion: one authored moment, once ────────────────────────────────── */
 .dropin-num,
-.dropin-class,
+.dropin-list,
 .dropin-btn {
   opacity: 0;
   transform: translateY(24px);
 }
 .dropin-feature.visible .dropin-num,
-.dropin-feature.visible .dropin-class,
+.dropin-feature.visible .dropin-list,
 .dropin-feature.visible .dropin-btn {
   animation: dropin-rise 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-.dropin-feature.visible .dropin-class { animation-delay: 80ms; }
+.dropin-feature.visible .dropin-list { animation-delay: 80ms; }
 .dropin-feature.visible .dropin-btn { animation-delay: 160ms; }
 
 @keyframes dropin-rise {
@@ -11626,15 +11686,15 @@ html.menu-open .mob-cta { display: none !important; }
 /* No JS, no observer, no reveal: the band must never be a rectangle of
    invisible text. */
 .no-js .dropin-num,
-.no-js .dropin-class,
+.no-js .dropin-list,
 .no-js .dropin-btn { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .dropin-num,
-  .dropin-class,
+  .dropin-list,
   .dropin-btn { opacity: 0; transform: none; }
   .dropin-feature.visible .dropin-num,
-  .dropin-feature.visible .dropin-class,
+  .dropin-feature.visible .dropin-list,
   .dropin-feature.visible .dropin-btn {
     animation: dropin-fade 200ms linear forwards;
     animation-delay: 0ms;
