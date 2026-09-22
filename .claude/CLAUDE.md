@@ -14,18 +14,14 @@ Repo: `~/Code/dwd-website`. Last verified: 2026-09-22.
 - Branch: main → auto-deploys to GitHub Pages
 
 ## Key Files
-- `index.html` (67KB, ~1105 lines) — single-page site, all routes handled via hash navigation
-- `styles.css` (~2000 lines) — primary stylesheet, CSS variables at top
-- `additions.css` (~1633 lines) — supplementary styles (additions, not overrides)
-- `main.js` — page navigation, lightbox, scroll reveals, form handling
-- `analytics.js` — lightweight cookie-free tracking via Supabase
-- `analytics-dashboard.js` — tabbed dashboard (30d/custom period), access code protected
-- `campaign.js` — campaign conversion funnel tracking
-- `analytics.html` — separate analytics page (access code: `dwdps2026`)
-- `DWD-Website-Content.md` — content reference doc
-
-## Pages (hash-routed in index.html)
-Home, About, ProSeries, DWDC (Adult Company), Merch, Contact, Gallery, FAQ, Early Access (`/#early-access`)
+- `index.html` — THE source for every page. Real paths (/schedule/, /proseries/, /collective/, /teachers/, /gallery/, /contact/, /privacy/) are **generated shells** written by `node scripts/build-routes.mjs` (each paints its own section; main.js swaps sections on in-site nav via pushState). **Never hand-edit `<dir>/index.html`**: edit index.html, run build-routes, confirm `--check`. (705630c edited a shell by hand and the October pager was dead for every visitor arriving from the nav.)
+- `css/site.css` — the only stylesheet source; pages load `css/site.min.css` (build: `node scripts/build-css.mjs`, `--check`).
+- `js/main.js` — routing (`showPage` fires `dwd:route`), sticky phone bar, YouTube tap-to-load, forms, lightbox.
+- `js/now.js` — the DROP IN panel (every weekly drop-in slot from `public_site_schedule`) + THIS WEEK rows. `js/schedule.js` — /schedule/ week pager, cart, Stripe checkout. `js/season.js` — chair counts. `js/episodes.js`, `js/dwdc-next.js`, `js/eras.js`.
+- `js/analytics.js` — cookie-free tracking into `site_analytics`; counts in-site navigation only since 2026-09-22 (re-baseline from then); skips localhost, 127.x and automated browsers.
+- `sw.js` — same-origin GETs only; bump `CACHE_NAME` on any change to it.
+- `docs/STATUS.md` (open / agreed / done), `docs/audits/`, `docs/plans/` — excluded from the public site by `_config.yml`.
+- QA: `scripts/qa/shoot.js` (sweep), `snap.js` + `pixdiff.js` (CSS refactor gate). In Puppeteer, block `/sw.js` or stub `fetch`, or test traffic reaches live Supabase.
 
 ## SEO
 - Google Search Console verified
@@ -34,9 +30,8 @@ Home, About, ProSeries, DWDC (Adult Company), Merch, Contact, Gallery, FAQ, Earl
 - OG tags + Twitter Cards on all pages
 
 ## Supabase Integration
-- `email_signups` table — early access + contact form submissions
-- Source field distinguishes: `proseries-early-access`, `contact-form`, etc.
-- Analytics tracking: page views, events (no cookies, no PII)
+- Project ipulrvhiuvgbvralybxx. supabase-js pinned 2.117.0 with SRI (upgrade = new version + new hash, see the comment in index.html).
+- Reads: `public_site_schedule` RPC, `public_site_dwdc_events`, `public_site_episodes`, `proseries_config`. Writes (anon insert-only): `audition_registrations` (interest form), `email_signups`, `site_analytics`; checkout via the `drop-in-checkout` edge function.
 
 ## Brand Rules
 - Brand colors defined as CSS variables (forest green #0c1f17, terracotta #C8614B, Family Pink #FF7AA2 [retired blush #f8d7c8 2026-07-18], ivory #FAF3E8, seafoam #6BAF8A, soft pink #FF8FAB dwdPS-Prep-badge). Gold (#e2b955 flat / rose-gold gradient #c9956c→#e8c49a→#d4a574) is Tamara Mark memorial only. The v3 logo's gold sparkle references Tamara and is sanctioned (Dixon, 2026-09-22). Arms differ by volume via [data-arm] house/ps/c — see docs/REBRAND-ONE-HOUSE-2026-07.md.
