@@ -23,7 +23,8 @@ Repo: `~/Code/dwd-website`. Last verified: 2026-09-25.
 - `docs/STATUS.md` (open / agreed / done), `docs/audits/`, `docs/plans/` — excluded from the public site by `_config.yml`.
 - QA: `scripts/qa/shoot.js` (sweep), `snap.js` + `pixdiff.js` (CSS refactor gate). In Puppeteer, block `/sw.js` or stub `fetch`, or test traffic reaches live Supabase.
 
-## SEO
+## SEO + AI findability
+- ChatGPT sends real visitors (`utm_source=chatgpt.com`, ~10/month, the highest tap rate of any source). Since 2026-09-25 the JSON-LD `@graph` in index.html carries every drop-in class, the three ProSeries tracks and the Collective as `Course` nodes (ages, weekly schedule, prices, `?class=` links) plus a `#studio` Place with real coordinates; `/llms.txt` is the plain-text summary for AI readers (canonical bio facts only). **When a class time, price or lineup changes:** update those nodes + llms.txt, run `node scripts/check-classes-jsonld.mjs` (fails on drift from the live schedule), then after the deploy `node scripts/indexnow.mjs` (pings Bing via IndexNow; the key file `ab41909a2a903c005700777de58449ce.txt` at the root must stay).
 - Google Search Console verified
 - sitemap.xml, robots.txt
 - Structured data (JSON-LD): Organization + LocalBusiness
