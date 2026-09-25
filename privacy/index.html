@@ -130,7 +130,7 @@
         "@id": "https://dancewithdixon.com/#season-one",
         "name": "dwdPROSERIES Season One",
         "description": "The 2026-27 dwdPROSERIES competitive training season. Every competition is an episode, every showcase a special, and the May recital is the finale.",
-        "url": "https://dancewithdixon.com/#proseries",
+        "url": "https://dancewithdixon.com/proseries/",
         "startDate": "2026-08-10",
         "endDate": "2027-05-25",
         "eventStatus": "https://schema.org/EventScheduled",
@@ -162,7 +162,7 @@
           "@type": "Person",
           "name": "Dixon Bowles",
           "jobTitle": "Director & Choreographer",
-          "url": "https://dancewithdixon.com/#about"
+          "url": "https://dancewithdixon.com/teachers/"
         },
         "sameAs": [
           "https://www.instagram.com/dwdproseries",
@@ -192,8 +192,8 @@
         },
         "geo": {
           "@type": "GeoCoordinates",
-          "latitude": 28.5383,
-          "longitude": -81.3792
+          "latitude": 28.4582133,
+          "longitude": -81.3965675
         },
         "areaServed": {
           "@type": "City",
@@ -276,6 +276,411 @@
             }
           }
         ]
+      },
+      {
+        "@type": "Place",
+        "@id": "https://dancewithdixon.com/#studio",
+        "name": "Exchange Dance",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "7409 Chancery Lane",
+          "addressLocality": "Orlando",
+          "addressRegion": "FL",
+          "postalCode": "32809",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 28.4582133,
+          "longitude": -81.3965675
+        }
+      },
+      {
+        "@type": "Course",
+        "@id": "https://dancewithdixon.com/#dropin-technique-flexibility",
+        "name": "Technique & Flexibility (drop-in class)",
+        "description": "Drop-in technique and flexibility class for ages 5 to 9, taught alongside the dwdPROSERIES Prep track. No audition and no enrollment: pick a date online, pay, and show up. Tuesdays 4:45 to 5:45 pm at Exchange Dance, Orlando. $20 a class, $17.50 each when you book four or more dates.",
+        "url": "https://dancewithdixon.com/schedule/?class=technique-flexibility",
+        "provider": {
+          "@id": "https://dancewithdixon.com/#organization"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 5,
+          "suggestedMaxAge": 9
+        },
+        "isAccessibleForFree": false,
+        "offers": [
+          {
+            "@type": "Offer",
+            "category": "Drop-in class",
+            "price": "20.00",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dancewithdixon.com/schedule/?class=technique-flexibility"
+          },
+          {
+            "@type": "Offer",
+            "category": "Drop-in class, 4 or more dates in one order",
+            "price": "17.50",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dancewithdixon.com/schedule/?class=technique-flexibility"
+          }
+        ],
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "Onsite",
+          "location": {
+            "@id": "https://dancewithdixon.com/#studio"
+          },
+          "courseSchedule": {
+            "@type": "Schedule",
+            "repeatFrequency": "P1W",
+            "byDay": "https://schema.org/Tuesday",
+            "startTime": "16:45",
+            "endTime": "17:45",
+            "scheduleTimezone": "America/New_York"
+          }
+        }
+      },
+      {
+        "@type": "Course",
+        "@id": "https://dancewithdixon.com/#dropin-ballet",
+        "name": "Ballet (drop-in class)",
+        "description": "Drop-in ballet for ages 10 and up, in the room with the dwdPROSERIES Elite and Pro dancers. No audition: pick a date online, pay, and show up. Tuesdays 4:45 to 6:00 pm at Exchange Dance, Orlando, starting October 6, 2026. $25 a class, $22.50 each when you book four or more dates.",
+        "url": "https://dancewithdixon.com/schedule/?class=ballet",
+        "provider": {
+          "@id": "https://dancewithdixon.com/#organization"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 10
+        },
+        "isAccessibleForFree": false,
+        "offers": [
+          {
+            "@type": "Offer",
+            "category": "Drop-in class",
+            "price": "25.00",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dancewithdixon.com/schedule/?class=ballet"
+          },
+          {
+            "@type": "Offer",
+            "category": "Drop-in class, 4 or more dates in one order",
+            "price": "22.50",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dancewithdixon.com/schedule/?class=ballet"
+          }
+        ],
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "Onsite",
+          "location": {
+            "@id": "https://dancewithdixon.com/#studio"
+          },
+          "courseSchedule": {
+            "@type": "Schedule",
+            "repeatFrequency": "P1W",
+            "byDay": "https://schema.org/Tuesday",
+            "startTime": "16:45",
+            "endTime": "18:00",
+            "scheduleTimezone": "America/New_York",
+            "startDate": "2026-10-06"
+          }
+        }
+      },
+      {
+        "@type": "Course",
+        "@id": "https://dancewithdixon.com/#dropin-advanced-technique-tricks",
+        "name": "Advanced Technique & Tricks (drop-in class)",
+        "description": "Drop-in advanced technique and tricks for ages 12 and up, with the dwdPROSERIES Pro track. No audition: pick a date online, pay, and show up. Tuesdays 6:00 to 7:00 pm at Exchange Dance, Orlando, starting October 6, 2026. $25 a class, $22.50 each when you book four or more dates.",
+        "url": "https://dancewithdixon.com/schedule/?class=advanced-technique-tricks",
+        "provider": {
+          "@id": "https://dancewithdixon.com/#organization"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 12
+        },
+        "isAccessibleForFree": false,
+        "offers": [
+          {
+            "@type": "Offer",
+            "category": "Drop-in class",
+            "price": "25.00",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dancewithdixon.com/schedule/?class=advanced-technique-tricks"
+          },
+          {
+            "@type": "Offer",
+            "category": "Drop-in class, 4 or more dates in one order",
+            "price": "22.50",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dancewithdixon.com/schedule/?class=advanced-technique-tricks"
+          }
+        ],
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "Onsite",
+          "location": {
+            "@id": "https://dancewithdixon.com/#studio"
+          },
+          "courseSchedule": {
+            "@type": "Schedule",
+            "repeatFrequency": "P1W",
+            "byDay": "https://schema.org/Tuesday",
+            "startTime": "18:00",
+            "endTime": "19:00",
+            "scheduleTimezone": "America/New_York",
+            "startDate": "2026-10-06"
+          }
+        }
+      },
+      {
+        "@type": "Course",
+        "@id": "https://dancewithdixon.com/#dropin-contemporary",
+        "name": "Contemporary (drop-in class)",
+        "description": "Drop-in contemporary for ages 10 and up, in the room with the dwdPROSERIES Elite and Pro dancers. No audition: pick a date online, pay, and show up. Tuesdays 7:00 to 8:30 pm at Exchange Dance, Orlando, starting October 6, 2026. $25 a class, $22.50 each when you book four or more dates.",
+        "url": "https://dancewithdixon.com/schedule/?class=contemporary",
+        "provider": {
+          "@id": "https://dancewithdixon.com/#organization"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 10
+        },
+        "isAccessibleForFree": false,
+        "offers": [
+          {
+            "@type": "Offer",
+            "category": "Drop-in class",
+            "price": "25.00",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dancewithdixon.com/schedule/?class=contemporary"
+          },
+          {
+            "@type": "Offer",
+            "category": "Drop-in class, 4 or more dates in one order",
+            "price": "22.50",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dancewithdixon.com/schedule/?class=contemporary"
+          }
+        ],
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "Onsite",
+          "location": {
+            "@id": "https://dancewithdixon.com/#studio"
+          },
+          "courseSchedule": {
+            "@type": "Schedule",
+            "repeatFrequency": "P1W",
+            "byDay": "https://schema.org/Tuesday",
+            "startTime": "19:00",
+            "endTime": "20:30",
+            "scheduleTimezone": "America/New_York",
+            "startDate": "2026-10-06"
+          }
+        }
+      },
+      {
+        "@type": "Course",
+        "@id": "https://dancewithdixon.com/#dropin-jazz",
+        "name": "Jazz (drop-in class)",
+        "description": "Drop-in jazz for ages 10 and up, in the room with the dwdPROSERIES Elite and Pro dancers. No audition: pick a date online, pay, and show up. Wednesdays 4:15 to 5:45 pm at Exchange Dance, Orlando, starting October 7, 2026. $25 a class, $22.50 each when you book four or more dates.",
+        "url": "https://dancewithdixon.com/schedule/?class=jazz",
+        "provider": {
+          "@id": "https://dancewithdixon.com/#organization"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 10
+        },
+        "isAccessibleForFree": false,
+        "offers": [
+          {
+            "@type": "Offer",
+            "category": "Drop-in class",
+            "price": "25.00",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dancewithdixon.com/schedule/?class=jazz"
+          },
+          {
+            "@type": "Offer",
+            "category": "Drop-in class, 4 or more dates in one order",
+            "price": "22.50",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://dancewithdixon.com/schedule/?class=jazz"
+          }
+        ],
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "Onsite",
+          "location": {
+            "@id": "https://dancewithdixon.com/#studio"
+          },
+          "courseSchedule": {
+            "@type": "Schedule",
+            "repeatFrequency": "P1W",
+            "byDay": "https://schema.org/Wednesday",
+            "startTime": "16:15",
+            "endTime": "17:45",
+            "scheduleTimezone": "America/New_York",
+            "startDate": "2026-10-07"
+          }
+        }
+      },
+      {
+        "@type": "Course",
+        "@id": "https://dancewithdixon.com/#proseries-prep",
+        "name": "dwdPROSERIES Prep track",
+        "description": "Competitive dance training for ages 5 to 9: about four hours a week of ballet, jazz, choreography and company work on weeknights at Exchange Dance, Orlando, with one to two competitions a season. $195 a month tuition, a $25 monthly admin fee, and $25 a month per routine each for costume and competition deposits; plan on about $3,000 across the season, plus a $50 registration once a season. By application: express interest online, take a free placement class, and Dixon calls with a track offer. Chairs are limited to ten per track.",
+        "url": "https://dancewithdixon.com/proseries/",
+        "provider": {
+          "@id": "https://dancewithdixon.com/#organization"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 5,
+          "suggestedMaxAge": 9
+        },
+        "offers": {
+          "@type": "Offer",
+          "category": "Monthly tuition",
+          "priceCurrency": "USD",
+          "price": "195.00",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "195.00",
+            "priceCurrency": "USD",
+            "unitCode": "MON",
+            "unitText": "month"
+          },
+          "url": "https://dancewithdixon.com/proseries/#interest"
+        },
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "Onsite",
+          "location": {
+            "@id": "https://dancewithdixon.com/#studio"
+          },
+          "startDate": "2026-08-10",
+          "endDate": "2027-05-25"
+        }
+      },
+      {
+        "@type": "Course",
+        "@id": "https://dancewithdixon.com/#proseries-elite",
+        "name": "dwdPROSERIES Elite track",
+        "description": "Competitive dance training for ages 8 to 12: eight or more hours a week on weeknights at Exchange Dance, Orlando, with four to six competitions plus conventions. $310 a month tuition, a $25 monthly admin fee, and $25 a month per routine each for costume and competition deposits; plan on about $4,650 across the season, plus a $50 registration once a season. By application: express interest online, take a free placement class, and Dixon calls with a track offer. Chairs are limited to ten per track.",
+        "url": "https://dancewithdixon.com/proseries/",
+        "provider": {
+          "@id": "https://dancewithdixon.com/#organization"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 8,
+          "suggestedMaxAge": 12
+        },
+        "offers": {
+          "@type": "Offer",
+          "category": "Monthly tuition",
+          "priceCurrency": "USD",
+          "price": "310.00",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "310.00",
+            "priceCurrency": "USD",
+            "unitCode": "MON",
+            "unitText": "month"
+          },
+          "url": "https://dancewithdixon.com/proseries/#interest"
+        },
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "Onsite",
+          "location": {
+            "@id": "https://dancewithdixon.com/#studio"
+          },
+          "startDate": "2026-08-10",
+          "endDate": "2027-05-25"
+        }
+      },
+      {
+        "@type": "Course",
+        "@id": "https://dancewithdixon.com/#proseries-pro",
+        "name": "dwdPROSERIES Pro track",
+        "description": "Competitive dance training for ages 12 and up: ten or more hours a week on weeknights at Exchange Dance, Orlando, with four to six competitions plus conventions and a weekly Solo Hour. $360 a month tuition, a $25 monthly admin fee, and $25 a month per routine each for costume and competition deposits; plan on about $5,400 across the season, plus a $50 registration once a season. By application: express interest online, take a free placement class, and Dixon calls with a track offer. Chairs are limited to ten per track.",
+        "url": "https://dancewithdixon.com/proseries/",
+        "provider": {
+          "@id": "https://dancewithdixon.com/#organization"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 12,
+          "suggestedMaxAge": 19
+        },
+        "offers": {
+          "@type": "Offer",
+          "category": "Monthly tuition",
+          "priceCurrency": "USD",
+          "price": "360.00",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "360.00",
+            "priceCurrency": "USD",
+            "unitCode": "MON",
+            "unitText": "month"
+          },
+          "url": "https://dancewithdixon.com/proseries/#interest"
+        },
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "Onsite",
+          "location": {
+            "@id": "https://dancewithdixon.com/#studio"
+          },
+          "startDate": "2026-08-10",
+          "endDate": "2027-05-25"
+        }
+      },
+      {
+        "@type": "Course",
+        "@id": "https://dancewithdixon.com/#collective-class",
+        "name": "dwdCOLLECTIVE adult modern and contemporary class",
+        "description": "Modern and contemporary dance for adults 18 and up, all levels, no audition and no experience required: class work, original choreography, and stage time when a performance project is on. $15 a class, paid at class in cash or Venmo, no contract. Classes run at Exchange Dance, Orlando; the next class date is announced on the site and on Instagram @dwd_collective. To get on the list, send a message through the contact page.",
+        "url": "https://dancewithdixon.com/collective/",
+        "provider": {
+          "@id": "https://dancewithdixon.com/#organization"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 18
+        },
+        "offers": {
+          "@type": "Offer",
+          "category": "Per class",
+          "price": "15.00",
+          "priceCurrency": "USD",
+          "url": "https://dancewithdixon.com/contact/?reason=adult"
+        },
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "Onsite",
+          "location": {
+            "@id": "https://dancewithdixon.com/#studio"
+          }
+        }
       },
       {
         "@type": "WebSite",
