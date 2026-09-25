@@ -205,7 +205,7 @@
       // times in the page body and zero times in any metadata).
       'proseries': 'ProSeries: Season One | DWD',
       'teachers': 'Teachers | DWD',
-      'schedule': 'Drop-in dance classes this week | Dance With Dixon, Orlando',
+      'schedule': 'Drop-in dance classes in Orlando | Dance With Dixon',
 
       'gallery': 'Gallery | DWD',
       'contact': 'Contact | DWD'

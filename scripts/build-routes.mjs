@@ -71,13 +71,14 @@ const ROUTES = [
     supabase: true,
     feature: true,
     route: 'schedule',
-    title: 'Drop-in dance classes this week | Dance With Dixon, Orlando',
+    title: 'Drop-in dance classes in Orlando | Dance With Dixon',
     description:
-      'Drop in to a ProSeries class in Orlando. No audition. $20 to $25 a class, less when you ' +
-      'book four or more dates. Ages 5 to 19. Pay online, show up, dance.',
-    ogTitle: 'This week at ProSeries',
+      'Drop-in dance classes in Orlando for ages 5 to 19. No audition. $20 to $25 a class at ' +
+      'Exchange Dance. Pick a date, pay online, show up.',
+    ogTitle: 'No audition. Just drop in.',
     ogDescription:
-      'The live ProSeries schedule. Open classes take drop-ins: pay online, show up, dance.',
+      'Five classes a week at Exchange Dance in Orlando, $20 to $25 a class. Pick a date, pay ' +
+      'online, show up.',
     image: '/images/og/proseries.jpg',
     imageAlt: 'A ProSeries dancer mid-leap at the Summer Intensive showcase.',
   },

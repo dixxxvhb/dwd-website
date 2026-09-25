@@ -1,10 +1,23 @@
 /* ═══════════════════════════════════════════════
    DWD — schedule.js
-   /schedule/ — live ProSeries schedule + drop-in cart.
+   /schedule/ — the drop-in page: five weekly classes with their bookable
+   dates as chips, the drop-in cart, and (behind one toggle) the full
+   ProSeries week grid. Plan: docs/plans/2026-09-24-drop-in-finder.md.
 
    Reads public_site_schedule(p_from, p_to) via window.__dwd_sb.rpc, lets a
    visitor add open (drop-in) classes to a cart, and checks out through the
    drop-in-checkout edge function (Stripe Checkout redirect).
+
+   The class list: two 21-day windows (the RPC's cap per call) fetched in
+   parallel, grouped into weekly slots (class_id + weekday + start time). The
+   markup ships a static list of the same five classes; this only replaces it
+   when the feed answers with something truer (same contract as js/now.js).
+   ?class=<slug> scrolls to one class, marks it and opens its later dates.
+
+   The week grid is the old page, unchanged in behaviour, collapsed by
+   default and loaded on first open (or straight away for #sched-list /
+   ?week=). Nothing here runs until the schedule route is actually showing:
+   every route shell carries this section, and Home has no use for the RPC.
 
    USE_STUB: the app's Phase 1 RPCs (public_site_schedule,
    drop_in_order_public) and the drop-in-checkout edge function are not live
@@ -38,10 +51,23 @@
 
   var DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
   var DAY_NAMES_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   var MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+  // The class list shows this many dates per class; "More dates" opens the
+  // rest of the window.
+  var FINDER_VISIBLE = 4;
+  // Two calls of 21 days each (the RPC caps one call at 21): six weeks out.
+  var FINDER_WINDOW = 21;
+
   // ── Elements ──
-  var elH1 = page.querySelector('[data-sched-h1]');
+  var elMain = page.querySelector('[data-sched-main]');
+  var elFinderList = page.querySelector('[data-finder-list]');
+  var elFull = page.querySelector('[data-sched-full]');
+  var elFullToggle = page.querySelector('[data-sched-full-toggle]');
+  var elFullBody = page.querySelector('[data-sched-full-body]');
+  var elWeekNotice = page.querySelector('[data-sched-week-notice]');
+  var elPending = page.querySelector('[data-sched-pending]');
   var elWeekLabel = page.querySelector('[data-sched-week-label]');
   var elWeekPrev = page.querySelector('[data-sched-week-prev]');
   var elWeekNext = page.querySelector('[data-sched-week-next]');
@@ -81,6 +107,19 @@
   var currentRows = [];
   var droppedNotice = '';
 
+  // The week grid loads on first open. gridReady: currentRows is a real
+  // week's answer (not the empty array it starts as), so re-rendering it after
+  // a chip tap cannot paint "No classes this week" over a list still loading.
+  var gridLoaded = false;
+  var gridReady = false;
+
+  // The class list: rows by class_id|occurrence_date, for the chips.
+  var finderRowsByKey = {};
+  // The feed has answered (or failed) and the list on screen is final, so a
+  // ?class= deep link can be aimed at it.
+  var finderSettled = false;
+  var deepLinkPending = true;
+
   // ── Date helpers (America/New_York, never the visitor's zone) ──
   var NY_FMT = new Intl.DateTimeFormat('en-US', {
     timeZone: 'America/New_York',
@@ -97,7 +136,10 @@
   // "now" as a comparable string YYYY-MM-DD HH:MM in NY time.
   function nyNowStamp() {
     var p = nyNowParts();
-    return p.year + '-' + p.month + '-' + p.day + ' ' + p.hour + ':' + p.minute;
+    // hour12:false prints midnight as "24" in Chrome; "24:10" would sort after
+    // every class that day and mark them all started (now.js has the same fix).
+    var hour = p.hour === '24' ? '00' : p.hour;
+    return p.year + '-' + p.month + '-' + p.day + ' ' + hour + ':' + p.minute;
   }
 
   function nyTodayIso() {
@@ -144,6 +186,41 @@
 
   function shortDateLabel(d) {
     return MONTHS_SHORT[d.getMonth()] + ' ' + d.getDate();
+  }
+
+  // YYYY-MM-DD as a LOCAL date: new Date('2026-09-29') is UTC midnight, the
+  // evening before in Eastern, and would print the wrong weekday.
+  function localDate(iso) {
+    var m = String(iso || '').slice(0, 10).split('-');
+    return new Date(Number(m[0]), Number(m[1]) - 1, Number(m[2]));
+  }
+
+  // "Technique & Flexibility" -> "technique-flexibility". Derived from the
+  // public name, never a table, so a renamed class gets its new link for free.
+  // js/now.js carries the same function for the DROP IN panel's row links.
+  function slugify(name) {
+    return String(name || '').toLowerCase()
+      .replace(/&/g, ' ')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  function minutesOf(t) {
+    var m = String(t || '').match(/^(\d{1,2}):(\d{2})/);
+    return m ? Number(m[1]) * 60 + Number(m[2]) : null;
+  }
+
+  // "1 hr", "1 hr 30", "45 min".
+  function lengthLabel(start, end) {
+    var a = minutesOf(start), b = minutesOf(end);
+    if (a == null || b == null || b <= a) return '';
+    var mins = b - a, h = Math.floor(mins / 60), r = mins % 60;
+    if (!h) return r + ' min';
+    return h + ' hr' + (r ? ' ' + r : '');
+  }
+
+  function track(name) {
+    try { if (typeof window.__dwd_track === 'function') window.__dwd_track(name); } catch (e) {}
   }
 
   // ── Cart (localStorage) ──
@@ -360,10 +437,21 @@
     return fmtTime(start) + (end ? ' \u2013 ' + fmtTime(end) : '');
   }
 
+  // Cart news (a line left the cart, nothing was charged): top of the page,
+  // above whichever view is showing.
   function renderNotice(text) {
     if (!text) { elNotice.hidden = true; elNotice.textContent = ''; return; }
     elNotice.hidden = false;
     elNotice.textContent = text;
+  }
+
+  // Week-grid news (this week is done, six at a time): inside the full week,
+  // where the visitor is looking when it happens.
+  function renderWeekNotice(text) {
+    if (!elWeekNotice) { renderNotice(text); return; }
+    if (!text) { elWeekNotice.hidden = true; elWeekNotice.textContent = ''; return; }
+    elWeekNotice.hidden = false;
+    elWeekNotice.textContent = text;
   }
 
   function weekLabelFor(offset) {
@@ -527,19 +615,18 @@
             btn.addEventListener('click', function () {
               if (added) {
                 cartRemove(row.class_id, row.occurrence_date);
-                renderCartBar();
-                renderRows(currentRows);
+                syncCart();
                 return;
               }
               var cartNow = readCart();
               if (cartNow.length >= MAX_LINES) {
-                renderNotice('Six classes at a time. Check out, then add more.');
+                renderWeekNotice('Six classes at a time. Check out, then add more.');
                 return;
               }
               cartAdd(row);
               renderNotice('');
-              renderCartBar();
-              renderRows(currentRows);
+              renderWeekNotice('');
+              syncCart();
             });
             actionWrap.appendChild(btn);
           }
@@ -568,6 +655,7 @@
   function loadWeek(offset, auto) {
     var seq = ++loadSeq;
     currentWeekOffset = offset;
+    gridReady = false;
     updateWeekLabels();
     renderLoading();
 
@@ -600,14 +688,16 @@
         return;
       }
       if (auto && offset > 0) {
-        renderNotice(offset === 1
+        renderWeekNotice(offset === 1
           ? 'This week’s classes are done. Here’s next week.'
           : 'No classes until the week of ' + shortDateLabel(mondayOf(offset)) + '.');
       }
       currentRows = rows;
+      gridReady = true;
       applyBulkMin(rows);
       var pruned = pruneCart(rows);
       renderCartBar();
+      paintChips();
       if (pruned.dropped.length) {
         renderNotice(pruned.dropped[0] + ' closed since you added it, so it left your cart.');
       }
@@ -624,7 +714,7 @@
     if (next < 0) next = 0;
     if (next > MAX_WEEK_OFFSET) next = MAX_WEEK_OFFSET;
     if (next === currentWeekOffset) return;
-    renderNotice('');
+    renderWeekNotice('');
     loadWeek(next);
   }
 
@@ -632,7 +722,331 @@
   if (elWeekNext) elWeekNext.addEventListener('click', function () { stepWeek(1); });
   if (elWeekJumpBtn) elWeekJumpBtn.addEventListener('click', function () {
     var jump = octoberJumpOffset();
-    if (jump >= 0) { renderNotice(''); loadWeek(jump); }
+    if (jump >= 0) { renderWeekNotice(''); loadWeek(jump); }
+  });
+
+  // ── The class list (the page's focal point) ──
+  // One slot per weekly class: same class_id, same weekday (of `date`, the
+  // day it actually runs), same start time. Only slots with at least one open
+  // date make the list; their chips are the open dates, full ones included.
+  function buildSlots(rows) {
+    var byKey = {}, keys = [];
+    rows.forEach(function (r) {
+      if (!r || !r.class_id || !r.date || !r.start_time) return;
+      if (!r.drop_in_open) return;
+      if (isPast(r.date, r.start_time)) return;
+      var dow = localDate(r.date).getDay();
+      var k = r.class_id + '|' + dow + '|' + String(r.start_time).slice(0, 5);
+      if (!byKey[k]) { byKey[k] = { dow: dow, open: [] }; keys.push(k); }
+      byKey[k].open.push(r);
+    });
+
+    var slots = keys.map(function (k) {
+      var s = byKey[k];
+      s.open.sort(function (a, b) { return String(a.date).localeCompare(String(b.date)); });
+      // The public name is the one the open dates carry. A per-date swap
+      // title (a closed "Adv Ballet" week) never reaches here; if the open
+      // dates themselves disagree, the name most of them carry wins.
+      var counts = {}, name = s.open[0].name;
+      s.open.forEach(function (r) {
+        counts[r.name] = (counts[r.name] || 0) + 1;
+        if (counts[r.name] > counts[name]) name = r.name;
+      });
+      s.name = name || 'Drop-in class';
+      s.slug = slugify(s.name);
+      s.ref = s.open.filter(function (r) { return r.name === name; })[0] || s.open[0];
+      return s;
+    });
+
+    // Monday first, then by time; two classes at 4:45 go shorter first.
+    function weekPos(d) { return d === 0 ? 7 : d; }
+    slots.sort(function (a, b) {
+      return (weekPos(a.dow) - weekPos(b.dow)) ||
+        String(a.ref.start_time).localeCompare(String(b.ref.start_time)) ||
+        String(a.ref.end_time || '').localeCompare(String(b.ref.end_time || '')) ||
+        a.name.localeCompare(b.name);
+    });
+    return slots;
+  }
+
+  function chipKey(r) { return r.class_id + '|' + r.occurrence_date; }
+
+  function renderFinder(slots) {
+    if (!elFinderList || !slots.length) return false; // static list stands
+    var soonIso = toIso(addDays(localDate(nyTodayIso()), 6));
+    finderRowsByKey = {};
+    var frag = document.createDocumentFragment();
+
+    slots.forEach(function (s) {
+      var ref = s.ref;
+      var li = el('li', 'finder-class');
+      li.setAttribute('data-class-slug', s.slug);
+
+      var top = el('p', 'finder-top');
+      var when = el('span', 'finder-when', DAY_SHORT[s.dow] + ' ' + fmtTime(ref.start_time));
+      top.appendChild(when);
+      // Not bookable this week: say when it starts, so "Tue 4:45" in late
+      // September is not read as tonight. Same rule as the panel in now.js.
+      var firstIso = String(s.open[0].date).slice(0, 10);
+      if (firstIso > soonIso) {
+        top.appendChild(el('span', 'finder-starts', 'Starts ' + shortDateLabel(localDate(firstIso))));
+      }
+      top.appendChild(el('span', 'finder-price', money(ref.drop_in_fee_cents)));
+      li.appendChild(top);
+
+      li.appendChild(el('h2', 'finder-name', s.name));
+      var meta = [ref.track_label, ref.age_band, lengthLabel(ref.start_time, ref.end_time)]
+        .filter(Boolean).join(' · ');
+      if (meta) li.appendChild(el('p', 'finder-meta', meta));
+
+      var dates = el('ul', 'finder-dates');
+      dates.setAttribute('aria-label', 'Dates for ' + s.name);
+      s.open.forEach(function (row, i) {
+        finderRowsByKey[chipKey(row)] = row;
+        var cell = el('li', 'finder-date');
+        if (i >= FINDER_VISIBLE) { cell.className += ' is-extra'; cell.hidden = true; }
+        var chip = el('button', 'finder-chip');
+        chip.type = 'button';
+        chip.setAttribute('data-key', chipKey(row));
+        chip.setAttribute('data-track', 'dropin-chip:' + s.slug);
+        cell.appendChild(chip);
+        cell.appendChild(el('span', 'finder-chip-note'));
+        dates.appendChild(cell);
+      });
+      if (s.open.length > FINDER_VISIBLE) {
+        var moreCell = el('li', 'finder-date finder-date--more');
+        var more = el('button', 'finder-more', 'More dates');
+        more.type = 'button';
+        more.setAttribute('aria-expanded', 'false');
+        moreCell.appendChild(more);
+        dates.appendChild(moreCell);
+      }
+      li.appendChild(dates);
+
+      var note = el('p', 'finder-note');
+      note.hidden = true;
+      note.setAttribute('role', 'status');
+      li.appendChild(note);
+
+      frag.appendChild(li);
+    });
+
+    elFinderList.innerHTML = '';
+    elFinderList.appendChild(frag);
+    paintChips();
+    return true;
+  }
+
+  // Chip state from the cart and the row: available, added, full, n left.
+  function paintChips() {
+    if (!elFinderList) return;
+    var chips = elFinderList.querySelectorAll('.finder-chip');
+    Array.prototype.forEach.call(chips, function (chip) {
+      var row = finderRowsByKey[chip.getAttribute('data-key')];
+      if (!row) return;
+      var d = localDate(row.date);
+      var full = row.spots_left === 0;
+      var added = !full && cartHas(row.class_id, row.occurrence_date);
+      var few = typeof row.spots_left === 'number' && row.spots_left >= 1 && row.spots_left <= 3;
+
+      chip.className = 'finder-chip' + (added ? ' is-added' : '') + (full ? ' is-full' : '');
+      chip.disabled = full;
+      if (full) chip.removeAttribute('aria-pressed');
+      else chip.setAttribute('aria-pressed', added ? 'true' : 'false');
+      chip.innerHTML = '';
+      if (added) {
+        var tick = el('span', 'sched-check');
+        tick.setAttribute('aria-hidden', 'true');
+        chip.appendChild(tick);
+      }
+      chip.appendChild(document.createTextNode(shortDateLabel(d)));
+
+      var noteText = full ? 'Full' : (few ? row.spots_left + ' left' : '');
+      chip.setAttribute('aria-label', DAY_NAMES_LONG[d.getDay()] + ' ' + shortDateLabel(d) +
+        (noteText ? ', ' + (full ? 'full' : row.spots_left + ' spot' + (row.spots_left === 1 ? '' : 's') + ' left') : ''));
+      var note = chip.nextElementSibling;
+      if (note) note.textContent = noteText;
+    });
+  }
+
+  function setBlockNote(block, text) {
+    var note = block && block.querySelector('.finder-note');
+    if (!note) return;
+    note.textContent = text || '';
+    note.hidden = !text;
+  }
+
+  // Reveal the rest of a class's dates. `focus` moves keyboard focus to the
+  // first date it revealed, since the button that had it is gone.
+  function expandDates(block, focus) {
+    var extra = block.querySelectorAll('.finder-date.is-extra');
+    Array.prototype.forEach.call(extra, function (c) { c.hidden = false; });
+    var moreCell = block.querySelector('.finder-date--more');
+    if (moreCell) moreCell.parentNode.removeChild(moreCell);
+    if (focus && extra.length) {
+      var first = extra[0].querySelector('.finder-chip');
+      if (first) first.focus();
+    }
+  }
+
+  if (elFinderList) elFinderList.addEventListener('click', function (e) {
+    var more = e.target.closest && e.target.closest('.finder-more');
+    if (more) {
+      expandDates(more.closest('.finder-class'), true);
+      return;
+    }
+    var chip = e.target.closest && e.target.closest('.finder-chip');
+    if (!chip || chip.disabled) return;
+    var row = finderRowsByKey[chip.getAttribute('data-key')];
+    if (!row || row.spots_left === 0) return;
+    var block = chip.closest('.finder-class');
+    if (cartHas(row.class_id, row.occurrence_date)) {
+      cartRemove(row.class_id, row.occurrence_date);
+      setBlockNote(block, '');
+    } else {
+      if (readCart().length >= MAX_LINES) {
+        setBlockNote(block, 'Six classes at a time. Check out, then add more.');
+        return;
+      }
+      cartAdd(row);
+      setBlockNote(block, '');
+      renderNotice('');
+    }
+    syncCart();
+  });
+
+  // One cart, three surfaces: the bar, the chips, and the week grid if open.
+  function syncCart() {
+    renderCartBar();
+    paintChips();
+    if (gridReady) renderRows(currentRows);
+  }
+
+  var finderSeq = 0;
+  function loadFinder() {
+    var seq = ++finderSeq;
+    if (!USE_STUB && !sb) { settleFinder(false); return; }
+    if (elFinderList) elFinderList.classList.add('is-loading');
+
+    var today = localDate(nyTodayIso());
+    var a0 = toIso(today), a1 = toIso(addDays(today, FINDER_WINDOW - 1));
+    var b0 = toIso(addDays(today, FINDER_WINDOW)), b1 = toIso(addDays(today, FINDER_WINDOW * 2 - 1));
+
+    Promise.all([fetchWeek(a0, a1), fetchWeek(b0, b1)]).then(function (res) {
+      if (seq !== finderSeq) return;
+      var rows = (res[0] || []).concat(res[1] || []);
+      applyBulkMin(rows);
+      var pruned = pruneCart(rows);
+      renderCartBar();
+      if (pruned.dropped.length) {
+        renderNotice(pruned.dropped[0] + ' closed since you added it, so it left your cart.');
+      }
+      renderFinder(buildSlots(rows));
+      settleFinder(true);
+    }).catch(function (err) {
+      if (seq !== finderSeq) return;
+      console.warn('drop-in classes:', err && err.message);
+      settleFinder(false);
+    });
+  }
+
+  function settleFinder() {
+    finderSettled = true;
+    if (elFinderList) elFinderList.classList.remove('is-loading');
+    applyDeepLink();
+  }
+
+  // ── ?class=<slug> ──
+  function applyDeepLink() {
+    if (!deepLinkPending || !finderSettled || !elFinderList) return;
+    deepLinkPending = false;
+    var blocks = elFinderList.querySelectorAll('.finder-class');
+    Array.prototype.forEach.call(blocks, function (b) { b.classList.remove('is-linked'); });
+    var slug = (new URLSearchParams(location.search).get('class') || '').trim().toLowerCase();
+    if (!slug) return;
+    var target = null;
+    for (var i = 0; i < blocks.length; i++) {
+      if (blocks[i].getAttribute('data-class-slug') === slug) { target = blocks[i]; break; }
+    }
+    if (!target) return; // unknown slug: the normal page
+    target.classList.add('is-linked');
+    expandDates(target, false);
+    scrollToBlock(target);
+  }
+
+  // Aim a few times: web fonts landing can still move the block after the
+  // first jump. The visitor's own scroll cancels the rest.
+  function scrollToBlock(block) {
+    var cancelled = false;
+    function cancel() { cancelled = true; }
+    var evts = ['wheel', 'touchstart', 'keydown'];
+    evts.forEach(function (ev) { window.addEventListener(ev, cancel, { passive: true }); });
+    function aim() {
+      if (cancelled) return;
+      var nav = document.getElementById('topnav');
+      var off = 16;
+      if (nav) {
+        var pos = window.getComputedStyle(nav).position;
+        if (pos === 'fixed' || pos === 'sticky') off += nav.offsetHeight;
+      }
+      var y = Math.max(0, block.getBoundingClientRect().top + window.pageYOffset - off);
+      try { window.scrollTo({ top: y, behavior: 'instant' }); } catch (e) { window.scrollTo(0, y); }
+    }
+    [0, 150, 400, 900].forEach(function (ms, i, all) {
+      setTimeout(function () {
+        aim();
+        if (i === all.length - 1) evts.forEach(function (ev) { window.removeEventListener(ev, cancel); });
+      }, ms);
+    });
+  }
+
+  // ── The full ProSeries week (collapsed by default) ──
+  // ?week=N (weeks from this one) or ?week=YYYY-MM-DD (the week holding that
+  // date) opens it on that week; anything else opens it the normal way.
+  function weekParamOffset() {
+    var w = new URLSearchParams(location.search).get('week');
+    if (!w) return null;
+    if (/^\d{1,2}$/.test(w)) return Math.min(Number(w), MAX_WEEK_OFFSET);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(w)) {
+      var t = localDate(w).getTime();
+      for (var o = 0; o <= MAX_WEEK_OFFSET; o++) {
+        if (t >= mondayOf(o).getTime() && t < mondayOf(o + 1).getTime()) return o;
+      }
+    }
+    return null;
+  }
+
+  function wantsFullWeek() {
+    return location.hash === '#sched-list' || new URLSearchParams(location.search).has('week');
+  }
+
+  function openFullWeek() {
+    if (!elFullBody) return;
+    elFullBody.hidden = false;
+    if (elFull) elFull.classList.add('is-open');
+    if (elFullToggle) elFullToggle.setAttribute('aria-expanded', 'true');
+    if (!gridLoaded) {
+      gridLoaded = true;
+      var w = weekParamOffset();
+      if (w == null) loadWeek(0, true); else loadWeek(w);
+    }
+  }
+
+  function closeFullWeek() {
+    if (!elFullBody) return;
+    elFullBody.hidden = true;
+    if (elFull) elFull.classList.remove('is-open');
+    if (elFullToggle) elFullToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  if (elFullToggle) elFullToggle.addEventListener('click', function () {
+    if (elFullBody.hidden) openFullWeek(); else closeFullWeek();
+  });
+
+  // The static list's Book links (and any #sched-list link) land on the grid:
+  // open it in the same tick main.js starts scrolling to it.
+  window.addEventListener('hashchange', function () {
+    if (location.hash === '#sched-list' && page.classList.contains('active')) openFullWeek();
   });
 
   // ── Checkout view ──
@@ -641,8 +1055,7 @@
     if (!cart.length) return;
     elCheckout.hidden = false;
     elCartBar.hidden = true;
-    page.querySelector('.sched-header').hidden = true;
-    elList.hidden = true;
+    elMain.hidden = true;
     elThankyou.hidden = true;
     elError.hidden = true;
     renderSummary();
@@ -662,10 +1075,10 @@
 
   function closeCheckout() {
     elCheckout.hidden = true;
-    page.querySelector('.sched-header').hidden = false;
-    elList.hidden = false;
+    elMain.hidden = false;
     renderCartBar();
-    loadWeek(currentWeekOffset);
+    paintChips();
+    if (gridLoaded) loadWeek(currentWeekOffset);
     jumpToTop(null);
   }
 
@@ -732,6 +1145,7 @@
       elError.hidden = false;
       elError.textContent = firstMsg;
       firstBad.focus();
+      track('dropin-checkout:invalid');
       return;
     }
 
@@ -765,9 +1179,11 @@
     }).then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
       .then(function (r) {
         if (r.ok && r.json && r.json.url) {
+          track('dropin-checkout:ok');
           window.top.location.href = r.json.url;
           return;
         }
+        track('dropin-checkout:err');
         elPayBtn.disabled = false;
         elPayBtn.textContent = prevLabel;
         elError.hidden = false;
@@ -784,6 +1200,7 @@
         }
       })
       .catch(function () {
+        track('dropin-checkout:err');
         elPayBtn.disabled = false;
         elPayBtn.textContent = prevLabel;
         elError.hidden = false;
@@ -793,8 +1210,8 @@
 
   // ── Return from Stripe ──
   function renderThankyou(orderRows, dancerFirstName) {
-    page.querySelector('.sched-header').hidden = true;
-    elList.hidden = true;
+    elMain.hidden = true;
+    if (elPending) elPending.hidden = true;
     elCheckout.hidden = true;
     elCartBar.hidden = true;
     elThankyou.hidden = false;
@@ -879,37 +1296,56 @@
 
     if (!order) return false;
 
+    if (elFinderList) elFinderList.classList.add('is-loading');
     fetchOrder(order, token).then(function (rows) {
       var status = rows.length ? rows[0].status : null;
       if (status === 'paid') {
         renderThankyou(rows, rows[0].dancer_first_name || null);
       } else if (status === 'pending') {
-        page.querySelector('.sched-header').hidden = true;
-        elList.hidden = true;
-        elList.innerHTML = '<p class="sched-empty-line">Payment received, saving your spot\u2026</p>';
-        elList.hidden = false;
+        elMain.hidden = true;
+        if (elPending) elPending.hidden = false;
         pollPending(order, token, 1);
       } else {
-        // Wrong token, expired or cancelled order: show the normal schedule
-        // instead of a skeleton that never resolves.
+        // Wrong token, expired or cancelled order: show the normal page
+        // instead of a lookup that never resolves.
         if (status === 'expired' || status === 'cancelled') {
           renderNotice('That checkout timed out. Nothing was charged.');
         }
-        loadWeek(0);
+        loadFinder();
       }
     }).catch(function (err) {
       console.warn('order lookup:', err && err.message);
-      loadWeek(0);
+      loadFinder();
     });
     return true;
   }
 
   // ── Init ──
-  var returning = handleReturn();
-  if (new URLSearchParams(location.search).get('order') === 'stub') {
-    // QA hook for the thank-you screenshot against the stub, per the brief's
-    // verification step (checks thankyou_renders_from_rpc_or_stub).
-  } else if (!returning) {
-    loadWeek(0, true);
+  // Only once the schedule route is actually showing: this section sits in
+  // every route shell, and a Home visitor has no use for the RPC calls.
+  var started = false;
+  function start() {
+    if (started) return;
+    started = true;
+    var returning = handleReturn();
+    if (new URLSearchParams(location.search).get('order') === 'stub') {
+      // QA hook for the thank-you screenshot against the stub, per the brief's
+      // verification step (checks thankyou_renders_from_rpc_or_stub).
+    } else if (!returning) {
+      loadFinder();
+    }
+    if (wantsFullWeek()) openFullWeek();
   }
+
+  if (page.classList.contains('active')) start();
+
+  // In-site navigation (a DROP IN row on Home is /schedule/?class=ballet):
+  // main.js swaps the section with pushState and announces it here.
+  window.addEventListener('dwd:route', function (e) {
+    if (!e || !e.detail || e.detail.page !== 'schedule') return;
+    deepLinkPending = true;
+    start();
+    applyDeepLink();
+    if (wantsFullWeek()) openFullWeek();
+  });
 })();
