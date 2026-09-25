@@ -4940,7 +4940,6 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   background: var(--forest) !important;
   color: var(--ivory) !important;
 }
-#page-proseries .content-section.alt h2 { color: var(--pink) !important; }
 #page-proseries .content-section .chapter {
   display: inline-flex;
   align-items: center;
@@ -4965,21 +4964,6 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   color: inherit !important;
 }
 #page-proseries .content-section .chapter .lbl { color: inherit !important; }
-#page-proseries .content-section h2 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(48px, 6vw, 96px) !important;
-  line-height: 0.92 !important;
-  letter-spacing: .005em;
-  text-transform: uppercase;
-  margin: 0 0 24px !important;
-  /* Ground ink on ivory. Family Pink on ivory measures 2.23:1 and fails even
-     the 3:1 large-text bar; forest is 15.56:1. Same call already made for the
-     Elite track heading (seafoam on ivory failed 3:1). Pink stays on .alt,
-     where it sits on forest at 6.99:1 and passes. */
-  color: var(--forest);
-}
-#page-proseries .content-section.alt h2 { color: var(--pink) !important; }
 #page-proseries .content-section p,
 #page-proseries .content-section .section-lead {
   font-family: 'Outfit', sans-serif !important;
@@ -4990,60 +4974,6 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   color: inherit;
 }
 #page-proseries .content-section.alt p { color: var(--ivory); }
-
-/* Why ProSeries — 4-item grid as alternating coral / blush / forest / cream blocks */
-#page-proseries .why-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  margin-top: 32px !important;
-  background: var(--forest);
-  border: 1px solid var(--oh-rule);
-}
-#page-proseries .why-item {
-  padding: 36px 32px !important;
-  background: var(--forest);
-  color: var(--ivory) !important;
-  border: 0 !important;
-  margin: 0 !important;
-}
-/* Family-thread terracotta panel (display-size fill, not text-on-ground) stays part of the checker */
-#page-proseries .why-item:nth-child(1) { background: var(--terra); color: var(--ivory); }
-#page-proseries .why-item:nth-child(1) h4,
-#page-proseries .why-item:nth-child(1) p { color: var(--ivory) !important; }
-#page-proseries .why-item:nth-child(2) { background: var(--ivory); color: var(--forest); }
-#page-proseries .why-item:nth-child(2) h4,
-#page-proseries .why-item:nth-child(2) p { color: var(--forest) !important; }
-/* Retired blush panel -> Family Pink fill (forest text on pink fill is contrast-safe) */
-#page-proseries .why-item:nth-child(3) { background: var(--pink); color: var(--forest); }
-#page-proseries .why-item:nth-child(3) h4,
-#page-proseries .why-item:nth-child(3) p { color: var(--forest) !important; }
-#page-proseries .why-item:nth-child(4) { background: var(--forest); color: var(--ivory); }
-#page-proseries .why-item:nth-child(4) h4,
-#page-proseries .why-item:nth-child(4) p { color: var(--ivory) !important; }
-#page-proseries .why-item h4 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(26px, 2.4vw, 38px) !important;
-  line-height: 0.96 !important;
-  letter-spacing: .005em;
-  text-transform: uppercase;
-  margin: 0 0 14px !important;
-  color: inherit !important;
-}
-#page-proseries .why-item p {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 14px !important;
-  line-height: 1.6 !important;
-  color: inherit !important;
-  opacity: .92;
-  margin: 0 !important;
-}
-#page-proseries .why-item em {
-  font-family: "Cormorant Garamond", serif;
-  font-style: italic;
-  font-weight: 500;
-}
 
 /* The Three Tracks — full poster panels */
 #page-proseries .track-detail-section {
@@ -5056,16 +4986,6 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   background: var(--forest);
   color: var(--ivory);
   text-align: left;
-}
-#page-proseries .td-intro h2 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(56px, 7vw, 112px) !important;
-  line-height: 0.9 !important;
-  letter-spacing: .005em;
-  text-transform: uppercase;
-  margin: 0 0 20px !important;
-  color: var(--pink) !important;
 }
 #page-proseries .td-intro p {
   font-family: 'Outfit', sans-serif !important;
@@ -5481,122 +5401,6 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   opacity: .7;
 }
 
-/* One-time fees + Deposit notes */
-#page-proseries .pricing-onetime,
-#page-proseries .pricing-notes {
-  padding: 48px 64px !important;
-  margin: 0 !important;
-  max-width: none;
-  border: 0 !important;
-}
-#page-proseries .pricing-onetime {
-  background: var(--ivory) !important;
-  color: var(--forest) !important;
-}
-/* Retired blush band -> Family Pink; heading flips to forest ink since it now
-   sits ON the pink field (pink-on-pink would vanish). */
-#page-proseries .pricing-notes {
-  background: var(--pink) !important;
-  color: var(--forest) !important;
-}
-#page-proseries .pricing-onetime h3,
-#page-proseries .pricing-notes h3 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(40px, 5vw, 64px) !important;
-  line-height: 0.94 !important;
-  text-transform: uppercase;
-  letter-spacing: .005em;
-  margin: 0 0 22px !important;
-  color: var(--pink);
-}
-#page-proseries .pricing-notes h3 { color: var(--forest) !important; }
-#page-proseries .pricing-onetime-rows {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  border-top: 1px solid var(--forest);
-  border-bottom: 1px solid var(--forest);
-}
-#page-proseries .pricing-onetime .pot-row {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr auto;
-  gap: 16px 24px;
-  align-items: baseline;
-  padding: 18px 0 !important;
-  border-bottom: 1px solid rgba(10,31,24,.25) !important;
-}
-#page-proseries .pricing-onetime .pot-row:last-child { border-bottom: 0 !important; }
-#page-proseries .pricing-onetime .pot-name {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: 24px;
-  letter-spacing: .005em;
-  text-transform: uppercase;
-}
-#page-proseries .pricing-onetime .pot-meta {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  opacity: .7;
-}
-#page-proseries .pricing-onetime .pot-amount {
-  font-family: "Bebas Neue", sans-serif !important;
-  font-style: normal;
-  font-size: 36px;
-  letter-spacing: .005em;
-}
-#page-proseries .pricing-notes p {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 15px !important;
-  line-height: 1.6 !important;
-  margin: 0 0 14px !important;
-  max-width: 70ch;
-  color: var(--forest) !important;
-}
-#page-proseries .pricing-notes ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 18px;
-}
-#page-proseries .pricing-notes li {
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
-  padding: 4px 0;
-  color: var(--forest) !important;
-}
-#page-proseries .pricing-notes li strong {
-  color: var(--forest) !important;
-}
-#page-proseries .pricing-notes li::before {
-  content: "—  ";
-  opacity: .55;
-  margin-right: 4px;
-}
-#page-proseries .pricing-notes-fine {
-  font-size: 12.5px !important;
-  opacity: .75;
-  font-style: italic;
-  color: var(--forest) !important;
-}
-/* Force readable colors on both Fees (ivory) + Deposits (pink) bands. The
-   Deposits h3 flips to forest ink since its ground is pink now, not coral;
-   the old coral strong-emphasis in Deposits body copy also drops to forest
-   (pink text on a pink ground would vanish). */
-#page-proseries .pricing-onetime,
-#page-proseries .pricing-onetime *:not(h3),
-#page-proseries .pricing-notes,
-#page-proseries .pricing-notes *:not(h3) { color: var(--forest) !important; }
-/* Ivory ground: forest ink, matching .pricing-notes h3 directly below.
-   Family Pink here measured 2.23:1. */
-#page-proseries .pricing-onetime h3 { color: var(--forest) !important; }
-#page-proseries .pricing-notes h3 { color: var(--forest) !important; }
-#page-proseries .pricing-onetime .pot-amount,
-#page-proseries .pricing-onetime .pot-name { color: var(--forest) !important; }
-#page-proseries .pricing-onetime .pot-meta { color: var(--forest) !important; opacity: .7; }
 
 /* Coming Soon banner */
 #page-proseries .coming-soon-banner {
@@ -5624,109 +5428,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   max-width: 62ch;
 }
 
-/* Registration is Open */
-/* "Auditions are done" band — the other named full-pink band, forest ink */
-#page-proseries #proseries-interest {
-  padding: 64px 64px !important;
-  background: var(--pink) !important;
-  color: var(--forest) !important;
-  text-align: left;
-  max-width: none;
-  margin: 0 !important;
-}
-#page-proseries #proseries-interest h2 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(56px, 7vw, 112px) !important;
-  line-height: 0.9 !important;
-  text-transform: uppercase;
-  letter-spacing: .005em;
-  margin: 0 0 24px !important;
-  color: var(--forest) !important;
-}
-#page-proseries #proseries-interest p {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 16px !important;
-  line-height: 1.6;
-  max-width: 64ch;
-  color: var(--forest) !important;
-}
-/* Primary CTA on a pink band must invert to forest/ivory (pink-on-pink would vanish) */
-#page-proseries #proseries-interest .btn-blush {
-  background: var(--forest) !important;
-  color: var(--ivory) !important;
-}
-#page-proseries #proseries-interest .btn-blush:hover { background: var(--forest-mid) !important; }
-#page-proseries #proseries-interest .btn-outline {
-  background: transparent !important;
-  color: var(--forest) !important;
-  border: 1px solid var(--forest) !important;
-}
-#page-proseries #proseries-interest .btn-outline:hover {
-  background: var(--forest) !important;
-  color: var(--pink) !important;
-}
-#page-proseries #proseries-interest .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 26px !important;
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 700;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  text-decoration: none;
-  margin: 24px 12px 0 0 !important;
-}
 
-/* Questions outro */
-#page-proseries .cta-banner {
-  padding: 48px 64px !important;
-  background: var(--forest) !important;
-  color: var(--ivory) !important;
-  text-align: left;
-  max-width: none;
-  margin: 0 !important;
-  border: 0 !important;
-}
-#page-proseries .cta-banner h3 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(32px, 3.6vw, 48px) !important;
-  line-height: 0.96 !important;
-  text-transform: uppercase;
-  letter-spacing: .005em;
-  margin: 0 0 12px !important;
-  color: var(--pink) !important;
-}
-#page-proseries .cta-banner p {
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 15px !important;
-  line-height: 1.6;
-  max-width: 60ch;
-  color: var(--ivory) !important;
-  opacity: .85;
-  margin: 0 0 22px !important;
-}
-/* CTA on ps: pink bg + forest label (matches .arm-cta ps pattern in arms.css) */
-#page-proseries .cta-banner .btn,
-#page-proseries .cta-banner .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 26px !important;
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 700;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  text-decoration: none;
-  background: var(--pink) !important;
-  color: var(--forest) !important;
-  border: 0 !important;
-}
-#page-proseries .cta-banner .btn-primary:hover { background: var(--forest) !important; color: var(--pink) !important; }
 
 
 .ac-hero-text {
@@ -5761,31 +5463,11 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
    (Summer Intensive + Competition Season — merged from old Performances)
    ============================================================ */
 
-/* Retired blush band -> Family Pink; heading flips to forest ink (pink-on-pink) */
-#page-proseries .ps-whatelse {
-  padding: 56px 64px !important;
-  background: var(--pink) !important;
-  color: var(--forest) !important;
-  text-align: left;
-  margin: 0 !important;
-}
-#page-proseries .ps-whatelse h2 {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 700 !important;
-  font-size: clamp(48px, 6vw, 88px) !important;
-  text-align: left;
-  line-height: 0.92 !important;
-  letter-spacing: .005em;
-  text-transform: uppercase;
-  color: var(--forest) !important;
-  margin: 0 !important;
-}
 
 
 @media (max-width: 980px) {
 
 
-  #page-proseries .ps-whatelse { padding: 40px 28px !important; }
 }
 
 /* ============================================================
@@ -7598,20 +7280,6 @@ footer.site-footer .footer-brand img {
   display: none;
 }
 
-/* #proseries-interest ("Now casting.") is styled by an ID selector in
-   poster-pages.css (2 ids: #page-proseries #proseries-interest) — always
-   Family Pink bg / forest text, in both takeover and non-takeover states;
-   the generic .content-section.alt midnight override above can't reach it
-   (class specificity loses to an id+id selector) and isn't meant to, since
-   this band was never part of the midnight-ify pass. The chapter eyebrow
-   added with the 2026-08-03 copy rewrite needs to match that same
-   self-contained pink/forest pairing rather than inherit the generic
-   .content-section .chapter silver rule (which assumes a midnight/forest
-   ground this section doesn't have). */
-#page-proseries #proseries-interest .chapter,
-#page-proseries #proseries-interest .lbl {
-  color: var(--forest, #0c1f17) !important;
-}
 
 /* ------------------------------------------------------------
    TRACKS SERIES-BRANDING (permanent — both takeover and non-takeover
@@ -8770,11 +8438,6 @@ footer.site-footer .footer-brand img {
   box-shadow: none;
 }
 
-/* 2. "The Program" stat slate sits on the IVORY section but its numerals were
-      ivory (season1.css assumes a forest ground) — 3 / 40 / 1 were invisible. */
-#page-proseries #ps-program .s1-slate-num { color: var(--forest, #0c1f17); }
-#page-proseries #ps-program .s1-slate-lbl { color: #5f6f66; }
-#page-proseries #ps-program .s1-slate-item { border-right-color: rgba(12, 31, 23, 0.18); }
 
 /* 3. Cast wall footer line was jammed against the Pro row: poster-pages'
       `#page-proseries .content-section p { margin: 0 0 14px !important }`
@@ -8811,374 +8474,6 @@ footer.site-footer .footer-brand img {
      1.1  #interest — on-site Express Interest form (Family Pink ground)
    ═══════════════════════════════════════════════════════════════ */
 
-
-/* ============================================================
-   1.1  EXPRESS INTEREST FORM
-   Sits inside #proseries-interest, which is a full-bleed Family
-   Pink band with forest ink (poster-pages.css). Every form
-   primitive on this site assumes the opposite (cream ink on
-   forest), so the whole component is re-inked here rather than
-   inheriting and fighting.
-
-   No card, no panel: the form sits directly on the pink. The page
-   is already a stack of flat colour bands and a floating white
-   box would be the only one of its kind. Depth stays at one.
-   ============================================================ */
-
-#page-proseries #proseries-interest .ps-if {
-  max-width: 620px;
-  margin: 44px 0 0;
-  text-align: left;
-}
-
-#page-proseries #proseries-interest .ps-if-title {
-  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700;
-  font-size: clamp(28px, 3.4vw, 42px);
-  line-height: 1.05;
-  color: var(--forest, #0c1f17);
-  margin: 0 0 10px;
-}
-
-#page-proseries #proseries-interest .ps-if-sub {
-  font-size: 15px !important;
-  line-height: 1.55;
-  color: rgba(12, 31, 23, 0.82) !important;
-  max-width: 52ch;
-  margin: 0 0 28px !important;
-}
-
-/* ── Fields ─────────────────────────────────────────────────── */
-
-#page-proseries #proseries-interest .ps-if .form-group {
-  margin-bottom: 20px;
-}
-
-#page-proseries #proseries-interest .ps-if label {
-  display: block;
-  font-family: var(--font-body), 'Outfit', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--forest, #0c1f17);
-  margin-bottom: 6px;
-}
-
-/* Muted by weight, not opacity: forest at 62% on Family Pink was 2.4:1. */
-#page-proseries #proseries-interest .ps-if .ps-if-opt {
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  text-transform: none;
-}
-
-#page-proseries #proseries-interest .ps-if input,
-#page-proseries #proseries-interest .ps-if select,
-#page-proseries #proseries-interest .ps-if textarea {
-  width: 100%;
-  padding: 11px 12px;
-  background: rgba(250, 243, 232, 0.92);
-  border: 1px solid rgba(12, 31, 23, 0.22);
-  border-radius: 2px;
-  color: var(--forest, #0c1f17);
-  font-family: var(--font-body), 'Outfit', sans-serif;
-  /* 16px floor is enforced globally by styles.css to stop iOS zoom-on-focus. */
-  line-height: 1.4;
-  transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
-}
-
-#page-proseries #proseries-interest .ps-if input::placeholder,
-#page-proseries #proseries-interest .ps-if textarea::placeholder {
-  color: rgba(12, 31, 23, 0.6);
-}
-
-#page-proseries #proseries-interest .ps-if input:hover,
-#page-proseries #proseries-interest .ps-if select:hover,
-#page-proseries #proseries-interest .ps-if textarea:hover {
-  border-color: rgba(12, 31, 23, 0.45);
-}
-
-#page-proseries #proseries-interest .ps-if input:focus,
-#page-proseries #proseries-interest .ps-if select:focus,
-#page-proseries #proseries-interest .ps-if textarea:focus {
-  outline: none;
-  background: #FAF3E8;
-  border-color: var(--forest, #0c1f17);
-  box-shadow: 0 0 0 2px rgba(12, 31, 23, 0.32);
-}
-
-/* The base select arrow is drawn ivory for the forest ground. Forest here. */
-#page-proseries #proseries-interest .ps-if select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230c1f17' d='M1 4l5 4 5-4'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 34px;
-}
-
-#page-proseries #proseries-interest .ps-if textarea {
-  min-height: 84px;
-  resize: vertical;
-}
-
-/* Date inputs render a native calendar glyph that is invisible on a light
-   ground in some Chrome themes; force it dark and give it a hit target. */
-#page-proseries #proseries-interest .ps-if input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: none;
-  opacity: 0.55;
-  cursor: pointer;
-}
-
-/* Invalid state (set by validateForm in main.js) */
-#page-proseries #proseries-interest .ps-if .invalid {
-  border-color: #8f2f1c;
-  background: #FAF3E8;
-}
-
-#page-proseries #proseries-interest .ps-if .form-field-error {
-  display: none;
-  font-family: var(--font-body), 'Outfit', sans-serif;
-  font-size: 13px;
-  color: #8f2f1c;
-  margin-top: 5px;
-}
-
-#page-proseries #proseries-interest .ps-if .form-field-error.show {
-  display: block;
-}
-
-/* ── Two-up rows collapse to one column on phones ───────────── */
-
-#page-proseries #proseries-interest .ps-if-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 20px;
-}
-
-/* Inside a dancer block the three fields are one thought, so they sit on one
-   line at desktop width instead of leaving Experience stranded full-bleed. */
-@media (min-width: 721px) {
-  #page-proseries #proseries-interest .ps-if-dancer .ps-if-row {
-    grid-template-columns: 1.3fr 1fr;
-  }
-}
-@media (min-width: 921px) {
-  #page-proseries #proseries-interest .ps-if-dancer {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr 1fr;
-    gap: 0 20px;
-    align-items: start;
-  }
-  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-legend { grid-column: 1 / -1; }
-  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-row {
-    display: contents;
-  }
-  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-track-note { grid-column: 1 / -1; }
-}
-
-/* ── Dancer blocks ──────────────────────────────────────────── */
-
-#page-proseries #proseries-interest .ps-if-dancer {
-  border: none;
-  border-top: 1px solid rgba(12, 31, 23, 0.22);
-  padding: 20px 0 0;
-  margin: 8px 0 0;
-}
-
-#page-proseries #proseries-interest .ps-if-legend {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  font-family: var(--font-body), 'Outfit', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--forest, #0c1f17);
-  padding: 0;
-  margin-bottom: 14px;
-}
-
-#page-proseries #proseries-interest .ps-if-remove {
-  background: none;
-  border: none;
-  padding: 4px 2px;
-  font-family: var(--font-body), 'Outfit', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  color: rgba(12, 31, 23, 0.62);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  cursor: pointer;
-}
-
-#page-proseries #proseries-interest .ps-if-remove:hover {
-  color: var(--forest, #0c1f17);
-}
-
-/* The live track preview: the one thing on this form that answers the
-   question every parent asks before they ask it. */
-#page-proseries #proseries-interest .ps-if-track-note {
-  font-family: var(--font-body), 'Outfit', sans-serif;
-  font-size: 13px !important;
-  line-height: 1.45;
-  color: rgba(12, 31, 23, 0.8) !important;
-  margin: -8px 0 4px !important;
-  padding-left: 12px;
-  border-left: 2px solid var(--forest, #0c1f17);
-}
-
-#page-proseries #proseries-interest .ps-if-add {
-  display: inline-block;
-  background: none;
-  border: 1px solid rgba(12, 31, 23, 0.45);
-  border-radius: 2px;
-  padding: 9px 14px;
-  margin: 18px 0 24px;
-  font-family: var(--font-body), 'Outfit', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--forest, #0c1f17);
-  cursor: pointer;
-  transition: background-color 0.18s ease, border-color 0.18s ease;
-}
-
-#page-proseries #proseries-interest .ps-if-add:hover {
-  background: rgba(12, 31, 23, 0.08);
-  border-color: var(--forest, #0c1f17);
-}
-
-/* ── Submit + consent ───────────────────────────────────────── */
-
-#page-proseries #proseries-interest .ps-if-submit {
-  margin-top: 6px;
-}
-
-#page-proseries #proseries-interest .ps-if-submit:active {
-  transform: scale(0.98);
-}
-
-#page-proseries #proseries-interest .ps-if-consent {
-  font-size: 13px !important;
-  line-height: 1.5;
-  color: rgba(12, 31, 23, 0.72) !important;
-  max-width: 46ch;
-  margin: 14px 0 0 !important;
-}
-
-#page-proseries #proseries-interest .ps-if-consent a {
-  color: var(--forest, #0c1f17);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-#page-proseries #proseries-interest .ps-if .form-error {
-  display: none;
-  font-family: var(--font-body), 'Outfit', sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #7a1f10;
-  background: rgba(250, 243, 232, 0.7);
-  border-left: 3px solid #8f2f1c;
-  padding: 10px 14px;
-  margin-top: 14px;
-}
-
-#page-proseries #proseries-interest .ps-if .form-error.show {
-  display: block;
-}
-
-/* ── Success state (replaces the form in place, no modal) ───── */
-
-#page-proseries #proseries-interest .ps-if-done .ps-if-title {
-  margin-top: 0;
-}
-
-/* No text-transform: uppercasing this would print "DWDPROSERIES", and the
-   brand casing is dwdPROSERIES. Handles stay exactly as written. */
-#page-proseries #proseries-interest .ps-if-follow {
-  display: inline-block;
-  margin-top: 6px;
-  font-family: var(--font-body), 'Outfit', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--forest, #0c1f17);
-  border-bottom: 1px solid rgba(12, 31, 23, 0.45);
-  padding-bottom: 3px;
-}
-
-#page-proseries #proseries-interest .ps-if-follow:hover {
-  border-bottom-color: var(--forest, #0c1f17);
-}
-
-/* ── Phones ─────────────────────────────────────────────────── */
-
-@media (max-width: 720px) {
-  #page-proseries #proseries-interest .ps-if {
-    max-width: none;
-    margin-top: 32px;
-  }
-  #page-proseries #proseries-interest .ps-if-row {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-  #page-proseries #proseries-interest .ps-if-submit {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #page-proseries #proseries-interest .ps-if input,
-  #page-proseries #proseries-interest .ps-if select,
-  #page-proseries #proseries-interest .ps-if textarea,
-  #page-proseries #proseries-interest .ps-if-add,
-  #page-proseries #proseries-interest .ps-if-submit {
-    transition: none;
-  }
-}
-
-/* ── Band alignment ─────────────────────────────────────────────
-   The three steps and the "or ask a question first" link were each
-   centred in their own max-width box while the h2 sat hard left, so
-   the band had two competing spines. With a form in here the spine
-   has to be one thing. Everything lines up under "Now casting."
-   These two components appear nowhere else on the site.
-   ─────────────────────────────────────────────────────────────── */
-
-#page-proseries #proseries-interest .conv-steps {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-#page-proseries #proseries-interest .conv-ask-first {
-  text-align: left;
-  margin-top: 26px;
-}
-
-/* Focus ring. tighten.css sets a terracotta :focus-visible ring site-wide
-   with, chosen for the forest and ivory grounds. Nobody checked it
-   against Family Pink: #C8614B on #FF7AA2 measures 1.62:1, under the 3:1 UI
-   floor and visually just brown mud. Forest on pink is 6.99:1. Overridden here
-   for this band only; the site-wide ring is untouched everywhere else. */
-#page-proseries #proseries-interest .ps-if input:focus,
-#page-proseries #proseries-interest .ps-if select:focus,
-#page-proseries #proseries-interest .ps-if textarea:focus,
-#page-proseries #proseries-interest .ps-if input:focus-visible,
-#page-proseries #proseries-interest .ps-if select:focus-visible,
-#page-proseries #proseries-interest .ps-if textarea:focus-visible,
-#page-proseries #proseries-interest .ps-if-add:focus-visible,
-#page-proseries #proseries-interest .ps-if-remove:focus-visible,
-#page-proseries #proseries-interest .ps-if-submit:focus-visible,
-#page-proseries #proseries-interest .ps-if-follow:focus-visible {
-  outline: 2px solid var(--forest, #0c1f17) !important;
-  outline-offset: 2px;
-  box-shadow: none;
-}
 
 
 /* ============================================================
@@ -9784,16 +9079,6 @@ footer.site-footer .footer-brand img {
    a list of episodes.
    ============================================================ */
 
-/* Same bug one line up: the section lead is Season One silver on Family Pink
-   at 1.61:1. It sits on the pink, not on a card, so it takes forest ink.
-   Solid forest (6.99:1) rather than a softened 0.78 alpha (4.89:1, which does
-   pass) — the line is already set apart by being italic Cormorant at 15px, and
-   it matches .s1-season-dates two lines below it. Hierarchy from size and
-   style, not from colour. */
-#page-proseries #ps-calendar .section-lead {
-  color: var(--forest, #0c1f17) !important;
-  opacity: 1;
-}
 
 #page-proseries #ps-calendar .s1-ep {
   background: var(--forest, #0c1f17);
@@ -10240,27 +9525,6 @@ footer.site-footer .footer-brand img {
   color: var(--pink, #FF7AA2) !important;
 }
 
-/* The interest form sits on a Family Pink band, where the site-wide pink
-   primary and pink ghost vanish (the submit read as plain text, "+ Add
-   another dancer" as an empty gap). On this band they invert to forest. */
-#page-proseries #proseries-interest .ps-if-submit,
-#page-proseries #proseries-interest .btn-blush {
-  background: var(--forest, #0c1f17) !important;
-  color: var(--ivory, #FAF3E8) !important;
-}
-#page-proseries #proseries-interest .ps-if-submit:hover,
-#page-proseries #proseries-interest .btn-blush:hover {
-  background: #1a3d2e !important;
-  color: var(--ivory, #FAF3E8) !important;
-}
-#page-proseries #proseries-interest .ps-if-add {
-  color: var(--forest, #0c1f17) !important;
-  border-color: var(--forest, #0c1f17) !important;
-}
-#page-proseries #proseries-interest .ps-if-add:hover {
-  background: rgba(12, 31, 23, 0.08) !important;
-  color: var(--forest, #0c1f17) !important;
-}
 
 /* Form submit buttons carry the same floor at 390. */
 .ep-recaps-form button[type="submit"],
@@ -12123,3 +11387,734 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 /* Faculty photos: the width/height attributes out-ranked aspect-ratio, so the
    squares rendered 342x640 (stretched). */
 #page-teachers .rf-photo { height: auto; object-position: 50% 25%; }
+
+
+/* ═══ 2026-09-24 cleanup, lane A: ProSeries ═══
+   ProSeries on one ground (docs/plans/2026-09-24-site-cleanup.md, lane A).
+   The page used to change ground about fifteen times (navy, forest, ivory,
+   Family Pink, terracotta) and ran four heading treatments. Now:
+   - Forest end to end. The Season One title card keeps its own ground and
+     sky type inside the hero; the drop-in panel keeps its raised forest.
+   - One section heading: Cormorant Garamond 600, sentence case, ivory, one
+     size per viewport. One kicker: the drop-in panel's (Outfit 11px, 600,
+     .32em caps, Family Pink).
+   - Pink is the accent: kickers, the one filled button per view, chips.
+   - Ivory only for the money: one inset panel (.ps-money) holding the
+     one-time fees, how deposits work and what a season adds up to.
+   - Sections part by space (32px each side on a phone, 56px from a tablet
+     up) and an inset hairline, never a colour block.
+   Tokens match #page-schedule so the two forest pages read as one site. */
+#page-proseries {
+  --psA-ink: #FAF3E8;
+  --psA-muted: rgba(250, 243, 232, 0.72);
+  --psA-faint: rgba(250, 243, 232, 0.56);
+  --psA-line: rgba(250, 243, 232, 0.14);
+  --psA-ring: rgba(250, 243, 232, 0.4);
+  --psA-gutter: 64px;
+  --psA-pad: 56px;
+  --psA-display: 'Cormorant Garamond', Georgia, serif;
+  --psA-body: 'Outfit', system-ui, sans-serif;
+  background: var(--forest, #0c1f17);
+}
+@media (max-width: 1024px) {
+  #page-proseries { --psA-gutter: 28px; }
+}
+@media (max-width: 720px) {
+  #page-proseries { --psA-gutter: 24px; --psA-pad: 32px; }
+}
+
+/* ── Sections: one ground, space + a hairline between ─────────────────── */
+#page-proseries .track-detail-section {
+  background: var(--forest, #0c1f17) !important;
+  margin: 0 !important;
+}
+/* Id-weight on purpose: older rules pin #proseries-interest and #ps-cast
+   with two ids and !important, and would otherwise keep their own padding
+   and ground at some widths. */
+#page-proseries #proseries-interest,
+#page-proseries #ps-cast,
+#page-proseries #ps-story,
+#page-proseries #ps-program,
+#page-proseries #ps-why,
+#page-proseries #ps-faq,
+#page-proseries #ps-philosophy,
+#page-proseries #ps-calendar,
+#page-proseries #ep-recaps-ps,
+#page-proseries .cta-banner {
+  background:
+    linear-gradient(var(--psA-line), var(--psA-line)) no-repeat center top / calc(100% - 2 * var(--psA-gutter)) 1px,
+    var(--forest, #0c1f17) !important;
+  color: var(--psA-ink) !important;
+  padding: var(--psA-pad) var(--psA-gutter) !important;
+  margin: 0 !important;
+  max-width: none;
+  border: 0 !important;
+  text-align: left;
+}
+#page-proseries .td-intro {
+  background: none;
+  max-width: none;
+  margin: 0 !important;
+  padding: var(--psA-pad) var(--psA-gutter) 32px !important;
+}
+
+/* ── One section heading ──────────────────────────────────────────────── */
+#page-proseries .td-intro h2,
+#page-proseries .content-section h2,
+#page-proseries .ps-conv-band h3,
+#page-proseries .cta-banner h3 {
+  font-family: var(--psA-display) !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  font-size: clamp(36px, 1.75rem + 1.6vw, 48px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  text-align: left !important;
+  color: var(--psA-ink) !important;
+  margin: 0 0 16px !important;
+  max-width: 22ch;
+}
+#page-proseries .content-section h2::after,
+#page-proseries .td-intro h2::after { content: none; }
+
+/* ── One kicker ───────────────────────────────────────────────────────── */
+#page-proseries .td-cast-eyebrow,
+#page-proseries .ps-story-eyebrow,
+#page-proseries .content-section .chapter,
+#page-proseries .ep-recaps-eyebrow,
+#page-proseries .conv-step-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--psA-body) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.32em !important;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--pink, #FF7AA2) !important;
+  opacity: 1;
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none;
+}
+#page-proseries .content-section .chapter .no { display: none; }
+#page-proseries .content-section .chapter .lbl {
+  color: inherit !important;
+  padding: 0;
+  border: 0;
+  font-size: inherit;
+  letter-spacing: inherit;
+}
+#page-proseries .ps-story-eyebrow .ps-clapper { color: inherit; width: 18px; }
+
+/* The italic sublines ("three tracks. one company...", "one season. every
+   episode. no reruns.") are one device: Cormorant italic, muted. */
+#page-proseries .td-intro .td-cast-subline,
+#page-proseries #ps-calendar .s1-cormorant-italic.section-lead {
+  font-family: var(--psA-display) !important;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 20px !important;
+  line-height: 1.35 !important;
+  color: var(--psA-muted) !important;
+  opacity: 1;
+  margin: 0 0 16px !important;
+}
+
+/* ── Body on forest ───────────────────────────────────────────────────── */
+#page-proseries .td-intro p:not(.td-cast-subline) {
+  font-size: 15px !important;
+  line-height: 1.65;
+  color: var(--psA-ink);
+  opacity: 1;
+  max-width: 64ch;
+  margin: 0 0 12px;
+}
+#page-proseries .td-intro .td-placement-note { color: var(--psA-muted); }
+#page-proseries .content-section .section-lead { color: var(--psA-ink); }
+
+/* ── The money: the page's one ivory surface ──────────────────────────── */
+#page-proseries .ps-money {
+  --psA-money-ink: var(--forest, #0c1f17);
+  --psA-money-muted: rgba(12, 31, 23, 0.72);
+  --psA-money-line: rgba(12, 31, 23, 0.16);
+  margin: 48px var(--psA-gutter) 0;
+  padding: 0 40px;
+  max-width: 880px;
+  background: var(--ivory, #FAF3E8);
+  color: var(--psA-money-ink);
+}
+#page-proseries .ps-money .pricing-onetime,
+#page-proseries .ps-money .pricing-notes {
+  background: none !important;
+  border: 0 !important;
+  margin: 0 !important;
+  padding: 32px 0 !important;
+  max-width: none;
+  color: var(--psA-money-ink) !important;
+}
+#page-proseries .ps-money > .pricing-notes { border-top: 1px solid var(--psA-money-line) !important; }
+#page-proseries .ps-money h3 {
+  font-family: var(--psA-body) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  letter-spacing: 0.32em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--terra-dark, #a8503e) !important;
+  margin: 0 0 16px !important;
+}
+#page-proseries .ps-money .pricing-onetime-rows {
+  display: block;
+  border: 0;
+}
+#page-proseries .ps-money .pot-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 24px;
+  align-items: center;
+  padding: 0 !important;
+  border: 0 !important;
+}
+#page-proseries .ps-money .pot-name {
+  grid-column: 1;
+  font-family: var(--psA-body) !important;
+  font-size: 17px;
+  font-weight: 600 !important;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--psA-money-ink);
+}
+#page-proseries .ps-money .pot-meta {
+  grid-column: 1;
+  grid-row: 2;
+  font-family: var(--psA-body) !important;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--psA-money-muted);
+  opacity: 1;
+}
+#page-proseries .ps-money .pot-amount {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--psA-money-ink);
+  margin: 0;
+}
+#page-proseries .ps-money .pricing-notes p {
+  font-family: var(--psA-body) !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: var(--psA-money-ink) !important;
+  max-width: 64ch;
+  margin: 0 0 12px !important;
+}
+#page-proseries .ps-money .pricing-notes p:last-child { margin-bottom: 0 !important; }
+#page-proseries .ps-money .pricing-notes strong { color: var(--psA-money-ink); font-weight: 600; }
+#page-proseries .ps-money .pricing-notes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+#page-proseries .ps-money .pricing-notes li {
+  font-family: var(--psA-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--psA-money-ink);
+  padding: 2px 0 2px 16px;
+  margin: 0;
+  border: 0;
+  position: relative;
+}
+#page-proseries .ps-money .pricing-notes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 6px;
+  height: 1px;
+  background: currentColor;
+}
+#page-proseries .ps-money .pricing-notes li strong { color: var(--psA-money-ink); }
+#page-proseries .ps-money .pricing-notes-fine {
+  font-size: 13px !important;
+  font-style: italic;
+  color: var(--psA-money-muted) !important;
+  opacity: 1;
+}
+@media (max-width: 720px) {
+  #page-proseries .ps-money {
+    margin: 32px var(--psA-gutter) 0;
+    padding: 0 20px;
+  }
+  #page-proseries .ps-money .pricing-onetime,
+  #page-proseries .ps-money .pricing-notes { padding: 28px 0 !important; }
+}
+
+/* ── Chairs remain: on the ground, not a band ─────────────────────────── */
+#page-proseries .ps-conv-band {
+  background: none;
+  text-align: left;
+  margin: 0;
+  padding: 48px var(--psA-gutter) var(--psA-pad);
+}
+#page-proseries .ps-conv-chairs {
+  justify-content: flex-start;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+#page-proseries .ps-conv-line,
+#page-proseries .ps-conv-micro {
+  text-align: left;
+  font-family: var(--psA-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--psA-muted);
+  margin: 0 0 24px;
+  max-width: 64ch;
+}
+#page-proseries .ps-conv-micro { font-size: 13px; margin: 12px 0 0; }
+
+/* ── The page's filled buttons: the drop-in panel's shape ─────────────── */
+#page-proseries .ps-conv-band .btn,
+#page-proseries #proseries-interest .ps-if-submit,
+#page-proseries .cta-banner .btn {
+  min-height: 56px !important;
+  padding: 0 28px !important;
+  margin: 0 !important;
+  font-family: var(--psA-body) !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  border-radius: 0;
+}
+#page-proseries .ps-conv-band .btn em,
+#page-proseries #proseries-interest .ps-if-submit em { font-style: normal; }
+@media (max-width: 720px) {
+  #page-proseries .ps-conv-band .btn,
+  #page-proseries #proseries-interest .ps-if-submit,
+  #page-proseries .cta-banner .btn { width: 100%; justify-content: center; }
+}
+
+/* ── Now casting: steps ───────────────────────────────────────────────── */
+#page-proseries #proseries-interest .conv-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px 32px;
+  max-width: 960px;
+  margin: 32px 0 0;
+}
+#page-proseries #proseries-interest .conv-step { gap: 4px; }
+#page-proseries #proseries-interest .conv-step-chip { margin: 0 0 4px !important; }
+#page-proseries #proseries-interest .conv-step-title {
+  font-family: var(--psA-display);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--psA-ink);
+}
+#page-proseries #proseries-interest .conv-step-line {
+  font-family: var(--psA-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--psA-muted);
+}
+@media (max-width: 720px) {
+  #page-proseries #proseries-interest .conv-steps { grid-template-columns: 1fr; }
+}
+
+/* ── Now casting: the interest form, on forest ────────────────────────────
+   Fields match the /schedule/ checkout: a faint fill, a 1px ring, ivory text,
+   the dark colour scheme (so the date picker's glyph shows), labels above. */
+#page-proseries #proseries-interest .ps-if {
+  max-width: 620px;
+  margin: 56px 0 0;
+  text-align: left;
+}
+#page-proseries #proseries-interest .ps-if-title {
+  font-family: var(--psA-display);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--psA-ink);
+  margin: 0 0 8px;
+}
+#page-proseries #proseries-interest .ps-if-sub {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  color: var(--psA-muted) !important;
+  max-width: 52ch;
+  margin: 0 0 24px !important;
+}
+#page-proseries #proseries-interest .ps-if .form-group { margin: 0 0 16px; }
+#page-proseries #proseries-interest .ps-if label {
+  display: block;
+  font-family: var(--psA-body);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.4;
+  color: var(--psA-muted);
+  margin: 0 0 6px;
+}
+#page-proseries #proseries-interest .ps-if .ps-if-opt { color: var(--psA-faint); }
+#page-proseries #proseries-interest .ps-if input:not(.hp-field),
+#page-proseries #proseries-interest .ps-if select,
+#page-proseries #proseries-interest .ps-if textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  font-family: var(--psA-body);
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--psA-ink);
+  background-color: rgba(250, 243, 232, 0.06);
+  border: 1px solid var(--psA-ring);
+  border-radius: 0;
+  box-shadow: none;
+  color-scheme: dark;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+#page-proseries #proseries-interest .ps-if input::placeholder,
+#page-proseries #proseries-interest .ps-if textarea::placeholder { color: var(--psA-faint); opacity: 1; }
+#page-proseries #proseries-interest .ps-if input:not(.hp-field):hover,
+#page-proseries #proseries-interest .ps-if select:hover,
+#page-proseries #proseries-interest .ps-if textarea:hover { border-color: rgba(250, 243, 232, 0.6); }
+#page-proseries #proseries-interest .ps-if input:not(.hp-field):focus,
+#page-proseries #proseries-interest .ps-if select:focus,
+#page-proseries #proseries-interest .ps-if textarea:focus {
+  outline: none;
+  border-color: var(--pink, #FF7AA2);
+  box-shadow: 0 0 0 1px var(--pink, #FF7AA2);
+}
+#page-proseries #proseries-interest .ps-if select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FAF3E8' d='M1 4l5 4 5-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+#page-proseries #proseries-interest .ps-if select option { color: var(--forest, #0c1f17); background: var(--ivory, #FAF3E8); }
+#page-proseries #proseries-interest .ps-if textarea { min-height: 96px; resize: vertical; }
+#page-proseries #proseries-interest .ps-if input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.8; cursor: pointer; }
+#page-proseries #proseries-interest .ps-if input.invalid:not(.hp-field),
+#page-proseries #proseries-interest .ps-if select.invalid,
+#page-proseries #proseries-interest .ps-if textarea.invalid {
+  border-color: #d4775f;
+}
+/* An unchosen select reads as a placeholder, not an answer. */
+#page-proseries #proseries-interest .ps-if select:has(option[value=""]:checked) { color: var(--psA-faint); }
+#page-proseries #proseries-interest .ps-if .form-field-error {
+  font-family: var(--psA-body);
+  font-size: 14px;
+  line-height: 1.4;
+  color: #d4775f;
+  margin-top: 6px;
+}
+#page-proseries #proseries-interest .ps-if .form-error {
+  font-family: var(--psA-body);
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: left;
+  color: #d4775f;
+  background: none;
+  border: 0;
+  border-left: 2px solid #d4775f;
+  border-radius: 0;
+  padding: 4px 0 4px 12px;
+  margin: 16px 0 0;
+}
+
+#page-proseries #proseries-interest .ps-if-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+@media (min-width: 721px) {
+  #page-proseries #proseries-interest .ps-if-dancer .ps-if-row { grid-template-columns: 1.3fr 1fr; }
+}
+@media (min-width: 921px) {
+  #page-proseries #proseries-interest .ps-if-dancer {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 0 16px;
+    align-items: start;
+  }
+  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-legend,
+  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-track-note { grid-column: 1 / -1; }
+  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-row { display: contents; }
+}
+@media (max-width: 720px) {
+  #page-proseries #proseries-interest .ps-if { margin-top: 48px; }
+  #page-proseries #proseries-interest .ps-if-row { grid-template-columns: 1fr; }
+}
+
+#page-proseries #proseries-interest .ps-if-dancer {
+  border: 0;
+  border-top: 1px solid var(--psA-line);
+  padding: 24px 0 0;
+  margin: 16px 0 0;
+}
+#page-proseries #proseries-interest .ps-if-legend {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--psA-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--psA-ink);
+  padding: 0;
+  margin: 0 0 16px;
+}
+#page-proseries #proseries-interest .ps-if-remove {
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  font-family: var(--psA-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--psA-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+#page-proseries #proseries-interest .ps-if-remove:hover { color: var(--psA-ink); }
+#page-proseries #proseries-interest .ps-if-track-note {
+  font-family: var(--psA-body);
+  font-size: 14px !important;
+  line-height: 1.5;
+  color: var(--psA-muted) !important;
+  margin: -4px 0 8px !important;
+  padding-left: 12px;
+  border-left: 2px solid var(--pink, #FF7AA2);
+}
+/* Secondary: the outline. Pink ring and label on forest (the site-wide
+   .ps-if-add outline rule supplies the colour). */
+#page-proseries #proseries-interest .ps-if-add {
+  display: inline-flex;
+  padding: 0 20px !important;
+  margin: 8px 0 32px;
+  font-family: var(--psA-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+#page-proseries #proseries-interest .ps-if-submit { margin-top: 8px !important; }
+#page-proseries #proseries-interest .ps-if-submit:active { transform: scale(0.98); }
+#page-proseries #proseries-interest .ps-if-consent {
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  color: var(--psA-muted) !important;
+  max-width: 52ch;
+  margin: 16px 0 0 !important;
+}
+#page-proseries #proseries-interest .ps-if-consent a {
+  color: var(--psA-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+#page-proseries #proseries-interest .ps-if-done .ps-if-title { margin-top: 0; }
+#page-proseries #proseries-interest .ps-if-follow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--psA-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--pink, #FF7AA2);
+  border-bottom: 1px solid rgba(255, 122, 162, 0.5);
+}
+#page-proseries #proseries-interest .conv-ask-first {
+  text-align: left;
+  margin: 32px 0 0 !important;
+}
+#page-proseries .conv-ask-first a,
+#page-proseries .cta-banner .conv-ask-first-link {
+  font-family: var(--psA-body);
+  font-size: 15px;
+  color: var(--psA-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--psA-ring);
+  padding-bottom: 2px;
+}
+#page-proseries .conv-ask-first a:hover,
+#page-proseries .cta-banner .conv-ask-first-link:hover { color: var(--pink, #FF7AA2); border-color: var(--pink, #FF7AA2); }
+@media (prefers-reduced-motion: reduce) {
+  #page-proseries #proseries-interest .ps-if input,
+  #page-proseries #proseries-interest .ps-if select,
+  #page-proseries #proseries-interest .ps-if textarea { transition: none; }
+  #page-proseries #proseries-interest .ps-if-submit:active { transform: none; }
+}
+
+/* ── The program: stat slate on the spine ─────────────────────────────── */
+#page-proseries #ps-program .s1-slate {
+  justify-content: flex-start;
+  margin: 8px 0 24px;
+}
+#page-proseries #ps-program .s1-slate-item {
+  align-items: flex-start;
+  padding: 0 24px;
+  border-right: 1px solid var(--psA-line);
+}
+#page-proseries #ps-program .s1-slate-item:first-child { padding-left: 0; }
+#page-proseries #ps-program .s1-slate-item:last-child { border-right: 0; }
+#page-proseries #ps-program .s1-slate-num {
+  font-size: 44px;
+  line-height: 1;
+  color: var(--psA-ink);
+}
+#page-proseries #ps-program .s1-slate-lbl {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--psA-muted);
+  margin-top: 6px;
+}
+
+/* ── Why ProSeries: one list, no boxes ────────────────────────────────── */
+#page-proseries .why-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 32px 0 0 !important;
+  background: none;
+  border: 0;
+}
+@media (min-width: 900px) {
+  #page-proseries .why-grid { grid-template-columns: 1fr 1fr; column-gap: 64px; }
+}
+#page-proseries .why-item {
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--psA-line);
+  padding: 24px 0 !important;
+  margin: 0 !important;
+  color: var(--psA-ink) !important;
+}
+#page-proseries .why-item h4 {
+  font-family: var(--psA-display);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--psA-ink);
+  margin: 0 0 8px;
+}
+#page-proseries .why-item p {
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: var(--psA-muted) !important;
+  margin: 0 !important;
+  max-width: 60ch;
+}
+#page-proseries .why-item em { font-style: italic; }
+#page-proseries .why-item a { color: var(--pink, #FF7AA2); }
+
+/* ── The Episode Guide: episode cards on forest ───────────────────────── */
+#page-proseries #ps-calendar .s1-season-dates {
+  font-size: 15px;
+  color: var(--psA-muted);
+  margin: 0 0 8px;
+}
+#page-proseries #ps-calendar .s1-episode-list {
+  max-width: 760px;
+  margin: 24px 0 0;
+  gap: 12px;
+}
+#page-proseries #ps-calendar .s1-ep {
+  background: rgba(250, 243, 232, 0.03);
+  border-radius: 0;
+}
+#page-proseries #ps-calendar .s1-ep:not(.s1-ep--next) { border: 1px solid var(--psA-line); }
+#page-proseries #ps-calendar .s1-ep--finale { padding: 0.85rem 1.1rem; }
+@media (min-width: 561px) {
+  #page-proseries #ps-calendar .s1-ep--live .s1-ep-meta { max-width: 32ch; }
+}
+/* Phones: the code chip and the title share a line, the date sits under
+   them. Seven episodes stacked three lines deep were a screen and a half. */
+@media (max-width: 560px) {
+  #page-proseries #ps-calendar .s1-ep { gap: 8px 12px; }
+  #page-proseries #ps-calendar .s1-ep-title { flex: 1 1 0; min-width: 0; }
+  #page-proseries #ps-calendar .s1-ep-meta { flex: 1 1 100%; }
+}
+
+/* On a phone the story ends on its own disclosure bar, which already draws
+   a rule; the program's hairline right under it would be a second one. */
+@media (max-width: 767px) {
+  #page-proseries #ps-story + #ps-program { background: var(--forest, #0c1f17) !important; }
+}
+
+/* ── Episode recaps: a quiet line, its button a secondary ────────────────
+   The closing band's Express Interest is the filled button in this view. */
+#page-proseries .ep-recaps { gap: 16px 48px; }
+#page-proseries .ep-recaps-eyebrow { margin-bottom: 8px !important; }
+#page-proseries .ep-recaps-form input[type="email"] {
+  min-height: 48px;
+  background: rgba(250, 243, 232, 0.06);
+  border: 1px solid var(--psA-ring);
+  border-radius: 0;
+  color: var(--psA-ink);
+}
+#page-proseries .ep-recaps-form .btn-blush {
+  background: transparent !important;
+  color: var(--pink, #FF7AA2) !important;
+  border: 1px solid var(--pink, #FF7AA2) !important;
+  border-radius: 0;
+  font-family: var(--psA-body) !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  padding: 0 20px !important;
+}
+#page-proseries .ep-recaps-form .btn-blush:hover { background: rgba(255, 122, 162, 0.12) !important; }
+
+/* ── Closing band ─────────────────────────────────────────────────────── */
+#page-proseries .cta-banner { padding-bottom: calc(var(--psA-pad) + 16px) !important; }
+#page-proseries .cta-banner p {
+  font-family: var(--psA-body) !important;
+  font-size: 15px !important;
+  line-height: 1.6;
+  color: var(--psA-muted) !important;
+  opacity: 1;
+  max-width: 60ch;
+  margin: 0 0 24px !important;
+}
+#page-proseries .cta-banner .conv-ask-first-link {
+  display: inline-block;
+  margin: 0 0 0 24px;
+  vertical-align: middle;
+}
+@media (max-width: 720px) {
+  #page-proseries .cta-banner .conv-ask-first-link { display: table; margin: 20px 0 0; }
+}
+
+/* ── One accent for links on this page ───────────────────────────────────
+   The cast footer link and the FAQ's "+" and closing link were terracotta
+   next to pink kickers and chips: two accents doing the same job. */
+#page-proseries #ps-cast .ps-cast-footer-link,
+#page-proseries #ps-faq .ps-faq-more a { color: var(--pink, #FF7AA2); border-bottom-color: rgba(255, 122, 162, 0.5); }
+#page-proseries #ps-faq .ps-faq-q::after,
+#page-proseries #ps-faq .ps-faq-q:hover { color: var(--pink, #FF7AA2); }
+#page-proseries #ps-cast .ps-cast-footer-link:hover,
+#page-proseries #ps-faq .ps-faq-more a:hover { color: var(--psA-ink); }
