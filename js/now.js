@@ -134,8 +134,10 @@
 
   /* ── The DROP IN panel (addendum B) ───────────────────────────────────
      Was row 1 of the ledger; it is now the page's one focal point, rendered
-     into every .dropin-feature in the document (home, proseries, schedule —
-     same feed, same answer, different kicker and button). Same contract as
+     into every .dropin-feature in the document (home, proseries; /schedule/
+     has its own class list since 2026-09-24): same feed, same answer,
+     different kicker and button. Every row links to its class on /schedule/
+     (?class=<slug>). Same contract as
      before: this only ever replaces a line with something truer, so a dead
      feed leaves the static panel standing as a correct page. */
   /* "YYYY-MM-DD HH:MM" in the studio's zone, to drop classes that have
@@ -209,12 +211,26 @@
        starts, so "Tue 4:45 Ballet" in late September is not read as tonight. */
     var soon = today ? addDays(today, 6) : null;
 
+    /* Every row is a link to its own class on /schedule/ (2026-09-24): the
+       ad and story link stickers use the same ?class= URLs. The slug is the
+       public name, derived here exactly as js/schedule.js derives it. */
+    function slugify(n) {
+      return String(n || '').toLowerCase()
+        .replace(/&/g, ' ')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
     function buildList(list) {
       while (list.firstChild) list.removeChild(list.firstChild);
       order.forEach(function (k) {
         var r = slots[k].r, d = slots[k].d;
-        var li = document.createElement('li');
-        li.className = 'dropin-row';
+        var item = document.createElement('li');
+        var link = document.createElement('a');
+        link.className = 'dropin-row';
+        var slug = slugify(r.name);
+        link.href = '/schedule/' + (slug ? '?class=' + slug : '');
+        item.appendChild(link);
         var when = document.createElement('span');
         when.className = 'dropin-when';
         when.textContent = DAYS[d.getDay()].slice(0, 3) + ' ' + (timeLabel(r.start_time) || '');
@@ -244,10 +260,10 @@
         var cost = document.createElement('span');
         cost.className = 'dropin-cost';
         cost.textContent = money(r.drop_in_fee_cents) || '';
-        li.appendChild(when);
-        li.appendChild(what);
-        li.appendChild(cost);
-        list.appendChild(li);
+        link.appendChild(when);
+        link.appendChild(what);
+        link.appendChild(cost);
+        list.appendChild(item);
       });
     }
 
@@ -316,7 +332,7 @@
 
   /* #now and the panels all live in the DOM on every route shell, because
      every shell is a copy of the same index.html with a different section
-     shown. Observe all of them: on /schedule/ and /proseries/ the panel is the
+     shown. Observe all of them: on /proseries/ the panel is the
      visible one and #now never comes near the viewport. */
   var blocks = document.querySelectorAll('#now, .dropin-feature');
   if (!blocks.length) return;

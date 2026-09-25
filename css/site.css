@@ -10603,49 +10603,340 @@ html.menu-open .mob-cta { display: none !important; }
   align-items: center;
 }
 
-/* This route sits on paper (ivory), unlike the dark base theme most other
-   pages use — see the brief's §4 "Page header on paper". */
+/* ═══════════════════════════════════════════════════════════════════════
+   /schedule/ = the drop-in page (2026-09-24, docs/plans/2026-09-24-drop-in-finder.md)
+
+   On forest now, like the rest of the site. It was the site's one ivory
+   page; Dixon's 2026-09-23 rule is no cream by default, and a paid ad lands
+   here cold. One focal point: the five classes and their date chips. One
+   primary: the cart bar's Check out. Chips are secondary (outline) until a
+   date is in the cart, then Family Pink.
+
+   Type, per component: 15px (labels, meta, chips) and 28px (class name,
+   Bebas price). The chip's "2 left" / "Full" is 13px: a footnote to one
+   chip, not a line of the block. Two weights, 400 and 600.
+   ═══════════════════════════════════════════════════════════════════════ */
 #page-schedule {
-  background: var(--ivory);
-  color: var(--forest);
+  --sched-ink: var(--ivory, #FAF3E8);
+  --sched-muted: rgba(250, 243, 232, 0.72);
+  --sched-faint: rgba(250, 243, 232, 0.56);
+  --sched-line: rgba(250, 243, 232, 0.14);
+  --sched-ring: rgba(250, 243, 232, 0.4);
+  background: var(--forest, #0c1f17);
+  color: var(--sched-ink);
 }
 
 #page-schedule .sched-wrap {
-  padding: 3rem 1.5rem 2rem;
+  padding: 32px 24px 48px;
   max-width: 760px;
   margin: 0 auto;
 }
 
 @media (min-width: 900px) {
   #page-schedule .sched-wrap {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding: 56px 48px 64px;
   }
 }
 
 .sched-header .kicker {
-  color: var(--terra);
+  display: block;
+  color: var(--pink, #FF7AA2);
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 11px;
   font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin: 0 0 12px;
 }
 
 .sched-h1 {
   font-family: var(--font-display);
-  font-size: clamp(1.9rem, 4vw, 2.75rem);
-  color: var(--forest);
-  margin: 0.3rem 0 0.6rem;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: var(--sched-ink);
+  margin: 0 0 16px;
+}
+
+@media (min-width: 900px) {
+  .sched-h1 { font-size: 56px; }
 }
 
 .sched-dek {
   font-family: var(--font-body);
-  color: rgba(12, 31, 23, 0.68);
-  font-size: 1rem;
+  color: var(--sched-muted);
+  font-size: 16px;
   line-height: 1.5;
+  max-width: 46ch;
+  margin: 0;
+}
+@media (min-width: 900px) {
+  .sched-dek { max-width: none; }
+}
+
+/* ── The five classes ─────────────────────────────────────────────────── */
+.finder-list {
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+}
+
+/* Space and a hairline between classes. No card: the chips are the only
+   boxes on the page, which keeps nesting at one level. */
+.finder-class {
+  position: relative;
+  padding: 24px 0;
+  border-top: 1px solid var(--sched-line);
+}
+.finder-class:last-child { border-bottom: 1px solid var(--sched-line); }
+
+/* ?class=<slug>: a Family Pink rule in the gutter, nothing louder. */
+.finder-class.is-linked::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 24px;
+  bottom: 24px;
+  width: 2px;
+  background: var(--pink, #FF7AA2);
+}
+@media (min-width: 900px) {
+  .finder-class.is-linked::before { left: -24px; }
+}
+
+.finder-top {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 0;
+}
+
+.finder-when {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--sched-ink);
+}
+
+/* A class not bookable this week says when it starts, beside its time.
+   Muted, not pink: four of five blocks can carry it in late September, and
+   pink on every block would stop meaning anything. */
+.finder-starts {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--sched-muted);
+}
+
+.finder-price {
+  margin-left: auto;
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--sched-ink);
+}
+
+#page-schedule .finder-name {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: var(--sched-ink);
+  margin: 4px 0 0;
+}
+
+.finder-meta {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--sched-muted);
+  margin: 4px 0 0;
+}
+
+/* Dates: four across on a phone, a row of six from a tablet up. They wrap;
+   nothing scrolls sideways. */
+.finder-dates {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+@media (min-width: 640px) {
+  .finder-dates { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+.finder-date { margin: 0; min-width: 0; }
+.finder-date[hidden] { display: none; }
+
+.finder-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 1px solid var(--sched-ring);
+  border-radius: 0;
+  background: transparent;
+  color: var(--sched-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
+}
+.finder-chip:hover { border-color: var(--sched-ink); }
+.finder-chip:active { transform: scale(0.96); }
+
+.finder-chip.is-added {
+  background: var(--pink, #FF7AA2);
+  border-color: var(--pink, #FF7AA2);
+  color: var(--forest, #0c1f17);
+  font-weight: 600;
+}
+.finder-chip.is-added:hover {
+  background: var(--pink-soft, #FF8FAB);
+  border-color: var(--pink-soft, #FF8FAB);
+}
+
+.finder-chip.is-full,
+.finder-chip:disabled {
+  border-color: var(--sched-line);
+  color: var(--sched-faint);
+  cursor: default;
+  transform: none;
+}
+
+.finder-chip-note {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--pink, #FF7AA2);
+  margin-top: 4px;
+}
+.finder-chip-note:empty { display: none; }
+.finder-chip.is-full + .finder-chip-note { color: var(--sched-faint); }
+
+/* "More dates": a chip-sized text button, so it reads as a way to the rest
+   of the dates rather than a fifth date. */
+.finder-date--more { grid-column: span 2; }
+.finder-more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sched-muted);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: underline;
+  text-decoration-color: var(--sched-ring);
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.finder-more:hover,
+.finder-more:focus-visible { color: var(--sched-ink); }
+
+.finder-note {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--sched-muted);
+  margin: 12px 0 0;
+}
+.finder-note[hidden] { display: none; }
+
+/* The static list's way in when the feed is down: the full week. Hidden
+   (space kept) while the feed is still answering, so it does not flash. */
+.finder-book {
+  justify-content: center;
+  margin-top: 16px;
+  padding: 0 24px;
+  border: 1px solid var(--sched-ring);
+  color: var(--sched-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-decoration: none;
+}
+.finder-book:hover { border-color: var(--sched-ink); color: var(--sched-ink); }
+.finder-list.is-loading .finder-book { visibility: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .finder-chip { transition: none; }
+  .finder-chip:active { transform: none; }
+}
+
+/* ── What to know ─────────────────────────────────────────────────────── */
+.sched-know { margin: 48px 0 0; }
+#page-schedule .sched-know-head {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.45;
+  color: var(--sched-ink);
+  margin: 0 0 8px;
+}
+.sched-know-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sched-know-list li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--sched-muted);
+  margin: 0 0 8px;
   max-width: 60ch;
-  margin: 0 0 1.5rem;
+}
+
+/* ── The full ProSeries week (behind one toggle) ──────────────────────── */
+.sched-full {
+  margin: 48px 0 0;
+  border-top: 1px solid var(--sched-line);
+  padding-top: 8px;
+}
+.sched-full-toggle {
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sched-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sched-full-chev {
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.sched-full.is-open .sched-full-chev { transform: translateY(2px) rotate(-135deg); }
+.sched-full-body { padding-top: 16px; }
+.sched-full-body[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .sched-full-chev { transition: none; }
 }
 
 .sched-week-switch {
@@ -10660,13 +10951,13 @@ html.menu-open .mob-cta { display: none !important; }
   background: none;
   border: none;
   padding: 0.4rem 0;
-  color: rgba(12, 31, 23, 0.55);
+  color: var(--sched-muted);
   cursor: pointer;
   min-height: 44px;
 }
 
 .sched-week-btn.active {
-  color: var(--forest);
+  color: var(--sched-ink);
   text-decoration: underline;
   text-decoration-color: var(--arm-accent, var(--pink));
   text-decoration-thickness: 2px;
@@ -10710,15 +11001,15 @@ html.menu-open .mob-cta { display: none !important; }
 
 .sched-week-nav:hover,
 .sched-week-nav:focus-visible {
-  color: var(--forest);
+  color: var(--sched-ink);
 }
 
-/* The current week reads as the old .active chip did — forest over a pink
+/* The current week reads as the old .active chip did — ink over a pink
    rule — but it is a label now, not a button, so it gets no hover state. */
 .sched-week-now {
   font-family: var(--font-body);
   font-size: 0.95rem;
-  color: var(--forest);
+  color: var(--sched-ink);
   white-space: nowrap;
   text-align: center;
   padding: 0.4rem 0;
@@ -10742,7 +11033,7 @@ html.menu-open .mob-cta { display: none !important; }
   border: none;
   padding: 0;
   text-align: left;
-  color: var(--terra);
+  color: var(--pink, #FF7AA2);
   cursor: pointer;
   text-underline-offset: 3px;
 }
@@ -10760,20 +11051,22 @@ html.menu-open .mob-cta { display: none !important; }
 
 .sched-notice {
   font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--terra);
-  background: rgba(200, 97, 75, 0.08);
-  border-radius: 6px;
-  padding: 0.6rem 0.9rem;
-  margin-bottom: 1rem;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--sched-ink);
+  background: rgba(250, 243, 232, 0.06);
+  border-left: 2px solid var(--pink, #FF7AA2);
+  padding: 12px 16px;
+  margin-bottom: 16px;
 }
+.sched-notice[hidden] { display: none; }
 
 .sched-day-head {
   font-family: var(--font-body);
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   font-weight: 600;
-  color: rgba(12, 31, 23, 0.55);
+  color: var(--sched-faint);
   margin: 1.75rem 0 0.5rem;
 }
 
@@ -10788,30 +11081,26 @@ html.menu-open .mob-cta { display: none !important; }
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(12, 31, 23, 0.08);
-}
-
-.sched-row--closed .sched-row-name {
-  opacity: 0.55;
+  border-bottom: 1px solid var(--sched-line);
 }
 
 .sched-row-time {
   font-family: var(--font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.9rem;
-  color: rgba(12, 31, 23, 0.7);
+  color: var(--sched-muted);
 }
 
 .sched-row-name {
   font-family: var(--font-display);
   font-size: 22px;
-  color: var(--forest);
+  color: var(--sched-ink);
 }
 
 .sched-row-meta {
   font-family: var(--font-body);
   font-size: 14px;
-  color: rgba(12, 31, 23, 0.55);
+  color: var(--sched-faint);
 }
 
 .sched-row-price {
@@ -10821,13 +11110,13 @@ html.menu-open .mob-cta { display: none !important; }
 .sched-row-price-amt {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.4rem;
-  color: var(--forest);
+  color: var(--sched-ink);
 }
 
 .sched-row-spots {
   font-family: var(--font-body);
   font-size: 0.75rem;
-  color: var(--terra);
+  color: var(--pink, #FF7AA2);
 }
 
 /* The class's 4+ price, under its single price. Same muted weight as the
@@ -10836,7 +11125,7 @@ html.menu-open .mob-cta { display: none !important; }
   font-family: var(--font-body);
   font-size: 0.75rem;
   line-height: 1.3;
-  color: rgba(12, 31, 23, 0.55);
+  color: var(--sched-faint);
 }
 
 /* One muted line above the total, in the cart bar, the checkout summary and
@@ -10845,7 +11134,7 @@ html.menu-open .mob-cta { display: none !important; }
   font-family: var(--font-body);
   font-size: 0.78rem;
   line-height: 1.35;
-  color: rgba(12, 31, 23, 0.55);
+  color: var(--sched-faint);
   margin: 0 0 0.5rem;
 }
 
@@ -10865,9 +11154,8 @@ html.menu-open .mob-cta { display: none !important; }
   min-width: 0;
 }
 
-/* The bar is forest, so the muted line is muted ivory, not muted forest. */
 .sched-cart-bar .sched-bulk-note {
-  color: rgba(250, 243, 232, 0.65);
+  color: var(--sched-muted);
   margin: 0;
 }
 
@@ -10879,24 +11167,28 @@ html.menu-open .mob-cta { display: none !important; }
 .sched-row-full {
   font-family: var(--font-body);
   font-size: 0.85rem;
-  color: rgba(12, 31, 23, 0.45);
+  color: var(--sched-faint);
 }
 
+/* The grid's Add is secondary now, the same outline as a date chip: the one
+   filled control on the page is Check out. Added = Family Pink, as a chip. */
 .btn-ghost-arm {
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 600;
   background: transparent;
-  border: 1px solid var(--arm-ring, rgba(200, 97, 75, 0.35));
-  color: var(--forest);
-  border-radius: 999px;
+  border: 1px solid var(--sched-ring, rgba(250, 243, 232, 0.4));
+  color: var(--sched-ink, #FAF3E8);
+  border-radius: 0;
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
+.btn-ghost-arm:hover { border-color: var(--sched-ink, #FAF3E8); }
 
 .btn-ghost-arm.is-added {
-  color: rgba(12, 31, 23, 0.55);
-  border-color: rgba(12, 31, 23, 0.2);
+  background: var(--pink, #FF7AA2);
+  border-color: var(--pink, #FF7AA2);
+  color: var(--forest, #0c1f17);
 }
 
 .sched-check {
@@ -10905,26 +11197,26 @@ html.menu-open .mob-cta { display: none !important; }
   height: 5px;
   border-left: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
-  transform: rotate(-45deg);
+  transform: translateY(-2px) rotate(-45deg);
   margin-right: 0.4em;
 }
 
 .sched-empty-line {
   font-family: var(--font-display);
   font-style: italic;
-  color: rgba(12, 31, 23, 0.6);
+  font-size: 20px;
+  color: var(--sched-muted);
   margin: 1.5rem 0;
 }
+.sched-empty-line[hidden] { display: none; }
 
 .sched-empty-line a {
-  color: var(--terra);
+  color: var(--pink, #FF7AA2);
 }
 
 .sched-skel-row {
   height: 56px;
-  border-radius: 6px;
-  background: var(--arm-ring, rgba(255, 122, 162, 0.2));
-  opacity: 0.6;
+  background: rgba(250, 243, 232, 0.06);
   margin-bottom: 0.6rem;
 }
 
@@ -10932,6 +11224,8 @@ html.menu-open .mob-cta { display: none !important; }
   display: none;
 }
 
+/* A shade up from the page and a hairline over it, so the bar reads as the
+   page's footing rather than more of the page. */
 .sched-cart-bar {
   position: fixed;
   left: 0;
@@ -10940,8 +11234,9 @@ html.menu-open .mob-cta { display: none !important; }
   /* Auto height, not a fixed 64: the 4+ line rides above the count on a phone
      and a fixed bar clipped it. Still 64 tall when there is no extra line. */
   min-height: 64px;
-  background: var(--forest);
-  color: var(--ivory);
+  background: var(--forest-light, #1a3d2e);
+  border-top: 1px solid var(--sched-line);
+  color: var(--sched-ink);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10956,22 +11251,25 @@ html.menu-open .mob-cta { display: none !important; }
   font-size: 0.95rem;
 }
 
+/* The button keeps its one line; the note beside it wraps instead. */
+.sched-cart-bar > .btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .sched-cart-amt {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.1rem;
 }
 
-#page-schedule .sched-list {
-  padding-bottom: 128px;
-}
-
 .sched-back {
   font-family: var(--font-body);
   font-size: 0.9rem;
-  color: rgba(12, 31, 23, 0.6);
+  color: var(--sched-muted);
   display: inline-flex;
   margin-bottom: 1.5rem;
 }
+.sched-back:hover { color: var(--sched-ink); }
 
 .sched-checkout-grid {
   display: grid;
@@ -10979,10 +11277,12 @@ html.menu-open .mob-cta { display: none !important; }
   gap: 2.5rem;
 }
 
-.sched-h2 {
+#page-schedule .sched-h2 {
   font-family: var(--font-display);
-  font-size: 1.4rem;
-  color: var(--forest);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--sched-ink);
   margin: 0 0 0.75rem;
 }
 
@@ -10999,7 +11299,7 @@ html.menu-open .mob-cta { display: none !important; }
   font-family: var(--font-body);
   font-size: 0.9rem;
   padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(12, 31, 23, 0.08);
+  border-bottom: 1px solid var(--sched-line);
   gap: 0.75rem;
 }
 
@@ -11012,7 +11312,9 @@ html.menu-open .mob-cta { display: none !important; }
 .sched-remove-link {
   font-family: var(--font-body);
   font-size: 0.8rem;
-  color: var(--terra);
+  color: var(--sched-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .sched-summary-total {
@@ -11020,7 +11322,7 @@ html.menu-open .mob-cta { display: none !important; }
   justify-content: space-between;
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.3rem;
-  color: var(--forest);
+  color: var(--sched-ink);
   padding-top: 0.5rem;
 }
 
@@ -11032,19 +11334,30 @@ html.menu-open .mob-cta { display: none !important; }
 
 .sched-form label {
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: rgba(12, 31, 23, 0.6);
+  font-size: 0.85rem;
+  color: var(--sched-muted);
   margin-bottom: 0.3rem;
 }
 
-.sched-form input {
+/* Fields on forest: a faint fill and a hairline ring, ivory text, the dark
+   colour scheme so the date picker's icon is visible. */
+.sched-form input:not([type="checkbox"]) {
   font-family: var(--font-body);
   font-size: 1rem;
   padding: 0.6rem 0.7rem;
-  border: 1px solid rgba(12, 31, 23, 0.2);
-  border-radius: 6px;
+  background: rgba(250, 243, 232, 0.06);
+  border: 1px solid var(--sched-ring);
+  border-radius: 0;
+  color: var(--sched-ink);
+  color-scheme: dark;
   min-height: 44px;
 }
+.sched-form input:not([type="checkbox"]):focus {
+  outline: none;
+  border-color: var(--pink, #FF7AA2);
+  box-shadow: 0 0 0 1px var(--pink, #FF7AA2);
+}
+.sched-form input[aria-invalid="true"] { border-color: #d4775f; }
 
 .sched-waiver {
   display: flex;
@@ -11052,26 +11365,32 @@ html.menu-open .mob-cta { display: none !important; }
   gap: 0.6rem;
   font-family: var(--font-body);
   font-size: 0.85rem;
+  color: var(--sched-ink);
   margin: 1rem 0;
 }
 
 .sched-waiver input {
-  margin-top: 0.2rem;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--pink, #FF7AA2);
+  color-scheme: dark;
 }
 
-.sched-waiver a {
-  color: var(--terra);
+.sched-waiver a,
+.sched-stepup a,
+.sched-fineprint a {
+  color: var(--sched-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .sched-stepup {
   font-family: var(--font-body);
   font-size: 0.85rem;
-  color: rgba(12, 31, 23, 0.6);
+  color: var(--sched-muted);
   margin: 0 0 1rem;
-}
-
-.sched-stepup a {
-  color: var(--terra);
 }
 
 .sched-pay-btn {
@@ -11092,8 +11411,9 @@ html.menu-open .mob-cta { display: none !important; }
   cursor: default;
 }
 
+/* Terracotta's dark-ground body shade: an error, not the accent. */
 .sched-error {
-  color: var(--terra);
+  color: #d4775f;
   font-family: var(--font-body);
   font-size: 0.85rem;
   margin-top: 0.75rem;
@@ -11102,22 +11422,20 @@ html.menu-open .mob-cta { display: none !important; }
 .sched-fineprint {
   font-family: var(--font-body);
   font-size: 0.78rem;
-  color: rgba(12, 31, 23, 0.5);
+  color: var(--sched-faint);
   margin-top: 0.75rem;
   line-height: 1.5;
 }
 
-.sched-fineprint a {
-  color: var(--terra);
-}
-
 .sched-thankyou .kicker {
-  color: var(--terra);
+  display: block;
+  color: var(--pink, #FF7AA2);
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  font-size: 11px;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   font-weight: 600;
+  margin: 0 0 12px;
 }
 
 .sched-before {
@@ -11127,7 +11445,7 @@ html.menu-open .mob-cta { display: none !important; }
 .sched-before p {
   font-family: var(--font-body);
   font-size: 0.9rem;
-  color: rgba(12, 31, 23, 0.7);
+  color: var(--sched-muted);
   margin: 0.3rem 0;
 }
 
@@ -11589,11 +11907,6 @@ html.menu-open .mob-cta { display: none !important; }
   #page-proseries .dropin-inner { padding: 0 24px; }
 }
 
-/* On /schedule/ the panel already sits inside .sched-wrap's gutter, so it only
-   needs its own air, not a second one. */
-#page-schedule .dropin-feature { margin: 20px 0 24px; }
-#page-schedule .dropin-inner { padding: 0 20px; }
-
 /* The list of every drop-in (2026-09-22). Ledger grammar: hairlines, no
    boxes. Time, class, who, price; the class name is the line the eye reads. */
 .dropin-list {
@@ -11609,6 +11922,19 @@ html.menu-open .mob-cta { display: none !important; }
   align-items: baseline;
   padding: 12px 0;
   border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+/* Every row is a link to its class on /schedule/ (?class=<slug>, 2026-09-24).
+   Same look; the name underlines on hover so it reads as tappable. */
+a.dropin-row {
+  color: inherit;
+  text-decoration: none;
+}
+a.dropin-row:hover .dropin-name,
+a.dropin-row:focus-visible .dropin-name {
+  text-decoration: underline;
+  text-decoration-color: rgba(250, 243, 232, 0.4);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 .dropin-when,
 .dropin-cost {
@@ -11737,32 +12063,22 @@ html.menu-open .mob-cta { display: none !important; }
   body.mob-cta-on { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 }
 
-/* Schedule rows that are actually open: the price in Bebas and the Add control
-   filled, so the open rows read as the offer and the closed ones stay the quiet
-   grid they already were. */
+/* Schedule rows that are actually open: the price in Bebas, so the open rows
+   read as the offer and the closed ones stay the quiet grid they already were.
+   The Add control is an outline since 2026-09-24 (see .btn-ghost-arm): the
+   page's one filled button is Check out. */
 .sched-row:not(.sched-row--closed) .sched-row-price-amt {
   font-family: 'Bebas Neue', sans-serif;
   font-weight: 400;
   font-size: 28px;
   line-height: 1;
-  /* NOT ivory: /schedule/ is the site's one light page, and the brief's "ivory"
-     was written for the forest panel. Ivory here is invisible. Forest ink is
-     the same idea on this ground: the price is the loudest thing in the row. */
-  color: var(--forest, #0c1f17);
+  color: var(--ivory, #FAF3E8);
   letter-spacing: 0.01em;
 }
 .sched-row:not(.sched-row--closed) .sched-add-btn {
-  background: var(--pink, #FF7AA2);
-  border-color: var(--pink, #FF7AA2);
-  color: var(--forest, #0c1f17);
   min-height: 44px;
   font-weight: 600;
-  transition: background-color 0.2s ease, transform 0.12s ease;
-}
-.sched-row:not(.sched-row--closed) .sched-add-btn:hover {
-  background: var(--pink-soft, #FF8FAB);
-  border-color: var(--pink-soft, #FF8FAB);
-  color: var(--forest, #0c1f17);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
 }
 .sched-row:not(.sched-row--closed) .sched-add-btn:active { transform: scale(0.96); }
 @media (prefers-reduced-motion: reduce) {
@@ -11782,12 +12098,12 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 #sched-list { scroll-margin-top: 96px; }
 
 /* Contrast: terracotta #C8614B is display-only; small text on ivory takes the
-   light-ground body shade, on forest the dark-ground one. */
-#page-schedule .sched-header .kicker,
-#page-schedule .sched-week-jump-btn { color: #a8503e !important; }
+   light-ground body shade, on forest the dark-ground one. /schedule/ is on
+   forest since 2026-09-24: its closed grid rows take a muted ivory that still
+   clears 4.5:1 there (#949a91 on #0c1f17). */
 #page-schedule .sched-row--closed .sched-row-name { opacity: 1; }
 #page-schedule .sched-row--closed,
-#page-schedule .sched-row--closed * { color: #646a62 !important; }
+#page-schedule .sched-row--closed * { color: #949a91 !important; }
 .dropin-foot { color: #a9b5a8 !important; }
 #page-home cite > span { color: #d4775f !important; }
 #page-adult-company #col-who h2 { color: #d4775f !important; }
