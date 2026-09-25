@@ -2824,8 +2824,6 @@ a:focus-visible,
 
 .pull-quote blockquote .hl {
   color: var(--blush);
-  background: linear-gradient(180deg, transparent 65%, rgba(200, 97, 75, 0.3) 65%);
-  padding: 0 4px;
 }
 
 .pull-quote cite {
@@ -8608,9 +8606,9 @@ footer.site-footer .footer-brand img {
 /* ══════════ Teachers — rotation faculty roster ══════════
    Full-roster replacement for the old single-teacher stub. Scoped rf-
    classes live here (not poster-pages.css) per the "new styles go in
-   convert.css" convention. Initial tiles stand in for headshots: forest-
-   light ground, large ivory Cormorant initials — never gray, never gold
-   (gold is reserved for the Tamara Mark memorial). */
+   convert.css" convention. The initials tiles that stood in for missing
+   headshots were removed 2026-09-24: a card without a photo is a text entry
+   (.rf-card--text, lane B block at the end of this file). */
 #page-teachers .rf-intro {
   font-family: var(--font-display);
   font-style: italic;
@@ -8633,23 +8631,6 @@ footer.site-footer .footer-brand img {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-#page-teachers .rf-tile {
-  aspect-ratio: 4 / 5;
-  background: var(--forest-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#page-teachers .rf-initials {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(64px, 9vw, 104px);
-  line-height: .78;
-  color: var(--ivory);
 }
 
 #page-teachers .rf-name {
@@ -8690,14 +8671,6 @@ footer.site-footer .footer-brand img {
   grid-template-columns: repeat(2, 1fr);
   max-width: 620px;
   padding-bottom: 56px;
-}
-
-#page-teachers .rf-tile--assist {
-  aspect-ratio: 16 / 9;
-}
-
-#page-teachers .rf-initials--assist {
-  font-size: clamp(44px, 6vw, 64px);
 }
 
 @media (max-width: 1100px) {
@@ -10504,17 +10477,6 @@ html.menu-open body {
   color: var(--ivory, #FAF3E8) !important;
   border-color: var(--terra-light, #d4775f) !important;
 }
-/* One primary at the end of the Collective: "Join the Collective" leads,
-   the Instagram follow is the quiet second. */
-#page-adult-company #dwdc-next .btn-primary[data-track="adult-follow-ig"] {
-  border-color: rgba(250, 243, 232, 0.28) !important;
-  color: rgba(250, 243, 232, 0.75) !important;
-}
-#page-adult-company #dwdc-next a[data-track="adult-join-collective"] {
-  border-width: 1.5px !important;
-  border-color: var(--terra, #C8614B) !important;
-  color: var(--ivory, #FAF3E8) !important;
-}
 
 /* ═══════════════════════════════════════════════════════════════════════
  * PHASE 2 FOLLOW-UP (2026-09-04)
@@ -11493,16 +11455,6 @@ html.menu-open .mob-cta { display: none !important; }
   padding: 0 32px;
 }
 
-.fd-now-kicker {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--terra-light);
-  margin: 0 0 14px;
-}
-
 .fd-rows {
   list-style: none;
   margin: 0;
@@ -12034,11 +11986,6 @@ a.dropin-row:focus-visible .dropin-name {
   to { opacity: 1; }
 }
 
-/* The ledger follows the panel directly and its kicker repeats the words
-   "THIS WEEK". They need more air between them than two neighbouring ledger
-   blocks would. */
-.dropin-feature + .fd-now { margin-top: 56px; }
-
 /* ── The other drop-in surfaces ───────────────────────────────────────── */
 
 /* Hero primary: the same height and weight as the panel's button, so the two
@@ -12123,3 +12070,421 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 /* Faculty photos: the width/height attributes out-ranked aspect-ratio, so the
    squares rendered 342x640 (stretched). */
 #page-teachers .rf-photo { height: auto; object-position: 50% 25%; }
+
+/* ═══ 2026-09-24 cleanup, lane B: Home, Collective, Teachers, Contact, footer ═══
+   docs/plans/2026-09-24-site-cleanup.md, lane B. Everything this pass adds
+   lives in this block; rules it replaced were deleted where they stood. */
+
+/* ── Home ─────────────────────────────────────────────────────────────── */
+
+/* The credit line sits under its heading, flush left with it, at every
+   width. Right-aligned it hung off on its own at 390 and read as a caption
+   for nothing. */
+#page-home .video-featured .row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+#page-home .video-featured .meta {
+  text-align: left;
+  max-width: none;
+  text-wrap: pretty;
+}
+
+/* Phone rhythm: sections 48 to 64px apart, not three ~250px empty forest
+   bands (140px paddings plus 32px margins either side of the video and the
+   quote). */
+@media (max-width: 768px) {
+  #page-home .entries-lead { margin: 48px auto 24px; }
+  #page-home .video-featured {
+    margin: 0;
+    padding: 56px 24px 32px;
+    border-top: 0;
+  }
+  #page-home .video-featured .row { margin-bottom: 24px; }
+  #page-home .pull-quote {
+    margin: 0;
+    padding: 32px 20px 56px;
+    border-top: 1px solid var(--rb-rule);
+    border-bottom: 0;
+  }
+  #page-home .pull-quote .dot { margin-bottom: 24px; }
+  #page-home .pull-quote cite { margin-top: 32px; }
+  /* .page reserves 60px under every page for a ticker retired in August;
+     the sticky bar clears itself (body.mob-cta-on). Here it only doubled
+     the gap above the footer. */
+  #page-home.page { padding-bottom: 0; }
+}
+
+/* ── Collective: one joining screen ───────────────────────────────────── */
+
+#page-adult-company .col-join {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 56px;
+  display: grid;
+  gap: 32px;
+  text-align: left;
+}
+#page-adult-company .col-join-lead {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(250, 243, 232, 0.86);
+  max-width: 60ch;
+  margin: 0 0 32px;
+}
+
+/* What / who / where / cost: the site's ledger grammar (hairlines, no box). */
+#page-adult-company .col-facts {
+  margin: 0;
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+}
+#page-adult-company .col-fact {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  column-gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+#page-adult-company .col-fact dt {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--terra-light, #d4775f);
+}
+#page-adult-company .col-fact dd { margin: 0; }
+#page-adult-company .col-fact-main {
+  display: block;
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ivory, #FAF3E8);
+}
+#page-adult-company .col-fact-sub {
+  display: block;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(250, 243, 232, 0.72);
+  margin-top: 4px;
+}
+
+/* Next class + the one action. The date is the focal point when there is
+   one; until then the line says so plainly. */
+#page-adult-company .col-join .dnc {
+  border: 0;
+  padding: 0;
+  margin: 0 0 24px;
+}
+#page-adult-company .col-join .dnc-empty,
+#page-adult-company .col-join .dnc-date {
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--ivory, #FAF3E8);
+  max-width: none;
+  margin: 0;
+}
+#page-adult-company .col-join .dnc-eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--terra-light, #d4775f);
+  margin: 0 0 4px;
+}
+#page-adult-company .col-join .dnc-title,
+#page-adult-company .col-join .dnc-venue,
+#page-adult-company .col-join .dnc-price {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(250, 243, 232, 0.72);
+  margin: 0;
+}
+#page-adult-company .col-join .dnc-title { margin-top: 8px; color: var(--ivory, #FAF3E8); }
+#page-adult-company .col-join .dnc-more { margin-top: 16px; }
+
+/* The page's one filled button. The Collective carries no Family Pink (the
+   arm remaps it), so the fill is its own terracotta; forest ink on
+   terracotta measures 4.3:1, so the label is set as large text (19px bold,
+   AA needs 3:1 there). Square, like Home's primary buttons. */
+#page-adult-company .col-join-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 24px;
+  background: var(--terra, #C8614B);
+  color: var(--forest, #0c1f17);
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  border: 0;
+  border-radius: 0;
+}
+#page-adult-company .col-join-btn:hover { background: var(--terra-light, #d4775f); }
+#page-adult-company .col-join-btn:focus-visible {
+  outline: 2px solid var(--ivory, #FAF3E8);
+  outline-offset: 3px;
+}
+#page-adult-company .col-join-follow {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(250, 243, 232, 0.72);
+  margin: 16px 0 0;
+}
+#page-adult-company .col-join-follow a {
+  color: var(--terra-soft, #e08d76);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 900px) {
+  /* Flush with the hero's text column (56px), not centred in its own box. */
+  #page-adult-company .col-join {
+    max-width: none;
+    grid-template-columns: minmax(0, 640px) minmax(0, 440px);
+    column-gap: 96px;
+    align-items: start;
+    padding: 64px 56px 72px;
+  }
+  #page-adult-company .col-join-act { padding-top: 8px; }
+  #page-adult-company .col-join-btn { width: auto; display: inline-flex; }
+}
+
+/* Who it is for: the same list, on the page ground, no box around it. */
+#page-adult-company .col-who {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+  text-align: left;
+}
+#page-adult-company .col-who h2 {
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  text-align: left;
+}
+#page-adult-company .col-who .audience-list {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  max-width: 60ch;
+}
+#page-adult-company .col-who .audience-list li {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: rgba(250, 243, 232, 0.86);
+  margin: 0 0 12px;
+  padding-left: 20px;
+  text-indent: -20px;
+}
+#page-adult-company .col-who .audience-list li::before {
+  content: "\25B8";
+  display: inline-block;
+  width: 20px;
+  text-indent: 0;
+  margin: 0;
+  color: var(--terra-light, #d4775f);
+}
+#page-adult-company .col-who .audience-list .emphasis {
+  padding-left: 0;
+  text-indent: 0;
+  margin-top: 16px;
+  color: var(--ivory, #FAF3E8);
+  font-weight: 600;
+}
+#page-adult-company .col-who .audience-list .emphasis::before { content: none; }
+@media (min-width: 900px) {
+  #page-adult-company .col-who { max-width: none; padding: 0 56px 64px; }
+}
+
+/* Past shows: everything about June 2026 and 2025, whole, behind one toggle.
+   The toggle is a hushed ghost button, the arm's secondary style. */
+/* The toggle and its lead sit on the page's 24px gutter; the shows inside
+   keep the paddings they always had, so they render exactly as before. */
+#page-adult-company .col-past { margin: 0; padding: 0 0 48px; }
+#page-adult-company .col-past > .col-past-toggle { margin: 0 24px; }
+#page-adult-company .col-past-lead { padding: 0 24px; }
+#page-adult-company .col-past-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1.5px solid var(--terra, #C8614B);
+  color: var(--ivory, #FAF3E8);
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+#page-adult-company .col-past-toggle::-webkit-details-marker { display: none; }
+#page-adult-company .col-past-toggle::marker { content: ""; }
+/* Open / closed, said by a chevron that turns. */
+#page-adult-company .col-past-toggle::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+#page-adult-company .col-past[open] > .col-past-toggle::after {
+  transform: translateY(2px) rotate(-135deg);
+}
+#page-adult-company .col-past-toggle:hover { background: rgba(200, 97, 75, 0.14); }
+#page-adult-company .col-past-toggle:focus-visible {
+  outline: 2px solid var(--terra-light, #d4775f);
+  outline-offset: 3px;
+}
+#page-adult-company .col-past-body { padding-top: 32px; }
+#page-adult-company.page { padding-bottom: 0; }
+#page-adult-company .col-past-lead {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(250, 243, 232, 0.86);
+  max-width: 60ch;
+  margin: 0 0 32px;
+}
+#page-adult-company .col-past-lead a {
+  color: var(--terra-soft, #e08d76);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Body copy flush left in the history too (it was centred). */
+#page-adult-company .col-past .ac-hero,
+#page-adult-company .col-past .cc-intro,
+#page-adult-company .col-past .cc-intro h2,
+#page-adult-company .col-past .cc-caption,
+#page-adult-company .col-past .gallery-section-label {
+  text-align: left;
+}
+#page-adult-company .col-past .cc-intro { margin-left: 0; }
+#page-adult-company .col-past .cc-caption { margin-top: 12px; }
+@media (min-width: 900px) {
+  #page-adult-company .col-past { padding-bottom: 72px; }
+  #page-adult-company .col-past > .col-past-toggle { margin: 0 56px; }
+  #page-adult-company .col-past-lead { padding: 0 56px; }
+}
+
+/* Phone hero: with the "What's Next" button gone the hero is shorter, and
+   the dwdC mark (bottom right) sat on the tagline. Top right is clear of
+   every line of the text stack. */
+@media (max-width: 720px) {
+  #page-adult-company .ac-hero--photo-forward .hero-logo-big {
+    top: 16px;
+    right: 16px;
+    bottom: auto;
+    height: auto;
+    width: 88px;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+  #page-adult-company .ac-hero--photo-forward .hero-logo-big img {
+    width: 88px !important;
+    height: 88px !important;
+  }
+}
+
+/* The phone sticky bar on the Collective carries its Join action in the
+   arm's terracotta, set as large text for the same 4.3:1 reason. */
+#mob-cta[data-route="adult-company"] .mob-cta-btn {
+  background: var(--terra, #C8614B) !important;
+  color: var(--forest, #0c1f17) !important;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+/* The next-class line takes two short lines beside the wider button rather
+   than an ellipsis mid-date. */
+#mob-cta[data-route="adult-company"] .mob-cta-label {
+  white-space: normal;
+  line-height: 1.35;
+}
+
+/* ── Teachers: assistants without photos are text entries ────────────── */
+#page-teachers .rf-card--text { gap: 4px; }
+#page-teachers .rf-grid--assist {
+  gap: 24px 48px;
+  padding-top: 12px;
+}
+
+/* ── Contact: the /schedule/ checkout's field treatment ───────────────── */
+#page-contact .form-group { margin-bottom: 16px; }
+#page-contact .form-group label,
+#page-contact .contact-reason legend {
+  display: block;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(250, 243, 232, 0.78);
+  margin: 0 0 0.3rem;
+  padding: 0;
+}
+#page-contact .form-optional { color: rgba(250, 243, 232, 0.78); }
+#page-contact .form-group input,
+#page-contact .form-group textarea {
+  padding: 0.6rem 0.7rem;
+  background: rgba(250, 243, 232, 0.06);
+  border: 1px solid rgba(250, 243, 232, 0.4);
+  border-radius: 0;
+  color: var(--ivory, #FAF3E8);
+  color-scheme: dark;
+  min-height: 44px;
+  box-shadow: none;
+}
+#page-contact .form-group textarea { min-height: 140px; }
+#page-contact .form-group input::placeholder,
+#page-contact .form-group textarea::placeholder { color: rgba(250, 243, 232, 0.5); }
+#page-contact .form-group input:focus,
+#page-contact .form-group textarea:focus,
+#page-contact .form-group input:focus-visible,
+#page-contact .form-group textarea:focus-visible {
+  outline: none;
+  border-color: var(--pink, #FF7AA2);
+  box-shadow: 0 0 0 1px var(--pink, #FF7AA2);
+  background: rgba(250, 243, 232, 0.06);
+}
+#page-contact .form-group input.invalid,
+#page-contact .form-group textarea.invalid,
+#page-contact .form-group [aria-invalid="true"] { border-color: #d4775f; }
+/* The reason pills: 24px of air before the Message label. */
+#page-contact .contact-reason {
+  border: 0;
+  padding: 0;
+  margin: 0 0 24px;
+  min-width: 0;
+}
+#page-contact .contact-reason legend { margin-bottom: 0.5rem; }
+/* Both Instagram handles at the value size (the second was 0.85rem). */
+#page-contact .contact-ig-next { margin-top: 8px; }
+
+/* ── Footer: the "|" never starts a line of its own ───────────────────── */
+@media (max-width: 720px) {
+  footer.site-footer .footer-bottom .footer-sep { display: none; }
+  footer.site-footer .footer-bottom .footer-copy { flex-basis: 100%; text-align: center; text-wrap: balance; }
+}

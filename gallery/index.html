@@ -5,6 +5,31 @@
   <!-- Generated shell: scripts/build-routes.mjs. Do not edit by hand,
        edit index.html and re-run. -->
   <script>window.__dwd_route = "gallery";</script>
+  <!-- Route table + legacy #hash redirect (2026-09-24). The one copy of the
+       page list: js/main.js reads window.__dwd_routes rather than keeping its
+       own. An old link that names a page by hash (/#proseries,
+       /#contact?reason=adult) goes straight to that page's real path with
+       location.replace, before anything paints: it used to show Home for 0.5
+       to 0.9s on a phone first. Anchors inside a page (#ps-faq, #interest,
+       #amuse) are left alone; main.js resolves those after the body loads. -->
+  <script>
+  (function (l) {
+    var R = window.__dwd_routes = {
+      path: { 'home': '/', 'proseries': '/proseries/', 'adult-company': '/collective/',
+              'teachers': '/teachers/', 'schedule': '/schedule/', 'gallery': '/gallery/',
+              'contact': '/contact/', 'privacy': '/privacy/' },
+      // Performances and Classes were merged into the Collective, About into
+      // Teachers. #early-access names an element (#interest), not a page.
+      legacy: { 'classes-events': 'adult-company', 'performances': 'adult-company',
+                'about': 'teachers', 'early-access': 'interest' }
+    };
+    var own = function (o, k) { return Object.prototype.hasOwnProperty.call(o, k); };
+    var h = l.hash.slice(1).split('?'), name = own(R.legacy, h[0]) ? R.legacy[h[0]] : h[0];
+    if (!h[0] || !own(R.path, name) || l.pathname === R.path[name]) return;
+    var q = [l.search.slice(1), h[1]].filter(Boolean).join('&');
+    try { l.replace(R.path[name] + (q ? '?' + q : '')); } catch (e) {}
+  })(location);
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0c1f17">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -452,8 +477,8 @@
 
       <!-- DROP IN feature panel (2026-09-14, addendum B). Row 1 of THIS WEEK
            was a hairline in a ledger; the drop-in is the push, so it is now the
-           one focal point under the hero. Same feed, same fallback contract as
-           the ledger below: the markup ships a correct static answer and
+           one focal point under the hero. Same fallback contract as season.js
+           and dwdc-next.js: the markup ships a correct static answer and
            js/now.js only ever replaces a line with something truer. One ambient
            layer on the page (the pink wash behind the numeral) and one authored
            reveal. Nothing else moves. -->
@@ -484,39 +509,11 @@
         </div>
       </section>
 
-      <!-- THIS WEEK (2026-09-14 front door). Three live rows in the site's
-           ledger grammar: hairlines, no boxes, one text link each. Rendered by
-           js/now.js from public_site_schedule + public_site_dwdc_events +
-           window.DWD_SEASON.
-
-           Progressive enhancement, same contract as season.js and dwdc-next.js:
-           the markup below ships a correct, current static answer for all three
-           rows. now.js only ever REPLACES a line with something truer. Feed
-           down, CDN blocked, JS off — the block still reads as a finished page
-           rather than an empty box. Do not "simplify" these fallbacks away. -->
-      <section class="fd-now reveal" id="now" aria-label="This week">
-        <h2 class="fd-now-kicker">THIS WEEK</h2>
-        <ul class="fd-rows">
-          <li class="fd-row" data-now="proseries">
-            <span class="fd-row-label">ProSeries</span>
-            <span class="fd-row-main">
-              <span class="fd-row-title">Season One is underway</span>
-              <!-- Chair numbers render from window.DWD_SEASON (js/season.js) via
-                   js/now.js. Edit them there, never here. -->
-              <span class="fd-row-meta" data-now-meta>13 chairs open &middot; Prep 5 &middot; Elite 4 &middot; Pro 4</span>
-            </span>
-            <a class="fd-row-link" href="#interest" data-now-link data-track="now-apply">Apply &rarr;</a>
-          </li>
-          <li class="fd-row" data-now="collective">
-            <span class="fd-row-label">Collective</span>
-            <span class="fd-row-main">
-              <span class="fd-row-title" data-now-title>Adult modern company</span>
-              <span class="fd-row-meta" data-now-meta>18 and up &middot; no audition &middot; $15 at the door</span>
-            </span>
-            <a class="fd-row-link" href="/collective/" data-now-link data-track="now-collective">About the Collective &rarr;</a>
-          </li>
-        </ul>
-      </section>
+      <!-- THIS WEEK (#now) was deleted 2026-09-24 (site cleanup, lane B). Its
+           ProSeries row ("Season One is underway / 13 chairs open") and
+           Collective row said what the two path cards right below say, and
+           put open chairs on Home three ways. js/now.js no longer looks for
+           it. See git history for the prior markup. -->
 
       <!-- THE FORK — the two programs, hoisted directly under the hero so the
            primary choice is the first thing a visitor makes (was buried 5th). -->
@@ -576,10 +573,10 @@
            hide-after Jul 26). See git history for prior markup. -->
 
       <!-- The Season One CTA panel ("Spots remain" + the countdown to Aug 10)
-           was deleted 2026-09-14 in the front-door pass. THIS WEEK row 2 now
-           states the chair count live, from the same DWD_SEASON numbers, above
-           the fold — a second panel saying it again 1,200px down was the
-           duplicate. Its countdown clock was already spent (Aug 10 passed) and
+           was deleted 2026-09-14 in the front-door pass. The ProSeries path
+           card above states the chair count live, from the same DWD_SEASON
+           numbers (THIS WEEK did too until 2026-09-24) — a second panel saying
+           it again 1,200px down was the duplicate. Its countdown clock was already spent (Aug 10 passed) and
            the [data-season-clock] IIFE in eras.js simply finds nothing now.
            See git history for the prior markup. -->
 
@@ -704,108 +701,61 @@
           <h1>The Collective</h1>
           <div class="sub">Modern / Contemporary Dance for Adults 18+</div>
           <div class="tagline">No audition. No experience required. Just show up ready to move.</div>
-          <a href="#dwdc-next" class="btn btn-blush ac-hero-amuse-jump" data-track="collective-next-jump">What's Next <span aria-hidden="true">&darr;</span></a>
         </div>
         <div class="hero-logo-big">
           <img src="/images/logos/v3/dwdC-hero-transparent.svg" alt="dwdCOLLECTIVE" width="640" height="640" loading="lazy" decoding="async">
         </div>
       </div>
 
-      <nav class="chapter-rail" aria-label="Collective sections">
-        <a href="#col-about">The Collective</a>
-        <a href="#col-who">Who It's For</a>
-        <a href="#dwdc-next">What's Next</a>
-        <a href="#amuse">A&middot;Muse</a>
-        <a href="#amusing-spaces">Origin</a>
-      </nav>
+      <!-- ONE JOINING SCREEN (2026-09-24, site cleanup lane B). The three most
+           recent contact messages were all adults asking to join, and the page
+           answered with 9,000px of June. So the top of the page now answers
+           what, who, where, cost and next class, with ONE filled action; the
+           shows live behind "Past shows" below, collapsed, all of it kept.
+           The chapter rail and the hero's "What's Next" jump were for the long
+           page and went with it.
 
-      <div class="content-section reveal">
-        <div class="chapter">
-          <span class="no"><sup>No.</sup>02</span>
-          <span class="lbl">Collective · Adult Company</span>
-        </div>
-      </div>
-
-      <!-- Consolidated Collective card -->
-      <section class="collective-card reveal" id="col-about" aria-label="dwdCOLLECTIVE · overview">
-        <div class="cc-intro">
-          <h2>The Collective</h2>
-          <p>I didn't start dwdCOLLECTIVE to run a drop-in class. I started it because adults 18 and up deserve what competitive dancers get: real training, real choreography, a real stage. Whether you danced your whole life or you've never set foot in a studio, this is your company.</p>
-          <p>In June 2026 we took our first stage. <em>A&middot;Muse in Space</em> at Orlando Ballet, presented by Aric Barrow. Original contemporary modern choreography, danced by adults of all levels, in front of a full house. That was the proof. Now we build the next one. <a href="#amuse">See how it went &rarr;</a></p>
-        </div>
-
-        <!-- NEXT CLASS (item 1.2, 2026-09-02). Rendered from the anon-readable
-             view public_site_dwdc_events: upcoming, non-cancelled adult-program
-             events straight out of the Director calendar. The empty state below
-             is the markup default and is the launch state today, because there
-             is no Collective class on the calendar yet. Put one there (program
-             adult) and this block fills itself in. See js/dwdc-next.js. -->
-        <div class="dnc" id="dwdc-next-class" data-state="empty">
-          <span class="dnc-eyebrow">Next class</span>
-          <div class="dnc-main" data-dnc-main>
-            <p class="dnc-empty">The next class date is being set. Follow <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a>, or get on the list and I will text you the moment it is on the calendar.</p>
-          </div>
-          <ul class="dnc-more" data-dnc-more hidden></ul>
-        </div>
-
-        <div class="cc-grid">
-
-          <div class="cc-section">
-            <h3>Where We Dance</h3>
-            <div class="cc-day-name">Exchange Dance &middot; Orlando</div>
-            <ul class="cc-slots">
-              <li>
-                <span class="cc-slot-time">Studio</span>
-                <div>
-                  <span class="cc-slot-name">Exchange Dance</span>
-                  <p class="cc-slot-desc">7409 Chancery Lane, Orlando, FL. Our home since August 2026.</p>
-                </div>
-              </li>
-              <li>
-                <span class="cc-slot-time">Who</span>
-                <div>
-                  <span class="cc-slot-name">Adults 18+ &middot; all levels</span>
-                  <p class="cc-slot-desc">No audition. No experience required.</p>
-                </div>
-              </li>
-              <li>
-                <span class="cc-slot-time">What</span>
-                <div>
-                  <span class="cc-slot-name">Modern &amp; contemporary</span>
-                  <p class="cc-slot-desc">Class work, original choreography, and stage time when a project is on.</p>
-                </div>
-              </li>
-            </ul>
-            <p class="cc-meta">Class days and rehearsal cycles are announced per project on Instagram.</p>
-          </div>
-
-          <div class="cc-section cc-pricing-block">
-            <h3>Cost to Dance</h3>
-            <ul class="cc-prices">
-              <li>
-                <span class="cc-price-amount">$15</span>
-                <div>
-                  <span class="cc-price-label">Per class</span>
-                  <span class="cc-price-desc">Pay-as-you-go</span>
-                </div>
-              </li>
-            </ul>
-            <p style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 16px; color: #c4baa8; margin: 16px 0 8px;">No contract and no monthly commitment. Come when you can. When a performance project is on, I'll tell you up front what the rehearsal commitment is.</p>
-
-            <div class="cc-payment">
-              <p class="cc-payment-label">Pay at class:</p>
-              <div class="payment-methods">
-                <span class="payment-chip">Cash</span>
-                <span class="payment-chip">Venmo</span>
-              </div>
+           NEXT CLASS: rendered from the anon-readable view
+           public_site_dwdc_events (upcoming, non-cancelled adult-program events
+           out of the Director calendar). The empty state below is the markup
+           default and the launch state today. Put a class on the calendar
+           (program adult) and js/dwdc-next.js writes its date into the same
+           spot. The Join button stays the page's one action either way. -->
+      <section class="col-join" id="dwdc-next" aria-label="Join dwdCOLLECTIVE">
+        <div class="col-join-copy">
+          <p class="col-join-lead">I didn't start dwdCOLLECTIVE to run a drop-in class. I started it because adults 18 and up deserve what competitive dancers get: real training, real choreography, a real stage. Whether you danced your whole life or you've never set foot in a studio, this is your company.</p>
+          <dl class="col-facts">
+            <div class="col-fact">
+              <dt>What</dt>
+              <dd><span class="col-fact-main">Modern &amp; contemporary</span> <span class="col-fact-sub">Class work, original choreography, and stage time when a project is on.</span></dd>
             </div>
-
+            <div class="col-fact">
+              <dt>Who</dt>
+              <dd><span class="col-fact-main">Adults 18+ &middot; all levels</span> <span class="col-fact-sub">No audition. No experience required.</span></dd>
+            </div>
+            <div class="col-fact">
+              <dt>Where</dt>
+              <dd><span class="col-fact-main">Exchange Dance</span> <span class="col-fact-sub">7409 Chancery Lane, Orlando, FL. Our home since August 2026.</span></dd>
+            </div>
+            <div class="col-fact">
+              <dt>Cost</dt>
+              <dd><span class="col-fact-main">$15 per class &middot; pay-as-you-go</span> <span class="col-fact-sub">Pay at class: cash or Venmo. No contract and no monthly commitment. Come when you can. When a performance project is on, I'll tell you up front what the rehearsal commitment is.</span></dd>
+            </div>
+          </dl>
+        </div>
+        <div class="col-join-act">
+          <div class="dnc" id="dwdc-next-class" data-state="empty">
+            <div class="dnc-main" data-dnc-main>
+              <p class="dnc-empty">Next class: date coming soon.</p>
+            </div>
+            <ul class="dnc-more" data-dnc-more hidden></ul>
           </div>
-
+          <a class="col-join-btn" href="/contact/?reason=adult" data-track="adult-join-collective">Join the Collective <span aria-hidden="true">&rarr;</span></a>
+          <p class="col-join-follow">Classes and the next round of performances run out of Exchange Dance this season. Dates, times, and casting calls go up on Instagram first. Follow <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener" data-track="adult-follow-ig">@dwd_collective</a> so you don't miss the call.</p>
         </div>
       </section>
 
-      <div class="content-section reveal" id="col-who">
+      <div class="col-who" id="col-who">
         <h2>Who This Is For</h2>
         <ul class="audience-list">
           <li>Adults 18+ who danced growing up and want to get back into it</li>
@@ -816,151 +766,153 @@
         </ul>
       </div>
 
-      <div class="cta-banner" id="dwdc-next">
-        <!-- Headline is replaced by js/dwdc-next.js when the calendar has an
-             upcoming adult class; this is the no-rows copy. -->
-        <h3 data-dnc-band-title>The next project is coming.</h3>
-        <p>Classes and the next round of performances run out of Exchange Dance this season. Dates, times, and casting calls go up on Instagram first. Follow <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a> so you don't miss the call.</p>
-        <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener" class="btn btn-primary" data-track="adult-follow-ig">Follow @dwd_collective</a>
-        <a href="/contact/?reason=adult" class="btn btn-primary" data-track="adult-join-collective">Join the Collective &rarr;</a>
-      </div>
+      <!-- PAST SHOWS: everything about the shows so far (A·Muse in Space,
+           June 2026; Beastly Kingdom, 2025), kept whole behind one toggle.
+           A link to #amuse or #amusing-spaces opens it first (js/main.js,
+           scrollToAnchor), and its video poster only loads once it is open. -->
+      <details class="col-past" id="col-past" data-past-shows>
+        <summary class="col-past-toggle" data-track="collective-past-shows">Past shows</summary>
+        <div class="col-past-body">
+          <p class="col-past-lead">In June 2026 we took our first stage. <em>A&middot;Muse in Space</em> at Orlando Ballet, presented by Aric Barrow. Original contemporary modern choreography, danced by adults of all levels, in front of a full house. That was the proof. Now we build the next one. <a href="#amuse">See how it went &rarr;</a></p>
 
-      <!-- ══════════ A·MUSE IN SPACE — featured performance (merged from Performances) ══════════ -->
-      <section id="amuse" aria-label="A·Muse in Space · featured performance">
-        <div class="ac-hero" style="background-image: linear-gradient(rgba(15,35,24,0.82), rgba(15,35,24,0.94)), url('/images/photos/opt/dwdc-7i6a3724-1600.webp'); background-size: cover; background-position: center;">
-          <div class="label">Aric Barrow presents</div>
-          <h2 class="ac-hero-title">A&middot;Muse in Space</h2>
-          <div class="sub">Saturday, June 27, 2026 &middot; Orlando Ballet</div>
-          <div class="tagline">featuring dwdCOLLECTIVE</div>
-        </div>
-
-        <div class="content-section reveal">
-          <div class="chapter">
-            <span class="no"><sup>No.</sup>03</span>
-            <span class="lbl">Performances &middot; On Stage</span>
-          </div>
-        </div>
-
-        <section class="collective-card reveal" aria-label="A·Muse in Space · overview">
-          <div class="cc-intro">
-            <h2>The Show</h2>
-            <p>dwdCOLLECTIVE took the stage in <em>A&middot;Muse in Space</em>, presented by Aric Barrow at Orlando Ballet. We danced an original contemporary modern piece: upbeat, full-out, built for adult dancers who wanted a real stage and a real room.</p>
-            <p>This was dwdC's first public performance. We'd been building toward it since we started, and it won't be the last. The next one goes up out of Exchange Dance this season.</p>
+        <!-- ══════════ A·MUSE IN SPACE — featured performance (merged from Performances) ══════════ -->
+        <section id="amuse" aria-label="A·Muse in Space · featured performance">
+          <div class="ac-hero" style="background-image: linear-gradient(rgba(15,35,24,0.82), rgba(15,35,24,0.94)), url('/images/photos/opt/dwdc-7i6a3724-1600.webp'); background-size: cover; background-position: center;">
+            <div class="label">Aric Barrow presents</div>
+            <h2 class="ac-hero-title">A&middot;Muse in Space</h2>
+            <div class="sub">Saturday, June 27, 2026 &middot; Orlando Ballet</div>
+            <div class="tagline">featuring dwdCOLLECTIVE</div>
           </div>
 
-          <div class="cc-grid">
-            <div class="cc-section">
-              <h3>The Details</h3>
-              <ul class="cc-slots">
-                <li>
-                  <span class="cc-slot-time">Sat Jun 27, 2026</span>
-                  <div>
-                    <span class="cc-slot-name">Orlando Ballet</span>
-                    <p class="cc-slot-desc">Our first public performance, presented by Aric Barrow.</p>
-                  </div>
-                </li>
-                <li>
-                  <span class="cc-slot-time">The Piece</span>
-                  <div>
-                    <span class="cc-slot-name">Contemporary modern &middot; upbeat</span>
-                    <p class="cc-slot-desc">Original choreography by Dixon Bowles.</p>
-                  </div>
-                </li>
-                <li>
-                  <span class="cc-slot-time">The Cast</span>
-                  <div>
-                    <span class="cc-slot-name">Adult dancers &middot; ages 18+</span>
-                    <p class="cc-slot-desc">All levels, no audition. This first cast made it happen.</p>
-                  </div>
-                </li>
-              </ul>
-              <p class="cc-meta">Presented by Aric Barrow &middot; performed at Orlando Ballet</p>
+          <div class="content-section reveal">
+            <div class="chapter">
+              <span class="no"><sup>No.</sup>03</span>
+              <span class="lbl">Performances &middot; On Stage</span>
+            </div>
+          </div>
+
+          <section class="collective-card reveal" aria-label="A·Muse in Space · overview">
+            <div class="cc-intro">
+              <h2>The Show</h2>
+              <p>dwdCOLLECTIVE took the stage in <em>A&middot;Muse in Space</em>, presented by Aric Barrow at Orlando Ballet. We danced an original contemporary modern piece: upbeat, full-out, built for adult dancers who wanted a real stage and a real room.</p>
+              <p>This was dwdC's first public performance. We'd been building toward it since we started, and it won't be the last. The next one goes up out of Exchange Dance this season.</p>
             </div>
 
-            <div class="cc-section">
-              <h3>What It Took</h3>
-              <ul class="cc-slots">
-                <li>
-                  <span class="cc-slot-time">5 weeks</span>
-                  <div>
-                    <span class="cc-slot-name">Four Sunday rehearsals</span>
-                    <p class="cc-slot-desc">Two hours at a time, built around everyone's work week.</p>
-                  </div>
-                </li>
-                <li>
-                  <span class="cc-slot-time">The cast</span>
-                  <div>
-                    <span class="cc-slot-name">Adults with day jobs</span>
-                    <p class="cc-slot-desc">Some had trained their whole lives. Some hadn't been on a stage in years. Nobody auditioned.</p>
-                  </div>
-                </li>
-                <li>
-                  <span class="cc-slot-time">The ask</span>
-                  <div>
-                    <span class="cc-slot-name">Show up three times out of four</span>
-                    <p class="cc-slot-desc">That was the whole commitment, and it was enough to make a piece.</p>
-                  </div>
-                </li>
-              </ul>
+            <div class="cc-grid">
+              <div class="cc-section">
+                <h3>The Details</h3>
+                <ul class="cc-slots">
+                  <li>
+                    <span class="cc-slot-time">Sat Jun 27, 2026</span>
+                    <div>
+                      <span class="cc-slot-name">Orlando Ballet</span>
+                      <p class="cc-slot-desc">Our first public performance, presented by Aric Barrow.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="cc-slot-time">The Piece</span>
+                    <div>
+                      <span class="cc-slot-name">Contemporary modern &middot; upbeat</span>
+                      <p class="cc-slot-desc">Original choreography by Dixon Bowles.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="cc-slot-time">The Cast</span>
+                    <div>
+                      <span class="cc-slot-name">Adult dancers &middot; ages 18+</span>
+                      <p class="cc-slot-desc">All levels, no audition. This first cast made it happen.</p>
+                    </div>
+                  </li>
+                </ul>
+                <p class="cc-meta">Presented by Aric Barrow &middot; performed at Orlando Ballet</p>
+              </div>
+
+              <div class="cc-section">
+                <h3>What It Took</h3>
+                <ul class="cc-slots">
+                  <li>
+                    <span class="cc-slot-time">5 weeks</span>
+                    <div>
+                      <span class="cc-slot-name">Four Sunday rehearsals</span>
+                      <p class="cc-slot-desc">Two hours at a time, built around everyone's work week.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="cc-slot-time">The cast</span>
+                    <div>
+                      <span class="cc-slot-name">Adults with day jobs</span>
+                      <p class="cc-slot-desc">Some had trained their whole lives. Some hadn't been on a stage in years. Nobody auditioned.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="cc-slot-time">The ask</span>
+                    <div>
+                      <span class="cc-slot-name">Show up three times out of four</span>
+                      <p class="cc-slot-desc">That was the whole commitment, and it was enough to make a piece.</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <div class="content-section reveal">
+            <div class="gallery-section-label">On Stage &middot; June 27, 2026</div>
+            <div class="gallery-grid">
+              <img width="1600" height="1144" src="/images/photos/opt/dwdc-amuse-01-1600.webp" srcset="/images/photos/opt/dwdc-amuse-01-800.webp 800w, /images/photos/opt/dwdc-amuse-01-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE on stage at A&middot;Muse in Space &middot; the company spread across the floor" class="wide" loading="lazy" data-lightbox>
+              <img width="1600" height="1042" src="/images/photos/opt/dwdc-amuse-02-1600.webp" srcset="/images/photos/opt/dwdc-amuse-02-800.webp 800w, /images/photos/opt/dwdc-amuse-02-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE in motion at Orlando Ballet" loading="lazy" data-lightbox>
+              <img width="1600" height="1310" src="/images/photos/opt/dwdc-amuse-03-1600.webp" srcset="/images/photos/opt/dwdc-amuse-03-800.webp 800w, /images/photos/opt/dwdc-amuse-03-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE dancers mid-phrase" loading="lazy" data-lightbox>
+              <img width="1600" height="1188" src="/images/photos/opt/dwdc-amuse-04-1600.webp" srcset="/images/photos/opt/dwdc-amuse-04-800.webp 800w, /images/photos/opt/dwdc-amuse-04-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE walking downstage together" loading="lazy" data-lightbox>
+              <img width="1600" height="1118" src="/images/photos/opt/dwdc-amuse-05-1600.webp" srcset="/images/photos/opt/dwdc-amuse-05-800.webp 800w, /images/photos/opt/dwdc-amuse-05-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE holding a formation on stage" loading="lazy" data-lightbox>
+              <img width="1600" height="1010" src="/images/photos/opt/dwdc-amuse-06-1600.webp" srcset="/images/photos/opt/dwdc-amuse-06-800.webp 800w, /images/photos/opt/dwdc-amuse-06-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE with arms lifted, full company" loading="lazy" data-lightbox>
+              <img width="1600" height="1542" src="/images/photos/opt/dwdc-amuse-07-1600.webp" srcset="/images/photos/opt/dwdc-amuse-07-800.webp 800w, /images/photos/opt/dwdc-amuse-07-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE leaping in the closing section" loading="lazy" data-lightbox>
+              <img width="1600" height="1314" src="/images/photos/opt/dwdc-amuse-08-1600.webp" srcset="/images/photos/opt/dwdc-amuse-08-800.webp 800w, /images/photos/opt/dwdc-amuse-08-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="A dwdCOLLECTIVE dancer alone in the light" class="wide" loading="lazy" data-lightbox>
+            </div>
+            <p class="cc-meta cc-caption">A&middot;Muse in Space &middot; Orlando Ballet &middot; presented by Aric Barrow</p>
+          </div>
+
+        </section>
+
+        <!-- ══════════ AMUSING SPACES 2025 — the piece the Collective came out of ══════════ -->
+        <section id="amusing-spaces" aria-label="Amusing Spaces 2025 · before the Collective">
+          <div class="content-section reveal">
+            <div class="chapter">
+              <span class="no"><sup>No.</sup>04</span>
+              <span class="lbl">Origin &middot; Before the Collective</span>
+            </div>
+          </div>
+
+          <section class="collective-card reveal" aria-label="Amusing Spaces 2025 · overview">
+            <div class="cc-intro">
+              <h2>Before the Collective</h2>
+              <p>Before dwdCOLLECTIVE had a name, there was this. <em>Beastly Kingdom</em>, staged in Aric Barrow's <em>Amusing Spaces</em> showcase in 2025. A stage full of adults in black dancing original contemporary work, most of them with day jobs and nowhere in particular to put this.</p>
+              <p>It worked. So I stopped wondering whether adults wanted this and started building somewhere for them to keep doing it. The Collective came out of this piece.</p>
+            </div>
+          </section>
+
+          <div class="content-section reveal">
+            <div class="as-video-wrap">
+              <video class="as-video" controls preload="none" playsinline
+                     data-poster="/images/photos/opt/amusing-spaces-poster.webp"
+                     aria-label="Beastly Kingdom · Amusing Spaces 2025 · performance highlight">
+                <source src="/video/amusing-spaces-highlight.mp4" type="video/mp4">
+                Your browser doesn't support embedded video.
+              </video>
+            </div>
+            <p class="cc-meta cc-caption">Excerpt &middot; <em>Beastly Kingdom</em> &middot; Amusing Spaces, 2025 &middot; choreography by Dixon Bowles</p>
+          </div>
+
+          <div class="content-section reveal">
+            <div class="gallery-grid">
+              <img width="1600" height="740" src="/images/photos/opt/amusing-spaces-01-1600.webp" srcset="/images/photos/opt/amusing-spaces-01-800.webp 800w, /images/photos/opt/amusing-spaces-01-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Adult dancers in black spread across the stage at Amusing Spaces, 2025" class="wide" loading="lazy" data-lightbox>
+              <img width="1600" height="740" src="/images/photos/opt/amusing-spaces-02-1600.webp" srcset="/images/photos/opt/amusing-spaces-02-800.webp 800w, /images/photos/opt/amusing-spaces-02-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="The ensemble mid-phrase against the amber cyc" loading="lazy" data-lightbox>
+              <img width="1600" height="740" src="/images/photos/opt/amusing-spaces-03-1600.webp" srcset="/images/photos/opt/amusing-spaces-03-800.webp 800w, /images/photos/opt/amusing-spaces-03-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="The company gathered together near the end of the piece" loading="lazy" data-lightbox>
+              <img width="1600" height="740" src="/images/photos/opt/amusing-spaces-04-1600.webp" srcset="/images/photos/opt/amusing-spaces-04-800.webp 800w, /images/photos/opt/amusing-spaces-04-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Dancers in silhouette as the lights drop" class="wide" loading="lazy" data-lightbox>
             </div>
           </div>
         </section>
-
-        <div class="content-section reveal">
-          <div class="gallery-section-label">On Stage &middot; June 27, 2026</div>
-          <div class="gallery-grid">
-            <img width="1600" height="1144" src="/images/photos/opt/dwdc-amuse-01-1600.webp" srcset="/images/photos/opt/dwdc-amuse-01-800.webp 800w, /images/photos/opt/dwdc-amuse-01-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE on stage at A&middot;Muse in Space &middot; the company spread across the floor" class="wide" loading="lazy" data-lightbox>
-            <img width="1600" height="1042" src="/images/photos/opt/dwdc-amuse-02-1600.webp" srcset="/images/photos/opt/dwdc-amuse-02-800.webp 800w, /images/photos/opt/dwdc-amuse-02-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE in motion at Orlando Ballet" loading="lazy" data-lightbox>
-            <img width="1600" height="1310" src="/images/photos/opt/dwdc-amuse-03-1600.webp" srcset="/images/photos/opt/dwdc-amuse-03-800.webp 800w, /images/photos/opt/dwdc-amuse-03-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE dancers mid-phrase" loading="lazy" data-lightbox>
-            <img width="1600" height="1188" src="/images/photos/opt/dwdc-amuse-04-1600.webp" srcset="/images/photos/opt/dwdc-amuse-04-800.webp 800w, /images/photos/opt/dwdc-amuse-04-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE walking downstage together" loading="lazy" data-lightbox>
-            <img width="1600" height="1118" src="/images/photos/opt/dwdc-amuse-05-1600.webp" srcset="/images/photos/opt/dwdc-amuse-05-800.webp 800w, /images/photos/opt/dwdc-amuse-05-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE holding a formation on stage" loading="lazy" data-lightbox>
-            <img width="1600" height="1010" src="/images/photos/opt/dwdc-amuse-06-1600.webp" srcset="/images/photos/opt/dwdc-amuse-06-800.webp 800w, /images/photos/opt/dwdc-amuse-06-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE with arms lifted, full company" loading="lazy" data-lightbox>
-            <img width="1600" height="1542" src="/images/photos/opt/dwdc-amuse-07-1600.webp" srcset="/images/photos/opt/dwdc-amuse-07-800.webp 800w, /images/photos/opt/dwdc-amuse-07-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE leaping in the closing section" loading="lazy" data-lightbox>
-            <img width="1600" height="1314" src="/images/photos/opt/dwdc-amuse-08-1600.webp" srcset="/images/photos/opt/dwdc-amuse-08-800.webp 800w, /images/photos/opt/dwdc-amuse-08-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="A dwdCOLLECTIVE dancer alone in the light" class="wide" loading="lazy" data-lightbox>
-          </div>
-          <p class="cc-meta" style="text-align:center; margin-top:14px;">A&middot;Muse in Space &middot; Orlando Ballet &middot; presented by Aric Barrow</p>
         </div>
-
-      </section>
-
-      <!-- ══════════ AMUSING SPACES 2025 — the piece the Collective came out of ══════════ -->
-      <section id="amusing-spaces" aria-label="Amusing Spaces 2025 · before the Collective">
-        <div class="content-section reveal">
-          <div class="chapter">
-            <span class="no"><sup>No.</sup>04</span>
-            <span class="lbl">Origin &middot; Before the Collective</span>
-          </div>
-        </div>
-
-        <section class="collective-card reveal" aria-label="Amusing Spaces 2025 · overview">
-          <div class="cc-intro">
-            <h2>Before the Collective</h2>
-            <p>Before dwdCOLLECTIVE had a name, there was this. <em>Beastly Kingdom</em>, staged in Aric Barrow's <em>Amusing Spaces</em> showcase in 2025. A stage full of adults in black dancing original contemporary work, most of them with day jobs and nowhere in particular to put this.</p>
-            <p>It worked. So I stopped wondering whether adults wanted this and started building somewhere for them to keep doing it. The Collective came out of this piece.</p>
-          </div>
-        </section>
-
-        <div class="content-section reveal">
-          <div class="as-video-wrap">
-            <video class="as-video" controls preload="none" playsinline
-                   poster="/images/photos/opt/amusing-spaces-poster.webp"
-                   aria-label="Beastly Kingdom · Amusing Spaces 2025 · performance highlight">
-              <source src="/video/amusing-spaces-highlight.mp4" type="video/mp4">
-              Your browser doesn't support embedded video.
-            </video>
-          </div>
-          <p class="cc-meta" style="text-align:center; margin-top:14px;">Excerpt &middot; <em>Beastly Kingdom</em> &middot; Amusing Spaces, 2025 &middot; choreography by Dixon Bowles</p>
-        </div>
-
-        <div class="content-section reveal">
-          <div class="gallery-grid">
-            <img width="1600" height="740" src="/images/photos/opt/amusing-spaces-01-1600.webp" srcset="/images/photos/opt/amusing-spaces-01-800.webp 800w, /images/photos/opt/amusing-spaces-01-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Adult dancers in black spread across the stage at Amusing Spaces, 2025" class="wide" loading="lazy" data-lightbox>
-            <img width="1600" height="740" src="/images/photos/opt/amusing-spaces-02-1600.webp" srcset="/images/photos/opt/amusing-spaces-02-800.webp 800w, /images/photos/opt/amusing-spaces-02-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="The ensemble mid-phrase against the amber cyc" loading="lazy" data-lightbox>
-            <img width="1600" height="740" src="/images/photos/opt/amusing-spaces-03-1600.webp" srcset="/images/photos/opt/amusing-spaces-03-800.webp 800w, /images/photos/opt/amusing-spaces-03-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="The company gathered together near the end of the piece" loading="lazy" data-lightbox>
-            <img width="1600" height="740" src="/images/photos/opt/amusing-spaces-04-1600.webp" srcset="/images/photos/opt/amusing-spaces-04-800.webp 800w, /images/photos/opt/amusing-spaces-04-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Dancers in silhouette as the lights drop" class="wide" loading="lazy" data-lightbox>
-          </div>
-        </div>
-      </section>
+      </details>
     </section>
 
     <!-- ══════════ PROSERIES ══════════ -->
@@ -2115,19 +2067,19 @@
         <div class="rf-assist-head">
           <span class="tch-rotation-eyebrow">Company Assistants</span>
         </div>
+        <!-- Text entries until their professional photos arrive (2026-09-24):
+             the initials tiles read as empty boxes. When a photo lands, add
+             its line from the comment inside the card as the card's first
+             child and drop the rf-card--text class. -->
         <div class="rf-grid rf-grid--assist">
-          <article class="rf-card rf-card--assist" data-teacher="tori">
-            <div class="rf-tile rf-tile--assist">
-              <span class="rf-initials rf-initials--assist" aria-hidden="true">TU</span>
-            </div>
+          <article class="rf-card rf-card--assist rf-card--text" data-teacher="tori">
+            <!-- PHOTO (rename to the real file): <img class="rf-photo" src="/images/photos/opt/teacher-tori-640.webp" alt="Tori Ugalde" loading="lazy" width="640" height="640"> -->
             <h3 class="rf-name">Tori Ugalde <span class="rf-disc">&middot; Strength and Stretch</span></h3>
             <p class="rf-line">Conditioning, flexibility, and warm-up leadership.</p>
           </article>
 
-          <article class="rf-card rf-card--assist" data-teacher="john">
-            <div class="rf-tile rf-tile--assist">
-              <span class="rf-initials rf-initials--assist" aria-hidden="true">JN</span>
-            </div>
+          <article class="rf-card rf-card--assist rf-card--text" data-teacher="john">
+            <!-- PHOTO (rename to the real file): <img class="rf-photo" src="/images/photos/opt/teacher-john-640.webp" alt="John Nuzzi" loading="lazy" width="640" height="640"> -->
             <h3 class="rf-name">John Nuzzi <span class="rf-disc">&middot; Rehearsal Assistant</span></h3>
             <p class="rf-line">Pro track dancer and rehearsal assistant.</p>
           </article>
@@ -2359,13 +2311,13 @@
               <input type="email" id="contact-email" placeholder="your@email.com" required inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false">
             </div>
             <div class="form-group">
-              <label for="contact-phone">Phone <span style="opacity:.6;font-weight:400;">(optional)</span></label>
+              <label for="contact-phone">Phone <span class="form-optional">(optional)</span></label>
               <input type="tel" id="contact-phone" inputmode="tel" autocomplete="tel">
             </div>
             <input type="hidden" id="contact-reason" name="reason" value="general">
             <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
-            <fieldset class="form-group" style="border:none;padding:0;margin:0;">
-              <legend style="font-size:0.85rem;font-weight:500;color:var(--cream-faint);margin-bottom:0.5rem;">What's this about?</legend>
+            <fieldset class="form-group contact-reason">
+              <legend>What's this about?</legend>
               <div class="toggle-group" data-name="reason" role="radiogroup" aria-label="Message topic">
                 <button type="button" class="toggle-btn" data-value="adult" role="radio" aria-checked="false">Adult Company</button>
                 <button type="button" class="toggle-btn" data-value="proseries" role="radio" aria-checked="false">ProSeries</button>
@@ -2410,10 +2362,8 @@
           <div class="contact-detail">
             <div class="dlabel">Instagram</div>
             <div class="value">
-              <a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> (ProSeries)
-              <div style="font-size: 0.85rem; margin-top: 8px;">
-                <a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a> (dwdCOLLECTIVE)
-              </div>
+              <div><a href="https://instagram.com/dwdproseries" target="_blank" rel="noopener">@dwdproseries</a> (ProSeries)</div>
+              <div class="contact-ig-next"><a href="https://instagram.com/dwd_collective" target="_blank" rel="noopener">@dwd_collective</a> (dwdCOLLECTIVE)</div>
             </div>
           </div>
           <div class="contact-detail">
@@ -2519,8 +2469,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2026 Dance With Dixon LLC. All rights reserved.
-      <span class="footer-sep">|</span>
+      <span class="footer-copy">&copy; 2026 Dance With Dixon LLC. All rights reserved.</span>
+      <span class="footer-sep" aria-hidden="true">|</span>
       <a href="/privacy/" class="footer-legal-link">Privacy Policy</a>
       <!-- Tamara Mark — For Mom -->
       <svg class="tamara-mark tamara-mark--footer" viewBox="20 10 200 190" width="28" height="27" aria-hidden="true">

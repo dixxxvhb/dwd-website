@@ -11,6 +11,13 @@
    file paints. That matters: if the fetch fails, the CDN is blocked, or the
    view returns nothing, the page still reads as a finished page rather than
    an empty box. This script only ever ADDS a real class.
+
+   Since 2026-09-24 the block sits in the Collective's joining screen, right
+   above the page's one "Join the Collective" button. A found class puts its
+   DATE first and biggest, in the spot the empty line held, and adds no
+   button of its own: the page already has the one action. It also hands the
+   phone sticky bar its "Next class" line (js/now.js used to, from a Home
+   block that no longer exists).
    ═══════════════════════════════════════════════ */
 
 (function () {
@@ -24,7 +31,6 @@
 
   var MAIN = block.querySelector('[data-dnc-main]');
   var MORE = block.querySelector('[data-dnc-more]');
-  var BAND_TITLE = document.querySelector('[data-dnc-band-title]');
 
   var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
@@ -92,7 +98,7 @@
     return bits.length ? bits.join(' · ') : null;
   }
 
-  /* The published drop-in price is $15 (see the Cost to Dance block). Only
+  /* The published drop-in price is $15 (see the Cost row above it). Only
      override it when the calendar row actually carries a price, and never
      invent one: a null price means the standing price applies. */
   function priceLine(row) {
@@ -112,25 +118,22 @@
     return e;
   }
 
+  /* Date first and biggest: when is the question an adult came here with.
+     Then what it is, where, and the price, quieter. */
   function renderHero(row) {
     var frag = document.createDocumentFragment();
 
-    var title = el('h3', 'dnc-title', row.title || 'Collective class');
-    frag.appendChild(title);
+    frag.appendChild(el('span', 'dnc-eyebrow', 'Next class'));
 
     var dl = dateLine(row);
     if (dl) frag.appendChild(el('p', 'dnc-date', dl));
+
+    frag.appendChild(el('p', 'dnc-title', row.title || 'Collective class'));
 
     var vl = venueLine(row);
     if (vl) frag.appendChild(el('p', 'dnc-venue', vl));
 
     frag.appendChild(el('p', 'dnc-price', priceLine(row)));
-
-    var cta = el('a', 'btn btn-outline dnc-cta');
-    cta.href = '/contact/?reason=adult';
-    cta.setAttribute('data-track', 'dwdc-next-class-save');
-    cta.innerHTML = 'Save my spot <em>&rarr;</em>';
-    frag.appendChild(cta);
 
     MAIN.textContent = '';
     MAIN.appendChild(frag);
@@ -154,12 +157,16 @@
     MORE.hidden = false;
   }
 
-  function renderBand(row) {
-    if (!BAND_TITLE) return;
+  /* The phone sticky bar on /collective/ quotes the next class. main.js owns
+     the bar's words; this only hands it a truer line. */
+  function renderBar(row) {
+    var label = document.querySelector('#mob-cta [data-mob-label]');
     var d = localDate(row.date);
-    if (!d) return;
-    BAND_TITLE.textContent = 'Next up: ' + (row.title || 'a Collective class') +
-      ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + '.';
+    if (!label || !d) return;
+    var t = row.all_day ? null : timeLabel(row.start_time);
+    label.setAttribute('data-mob-collective',
+      'Next class · ' + DAYS[d.getDay()].slice(0, 3) + ' ' + shortDate(d) + (t ? ' · ' + t : ''));
+    if (window.DWD_MOB && window.DWD_MOB.repaint) window.DWD_MOB.repaint();
   }
 
   sb.from('public_site_dwdc_events')
@@ -171,7 +178,13 @@
         console.warn('dwdc next class:', res.error.message);
         return;
       }
-      var rows = (res.data || []).filter(function (r) { return r && r.date; });
+      /* The view already returns upcoming classes only; this is a belt for
+         the day a class ran this morning and the view has not rolled over. */
+      var today = new Date(); today.setHours(0, 0, 0, 0);
+      var rows = (res.data || []).filter(function (r) {
+        var last = r && localDate(r.end_date || r.date);
+        return last && last.getTime() >= today.getTime();
+      });
       if (!rows.length) return;
 
       rows.sort(function (a, b) { return String(a.date).localeCompare(String(b.date)); });
@@ -179,6 +192,6 @@
       block.dataset.state = 'live';
       renderHero(rows[0]);
       renderMore(rows.slice(1));
-      renderBand(rows[0]);
+      renderBar(rows[0]);
     });
 })();

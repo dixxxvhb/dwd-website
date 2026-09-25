@@ -1,23 +1,22 @@
 /* ═══════════════════════════════════════════════
    DWD — now.js
-   The home page's THIS WEEK block (#now), plus the two small numbers
-   elsewhere that have to agree with it.
+   The DROP IN panel (.dropin-feature, on Home and ProSeries), the phone
+   sticky bar's drop-in line, and the ProSeries "N of 10 filled" chips.
 
-   Three rows, three sources:
-     1. DROP IN    — public_site_schedule(today, today+20), rows where
-                     drop_in_open. Every weekly drop-in slot is listed.
-     2. PROSERIES  — window.DWD_SEASON (js/season.js owns those numbers).
-     3. COLLECTIVE — public_site_dwdc_events, the same next-row logic
-                     js/dwdc-next.js uses.
+   Two sources:
+     1. DROP IN   — public_site_schedule(today, today+20), rows where
+                    drop_in_open. Every weekly drop-in slot is listed.
+     2. CHAIRS    — window.DWD_SEASON (js/season.js owns those numbers).
+
+   Home's THIS WEEK block (#now) was deleted 2026-09-24; nothing here looks
+   for it any more. The Collective's next class (it was row 3) is
+   js/dwdc-next.js's alone, sticky-bar line included.
 
    Progressive enhancement, same contract as season.js and dwdc-next.js: the
-   markup in index.html already ships a correct static answer for all three
-   rows. This file only ever REPLACES a line with something truer. Feed down,
-   CDN blocked, Supabase absent, JS off — the block still reads as a finished
-   page rather than an empty box. Nothing here writes.
-
-   It also rewrites the phone sticky bar's label when a real open class is
-   found, and renders the ProSeries "N of 10 filled" chips from DWD_SEASON.
+   markup in index.html already ships a correct static answer. This file only
+   ever REPLACES a line with something truer. Feed down, CDN blocked,
+   Supabase absent, JS off — the panel still reads as a finished page rather
+   than an empty box. Nothing here writes.
    ═══════════════════════════════════════════════ */
 
 (function () {
@@ -82,43 +81,17 @@
     return d.getFullYear() + '-' + mm + '-' + dd;
   }
 
-  function row(name) {
-    var block = document.getElementById('now');
-    return block ? block.querySelector('[data-now="' + name + '"]') : null;
-  }
-
   function setText(scope, sel, text) {
     if (!scope || !text) return;
     var el = scope.querySelector(sel);
     if (el) el.textContent = text;
   }
 
-  /* ── Row 2: ProSeries chairs, from DWD_SEASON ─────────────────────────
-     Runs first and needs no network, so the one row that can always be
-     right is right before anything is awaited. */
+  /* ── ProSeries chairs, from DWD_SEASON ────────────────────────────────
+     Runs first and needs no network. */
   function renderSeason() {
     var S = window.DWD_SEASON;
     if (!S || !S.chairs) return;
-    var tracks = ['prep', 'elite', 'pro'];
-    var open = {}, total = 0;
-    for (var i = 0; i < tracks.length; i++) {
-      var c = S.chairs[tracks[i]];
-      if (!c) return;
-      open[tracks[i]] = c.max - c.filled;
-      total += open[tracks[i]];
-    }
-
-    var r = row('proseries');
-    if (r) {
-      var link = r.querySelector('[data-now-link]');
-      if (total <= 0) {
-        setText(r, '[data-now-meta]', 'Every chair is taken · join the wait list');
-        if (link) link.textContent = 'Wait list →';
-      } else {
-        setText(r, '[data-now-meta]', total + ' chairs open · Prep ' + open.prep +
-          ' · Elite ' + open.elite + ' · Pro ' + open.pro);
-      }
-    }
 
     /* The ProSeries pricing band's chips: "Prep 5 of 10 filled". The word is
        load-bearing — "5 of 10" under a heading reading "chairs remain" reads
@@ -294,55 +267,21 @@
     if (window.DWD_MOB && window.DWD_MOB.repaint) window.DWD_MOB.repaint();
   }
 
-  /* ── Row 3: the Collective's next class ───────────────────────────── */
-  function renderCollective(rows) {
-    rows = (rows || []).filter(function (r) { return r && r.date; });
-    if (!rows.length) return; // static fallback stands
-    rows.sort(function (a, b) { return String(a.date).localeCompare(String(b.date)); });
-
-    var ev = rows[0];
-    var d = localDate(ev.date);
-    if (!d) return;
-
-    var when = DAYS[d.getDay()] + ' ' + MONTHS_SHORT[d.getMonth()] + ' ' + d.getDate();
-    var t = ev.all_day ? null : timeLabel(ev.start_time);
-    if (t) when += ' · ' + t;
-
-    var r = row('collective');
-    if (r) {
-      setText(r, '[data-now-title]', ev.title || 'Collective class');
-      setText(r, '[data-now-meta]', when + ' · $15 at the door');
-      var link = r.querySelector('[data-now-link]');
-      if (link) link.textContent = 'Details →';
-    }
-
-    /* /collective/ gets its own sticky label: the next class, not a drop-in. */
-    var label = document.querySelector('#mob-cta [data-mob-label]');
-    if (label) {
-      label.setAttribute('data-mob-collective',
-        'Next class · ' + (ev.title || 'Collective class') + ' · ' + when);
-      if (window.DWD_MOB && window.DWD_MOB.repaint) window.DWD_MOB.repaint();
-    }
-  }
-
   renderSeason();
 
   var sb = window.__dwd_sb;
   if (!sb) return; // supabase-js unavailable — every static line stands
 
-  /* #now and the panels all live in the DOM on every route shell, because
-     every shell is a copy of the same index.html with a different section
-     shown. Observe all of them: on /proseries/ the panel is the
-     visible one and #now never comes near the viewport. */
-  var blocks = document.querySelectorAll('#now, .dropin-feature');
+  /* The panels live in the DOM on every route shell, because every shell is
+     a copy of the same index.html with a different section shown. Firing a
+     query on /teachers/ to fill a panel nobody is looking at is how a
+     schedule RPC ends up being called fourteen times in a QA sweep (and
+     500ing once). So the fetch waits until a panel is actually near the
+     viewport — which also covers arriving on Home or ProSeries by client-side
+     nav, where a route check would not. */
+  var blocks = document.querySelectorAll('.dropin-feature');
   if (!blocks.length) return;
 
-  /* #now lives in the DOM on every route shell, because every shell is a copy
-     of the same index.html with a different section shown. Firing two queries
-     on /teachers/ to fill a block nobody is looking at is how a schedule RPC
-     ends up being called fourteen times in a QA sweep (and 500ing once). So
-     the fetch waits until the block is actually near the viewport — which also
-     covers arriving on Home by client-side nav, where a route check would not. */
   var fired = false;
 
   function load() {
@@ -363,19 +302,6 @@
           console.warn('this week drop-ins:', err && err.message);
         });
     }
-
-    sb.from('public_site_dwdc_events')
-      .select('*')
-      .limit(3)
-      .then(function (res) {
-        if (res.error) {
-          console.warn('this week collective:', res.error.message);
-          return;
-        }
-        renderCollective(res.data || []);
-      }, function (err) {
-        console.warn('this week collective:', err && err.message);
-      });
   }
 
   if (typeof IntersectionObserver !== 'function') {
