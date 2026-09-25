@@ -1,5 +1,7 @@
 # Site cleanup, two lanes (2026-09-24)
 
+**STATUS: DONE, LIVE 2026-09-25 as ebd8493.** Lane A b4e546d (ProSeries one ground), lane B b41e979 (Home, Collective, Teachers, Contact, footer, speed, legacy hash), ebd8493 (the four ProSeries story posters lane B could not touch). Live sweep ALL CLEAN; no off-route media. Waiting on Dixon only for content: the Collective date and Tori/John photos (Apple Reminders 9/28, 9/29).
+
 Dixon, 2026-09-24: "lets get website fully cleaned up merged and deployed all things ready." Source: the NEEDS WORK list in `docs/audits/2026-09-24-site-review.md` (analytics + live QA + visual read) and the 09-22 audit's NOT DONE list. The drop-in page (`/schedule/`) is already merged and live (d12c8ca): do not touch `#page-schedule`, `js/schedule.js` or the schedule CSS in either lane.
 
 Two builders work in parallel, each in its own worktree and branch, on disjoint sections. Martha merges both, regenerates shells and CSS, sweeps, and deploys. **Neither lane pushes or commits to `main`.**

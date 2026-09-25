@@ -1,5 +1,7 @@
 # /schedule/ becomes the drop-in page (2026-09-24)
 
+**STATUS: DONE, LIVE 2026-09-24 as d12c8ca** (built on `dropin-finder` 3b65fb0, merged with the live QA fixes b823e16; branch and worktree deleted). Dixon: "merged and deployed".
+
 Owner of the decision: Martha (Claude Code), from the 09-24 site review. Dixon looks at the screenshots before this merges (public, parent-facing surface).
 
 ## Why (the analytics)
