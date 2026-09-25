@@ -162,6 +162,11 @@
     });
   }
 
+  // Of those, the ones a visitor can book right now.
+  function bookableRows(rows) {
+    return upcomingRows(rows).filter(function (r) { return r.drop_in_open && r.spots_left !== 0; });
+  }
+
   // Monday of the week `offset` weeks from this week, off the studio's (NY)
   // calendar date. The visitor's own zone is never used: on a Sunday night in
   // California the local date is still Sunday while NY is already Monday, and
@@ -649,8 +654,9 @@
   // `auto` is the first load only. From Thursday night to Sunday this week has
   // nothing left on it, and "No classes this week" was the whole list for the
   // ~60% of the Sept 16-21 Instagram ad visitors who landed Friday to Sunday.
-  // So the first load walks forward to the first week that still has a class
-  // on it. Paging by hand never skips: a visitor who asks for a week gets it.
+  // So the first load walks forward to the first week with a drop-in that can
+  // still be booked (people arrive here from "Drop in" buttons and ads).
+  // Paging by hand never skips: a visitor who asks for a week gets it.
   var loadSeq = 0;
   function loadWeek(offset, auto) {
     var seq = ++loadSeq;
@@ -683,14 +689,14 @@
       // A slower answer for a week the visitor already paged past must not
       // paint its rows under the newer week's label.
       if (seq !== loadSeq) return;
-      if (auto && offset < MAX_WEEK_OFFSET && !upcomingRows(rows).length) {
+      if (auto && offset < MAX_WEEK_OFFSET && !bookableRows(rows).length) {
         loadWeek(offset + 1, true);
         return;
       }
       if (auto && offset > 0) {
         renderWeekNotice(offset === 1
-          ? 'This week’s classes are done. Here’s next week.'
-          : 'No classes until the week of ' + shortDateLabel(mondayOf(offset)) + '.');
+          ? 'Nothing left to book this week. Here’s next week.'
+          : 'Nothing open to book until the week of ' + shortDateLabel(mondayOf(offset)) + '.');
       }
       currentRows = rows;
       gridReady = true;

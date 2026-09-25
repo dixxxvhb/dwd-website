@@ -448,14 +448,20 @@
   /* The DROP IN panel on /schedule/ points at the list directly below it, so
      it scrolls rather than navigating. The href stays a real fragment: with JS
      off the browser jumps there on its own. */
+  // It lands on the week switch, not the list: scrolling to the list put the
+  // switch and the October jump under the fixed nav, and on an empty week that
+  // left a phone with nothing to tap (live QA, 2026-09-24).
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest && e.target.closest('[data-dropin-scroll]');
     if (!a) return;
-    var target = document.querySelector(a.getAttribute('href') || '#sched-list');
+    var target = document.querySelector('[data-sched-week-switch]') ||
+      document.querySelector(a.getAttribute('href') || '#sched-list');
     if (!target) return;
     e.preventDefault();
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    var nav = document.querySelector('.topnav');
+    var top = target.getBoundingClientRect().top + window.pageYOffset - (nav ? nav.offsetHeight : 0) - 16;
+    window.scrollTo({ top: Math.max(0, top), behavior: reduce ? 'auto' : 'smooth' });
   });
 
   // ── SCROLL ANIMATIONS (staggered reveals) ──
@@ -805,12 +811,21 @@
       var value = field.value.trim();
       if (!value) {
         var labelEl = field.id ? form.querySelector('label[for="' + field.id + '"]') : null;
-        var labelText = labelEl ? labelEl.textContent.trim().toLowerCase() : '';
+        var labelText = labelEl ? labelEl.textContent.trim().toLowerCase().replace(/\s*\(optional\)\s*$/, '') : '';
         var fallback = field.type === 'email' ? 'an email address'
                      : field.tagName === 'TEXTAREA' ? 'a message'
                      : 'this field';
-        var hint = labelText ? ('your ' + labelText) : fallback;
-        setFieldError(field, 'Please enter ' + hint + '.');
+        // Dancer fields on the interest form belong to the child, not the
+        // parent filling it in; labels that already say "your" keep it once.
+        var owner = field.hasAttribute('data-child') ? 'the dancer’s '
+                  : /^your\b/.test(labelText) ? '' : 'your ';
+        var hint = labelText ? (owner + labelText) : fallback;
+        setFieldError(field, (field.tagName === 'SELECT' ? 'Please choose ' : 'Please enter ') + hint + '.');
+        valid = false;
+        return;
+      }
+      if (field.type === 'date' && field.max && value > field.max) {
+        setFieldError(field, 'That date is in the future.');
         valid = false;
         return;
       }
@@ -1200,6 +1215,23 @@
 
     renumber();
 
+    // The first dancer ships in the HTML without a max; added dancers get one
+    // in the template above. A 2030 birthday went through (live QA 09-24).
+    var todayIso = new Date().toISOString().slice(0, 10);
+    form.querySelectorAll('input[type="date"][data-child]').forEach(function (i) { i.max = todayIso; });
+
+    // The column is a uuid: the old fallback ("1727..-a3f") failed the insert
+    // on any browser without crypto.randomUUID.
+    function uuid4() {
+      if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
+      var b = new Uint8Array(16);
+      if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(b);
+      else for (var k = 0; k < 16; k++) b[k] = Math.floor(Math.random() * 256);
+      b[6] = (b[6] & 0x0f) | 0x40; b[8] = (b[8] & 0x3f) | 0x80;
+      var h = Array.prototype.map.call(b, function (x) { return (x + 0x100).toString(16).slice(1); }).join('');
+      return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -1235,9 +1267,7 @@
       var note = document.getElementById('if-note').value.trim();
 
       var payload = {
-        id: (window.crypto && window.crypto.randomUUID)
-          ? window.crypto.randomUUID()
-          : String(Date.now()) + '-' + Math.random().toString(16).slice(2),
+        id: uuid4(),
         parent_name: document.getElementById('if-parent-name').value.trim(),
         parent_email: document.getElementById('if-parent-email').value.trim(),
         parent_phone: phone || null,
