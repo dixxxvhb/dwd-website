@@ -7,25 +7,21 @@
   'use strict';
 
   // ── HASH ROUTING ──
-  const validPages = [
-    'home', 'adult-company', 'proseries',
-    'teachers', 'schedule',
-    'gallery', 'contact', 'privacy'
-  ];
+  // The page list, each page's real path and the legacy hash map live in ONE
+  // place: the inline script at the top of <head> in index.html, which also
+  // sends an old /#page link to its real path before first paint
+  // (2026-09-24). It runs on every shell, so it is always there before this
+  // deferred file; the fallback only keeps Home alive if someone deletes it.
+  var ROUTES = window.__dwd_routes || { path: { 'home': '/' }, legacy: {} };
+  const validPages = Object.keys(ROUTES.path);
   window.__dwd_pages = validPages;
 
   // Legacy hash redirects — Performances was merged into Collective (#adult-company),
   // About was merged into Teachers, and A·Muse content lives at #amuse.
-  const legacyHashRedirects = {
-    'classes-events': 'adult-company',
-    'performances':   'adult-company',
-    'about':          'teachers',
-    // #early-access retired 2026-09-02 (item 2.4). Its whole job was capturing
-    // emails for a registration link that went out in June; the on-site interest
-    // form is what those visitors actually want now. Not a page name: the
-    // element-anchor branch below resolves #interest to its owning page.
-    'early-access':   'interest'
-  };
+  // #early-access (retired 2026-09-02, item 2.4) maps to #interest, which is
+  // not a page name: the element-anchor branch below resolves it to its
+  // owning page.
+  const legacyHashRedirects = ROUTES.legacy;
   (function applyLegacyRedirect() {
     var raw = window.location.hash.replace('#', '').split('?')[0];
     if (legacyHashRedirects[raw]) {
@@ -41,16 +37,7 @@
   // The old #hash links keep working forever. When one names a section that
   // HAS a path, the hash handler swaps the URL for the path with replaceState,
   // so a shared link is always the good kind.
-  var ROUTE_PATH = {
-    'home': '/',
-    'proseries': '/proseries/',
-    'adult-company': '/collective/',
-    'teachers': '/teachers/',
-    'schedule': '/schedule/',
-    'gallery': '/gallery/',
-    'contact': '/contact/',
-    'privacy': '/privacy/'
-  };
+  var ROUTE_PATH = ROUTES.path;
 
   var PATH_ROUTE = {};
   Object.keys(ROUTE_PATH).forEach(function (route) {
@@ -100,8 +87,20 @@
     return (pos === 'fixed' || pos === 'sticky') ? nav.offsetHeight + 12 : 12;
   }
 
+  // An anchor inside a closed <details> (the Collective's #amuse and
+  // #amusing-spaces live behind "Past shows") has no box to scroll to, so
+  // open every closed <details> around it first.
+  function openAround(el) {
+    var d = el && el.closest ? el.closest('details') : null;
+    while (d) {
+      if (!d.open) d.open = true;
+      d = d.parentElement ? d.parentElement.closest('details') : null;
+    }
+  }
+
   function scrollToAnchor(id) {
     if (settleTimer) { clearTimeout(settleTimer); settleTimer = null; }
+    openAround(document.getElementById(id));
 
     var attempts = 0;
     var stable = 0;
@@ -149,6 +148,39 @@
     requestAnimationFrame(step);
   }
 
+  // ── OFF-ROUTE MEDIA (2026-09-24) ──
+  // A <video poster> is fetched the moment the parser reads it, even inside a
+  // display:none section, so every route used to download every other
+  // route's posters (143KB on Home, 29% of the page on slow 4G). Media that
+  // lives off the landing route ships as data-poster / data-src instead and
+  // is set here when its section becomes the active one, or, inside a closed
+  // <details>, when that opens.
+  function wakeMedia(scope) {
+    if (!scope || !scope.querySelectorAll) return;
+    var reload = [];
+    scope.querySelectorAll('[data-poster], [data-src]').forEach(function (el) {
+      if (el.closest('details:not([open])')) return;
+      var poster = el.getAttribute('data-poster');
+      if (poster) {
+        el.setAttribute('poster', poster);
+        el.removeAttribute('data-poster');
+      }
+      var src = el.getAttribute('data-src');
+      if (src) {
+        el.setAttribute('src', src);
+        el.removeAttribute('data-src');
+        // A <source> gained a src: its <video> only notices on load().
+        var media = el.tagName === 'SOURCE' ? el.parentNode : null;
+        if (media && media.load && reload.indexOf(media) === -1) reload.push(media);
+      }
+    });
+    reload.forEach(function (m) { try { m.load(); } catch (e) {} });
+  }
+  // toggle does not bubble; a capture listener still hears every <details>.
+  document.addEventListener('toggle', function (e) {
+    if (e.target && e.target.open) wakeMedia(e.target);
+  }, true);
+
   var initialRouteDone = false;
   function showPage(name) {
     if (!validPages.includes(name)) name = 'home';
@@ -159,6 +191,7 @@
     });
     var target = document.getElementById('page-' + name);
     if (target) target.classList.add('active');
+    wakeMedia(target);
 
     // Sticky mobile CTA bar (item M1, rebuilt 2026-09-04): every route except
     // Privacy. Visibility itself is driven by observers, not by the route —
@@ -271,13 +304,18 @@
      thing worth showing there. js/now.js hands this the live text by hanging
      data-mob-dropin / data-mob-collective on the label; both have a static
      fallback in the markup, so a dead feed leaves a correct bar. */
+  /* The Collective (2026-09-24): its joining screen's one action is "Join the
+     Collective", so the bar carries that action, in the arm's terracotta
+     (CSS keys on data-route), and stays hidden until that button itself has
+     scrolled off. js/dwdc-next.js hands it the live next-class line. */
   var MOB_ROUTES = {
     'adult-company': {
-      label: 'Next class',
+      label: 'Next class: date coming soon.',
       labelAttr: 'data-mob-collective',
-      href: '#dwdc-next',
-      text: 'Details →',
-      track: 'mobile-sticky-collective'
+      href: '/contact/?reason=adult',
+      text: 'Join the Collective →',
+      track: 'mobile-sticky-collective',
+      lead: 'a[href="/contact/?reason=adult"]'
     }
   };
   var MOB_DEFAULT = {
@@ -298,6 +336,7 @@
     document.body.classList.toggle('mob-cta-on', show);
 
     var conf = MOB_ROUTES[mobState.route] || MOB_DEFAULT;
+    mob.setAttribute('data-route', mobState.route || 'home');
     var label = mob.querySelector('[data-mob-label]');
     var btn = mob.querySelector('[data-mob-btn]');
     if (label) {
@@ -316,6 +355,11 @@
       btn.setAttribute('data-track', conf.track);
     }
   }
+
+  // now.js and dwdc-next.js hang live lines on the label after their fetches
+  // land; this lets them repaint the bar straight away instead of waiting
+  // for the next observer tick.
+  window.DWD_MOB = { repaint: paintMobCta };
 
   // eras.js reveals the date-gated bands AFTER main.js runs, so the lead
   // element can change once. Re-resolve it on load.
@@ -349,7 +393,8 @@
     // Express Interest link is at the bottom of the page, and a page-sized
     // container never leaves the viewport.
     var lead = null;
-    var candidates = page.querySelectorAll('a[href="/schedule/"], a[href="#interest"]');
+    var routeConf = MOB_ROUTES[name] || {};
+    var candidates = page.querySelectorAll(routeConf.lead || 'a[href="/schedule/"], a[href="#interest"]');
     for (var i = 0; i < candidates.length; i++) {
       if (candidates[i].offsetParent !== null &&
           candidates[i].getBoundingClientRect().height > 0) { lead = candidates[i]; break; }
@@ -1543,6 +1588,9 @@
       }
     }, 100);
   }
+  // The landing section's own deferred media (showPage already did this on
+  // every branch above except a plain Home load).
+  wakeMedia(document.querySelector('.page.active'));
   initialRouteDone = true;
 
 })();
