@@ -967,6 +967,9 @@
     });
   });
 
+  // Form outcomes into site_analytics ('form' rows, see js/analytics.js).
+  function trackForm(name) { if (window.__dwd_track) window.__dwd_track(name); }
+
   // ── CONTACT FORM ──
   var contactForm = document.querySelector('[data-form="contact"]');
   if (contactForm) {
@@ -977,7 +980,7 @@
       var hp = document.getElementById('contact-website');
       if (hp && hp.value) { contactForm.reset(); showFormSuccess(contactForm); return; }
 
-      if (!validateForm(contactForm)) return;
+      if (!validateForm(contactForm)) { trackForm('contact:invalid'); return; }
 
       var activeToggle = contactForm.querySelector('.toggle-group .toggle-btn.active');
       var phoneEl = document.getElementById('contact-phone');
@@ -1000,8 +1003,10 @@
           setSubmitLoading(contactForm, false);
           if (res.error) {
             console.error('Contact form error:', res.error);
+            trackForm('contact:err');
             showFormError(contactForm, 'Something went wrong. Please try again.');
           } else {
+            trackForm('contact:ok');
             contactForm.reset();
             showFormSuccess(contactForm);
           }
@@ -1018,7 +1023,7 @@
       var hp = form.querySelector('.hp-field');
       if (hp && hp.value) { form.reset(); showFormSuccess(form); return; }
 
-      if (!validateForm(form)) return;
+      if (!validateForm(form)) { trackForm(form.dataset.form + ':invalid'); return; }
 
       var emailInput = form.querySelector('input[type="email"]');
       var source = form.dataset.form.replace('signup-', '') || 'home';
@@ -1034,13 +1039,16 @@
           if (res.error) {
             if (res.error.code === '23505') {
               // Duplicate email — still show success (already subscribed)
+              trackForm(form.dataset.form + ':ok');
               form.reset();
               showFormSuccess(form);
             } else {
               console.error('Signup error:', res.error);
+              trackForm(form.dataset.form + ':err');
               showFormError(form, 'Something went wrong. Please try again.');
             }
           } else {
+            trackForm(form.dataset.form + ':ok');
             form.reset();
             showFormSuccess(form);
           }
@@ -1199,7 +1207,7 @@
       var hp = form.querySelector('.hp-field');
       if (hp && hp.value) { showInterestDone(); return; }
 
-      if (!validateForm(form)) return;
+      if (!validateForm(form)) { trackForm('ps-interest:invalid'); return; }
 
       var sets = Array.prototype.slice.call(dancersWrap.querySelectorAll('.ps-if-dancer'));
       var children = sets.map(function (fs) {
@@ -1264,10 +1272,12 @@
           setSubmitLoading(form, false);
           if (res.error) {
             console.error('Interest form error:', res.error);
+            trackForm('ps-interest:err');
             showFormError(form, 'Something went wrong. Please email dancewithdixon@gmail.com and I’ll get you on the list myself.');
             return;
           }
           window.__dwd_last_interest_id = payload.id; // QA receipt
+          trackForm('ps-interest:ok');
           showInterestDone();
         });
     });

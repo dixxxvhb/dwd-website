@@ -90,8 +90,57 @@
   function enterPage() {
     currentPage = getPage();
     pageEnteredAt = Date.now();
+    depthSent = {};
+    formsStarted = {};
     send('page_view', { page: currentPage });
   }
+
+  // ── Scroll depth ──
+  // One 'scroll' row per threshold per page view, element = '25' / '50' /
+  // '75' / '100'. Added 2026-09-24: ~1,000 paid visitors landed on /schedule
+  // and left in a median 3s, and nothing recorded whether they ever saw the
+  // classes. The Director's traffic RPCs filter by event_type, so these rows
+  // never touch its view or click counts.
+  var depthSent = {};
+  var DEPTHS = [25, 50, 75, 100];
+  var depthQueued = false;
+  function checkDepth() {
+    depthQueued = false;
+    var doc = document.documentElement;
+    var total = Math.max(doc.scrollHeight, document.body ? document.body.scrollHeight : 0);
+    if (!total) return;
+    var seen = Math.min(100, ((window.scrollY || doc.scrollTop) + window.innerHeight) / total * 100);
+    for (var i = 0; i < DEPTHS.length; i++) {
+      var d = DEPTHS[i];
+      if (seen >= d - 1 && !depthSent[d]) {
+        depthSent[d] = true;
+        send('scroll', { page: currentPage, element: String(d) });
+      }
+    }
+  }
+  window.addEventListener('scroll', function () {
+    if (depthQueued) return;
+    depthQueued = true;
+    (window.requestAnimationFrame || setTimeout)(checkDepth);
+  }, { passive: true });
+
+  // ── Forms ──
+  // 'form' rows: '<form>:start' on the first focus inside a form (once per
+  // page view), and main.js / schedule.js report ':ok', ':err' and
+  // ':invalid' through window.__dwd_track. Before this, a form that failed
+  // or was abandoned left no trace at all.
+  var formsStarted = {};
+  document.addEventListener('focusin', function (e) {
+    var f = e.target && e.target.closest && e.target.closest('form');
+    if (!f) return;
+    var name = f.getAttribute('data-form') || f.id || 'form';
+    if (formsStarted[name]) return;
+    formsStarted[name] = true;
+    send('form', { page: currentPage, element: name + ':start' });
+  });
+  window.__dwd_track = function (name) {
+    if (name) send('form', { page: currentPage || getPage(), element: String(name).slice(0, 80) });
+  };
 
   // ── Session start (once per session) ──
   if (!stored(sessionStorage, 'dwd_started')) {
@@ -101,6 +150,25 @@
 
   // ── Init: track first page ──
   enterPage();
+
+  // ── Load speed (one 'perf' row per full page load) ──
+  // element 'tracker' = ms from navigation start until this file ran. Anyone
+  // who leaves before that is invisible to every other number here, so this
+  // is how big the blind spot is on a slow phone. element 'lcp' = largest
+  // contentful paint, finalised when the page is first hidden.
+  try { send('perf', { page: currentPage, element: 'tracker', duration_ms: Math.round(performance.now()) }); } catch (e) {}
+  var lcp = 0, lcpSent = false, landingPage = currentPage;
+  try {
+    new PerformanceObserver(function (list) {
+      var entries = list.getEntries();
+      if (entries.length) lcp = entries[entries.length - 1].startTime;
+    }).observe({ type: 'largest-contentful-paint', buffered: true });
+  } catch (e) {}
+  function sendLcp() {
+    if (lcpSent || !lcp) return;
+    lcpSent = true;
+    send('perf', { page: landingPage, element: 'lcp', duration_ms: Math.round(lcp) });
+  }
 
   // ── Route change: main.js fires dwd:route from showPage(), after the URL
   // has been updated. The site navigates with pushState, which never fires
@@ -113,7 +181,7 @@
 
   // ── Tab hidden / close: exit current page ──
   document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState === 'hidden') exitPage();
+    if (document.visibilityState === 'hidden') { sendLcp(); exitPage(); }
     if (document.visibilityState === 'visible') { pageEnteredAt = Date.now(); }
   });
 
