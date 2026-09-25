@@ -39,3 +39,6 @@ Plan: `docs/plans/2026-09-24-drop-in-finder.md`. `/schedule/` becomes the drop-i
 3. Photos of Tori and John for Teachers, or drop the placeholder tiles.
 4. Still open from 09-22: Teachers bio claims, @dixonbowles absent from the site, waiver wording, "dwdCON returns this season", the young-looking headshot.
 5. Next ad: point it at `/schedule/?class=<slug>` for the class it shows (live once `dropin-finder` merges).
+
+## UPDATE 2026-09-25: all of it shipped
+Dixon (09-24): "lets get website fully cleaned up merged and deployed all things ready." The drop-in page merged and went live as d12c8ca. NEEDS WORK items 1 to 7 were built in two lanes (docs/plans/2026-09-24-site-cleanup.md) and went live as ebd8493, apart from the two that need Dixon: the Collective date and the Tori/John photos. Both have Apple Reminders (Mon 9/28 noon, Tue 9/29 4pm), and the site is ready for them: the Collective page shows the next dwdC event on its own, and Teachers has a comment slot for each photo.
