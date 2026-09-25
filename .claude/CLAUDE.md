@@ -1,5 +1,5 @@
 # DWD Website — dancewithdixon.com
-Repo: `~/Code/dwd-website`. Last verified: 2026-09-22.
+Repo: `~/Code/dwd-website`. Last verified: 2026-09-25.
 
 ## Stack
 - Vanilla HTML/CSS/JS (no framework)
@@ -17,7 +17,7 @@ Repo: `~/Code/dwd-website`. Last verified: 2026-09-22.
 - `index.html` — THE source for every page. Real paths (/schedule/, /proseries/, /collective/, /teachers/, /gallery/, /contact/, /privacy/) are **generated shells** written by `node scripts/build-routes.mjs` (each paints its own section; main.js swaps sections on in-site nav via pushState). **Never hand-edit `<dir>/index.html`**: edit index.html, run build-routes, confirm `--check`. (705630c edited a shell by hand and the October pager was dead for every visitor arriving from the nav.)
 - `css/site.css` — the only stylesheet source; pages load `css/site.min.css` (build: `node scripts/build-css.mjs`, `--check`).
 - `js/main.js` — routing (`showPage` fires `dwd:route`), sticky phone bar, YouTube tap-to-load, forms, lightbox.
-- `js/now.js` — the DROP IN panel (every weekly drop-in slot from `public_site_schedule`) + THIS WEEK rows. `js/schedule.js` — /schedule/ week pager, cart, Stripe checkout. `js/season.js` — chair counts. `js/episodes.js`, `js/dwdc-next.js`, `js/eras.js`.
+- `js/now.js` — the DROP IN panel (every weekly drop-in slot from `public_site_schedule`; rows link to `/schedule/?class=<slug>`). `js/schedule.js` — /schedule/ is the drop-in page (five classes with date chips, `?class=` deep links; the full ProSeries week pager behind a toggle), cart, Stripe checkout. Off-route media ships as `data-poster`/`data-src` and main.js `wakeMedia` sets it when the route shows. `js/season.js` — chair counts. `js/episodes.js`, `js/dwdc-next.js`, `js/eras.js`.
 - `js/analytics.js` — cookie-free tracking into `site_analytics`; counts in-site navigation only since 2026-09-22 (re-baseline from then); skips localhost, 127.x and automated browsers.
 - `sw.js` — same-origin GETs only; bump `CACHE_NAME` on any change to it.
 - `docs/STATUS.md` (open / agreed / done), `docs/audits/`, `docs/plans/` — excluded from the public site by `_config.yml`.
@@ -31,7 +31,8 @@ Repo: `~/Code/dwd-website`. Last verified: 2026-09-22.
 
 ## Supabase Integration
 - Project ipulrvhiuvgbvralybxx. supabase-js pinned 2.117.0 with SRI (upgrade = new version + new hash, see the comment in index.html).
-- Reads: `public_site_schedule` RPC, `public_site_dwdc_events`, `public_site_episodes`, `proseries_config`. Writes (anon insert-only): `audition_registrations` (interest form), `email_signups`, `site_analytics`; checkout via the `drop-in-checkout` edge function.
+- Reads: `public_site_schedule` RPC (21-day window max, so /schedule/ fetches two windows), `public_site_dwdc_events`, `public_site_episodes`, `proseries_config`. Writes (anon insert-only): `audition_registrations` (ProSeries interest form), `website_contacts` (contact form; `?reason=adult` is the Collective's Join), `email_signups`, `site_analytics`; checkout via the `drop-in-checkout` edge function.
+- `site_analytics` event types: `session_start`, `page_view`, `page_exit`, `click` (from `[data-track]`), and since 2026-09-24 `scroll` (25/50/75/100), `form` (`<form>:start|invalid|ok|err`, plus `dropin-checkout:*`) and `perf` (`tracker`, `lcp`). Other scripts report through `window.__dwd_track(name)`. The Director's traffic RPCs filter by event_type.
 
 ## Brand Rules
 - Brand colors defined as CSS variables (forest green #0c1f17, terracotta #C8614B, Family Pink #FF7AA2 [retired blush #f8d7c8 2026-07-18], ivory #FAF3E8, seafoam #6BAF8A, soft pink #FF8FAB dwdPS-Prep-badge). Gold (#e2b955 flat / rose-gold gradient #c9956c→#e8c49a→#d4a574) is Tamara Mark memorial only. The v3 logo's gold sparkle references Tamara and is sanctioned (Dixon, 2026-09-22). Arms differ by volume via [data-arm] house/ps/c — see docs/REBRAND-ONE-HOUSE-2026-07.md.
