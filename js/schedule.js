@@ -1215,41 +1215,47 @@
   });
 
   // ── Return from Stripe ──
-  function renderThankyou(orderRows, dancerFirstName) {
+  // drop_in_order_public answers ONE row per order: status,
+  // dancer_first_name, amount_cents (what Stripe charged), bulk_applied, and
+  // lines [{date, name, start_time, end_time, room}], which carry no price.
+  // (Until 2026-10-04 this read one row per class, the stub's old shape, and
+  // every paid family saw "See you undefined" and a $0 total.)
+  function renderThankyou(order) {
     elMain.hidden = true;
     if (elPending) elPending.hidden = true;
     elCheckout.hidden = true;
     elCartBar.hidden = true;
     elThankyou.hidden = false;
 
+    var lines = (order && Array.isArray(order.lines)) ? order.lines : [];
+    var dancerFirstName = (order && order.dancer_first_name) || null;
     var days = {};
-    orderRows.forEach(function (r) { days[String(r.date).slice(0, 10)] = true; });
+    lines.forEach(function (l) { days[String(l.date).slice(0, 10)] = true; });
     var dayKeys = Object.keys(days);
     if (dayKeys.length === 1) {
-      var d = new Date(dayKeys[0] + 'T00:00:00');
+      var d = localDate(dayKeys[0]);
       elTyH1.textContent = 'See you ' + DAY_NAMES_LONG[d.getDay()] + (dancerFirstName ? ', ' + dancerFirstName : '') + '.';
     } else {
       elTyH1.textContent = 'See you soon.';
     }
 
     elTyList.innerHTML = '';
-    orderRows.forEach(function (r) {
-      var d = new Date(String(r.date).slice(0, 10) + 'T00:00:00');
+    lines.forEach(function (r) {
+      var d = localDate(r.date);
       var li = el('li', 'sched-summary-line');
       li.appendChild(el('span', '', DAY_NAMES_LONG[d.getDay()] + ' \u00b7 ' + shortDateLabel(d) + ' \u00b7 ' + timeRange(r.start_time, null).split(' ')[0] + ' \u00b7 ' + r.name + (r.room ? ' \u00b7 ' + r.room : '')));
-      li.appendChild(el('span', '', money(r.fee_cents != null ? r.fee_cents : r.drop_in_fee_cents)));
       elTyList.appendChild(li);
     });
-    var total = orderRows.reduce(function (s, r) { return s + (r.fee_cents != null ? r.fee_cents : (r.drop_in_fee_cents || 0)); }, 0);
-    renderBulkNote(elTyBulkNote, (orderRows[0] && orderRows[0].bulk_applied) ? 'Four or more dates in one order. Each one costs less.' : '');
-    elTyTotal.textContent = money(total);
+    renderBulkNote(elTyBulkNote, (order && order.bulk_applied) ? 'Four or more dates in one order. Each one costs less.' : '');
+    elTyTotal.textContent = money(order ? order.amount_cents : 0);
+    elTyTotal.parentNode.hidden = !order;
 
     writeCart([]);
   }
 
   function pollPending(id, token, attempt) {
     if (attempt > 20) {
-      renderThankyou([], null);
+      renderThankyou(null);
       elTyH1.textContent = 'Paid.';
       var fallback = el('p', '', "If your spot doesn't show in the Director's roll by tomorrow, email dancewithdixon@gmail.com.");
       elThankyou.appendChild(fallback);
@@ -1258,7 +1264,7 @@
     setTimeout(function () {
       fetchOrder(id, token).then(function (rows) {
         var status = rows[0] && rows[0].status;
-        if (status === 'paid') { renderThankyou(rows, rows[0].dancer_first_name || null); return; }
+        if (status === 'paid') { renderThankyou(rows[0]); return; }
         pollPending(id, token, attempt + 1);
       }).catch(function () { pollPending(id, token, attempt + 1); });
     }, 3000);
@@ -1270,15 +1276,15 @@
         setTimeout(function () {
           if (id !== 'stub') { resolve([]); return; }
           var cart = readCart();
-          var rows = (cart.length ? cart : buildStubRows(toIso(mondayOf(0)), 0).filter(function (r) { return r.drop_in_open; }).slice(0, 2))
-            .map(function (l) {
-              var active = bulkActive(cart);
-              return Object.assign({
-                status: 'paid', dancer_first_name: 'Remi', room: 'Garage',
-                bulk_applied: active
-              }, l, { fee_cents: lineCents(l, active) });
-            });
-          resolve(rows);
+          if (!cart.length) cart = buildStubRows(toIso(mondayOf(0)), 0).filter(function (r) { return r.drop_in_open; }).slice(0, 2);
+          // Same shape as drop_in_order_public: one row, the classes in lines.
+          resolve([{
+            status: 'paid', dancer_first_name: 'Remi',
+            amount_cents: cartTotalCents(cart), bulk_applied: bulkActive(cart),
+            lines: cart.map(function (l) {
+              return { date: l.occurrence_date, name: l.name, start_time: l.start_time, end_time: l.end_time, room: 'Garage' };
+            })
+          }]);
         }, 200);
       });
     }
@@ -1306,7 +1312,7 @@
     fetchOrder(order, token).then(function (rows) {
       var status = rows.length ? rows[0].status : null;
       if (status === 'paid') {
-        renderThankyou(rows, rows[0].dancer_first_name || null);
+        renderThankyou(rows[0]);
       } else if (status === 'pending') {
         elMain.hidden = true;
         if (elPending) elPending.hidden = false;
