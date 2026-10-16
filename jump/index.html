@@ -152,7 +152,7 @@ h2{font:700 28px/1 'Cormorant Garamond',serif;margin:30px 0 4px}
     });
   }
 
-  function render() { if (view.sheet) renderSheet(); else renderMain(); }
+  function render() { if (view.sheet != null) renderSheet(); else renderMain(); }
 
   function renderMain() {
     var c = data.comp, now = nyNow(), ds = days();
