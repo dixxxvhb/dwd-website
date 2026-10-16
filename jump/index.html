@@ -139,6 +139,12 @@ h2{font:700 28px/1 'Cormorant Garamond',serif;margin:30px 0 4px}
       if (!data.comp) { app.innerHTML = '<div class="lock"><div class="t">No comp this weekend.</div></div>'; return; }
       var ds = days(), today = nyNow().day;
       if (!view.day) view.day = ds.indexOf(today) >= 0 ? today : ds[0];
+      // #awards-81 (the widget's awards line) opens that block's scoresheet once.
+      var m = /^#awards-(\d+)$/.exec(location.hash);
+      if (m && view.sheet == null) {
+        var bi = data.award_blocks.findIndex(function (b) { return b.from === +m[1]; });
+        if (bi >= 0) { view.sheet = bi; view.day = data.award_blocks[bi].day; history.replaceState(null, '', location.pathname + location.search); history.pushState({ s: 1 }, ''); }
+      }
       render();
     }).catch(function (e) {
       if (e.message === 'key') app.innerHTML = '<div class="lock"><div class="t">That link has expired.</div><p class="mute">Ask Dixon for the new one.</p></div>';
