@@ -100,7 +100,7 @@ h2{font:700 28px/1 'Cormorant Garamond',serif;margin:30px 0 4px}
   var qs = new URLSearchParams(location.search);
   var key = qs.get('k');
   try { if (key) localStorage.setItem('dwdps-comp-key', key); else key = localStorage.getItem('dwdps-comp-key'); } catch (e) {}
-  var data = null, view = { day: null, level: null, sheet: null, oursOnly: false, open: null };
+  var data = null, runOrder = null, view = { day: null, level: null, sheet: null, oursOnly: false, open: null };
   try { view.level = localStorage.getItem('dwdps-comp-level'); } catch (e) {}
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -139,6 +139,11 @@ h2{font:700 28px/1 'Cormorant Garamond',serif;margin:30px 0 4px}
       if (!data.comp) { app.innerHTML = '<div class="lock"><div class="t">No comp this weekend.</div></div>'; return; }
       var ds = days(), today = nyNow().day;
       if (!view.day) view.day = ds.indexOf(today) >= 0 ? today : ds[0];
+      // JUMP's public run order (scripts/jump-run-order.mjs), when we have it for this comp.
+      if (!runOrder) fetch('/jump/runorder-' + data.comp.start_date + '.json', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) { if (j && j.entries) { runOrder = {}; j.entries.forEach(function (x) { runOrder[x.no] = x; }); if (view.sheet != null) render(); } })
+        .catch(function () {});
       // #awards-81 (the widget's awards line) opens that block's scoresheet once.
       var m = /^#awards-(\d+)$/.exec(location.hash);
       if (m && view.sheet == null) {
@@ -219,15 +224,18 @@ h2{font:700 28px/1 'Cormorant Garamond',serif;margin:30px 0 4px}
       + '<h2 style="margin-top:8px">Entries #' + b.from + ' to #' + b.to + '</h2>'
       + '<div class="tog"><button data-only="0" aria-pressed="' + !view.oursOnly + '">Every entry</button><button data-only="1" aria-pressed="' + view.oursOnly + '">Ours only</button></div></div>';
     for (var no = b.from; no <= b.to; no++) {
-      var e = ours[no];
+      var e = ours[no], ro = runOrder && runOrder[no];
+      if (runOrder && !ro && !e) continue; // a number JUMP skipped
       if (view.oursOnly && !e) continue;
       var mine = n[no] || {}, res = noteText(mine);
       h += '<div class="ent' + (e ? ' ours' : '') + '"><button data-open="' + no + '"><span class="no">#' + no + '</span><span class="who">'
-        + (e ? esc(names(e.dancers)) + '<span class="rt">' + esc(e.name) + (e.awards.length ? ' · Dixon has: ' + esc(e.awards.join(', ')) : '') + '</span>' : (mine.who ? esc(mine.who) : '<span class="mute">Tap to add</span>'))
+        + (e ? esc(names(e.dancers)) + '<span class="rt">' + esc(e.name) + (e.awards.length ? ' · Dixon has: ' + esc(e.awards.join(', ')) : '') + '</span>'
+          : ro ? esc(ro.title) + '<span class="rt">' + esc(ro.studio) + ' · ' + esc(ro.division) + (mine.who ? ' · ' + esc(mine.who) : '') + '</span>'
+          : (mine.who ? esc(mine.who) : '<span class="mute">Tap to add</span>'))
         + '</span><span class="res">' + esc(res) + '</span></button>';
       if (view.open === no) {
         h += '<div class="ed">'
-          + (e ? '' : '<div class="lbl">Who</div><input data-f="who" data-no="' + no + '" value="' + esc(mine.who || '') + '" placeholder="Studio or dancer, if you want">')
+          + (e ? '' : '<div class="lbl">' + (ro ? 'Dancer (optional)' : 'Who') + '</div><input data-f="who" data-no="' + no + '" value="' + esc(mine.who || '') + '" placeholder="Studio or dancer, if you want">')
           + '<div class="lbl">Adjudication</div><div class="pick">' + LEVELS_ADJ.map(function (l) { return '<button data-adj="' + l + '" data-no="' + no + '" aria-pressed="' + (mine.adj === l) + '">' + l + '</button>'; }).join('') + '</div>'
           + '<div class="lbl">Placed</div><div class="pick">' + ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'].map(function (p) { return '<button data-place="' + p + '" data-no="' + no + '" aria-pressed="' + (mine.place === p) + '">' + ordinal(p) + '</button>'; }).join('') + '</div>'
           + '<div class="lbl">Note</div><input data-f="note" data-no="' + no + '" value="' + esc(mine.note || '') + '" placeholder="Overall, special award, judge pick...">'
