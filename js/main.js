@@ -1397,6 +1397,33 @@
   // underneath is what shows, which is also what a no-JS, no-video or
   // blocked-media visitor gets. The caption swaps with the state rather than
   // crediting one dancer over footage of another.
+  // Ambient loops (2026-10-22): the drop-in panel's silent clip. Same rules as
+  // the hero loop below: never under reduced motion, fetch and play only while
+  // on screen, and a refused autoplay just leaves the poster.
+  (function ambientLoops() {
+    var vids = document.querySelectorAll('video[data-ambient-loop]');
+    if (!vids.length || !('IntersectionObserver' in window)) return;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduced && reduced.matches) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var v = entry.target;
+        if (entry.isIntersecting) {
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        } else if (!v.paused) {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.25 });
+    vids.forEach(function (v) { io.observe(v); });
+    if (reduced && reduced.addEventListener) {
+      reduced.addEventListener('change', function (e) {
+        if (e.matches) vids.forEach(function (v) { v.pause(); });
+      });
+    }
+  })();
+
   (function heroLoop() {
     var video = document.getElementById('hero-loop');
     if (!video) return;

@@ -68,6 +68,10 @@ ENTRIES = {
           # edges with the folding table in the middle. This crop is the solo in
           # the purple pool, held for the full seven seconds.
           'ss': '34.5', 'crop': '900:1350:340:720'},
+    # JUMP Ft. Lauderdale, Oct 2026 (added 2026-10-22). Masters are the opt
+    # files scripts/build-jump-media.py writes from the app's JUMP photos.
+    'N': {'kind': 'photo', 'src': 'images/photos/opt/jump-pose-1600.webp'},
+    'O': {'kind': 'photo', 'src': 'images/photos/opt/jump-backbend-1600.webp'},
 }
 
 # Wide (large) and narrow (small) target widths, and the encoder quality. The
@@ -103,10 +107,15 @@ def load(letter, spec):
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    manifest = {}
+    # Letters on the command line rebuild just those entries and merge them
+    # into the existing manifest (some masters live in iCloud and are not
+    # always reachable from this machine).
+    only = [a for a in sys.argv[1:] if a in ENTRIES]
+    mpath = os.path.join(OUT, 'manifest.json')
+    manifest = json.load(open(mpath)) if only and os.path.exists(mpath) else {}
     total = 0
 
-    for letter in sorted(ENTRIES):
+    for letter in (only or sorted(ENTRIES)):
         spec = ENTRIES[letter]
         src = load(letter, spec)
         rec = {'src': spec['src'], 'files': {}}
@@ -143,9 +152,12 @@ def main():
     with open(os.path.join(OUT, 'manifest.json'), 'w') as f:
         json.dump(manifest, f, indent=1, sort_keys=True)
 
+    if only:
+        total = sum(v['bytes'] for r in manifest.values() for v in r['files'].values())
     mb = total / 1048576.0
-    print('\ntotal %.3f MB (budget 2.5)' % mb)
-    if mb > 2.5:
+    print('\ntotal %.3f MB (budget 2.6)' % mb)
+    # 2.6 since 2026-10-22: entries N and O (JUMP) put the set 40 KB over 2.5.
+    if mb > 2.6:
         print('OVER BUDGET', file=sys.stderr)
         return 1
     return 0

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v44-audit';
+const CACHE_NAME = 'dwd-site-v45-jump';
 // Photos live in their own cache so a code deploy (CACHE_NAME bump) does not
 // throw away every image a returning visitor already has. Capped below.
 const IMG_CACHE = 'dwd-img-v1';

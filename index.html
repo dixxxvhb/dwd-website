@@ -50,7 +50,7 @@
        scripts/build-routes.mjs strips that block from the six route shells and
        the hero still has to render on Home when a visitor arrives via a shell
        and navigates in. -->
-  <script type="application/json" id="hero-entries">[{"l":"A","s":[[800,800],[1600,1600]],"w":1600,"h":726,"c":"John Nuzzi · Solo Work · Tremaine","d":"65% 60%","p":"55% 35%"},{"l":"B","s":[[800,800],[1600,1400]],"w":1400,"h":2100,"c":"Daisy · Summer Intensive Showcase · 2026","d":"75% 45%","p":"70% 40%","v":"hero-loop"},{"l":"C","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"John Nuzzi · Aura · Groove 2025","d":"62% 25%","p":"65% 15%"},{"l":"D","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"John Nuzzi · Heart of Gold · Groove 2025","d":"66% 40%","p":"68% 18%"},{"l":"E","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"John Nuzzi · Aura · Groove 2025","d":"30% 45%","p":"30% 42%"},{"l":"F","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"45% 30%","p":"45% 32%"},{"l":"G","s":[[800,800],[1600,1600]],"w":1600,"h":1138,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"70% 55%","p":"70% 45%"},{"l":"H","s":[[800,800],[1600,1600]],"w":1600,"h":1314,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"50% 55%","p":"50% 38%"},{"l":"I","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"35% 50%","p":"35% 45%"},{"l":"J","s":[[800,800],[1600,1600]],"w":1600,"h":900,"c":"Daisy · Summer Intensive Showcase · 2026","d":"48% 40%","p":"45% 38%"},{"l":"K","s":[[1600,720]],"w":720,"h":1080,"c":"Dixon · In the room","d":"50% 30%","p":"50% 12%","v":"hero-k"},{"l":"M","s":[[800,800],[1600,900]],"w":900,"h":1350,"c":"Summer Intensive Showcase · 2026","d":"76% 40%","p":"76% 26%","v":"hero-m"}]</script>
+  <script type="application/json" id="hero-entries">[{"l":"A","s":[[800,800],[1600,1600]],"w":1600,"h":726,"c":"John Nuzzi · Solo Work · Tremaine","d":"65% 60%","p":"55% 35%"},{"l":"B","s":[[800,800],[1600,1400]],"w":1400,"h":2100,"c":"Daisy · Summer Intensive Showcase · 2026","d":"75% 45%","p":"70% 40%","v":"hero-loop"},{"l":"C","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"John Nuzzi · Aura · Groove 2025","d":"62% 25%","p":"65% 15%"},{"l":"D","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"John Nuzzi · Heart of Gold · Groove 2025","d":"66% 40%","p":"68% 18%"},{"l":"E","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"John Nuzzi · Aura · Groove 2025","d":"30% 45%","p":"30% 42%"},{"l":"F","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"45% 30%","p":"45% 32%"},{"l":"G","s":[[800,800],[1600,1600]],"w":1600,"h":1138,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"70% 55%","p":"70% 45%"},{"l":"H","s":[[800,800],[1600,1600]],"w":1600,"h":1314,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"50% 55%","p":"50% 38%"},{"l":"I","s":[[800,800],[1600,1600]],"w":1600,"h":1067,"c":"dwdCOLLECTIVE · A·Muse in Space · Orlando Ballet","d":"35% 50%","p":"35% 45%"},{"l":"J","s":[[800,800],[1600,1600]],"w":1600,"h":900,"c":"Daisy · Summer Intensive Showcase · 2026","d":"48% 40%","p":"45% 38%"},{"l":"K","s":[[1600,720]],"w":720,"h":1080,"c":"Dixon · In the room","d":"50% 30%","p":"50% 12%","v":"hero-k"},{"l":"M","s":[[800,800],[1600,900]],"w":900,"h":1350,"c":"Summer Intensive Showcase · 2026","d":"76% 40%","p":"76% 26%","v":"hero-m"},{"l":"N","s":[[800,800],[1600,1536]],"w":1536,"h":2048,"c":"dwdPROSERIES · JUMP Ft. Lauderdale · Oct 2026","d":"50% 50%","p":"50% 30%"},{"l":"O","s":[[800,800],[1600,1536]],"w":1536,"h":2048,"c":"dwdPROSERIES · JUMP Ft. Lauderdale · Oct 2026","d":"50% 62%","p":"50% 60%"}]</script>
   <script>
   /* Pick one entry per visit and hold it: no carousel, no crossfade, no timer.
      The loop entries are the only thing on this page that moves, and two moving
@@ -908,12 +908,25 @@
         <div class="dropin-inner">
           <p class="dropin-kicker">DROP IN &middot; EVERY WEEK</p>
           <div class="dropin-grid">
+            <div class="dropin-side">
             <div class="dropin-price">
               <span class="dropin-num" data-dropin-price>$20</span>
               <span class="dropin-price-lines">
                 <span class="dropin-price-line" data-dropin-range>to $25 a class</span>
                 <span class="dropin-price-line" data-dropin-bulk>Less when you book four or more</span>
               </span>
+            </div>
+            <!-- The room itself (2026-10-22 refresh): seven silent seconds of the
+                 Oct 21 Wednesday drop-in, shot from behind. Plays only on screen
+                 and never under reduced motion (js/main.js ambientLoops); the
+                 poster is the fallback for both. -->
+            <figure class="dropin-loop">
+              <video muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-ambient-loop data-poster="/images/photos/opt/dropin-wod-loop-poster.webp" width="720" height="900">
+                <source media="(max-width: 767px)" src="/video/dropin-wod-loop-480.mp4" type="video/mp4">
+                <source src="/video/dropin-wod-loop.mp4" type="video/mp4">
+              </video>
+              <figcaption>Wednesday drop-in &middot; Oct 21</figcaption>
+            </figure>
             </div>
             <div class="dropin-body">
               <ul class="dropin-list" data-dropin-list>
@@ -987,6 +1000,39 @@
           </div>
         </a>
       </div>
+
+      <!-- FRESH FROM JUMP (2026-10-22, website refresh). The season's first
+           competition, told as proof and pointed at the drop-in: the people
+           reading this want their kid in that room, and the room is open on
+           Tuesdays. Routine names only, no dancer names (Dixon's rule for this
+           strip). Results are from competition_awards for JUMP Ft. Lauderdale,
+           Oct 16-18, 2026, worded the way Dixon gave them on 2026-10-22. Photos
+           come from the app's JUMP album, picked off a numbered contact sheet;
+           built by scripts/build-jump-media.py. -->
+      <section class="jump-recap reveal" id="jump-recap" aria-label="JUMP 2026 results">
+        <div class="jump-inner">
+          <div class="jump-head">
+            <p class="jump-kicker"><span class="brand-case">dwdPROSERIES</span> &middot; JUMP Ft. Lauderdale &middot; Oct 16&ndash;18</p>
+            <h2 class="jump-title">First competition. <em>First overall.</em></h2>
+          </div>
+          <div class="jump-grid" data-jump-grid>
+            <img width="1600" height="1200" src="/images/photos/opt/jump-team-1600.webp" srcset="/images/photos/opt/jump-team-800.webp 800w, /images/photos/opt/jump-team-1600.webp 1600w" sizes="(max-width: 899px) 100vw, 550px" alt="The dwdPROSERIES team in green and pink jackets at the JUMP wall" loading="lazy" decoding="async" data-lightbox>
+            <img width="800" height="1067" src="/images/photos/opt/jump-first-place-800.webp" sizes="(max-width: 899px) 50vw, 275px" alt="Three dancers holding the First Place card" loading="lazy" decoding="async" data-lightbox>
+            <img width="800" height="1067" src="/images/photos/opt/jump-line-800.webp" sizes="(max-width: 899px) 50vw, 275px" alt="A dancer in costume holding a shape before her number" loading="lazy" decoding="async" data-lightbox>
+            <img width="800" height="1067" src="/images/photos/opt/jump-first-place-b-800.webp" sizes="(max-width: 899px) 50vw, 275px" alt="The First Place trio under pink light after awards" loading="lazy" decoding="async" data-lightbox>
+            <img width="800" height="800" src="/images/photos/opt/jump-jackets-800.webp" sizes="(max-width: 899px) 50vw, 275px" alt="Team jackets on the rack, one stitched MR DIXON" loading="lazy" decoding="async" data-lightbox>
+          </div>
+          <ul class="jump-results" aria-label="JUMP results">
+            <li><span class="jump-res-big">1st</span><span class="jump-res-what">Overall, <em>Can You Hear The Music?</em> Plus a Palladium.</span></li>
+            <li><span class="jump-res-big">9th</span><span class="jump-res-what">Overall, <em>Gods of Science.</em> Plus VIP Runner Up.</span></li>
+            <li><span class="jump-res-big">6</span><span class="jump-res-what">High Golds across the team.</span></li>
+            <li><span class="jump-res-big">1</span><span class="jump-res-what">Class scholarship to DancerPalooza.</span></li>
+          </ul>
+          <div class="jump-cta">
+            <a class="jump-btn" href="/schedule/" data-ref="home-jump" data-track="home-jump-dropin">Train with this team. Drop in Tuesday. &rarr;</a>
+          </div>
+        </div>
+      </section>
 
       <!-- VICTORY LAP (#audition-wrap), SUMMER INTENSIVE BAND (#intensive-cta),
            and dwdCON CTA (#dwdcon-cta) deleted 2026-08-03 — all permanently past
@@ -1078,16 +1124,19 @@
           <div class="row">
             <div>
               <div class="video-label">See the Work</div>
-              <h2>Tokyo <em>Sunrise.</em></h2>
+              <h2>Wednesday <em>WOD.</em></h2>
             </div>
-            <div class="meta">Original choreography by Dixon Bowles · 2024 season.</div>
+            <div class="meta">A real drop-in, filmed Oct 21, 2026. Tuesdays and Wednesdays, no audition.</div>
           </div>
-          <!-- YouTube loads on tap, not on page load (2026-09-22 audit): five
-               hidden-section iframes were pulling ~1MB of player JS, ad pings
-               and cookies onto every route, /privacy/ included. js/main.js
-               swaps the button for a youtube-nocookie iframe on click. -->
-          <div class="video-embed">
-            <button type="button" class="yt-facade" data-yt="13yTeXaUc9U" data-yt-title="Dixon Bowles choreography · Tokyo Sunrise" aria-label="Play video: Dixon Bowles choreography · Tokyo Sunrise"><img src="https://i.ytimg.com/vi/13yTeXaUc9U/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360"><span class="yt-play" aria-hidden="true"></span></button>
+          <!-- 2026-10-22: Tokyo Sunrise (2024 season) out, this season's drop-in
+               reel in. Self-hosted 720x1280, preload none, poster via wakeMedia;
+               sound plays only when the visitor presses play. -->
+          <div class="video-reel">
+            <video controls playsinline preload="none" data-poster="/images/photos/opt/wod-reel-poster.webp" width="720" height="1280" aria-label="Wednesday WOD, a dwdPROSERIES drop-in class">
+              <source src="/video/wod-reel.mp4" type="video/mp4">
+              Your browser doesn't support embedded video.
+            </video>
+            <a class="video-reel-cta" href="/schedule/" data-ref="home-reel" data-track="home-reel-dropin">Book a drop-in &rarr;</a>
           </div>
         </div>
       </div>
@@ -2077,6 +2126,26 @@
             </div>
           </div>
 
+          <!-- Scene 8: JUMP Ft. Lauderdale (added 2026-10-22). Routine names
+               only, no dancer names. -->
+          <div class="ps-scene ps-scene--flip reveal">
+            <div class="ps-scene-media">
+              <img width="1600" height="1200" class="span2" src="/images/photos/opt/jump-team-1600.webp" srcset="/images/photos/opt/jump-team-800.webp 800w, /images/photos/opt/jump-team-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="The dwdPROSERIES team at the JUMP wall in Ft. Lauderdale" loading="lazy" data-lightbox>
+              <img width="800" height="1067" src="/images/photos/opt/jump-first-place-800.webp" alt="Three dancers holding the First Place card" loading="lazy" data-lightbox>
+              <img width="800" height="1067" src="/images/photos/opt/jump-backbend-800.webp" alt="A dancer in a backbend on the JUMP red carpet" loading="lazy" data-lightbox>
+              <img width="800" height="1067" src="/images/photos/opt/jump-peace-800.webp" alt="A dancer throwing peace signs at the JUMP wall" loading="lazy" data-lightbox>
+              <img width="800" height="1067" src="/images/photos/opt/jump-mini-800.webp" alt="One of our youngest dancers posing in costume at JUMP" loading="lazy" data-lightbox>
+            </div>
+            <div class="ps-scene-text" data-num="08">
+              <div class="ps-scene-slate">
+                <span class="s1-ep-code ps-chip--sky">S1</span>
+                <span class="scene-when">JUMP FT. LAUDERDALE &middot; OCT 16 TO 18</span>
+              </div>
+              <h3>First competition. First overall.</h3>
+              <p>Our first weekend on a competition stage. <em>Can You Hear The Music?</em> took 1st overall and a Palladium. <em>Gods of Science</em> placed 9th overall with a VIP Runner Up. Six High Golds across the team, and a class scholarship to DancerPalooza. The season started in August.</p>
+            </div>
+          </div>
+
             </div>
           </details>
 
@@ -2275,6 +2344,16 @@
             <p class="kicker">DROP IN &middot; NO AUDITION</p>
             <h1 class="sched-h1">No audition. Just drop in.</h1>
             <p class="sched-dek">Five classes a week at Exchange Dance in Orlando. Pick a date, pay online, show up.</p>
+          </div>
+
+          <!-- The room (2026-10-22): four frames from the Oct 21 Wednesday
+               drop-in, all from behind or wide. data-src so they only load
+               when /schedule/ is the active route. -->
+          <div class="sched-band" aria-label="Photos from a Wednesday drop-in">
+            <img width="800" height="1422" data-src="/images/photos/opt/dropin-wod-reach-800.webp" alt="The whole room in a reach, Wednesday drop-in" decoding="async" data-lightbox>
+            <img width="800" height="1422" data-src="/images/photos/opt/dropin-wod-balance-800.webp" alt="A dancer holding a balance in front of the mirror" decoding="async" data-lightbox>
+            <img width="800" height="1422" data-src="/images/photos/opt/dropin-wod-lunge-800.webp" alt="Lunge and reach across the floor" decoding="async" data-lightbox>
+            <img width="800" height="1422" data-src="/images/photos/opt/dropin-wod-walkover-800.webp" alt="Walkovers at the end of class" decoding="async" data-lightbox>
           </div>
 
           <ul class="finder-list" data-finder-list aria-label="Drop-in classes">
@@ -2571,7 +2650,32 @@
       <div class="gallery-lead">
         <span class="gallery-lead-eyebrow">Season One</span>
         <h2 class="gallery-lead-title">How we got here.</h2>
-        <p class="gallery-lead-sub">Open house to signing day in one summer, then the season started.</p>
+        <p class="gallery-lead-sub">Our first competition up top. Then the summer that built the team.</p>
+      </div>
+
+      <!-- JUMP 2026 (added 2026-10-22). From the app's JUMP album, picked off
+           a numbered contact sheet. Every face is a Season One dancer or
+           Dixon; the jackets shot is a parent upload with no faces. -->
+      <div class="gallery-episode reveal">
+        <div class="gallery-episode-head">
+          <span class="gallery-episode-name">JUMP Ft. Lauderdale</span>
+          <span class="gallery-episode-when">October 2026</span>
+        </div>
+        <div class="gallery-grid">
+        <img width="1600" height="1200" src="/images/photos/opt/jump-team-1600.webp" srcset="/images/photos/opt/jump-team-800.webp 800w, /images/photos/opt/jump-team-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="The dwdPROSERIES team at the JUMP wall" class="wide" loading="lazy" data-lightbox>
+        <img width="1536" height="2048" src="/images/photos/opt/jump-first-place-1600.webp" srcset="/images/photos/opt/jump-first-place-800.webp 800w, /images/photos/opt/jump-first-place-1600.webp 1536w" sizes="(max-width: 768px) 100vw, 50vw" alt="Three dancers holding the First Place card" loading="lazy" data-lightbox>
+        <img width="1536" height="2048" src="/images/photos/opt/jump-first-place-b-1600.webp" srcset="/images/photos/opt/jump-first-place-b-800.webp 800w, /images/photos/opt/jump-first-place-b-1600.webp 1536w" sizes="(max-width: 768px) 100vw, 50vw" alt="The First Place trio under pink light after awards" loading="lazy" data-lightbox>
+        <img width="1536" height="2048" src="/images/photos/opt/jump-line-1600.webp" srcset="/images/photos/opt/jump-line-800.webp 800w, /images/photos/opt/jump-line-1600.webp 1536w" sizes="(max-width: 768px) 100vw, 50vw" alt="A dancer in costume holding a shape before her number" loading="lazy" data-lightbox>
+        <img width="1536" height="2048" src="/images/photos/opt/jump-backbend-1600.webp" srcset="/images/photos/opt/jump-backbend-800.webp 800w, /images/photos/opt/jump-backbend-1600.webp 1536w" sizes="(max-width: 768px) 100vw, 50vw" alt="A dancer in a backbend on the JUMP red carpet" loading="lazy" data-lightbox>
+        <img width="1600" height="1200" src="/images/photos/opt/jump-team-b-1600.webp" srcset="/images/photos/opt/jump-team-b-800.webp 800w, /images/photos/opt/jump-team-b-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="The team together on day two of JUMP" class="wide" loading="lazy" data-lightbox>
+        <img width="1536" height="2048" src="/images/photos/opt/jump-peace-1600.webp" srcset="/images/photos/opt/jump-peace-800.webp 800w, /images/photos/opt/jump-peace-1600.webp 1536w" sizes="(max-width: 768px) 100vw, 50vw" alt="A dancer throwing peace signs at the JUMP wall" loading="lazy" data-lightbox>
+        <img width="1536" height="2048" src="/images/photos/opt/jump-pose-1600.webp" srcset="/images/photos/opt/jump-pose-800.webp 800w, /images/photos/opt/jump-pose-1600.webp 1536w" sizes="(max-width: 768px) 100vw, 50vw" alt="A dancer posing at the JUMP wall" loading="lazy" data-lightbox>
+        <img width="1536" height="2048" src="/images/photos/opt/jump-mini-1600.webp" srcset="/images/photos/opt/jump-mini-800.webp 800w, /images/photos/opt/jump-mini-1600.webp 1536w" sizes="(max-width: 768px) 100vw, 50vw" alt="One of our youngest dancers posing in costume" loading="lazy" data-lightbox>
+        <img width="1600" height="1600" src="/images/photos/opt/jump-backstage-1600.webp" srcset="/images/photos/opt/jump-backstage-800.webp 800w, /images/photos/opt/jump-backstage-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Three dancers in team jackets backstage" loading="lazy" data-lightbox>
+        <img width="1600" height="1200" src="/images/photos/opt/jump-team-c-1600.webp" srcset="/images/photos/opt/jump-team-c-800.webp 800w, /images/photos/opt/jump-team-c-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="The whole team on the last day of JUMP" class="wide" loading="lazy" data-lightbox>
+        <img width="1600" height="1600" src="/images/photos/opt/jump-jackets-1600.webp" srcset="/images/photos/opt/jump-jackets-800.webp 800w, /images/photos/opt/jump-jackets-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Team jackets on the rack, one stitched MR DIXON" loading="lazy" data-lightbox>
+        <img width="1536" height="2048" src="/images/photos/opt/jump-solo-1600.webp" srcset="/images/photos/opt/jump-solo-800.webp 800w, /images/photos/opt/jump-solo-1600.webp 1536w" sizes="(max-width: 768px) 100vw, 50vw" alt="A soloist in her costume at the JUMP wall" loading="lazy" data-lightbox>
+        </div>
       </div>
 
       <div class="gallery-episode reveal">

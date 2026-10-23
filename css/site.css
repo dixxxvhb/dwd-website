@@ -12483,3 +12483,97 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   footer.site-footer .footer-bottom .footer-sep { display: none; }
   footer.site-footer .footer-bottom .footer-copy { flex-basis: 100%; text-align: center; text-wrap: balance; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FRESH FROM JUMP (Home, 2026-10-22). Proof, then the door: photos, four
+   results in the drop-in panel's ledger grammar, one ghost-to-pink button
+   that goes to /schedule/. Forest ground so Home stays one house.
+   ═══════════════════════════════════════════════════════════════════════ */
+.jump-recap { background: var(--forest); padding: 56px 0; }
+.jump-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.jump-kicker {
+  font-family: var(--font-body); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--pink, #FF7AA2); margin: 0 0 14px;
+}
+.jump-title {
+  font-family: var(--font-display); font-weight: 400; font-size: 40px; line-height: 1.08;
+  color: var(--ivory); margin: 0 0 28px;
+}
+.jump-title em { font-style: italic; color: var(--pink, #FF7AA2); }
+.jump-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 32px; }
+.jump-grid:empty { display: none; }
+.jump-grid img, .jump-grid video { width: 100%; height: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; border-radius: 0; }
+.jump-grid > :first-child { grid-column: span 2; aspect-ratio: auto; }
+.jump-grid > :first-child img, .jump-grid > img:first-child { aspect-ratio: 4 / 3; }
+.jump-results { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(250, 243, 232, 0.14); }
+.jump-results li {
+  display: grid; grid-template-columns: 72px minmax(0, 1fr); column-gap: 16px; align-items: baseline;
+  padding: 12px 0; border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+.jump-res-big { font-family: 'Bebas Neue', sans-serif; font-size: 34px; line-height: 1; color: var(--ivory); }
+.jump-res-what { font-family: var(--font-body); font-size: 16px; line-height: 1.45; color: rgba(250, 243, 232, 0.82); }
+.jump-res-what em { font-family: var(--font-display); font-size: 1.12em; color: var(--ivory); }
+.jump-cta { margin-top: 28px; }
+.jump-cta-line { font-family: var(--font-body); font-size: 17px; line-height: 1.5; color: rgba(250, 243, 232, 0.86); margin: 0 0 14px; }
+.jump-btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px;
+  border: 1px solid var(--pink, #FF7AA2); color: var(--pink, #FF7AA2); background: transparent;
+  font-family: var(--font-body); font-size: 17px; font-weight: 600; letter-spacing: 0.6px; text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.12s ease;
+}
+.jump-btn:hover, .jump-btn:focus-visible { background: var(--pink, #FF7AA2); color: var(--forest); }
+.jump-btn:active { transform: scale(0.96); }
+@media (min-width: 900px) {
+  .jump-recap { padding: 80px 0; }
+  .jump-inner { padding: 0 32px; }
+  .jump-title { font-size: 56px; }
+  .jump-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .jump-grid > :first-child { grid-column: span 2; grid-row: span 2; }
+  .jump-grid > img:first-child { aspect-ratio: auto; }
+  .jump-results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   OCTOBER REFRESH (2026-10-22): the drop-in loop on Home, the reel that
+   replaced Tokyo Sunrise, and the photo band on /schedule/.
+   ═══════════════════════════════════════════════════════════════════════ */
+.dropin-side { min-width: 0; }
+.dropin-loop { margin: 24px 0 0; max-width: 340px; }
+.dropin-loop video {
+  display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
+  background: var(--forest) center / cover no-repeat;
+}
+.dropin-loop figcaption {
+  font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.24em;
+  text-transform: uppercase; color: rgba(250, 243, 232, 0.55); margin-top: 10px;
+}
+@media (max-width: 899px) {
+  /* On a phone the loop sits between the price and the list: a short band, not
+     a second full screen of scroll before the classes. */
+  .dropin-loop { max-width: none; }
+  .dropin-loop video { aspect-ratio: 16 / 10; }
+}
+
+.video-reel { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.video-reel video {
+  display: block; width: 100%; max-width: 360px; height: auto; aspect-ratio: 9 / 16;
+  background: var(--forest); object-fit: cover;
+}
+.video-reel-cta {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
+  border: 1px solid var(--pink, #FF7AA2); color: var(--pink, #FF7AA2);
+  font-family: var(--font-body); font-size: 16px; font-weight: 600; letter-spacing: 0.6px; text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.video-reel-cta:hover, .video-reel-cta:focus-visible { background: var(--pink, #FF7AA2); color: var(--forest); }
+
+.sched-band {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 0 0 32px;
+}
+.sched-band img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; background: var(--forest); cursor: zoom-in; }
+@media (max-width: 599px) {
+  /* Two across on a phone, the second pair dropped: four 3:4 crops at 85px
+     wide read as thumbnails, two at 175px read as the room. */
+  .sched-band { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sched-band img:nth-child(n+3) { display: none; }
+}
