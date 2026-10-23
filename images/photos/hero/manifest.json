@@ -312,5 +312,59 @@
   "h": 1350,
   "src": "C:\\Users\\bowle/iCloudDrive/Desktop/DWD/dwdPROSERIES/season-1/events/2026-07-06-summer-intensive/source/from-phone-hires/video-masters/SHOW__monotony_remi_daisy_evie_john_belle_adelyn.MOV",
   "w": 900
+ },
+ "N": {
+  "files": {
+   "N-1600.jpg": {
+    "bytes": 153105,
+    "h": 2048,
+    "w": 1536
+   },
+   "N-1600.webp": {
+    "bytes": 86504,
+    "h": 2048,
+    "w": 1536
+   },
+   "N-800.jpg": {
+    "bytes": 62344,
+    "h": 1067,
+    "w": 800
+   },
+   "N-800.webp": {
+    "bytes": 35288,
+    "h": 1067,
+    "w": 800
+   }
+  },
+  "h": 2048,
+  "src": "images/photos/opt/jump-pose-1600.webp",
+  "w": 1536
+ },
+ "O": {
+  "files": {
+   "O-1600.jpg": {
+    "bytes": 132825,
+    "h": 2048,
+    "w": 1536
+   },
+   "O-1600.webp": {
+    "bytes": 70482,
+    "h": 2048,
+    "w": 1536
+   },
+   "O-800.jpg": {
+    "bytes": 54450,
+    "h": 1067,
+    "w": 800
+   },
+   "O-800.webp": {
+    "bytes": 25916,
+    "h": 1067,
+    "w": 800
+   }
+  },
+  "h": 2048,
+  "src": "images/photos/opt/jump-backbend-1600.webp",
+  "w": 1536
  }
 }
