@@ -52,6 +52,15 @@
   // "What to know" address in index.html carries.
   var EXCHANGE_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=Exchange+Dance+Studio%2C+7409+Chancery+Lane%2C+Orlando%2C+FL+32809';
 
+  // Thanksgiving week 2026: the menu at the top of the page. Each course is
+  // the morning class (starts before noon) on its date in the feed, so the
+  // Director class is the source of truth for price and spots and the cart
+  // and checkout need nothing new. Guest names go here once confirmed; an
+  // empty string keeps "to be announced". After TG_LAST the block hides.
+  var TG_DATES = ['2026-11-24', '2026-11-25', '2026-11-27'];
+  var TG_LAST = '2026-11-27';
+  var TG_GUESTS = { '2026-11-24': '', '2026-11-25': '' };
+
   var DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
   var DAY_NAMES_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -840,6 +849,7 @@
     rows.forEach(function (r) {
       if (!r || !r.class_id || !r.date || !r.start_time) return;
       if (!r.drop_in_open) return;
+      if (isTgRow(r)) return; // booked from the menu, not listed twice
       if (isPast(r.date, r.start_time)) return;
       var dow = localDate(r.date).getDay();
       var k = r.class_id + '|' + dow + '|' + String(r.start_time).slice(0, 5);
@@ -1032,10 +1042,108 @@
     syncCart();
   });
 
-  // One cart, three surfaces: the bar, the chips, and the week grid if open.
+  // ── Thanksgiving menu ──
+  var elTg = page.querySelector('[data-tg]');
+  var tgRowsByDate = {};
+
+  function isTgRow(r) {
+    return TG_DATES.indexOf(String(r.date).slice(0, 10)) !== -1 && String(r.start_time) < '12';
+  }
+
+  function setTgRows(rows) {
+    tgRowsByDate = {};
+    rows.forEach(function (r) {
+      if (r && r.class_id && r.start_time && isTgRow(r)) tgRowsByDate[String(r.date).slice(0, 10)] = r;
+    });
+    paintTg();
+  }
+
+  // One course: closed until its class is open for drop-in, then Reserve,
+  // In your order, or Full. Price comes from the class; none set reads TBA.
+  function paintTg() {
+    if (!elTg) return;
+    if (nyTodayIso() > TG_LAST) { elTg.hidden = true; return; }
+    var courses = elTg.querySelectorAll('[data-tg-date]');
+    Array.prototype.forEach.call(courses, function (li) {
+      var d = li.getAttribute('data-tg-date');
+      var guest = li.querySelector('[data-tg-guest]');
+      if (guest && TG_GUESTS[d]) guest.textContent = TG_GUESTS[d];
+      var btn = li.querySelector('[data-tg-btn]');
+      var price = li.querySelector('[data-tg-price]');
+      var row = tgRowsByDate[d];
+      var open = row && row.drop_in_open && !isPast(row.date, row.start_time);
+      btn.className = 'tg-btn tap-44';
+      btn.innerHTML = '';
+      if (!open) {
+        btn.disabled = true;
+        btn.removeAttribute('aria-pressed');
+        btn.textContent = row && isPast(row.date, row.start_time) ? 'Served' : 'Reservations open soon';
+        price.textContent = '';
+        return;
+      }
+      price.textContent = typeof row.drop_in_fee_cents === 'number' ? money(row.drop_in_fee_cents) : 'Price TBA';
+      if (row.spots_left === 0) {
+        btn.disabled = true;
+        btn.removeAttribute('aria-pressed');
+        btn.textContent = 'Fully booked';
+        return;
+      }
+      btn.disabled = false;
+      var added = cartHas(row.class_id, row.occurrence_date);
+      btn.setAttribute('aria-pressed', added ? 'true' : 'false');
+      if (added) {
+        btn.className += ' is-added';
+        var tick = el('span', 'sched-check');
+        tick.setAttribute('aria-hidden', 'true');
+        btn.appendChild(tick);
+        btn.appendChild(document.createTextNode('In your order'));
+      } else {
+        btn.textContent = 'Reserve a seat';
+      }
+    });
+  }
+
+  if (elTg) elTg.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-tg-btn]');
+    if (!btn || btn.disabled) return;
+    var li = btn.closest('[data-tg-date]');
+    var row = tgRowsByDate[li.getAttribute('data-tg-date')];
+    var note = li.querySelector('[data-tg-note]');
+    if (!row) return;
+    note.hidden = true;
+    if (cartHas(row.class_id, row.occurrence_date)) {
+      cartRemove(row.class_id, row.occurrence_date);
+    } else if (cartAdd(row) === 'full') {
+      note.textContent = 'Six classes at a time. Check out, then add more.';
+      note.hidden = false;
+      return;
+    }
+    renderNotice('');
+    syncCart();
+  });
+
+  // Localhost only: ?tg=demo fills the three mornings with open rows (no
+  // price, so they read Price TBA) to see the menu without Director classes.
+  // Never reaches checkout: these class_ids do not exist on the server.
+  function tgDemoRows() {
+    if (!/^(localhost|127\.)/.test(location.hostname)) return [];
+    if (new URLSearchParams(location.search).get('tg') !== 'demo') return [];
+    return TG_DATES.map(function (d) {
+      return {
+        class_id: 'tg-demo-' + d, occurrence_date: d, date: d,
+        start_time: '10:00:00', end_time: '13:00:00',
+        name: d === '2026-11-27' ? 'Leftovers' : 'Guest Masterclass',
+        track_label: null, age_band: null, room: null,
+        drop_in_open: true, drop_in_fee_cents: null, spots_left: d === '2026-11-25' ? 0 : 20
+      };
+    });
+  }
+
+  // One cart, four surfaces: the bar, the chips, the menu, and the week grid if open.
   function syncCart() {
     renderCartBar();
     paintChips();
+    paintTg();
     if (gridReady) renderRows(currentRows);
   }
 
@@ -1051,8 +1159,9 @@
 
     Promise.all([fetchWeek(a0, a1), fetchWeek(b0, b1)]).then(function (res) {
       if (seq !== finderSeq) return;
-      var rows = (res[0] || []).concat(res[1] || []);
+      var rows = (res[0] || []).concat(res[1] || [], tgDemoRows());
       applyBulkMin(rows);
+      setTgRows(rows);
       var pruned = pruneCart(rows);
       renderCartBar();
       if (pruned.dropped.length) {
@@ -1650,6 +1759,7 @@
   function start() {
     if (started) return;
     started = true;
+    paintTg(); // hides the menu after Thanksgiving week even if the feed fails
     var returning = handleReturn();
     if (new URLSearchParams(location.search).get('order') === 'stub') {
       // QA hook for the thank-you screenshot against the stub, per the brief's
