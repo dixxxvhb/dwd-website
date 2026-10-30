@@ -5,7 +5,7 @@ Branch `claude/thanksgiving-menu`. Not on main yet: main deploys to dancewithdix
 ## What it is
 The Instagram post (the Thanksgiving Tasting Menu, `DWD/dwdPROSERIES/season-1/campaigns/thanksgiving-week-nov-2026/`) as a printed menu card at the top of /schedule/, with two seatings per morning. Lineup is tentative (Dixon, 2026-10-30):
 
-- I. Tue Nov 24: Contemporary, guest chef Ms. Tori. 10 to 11:30 ages 9 and under; 11:30 to 1 ages 10 and up.
+- I. Tue Nov 24: Jazz, guest chef Ms. Tori. 10 to 11:30 ages 9 and under; 11:30 to 1 ages 10 and up.
 - II. Wed Nov 25: Contemporary Fusion, guest chef Megan Montgomery. Same split.
 - Intermission, Thu: The Turkey (no buttons)
 - III. Fri Nov 27: Leftovers with Dixon. 10 to 11:30 intermediate/advanced ballet + conditioning, ages 10 and up; 11:30 to 1 musical theatre, open to everyone.
