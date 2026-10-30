@@ -25,7 +25,8 @@
   'use strict';
 
   var list = document.querySelector('[data-episode-list]');
-  if (!list) return;
+  var home = document.querySelector('[data-season-home]');
+  if (!list && !home) return;
 
   var sb = window.__dwd_sb;
   if (!sb) return; // supabase-js unavailable — static rows stand
@@ -140,6 +141,92 @@
     return wrap;
   }
 
+  /* Home's Season One section (#season-home, 2026-10-30): the seven-stop
+     rail and the Up next card, from the same rows and numbering as the
+     guide. The premiere is always aired by now; FINALE_ISO mirrors the
+     guide's hardcoded last row. "Last time out" is written by hand, so the
+     only thing done to it here is an honest label once a newer episode has
+     aired and nobody has swapped it yet. */
+  var FINALE_ISO = '2027-05-25';
+  var SHORT_NAMES = {
+    'titans-of-dance': 'Titans', jump: 'JUMP', starquest: 'StarQuest',
+    dreammaker: 'DreamMaker', showstopper: 'Showstopper'
+  };
+
+  function shortName(row) {
+    return SHORT_NAMES[row.brand_slug] || String(row.name || 'Competition').split(/[\s(]/)[0];
+  }
+
+  function railStop(code, name, state) {
+    var li = el('li', 'sh-ep' + (state ? ' is-' + state : ''));
+    if (state === 'next') li.setAttribute('aria-current', 'step');
+    var dot = el('span', 'sh-dot');
+    dot.setAttribute('aria-hidden', 'true');
+    li.appendChild(dot);
+    li.appendChild(el('span', 'sh-code', code));
+    li.appendChild(el('span', 'sh-name', name));
+    return li;
+  }
+
+  function renderHome(rows, nextIndex, today) {
+    var lastAired = -1;
+    var stops = [{ code: 'E1', name: 'Premiere', state: 'aired' }];
+    rows.forEach(function (r, i) {
+      var end = localDate(r.end_date) || localDate(r.start_date);
+      var state = '';
+      if (end && end.getTime() < today.getTime()) { state = 'aired'; lastAired = i; }
+      else if (i === nextIndex) state = 'next';
+      stops.push({ code: 'E' + (i + 2), name: shortName(r), state: state });
+    });
+    var finaleDay = localDate(FINALE_ISO);
+    var finaleState = '';
+    if (finaleDay.getTime() < today.getTime()) finaleState = 'aired';
+    else if (nextIndex === -1) finaleState = 'next';
+    stops.push({
+      code: 'Finale',
+      name: MONTHS[finaleDay.getMonth()] + ' ' + finaleDay.getDate(),
+      state: finaleState
+    });
+
+    // The pink line runs to the next stop, or to the last aired one.
+    var reach = 0;
+    stops.forEach(function (s, i) {
+      if (s.state === 'aired' || s.state === 'next') reach = i;
+    });
+
+    var rail = home.querySelector('[data-sh-rail]');
+    if (rail) {
+      rail.textContent = '';
+      stops.forEach(function (s) { rail.appendChild(railStop(s.code, s.name, s.state)); });
+      rail.style.setProperty('--sh-progress', (reach / (stops.length - 1)).toFixed(3));
+    }
+
+    var card = home.querySelector('[data-sh-next]');
+    if (card) {
+      if (nextIndex === -1) {
+        card.hidden = true;
+      } else {
+        var next = rows[nextIndex];
+        var bits = [];
+        var when = dateRange(next.start_date, next.end_date);
+        if (when) bits.push(when);
+        if (next.location) bits.push(next.location);
+        var code = card.querySelector('[data-sh-next-code]');
+        var name = card.querySelector('[data-sh-next-name]');
+        var meta = card.querySelector('[data-sh-next-meta]');
+        if (code) code.textContent = 'S1:E' + (nextIndex + 2);
+        if (name) name.textContent = next.name || 'Competition';
+        if (meta) meta.textContent = bits.join(' · ');
+      }
+    }
+
+    var last = home.querySelector('[data-sh-last]');
+    if (last && lastAired !== -1 && rows[lastAired].id !== last.getAttribute('data-ep-id')) {
+      var label = last.querySelector('[data-sh-last-label]');
+      if (label) label.textContent = 'Earlier this season';
+    }
+  }
+
   function render(rows, recaps) {
     var today = midnightToday();
 
@@ -154,6 +241,9 @@
       var end = localDate(r.end_date) || localDate(r.start_date);
       if (end && end.getTime() >= today.getTime()) nextIndex = i;
     });
+
+    if (home) renderHome(rows, nextIndex, today);
+    if (!list) return;
 
     var finale = list.querySelector('[data-ep-fixed="last"]');
     var frag = document.createDocumentFragment();

@@ -925,7 +925,7 @@
                 <source media="(max-width: 767px)" src="/video/dropin-wod-loop-480.mp4" type="video/mp4">
                 <source src="/video/dropin-wod-loop.mp4" type="video/mp4">
               </video>
-              <figcaption>Wednesday drop-in &middot; Oct 21</figcaption>
+              <figcaption>Wednesday drop-in</figcaption>
             </figure>
             </div>
             <div class="dropin-body">
@@ -1001,35 +1001,55 @@
         </a>
       </div>
 
-      <!-- FRESH FROM JUMP (2026-10-22, website refresh). The season's first
-           competition, told as proof and pointed at the drop-in: the people
-           reading this want their kid in that room, and the room is open on
-           Tuesdays. Routine names only, no dancer names (Dixon's rule for this
-           strip). Results are from competition_awards for JUMP Ft. Lauderdale,
-           Oct 16-18, 2026, worded the way Dixon gave them on 2026-10-22. Photos
-           come from the app's JUMP album, picked off a numbered contact sheet;
-           built by scripts/build-jump-media.py. -->
-      <section class="jump-recap reveal" id="jump-recap" aria-label="JUMP 2026 results">
-        <div class="jump-inner">
-          <div class="jump-head">
-            <p class="jump-kicker"><span class="brand-case">dwdPROSERIES</span> &middot; JUMP Ft. Lauderdale &middot; Oct 16&ndash;18</p>
-            <h2 class="jump-title">First competition. <em>First overall.</em></h2>
-          </div>
-          <div class="jump-grid" data-jump-grid>
-            <img width="1600" height="1200" src="/images/photos/opt/jump-team-1600.webp" srcset="/images/photos/opt/jump-team-800.webp 800w, /images/photos/opt/jump-team-1600.webp 1600w" sizes="(max-width: 899px) 100vw, 550px" alt="The dwdPROSERIES team in green and pink jackets at the JUMP wall" loading="lazy" decoding="async" data-lightbox>
-            <img width="800" height="1067" src="/images/photos/opt/jump-first-place-800.webp" sizes="(max-width: 899px) 50vw, 275px" alt="Three dancers holding the First Place card" loading="lazy" decoding="async" data-lightbox>
-            <img width="800" height="1067" src="/images/photos/opt/jump-line-800.webp" sizes="(max-width: 899px) 50vw, 275px" alt="A dancer in costume holding a shape before her number" loading="lazy" decoding="async" data-lightbox>
-            <img width="800" height="1067" src="/images/photos/opt/jump-first-place-b-800.webp" sizes="(max-width: 899px) 50vw, 275px" alt="The First Place trio under pink light after awards" loading="lazy" decoding="async" data-lightbox>
-            <img width="800" height="800" src="/images/photos/opt/jump-jackets-800.webp" sizes="(max-width: 899px) 50vw, 275px" alt="Team jackets on the rack, one stitched MR DIXON" loading="lazy" decoding="async" data-lightbox>
-          </div>
-          <ul class="jump-results" aria-label="JUMP results">
-            <li><span class="jump-res-big">1st</span><span class="jump-res-what">Overall, <em>Can You Hear The Music?</em> Plus a Palladium.</span></li>
-            <li><span class="jump-res-big">9th</span><span class="jump-res-what">Overall, <em>Gods of Science.</em> Plus VIP Runner Up.</span></li>
-            <li><span class="jump-res-big">6</span><span class="jump-res-what">High Golds across the team.</span></li>
-            <li><span class="jump-res-big">1</span><span class="jump-res-what">Class scholarship to DancerPalooza.</span></li>
-          </ul>
-          <div class="jump-cta">
-            <a class="jump-btn" href="/schedule/" data-ref="home-jump" data-track="home-jump-dropin">Train with this team. Drop in Tuesday. &rarr;</a>
+      <!-- SEASON ONE ON HOME (2026-10-30, November refresh). One section in
+           place of two: FRESH FROM JUMP (2026-10-22) and the midnight Season
+           One strip, which still read S1:E1 three episodes in.
+           The rail and Up next read public_site_episodes through
+           js/episodes.js, the same view and numbering as the Episode Guide on
+           ProSeries, so the season moves forward here by itself. The static
+           markup is the fallback and matches the Director calendar on
+           2026-10-30; keep it truthful.
+           "Last time out" is told by hand (routine names only, no dancer
+           names, Dixon's rule). After StarQuest, swap its results, photo and
+           data-ep-id; until then the script relabels it "Earlier this season"
+           once a newer episode has aired. JUMP results are from
+           competition_awards, worded the way Dixon gave them on 2026-10-22.
+           Team photo: every dancer on a JUMP entry or signup has
+           photo_release_granted (checked 2026-10-30). -->
+      <section class="season-home reveal" id="season-home" aria-labelledby="sh-heading" data-season-home>
+        <div class="sh-inner">
+          <h2 class="sh-kicker" id="sh-heading"><span class="brand-case">dwdPROSERIES</span> &middot; Season One</h2>
+          <ol class="sh-rail" data-sh-rail style="--sh-progress: 0.5" aria-label="Season One episodes">
+            <li class="sh-ep is-aired"><span class="sh-dot" aria-hidden="true"></span><span class="sh-code">E1</span><span class="sh-name">Premiere</span></li>
+            <li class="sh-ep is-aired"><span class="sh-dot" aria-hidden="true"></span><span class="sh-code">E2</span><span class="sh-name">Titans</span></li>
+            <li class="sh-ep is-aired"><span class="sh-dot" aria-hidden="true"></span><span class="sh-code">E3</span><span class="sh-name">JUMP</span></li>
+            <li class="sh-ep is-next" aria-current="step"><span class="sh-dot" aria-hidden="true"></span><span class="sh-code">E4</span><span class="sh-name">StarQuest</span></li>
+            <li class="sh-ep"><span class="sh-dot" aria-hidden="true"></span><span class="sh-code">E5</span><span class="sh-name">DreamMaker</span></li>
+            <li class="sh-ep"><span class="sh-dot" aria-hidden="true"></span><span class="sh-code">E6</span><span class="sh-name">Showstopper</span></li>
+            <li class="sh-ep"><span class="sh-dot" aria-hidden="true"></span><span class="sh-code">Finale</span><span class="sh-name">May 25</span></li>
+          </ol>
+
+          <div class="sh-body">
+            <article class="sh-last" data-sh-last data-ep-id="e43124d1-a76d-4b76-9bef-baecd55bf361">
+              <p class="sh-label"><b data-sh-last-label>Last time out</b> &middot; S1:E3 &middot; JUMP&nbsp;Ft.&nbsp;Lauderdale &middot; Oct&nbsp;16&nbsp;to&nbsp;18</p>
+              <h3 class="sh-last-title">First competition. <em>First overall.</em></h3>
+              <img class="sh-photo" width="1600" height="1200" src="/images/photos/opt/jump-team-1600.webp" srcset="/images/photos/opt/jump-team-800.webp 800w, /images/photos/opt/jump-team-1600.webp 1600w" sizes="(max-width: 899px) 100vw, 600px" alt="The dwdPROSERIES team in green and pink jackets at the JUMP wall" loading="lazy" decoding="async" data-lightbox>
+              <ul class="jump-results" aria-label="JUMP results">
+                <li><span class="jump-res-big">1st</span><span class="jump-res-what">Overall, <em>Can You Hear The Music?</em> Plus a Palladium.</span></li>
+                <li><span class="jump-res-big">9th</span><span class="jump-res-what">Overall, <em>Gods of Science.</em> Plus VIP Runner Up.</span></li>
+                <li><span class="jump-res-big">6</span><span class="jump-res-what">High Golds across the team.</span></li>
+                <li><span class="jump-res-big">1</span><span class="jump-res-what">Class scholarship to DancerPalooza.</span></li>
+              </ul>
+            </article>
+
+            <aside class="sh-next" data-sh-next aria-label="Up next">
+              <p class="sh-label"><b>Up next</b> &middot; <span data-sh-next-code>S1:E4</span></p>
+              <h3 class="sh-next-name" data-sh-next-name>StarQuest (Orlando I)</h3>
+              <p class="sh-next-meta" data-sh-next-meta>Feb 5 to 7, 2027 &middot; Orlando FL</p>
+              <p class="sh-next-line">Until then the team trains every week, and <span class="sh-keep">drop-in</span> classes put your dancer in the room <span class="sh-keep">with them.</span></p>
+              <a class="jump-btn" href="/schedule/" data-ref="home-season" data-track="home-season-dropin">Train with this team. Drop in Tuesday. &rarr;</a>
+              <a class="sh-more" href="/proseries/#ps-calendar" data-track="home-season-guide">See the whole season &rarr;</a>
+            </aside>
           </div>
         </div>
       </section>
@@ -1046,36 +1066,6 @@
            it again 1,200px down was the duplicate. Its countdown clock was already spent (Aug 10 passed) and
            the [data-season-clock] IIFE in eras.js simply finds nothing now.
            See git history for the prior markup. -->
-
-      <!-- SEASON ONE HOME TEASER — replaces the season-underway-cta variant
-           (2026-08-03: cinematic midnight strip, a keyhole into the Series
-           branding rather than a full page takeover — that's what #page-proseries
-           carries). Same slot in the DOM, same reveal gate (Aug 10, no hide-after
-           — verified nothing in eras.js referenced the old
-           #season-underway-cta id directly, only the generic
-           data-reveal-after/data-hide-after loop + [data-season-clock] selector,
-           which only matches #season-one-cta above, not this one — safe to
-           rename). Home stays forest everywhere else; this is the one midnight
-           strip on the page. -->
-      <section class="reveal" id="s1-home-teaser"
-               aria-label="Season One is rolling"
-               data-reveal-after="2026-08-10T04:00:00-04:00"
-               style="display:none">
-        <div class="s1ht-inner">
-          <div class="s1ht-main">
-            <div class="s1ht-eyebrow"><span class="brand-case">dwdPROSERIES</span> presents</div>
-            <div class="s1ht-lockup">
-              <svg class="s1ht-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF7AA2" d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
-              <span class="s1ht-title">SEASON ONE</span>
-              <svg class="s1ht-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF7AA2" d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
-            </div>
-            <div class="s1ht-meta"><span class="s1-ep-code">S1:E1</span> <span class="s1-when" data-s1-when="premiere">The Premiere &middot; August 10 &middot; Exchange Dance, Orlando</span><span class="s1-when" data-s1-when="midseason finale">Season One is underway &middot; Exchange Dance, Orlando &middot; new dancers join by placement class</span></div>
-          </div>
-          <div class="s1ht-actions">
-            <a class="s1ht-link" href="#proseries">See the season &rarr;</a>
-          </div>
-        </div>
-      </section>
 
       <!-- The Episode Recaps email band was duplicated word for word on Home
            and ProSeries. ProSeries keeps it (2026-09-04 audit). -->
@@ -1126,7 +1116,7 @@
               <div class="video-label">See the Work</div>
               <h2>Wednesday <em>WOD.</em></h2>
             </div>
-            <div class="meta">A real drop-in, filmed Oct 21, 2026. Tuesdays and Wednesdays, no audition.</div>
+            <div class="meta">A real Wednesday drop-in, filmed this season. Tuesdays and Wednesdays, no audition.</div>
           </div>
           <!-- 2026-10-22: Tokyo Sunrise (2024 season) out, this season's drop-in
                reel in. Self-hosted 720x1280, preload none, poster via wakeMedia;
