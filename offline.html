@@ -14,6 +14,8 @@
       --bg: #0c1f17;
       --ink: #faf3e8;
       --terra: #c8614b;
+      --pink: #ff7aa2;
+      --pink-soft: #ff8fab;
       --muted: rgba(250, 243, 232, 0.6);
     }
     *, *::before, *::after { box-sizing: border-box; }
@@ -51,20 +53,34 @@
       line-height: 1.55;
       margin: 0 0 2rem;
     }
+    /* The site's one primary button (site.css "ONE CTA SYSTEM"): Family Pink
+       ground, forest ink, square, 48px tall. Ivory on terracotta was 3.62:1. */
     button {
-      background: var(--terra);
-      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      background: var(--pink);
+      color: var(--bg);
       border: 0;
-      padding: 0.85rem 1.75rem;
+      border-radius: 0;
+      padding: 0.875rem 2rem;
       font-family: inherit;
-      font-size: 0.875rem;
-      letter-spacing: 0.18em;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
       cursor: pointer;
-      transition: transform 0.15s ease;
+      transition: transform 0.15s ease, background 0.25s ease;
     }
-    button:hover { transform: translateY(-1px); }
+    button:hover { background: var(--pink-soft); transform: translateY(-1px); }
     button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    /* Tamara Mark, same markup and weight as the site footer's. */
+    .tamara-mark { display: block; margin: 2.5rem auto 0; opacity: 0.9; }
+    @media (min-resolution: 2dppx) { /* fine lines on 2x/3x, as in site.css */
+      .tamara-mark circle:nth-of-type(1) { stroke-width: 0.6; }
+      .tamara-mark circle:nth-of-type(2) { stroke-width: 0.85; }
+    }
   </style>
 </head>
 <body data-arm="house">
@@ -74,6 +90,18 @@
     <h1>Looks like you're offline.</h1>
     <p>The network dropped before we could load the page. Once you're back online, the site will work as usual.</p>
     <button type="button" onclick="window.location.reload()">Try again</button>
+    <!-- Tamara Mark — For Mom -->
+    <svg class="tamara-mark tamara-mark--footer" viewBox="20 10 200 190" width="28" height="27" aria-hidden="true">
+      <circle cx="100" cy="115" r="65" fill="none" stroke="url(#tm-gold-f)" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linecap="round" opacity="0.75"/>
+      <circle cx="152" cy="70" r="49" fill="none" stroke="url(#tm-gold-f)" stroke-width="1.4" vector-effect="non-scaling-stroke" stroke-linecap="round" opacity="0.95"/>
+      <circle cx="107" cy="50" r="10" fill="url(#tm-glow-f)" opacity="0.25"/>
+      <defs>
+        <linearGradient id="tm-gold-f" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#c9956c"/><stop offset="40%" stop-color="#e8c49a"/><stop offset="100%" stop-color="#d4a574"/>
+        </linearGradient>
+        <radialGradient id="tm-glow-f"><stop offset="0%" stop-color="#e8c49a"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+      </defs>
+    </svg>
   </main>
 </body>
 </html>

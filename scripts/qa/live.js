@@ -46,14 +46,18 @@ const CORS = {
         state: list.getAttribute('data-episode-list'),
         rows: [...list.querySelectorAll('.s1-ep')].map((e) => e.textContent.replace(/\s+/g, ' ').trim()),
         next: (list.querySelector('.s1-ep--next .s1-ep-title') || {}).textContent || null,
+        // The soonest competition that has not aired, read off the guide itself
+        // (this check said /Titans/ until Titans aired on Sep 20).
+        firstUnaired: ([...list.querySelectorAll('.s1-ep--live:not(.s1-ep--aired) .s1-ep-title')][0] || {}).textContent || null,
       };
     });
     say(eg.state === 'live' && eg.rows.length === 7, 'Episode Guide live from public_site_episodes', `${eg.rows.length} rows`);
-    say(/Titans/.test(eg.next || ''), 'Up next chip on the soonest competition', (eg.next || '').replace(/\s+/g, ' ').slice(0, 40));
+    say(!!eg.next && eg.next === eg.firstUnaired, 'Up next chip on the soonest competition', (eg.next || '').replace(/\s+/g, ' ').slice(0, 40));
     await p.close();
   }
 
-  /* ── 2. Collective next class: empty state is the live state ── */
+  /* ── 2. Collective next class: a real date, or the empty state ──
+     Either is right; which one depends on the Director calendar that day. */
   {
     const p = await browser.newPage();
     await p.setViewport({ width: 1280, height: 900 });
@@ -63,8 +67,8 @@ const CORS = {
       const b = document.getElementById('dwdc-next-class');
       return { state: b.dataset.state, text: b.textContent.replace(/\s+/g, ' ').trim().slice(0, 60) };
     });
-    say(d.state === 'empty' && /next class date is being set/i.test(d.text),
-      'Collective next class: empty state renders', d.state);
+    say((d.state === 'live' && d.text.length > 0) || (d.state === 'empty' && /coming soon|being set/i.test(d.text)),
+      'Collective next class renders', d.state + ': ' + d.text.slice(0, 40));
     await p.close();
   }
 
@@ -107,7 +111,8 @@ const CORS = {
       window.DWD_SEASON.render();
       return { total: sites.length, reacted: after };
     });
-    say(c.total === 12 && c.reacted >= 4, 'Chair counts render from js/season.js',
+    // 9 render sites on /proseries/ since the 09-25 cleanup (was 12).
+    say(c.total >= 9 && c.reacted >= 4, 'Chair counts render from js/season.js',
       `${c.total} sites, ${c.reacted} follow one edit`);
     await p.close();
   }
@@ -209,7 +214,10 @@ const CORS = {
       await new Promise((x) => setTimeout(x, 1800));
       const found = await p.evaluate(() => [...document.querySelectorAll('a[href]')]
         .map((a) => a.href)
-        .filter((h) => /netlify\.app/.test(h)));
+        .filter((h) => /netlify\.app/.test(h))
+        // The one sanctioned exit: Step Up For Students families request a
+        // drop-in spot in the Director (schedule checkout, every shell).
+        .filter((h) => h !== 'https://dwd-director.netlify.app/drop-in'));
       if (found.length) bad.push(r + ': ' + found.join(','));
     }
     say(bad.length === 0, 'Zero off-domain CTAs on every route', bad.join(' | '));

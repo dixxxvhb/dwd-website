@@ -72,6 +72,14 @@
     return e;
   }
 
+  /* "StarQuest (Orlando I)" reads "StarQuest" wherever a visitor sees it
+     (2026-10-30, Home card and guide rows): the venue already rides on the
+     meta line beside it. */
+  function compName(name) {
+    var full = String(name || 'Competition');
+    return full.replace(/\s*\([^)]*\)\s*$/, '') || full;
+  }
+
   /* Optional competition mark, 20px to the left of the title.
      Nothing ships in images/comps/ today. Those are third-party competition
      logos and putting them on Dixon's site is his call, not this script's.
@@ -110,7 +118,7 @@
     var title = el('span', 's1-ep-title');
     var mark = markFor(row.brand_slug);
     if (mark) title.appendChild(mark);
-    title.appendChild(document.createTextNode(row.name || 'Competition'));
+    title.appendChild(document.createTextNode(compName(row.name)));
     if (state === 'next') {
       title.appendChild(el('span', 's1-ep-flag', 'Up next'));
     }
@@ -215,7 +223,7 @@
         var name = card.querySelector('[data-sh-next-name]');
         var meta = card.querySelector('[data-sh-next-meta]');
         if (code) code.textContent = 'S1:E' + (nextIndex + 2);
-        if (name) name.textContent = next.name || 'Competition';
+        if (name) name.textContent = compName(next.name);
         if (meta) meta.textContent = bits.join(' · ');
       }
     }

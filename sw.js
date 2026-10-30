@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dwd-site-v45-jump';
+const CACHE_NAME = 'dwd-site-v46';
 // Photos live in their own cache so a code deploy (CACHE_NAME bump) does not
 // throw away every image a returning visitor already has. Capped below.
 const IMG_CACHE = 'dwd-img-v1';
@@ -14,6 +14,9 @@ const ASSETS = [
   // The MINIFIED sheet, because that is the one the pages link.
   '/css/site.min.css',
   '/images/logos/v3/DWD-glyph-transparent.svg',
+  // The footer logo on every page; without it a cached page shows a broken
+  // image offline (2026-10-30).
+  '/images/logos/v3/DWD-compact-transparent.svg',
   '/images/logos/v3/DWD-compact-dark-192.png',
   '/images/logos/v3/DWD-compact-dark-512.png'
 ];

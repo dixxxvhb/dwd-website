@@ -242,71 +242,39 @@
     page.classList.toggle('s1-premiere-window', state === 'premiere' || state === 'finale');
   };
 
-  // ── S1 PREMIERE ENTRANCE CUE (added 2026-08-03) ──
-  // One-shot: adds .s1-cue to #s1-premiere the first time it's actually
-  // visible AND on-screen, which triggers the CSS entrance sequence in
-  // season1.css. The band starts display:none behind its data-reveal-after
-  // gate (applyProSeriesReveal flips that later, possibly long after this
-  // script runs) — IntersectionObserver recalculates whenever the target's
-  // box changes for ANY reason, including a display:none -> '' flip driven
-  // by another script, so wiring this once at load (no polling) is enough;
-  // it also fires correctly the moment ?launched=1 / the preview override
-  // reveals the band immediately on page load.
+  // ── S1 PREMIERE ENTRANCE: SECOND LOOK (reduced 2026-10-30) ──
+  // The band's Aug 10 gate is permanently past, so #s1-premiere ships
+  // visible with .s1-cue already in the markup: the CSS entrance sequence
+  // plays from first paint, and again each time main.js swaps the ProSeries
+  // page in (an element coming back from display:none restarts its CSS
+  // animations). It used to wait here for an IntersectionObserver cue, and
+  // this file runs after the deferred supabase-js, which on a throttled
+  // phone held the hero at an empty dark band until ~3.8s.
+  //
+  // What is left is the shortcut: once the band has been seen this session,
+  // later showings play the short version (.s1-cue--fast in site.css). The
+  // class only ever changes while the ProSeries page is hidden. Switching
+  // durations on a running sequence would jump it, so a direct reload of
+  // /proseries/ plays the full sequence and the next in-site visit plays the
+  // short one.
   (function () {
     var s1el = document.getElementById('s1-premiere');
-    if (!s1el) return;
-    if (!('IntersectionObserver' in window)) {
-      s1el.classList.add('s1-cue');
-      return;
-    }
-    // Second look in the same session plays the short version of the
-    // sequence (see .s1-cue--fast in site.css). Set before the cue lands so
-    // the CSS is already in place when it does.
-    try {
-      if (window.sessionStorage && sessionStorage.getItem('dwd-s1-seen')) {
-        s1el.classList.add('s1-cue--fast');
-      }
-    } catch (e) { /* storage blocked: full sequence, no harm */ }
+    var page = document.getElementById('page-proseries');
+    if (!s1el || !page) return;
 
-    function cue() {
-      if (s1el.classList.contains('s1-cue')) return;
-      s1el.classList.add('s1-cue');
-      try { sessionStorage.setItem('dwd-s1-seen', '1'); } catch (e) { /* ignore */ }
-    }
-
-    var s1io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          cue();
-          s1io.unobserve(s1el);
+    function sync() {
+      try {
+        if (page.classList.contains('active')) {
+          sessionStorage.setItem('dwd-s1-seen', '1');
+        } else if (sessionStorage.getItem('dwd-s1-seen')) {
+          s1el.classList.add('s1-cue--fast');
         }
-      });
-    }, { threshold: 0.2 });
-    s1io.observe(s1el);
-
-    // Direct loads of /proseries/ (2026-09-03): the observer only reports
-    // after the next rendering opportunity, which on a cold phone load
-    // landed the cue ~0.8s after the band was already on screen. Once
-    // initEras has opened the gate, cue on the same tick if the band is
-    // showing; the 800ms pass is the safety net for a late gate.
-    function cueIfShowing() {
-      if (s1el.classList.contains('s1-cue')) return;
-      if (s1el.style.display === 'none') return;
-      var page = document.getElementById('page-proseries');
-      if (!page || !page.classList.contains('active')) return;
-      var r = s1el.getBoundingClientRect();
-      if (r.height === 0 || r.top > window.innerHeight * 0.8) return;
-      cue();
+      } catch (e) { /* storage blocked: full sequence, no harm */ }
     }
-    function afterInit() {
-      setTimeout(cueIfShowing, 0);
-      setTimeout(cueIfShowing, 800);
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', afterInit);
-    } else {
-      afterInit();
-    }
+    sync();
+    // main.js fires dwd:route on every in-site swap, after the new page is
+    // active: entering marks the band seen, leaving arms the short version.
+    window.addEventListener('dwd:route', sync);
   })();
 
   // Re-check every 30s so visitors on the page at an era boundary still see it

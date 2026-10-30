@@ -924,6 +924,10 @@ a:hover {
   z-index: 200;
   align-items: center;
   justify-content: center;
+  /* Horizontal drags belong to main.js (swipe to page). Left to the browser,
+     a rightward swipe overscrolled into history-back and left the site. */
+  touch-action: pan-y pinch-zoom;
+  overscroll-behavior: contain;
 }
 
 .lightbox.open {
@@ -943,10 +947,18 @@ a:hover {
 }
 
 
+/* 48x48 tap area around the same 2rem glyph (2026-10-30: it was 19x37). */
 .lightbox-close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
   background: none;
   border: none;
   color: var(--accent);
@@ -1127,12 +1139,15 @@ a:hover {
   }
 
 
-  .lightbox-prev {
-    left: 0.5rem;
+  /* Flush to the edge so the 48px tap areas keep the arrows where the old
+     13px buttons had them, off the photo. `.lightbox` raises specificity past
+     the one-line base rules further down, which used to win here. */
+  .lightbox .lightbox-prev {
+    left: 0;
   }
 
-  .lightbox-next {
-    right: 0.5rem;
+  .lightbox .lightbox-next {
+    right: 0;
   }
 }
 
@@ -1990,7 +2005,7 @@ video.hero-logo {
   background-color: var(--forest-light); padding: 2rem;
   border: 1px solid var(--forest-mid);
 }
-.why-item h4 { color: var(--accent); margin-bottom: 0.75rem; font-family: var(--font-display); }
+.why-item h3 { color: var(--accent); margin-bottom: 0.75rem; font-family: var(--font-display); }
 .why-item p { color: var(--cream); line-height: 1.7; font-size: 0.9rem; }
 .section-lead {
   color: var(--cream); font-size: 1.05rem; line-height: 1.7;
@@ -2167,8 +2182,9 @@ video.hero-logo {
 
 /* Lightbox img */
 .lightbox-img { max-width: 90vw; max-height: 85vh; object-fit: contain; }
-.lightbox-prev { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--accent); font-size: 2.5rem; cursor: pointer; z-index: 201; }
-.lightbox-next { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--accent); font-size: 2.5rem; cursor: pointer; z-index: 201; }
+/* Prev/next: 48x48 tap areas around the same 2.5rem glyphs (were 13x45). */
+.lightbox-prev { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; background: none; border: none; color: var(--accent); font-size: 2.5rem; cursor: pointer; z-index: 201; }
+.lightbox-next { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; background: none; border: none; color: var(--accent); font-size: 2.5rem; cursor: pointer; z-index: 201; }
 
 /* Form success hidden by default */
 .form-success { display: none; }
@@ -2303,8 +2319,11 @@ button[type="submit"]:disabled {
 .toggle-btn:hover {
   background: rgba(200, 97, 75, 0.15);
 }
+/* Checked: the site's one CTA style, Family Pink with forest ink (2026-10-30).
+   Forest on terracotta measured 4.30:1, under AA for this 13.6px label. */
 .toggle-btn.active {
-  background: var(--terra);
+  background: var(--pink, #FF7AA2);
+  border-color: var(--pink, #FF7AA2);
   color: var(--forest, #0c1f17);
   font-weight: 600;
 }
@@ -2317,11 +2336,16 @@ button[type="submit"]:disabled {
 }
 .footer-legal-link:hover { color: var(--accent); }
 
-/* Privacy page */
-.privacy-date { color: rgba(245,241,235,0.5); font-size: 0.85rem; margin-bottom: 2rem; }
-#page-privacy h3 { color: var(--accent); margin-top: 2rem; margin-bottom: 0.5rem; }
+/* Privacy page. 2026-10-30: lines ran ~125 characters at desktop, so the
+   section is capped at a 720px measure (plus its 3rem gutters). The headings
+   are h2 (this used to style h3, which the page never had, so they fell back
+   to the 40px page h2). .privacy-date needs the id to beat `#page-privacy p`.
+   Links differed from body text by colour alone (2.22:1), so they underline. */
+#page-privacy .content-section { max-width: calc(720px + 6rem); }
+#page-privacy .privacy-date { color: rgba(245,241,235,0.5); font-size: 0.85rem; margin-bottom: 2rem; }
+#page-privacy h2 { color: var(--accent); font-size: clamp(22px, 2.4vw, 28px); margin-top: 2.5rem; margin-bottom: 0.5rem; }
 #page-privacy p { color: var(--cream); line-height: 1.7; margin-bottom: 0.75rem; }
-#page-privacy a { color: var(--accent); }
+#page-privacy a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 
 /* Footer stays full-width but content inside is centered */
 .footer-grid {
@@ -2417,18 +2441,29 @@ button[type="submit"]:disabled {
 }
 
 
-/* Tamara Mark — memorial easter egg */
+/* Tamara Mark — memorial easter egg. 2026-10-30: at 0.5 with strokes scaled
+   down to about a quarter pixel, both marks read as a grey smudge. The circles
+   now draw non-scaling 1px / 1.4px strokes, and the mark sits at 0.9 so the
+   gold is visibly gold. */
 .tamara-mark {
   display: inline-block;
   vertical-align: middle;
-  opacity: 0.5;
+  opacity: 0.9;
   transition: opacity 0.6s ease;
 }
 .tamara-mark:hover {
-  opacity: 0.7;
+  opacity: 1;
 }
 .tamara-mark--footer {
   margin-left: 8px;
+}
+/* On a 2x or 3x screen 1px / 1.4px draws 2 to 4 device pixels and the rings go
+   heavy; these keep them the fine gold lines they are on a phone. */
+@media (min-resolution: 2dppx) {
+  .tamara-mark--footer circle:nth-of-type(1),
+  .tamara-mark--about circle:nth-of-type(1) { stroke-width: 0.6; }
+  .tamara-mark--footer circle:nth-of-type(2),
+  .tamara-mark--about circle:nth-of-type(2) { stroke-width: 0.85; }
 }
 
 /* Fix footer hidden behind fixed sidebar on desktop. Scoped to the legacy
@@ -2443,7 +2478,6 @@ button[type="submit"]:disabled {
   display: inline-block;
   vertical-align: super;
   margin: 0 0 0 2px;
-  opacity: 0.45;
 }
 
 
@@ -3578,7 +3612,7 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 
 /* Per-entry crop tuning — lift ProSeries dancer so her face clears the foot bar */
 #page-home .entries .entry .thumb .bg { background-repeat: no-repeat; }
-#page-home .entries .entry[href="#adult-company"] .thumb .bg {
+#page-home .entries .entry.collective .thumb .bg {
   background-position: center 40%;
 }
 
@@ -3598,6 +3632,17 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 }
 #page-home .entries .entry:hover::after {
   background: linear-gradient(180deg, rgba(12,31,23,0.3) 0%, rgba(12,31,23,0.22) 40%, rgba(12,31,23,0.8) 100%);
+}
+/* The Collective's photo is a lit orange wall behind its terracotta tag and
+   line, which read 2.9:1 and 2.7:1 through the shared scrim. The card is
+   photography-led, so the photo stays: this scrim is only a shade deeper at
+   the top, and the tag and line take a lighter terracotta (#F2A68F, with the
+   .tag rule near "Home entry-card eyebrows"). Measured at 390 and 1280: tag
+   5.26:1, line 4.66:1 or better. Hover keeps the same scrim, since the shared
+   hover lightens exactly where the line sits (2026-10-30). */
+#page-home .entries .entry.collective::after,
+#page-home .entries .entry.collective:hover::after {
+  background: linear-gradient(180deg, rgba(12,31,23,0.6) 0%, rgba(12,31,23,0.42) 40%, rgba(12,31,23,0.94) 100%);
 }
 #page-home .entries .entry > .body,
 #page-home .entries .entry > .foot { position: relative; z-index: 2; }
@@ -3619,10 +3664,13 @@ body.has-topnav main.main > .page.active:not(#page-home) {
   font-size: 15px; line-height: 1.65; color: var(--rb-ivory-dim);
   max-width: 480px; margin-top: 20px;
 }
+/* One column, left aligned, at every width (2026-10-30): facts, then ENTER
+   under them. Side by side, ENTER sat bottom-right on the Collective and
+   wrapped bottom-left on ProSeries, and the dividers missed by 53px. */
 #page-home .entries .entry .foot {
   margin-top: 48px;
-  display: flex; justify-content: space-between; align-items: end;
-  flex-wrap: wrap; gap: 24px;
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: 24px;
   padding-top: 24px; border-top: 1px solid rgba(250,243,232,0.18);
 }
 #page-home .entries .entry .facts { display: flex; gap: 32px; flex-wrap: wrap; }
@@ -3645,22 +3693,27 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 #page-home .entries .entry .enter-arrow .a {
   display: inline-block; transition: transform 0.3s ease;
 }
-#page-home .entries .entry.proseries .tag,
-#page-home .entries .entry[href="#proseries"] .tag { color: var(--rb-seafoam); }
-#page-home .entries .entry.proseries h3 em,
-#page-home .entries .entry[href="#proseries"] h3 em { color: var(--rb-seafoam); }
-#page-home .entries .entry.collective .tag,
-#page-home .entries .entry[href="#adult-company"] .tag { color: var(--rb-terracotta); }
-#page-home .entries .entry.collective h3 em,
-#page-home .entries .entry[href="#adult-company"] h3 em { color: var(--rb-terracotta); }
+/* Keyed on the cards' classes: their hrefs are real paths since 2026-10-30. */
+#page-home .entries .entry.proseries .tag { color: var(--rb-seafoam); }
+#page-home .entries .entry.proseries h3 em { color: var(--rb-seafoam); }
+#page-home .entries .entry.collective .tag { color: var(--rb-terracotta); }
+#page-home .entries .entry.collective h3 em { color: var(--rb-terracotta); }
 
 /* ═══ HOME — FEATURED VIDEO ═══ */
+/* 80px over the reel and 56 under it, like the Season section above it: at
+   140 plus the old margins it left ~370px of empty forest before the quote
+   (2026-10-30). The .wrap is .sh-inner's column (1100 wide, 24 then 32px in),
+   so the heading starts where every section above it does. */
 #page-home .video-featured {
-  padding: 140px 32px;
+  margin: 0;
+  padding: 80px 0 56px;
   background: var(--rb-bg-base);
   border-top: 1px solid var(--rb-rule);
 }
-#page-home .video-featured .wrap { max-width: 1280px; margin: 0 auto; }
+#page-home .video-featured .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+@media (min-width: 900px) {
+  #page-home .video-featured .wrap { padding: 0 32px; }
+}
 #page-home .video-featured .row {
   display: flex; justify-content: space-between; align-items: end;
   margin-bottom: 48px; gap: 48px; flex-wrap: wrap;
@@ -3723,12 +3776,18 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 /* ═══ HOME — PULL QUOTE (ivory landmark) ═══ */
 /* Memorial band sits on FOREST, not ivory — the Tamara Mark is gold, and gold
    never goes on ivory. Flipping the ground keeps the tribute legible and on-rule. */
+/* One hairline over it and none under it: the footer brings its own. The
+   generic .pull-quote margins and the 180px paddings stacked into a ~370px
+   gap above and an empty bordered strip below (2026-10-30). */
 #page-home .pull-quote {
-  padding: 180px 32px;
+  margin: 0;
+  padding: 56px 32px 80px;
   background: var(--rb-bg-base);
   color: var(--rb-ivory);
   text-align: center;
   position: relative; overflow: hidden;
+  border-top: 1px solid var(--rb-rule);
+  border-bottom: 0;
 }
 #page-home .pull-quote .bg-tamara {
   position: absolute; top: 50%; left: 50%;
@@ -3772,9 +3831,9 @@ body.has-topnav main.main > .page.active:not(#page-home) {
   color: rgba(250,243,232,0.6);
 }
 #page-home .pull-quote cite span { color: var(--rb-terracotta); }
-/* Generous negative space should scale with the viewport, not stay a desktop constant. */
-@media (max-width: 900px) { #page-home .pull-quote { padding: 96px 22px; } }
-@media (max-width: 520px) { #page-home .pull-quote { padding: 64px 20px; } }
+/* Narrower sides on a tablet; the phone values live in the 2026-09-24 Home
+   block below. */
+@media (max-width: 900px) { #page-home .pull-quote { padding-left: 22px; padding-right: 22px; } }
 
 /* ═══ HOME — EMAIL SIGNUP ═══ */
 #page-home .email-signup {
@@ -3885,7 +3944,7 @@ footer.site-footer .footer-bottom .footer-legal-link {
 }
 footer.site-footer .footer-bottom .footer-legal-link:hover { color: var(--rb-pink); }
 footer.site-footer .footer-bottom .tamara-mark--footer {
-  margin-left: 8px; opacity: 0.7;
+  margin-left: 8px;
 }
 
 /* ═══ GLOBAL — SCROLL REVEAL ═══
@@ -4856,7 +4915,8 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   color: var(--oh-cream-warm) !important;
   margin: 0 0 18px !important;
 }
-#page-contact .contact-detail .dlabel {
+#page-contact .contact-detail .dlabel,
+#page-contact .contact-quick-links .dlabel {
   color: var(--oh-coral) !important;
   font-family: 'Outfit', sans-serif !important;
   font-size: 11px !important;
@@ -5605,13 +5665,14 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   background: var(--oh-green-deep);
   padding: 0;
 }
+/* Stacked at every width (2026-10-30): side by side, the title ran off to the
+   far right while its eyebrow and the intro under it sat left. */
 .tch-rotation-head {
   padding: 48px 64px 28px;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
 }
 .tch-rotation-eyebrow {
   font-family: 'Outfit', sans-serif;
@@ -5638,7 +5699,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   color: var(--oh-cream-warm);
   padding: 56px 64px;
 }
-.tch-outro h3 {
+.tch-outro h2 {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-weight: 700 !important;
   font-size: clamp(32px, 3.6vw, 56px) !important;
@@ -5674,6 +5735,17 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   border: 0 !important;
 }
 .tch-outro .btn-primary:hover { background: var(--oh-coral-ink) !important; }
+/* The Contact link is a 44px tap target (.tap-44, 2026-10-30). Its rule
+   under the text has to be a text underline: a bottom border would sit at
+   the foot of the 44px box, 10px under the word. */
+.tch-outro .conv-ask-first-link {
+  border-bottom: 0;
+  text-decoration: underline;
+  text-decoration-color: rgba(250, 243, 232, 0.3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+.tch-outro .conv-ask-first-link:hover { text-decoration-color: var(--pink); }
 
 /* Responsive */
 @media (max-width: 1024px) {
@@ -5681,7 +5753,7 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   .tch-director { grid-template-columns: 1fr; }
   .tch-director-photo { min-height: 280px; order: 1; }
   .tch-director-text { order: 2; padding: 44px 28px; }
-  .tch-rotation-head { padding: 40px 28px 22px; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .tch-rotation-head { padding: 40px 28px 22px; }
 
   .tch-outro { padding: 44px 28px; }
 }
@@ -6446,7 +6518,7 @@ footer.site-footer .footer-brand img {
 /* ── Collective card: HUSHED, terracotta line, no pink ──
    dwdC carries no pink except the logo star; quieter, photography-led. */
 #page-home .entries .entry.collective h3 em { color: var(--terra-light); }
-#page-home .entries .entry.collective .entry-hl { color: var(--terra-light); }
+#page-home .entries .entry.collective .entry-hl { color: #F2A68F; } /* lighter: it sits on the photo, see the scrim note */
 #page-home .entries .entry.collective .f .v em { color: var(--terra-light); }
 /* thinner, warmer divider on the hushed card */
 #page-home .entries .entry.collective .foot { border-top-color: var(--arm-ring); }
@@ -6829,6 +6901,9 @@ footer.site-footer .footer-brand img {
   color: var(--s1-silver);
   margin-top: 0.25rem;
 }
+/* The state phrase never splits ("NOW / PLAYING" at 390, 2026-10-30): the
+   line breaks after the middot instead. */
+#page-proseries .s1-credits .s1-when { white-space: nowrap; }
 
 #page-proseries .s1-blurb {
   font-family: 'Outfit', sans-serif;
@@ -6849,16 +6924,20 @@ footer.site-footer .footer-brand img {
   text-transform: uppercase;
   color: var(--s1-silver);
   margin-top: 0.75rem;
-}
-
-#page-proseries .s1-cta {
-  margin-top: 0.5rem;
+  /* The CTA's 8px lead lives here since 2026-10-30: the CTA now takes the
+     page's filled-button shape ("The page's filled buttons", in the
+     2026-09-24 ProSeries cleanup block below), which zeroes button
+     margins. */
+  margin-bottom: 0.5rem;
 }
 
 /* ------------------------------------------------------------
    ENTRANCE SEQUENCE — plays once, gated by .s1-cue (added by the
    IntersectionObserver in campaign.js the first time the band is both
    revealed by its data-reveal-after gate AND actually on-screen).
+   Since 2026-10-30 .s1-cue ships in the markup, so the sequence plays
+   whenever the ProSeries page itself is shown (first paint, or the
+   in-site swap from display:none); eras.js only adds .s1-cue--fast.
    Total sequence ~2.2s, ease-out, cinematic not bouncy. Elements sit
    hidden by default so there's no flash of unstyled content while
    waiting for the gate + observer; prefers-reduced-motion forces the
@@ -7085,12 +7164,6 @@ footer.site-footer .footer-brand img {
   flex: 1 1 auto;
 }
 
-#page-proseries .s1-ep--tba .s1-ep-title {
-  text-transform: none;
-  font-weight: 400;
-  color: var(--s1-silver);
-}
-
 #page-proseries .s1-ep-meta {
   font-family: 'Outfit', sans-serif;
   font-size: 0.82rem;
@@ -7278,50 +7351,10 @@ footer.site-footer .footer-brand img {
   display: none;
 }
 
-
-/* ------------------------------------------------------------
-   TRACKS SERIES-BRANDING (permanent — both takeover and non-takeover
-   states, since .td-intro's ground is forest either way: forest always
-   per poster-pages.css, midnight-family only during the takeover via
-   .track-detail-section's override above). Mission Silver + sky read
-   fine against both dark grounds, so one rule covers both. Framing
-   only — prep/elite/pro accent colors, pricing and deposit copy are
-   untouched.
-   ------------------------------------------------------------ */
-#page-proseries .td-cast-eyebrow {
-  font-family: 'Outfit', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--s1-silver);
-  margin-bottom: 10px;
-}
-
-#page-proseries .td-cast-subline {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 17px;
-  color: var(--ivory, #FAF3E8);
-  opacity: .85;
-  margin: 0 0 18px;
-}
-
-/* Track code chip — s1-ep-code styling (Bebas, sky pill) dropped into each
-   track tab alongside its existing "Track One/Two/Three" label. */
-#page-proseries .track-tab .tt-code {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: .06em;
-  font-size: 11px;
-  color: var(--s1-sky);
-  border: 1px solid var(--s1-sky);
-  border-radius: 4px;
-  padding: 0.15rem 0.5rem;
-  display: inline-block;
-  width: fit-content;
-  margin-bottom: 2px;
-  opacity: 1;
-}
+/* TRACKS SERIES-BRANDING (the "The Cast" eyebrow + italic subline over the
+   tracks intro, and the sky "Track 01" chips in the tabs) was deleted
+   2026-10-30: the eyebrow repeated the real Cast section's label, and each
+   tab said its track three times. */
 
 /* ============================================================
    SKY BLUE — the working accent on Season One CTAs + interaction
@@ -7349,18 +7382,10 @@ footer.site-footer .footer-brand img {
   color: var(--forest, #0c1f17);
 }
 
-/* Chapter-rail active accent — sky in the NORMAL (non-takeover) state too,
-   not just under .s1-premiere-window (which already had this). Scoped to
-   the ps arm only; the house/collective rail keeps its terracotta accent. */
-[data-arm="ps"] .chapter-rail a.active {
-  color: var(--s1-sky) !important;
-  border-bottom-color: var(--s1-sky) !important;
-  background: none !important;
-}
-[data-arm="ps"] .chapter-rail a:hover {
-  color: var(--ivory) !important;
-  background: none !important;
-}
+/* The sky chapter-rail override (active link sky in every state) was deleted
+   2026-10-30: sky is ProSeries hero type only, so the rail's active link is
+   the arm's Family Pink ([data-arm="ps"] .chapter-rail a.active in the
+   "Chapter rail" block above). The takeover's own sky rail is untouched. */
 
 /* ============================================================
    SEASON ONE STATE MACHINE (added 2026-08-16)
@@ -7406,10 +7431,10 @@ footer.site-footer .footer-brand img {
    The full midnight takeover (.s1-premiere-window) belongs to the
    premiere and the finale. Between them the page returns to its
    own ivory/forest design, but keeps the season's accent so the
-   identity doesn't evaporate for eight months. The chapter rail
-   already runs sky unconditionally under [data-arm="ps"] further
-   up this file; these are the three accents that used to live
-   ONLY inside the takeover block and vanished with it. */
+   identity doesn't evaporate for eight months. These are the three
+   accents that used to live ONLY inside the takeover block and
+   vanished with it. (The chapter rail ran sky here too until
+   2026-10-30; it is Family Pink now.) */
 [data-s1-state="midseason"] #page-proseries h2::after,
 [data-s1-state="midseason"] #page-proseries .td-name-row::after {
   background: var(--s1-sky);
@@ -7424,18 +7449,12 @@ footer.site-footer .footer-brand img {
    Family Pink so the ProSeries page is coherent again while Season
    Two is written. These need to out-specify the unconditional sky
    rules above, hence the doubled attribute selector on the root. */
-[data-s1-state="wrapped"] #page-proseries .s1-ep-code,
-[data-s1-state="wrapped"] #page-proseries .track-tab .tt-code {
+[data-s1-state="wrapped"] #page-proseries .s1-ep-code {
   color: var(--pink, #FF7AA2);
   border-color: var(--pink, #FF7AA2);
 }
 [data-s1-state="wrapped"] #page-proseries .s1-ep--finale {
   border-color: var(--pink, #FF7AA2);
-}
-[data-s1-state="wrapped"] [data-arm="ps"] .chapter-rail a.active {
-  color: var(--pink, #FF7AA2) !important;
-  border-bottom-color: var(--pink, #FF7AA2) !important;
-  background: none !important;
 }
 
 /* ── Chapter-rail tap targets (audit M1, 2026-08-16) ──
@@ -7656,6 +7675,12 @@ footer.site-footer .footer-brand img {
   text-decoration: underline;
   text-underline-offset: 3px;
   font-weight: 600;
+  /* 44px tap target, same look (2026-10-30): the box grows by its padding
+     and hands the space back with an equal negative margin, so the
+     sentence around it does not move. */
+  display: inline-block;
+  padding-block: 11px;
+  margin-block: -11px;
 }
 #ps-cast .ps-cast-footer-link:hover { color: var(--ivory); }
 
@@ -7815,6 +7840,17 @@ footer.site-footer .footer-brand img {
 @media (max-width: 900px) {
   #ps-story .ps-scene-text::after { display: none; }
   #ps-story .ps-story-mark { display: none; }
+}
+
+/* Two-column scenes (2026-10-30): the text column sat centred beside photo
+   columns up to ~1,800px tall, leaving 600 to 900px of empty half-screen
+   above and below it. It now starts at the top of its scene and stays in
+   view while the photos scroll past. 151 = the 70px topnav + the 49px stuck
+   chapter rail + 32. Below 901px the scenes are one column, unchanged. Comes
+   after the ghost-number block, whose position: relative it overrides. */
+@media (min-width: 901px) {
+  #ps-story .ps-scene { align-items: start; }
+  #ps-story .ps-scene-text { position: sticky; top: 151px; }
 }
 
 /* Scene 7 ghost numeral matches its sky chip */
@@ -8328,7 +8364,8 @@ footer.site-footer .footer-brand img {
   margin: 0 0 6px;
 }
 
-#page-adult-company .dnc-date {
+#page-adult-company .dnc-date,
+#page-adult-company .dnc-time {
   font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(20px, 2.2vw, 26px);
   font-style: italic;
@@ -8483,10 +8520,11 @@ footer.site-footer .footer-brand img {
   margin-bottom: 10px;
 }
 
+/* 60px, not 72: a glyph above 64px is out of its tier (repo logo rule). */
 #page-teachers .tch-hero-mark {
   flex: 0 0 auto;
-  width: 72px;
-  height: 72px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
 }
 
@@ -8605,7 +8643,7 @@ footer.site-footer .footer-brand img {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 4px;
+  margin-bottom: 24px;
 }
 
 #page-contact .contact-mark {
@@ -8915,10 +8953,6 @@ footer.site-footer .footer-brand img {
   color: var(--s1-silver, #c9d4ce) !important;
 }
 
-#page-proseries #ps-calendar .s1-ep--tba .s1-ep-title {
-  color: var(--s1-silver, #c9d4ce) !important;
-}
-
 /* Competition mark, if one is ever dropped into images/comps/. */
 #page-proseries #ps-calendar .s1-ep-mark {
   flex: 0 0 auto;
@@ -9052,12 +9086,16 @@ footer.site-footer .footer-brand img {
   margin: 0 3rem 18px;
 }
 
+/* An h3 since 2026-10-30 (was a span); margin and tracking reset so it looks
+   exactly as it did. */
 #page-gallery .gallery-episode-name {
   font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
   font-weight: 600;
   font-size: clamp(22px, 2.4vw, 30px);
   line-height: 1.1;
+  letter-spacing: inherit;
   color: var(--ivory, #FAF3E8);
+  margin: 0;
 }
 
 #page-gallery .gallery-episode-when {
@@ -9068,6 +9106,12 @@ footer.site-footer .footer-brand img {
   text-transform: uppercase;
   color: var(--terra-soft, #e08d76);
   white-space: nowrap;
+}
+
+/* Tiles crop to fixed shapes; most of these are people shot standing, so the
+   crop keeps the top of the frame (faces) rather than the middle (2026-10-30). */
+#page-gallery .gallery-grid img {
+  object-position: 50% 30%;
 }
 
 /* The archive fold. Everything from the CAA years lives behind one click. */
@@ -9102,8 +9146,9 @@ footer.site-footer .footer-brand img {
   color: var(--terra-soft, #e08d76);
 }
 
+/* U+2212 minus, the true partner of the plus (was an en dash). */
 #page-gallery .gallery-archive[open] .gallery-archive-label::after {
-  content: ' –';
+  content: ' \2212';
 }
 
 #page-gallery .gallery-archive-hint {
@@ -9131,10 +9176,16 @@ footer.site-footer .footer-brand img {
   padding-right: 0;
 }
 
+/* One left edge on a phone (2026-10-30): the photos sit at 16px, so the lead,
+   album heads, section label, videos, archive and the Instagram card do too.
+   They were at 24, 24, 48, 24, 24 and 20. */
 @media (max-width: 640px) {
-  #page-gallery .gallery-lead { padding: 36px 1.5rem 4px; }
-  #page-gallery .gallery-episode-head { margin: 0 1.5rem 14px; }
-  #page-gallery .gallery-archive { margin: 40px 1.5rem 0; }
+  #page-gallery .gallery-lead { padding: 36px 16px 4px; }
+  #page-gallery .gallery-episode-head { margin: 0 16px 14px; }
+  #page-gallery .gallery-archive { margin: 40px 16px 0; }
+  #page-gallery .gallery-section-label { padding-left: 16px; }
+  #page-gallery .video-grid { padding: 0 16px; }
+  #page-gallery .ig-follow { padding-left: 16px; padding-right: 16px; }
   #page-gallery .gallery-episode-head {
     flex-direction: column;
     align-items: flex-start;
@@ -9218,17 +9269,25 @@ footer.site-footer .footer-brand img {
   margin: 26px 0 0 !important;
 }
 
+/* 44px tap target, same look (2026-10-30): the box grows by its padding and
+   hands the space back with an equal negative margin, so nothing around it
+   moves. The underline became text-decoration because a bottom border would
+   have ridden down with the padding. */
 #page-proseries #ps-faq .ps-faq-more a {
+  display: inline-block;
+  padding-block: 11px;
+  margin-block: -11px;
   font-family: var(--font-body), 'Outfit', sans-serif;
   font-size: 14px;
   color: var(--terra-soft, #e08d76);
-  border-bottom: 1px solid rgba(224, 141, 118, 0.5);
-  padding-bottom: 2px;
+  text-decoration: underline 1px rgba(224, 141, 118, 0.5);
+  text-decoration-skip-ink: none;
+  text-underline-offset: 6px;
 }
 
 #page-proseries #ps-faq .ps-faq-more a:hover {
   color: var(--ivory, #FAF3E8);
-  border-bottom-color: var(--ivory, #FAF3E8);
+  text-decoration-color: var(--ivory, #FAF3E8);
 }
 
 @media (max-width: 640px) {
@@ -9374,6 +9433,7 @@ footer.site-footer .footer-brand img {
   font-size: 12px !important;
 }
 #page-home .entries .entry.proseries .tag { color: var(--pink, #FF7AA2) !important; }
+#page-home .entries .entry.collective .tag { color: #F2A68F !important; } /* on the photo: 5.26:1 */
 
 /* Track badge "Pro": ivory on terracotta was 3.62:1. Forest ink on the same
    ground clears 4.5:1, and matches Prep/Elite. */
@@ -9810,6 +9870,28 @@ html.menu-open .mob-cta { display: none !important; }
   color: var(--sched-ink);
 }
 
+/* Live rows stack the multi-buy price under the single one ("$17.50 each
+   for 4+", 2026-10-30), right-aligned, in the meta line's muted voice at the
+   block's 13px footnote size, so it pushes the class name down as little as
+   it can. The column's baseline is the price's, so the row still lines up
+   with the time. */
+.finder-price-col {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+.finder-price-col .finder-price { margin-left: 0; }
+.finder-bulk {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--sched-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
 #page-schedule .finder-name {
   font-family: var(--font-display);
   font-size: 28px;
@@ -10221,9 +10303,12 @@ html.menu-open .mob-cta { display: none !important; }
   min-width: 0;
 }
 
+/* Balanced, so the price the note names never wraps alone onto its own line
+   ("$17.50." under "Add 2 more and each date drops to", 2026-10-30). */
 .sched-cart-bar .sched-bulk-note {
   color: var(--sched-muted);
   margin: 0;
+  text-wrap: balance;
 }
 
 .sched-row-action {
@@ -10460,18 +10545,46 @@ html.menu-open .mob-cta { display: none !important; }
   margin: 0 0 1rem;
 }
 
+/* Check out (the cart bar's button) and Pay wear .dropin-btn's look
+   (2026-10-30): the 56px Family Pink rectangle in sentence case that "Book a
+   class" and "Drop in this week" already are, not a 13.6px uppercase pill.
+   These two only; .arm-cta itself is shared and stays as it is. */
+.sched-cart-bar > .btn,
 .sched-pay-btn {
-  width: 100%;
   justify-content: center;
-  border: none;
-  border-radius: 999px;
-  padding: 0.85rem 1rem;
+  min-height: 56px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 0;
+  background: var(--pink, #FF7AA2);
+  color: var(--forest, #0c1f17);
   font-family: var(--font-body);
+  font-size: 18px;
   font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: none;
   cursor: pointer;
-  background: var(--pink);
-  color: var(--forest);
+  transition: background-color 0.2s ease, transform 0.12s ease;
 }
+.sched-cart-bar > .btn:hover,
+.sched-cart-bar > .btn:focus-visible,
+.sched-pay-btn:hover,
+.sched-pay-btn:focus-visible {
+  background: var(--pink-soft, #FF8FAB);
+  color: var(--forest, #0c1f17);
+  transform: none;
+  box-shadow: none;
+}
+.sched-cart-bar > .btn:active,
+.sched-pay-btn:active { transform: scale(0.96); }
+@media (prefers-reduced-motion: reduce) {
+  .sched-cart-bar > .btn,
+  .sched-pay-btn { transition: none; }
+  .sched-cart-bar > .btn:active,
+  .sched-pay-btn:active { transform: none; }
+}
+
+.sched-pay-btn { width: 100%; }
 
 .sched-pay-btn:disabled {
   opacity: 0.6;
@@ -10524,17 +10637,30 @@ html.menu-open .mob-cta { display: none !important; }
   margin-top: 0.5rem;
 }
 
+/* Phone: the time takes its own line over the name (2026-10-30). Beside a
+   90px time column and the 96px button, names had ~140px and broke onto
+   three loose lines. */
 @media (max-width: 640px) {
   .sched-row {
-    grid-template-columns: 90px 1fr 96px;
+    grid-template-columns: minmax(0, 1fr) 96px;
+    row-gap: 2px;
+  }
+  .sched-row-time {
+    grid-column: 1 / -1;
+  }
+  .sched-row-main,
+  .sched-row-price {
+    grid-column: 1;
   }
   .sched-row-price {
-    grid-column: 2;
     text-align: left;
   }
   .sched-row-action {
-    grid-column: 3;
-    grid-row: 1;
+    grid-column: 2;
+    grid-row: 2 / span 2;
+  }
+  .sched-row-name {
+    line-height: 1.15;
   }
   .sched-checkout-grid {
     grid-template-columns: 1fr;
@@ -10815,10 +10941,13 @@ html.menu-open .mob-cta { display: none !important; }
   z-index: 0;
 }
 
+/* Home's is the panel's <h2> since 2026-10-30 (ProSeries keeps a <p>), so
+   the line-height is stated rather than left to the global heading rule. */
 .dropin-kicker {
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
+  line-height: 1.6;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--pink, #FF7AA2);
@@ -11267,7 +11396,6 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 #page-proseries .td-intro h2::after { content: none; }
 
 /* ── One kicker ───────────────────────────────────────────────────────── */
-#page-proseries .td-cast-eyebrow,
 #page-proseries .ps-story-eyebrow,
 #page-proseries .content-section .chapter,
 #page-proseries .ep-recaps-eyebrow,
@@ -11298,9 +11426,8 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 }
 #page-proseries .ps-story-eyebrow .ps-clapper { color: inherit; width: 18px; }
 
-/* The italic sublines ("three tracks. one company...", "one season. every
-   episode. no reruns.") are one device: Cormorant italic, muted. */
-#page-proseries .td-intro .td-cast-subline,
+/* The italic subline ("one season. every episode. no reruns."): Cormorant
+   italic, muted. (Its twin over the tracks intro went 2026-10-30.) */
 #page-proseries #ps-calendar .s1-cormorant-italic.section-lead {
   font-family: var(--psA-display) !important;
   font-style: italic;
@@ -11313,6 +11440,9 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 }
 
 /* ── Body on forest ───────────────────────────────────────────────────── */
+/* .td-cast-subline is gone (2026-10-30); the :not() stays for its weight,
+   which is what keeps the placement note ivory. Plain `p` would let the
+   muted rule below win and change that line. */
 #page-proseries .td-intro p:not(.td-cast-subline) {
   font-size: 15px !important;
   line-height: 1.65;
@@ -11474,6 +11604,9 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 #page-proseries .ps-conv-micro { font-size: 13px; margin: 12px 0 0; }
 
 /* ── The page's filled buttons: the drop-in panel's shape ─────────────── */
+/* The hero's Express Interest joined 2026-10-30 (it was the one primary still
+   in the old 48px uppercase 13.6px shape). */
+#page-proseries .s1-premiere .s1-cta,
 #page-proseries .ps-conv-band .btn,
 #page-proseries #proseries-interest .ps-if-submit,
 #page-proseries .cta-banner .btn {
@@ -11490,6 +11623,7 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 #page-proseries .ps-conv-band .btn em,
 #page-proseries #proseries-interest .ps-if-submit em { font-style: normal; }
 @media (max-width: 720px) {
+  #page-proseries .s1-premiere .s1-cta,
   #page-proseries .ps-conv-band .btn,
   #page-proseries #proseries-interest .ps-if-submit,
   #page-proseries .cta-banner .btn { width: 100%; justify-content: center; }
@@ -11736,17 +11870,26 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   text-align: left;
   margin: 32px 0 0 !important;
 }
+/* 44px tap targets, same look (2026-10-30): the box grows by its padding and
+   hands the space back with an equal negative margin (the closing band's
+   link carries that margin in its own rules below), so nothing around it
+   moves. The underline is text-decoration now: a bottom border would ride
+   down with the padding. */
 #page-proseries .conv-ask-first a,
 #page-proseries .cta-banner .conv-ask-first-link {
+  display: inline-block;
+  padding-block: 11px;
+  margin-block: -11px;
   font-family: var(--psA-body);
   font-size: 15px;
   color: var(--psA-ink);
-  text-decoration: none;
-  border-bottom: 1px solid var(--psA-ring);
-  padding-bottom: 2px;
+  border-bottom: 0;
+  text-decoration: underline 1px var(--psA-ring);
+  text-decoration-skip-ink: none;
+  text-underline-offset: 6px;
 }
 #page-proseries .conv-ask-first a:hover,
-#page-proseries .cta-banner .conv-ask-first-link:hover { color: var(--pink, #FF7AA2); border-color: var(--pink, #FF7AA2); }
+#page-proseries .cta-banner .conv-ask-first-link:hover { color: var(--pink, #FF7AA2); text-decoration-color: var(--pink, #FF7AA2); }
 @media (prefers-reduced-motion: reduce) {
   #page-proseries #proseries-interest .ps-if input,
   #page-proseries #proseries-interest .ps-if select,
@@ -11798,7 +11941,9 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   margin: 0 !important;
   color: var(--psA-ink) !important;
 }
-#page-proseries .why-item h4 {
+/* h3 since 2026-10-30: they sit under the section's h2 (were h4, a skipped
+   level). Same look as before. */
+#page-proseries .why-item h3 {
   font-family: var(--psA-display);
   font-weight: 600;
   font-size: 24px;
@@ -11888,20 +12033,22 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   max-width: 60ch;
   margin: 0 0 24px !important;
 }
+/* The -11px block margins return the link's 44px tap padding (2026-10-30). */
 #page-proseries .cta-banner .conv-ask-first-link {
   display: inline-block;
-  margin: 0 0 0 24px;
+  margin: -11px 0 -11px 24px;
   vertical-align: middle;
 }
 @media (max-width: 720px) {
-  #page-proseries .cta-banner .conv-ask-first-link { display: table; margin: 20px 0 0; }
+  #page-proseries .cta-banner .conv-ask-first-link { display: table; margin: 9px 0 -11px; }
 }
 
 /* ── One accent for links on this page ───────────────────────────────────
    The cast footer link and the FAQ's "+" and closing link were terracotta
    next to pink kickers and chips: two accents doing the same job. */
 #page-proseries #ps-cast .ps-cast-footer-link,
-#page-proseries #ps-faq .ps-faq-more a { color: var(--pink, #FF7AA2); border-bottom-color: rgba(255, 122, 162, 0.5); }
+#page-proseries #ps-faq .ps-faq-more a { color: var(--pink, #FF7AA2); }
+#page-proseries #ps-faq .ps-faq-more a { text-decoration-color: rgba(255, 122, 162, 0.5); }
 #page-proseries #ps-faq .ps-faq-q::after,
 #page-proseries #ps-faq .ps-faq-q:hover { color: var(--pink, #FF7AA2); }
 #page-proseries #ps-cast .ps-cast-footer-link:hover,
@@ -11927,29 +12074,25 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   text-wrap: pretty;
 }
 
+/* .page reserves 60px under every page for a ticker retired in August; the
+   sticky bar clears itself (body.mob-cta-on). Here it only doubled the gap
+   above the footer, on a phone and (since 2026-10-30) at every width. */
+#page-home.page { padding-bottom: 0; }
+
 /* Phone rhythm: sections 48 to 64px apart, not three ~250px empty forest
    bands (140px paddings plus 32px margins either side of the video and the
-   quote). */
+   quote). The zero margins and the quote's one hairline now live on the base
+   rules; desktop keeps the same shape at 80/56. */
 @media (max-width: 768px) {
   #page-home .entries-lead { margin: 48px auto 24px; }
   #page-home .video-featured {
-    margin: 0;
-    padding: 56px 24px 32px;
+    padding: 56px 0 32px;
     border-top: 0;
   }
   #page-home .video-featured .row { margin-bottom: 24px; }
-  #page-home .pull-quote {
-    margin: 0;
-    padding: 32px 20px 56px;
-    border-top: 1px solid var(--rb-rule);
-    border-bottom: 0;
-  }
+  #page-home .pull-quote { padding: 32px 20px 56px; }
   #page-home .pull-quote .dot { margin-bottom: 24px; }
   #page-home .pull-quote cite { margin-top: 32px; }
-  /* .page reserves 60px under every page for a ticker retired in August;
-     the sticky bar clears itself (body.mob-cta-on). Here it only doubled
-     the gap above the footer. */
-  #page-home.page { padding-bottom: 0; }
 }
 
 /* ── Collective: one joining screen ───────────────────────────────────── */
@@ -11957,7 +12100,7 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 #page-adult-company .col-join {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 48px 24px 56px;
+  padding: 48px 24px;
   display: grid;
   gap: 32px;
   text-align: left;
@@ -12016,7 +12159,8 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   margin: 0 0 24px;
 }
 #page-adult-company .col-join .dnc-empty,
-#page-adult-company .col-join .dnc-date {
+#page-adult-company .col-join .dnc-date,
+#page-adult-company .col-join .dnc-time {
   font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
   font-style: normal;
   font-weight: 600;
@@ -12096,15 +12240,26 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
     align-items: start;
     padding: 64px 56px 72px;
   }
-  #page-adult-company .col-join-act { padding-top: 8px; }
+  /* Next class + Join span both rows and stay pinned while the facts and
+     "Who This Is For" scroll past on the left (2026-10-30): the column was
+     203px tall beside a 522px one, and from there down the right half was
+     empty with Join ~700px back up. Top clears the 76px top nav. */
+  #page-adult-company .col-join-act {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: 100px;
+    padding-top: 8px;
+  }
   #page-adult-company .col-join-btn { width: auto; display: inline-flex; }
 }
 
-/* Who it is for: the same list, on the page ground, no box around it. */
+/* Who it is for: the same list, on the page ground, no box around it. It is
+   the joining screen's third child now; on a phone the 24px top here plus the
+   grid's 32px gap (and .col-join's 48px bottom) keep every line where it was
+   when it sat after the section. */
 #page-adult-company .col-who {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px 48px;
+  padding: 24px 0 0;
   text-align: left;
 }
 #page-adult-company .col-who h2 {
@@ -12148,7 +12303,7 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 }
 #page-adult-company .col-who .audience-list .emphasis::before { content: none; }
 @media (min-width: 900px) {
-  #page-adult-company .col-who { max-width: none; padding: 0 56px 64px; }
+  #page-adult-company .col-who { grid-column: 1; padding: 40px 0 0; }
 }
 
 /* Past shows: everything about June 2026 and 2025, whole, behind one toggle.
@@ -12218,6 +12373,10 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 }
 #page-adult-company .col-past .cc-intro { margin-left: 0; }
 #page-adult-company .col-past .cc-caption { margin-top: 12px; }
+/* The "No.03" chapter mark between the show's band and "The Show" went with
+   the long page (2026-10-30); this keeps the room it left, so the heading
+   does not sit 12px under the band. */
+#page-adult-company .col-past .ac-hero + .collective-card { margin-top: 40px !important; }
 @media (min-width: 900px) {
   #page-adult-company .col-past { padding-bottom: 72px; }
   #page-adult-company .col-past > .col-past-toggle { margin: 0 56px; }
@@ -12262,6 +12421,8 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 
 /* ── Teachers: assistants without photos are text entries ────────────── */
 #page-teachers .rf-card--text { gap: 4px; }
+/* The role on its own line under the name (no "·" to strand at a wrap). */
+#page-teachers .rf-card--text .rf-role { margin: 0; line-height: 1.5; }
 #page-teachers .rf-grid--assist {
   gap: 24px 48px;
   padding-top: 12px;
@@ -12403,11 +12564,17 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 .jump-btn:hover, .jump-btn:focus-visible { background: var(--pink, #FF7AA2); color: var(--forest); }
 .jump-btn:active { transform: scale(0.96); }
 .sh-next .jump-btn { display: flex; width: 100%; padding: 12px 18px; line-height: 1.3; text-align: center; }
+/* A 44px tap target that still looks like a 27px underlined line
+   (2026-10-30): the box grows, the rule moved from border-bottom to an
+   offset underline so it stays under the words, and the margin gives back
+   what the taller box added so the text sits where it did. */
 .sh-more {
-  display: inline-block; margin-top: 20px; padding-bottom: 2px; font-family: var(--font-body); font-size: 15px;
-  font-weight: 600; color: var(--ivory); text-decoration: none; border-bottom: 1px solid rgba(250, 243, 232, 0.4);
+  display: inline-flex; align-items: center; min-height: 44px; margin: 10px 0 -7px;
+  font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--ivory);
+  text-decoration: underline; text-decoration-color: rgba(250, 243, 232, 0.4);
+  text-decoration-thickness: 1px; text-underline-offset: 7px; text-decoration-skip-ink: none;
 }
-.sh-more:hover, .sh-more:focus-visible { color: var(--pink, #FF7AA2); border-color: var(--pink, #FF7AA2); }
+.sh-more:hover, .sh-more:focus-visible { color: var(--pink, #FF7AA2); text-decoration-color: var(--pink, #FF7AA2); }
 @media (min-width: 900px) {
   .season-home { padding: 80px 0; }
   .sh-inner { padding: 0 32px; }
@@ -12429,9 +12596,12 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
   background: var(--forest) center / cover no-repeat;
 }
+/* A caption in sentence case (2026-10-30): set in the panel's tracked caps it
+   read as the heading of the class list next to it, and .55 was 4.45:1 on
+   the panel's lighter forest (.66 is 5.7:1). */
 .dropin-loop figcaption {
-  font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.24em;
-  text-transform: uppercase; color: rgba(250, 243, 232, 0.55); margin-top: 10px;
+  font-family: var(--font-body); font-size: 13px; line-height: 1.5;
+  color: rgba(250, 243, 232, 0.66); margin-top: 10px;
 }
 @media (max-width: 899px) {
   /* On a phone the loop sits between the price and the list: a short band, not
@@ -12453,8 +12623,12 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 }
 .video-reel-cta:hover, .video-reel-cta:focus-visible { background: var(--pink, #FF7AA2); color: var(--forest); }
 
+/* Air above it too (2026-10-30): it sat flush on the intro line. */
 .sched-band {
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 0 0 32px;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 24px 0 32px;
+}
+@media (min-width: 768px) {
+  .sched-band { margin-top: 32px; }
 }
 .sched-band img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; background: var(--forest); cursor: zoom-in; }
 @media (max-width: 599px) {

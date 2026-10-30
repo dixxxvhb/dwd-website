@@ -72,6 +72,12 @@
       align-items: center;
     }
     .nf-links a:hover, .nf-links a:focus-visible { border-bottom-color: #ff7aa2; color: #ff7aa2; }
+    /* Tamara Mark, same markup and weight as the site footer's. */
+    .tamara-mark { display: block; opacity: 0.9; }
+    @media (min-resolution: 2dppx) { /* fine lines on 2x/3x, as in site.css */
+      .tamara-mark circle:nth-of-type(1) { stroke-width: 0.6; }
+      .tamara-mark circle:nth-of-type(2) { stroke-width: 0.85; }
+    }
   </style>
 </head>
 <body data-arm="house">
@@ -87,6 +93,18 @@
       <a href="/proseries/">ProSeries</a>
       <a href="/contact/">Contact</a>
     </nav>
+    <!-- Tamara Mark — For Mom -->
+    <svg class="tamara-mark tamara-mark--footer" viewBox="20 10 200 190" width="28" height="27" aria-hidden="true">
+      <circle cx="100" cy="115" r="65" fill="none" stroke="url(#tm-gold-f)" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linecap="round" opacity="0.75"/>
+      <circle cx="152" cy="70" r="49" fill="none" stroke="url(#tm-gold-f)" stroke-width="1.4" vector-effect="non-scaling-stroke" stroke-linecap="round" opacity="0.95"/>
+      <circle cx="107" cy="50" r="10" fill="url(#tm-glow-f)" opacity="0.25"/>
+      <defs>
+        <linearGradient id="tm-gold-f" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#c9956c"/><stop offset="40%" stop-color="#e8c49a"/><stop offset="100%" stop-color="#d4a574"/>
+        </linearGradient>
+        <radialGradient id="tm-glow-f"><stop offset="0%" stop-color="#e8c49a"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+      </defs>
+    </svg>
   </main>
 </body>
 </html>

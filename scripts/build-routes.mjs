@@ -202,6 +202,34 @@ if (drift) {
   process.exit(1);
 }
 
+/* ── Season One state at build time ─────────────────────────────────────
+   s1CurrentState() in js/eras.js, minus its preview overrides, read from that
+   file's own dates so the two cannot drift. Used to paint the ProSeries
+   shell's state from the first byte (see buildShell). */
+const erasJs = readFileSync('js/eras.js', 'utf8');
+function erasMs(name) {
+  const m = erasJs.match(new RegExp(`var ${name}\\s*=\\s*new Date\\('([^']+)'\\)\\.getTime\\(\\);`));
+  const ms = m ? new Date(m[1]).getTime() : NaN;
+  if (Number.isNaN(ms)) {
+    console.error(`Refusing to build: could not read ${name} from js/eras.js.`);
+    process.exit(1);
+  }
+  return ms;
+}
+const S1 = {
+  premiereStart: erasMs('S1_PREMIERE_START_MS'),
+  premiereEnd: erasMs('S1_PREMIERE_END_MS'),
+  finaleStart: erasMs('S1_FINALE_START_MS'),
+  seasonEnd: erasMs('S1_SEASON_END_MS'),
+};
+function s1StateAt(now) {
+  if (now < S1.premiereStart) return null;
+  if (now <= S1.premiereEnd) return 'premiere';
+  if (now < S1.finaleStart) return 'midseason';
+  if (now <= S1.seasonEnd) return 'finale';
+  return 'wrapped';
+}
+
 /* ── Build one shell ─────────────────────────────────────────────────── */
 
 function esc(s) {
@@ -327,6 +355,34 @@ function buildShell(r) {
       .replace(navMine, `<a href="/${r.dir}/" class="active" data-page="${r.route}">`);
   }
 
+  // ProSeries paints its Season One state from the first byte too (2026-10-30).
+  // On load js/eras.js sets <html data-s1-state> (which shows the band's
+  // credit line and blurb) and folds the old .ps-hero away while the season is
+  // live (.s1-hero-folded; .s1-premiere-window adds the takeover for the
+  // premiere and finale). eras.js runs behind the deferred supabase-js, so
+  // until then the band painted without its copy and the old hero showed under
+  // it. This writes what eras.js would set at build time; eras.js still runs
+  // and corrects it, so a shell built before a state change is only wrong
+  // until the script lands, and --check calls it stale from that day until
+  // the next build. The band's own Aug 10 gate is past for good: it ships
+  // visible, so "band up" is not part of the fold here.
+  if (r.route === 'proseries') {
+    const state = s1StateAt(Date.now());
+    const cls = ['page', 'active'];
+    if (state && state !== 'wrapped') cls.push('s1-hero-folded');
+    if (state === 'premiere' || state === 'finale') cls.push('s1-premiere-window');
+    const sectionOn = '<section class="page active" id="page-proseries"';
+    const htmlTag = '<html lang="en">';
+    for (const needle of [sectionOn, htmlTag]) {
+      if (!out.includes(needle)) {
+        console.error(`Refusing to build ${r.dir}: index.html no longer contains ${needle}`);
+        process.exit(1);
+      }
+    }
+    out = out.replace(sectionOn, `<section class="${cls.join(' ')}" id="page-proseries"`);
+    if (state) out = out.replace(htmlTag, `<html lang="en" data-s1-state="${state}">`);
+  }
+
   return out;
 }
 
@@ -370,6 +426,7 @@ function buildSitemap() {
 
 const check = process.argv.includes('--check');
 let stale = [];
+let wroteShell = false;
 
 for (const r of ROUTES) {
   const shell = buildShell(r);
@@ -382,19 +439,25 @@ for (const r of ROUTES) {
   }
   mkdirSync(r.dir, { recursive: true });
   writeFileSync(path, shell);
+  wroteShell = true;
   console.log(`wrote ${path}`);
 }
 
+/* The sitemap's lastmod follows the pages (2026-10-30). It used to be
+   rewritten only when the URL list changed, so every entry said 2026-09-12
+   for weeks of real edits. Now a run that rewrites any shell also rewrites
+   the sitemap with today's date (A·Muse keeps its fixed one). A run that
+   changes nothing leaves it alone, and --check still ignores dates: it fails
+   only when the URL list itself is out of date. */
 const sitemap = buildSitemap();
 const currentSitemap = existsSync('sitemap.xml') ? readFileSync('sitemap.xml', 'utf8') : null;
-// Only the <lastmod> changes day to day; do not churn the file for that alone.
 const stripDates = (s) => (s || '').replace(/<lastmod>[^<]*<\/lastmod>/g, '');
-if (stripDates(currentSitemap) !== stripDates(sitemap)) {
-  if (check) stale.push('sitemap.xml');
-  else {
-    writeFileSync('sitemap.xml', sitemap);
-    console.log('wrote sitemap.xml');
-  }
+const urlsChanged = stripDates(currentSitemap) !== stripDates(sitemap);
+if (check) {
+  if (urlsChanged) stale.push('sitemap.xml');
+} else if (urlsChanged || (wroteShell && currentSitemap !== sitemap)) {
+  writeFileSync('sitemap.xml', sitemap);
+  console.log('wrote sitemap.xml');
 }
 
 if (check) {

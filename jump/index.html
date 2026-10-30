@@ -25,6 +25,8 @@ body{background:var(--forest);color:var(--ivory);font:400 16px/1.45 Outfit,syste
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 a{color:inherit}
 .kick{font:600 12px/1 Outfit;letter-spacing:.24em;text-transform:uppercase;color:var(--pink)}
+/* Brand casing survives the uppercase kicker: dwdPROSERIES, never DWDPROSERIES. */
+.kick .brand-case{text-transform:none}
 .mute{color:var(--mute)}
 .head{display:flex;align-items:center;gap:12px;margin:4px 0 20px}
 .head img{width:40px;height:40px}
@@ -128,7 +130,7 @@ h2{font:700 28px/1 'Cormorant Garamond',serif;margin:30px 0 4px}
   function ordinal(v) { var n = parseInt(v, 10); if (!n) return v; var s = ['th', 'st', 'nd', 'rd'], r = n % 100; return n + (s[(r - 20) % 10] || s[r] || s[0]); }
 
   function load() {
-    if (!key) { app.innerHTML = '<div class="lock"><div class="kick">dwdPROSERIES</div><div class="t">This page needs the link from Dixon.</div><p class="mute">Open it from the text he sent.</p></div>'; return; }
+    if (!key) { app.innerHTML = '<div class="lock"><div class="kick"><span class="brand-case">dwdPROSERIES</span></div><div class="t">This page needs the link from Dixon.</div><p class="mute">Open it from the text he sent.</p></div>'; return; }
     fetch(FEED + '?key=' + encodeURIComponent(key), { cache: 'no-store' }).then(function (r) {
       if (r.status === 401) throw new Error('key');
       if (!r.ok) throw new Error('down');

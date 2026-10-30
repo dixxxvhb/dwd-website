@@ -50,7 +50,8 @@
   }
 
   /* "2:00 pm" from "14:00:00". Returns null for anything unparseable so the
-     caller can just leave the time off rather than print "NaN:NaN". */
+     caller can just leave the time off rather than print "NaN:NaN". A
+     no-break space keeps "pm" on its number when a line wraps. */
   function timeLabel(t) {
     if (!t) return null;
     var m = String(t).match(/^(\d{1,2}):(\d{2})/);
@@ -60,7 +61,19 @@
     var mer = h >= 12 ? 'pm' : 'am';
     var h12 = h % 12;
     if (h12 === 0) h12 = 12;
-    return h12 + ':' + min + ' ' + mer;
+    return h12 + ':' + min + '\u00a0' + mer;
+  }
+
+  /* The calendar sometimes hands over a title in capitals ("MASTERCLASS").
+     Shown as is it shouts next to the date, so an all-caps title is set in
+     title case; a title with any lower case is left exactly as typed. */
+  function displayTitle(t) {
+    var s = String(t || '').trim();
+    if (!s) return 'Collective class';
+    if (s !== s.toUpperCase() || !/[A-Z]/.test(s)) return s;
+    return s.toLowerCase().replace(/(^|[\s\-\/(])([a-z])/g, function (m, pre, c) {
+      return pre + c.toUpperCase();
+    });
   }
 
   function longDate(d) {
@@ -71,24 +84,28 @@
     return MONTHS_SHORT[d.getMonth()] + ' ' + d.getDate();
   }
 
-  /* Date line: "Sunday, September 14 · 2:00 pm", or a range when the event
-     spans days, or just the day when it is all-day / has no start time. */
+  /* Date line: "Sunday, September 14", or a range when the event spans days.
+     The time is its own line under it (timeLine): on one line the wrap
+     landed inside the time ("10:00 / am to 12:00 pm"). */
   function dateLine(row) {
     var start = localDate(row.date);
     if (!start) return null;
     var end = localDate(row.end_date);
     var line = longDate(start);
-    if (end && end.getTime() > start.getTime()) {
-      line += ' to ' + shortDate(end);
-      return line;
-    }
-    if (row.all_day) return line;
-    var t = timeLabel(row.start_time);
-    if (!t) return line;
-    line += ' · ' + t;
-    var te = timeLabel(row.end_time);
-    if (te) line += ' to ' + te;
+    if (end && end.getTime() > start.getTime()) line += ' to ' + shortDate(end);
     return line;
+  }
+
+  /* "2:00 pm to 4:00 pm", or null for a multi-day, all-day or untimed
+     event, which shows its date line alone. */
+  function timeLine(row) {
+    var start = localDate(row.date);
+    var end = localDate(row.end_date);
+    if (!start || (end && end.getTime() > start.getTime()) || row.all_day) return null;
+    var t = timeLabel(row.start_time);
+    if (!t) return null;
+    var te = timeLabel(row.end_time);
+    return te ? t + ' to ' + te : t;
   }
 
   function venueLine(row) {
@@ -127,8 +144,10 @@
 
     var dl = dateLine(row);
     if (dl) frag.appendChild(el('p', 'dnc-date', dl));
+    var tl = dl && timeLine(row);
+    if (tl) frag.appendChild(el('p', 'dnc-time', tl));
 
-    frag.appendChild(el('p', 'dnc-title', row.title || 'Collective class'));
+    frag.appendChild(el('p', 'dnc-title', displayTitle(row.title)));
 
     var vl = venueLine(row);
     if (vl) frag.appendChild(el('p', 'dnc-venue', vl));
@@ -149,7 +168,7 @@
       var li = el('li', 'dnc-more-item');
       var d = localDate(row.date);
       li.appendChild(el('span', 'dnc-more-date', d ? shortDate(d) : ''));
-      li.appendChild(el('span', 'dnc-more-title', row.title || 'Collective class'));
+      li.appendChild(el('span', 'dnc-more-title', displayTitle(row.title)));
       var t = row.all_day ? null : timeLabel(row.start_time);
       if (t) li.appendChild(el('span', 'dnc-more-time', t));
       MORE.appendChild(li);

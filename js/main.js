@@ -416,7 +416,11 @@
     // Step aside while ANY same-action link is on screen, not only the first:
     // the DROP IN panel's "Book Tuesday" and the bar's "Drop in" used to share
     // a viewport on Home and ProSeries (two primaries for one action).
-    var twins = Array.prototype.filter.call(candidates, function (c) { return c !== lead; });
+    // [data-mob-twin] marks any other filled primary the bar should yield to
+    // (Teachers' closing Express Interest, 2026-10-30). Twins only, never a
+    // lead: as a lead near the page bottom the bar would almost never show.
+    var twins = Array.prototype.filter.call(candidates, function (c) { return c !== lead; })
+      .concat(Array.prototype.filter.call(page.querySelectorAll('[data-mob-twin]'), function (c) { return c !== lead; }));
     if (twins.length) {
       var onScreen = new Set();
       var twinObs = new IntersectionObserver(function (entries) {
@@ -636,12 +640,15 @@
   // Prev/next must stay inside the section the visitor is actually looking at.
   // The document carries 77 [data-lightbox] nodes across six sections; walking
   // all of them meant "next" left the gallery and landed on a Collective
-  // rehearsal shot.
+  // rehearsal shot. Photos folded inside a closed <details> (the Gallery's
+  // archive) are not on screen either, so they are skipped until it is opened.
   function collectLightboxImages(from) {
     var scope = (from && from.closest && from.closest('.page')) ||
                 document.querySelector('.page.active') ||
                 document;
-    lightboxImages = Array.from(scope.querySelectorAll('[data-lightbox]'));
+    lightboxImages = Array.from(scope.querySelectorAll('[data-lightbox]')).filter(function (img) {
+      return !img.closest('details:not([open])');
+    });
   }
 
   // Serve the lightbox the same responsive set the thumbnail used, so a phone
@@ -732,6 +739,24 @@
     lightbox.addEventListener('click', function (e) {
       if (e.target === lightbox) closeLightbox();
     });
+
+    // Swipe on a phone: a mostly-horizontal drag of more than 40px pages the
+    // viewer, left for next and right for previous (2026-10-30).
+    var swipeX = null, swipeY = null;
+    lightbox.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) { swipeX = null; return; }
+      swipeX = e.touches[0].clientX;
+      swipeY = e.touches[0].clientY;
+    }, { passive: true });
+    lightbox.addEventListener('touchend', function (e) {
+      if (swipeX === null || !lightbox.classList.contains('open')) return;
+      var t = e.changedTouches[0];
+      var dx = t.clientX - swipeX, dy = t.clientY - swipeY;
+      swipeX = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) nextImage(); else prevImage();
+      }
+    }, { passive: true });
   }
 
   // Lightbox keyboard nav + focus trap
@@ -803,7 +828,7 @@
         var feeRows = document.querySelectorAll('.fee-table tbody tr');
         if (feeRows[0]) {
           var cells = feeRows[0].querySelectorAll('td');
-          if (cells[1]) cells[1].textContent = '$' + prepDollars + '–$' + proDollars + ' / month';
+          if (cells[1]) cells[1].textContent = '$' + prepDollars + ' to $' + proDollars + ' / month';
         }
       });
   })();
@@ -949,20 +974,10 @@
   // the job: the toggle has to do visible work, so it also swaps the heading
   // and the helper line above the form, and it is what the submission's
   // `reason` field is read from.
-  var REASON_COPY = {
-    proseries: {
-      title: 'Tell us about your dancer.',
-      help: 'Age, experience, and what you are hoping for. Dixon replies personally.'
-    },
-    adult: {
-      title: 'Tell us about you and your training.',
-      help: 'However much or little you have danced. No audition, no experience required.'
-    },
-    general: {
-      title: "What's on your mind?",
-      help: 'Choreography, workshops, judging, or anything else.'
-    }
-  };
+  // The strings live in index.html, in the inline script right after the
+  // help line (#page-contact), which also paints them on a direct load before
+  // this deferred file runs (2026-10-30). One copy, read by both.
+  var REASON_COPY = window.DWD_REASON_COPY || {};
 
   function readReason() {
     var q = (window.location.search || '').replace('?', '');
@@ -982,11 +997,22 @@
     var help = document.getElementById('contact-reason-help');
     var hidden = document.getElementById('contact-reason');
     var sub = document.querySelector('#page-contact .contact-form-side .sub');
-    if (h1) h1.textContent = copy.title;
+    if (copy && h1) h1.textContent = copy.title;
     // The catch-all sub-line only earns its place on the catch-all reason.
     if (sub) sub.hidden = (value === 'adult' || value === 'proseries');
-    if (help) help.textContent = copy.help;
+    if (copy && help) help.textContent = copy.help;
     if (hidden) hidden.value = value || 'general';
+  }
+
+  // One chip checked per group. The checked chip is the group's only tab stop
+  // (roving tabindex, the ARIA radio pattern); arrows move between chips.
+  function checkToggle(group, btn) {
+    group.querySelectorAll('.toggle-btn').forEach(function (b) {
+      var on = b === btn;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-checked', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+    });
   }
 
   function applyContactReason(explicit) {
@@ -996,14 +1022,7 @@
     var reason = (typeof explicit === 'string' && explicit) || readReason();
     if (reason) {
       var btn = group.querySelector('.toggle-btn[data-value="' + reason.replace(/"/g, '') + '"]');
-      if (btn) {
-        group.querySelectorAll('.toggle-btn').forEach(function (b) {
-          b.classList.remove('active');
-          b.setAttribute('aria-checked', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-checked', 'true');
-      }
+      if (btn) checkToggle(group, btn);
     }
     var active = group.querySelector('.toggle-btn.active');
     paintReason(active ? active.dataset.value : 'general');
@@ -1013,17 +1032,27 @@
   window.addEventListener('popstate', function () { applyContactReason(); });
 
   // ── TOGGLE GROUPS ──
+  // role="radiogroup": a click checks a chip; Left/Up and Right/Down check
+  // the previous / next chip (wrapping) and move focus to it, through the
+  // same click path, so the reason copy repaints exactly as on a tap.
+  var TOGGLE_KEYS = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
   document.querySelectorAll('.toggle-group').forEach(function (group) {
-    group.querySelectorAll('.toggle-btn').forEach(function (btn) {
+    var btns = Array.prototype.slice.call(group.querySelectorAll('.toggle-btn'));
+    checkToggle(group, group.querySelector('.toggle-btn.active') || btns[0]);
+    btns.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        group.querySelectorAll('.toggle-btn').forEach(function (b) {
-          b.classList.remove('active');
-          b.setAttribute('aria-checked', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-checked', 'true');
+        checkToggle(group, btn);
         if (group.dataset.name === 'reason') applyContactReason(btn.dataset.value);
       });
+    });
+    group.addEventListener('keydown', function (e) {
+      var step = TOGGLE_KEYS[e.key];
+      var i = btns.indexOf(e.target);
+      if (!step || i < 0 || e.altKey || e.ctrlKey || e.metaKey) return;
+      e.preventDefault();
+      var next = btns[(i + step + btns.length) % btns.length];
+      next.focus();
+      next.click();
     });
   });
 
@@ -1224,9 +1253,9 @@
           '<label for="if-child-exp-' + i + '">Experience</label>' +
           '<select id="if-child-exp-' + i + '" data-child="experience_level" required>' +
             '<option value="">Select...</option>' +
-            '<option value="beginner">0–2 years</option>' +
-            '<option value="intermediate">3–5 years</option>' +
-            '<option value="advanced">6–8 years</option>' +
+            '<option value="beginner">0 to 2 years</option>' +
+            '<option value="intermediate">3 to 5 years</option>' +
+            '<option value="advanced">6 to 8 years</option>' +
             '<option value="elite">9+ years</option>' +
           '</select>' +
         '</div>' +

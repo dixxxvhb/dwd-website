@@ -127,12 +127,13 @@ body::after {
   border-bottom: 1px solid var(--amuse-line);
 }
 
+/* No uppercase transform: it printed DWDCOLLECTIVE. The markup already
+   carries the brand casing, dwd + COLLECTIVE (2026-10-30). */
 .amuse-wm {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 500;
   font-size: 1.05rem;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--amuse-cream);
   text-decoration: none;
   transition: opacity 0.2s;
@@ -707,15 +708,24 @@ body::after {
   font-size: 0.92rem;
   color: var(--amuse-muted);
 }
-.amuse-questions a {
+.amuse-questions a,
+.amuse-next a {
   color: var(--amuse-pink);
   text-decoration: none;
   border-bottom: 1px solid rgba(248, 215, 200, 0.3);
   transition: all 0.18s;
 }
-.amuse-questions a:hover {
+.amuse-questions a:hover,
+.amuse-next a:hover {
   color: var(--amuse-pink-hot);
   border-bottom-color: var(--amuse-pink-hot);
+}
+
+/* The way out of the archive page, to the company as it is now. */
+.amuse-next {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.92rem;
 }
 
 /* ─── Footer ─── */

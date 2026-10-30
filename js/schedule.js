@@ -287,13 +287,34 @@
     return cart.reduce(function (sum, l) { return sum + lineCents(l, active); }, 0);
   }
 
+  // The one bulk price every line in the cart shares, or null when the lines
+  // differ (or one has none). Only a shared price can be named in the note.
+  function sharedBulkCents(cart) {
+    var c = cart.length ? cart[0].bulk_fee_cents : null;
+    if (typeof c !== 'number') return null;
+    for (var i = 1; i < cart.length; i++) {
+      if (cart[i].bulk_fee_cents !== c) return null;
+    }
+    return c;
+  }
+
   // One muted line: the discount that applied, or how many dates away it is.
+  // Amounts come from the cart (2026-10-30), never a literal; a cart mixing
+  // two bulk prices keeps the general wording.
   function bulkNoteText(cart) {
     if (!cart.length || !anyBulk(cart)) return '';
-    if (cart.length >= DROP_IN_BULK_MIN) return 'Four or more dates in one order. Each one costs less.';
+    var each = sharedBulkCents(cart);
+    if (cart.length >= DROP_IN_BULK_MIN) {
+      if (each == null) return 'Four or more dates in one order. Each one costs less.';
+      var full = cart.reduce(function (sum, l) { return sum + (l.fee_cents || 0); }, 0);
+      var saved = full - cartTotalCents(cart);
+      return cart.length + ' dates at ' + money(each) + ' each.' +
+        (saved > 0 ? ' You save ' + money(saved) + '.' : '');
+    }
     if (cart.length < 2) return '';
     var need = DROP_IN_BULK_MIN - cart.length;
-    return 'Add ' + need + ' more and every date drops in price.';
+    if (each == null) return 'Add ' + need + ' more and every date drops in price.';
+    return 'Add ' + need + ' more and each date drops to ' + money(each) + '.';
   }
 
   function renderBulkNote(node, text) {
@@ -316,6 +337,13 @@
   function money(cents) {
     var d = (cents || 0) / 100;
     return '$' + (d % 1 === 0 ? String(d) : d.toFixed(2));
+  }
+
+  // "$22.50 each for 4+": a class's multi-buy price, under its single price
+  // in the class list and in the week grid. Empty when the feed has none.
+  function bulkEachLine(row) {
+    if (!row || typeof row.drop_in_bulk_fee_cents !== 'number') return '';
+    return money(row.drop_in_bulk_fee_cents) + ' each for ' + DROP_IN_BULK_MIN + '+';
   }
 
   // Prune cart lines no longer open/full against the freshest feed rows.
@@ -438,8 +466,9 @@
     return h + ':' + m[2];
   }
 
+  // "5:00 to 6:00". Words, not a dash: public copy carries no en dashes.
   function timeRange(start, end) {
-    return fmtTime(start) + (end ? ' \u2013 ' + fmtTime(end) : '');
+    return fmtTime(start) + (end ? ' to ' + fmtTime(end) : '');
   }
 
   // Cart news (a line left the cart, nothing was charged): top of the page,
@@ -588,9 +617,8 @@
         var priceWrap = el('div', 'sched-row-price');
         if (open) {
           priceWrap.appendChild(el('div', 'sched-row-price-amt', money(row.drop_in_fee_cents)));
-          if (typeof row.drop_in_bulk_fee_cents === 'number') {
-            priceWrap.appendChild(el('div', 'sched-row-bulk', money(row.drop_in_bulk_fee_cents) + ' each for ' + DROP_IN_BULK_MIN + '+'));
-          }
+          var bulkLine = bulkEachLine(row);
+          if (bulkLine) priceWrap.appendChild(el('div', 'sched-row-bulk', bulkLine));
           if (typeof row.spots_left === 'number' && row.spots_left >= 1 && row.spots_left <= 3) {
             priceWrap.appendChild(el('div', 'sched-row-spots', row.spots_left + ' spot' + (row.spots_left === 1 ? '' : 's') + ' left'));
           }
@@ -797,7 +825,13 @@
       if (firstIso > soonIso) {
         top.appendChild(el('span', 'finder-starts', 'Starts ' + shortDateLabel(localDate(firstIso))));
       }
-      top.appendChild(el('span', 'finder-price', money(ref.drop_in_fee_cents)));
+      // The multi-buy price under the single one (2026-10-30), the same line
+      // the week grid prints, so the discount is visible before the cart.
+      var priceCol = el('span', 'finder-price-col');
+      priceCol.appendChild(el('span', 'finder-price', money(ref.drop_in_fee_cents)));
+      var bulkLine = bulkEachLine(ref);
+      if (bulkLine) priceCol.appendChild(el('span', 'finder-bulk', bulkLine));
+      top.appendChild(priceCol);
       li.appendChild(top);
 
       li.appendChild(el('h2', 'finder-name', s.name));
