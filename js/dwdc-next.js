@@ -17,7 +17,8 @@
    DATE first and biggest, in the spot the empty line held, and adds no
    button of its own: the page already has the one action. It also hands the
    phone sticky bar its "Next class" line (js/now.js used to, from a Home
-   block that no longer exists).
+   block that no longer exists), and since 2026-10-30 the contact form's
+   Collective help line its date (window.DWD_DWDC_NEXT).
    ═══════════════════════════════════════════════ */
 
 (function () {
@@ -188,6 +189,21 @@
     if (window.DWD_MOB && window.DWD_MOB.repaint) window.DWD_MOB.repaint();
   }
 
+  /* The contact form's Collective help line quotes the next class too
+     (2026-10-30). main.js owns those words (window.DWD_REASON_COPY); this
+     hands it the date, "Friday, November 27, 10:00 am", and the venue name
+     when the row has one, then says so. Same date and time rules as the bar. */
+  function shareNext(row) {
+    var d = localDate(row.date);
+    if (!d) return;
+    var t = row.all_day ? null : timeLabel(row.start_time);
+    window.DWD_DWDC_NEXT = {
+      when: longDate(d) + (t ? ', ' + t : ''),
+      venue: row.location_name ? String(row.location_name).trim() : null
+    };
+    document.dispatchEvent(new CustomEvent('dwd:dwdc-next'));
+  }
+
   sb.from('public_site_dwdc_events')
     .select('*')
     .limit(3)
@@ -212,5 +228,6 @@
       renderHero(rows[0]);
       renderMore(rows.slice(1));
       renderBar(rows[0]);
+      shareNext(rows[0]);
     });
 })();

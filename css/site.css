@@ -2047,12 +2047,9 @@ video.hero-logo {
 }
 .contact-detail .value { color: var(--cream); font-size: 1rem; line-height: 1.6; }
 .contact-detail .value a { color: var(--accent); }
-.contact-booking {
-  background-color: var(--forest-light); padding: 1.5rem;
-  border: 1px solid var(--forest-mid); margin: 1.5rem 0;
-  font-size: 0.95rem; line-height: 1.7; color: var(--cream);
-}
-.contact-quick-links { margin-top: 1.5rem; }
+/* Quick links follow the last detail directly since the booking box went
+   (2026-10-30): the detail's own 1.5rem under its hairline is the gap, the
+   same as between details (a flex column, so a margin here would add). */
 .contact-quick-links .dlabel {
   font-family: var(--font-body); font-size: 0.75rem; font-weight: 600;
   text-transform: uppercase; letter-spacing: 1px;
@@ -10563,12 +10560,24 @@ html.menu-open .mob-cta { display: none !important; }
   text-underline-offset: 3px;
 }
 
+.sched-form-note,
 .sched-stepup {
   font-family: var(--font-body);
   font-size: 0.85rem;
   color: var(--sched-muted);
   margin: 0 0 1rem;
 }
+
+/* The soft age note under the date of birth (2026-10-30): ivory, not the
+   error shade, because it never blocks Pay. Empty, it takes no room. */
+.sched-age-note {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--sched-ink);
+  margin: 0;
+}
+.sched-age-note:not(:empty) { margin-top: 0.5rem; }
 
 /* Check out (the cart bar's button) and Pay wear .dropin-btn's look
    (2026-10-30): the 56px Family Pink rectangle in sentence case that "Book a

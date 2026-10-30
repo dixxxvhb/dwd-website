@@ -1052,7 +1052,7 @@
               <h3 class="sh-next-name" data-sh-next-name>StarQuest</h3>
               <p class="sh-next-meta" data-sh-next-meta>Feb 5 to 7, 2027 &middot; Orlando FL</p>
               <p class="sh-next-line">Until then the team trains every week, and <span class="sh-keep">drop-in</span> classes put your dancer in the room <span class="sh-keep">with them.</span></p>
-              <a class="jump-btn" href="/schedule/" data-ref="home-season" data-track="home-season-dropin">Train with this team. Drop in Tuesday. &rarr;</a>
+              <a class="jump-btn" href="/schedule/" data-ref="home-season" data-track="home-season-dropin">Drop in with the team &rarr;</a>
               <a class="sh-more" href="/proseries/#ps-calendar" data-track="home-season-guide">See the whole season &rarr;</a>
             </div>
           </div>
@@ -1241,7 +1241,7 @@
       <details class="col-past" id="col-past" data-past-shows>
         <summary class="col-past-toggle" data-track="collective-past-shows">Past shows</summary>
         <div class="col-past-body">
-          <p class="col-past-lead">In June 2026 we took our first stage. <em>A&middot;Muse in Space</em> at Orlando Ballet, presented by Aric Barrow. Original contemporary modern choreography, danced by adults of all levels, in front of a full house. That was the proof. Now we build the next one.</p>
+          <p class="col-past-lead">In June 2026 we took our first stage. <em>A&middot;Muse in Space</em> at Orlando Ballet. Original contemporary modern choreography, danced by adults of all levels, in front of a full house. That was the proof. Now we build the next one.</p>
 
         <!-- ══════════ A·MUSE IN SPACE — featured performance (merged from Performances) ══════════ -->
         <section id="amuse" aria-label="A·Muse in Space · featured performance">
@@ -1267,7 +1267,7 @@
                     <span class="cc-slot-time">Sat Jun 27, 2026</span>
                     <div>
                       <span class="cc-slot-name">Orlando Ballet</span>
-                      <p class="cc-slot-desc">Our first public performance, presented by Aric Barrow.</p>
+                      <p class="cc-slot-desc">Our first public performance.</p>
                     </div>
                   </li>
                   <li>
@@ -1285,7 +1285,6 @@
                     </div>
                   </li>
                 </ul>
-                <p class="cc-meta">Presented by Aric Barrow &middot; performed at Orlando Ballet</p>
               </div>
 
               <div class="cc-section">
@@ -1329,7 +1328,7 @@
               <img width="1600" height="1542" src="/images/photos/opt/dwdc-amuse-07-1600.webp" srcset="/images/photos/opt/dwdc-amuse-07-800.webp 800w, /images/photos/opt/dwdc-amuse-07-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="dwdCOLLECTIVE leaping in the closing section" loading="lazy" data-lightbox>
               <img width="1600" height="1314" src="/images/photos/opt/dwdc-amuse-08-1600.webp" srcset="/images/photos/opt/dwdc-amuse-08-800.webp 800w, /images/photos/opt/dwdc-amuse-08-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="A dwdCOLLECTIVE dancer alone in the light" class="wide" loading="lazy" data-lightbox>
             </div>
-            <p class="cc-meta cc-caption">A&middot;Muse in Space &middot; Orlando Ballet &middot; presented by Aric Barrow</p>
+            <p class="cc-meta cc-caption">A&middot;Muse in Space &middot; Orlando Ballet</p>
           </div>
 
         </section>
@@ -2354,7 +2353,7 @@
           <div class="sched-header">
             <p class="kicker">DROP IN &middot; NO AUDITION</p>
             <h1 class="sched-h1">No audition. Just drop in.</h1>
-            <p class="sched-dek">Five classes a week at Exchange Dance in Orlando. Pick a date, pay online, show up.</p>
+            <p class="sched-dek">Five dwdPROSERIES team classes a week with open spots, at Exchange Dance in Orlando. Any dancer the right age is welcome. Pick a date, pay online, show up.</p>
           </div>
 
           <!-- The room (2026-10-22): four frames from the Oct 21 Wednesday
@@ -2408,7 +2407,8 @@
             <ul class="sched-know-list">
               <li>Exchange Dance &middot; 7409 Chancery Lane, Orlando</li>
               <li>All black, form-fitting. Leotard and tights, or a fitted top and leggings. Hair pulled back off the face.</li>
-              <li>Can&rsquo;t make it? Move it to another week.</li>
+              <li>Arrive ten minutes early. No street shoes on the floor. Bring water.</li>
+              <li>Can&rsquo;t make it? Email us before class starts and we&rsquo;ll move you to another week.</li>
             </ul>
           </div>
 
@@ -2450,13 +2450,18 @@
               <div class="sched-summary-total"><span>Total</span><span data-sched-summary-total>$0</span></div>
             </div>
             <form class="sched-form" data-sched-form method="post" novalidate>
+              <p class="sched-form-note">One dancer per order. Booking for two? Check out once for each.</p>
               <div class="field">
                 <label for="sched-dancer-name">Dancer's name</label>
                 <input type="text" id="sched-dancer-name" name="dancer_name" autocomplete="off" required>
               </div>
+              <!-- The age note (2026-10-30): js/schedule.js writes it when the
+                   date of birth falls outside a cart class's age band. It never
+                   blocks Pay. Always rendered (empty) so the live region speaks. -->
               <div class="field">
                 <label for="sched-dancer-dob">Dancer's date of birth</label>
-                <input type="date" id="sched-dancer-dob" name="dancer_dob" required>
+                <input type="date" id="sched-dancer-dob" name="dancer_dob" aria-describedby="sched-dob-note" required>
+                <p class="sched-age-note" id="sched-dob-note" data-sched-age-note aria-live="polite"></p>
               </div>
               <div class="field">
                 <label for="sched-payer-name">Your name</label>
@@ -2890,9 +2895,14 @@
                 title: 'Tell us about your dancer.',
                 help: 'Age, experience, and what you are hoping for. Dixon replies personally.'
               },
+              // helpNext replaces help once js/dwdc-next.js knows the next
+              // class ({when}, {venue}); sent replaces the success line.
               adult: {
                 title: 'Tell us about you and your training.',
-                help: 'However much or little you have danced. No audition, no experience required.'
+                help: 'However much or little you have danced. No audition, no experience required.',
+                helpNext: 'No audition, no experience required. Next class: {when} at {venue}.',
+                venue: 'Exchange Dance',
+                sent: "Got it. You're on the list. Dixon will reply within 48 hours."
               },
               general: {
                 title: "What's on your mind?",
@@ -2998,9 +3008,6 @@
           <div class="contact-detail">
             <div class="dlabel">YouTube</div>
             <div class="value"><a href="https://youtube.com/@dancewithdixon" target="_blank" rel="noopener">Dance With Dixon</a></div>
-          </div>
-          <div class="contact-booking">
-            <p>Interested in booking Dixon for choreography, workshops, guest teaching, or competition judging? Drop a line. I'd love to hear from you.</p>
           </div>
           <div class="contact-quick-links">
             <div class="dlabel">Quick Links</div>

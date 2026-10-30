@@ -1000,9 +1000,26 @@
     if (copy && h1) h1.textContent = copy.title;
     // The catch-all sub-line only earns its place on the catch-all reason.
     if (sub) sub.hidden = (value === 'adult' || value === 'proseries');
-    if (copy && help) help.textContent = copy.help;
+    if (copy && help) help.textContent = helpText(copy);
     if (hidden) hidden.value = value || 'general';
   }
+
+  // The Collective's help line carries the next class once js/dwdc-next.js
+  // has one (2026-10-30); with none, the topic's standing line stays.
+  function helpText(copy) {
+    var next = window.DWD_DWDC_NEXT;
+    if (!copy.helpNext || !next || !next.when) return copy.help;
+    // The venue's last two words hold together: no lone "Dance." line.
+    var fill = { when: next.when, venue: String(next.venue || copy.venue).replace(/ (\S+)$/, '\u00a0$1') };
+    return copy.helpNext.replace(/\{(when|venue)\}/g, function (m, k) { return fill[k] || ''; });
+  }
+
+  // That read lands after this file has painted, so repaint the Collective
+  // chip if it is the one checked (never re-read the URL over a tap).
+  document.addEventListener('dwd:dwdc-next', function () {
+    var on = document.querySelector('.toggle-group[data-name="reason"] .toggle-btn.active');
+    if (on && on.dataset.value === 'adult') paintReason('adult');
+  });
 
   // One chip checked per group. The checked chip is the group's only tab stop
   // (roving tabindex, the ARIA radio pattern); arrows move between chips.
@@ -1061,6 +1078,10 @@
 
   // ── CONTACT FORM ──
   var contactForm = document.querySelector('[data-form="contact"]');
+  // The success line is per topic (2026-10-30): the Collective's says you are
+  // on the list; every other topic keeps the markup's own line.
+  var contactSent = contactForm && contactForm.querySelector('.form-success');
+  var contactSentDefault = contactSent ? contactSent.textContent : '';
   if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -1097,6 +1118,10 @@
           } else {
             trackForm('contact:ok');
             contactForm.reset();
+            if (contactSent) {
+              var sentCopy = REASON_COPY[payload.reason];
+              contactSent.textContent = (sentCopy && sentCopy.sent) || contactSentDefault;
+            }
             showFormSuccess(contactForm);
           }
         });

@@ -35,7 +35,7 @@
 
   var USE_STUB = false;
 
-  var WAIVER_REVISION = 'v1.1';
+  var WAIVER_REVISION = 'v1.2'; // dwd 98ddd17e, waiver/drop-in/ (2026-10-30)
   var CHECKOUT_URL = 'https://ipulrvhiuvgbvralybxx.supabase.co/functions/v1/drop-in-checkout';
   var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwdWxydmhpdXZnYnZyYWx5Ynh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2ODI0MzAsImV4cCI6MjA4NjI1ODQzMH0.O7MDYxkfqhQGNI58xyDq3HhsIm12OmgZRkJlyTXL0ug';
   var CART_KEY = 'dwd_dropin_cart';
@@ -85,6 +85,8 @@
   var elSummaryTotal = page.querySelector('[data-sched-summary-total]');
   var elBulkNote = page.querySelector('[data-sched-bulk-note]');
   var elForm = page.querySelector('[data-sched-form]');
+  var elDob = page.querySelector('#sched-dancer-dob');
+  var elAgeNote = page.querySelector('[data-sched-age-note]');
   var elPayBtn = page.querySelector('[data-sched-pay-btn]');
   var elError = page.querySelector('[data-sched-error]');
   var elThankyou = page.querySelector('[data-sched-thankyou]');
@@ -254,6 +256,7 @@
       date: row.date,
       name: row.name,
       label: [row.track_label, row.age_band, row.room].filter(Boolean).join(' \u00b7 '),
+      age_band: row.age_band || null,
       start_time: row.start_time,
       fee_cents: row.drop_in_fee_cents,
       bulk_fee_cents: (typeof row.drop_in_bulk_fee_cents === 'number') ? row.drop_in_bulk_fee_cents : null
@@ -1149,6 +1152,66 @@
     renderBulkNote(elBulkNote, bulkNoteText(cart));
     elSummaryTotal.textContent = money(total);
     elPayBtn.textContent = 'Pay ' + money(total);
+    renderAgeNote();
+  }
+
+  // ── Age note (2026-10-30) ──
+  // One soft line under the date of birth when the dancer's age on a cart
+  // class's date falls outside that class's band ("ages 10 and up"), for the
+  // first such class. It never blocks Pay, and it is rewritten whenever the
+  // date or the cart changes. A band that does not parse says nothing.
+  function parseBand(band) {
+    var s = String(band || '').trim().toLowerCase().replace(/[\u2013\u2014]/g, '-');
+    var m = s.match(/^ages?\s+(\d{1,2})\s*(?:to|-)\s*(\d{1,2})$/);
+    if (m) return Number(m[1]) <= Number(m[2]) ? { min: Number(m[1]), max: Number(m[2]) } : null;
+    m = s.match(/^ages?\s+(\d{1,2})\s*(?:\+|and up|and older|and over)$/);
+    return m ? { min: Number(m[1]), max: null } : null;
+  }
+
+  // Carts saved before lines carried age_band still have it inside label.
+  function lineBand(line) {
+    if (line.age_band) return String(line.age_band).trim();
+    var bits = String(line.label || '').split(' \u00b7 ');
+    for (var i = 0; i < bits.length; i++) {
+      if (/^ages?\s/i.test(bits[i])) return bits[i].trim();
+    }
+    return '';
+  }
+
+  // Whole years on the class's date; null while the date is half typed (a
+  // date field reports year 0002 mid-entry) or after the class.
+  function ageOn(dobIso, dateIso) {
+    var b = String(dobIso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    var c = String(dateIso || '').slice(0, 10).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!b || !c || Number(b[1]) < 1900) return null;
+    var age = Number(c[1]) - Number(b[1]);
+    if (c[2] + c[3] < b[2] + b[3]) age--; // birthday not reached yet that year
+    return age >= 0 ? age : null;
+  }
+
+  function ageNoteText(cart, dobIso) {
+    for (var i = 0; i < cart.length; i++) {
+      var band = lineBand(cart[i]);
+      var range = parseBand(band);
+      var age = range ? ageOn(dobIso, cart[i].date) : null;
+      if (age == null) continue;
+      if (age < range.min || (range.max != null && age > range.max)) {
+        return cart[i].name + ' is ' + band.charAt(0).toLowerCase() + band.slice(1) +
+          '. Still want it? Dixon will check at class.';
+      }
+    }
+    return '';
+  }
+
+  function renderAgeNote() {
+    if (!elAgeNote || !elDob) return;
+    var text = ageNoteText(readCart(), elDob.value);
+    if (elAgeNote.textContent !== text) elAgeNote.textContent = text;
+  }
+
+  if (elDob) {
+    elDob.addEventListener('input', renderAgeNote);
+    elDob.addEventListener('change', renderAgeNote);
   }
 
   elCartCheckoutBtn.addEventListener('click', openCheckout);
