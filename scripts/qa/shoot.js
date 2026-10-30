@@ -111,7 +111,10 @@ const FREEZE = `
         await new Promise(r => setTimeout(r, 700));
         const h = Math.min(await page.evaluate(() => document.documentElement.scrollHeight), 24000);
         await page.setViewport({ width: vp.w, height: vp.h });
-        const tileH = 1400;
+        // One screen per tile. Stepping further than the viewport is tall (this
+        // stepped 1400 on a 900 or 844 screen until 2026-10-30) skips a band of
+        // every page that nobody ever sees in review.
+        const tileH = vp.h;
         for (let y = 0, n = 0; y < h; y += tileH, n++) {
           await page.evaluate(yy => window.scrollTo(0, yy), y);
           await new Promise(r => setTimeout(r, 220));

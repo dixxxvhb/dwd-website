@@ -26,7 +26,7 @@ links are allowed; anything else is a CTA that escaped the site).
 node scripts/qa/shoot.js <outDir> [routes] [--tiles]
 ```
 
-`--tiles` also writes 1400px-tall screenshots per route. It waits for every
+`--tiles` also writes one screenshot per screen height, top to bottom, per route. It waits for every
 image to resolve first: these pages carry lazy images with no width/height, so
 an unsettled page grows while you tile it and the same section shows up twice.
 
