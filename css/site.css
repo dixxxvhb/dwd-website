@@ -9910,6 +9910,26 @@ html.menu-open .mob-cta { display: none !important; }
   margin: 18px auto 0;
 }
 .tg-orn { width: 110px; height: 4px; margin: 28px auto; border-top: 1px solid var(--tg-terra); border-bottom: 1px solid var(--tg-terra); opacity: 0.7; }
+/* When and where: the line people write down. Stacked on a phone, side by side wider. */
+.tg-ww {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 560px;
+  margin: 22px auto 0;
+  border-top: 1px solid rgba(200, 97, 75, 0.4);
+  border-bottom: 1px solid rgba(200, 97, 75, 0.4);
+}
+.tg-ww > div { padding: 16px 8px; min-width: 0; }
+.tg-ww > div + div { border-top: 1px solid rgba(200, 97, 75, 0.4); }
+.tg-ww-lbl { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase; color: var(--tg-terra); margin: 0; }
+.tg-ww-big { font-family: var(--font-display); font-weight: 600; font-size: 30px; line-height: 1.1; color: var(--tg-ink); margin: 6px 0 0; }
+.tg-ww-sm { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 19px; color: var(--tg-soft); margin: 2px 0 0; }
+@media (min-width: 560px) {
+  .tg-ww { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tg-ww > div + div { border-top: 0; border-left: 1px solid rgba(200, 97, 75, 0.4); }
+  .tg-ww-big { font-size: 34px; }
+}
 .tg-courses { list-style: none; margin: 0; padding: 0; display: grid; gap: 30px; }
 .tg-course { display: grid; justify-items: center; gap: 6px; }
 .tg-no { font-size: 11px; color: var(--tg-terra); }
