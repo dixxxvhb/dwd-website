@@ -52,14 +52,14 @@
   // "What to know" address in index.html carries.
   var EXCHANGE_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=Exchange+Dance+Studio%2C+7409+Chancery+Lane%2C+Orlando%2C+FL+32809';
 
-  // Thanksgiving week 2026: the menu at the top of the page. Each course is
-  // the morning class (starts before noon) on its date in the feed, so the
-  // Director class is the source of truth for price and spots and the cart
-  // and checkout need nothing new. Guest names go here once confirmed; an
-  // empty string keeps "to be announced". After TG_LAST the block hides.
+  // Thanksgiving week 2026: the menu at the top of the page. Each morning has
+  // two seatings (10 to 11:30, 11:30 to 1), each its own Director class: the
+  // classes on a date that start before 1pm, earliest first, fill the course's
+  // seats in order. The Director class is the source of truth for price and
+  // spots, so the cart and checkout need nothing new. After TG_LAST the block
+  // hides.
   var TG_DATES = ['2026-11-24', '2026-11-25', '2026-11-27'];
   var TG_LAST = '2026-11-27';
-  var TG_GUESTS = { '2026-11-24': '', '2026-11-25': '' };
 
   var DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
   var DAY_NAMES_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -1047,30 +1047,38 @@
   var tgRowsByDate = {};
 
   function isTgRow(r) {
-    return TG_DATES.indexOf(String(r.date).slice(0, 10)) !== -1 && String(r.start_time) < '12';
+    return TG_DATES.indexOf(String(r.date).slice(0, 10)) !== -1 && String(r.start_time) < '13';
   }
 
   function setTgRows(rows) {
     tgRowsByDate = {};
     rows.forEach(function (r) {
-      if (r && r.class_id && r.start_time && isTgRow(r)) tgRowsByDate[String(r.date).slice(0, 10)] = r;
+      if (!r || !r.class_id || !r.start_time || !isTgRow(r)) return;
+      var d = String(r.date).slice(0, 10);
+      (tgRowsByDate[d] = tgRowsByDate[d] || []).push(r);
+    });
+    Object.keys(tgRowsByDate).forEach(function (d) {
+      tgRowsByDate[d].sort(function (a, b) { return String(a.start_time).localeCompare(String(b.start_time)); });
     });
     paintTg();
   }
 
-  // One course: closed until its class is open for drop-in, then Reserve,
+  function tgRowFor(seat) {
+    var li = seat.closest('[data-tg-date]');
+    var rows = tgRowsByDate[li.getAttribute('data-tg-date')] || [];
+    return rows[Number(seat.getAttribute('data-tg-seat'))];
+  }
+
+  // One seating: closed until its class is open for drop-in, then Reserve,
   // In your order, or Full. Price comes from the class; none set reads TBA.
   function paintTg() {
     if (!elTg) return;
     if (nyTodayIso() > TG_LAST) { elTg.hidden = true; return; }
-    var courses = elTg.querySelectorAll('[data-tg-date]');
-    Array.prototype.forEach.call(courses, function (li) {
-      var d = li.getAttribute('data-tg-date');
-      var guest = li.querySelector('[data-tg-guest]');
-      if (guest && TG_GUESTS[d]) guest.textContent = TG_GUESTS[d];
-      var btn = li.querySelector('[data-tg-btn]');
-      var price = li.querySelector('[data-tg-price]');
-      var row = tgRowsByDate[d];
+    var seats = elTg.querySelectorAll('[data-tg-seat]');
+    Array.prototype.forEach.call(seats, function (seat) {
+      var btn = seat.querySelector('[data-tg-btn]');
+      var price = seat.querySelector('[data-tg-price]');
+      var row = tgRowFor(seat);
       var open = row && row.drop_in_open && !isPast(row.date, row.start_time);
       btn.className = 'tg-btn tap-44';
       btn.innerHTML = '';
@@ -1106,9 +1114,9 @@
   if (elTg) elTg.addEventListener('click', function (e) {
     var btn = e.target.closest && e.target.closest('[data-tg-btn]');
     if (!btn || btn.disabled) return;
-    var li = btn.closest('[data-tg-date]');
-    var row = tgRowsByDate[li.getAttribute('data-tg-date')];
-    var note = li.querySelector('[data-tg-note]');
+    var seat = btn.closest('[data-tg-seat]');
+    var row = tgRowFor(seat);
+    var note = seat.querySelector('[data-tg-note]');
     if (!row) return;
     note.hidden = true;
     if (cartHas(row.class_id, row.occurrence_date)) {
@@ -1122,21 +1130,25 @@
     syncCart();
   });
 
-  // Localhost only: ?tg=demo fills the three mornings with open rows (no
-  // price, so they read Price TBA) to see the menu without Director classes.
-  // Never reaches checkout: these class_ids do not exist on the server.
+  // Localhost only: ?tg=demo fills the six seatings with open rows (no price,
+  // so they read Price TBA; Wednesday's second seating is full) to see the
+  // menu without Director classes. Never reaches checkout: these class_ids do
+  // not exist on the server.
   function tgDemoRows() {
     if (!/^(localhost|127\.)/.test(location.hostname)) return [];
     if (new URLSearchParams(location.search).get('tg') !== 'demo') return [];
-    return TG_DATES.map(function (d) {
-      return {
-        class_id: 'tg-demo-' + d, occurrence_date: d, date: d,
-        start_time: '10:00:00', end_time: '13:00:00',
-        name: d === '2026-11-27' ? 'Leftovers' : 'Guest Masterclass',
-        track_label: null, age_band: null, room: null,
-        drop_in_open: true, drop_in_fee_cents: null, spots_left: d === '2026-11-25' ? 0 : 20
-      };
+    var out = [];
+    TG_DATES.forEach(function (d) {
+      [['10:00:00', '11:30:00'], ['11:30:00', '13:00:00']].forEach(function (t, i) {
+        out.push({
+          class_id: 'tg-demo-' + d + '-' + i, occurrence_date: d, date: d,
+          start_time: t[0], end_time: t[1], name: 'Thanksgiving masterclass',
+          track_label: null, age_band: null, room: null,
+          drop_in_open: true, drop_in_fee_cents: null, spots_left: (d === '2026-11-25' && i === 1) ? 0 : 20
+        });
+      });
     });
+    return out;
   }
 
   // One cart, four surfaces: the bar, the chips, the menu, and the week grid if open.

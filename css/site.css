@@ -9934,6 +9934,33 @@ html.menu-open .mob-cta { display: none !important; }
 }
 .tg-desc { font-size: 21px; line-height: 1.25; max-width: 36ch; }
 .tg-course--rest .tg-no { color: #b9a79b; }
+/* Two seatings per morning, side by side; stacked on a phone. */
+.tg-seats {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 520px;
+  margin-top: 14px;
+  border-top: 1px solid rgba(200, 97, 75, 0.35);
+}
+.tg-seat { display: grid; justify-items: center; align-content: start; gap: 4px; padding: 16px 8px; min-width: 0; }
+.tg-seat + .tg-seat { border-top: 1px solid rgba(200, 97, 75, 0.35); }
+.tg-when {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--tg-terra);
+  margin: 0;
+}
+.tg-what { font-family: var(--font-display); font-weight: 600; font-size: 24px; line-height: 1.1; color: var(--tg-ink); margin: 0; }
+.tg-who { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 19px; color: var(--tg-soft); margin: 0; }
+.tg-seat .tg-act { margin-top: 8px; flex-direction: column; gap: 8px; }
+@media (min-width: 560px) {
+  .tg-seats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tg-seat + .tg-seat { border-top: 0; border-left: 1px solid rgba(200, 97, 75, 0.35); }
+}
 .tg-course--rest .tg-dish,
 .tg-course--rest .tg-desc { color: #7d867f; }
 .tg-act { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
