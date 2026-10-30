@@ -120,10 +120,10 @@ const ROUTES = [
     route: 'gallery',
     title: 'Gallery | DWD',
     description:
-      'Season One in photos: the open house, the Summer Intensive, dwdCON, signing day and the ' +
-      'kickoff, plus the Collective on stage and choreography by Dixon Bowles.',
+      'Season One in photos: first overall at JUMP Ft. Lauderdale, then the summer that built ' +
+      'the team, plus dwdCOLLECTIVE on stage.',
     ogTitle: 'Season One in photos',
-    ogDescription: 'Open house to signing day in one summer, then the season started.',
+    ogDescription: 'From the first open house to first overall at JUMP.',
     image: '/images/og/gallery.jpg',
     imageAlt: 'The seventeen Season One dancers together on signing day.',
   },

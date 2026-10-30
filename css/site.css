@@ -9169,6 +9169,7 @@ footer.site-footer .footer-brand img {
 /* The grids inside the fold already carry their own page padding, which would
    double up inside this container. */
 #page-gallery .gallery-archive-body .gallery-grid,
+#page-gallery .gallery-archive-body .video-grid,
 #page-gallery .gallery-archive-body .gallery-section-label {
   margin-left: 0;
   margin-right: 0;
@@ -9176,15 +9177,39 @@ footer.site-footer .footer-brand img {
   padding-right: 0;
 }
 
+/* Video captions (2026-10-30, the videos moved into the fold): routine name,
+   then category and event as YouTube publishes them, quieter. */
+#page-gallery .video-cap {
+  margin: 0;
+  padding: 14px 16px 16px;
+}
+
+#page-gallery .video-cap-title {
+  display: block;
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--ivory, #FAF3E8);
+}
+
+#page-gallery .video-cap-meta {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #c4baa8; /* the lead's grey: 6.2:1 on the card (#a89c8a was 4.4) */
+}
+
 /* One left edge on a phone (2026-10-30): the photos sit at 16px, so the lead,
-   album heads, section label, videos, archive and the Instagram card do too.
-   They were at 24, 24, 48, 24, 24 and 20. */
+   album heads, archive and the Instagram card do too. They were at 24, 24, 24
+   and 20. (The section labels and videos live inside the archive since the
+   same day and take its edge.) */
 @media (max-width: 640px) {
   #page-gallery .gallery-lead { padding: 36px 16px 4px; }
   #page-gallery .gallery-episode-head { margin: 0 16px 14px; }
   #page-gallery .gallery-archive { margin: 40px 16px 0; }
-  #page-gallery .gallery-section-label { padding-left: 16px; }
-  #page-gallery .video-grid { padding: 0 16px; }
   #page-gallery .ig-follow { padding-left: 16px; padding-right: 16px; }
   #page-gallery .gallery-episode-head {
     flex-direction: column;
