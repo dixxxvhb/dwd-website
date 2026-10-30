@@ -308,6 +308,10 @@
      Collective", so the bar carries that action, in the arm's terracotta
      (CSS keys on data-route), and stays hidden until that button itself has
      scrolled off. js/dwdc-next.js hands it the live next-class line. */
+  /* ProSeries (2026-10-30): the page exists to cast Season One, so the bar
+     carries Express interest to the on-page form. Its lead and twins are the
+     page's own #interest links, and the form observer below already hides it
+     while the form is on screen. No labelAttr: the line is fixed. */
   var MOB_ROUTES = {
     'adult-company': {
       label: 'Next class: date coming soon.',
@@ -316,6 +320,13 @@
       text: 'Join the Collective →',
       track: 'mobile-sticky-collective',
       lead: 'a[href="/contact/?reason=adult"]'
+    },
+    proseries: {
+      label: 'Season One is casting',
+      href: '#interest',
+      text: 'Express interest →',
+      track: 'mobile-sticky-proseries',
+      lead: 'a[href="#interest"]'
     }
   };
   var MOB_DEFAULT = {
@@ -604,7 +615,7 @@
   }
 
   // ── PROSERIES STORY DISCLOSURE ──
-  // The 7-scene Preseason story is 5,000px of phone. It collapses behind a
+  // The Season One story (JUMP open, seven earlier scenes folded) is 5,000px of phone. It collapses behind a
   // native <details> at <=767px and stays fully open above that: the markup
   // ships `open`, and this is the only thing that closes it. Media-query
   // driven, so a rotation or a resize puts it back the way that width wants.

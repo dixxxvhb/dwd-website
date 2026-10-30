@@ -6,6 +6,8 @@
    Two sources:
      1. DROP IN   — public_site_schedule(today, today+20), rows where
                     drop_in_open. Every weekly drop-in slot is listed.
+                    js/tracks.js reuses the same read
+                    (window.__dwd_schedule21) for the track weeks.
      2. CHAIRS    — window.DWD_SEASON (js/season.js owns those numbers).
 
    Home's THIS WEEK block (#now) was deleted 2026-09-24; nothing here looks
@@ -272,6 +274,37 @@
   var sb = window.__dwd_sb;
   if (!sb) return; // supabase-js unavailable — every static line stands
 
+  /* One read, shared (2026-10-30). js/tracks.js renders the ProSeries track
+     weeks from this same window, so the fetch sits behind a getter: whichever
+     panel nears the viewport first starts it, the other reuses it. `.from`
+     and `.to` say what it covers. Resolves to the rows, or null when the read
+     failed (the static markup stands). The .then() makes it a native promise:
+     calling .then twice on a supabase-js builder sends the request twice. */
+  var schedFrom = nyToday();
+  var schedTo = schedFrom ? addDays(schedFrom, WINDOW_DAYS) : null;
+  var schedRead = null;
+  function schedule21() {
+    if (!schedRead) {
+      schedRead = !schedFrom ? Promise.resolve(null)
+        : sb.rpc('public_site_schedule', { p_from: schedFrom, p_to: schedTo })
+          .then(function (res) {
+            if (res.error) {
+              // Silent: the static rows in the markup are a correct page.
+              console.warn('this week drop-ins:', res.error.message);
+              return null;
+            }
+            return res.data || [];
+          }, function (err) {
+            console.warn('this week drop-ins:', err && err.message);
+            return null;
+          });
+    }
+    return schedRead;
+  }
+  schedule21.from = schedFrom;
+  schedule21.to = schedTo;
+  window.__dwd_schedule21 = schedule21;
+
   /* The panels live in the DOM on every route shell, because every shell is
      a copy of the same index.html with a different section shown. Firing a
      query on /teachers/ to fill a panel nobody is looking at is how a
@@ -287,21 +320,7 @@
   function load() {
     if (fired) return;
     fired = true;
-
-    var from = nyToday();
-    if (from) {
-      sb.rpc('public_site_schedule', { p_from: from, p_to: addDays(from, WINDOW_DAYS) })
-        .then(function (res) {
-          if (res.error) {
-            // Silent: the static row in the markup is a correct page.
-            console.warn('this week drop-ins:', res.error.message);
-            return;
-          }
-          renderDropIn(res.data || []);
-        }, function (err) {
-          console.warn('this week drop-ins:', err && err.message);
-        });
-    }
+    schedule21().then(function (rows) { if (rows) renderDropIn(rows); });
   }
 
   if (typeof IntersectionObserver !== 'function') {
