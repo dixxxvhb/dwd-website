@@ -365,21 +365,21 @@
         class_id: 'stub-elite-ballet', occurrence_date: toIso(tue), date: toIso(tue),
         start_time: '16:45:00', end_time: '18:00:00', name: 'Ballet',
         track_label: 'Elite + Pro', age_band: 'ages 8 and up', room: 'Garage',
-        drop_in_open: true, drop_in_fee_cents: 2500, drop_in_bulk_fee_cents: 2250,
+        drop_in_open: true, drop_in_fee_cents: 2000, drop_in_bulk_fee_cents: 1750,
         drop_in_bulk_min: 4, spots_left: 8
       },
       {
         class_id: 'stub-elite-rotation', occurrence_date: toIso(tue), date: toIso(tue),
         start_time: '19:00:00', end_time: '20:30:00', name: 'Rotation',
         track_label: 'Elite', age_band: 'ages 8 to 12', room: 'Studio A',
-        drop_in_open: true, drop_in_fee_cents: 2500, drop_in_bulk_fee_cents: 2250,
+        drop_in_open: true, drop_in_fee_cents: 2000, drop_in_bulk_fee_cents: 1750,
         drop_in_bulk_min: 4, spots_left: 0
       },
       {
         class_id: 'stub-jazz-tech', occurrence_date: toIso(wed), date: toIso(wed),
         start_time: '16:00:00', end_time: '17:30:00', name: 'Jazz Technique',
         track_label: 'Elite + Pro', age_band: 'ages 8 and up', room: 'Studio A',
-        drop_in_open: true, drop_in_fee_cents: 2000, drop_in_bulk_fee_cents: 1750,
+        drop_in_open: true, drop_in_fee_cents: 1500, drop_in_bulk_fee_cents: 1250,
         drop_in_bulk_min: 4, spots_left: 2
       },
       {

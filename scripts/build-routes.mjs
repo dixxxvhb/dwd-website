@@ -73,11 +73,11 @@ const ROUTES = [
     route: 'schedule',
     title: 'Drop-in dance classes in Orlando | Dance With Dixon',
     description:
-      'Drop-in dance classes in Orlando for ages 5 to 19. No audition. $20 to $25 a class at ' +
+      'Drop-in dance classes in Orlando for ages 5 to 19. No audition. $15 to $20 a class at ' +
       'Exchange Dance. Pick a date, pay online, show up.',
     ogTitle: 'No audition. Just drop in.',
     ogDescription:
-      'Five classes a week at Exchange Dance in Orlando, $20 to $25 a class. Pick a date, pay ' +
+      'Five classes a week at Exchange Dance in Orlando, $15 to $20 a class. Pick a date, pay ' +
       'online, show up.',
     image: '/images/og/proseries.jpg',
     imageAlt: 'A ProSeries dancer mid-leap at the Summer Intensive showcase.',
