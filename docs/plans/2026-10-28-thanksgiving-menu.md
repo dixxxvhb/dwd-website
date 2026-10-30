@@ -19,7 +19,7 @@ Button states per seating: no class or not open for drop-in = "Reservations open
 
 ## Before this can go live (Dixon)
 1. In the Director, create the six one-off classes: Tue 11/24 and Wed 11/25 at 10:00 to 11:30 (ages 9 and under) and 11:30 to 13:00 (ages 10 and up); Fri 11/27 10:00 to 11:30 (ballet + conditioning, 10 and up) and 11:30 to 13:00 (musical theatre, all). Each open for drop-in with its price and seat cap.
-2. The evening classes that week need cancelling in the Director, and Monday's rehearsal added. Those are calendar changes families see; inside 21 days (from Nov 2) they wait for Dixon's yes.
+2. DONE (checked 2026-10-30): Dixon cancelled that week's evening classes in the Director; `public_site_schedule` has no rows Nov 23 to 29, so the card's "Evening classes are off" line is true. Monday's rehearsal is internal and stays off the site.
 3. Decide whether ProSeries families pay for these or get them included. That's a pricing call, not code.
 4. If the lineup changes, edit the course text in index.html (the `tg-course` block) and run build-routes.
 

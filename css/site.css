@@ -9892,8 +9892,7 @@ html.menu-open .mob-cta { display: none !important; }
 }
 .tg-sub { font-size: 13px; color: var(--tg-terra); letter-spacing: 0.44em; margin-top: 12px; }
 .tg-date,
-.tg-desc,
-.tg-fine {
+.tg-desc {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 600;
@@ -9998,7 +9997,6 @@ html.menu-open .mob-cta { display: none !important; }
 .tg-btn:disabled { background: transparent; color: var(--tg-soft); border-color: rgba(12, 31, 23, 0.25); cursor: default; }
 .tg-note { font-family: var(--font-body); font-size: 13px; color: var(--tg-terra); margin: 2px 0 0; }
 .tg-served { font-size: 12px; color: var(--tg-ink); margin-top: 36px; }
-.tg-fine { font-size: 19px; color: var(--tg-soft); margin-top: 6px; }
 .tg-sig {
   display: flex;
   align-items: center;
@@ -10008,6 +10006,8 @@ html.menu-open .mob-cta { display: none !important; }
   letter-spacing: 0.34em;
   color: var(--tg-ink);
   margin-top: 20px;
+  /* the stem keeps its lowercase: dwdPROSERIES, never DWDPROSERIES */
+  text-transform: none;
 }
 .tg-mark { width: 32px; height: auto; }
 
