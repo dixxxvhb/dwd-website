@@ -3,12 +3,12 @@
 Branch `claude/thanksgiving-menu`. Not on main yet: main deploys to dancewithdixon.com.
 
 ## What it is
-The Instagram post (the Thanksgiving Tasting Menu, `DWD/dwdPROSERIES/season-1/campaigns/thanksgiving-week-nov-2026/`) as a printed menu card at the top of /schedule/, with two seatings per morning. Lineup is tentative (Dixon, 2026-10-30):
+The Instagram post (the Thanksgiving Week Masterclass Menu, Direction A, `DWD/dwdPROSERIES/season-1/campaigns/thanksgiving-week-nov-2026/source/menu-a.html`) as a printed menu card at the top of /schedule/, with two seatings per morning. Plain copy (day, class, teacher, times, ages), the dwdPS crest at the top, no puns (Dixon, 2026-10-30). Lineup is tentative (Dixon, 2026-10-30):
 
 - I. Tue Nov 24: Jazz, guest chef Ms. Tori. 10 to 11:30 ages 9 and under; 11:30 to 1 ages 10 and up.
 - II. Wed Nov 25: Contemporary Fusion, guest chef Megan Montgomery. Same split.
-- Intermission, Thu: The Turkey (no buttons)
-- III. Fri Nov 27: Leftovers with Dixon. 10 to 11:30 intermediate/advanced ballet + conditioning, ages 10 and up; 11:30 to 1 musical theatre, open to everyone.
+- Thu Nov 26: Closed for Thanksgiving (no buttons)
+- III. Fri Nov 27: Dixon Bowles. 10 to 11:30 intermediate/advanced ballet + conditioning, ages 10 and up; 11:30 to 1 musical theatre, open to everyone.
 
 Mornings run 10am to 1pm at Exchange Dance (Chelsea OK'd three hours, 2026-10-28). Monday's company rehearsal is internal and never shows here.
 

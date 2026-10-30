@@ -9849,7 +9849,7 @@ html.menu-open .mob-cta { display: none !important; }
   .sched-dek { max-width: none; }
 }
 
-/* ── Thanksgiving week 2026: the tasting menu ─────────────────────────── */
+/* ── Thanksgiving week 2026: the masterclass menu ─────────────────────── */
 /* The Instagram post as a printed menu card on the forest page. Ivory paper,
    terracotta double rule, one course per morning. Colors are the card's own,
    not the page's --sched-* tokens, because the card is paper. */
@@ -9869,15 +9869,7 @@ html.menu-open .mob-cta { display: none !important; }
   padding: 44px 24px 36px;
   box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.75), 0 6px 16px rgba(0, 0, 0, 0.3);
 }
-.tg-card::before,
-.tg-card::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-}
-.tg-card::before { inset: 12px; border: 1.5px solid var(--tg-terra); }
-.tg-card::after { inset: 18px; border: 0.75px solid rgba(200, 97, 75, 0.55); }
-.tg-wheat { display: block; width: 120px; height: 77px; margin: 0 auto; color: var(--tg-terra); }
+.tg-crest { display: block; width: 72px; height: 72px; margin: 0 auto; }
 .tg-house,
 .tg-sub,
 .tg-no,
@@ -9892,10 +9884,9 @@ html.menu-open .mob-cta { display: none !important; }
 .tg-house { font-size: 11px; color: var(--tg-ink); margin-top: 12px; font-weight: 500; }
 .tg-title {
   font-family: var(--font-display);
-  font-style: italic;
   font-weight: 500;
-  font-size: clamp(56px, 14vw, 104px);
-  line-height: 0.95;
+  font-size: clamp(40px, 10vw, 62px);
+  line-height: 1;
   color: var(--tg-ink);
   margin: 8px 0 0;
 }
@@ -9918,9 +9909,7 @@ html.menu-open .mob-cta { display: none !important; }
   max-width: 40ch;
   margin: 18px auto 0;
 }
-.tg-orn { display: flex; align-items: center; gap: 12px; width: 200px; margin: 28px auto; color: var(--tg-terra); }
-.tg-orn i { flex: 1; height: 1px; background: currentColor; opacity: 0.7; }
-.tg-orn b { width: 8px; height: 8px; transform: rotate(45deg); border: 1.5px solid currentColor; }
+.tg-orn { width: 110px; height: 4px; margin: 28px auto; border-top: 1px solid var(--tg-terra); border-bottom: 1px solid var(--tg-terra); opacity: 0.7; }
 .tg-courses { list-style: none; margin: 0; padding: 0; display: grid; gap: 30px; }
 .tg-course { display: grid; justify-items: center; gap: 6px; }
 .tg-no { font-size: 11px; color: var(--tg-terra); }
@@ -9934,6 +9923,7 @@ html.menu-open .mob-cta { display: none !important; }
 }
 .tg-desc { font-size: 21px; line-height: 1.25; max-width: 36ch; }
 .tg-course--rest .tg-no { color: #b9a79b; }
+.tg-teacher { font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--tg-ink); margin: 2px 0 0; }
 /* Two seatings per morning, side by side; stacked on a phone. */
 .tg-seats {
   display: grid;
@@ -10003,9 +9993,8 @@ html.menu-open .mob-cta { display: none !important; }
 
 @media (min-width: 900px) {
   .tg-card { padding: 60px 72px 44px; }
-  .tg-card::before { inset: 18px; }
-  .tg-card::after { inset: 25px; }
-  .tg-wheat { width: 150px; height: 96px; }
+  .tg-crest { width: 84px; height: 84px; }
+  .tg-teacher { font-size: 13px; }
   .tg-house { font-size: 13px; }
   .tg-sub { font-size: 16px; }
   .tg-date { font-size: 25px; }
