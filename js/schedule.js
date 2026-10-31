@@ -1128,6 +1128,16 @@
     });
   }
 
+  // The cart bar is fixed over the bottom of the screen. On a phone, a seat
+  // tapped low on the screen opens its note right under the bar (QA
+  // 2026-10-31: the six-class note on Friday's last seating was cut off), so
+  // nudge the page up until the note clears it.
+  function clearCartBar(node) {
+    if (!elCartBar || elCartBar.hidden) return;
+    var over = node.getBoundingClientRect().bottom - elCartBar.getBoundingClientRect().top;
+    if (over > 0) window.scrollBy(0, over + 12);
+  }
+
   if (elTg) elTg.addEventListener('click', function (e) {
     var btn = e.target.closest && e.target.closest('[data-tg-btn]');
     if (!btn || btn.disabled) return;
@@ -1141,6 +1151,7 @@
     } else if (cartAdd(row) === 'full') {
       note.textContent = 'Six classes at a time. Check out, then add more.';
       note.hidden = false;
+      clearCartBar(note);
       return;
     }
     renderNotice('');
