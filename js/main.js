@@ -1246,7 +1246,6 @@
     // class, so a stale cutoff costs a slightly wrong preview line, nothing more.
     var ELITE_CUTOFF = 8;
     var PRO_CUTOFF = 12;
-    var TRACK_NAME = { prep: 'Prep', elite: 'Elite', pro: 'Pro' };
 
     function easternTodayString() {
       return new Intl.DateTimeFormat('en-CA', {
@@ -1274,23 +1273,47 @@
       return 'pro';
     }
 
+    // The line says what the page's posted bands say (Prep 5 to 9, Elite 8 to
+    // 12, Pro 12 and up), overlaps included, so a parent reading literally
+    // never sees the form contradict the track cards (persona pass,
+    // 2026-10-31). preferred_track above still uses the Director's cutoffs.
+    function trackWords(age) {
+      if (age <= 7) return 'Prep';
+      if (age <= 9) return 'Prep or Elite';
+      if (age <= 11) return 'Elite';
+      if (age === 12) return 'Elite or Pro';
+      return 'Pro';
+    }
+
     // Live "here is where that birthday starts them" line under each dancer.
+    // Outside 5 to 19 it asks for a second look instead: a parent who typed
+    // their own birthday sees it before sending.
     function updateTrackNote(fieldset) {
       var note = fieldset.querySelector('[data-track-note]');
       var dobEl = fieldset.querySelector('[data-child="date_of_birth"]');
       if (!note || !dobEl) return;
-      var track = assignTrack(dobEl.value);
       var age = ageAsOf(dobEl.value, easternTodayString());
-      if (!track || age === null || age < 3 || age > 25) {
+      if (age === null || age < 0) {
         note.hidden = true;
         note.textContent = '';
         return;
       }
       var nameEl = fieldset.querySelector('[data-child="name"]');
-      var who = (nameEl && nameEl.value.trim()) ? nameEl.value.trim() : 'That birthday';
-      var verb = (nameEl && nameEl.value.trim()) ? ' starts in ' : ' starts them in ';
-      note.textContent = who + verb + TRACK_NAME[track] +
-        '. Dixon confirms the track at the placement class.';
+      var name = nameEl ? nameEl.value.trim() : '';
+      if (age < 5) {
+        note.textContent = 'ProSeries starts at age 5. Check the birthday, or send this and Dixon will tell you when ' +
+          (name || 'they') + ' can start.';
+      } else if (age > 19) {
+        note.textContent = 'ProSeries is for ages 5 to 19. Check the birthday, or for adults 18 and up there’s ';
+        var link = document.createElement('a');
+        link.href = '/collective/';
+        link.textContent = 'the Collective';
+        note.appendChild(link);
+        note.appendChild(document.createTextNode('.'));
+      } else {
+        note.textContent = (name ? name + ' starts in ' : 'That birthday starts them in ') + trackWords(age) +
+          '. Dixon confirms the track at the placement class.';
+      }
       note.hidden = false;
     }
 

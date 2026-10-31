@@ -81,12 +81,13 @@
     return m ? Number(m[1]) * 60 + Number(m[2]) : null;
   }
 
-  /* "5:00", no meridiem: every track class is a weeknight class (now.js). */
+  /* "5:00". Each Weekly Schedule heading says "All times pm" (2026-10-31),
+     so only a morning slot carries its own "am". */
   function clock(mins) {
     var h = Math.floor(mins / 60) % 12;
     if (h === 0) h = 12;
     var mm = String(mins % 60);
-    return h + ':' + (mm.length < 2 ? '0' + mm : mm);
+    return h + ':' + (mm.length < 2 ? '0' + mm : mm) + (mins < 720 ? ' am' : '');
   }
 
   /* 2.75 -> "2.75 hrs", 1 -> "1 hr" */

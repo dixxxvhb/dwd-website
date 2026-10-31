@@ -525,12 +525,17 @@
     if (!m) return '';
     var h = Number(m[1]) % 12;
     if (h === 0) h = 12;
-    return h + ':' + m[2];
+    // "4:45 pm" with a no-break space, so a caller's split(' ') keeps it whole.
+    return h + ':' + m[2] + ' ' + (Number(m[1]) >= 12 ? 'pm' : 'am');
   }
 
-  // "5:00 to 6:00". Words, not a dash: public copy carries no en dashes.
+  // "5:00 to 6:00 pm": one meridiem when both ends share it, like llms.txt.
+  // Words, not a dash: public copy carries no en dashes.
   function timeRange(start, end) {
-    return fmtTime(start) + (end ? ' to ' + fmtTime(end) : '');
+    var a = fmtTime(start);
+    if (!end) return a;
+    var b = fmtTime(end);
+    return (a.slice(-2) === b.slice(-2) ? a.slice(0, -3) : a) + ' to ' + b;
   }
 
   // Cart news (a line left the cart, nothing was charged): top of the page,

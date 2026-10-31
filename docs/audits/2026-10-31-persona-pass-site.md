@@ -62,6 +62,36 @@ Home LCP 4.5 s on a throttled phone), a true first visit (fonts and supabase-js
 came from cache), the real Stripe page (verified 10-30), what the database does
 with duplicate interest or contact rows, and iOS Safari.
 
+## Dixon's calls, answered (2026-10-31: "Yes, your picks")
+Built on `claude/persona-copy`, on top of `claude/persona-fixes` (which took
+findings 2 to 4, 6 and 12), not merged: merging this repo is the deploy.
+- 1, ages: the form's line follows the posted bands (8 and 9 "Prep or Elite",
+  12 "Elite or Pro"); under 5 and over 19 it asks for a second look, over 19
+  with a link to the Collective. `preferred_track` sent to the Director is
+  unchanged.
+- 7, am/pm: drop-in rows "Tue 4:45 pm" (quiet pm, column 90px on phones,
+  96px wider), class cards, full week and checkout lines "4:45 to 5:45 pm";
+  each track's Weekly Schedule heading says "All times pm" once, and a
+  morning slot from the Director would carry its own "am".
+- 8, words: "chair" defined on the Home card and in the tracks intro; ENTER
+  is "See ProSeries" / "See the Collective"; "Wednesday WOD" is "Wednesday
+  drop-in"; "No prep" is "Nothing to prepare".
+- 9 and 10, money: every season total is a range ($3,000 to $3,500, $4,650 to
+  $4,900, $5,400 to $5,900) in the panel, the FAQ, the Course JSON-LD and
+  llms.txt, with the $50 at enrollment and final balances on top.
+- 11: a ninth FAQ, "What if we need to leave mid-season?", in plain words from
+  Section 4 of the Parent Agreement. The Agreement is NOT posted: its
+  Exhibit A gives Elite 4 to 6 and Pro 5 to 8 typical routines (below its own
+  minimums of 5 and 6, and against the site's 5 to 6 and 6 to 8 from the 10-30
+  answers) and Prep 4 hrs a week (site: 5), and it carries 26 en dashes. The
+  fine print now says families get the Agreement and the Handbook when their
+  dancer is accepted (the Director's intake page already says so of the
+  Handbook). Fix Exhibit A at the next contract revision, then post it.
+Not built: finding 5 (Back to /proseries/ lands at the top; a router change).
+Checks: build-css, build-routes, build-faq-jsonld (9 questions) in sync;
+check-classes-jsonld matches the live schedule; shoot.js ALL CLEAN on 8 routes
+at 1280 and 390; every age case and the faked submit re-run at 375px.
+
 ## Suggested fixes (not built)
 - 2: after `focus({ preventScroll: true })`, scroll the first bad field's label
   to just under the sticky chrome (topnav plus the chapter rail on ProSeries).

@@ -43,16 +43,17 @@
     return isNaN(d.getTime()) ? null : d;
   }
 
-  /* "4:45" — no meridiem. Every class on this schedule is a weeknight class;
-     "4:45 pm" is three characters nobody needs. Returns null for anything
-     unparseable so the caller leaves the time off rather than printing NaN. */
+  /* "4:45 pm". The meridiem used to be left off as obvious; a parent reading
+     literally does not guess (persona pass, 2026-10-31). A no-break space
+     keeps "pm" on its number. Returns null for anything unparseable so the
+     caller leaves the time off rather than printing NaN. */
   function timeLabel(t) {
     if (!t) return null;
     var m = String(t).match(/^(\d{1,2}):(\d{2})/);
     if (!m) return null;
     var h = Number(m[1]) % 12;
     if (h === 0) h = 12;
-    return h + ':' + m[2];
+    return h + ':' + m[2] + ' ' + (Number(m[1]) >= 12 ? 'pm' : 'am');
   }
 
   function money(cents) {
@@ -208,7 +209,15 @@
         item.appendChild(link);
         var when = document.createElement('span');
         when.className = 'dropin-when';
-        when.textContent = DAYS[d.getDay()].slice(0, 3) + ' ' + (timeLabel(r.start_time) || '');
+        // "Tue 4:45" plus a quieter "pm" (.dropin-mer), as the typed rows have it.
+        var clockParts = (timeLabel(r.start_time) || '').split(' ');
+        when.textContent = DAYS[d.getDay()].slice(0, 3) + ' ' + clockParts[0];
+        if (clockParts[1]) {
+          var mer = document.createElement('span');
+          mer.className = 'dropin-mer';
+          mer.textContent = clockParts[1];
+          when.appendChild(mer);
+        }
         var iso = String(r.date || r.occurrence_date).slice(0, 10);
         if (soon && iso > soon) {
           var starts = document.createElement('span');

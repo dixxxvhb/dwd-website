@@ -5305,6 +5305,12 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   opacity: .65;
   color: inherit !important;
 }
+/* "All times pm" (2026-10-31): said once per week instead of on every slot. */
+.td-h4-note {
+  margin-left: 1em;
+  font-weight: 500;
+  white-space: nowrap;
+}
 
 /* Track details — schedule blocks */
 #page-proseries .td-day-block {
@@ -11176,7 +11182,7 @@ html.menu-open .mob-cta { display: none !important; }
 }
 .dropin-row {
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr) auto;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
   column-gap: 16px;
   align-items: baseline;
   padding: 12px 0;
@@ -11230,8 +11236,16 @@ a.dropin-row:focus-visible .dropin-name {
   color: rgba(250, 243, 232, 0.72);
   margin-top: 2px;
 }
+/* "pm" after the time (2026-10-31): there so nobody has to guess, quieter
+   than the number so the column still reads as times. */
+.dropin-mer {
+  margin-left: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(250, 243, 232, 0.72);
+}
 @media (max-width: 480px) {
-  .dropin-row { grid-template-columns: 68px minmax(0, 1fr) auto; column-gap: 12px; }
+  .dropin-row { grid-template-columns: 90px minmax(0, 1fr) auto; column-gap: 12px; }
   .dropin-name { font-size: 20px; }
   .dropin-who { font-size: 14px; }
 }
