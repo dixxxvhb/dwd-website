@@ -1,5 +1,5 @@
 const puppeteer = require('C:/Users/bowle/Code/DWDC-Instagram-Posts/node_modules/puppeteer');
-const BASE = 'http://localhost:8790';
+const BASE = process.env.QA_BASE || 'http://localhost:8790';
 
 const probe = () => ({
   page: (document.querySelector('.page.active') || {}).id,

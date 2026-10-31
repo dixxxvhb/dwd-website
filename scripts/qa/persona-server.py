@@ -217,4 +217,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     print('persona server on http://localhost:%d (writes faked; /__qa/slow/on for the slow phone)' % PORT, flush=True)
-    http.server.ThreadingHTTPServer(('127.0.0.1', PORT), Handler).serve_forever()
+    class Server(http.server.ThreadingHTTPServer):
+        # The default backlog of 5 refuses connections when a sweep loads a
+        # page's assets in parallel (ERR_CONNECTION_REFUSED, 2026-10-31).
+        request_queue_size = 64
+        daemon_threads = True
+
+    Server(('127.0.0.1', PORT), Handler).serve_forever()

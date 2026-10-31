@@ -87,7 +87,11 @@ took findings 2 to 4, 6 and 12). Verified live the same evening.
   fine print now says families get the Agreement and the Handbook when their
   dancer is accepted (the Director's intake page already says so of the
   Handbook). Fix Exhibit A at the next contract revision, then post it.
-Not built: finding 5 (Back to /proseries/ lands at the top; a router change).
+Finding 5 fixed after that (Dixon: "Yes, fix it"): every history entry keeps its scroll place, and
+Back or Forward to another page, or across a chapter-rail #anchor, returns there (js/main.js
+"BACK KEEPS YOUR PLACE"). Found while fixing it, live since before today: Back after a chapter-rail
+jump (/proseries/#ps-cast) showed Home under the /proseries/ address; an emptied hash now routes
+by the path.
 Checks: build-css, build-routes, build-faq-jsonld (9 questions) in sync;
 check-classes-jsonld matches the live schedule; shoot.js ALL CLEAN on 8 routes
 at 1280 and 390; every age case and the faked submit re-run at 375px.

@@ -460,7 +460,21 @@
 
   // Listen for hash changes
   window.addEventListener('hashchange', function () {
+    // Back/Forward that already put the visitor back in their place (see
+    // BACK KEEPS YOUR PLACE): jumping to the anchor now would undo it.
+    if (placeKeptFor && placeKeptFor === window.location.href) { placeKeptFor = null; return; }
+    placeHref = window.location.href;
     var hash = window.location.hash.replace('#', '').split('?')[0];
+
+    // An emptied hash is not an unknown page: Back from a chapter jump
+    // (/proseries/#ps-cast to /proseries/) used to fall through to "go home"
+    // below and put Home under the ProSeries address. The path says where we
+    // are, and popstate has already shown it.
+    if (!hash) {
+      var here = routeFromPath() || 'home';
+      if (activePageId() !== 'page-' + here) showPage(here);
+      return;
+    }
 
     // Legacy redirects — old Performances anchors land on the Collective page now.
     if (legacyHashRedirects[hash]) {
@@ -1630,6 +1644,94 @@
   // /fullout, /dwdcon, a PDF, an external host — is left alone and navigates
   // normally, which is the point: this is an enhancement, not a router that
   // owns every link on the page.
+  // ── BACK KEEPS YOUR PLACE (2026-10-31) ──
+  // Every history entry remembers how far down its page you were, saved once
+  // scrolling stops and merged into whatever state the entry already carries
+  // (schedule.js marks its checkout entry). Back or Forward to a DIFFERENT
+  // page puts you back there instead of at the top: a parent who tapped the
+  // logo halfway through the ProSeries form came Back 6,000px above it
+  // (persona pass). Steps within one page (the checkout, chapter anchors)
+  // keep their own handling.
+  if (supportsPathRouting && 'scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+  var placeSaveTimer = null;
+  var placeKeptFor = null; // the URL whose popstate restored a place; its hashchange stands down
+
+  function savePlace() {
+    clearTimeout(placeSaveTimer);
+    try {
+      var st = window.history.state;
+      var y = Math.round(window.pageYOffset);
+      if (st && typeof st === 'object' && st.y === y) return;
+      var next = {};
+      if (st && typeof st === 'object') for (var k in st) next[k] = st[k];
+      next.y = y;
+      window.history.replaceState(next, '');
+    } catch (e) {}
+  }
+  if (supportsPathRouting) {
+    window.addEventListener('scroll', function () {
+      clearTimeout(placeSaveTimer);
+      placeSaveTimer = setTimeout(savePlace, 200);
+    }, { passive: true });
+  }
+
+  function activePageId() {
+    var p = document.querySelector('.page.active');
+    return p ? p.id : '';
+  }
+
+  // Same settle idea as scrollToAnchor: the page being returned to can still
+  // be growing (lazy images, reveals), so re-aim a few times, and stop the
+  // moment the visitor scrolls for themselves.
+  function restorePlace(y) {
+    if (settleTimer) { clearTimeout(settleTimer); settleTimer = null; }
+    if (y <= 0) {
+      try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch (e) { window.scrollTo(0, 0); }
+      return;
+    }
+    var cancelled = false;
+    function cancel() { cancelled = true; }
+    var evts = ['wheel', 'touchstart', 'pointerdown', 'keydown'];
+    evts.forEach(function (evt) { window.addEventListener(evt, cancel, { once: true, passive: true }); });
+    var waits = [0, 60, 120, 200, 300, 450, 650, 900];
+    var i = 0;
+    (function step() {
+      if (cancelled) return;
+      try { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); } catch (e) { window.scrollTo(0, y); }
+      i++;
+      if (i < waits.length) { settleTimer = setTimeout(step, waits[i]); return; }
+      settleTimer = null;
+      evts.forEach(function (evt) { window.removeEventListener(evt, cancel); });
+    })();
+  }
+
+  // After a popstate has shown its page: restore the saved place if the page
+  // changed, or if only the #anchor changed (Back from a chapter-rail jump).
+  // An entry with the same address on the same page is someone else's step
+  // (schedule.js's checkout closes itself and picks its own scroll), so it is
+  // left alone. Returns true when it restored, so the caller skips its anchor
+  // jump.
+  var placeHref = window.location.href; // the entry on screen, so popstate knows what it left
+  function keepPlace(fromPageId, state, leftHref) {
+    var y = state && typeof state.y === 'number' ? state.y : null;
+    if (y === null) return false;
+    var samePage = activePageId() === fromPageId;
+    var anchorMoved = String(leftHref || '').split('#')[1] !== window.location.href.split('#')[1];
+    if (samePage && !anchorMoved) return false;
+    placeKeptFor = window.location.href;
+    restorePlace(y);
+    return true;
+  }
+
+  // An in-page #anchor link (the ProSeries chapter rail) makes a new history
+  // entry; note where the visitor was first, so Back returns there.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (a && a.getAttribute('href').length > 1) savePlace();
+  }, true);
+
   if (supportsPathRouting) {
     document.addEventListener('click', function (e) {
       if (e.defaultPrevented) return;
@@ -1668,26 +1770,34 @@
         return;
       }
 
+      placeKeptFor = null;
+      savePlace(); // the page being left keeps where you were on it
       try { window.history.pushState({ route: route }, '', target); } catch (err) {}
+      placeHref = window.location.href;
       showPage(route);
       applyContactReason();
       if (frag) scrollToAnchor(frag);
     });
 
-    window.addEventListener('popstate', function () {
+    window.addEventListener('popstate', function (e) {
+      var from = activePageId();
+      var left = placeHref;
+      placeHref = window.location.href;
+      placeKeptFor = null;
       var hash = window.location.hash.replace('#', '').split('?')[0];
       if (hash) {
-        if (validPages.includes(hash)) { showPage(hash); return; }
+        if (validPages.includes(hash)) { showPage(hash); keepPlace(from, e.state, left); return; }
         var el = document.getElementById(hash);
         if (el) {
           var owning = el.closest('.page');
           var name = owning ? (owning.id || '').replace(/^page-/, '') : '';
           if (validPages.includes(name)) showPage(name);
-          scrollToAnchor(hash);
+          if (!keepPlace(from, e.state, left)) scrollToAnchor(hash);
           return;
         }
       }
       showPage(routeFromPath() || 'home');
+      keepPlace(from, e.state, left);
     });
   }
 
