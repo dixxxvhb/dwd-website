@@ -925,12 +925,15 @@
     return valid;
   }
 
-  // Clear per-field error the moment the user starts correcting it.
-  document.addEventListener('input', function (e) {
+  // Clear per-field error the moment the user starts correcting it. 'change'
+  // too: a select or a date picked from a wheel can report only that.
+  function clearOnFix(e) {
     if (e.target && e.target.classList && e.target.classList.contains('invalid')) {
       clearFieldError(e.target);
     }
-  }, true);
+  }
+  document.addEventListener('input', clearOnFix, true);
+  document.addEventListener('change', clearOnFix, true);
 
   // Inline success everywhere. The "You're on the list" modal this used to
   // raise for signup forms had exactly two triggers: the early-access form,

@@ -6198,6 +6198,16 @@ textarea:focus {
   .footer-links a:hover svg { transform: none; }
 }
 
+/* A form field that focus() scrolls to (the first gap on a failed submit)
+   lands below the fixed topnav AND the ProSeries chapter rail, so its label
+   and error stay in sight (persona pass 2026-10-31: the interest form's error
+   sat under both bars and the parent saw nothing). */
+form input,
+form select,
+form textarea {
+  scroll-margin-top: 160px;
+}
+
 /* ───── Anchor scroll offset for fixed topnav ─────
    scroll-margin-top so in-page anchor jumps clear the fixed topnav. */
 #audition,
@@ -10640,6 +10650,25 @@ html.menu-open .mob-cta { display: none !important; }
   font-family: var(--font-body);
   font-size: 0.85rem;
   margin-top: 0.75rem;
+}
+
+/* A field's own message, under that field (persona pass 2026-10-31). Empty,
+   it takes no room. */
+.sched-field-error {
+  color: #d4775f;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  margin: 0.4rem 0 0;
+}
+.sched-field-error:empty { display: none; }
+
+/* The studio address is a tap for directions. */
+.sched-know-list a,
+[data-sched-ty-address] a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .sched-fineprint {

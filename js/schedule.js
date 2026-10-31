@@ -48,6 +48,9 @@
   // when present so the threshold is not hardcoded in two places.
   var DROP_IN_BULK_MIN = 4;
   var EXCHANGE_ADDRESS = 'Exchange Dance Studio \u00b7 7409 Chancery Lane, Orlando, FL 32809';
+  // Tap for directions (persona pass 2026-10-31): the same search link the
+  // "What to know" address in index.html carries.
+  var EXCHANGE_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=Exchange+Dance+Studio%2C+7409+Chancery+Lane%2C+Orlando%2C+FL+32809';
 
   var DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
   var DAY_NAMES_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -96,7 +99,14 @@
   var elTyBulkNote = page.querySelector('[data-sched-ty-bulk-note]');
   var elTyAddress = page.querySelector('[data-sched-ty-address]');
 
-  if (elTyAddress) elTyAddress.textContent = EXCHANGE_ADDRESS;
+  if (elTyAddress) {
+    elTyAddress.textContent = '';
+    var tyMap = el('a', '', EXCHANGE_ADDRESS);
+    tyMap.href = EXCHANGE_MAPS_URL;
+    tyMap.target = '_blank';
+    tyMap.rel = 'noopener';
+    elTyAddress.appendChild(tyMap);
+  }
 
   var sb = window.__dwd_sb;
 
@@ -258,6 +268,7 @@
       label: [row.track_label, row.age_band, row.room].filter(Boolean).join(' \u00b7 '),
       age_band: row.age_band || null,
       start_time: row.start_time,
+      end_time: row.end_time || null,
       fee_cents: row.drop_in_fee_cents,
       bulk_fee_cents: (typeof row.drop_in_bulk_fee_cents === 'number') ? row.drop_in_bulk_fee_cents : null
     });
@@ -269,6 +280,54 @@
     var cart = readCart().filter(function (l) { return !(l.class_id === classId && l.occurrence_date === occDate); });
     writeCart(cart);
     return cart;
+  }
+
+  // ── Same-time clash (persona pass 2026-10-31) ──
+  // One dancer per order, so two classes that overlap on one date can't both
+  // be hers: Technique & Flexibility and Ballet both start Tuesday at 4:45,
+  // and the cart used to take (and charge) both. Lines saved before end_time
+  // was kept count as an hour long.
+  function minutesOf(t) {
+    var m = String(t || '').match(/^(\d{1,2}):(\d{2})/);
+    return m ? Number(m[1]) * 60 + Number(m[2]) : null;
+  }
+
+  function cartClash(row) {
+    var day = String(row.occurrence_date).slice(0, 10);
+    var s = minutesOf(row.start_time);
+    if (s == null) return null;
+    var e = minutesOf(row.end_time) || s + 60;
+    var cart = readCart();
+    for (var i = 0; i < cart.length; i++) {
+      var l = cart[i];
+      if (String(l.occurrence_date).slice(0, 10) !== day || l.class_id === row.class_id) continue;
+      var ls = minutesOf(l.start_time);
+      if (ls == null) continue;
+      var le = minutesOf(l.end_time) || ls + 60;
+      if (s < le && ls < e) return l;
+    }
+    return null;
+  }
+
+  function clashText(line) {
+    return 'Your cart already has ' + line.name + ' at ' + fmtTime(line.start_time) +
+      ' that day. One dancer can’t be in both. Booking a second dancer? Check out once for each.';
+  }
+
+  // A bare "Elite + Pro" read like a level a drop-in has to have (persona pass
+  // 2026-10-31); it is who the dancer joins. The full week keeps the bare label.
+  function trackWords(label) {
+    var t = String(label || '').replace(/\s+only$/i, '').trim();
+    if (!t) return '';
+    return /^all tracks$/i.test(t) ? 'All tracks' : 'With the ' + t + ' team';
+  }
+
+  // Rooms are Exchange's names ("Garage", "Studio A"); a first-timer has never
+  // seen "Garage" used as a room before the thank-you.
+  function roomWords(room) {
+    var r = String(room || '').trim();
+    if (!r) return '';
+    return /\b(room|studio)\b/i.test(r) ? r : r + ' room';
   }
 
   // The cart hit the threshold, so every line that has a bulk price takes it.
@@ -659,6 +718,11 @@
                 renderWeekNotice('Six classes at a time. Check out, then add more.');
                 return;
               }
+              var clash = cartClash(row);
+              if (clash) {
+                renderWeekNotice(clashText(clash));
+                return;
+              }
               cartAdd(row);
               renderNotice('');
               renderWeekNotice('');
@@ -838,7 +902,7 @@
       li.appendChild(top);
 
       li.appendChild(el('h2', 'finder-name', s.name));
-      var meta = [ref.track_label, ref.age_band, lengthLabel(ref.start_time, ref.end_time)]
+      var meta = [trackWords(ref.track_label), ref.age_band, lengthLabel(ref.start_time, ref.end_time)]
         .filter(Boolean).join(' · ');
       if (meta) li.appendChild(el('p', 'finder-meta', meta));
 
@@ -949,6 +1013,11 @@
     } else {
       if (readCart().length >= MAX_LINES) {
         setBlockNote(block, 'Six classes at a time. Check out, then add more.');
+        return;
+      }
+      var clash = cartClash(row);
+      if (clash) {
+        setBlockNote(block, clashText(clash));
         return;
       }
       cartAdd(row);
@@ -1102,10 +1171,47 @@
     elThankyou.hidden = true;
     elError.hidden = true;
     renderSummary();
+    // The phone's Back (or a swipe) used to leave /schedule/ from here, which
+    // from Instagram meant back to Instagram with the form lost (persona pass
+    // 2026-10-31). One history entry for the open checkout; Back closes it.
+    if (!checkoutInHistory) {
+      try {
+        history.pushState({ schedCheckout: true }, '', location.href);
+        checkoutInHistory = true;
+      } catch (e) {}
+    }
     // The cart bar sits at the bottom of a long list; without this a phone
     // lands on the footer with the form above the screen.
     jumpToTop(elCheckout.querySelector('h2'));
   }
+
+  var checkoutInHistory = false;
+
+  // Every in-page way out of checkout (the Back link, removing the last line,
+  // a class that closed) goes through history, so the entry openCheckout
+  // pushed never lingers for a second Back to land on.
+  function leaveCheckout() {
+    if (checkoutInHistory) { history.back(); return; }
+    closeCheckout();
+  }
+
+  window.addEventListener('popstate', function (e) {
+    if (!checkoutInHistory || (e.state && e.state.schedCheckout)) return;
+    checkoutInHistory = false;
+    if (!elCheckout.hidden) closeCheckout();
+  });
+
+  // Two tabs share one cart. The other tab's change repaints this one, so the
+  // Pay button never shows a total the order won't charge.
+  window.addEventListener('storage', function (e) {
+    if (e.key !== CART_KEY) return;
+    if (!elCheckout.hidden) {
+      if (!readCart().length) { leaveCheckout(); return; }
+      renderSummary();
+      return;
+    }
+    if (elThankyou.hidden) syncCart();
+  });
 
   function jumpToTop(focusEl) {
     var top = page.getBoundingClientRect().top + window.pageYOffset - 80;
@@ -1141,7 +1247,7 @@
       rm.addEventListener('click', function (e) {
         e.preventDefault();
         cartRemove(line.class_id, line.occurrence_date);
-        if (!readCart().length) { closeCheckout(); return; }
+        if (!readCart().length) { leaveCheckout(); return; }
         renderSummary();
       });
       right.appendChild(rm);
@@ -1215,7 +1321,7 @@
   }
 
   elCartCheckoutBtn.addEventListener('click', openCheckout);
-  elBack.addEventListener('click', function (e) { e.preventDefault(); closeCheckout(); });
+  elBack.addEventListener('click', function (e) { e.preventDefault(); leaveCheckout(); });
 
   // ── Submit ──
   elForm.addEventListener('submit', function (e) {
@@ -1237,17 +1343,25 @@
     checks.forEach(function (c) {
       var input = document.getElementById(c[0]);
       if (!input) return;
-      var v = input.value.trim();
-      var bad = !v || (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
-      if (bad) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
-      if (bad && !firstBad) { firstBad = input; firstMsg = c[1]; }
+      var msg = fieldProblem(input, c[1]);
+      if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+      if (msg && !firstBad) { firstBad = input; firstMsg = msg; }
     });
     var waiverEl = document.getElementById('sched-waiver');
     if (!firstBad && !waiverEl.checked) { firstBad = waiverEl; firstMsg = 'Check the waiver box to continue.'; }
+    // A cart from before the same-time check, or one another tab filled.
+    if (!firstBad) {
+      for (var ci = 0; ci < cart.length; ci++) {
+        var other = cartClash(cart[ci]);
+        if (other) {
+          firstBad = elPayBtn;
+          firstMsg = cart[ci].name + ' and ' + other.name + ' are at the same time. One dancer can’t be in both, so remove one.';
+          break;
+        }
+      }
+    }
     if (firstBad) {
-      elError.hidden = false;
-      elError.textContent = firstMsg;
-      firstBad.focus();
+      showFormError(firstBad, firstMsg);
       track('dropin-checkout:invalid');
       return;
     }
@@ -1270,6 +1384,9 @@
     elPayBtn.disabled = true;
     var prevLabel = elPayBtn.textContent;
     elPayBtn.textContent = 'One second\u2026';
+    // The free database can take 15 s or more when it is busy; a button that
+    // still says "One second" by then reads as frozen.
+    var slowTimer = setTimeout(function () { elPayBtn.textContent = 'Still working\u2026'; }, 6000);
 
     fetch(CHECKOUT_URL, {
       method: 'POST',
@@ -1281,6 +1398,7 @@
       body: JSON.stringify(body)
     }).then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
       .then(function (r) {
+        clearTimeout(slowTimer);
         if (r.ok && r.json && r.json.url) {
           track('dropin-checkout:ok');
           window.top.location.href = r.json.url;
@@ -1290,7 +1408,8 @@
         elPayBtn.disabled = false;
         elPayBtn.textContent = prevLabel;
         elError.hidden = false;
-        elError.textContent = (r.json && r.json.error) || 'Something went wrong. Try again.';
+        elError.removeAttribute('data-kind');
+        elError.textContent = familyError(r.json && r.json.error);
         // Past lines are pruned before checkout opens; if the server still
         // names one, drop it only when it can actually be matched.
         var bad = r.json && r.json.line;
@@ -1298,18 +1417,102 @@
           var before = readCart().length;
           if (cartRemove(bad.class_id, bad.occurrence_date).length < before) {
             renderNotice('That class closed since you added it, so it left your cart.');
-            if (!readCart().length) closeCheckout(); else renderSummary();
+            if (!readCart().length) leaveCheckout(); else renderSummary();
           }
         }
       })
       .catch(function () {
+        clearTimeout(slowTimer);
         track('dropin-checkout:err');
         elPayBtn.disabled = false;
         elPayBtn.textContent = prevLabel;
         elError.hidden = false;
+        elError.removeAttribute('data-kind');
         elError.textContent = "That didn't go through. Nothing was charged. Try again.";
       });
   });
+
+  // ── Form errors (persona pass 2026-10-31) ──
+  // A field's message sits under that field. It used to sit under Pay, which
+  // was off-screen once focus jumped to the first empty field, so a phone saw
+  // red boxes and no words. The waiver and cart messages stay under Pay,
+  // which is where the parent is looking when they show.
+  function fieldProblem(input, emptyMsg) {
+    var v = input.value.trim();
+    if (!v) return emptyMsg;
+    if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+      return "That email doesn't look right. The receipt goes there.";
+    }
+    if (input.id === 'sched-dancer-dob') {
+      var age = ageOn(v, toIso(new Date()));
+      // drop_in_order_create refuses outside 3 to 25; say so before the round trip.
+      if (age == null || age < 3 || age > 25) return "Check the dancer's date of birth.";
+    }
+    if (input.type === 'tel' && v.replace(/\D/g, '').length < 10) {
+      return 'Add the phone number with its area code, in case class moves.';
+    }
+    return '';
+  }
+
+  function fieldErrorSlot(input) {
+    var id = input.id + '-error';
+    var slot = document.getElementById(id);
+    if (!slot) {
+      slot = el('p', 'sched-field-error');
+      slot.id = id;
+      slot.setAttribute('role', 'alert');
+      (input.closest('.field') || input.parentElement).appendChild(slot);
+      var desc = input.getAttribute('aria-describedby') || '';
+      if (desc.split(' ').indexOf(id) === -1) input.setAttribute('aria-describedby', (desc + ' ' + id).trim());
+    }
+    return slot;
+  }
+
+  function clearFormErrors() {
+    elForm.querySelectorAll('.sched-field-error').forEach(function (p) { p.textContent = ''; });
+    elError.hidden = true;
+    elError.removeAttribute('data-kind');
+  }
+
+  function showFormError(target, msg) {
+    clearFormErrors();
+    if (target.matches && target.matches('.field input')) {
+      fieldErrorSlot(target).textContent = msg;
+    } else {
+      elError.hidden = false;
+      elError.textContent = msg;
+      elError.setAttribute('data-kind', target.id === 'sched-waiver' ? 'waiver' : 'cart');
+    }
+    if (target !== elPayBtn) target.focus();
+  }
+
+  // A message goes the moment its field is fixed, not on the next Pay.
+  function clearFixed(e) {
+    var t = e.target;
+    if (!t || !t.id) return;
+    if (t.id === 'sched-waiver') {
+      if (t.checked && elError.getAttribute('data-kind') === 'waiver') { elError.hidden = true; elError.removeAttribute('data-kind'); }
+      return;
+    }
+    var slot = document.getElementById(t.id + '-error');
+    if (slot && slot.textContent && !fieldProblem(t, slot.textContent)) {
+      slot.textContent = '';
+      t.removeAttribute('aria-invalid');
+    }
+  }
+  elForm.addEventListener('input', clearFixed);
+  elForm.addEventListener('change', clearFixed);
+
+  // A sentence written for families (drop_in_order_create's RAISE lines) comes
+  // through as it is. Anything else gets plain words: on 2026-10-31 a busy
+  // database's own "canceling statement due to statement timeout" reached the
+  // page. Nothing is charged before Stripe, so the line can say so.
+  function familyError(msg) {
+    var m = String(msg || '').trim();
+    var written = /^[A-Z]/.test(m) && /[.!?]$/.test(m) &&
+      !/statement|timeout|violates|constraint|relation|column|function|syntax|permission|deadlock|JWT|null value|ERROR/.test(m);
+    return written ? m : "We couldn't hold your spot just now. Nothing was charged. Try again in a minute.";
+  }
 
   // ── Return from Stripe ──
   // drop_in_order_public answers ONE row per order: status,
@@ -1340,7 +1543,7 @@
     lines.forEach(function (r) {
       var d = localDate(r.date);
       var li = el('li', 'sched-summary-line');
-      li.appendChild(el('span', '', DAY_NAMES_LONG[d.getDay()] + ' \u00b7 ' + shortDateLabel(d) + ' \u00b7 ' + timeRange(r.start_time, null).split(' ')[0] + ' \u00b7 ' + r.name + (r.room ? ' \u00b7 ' + r.room : '')));
+      li.appendChild(el('span', '', DAY_NAMES_LONG[d.getDay()] + ' \u00b7 ' + shortDateLabel(d) + ' \u00b7 ' + timeRange(r.start_time, null).split(' ')[0] + ' \u00b7 ' + r.name + (r.room ? ' \u00b7 ' + roomWords(r.room) : '')));
       elTyList.appendChild(li);
     });
     renderBulkNote(elTyBulkNote, (order && order.bulk_applied) ? 'Four or more dates in one order. Each one costs less.' : '');
