@@ -10754,6 +10754,11 @@ html.menu-open .mob-cta { display: none !important; }
   margin: 1rem 0;
 }
 
+/* The age confirm under the date of birth (2026-10-31): shown only when a
+   cart class falls outside the dancer's age, so [hidden] has to beat flex. */
+.sched-age-ok { margin: 0.6rem 0 0; }
+.sched-age-ok[hidden] { display: none; }
+
 .sched-waiver input {
   flex-shrink: 0;
   width: 20px;

@@ -107,6 +107,8 @@
   var elBulkNote = page.querySelector('[data-sched-bulk-note]');
   var elForm = page.querySelector('[data-sched-form]');
   var elDob = page.querySelector('#sched-dancer-dob');
+  var elAgeOk = page.querySelector('[data-sched-age-ok]');
+  var elAgeOkBox = page.querySelector('#sched-age-ok');
   var elAgeNote = page.querySelector('[data-sched-age-note]');
   var elPayBtn = page.querySelector('[data-sched-pay-btn]');
   var elError = page.querySelector('[data-sched-error]');
@@ -135,6 +137,9 @@
 
   var currentWeekOffset = 0;
   var currentRows = [];
+  // The Monday and Sunday (ISO) of the week currentRows belongs to.
+  var shownWeekFrom = '';
+  var shownWeekTo = '';
   var droppedNotice = '';
 
   // The week grid loads on first open. gridReady: currentRows is a real
@@ -643,11 +648,22 @@
     renderError();
   }
 
+  // The empty week line. Thanksgiving week's mornings are all on the menu
+  // card, so that week points up at it instead of reading as closed.
+  function emptyWeekText() {
+    for (var i = 0; i < TG_DATES.length; i++) {
+      if (TG_DATES[i] >= shownWeekFrom && TG_DATES[i] <= shownWeekTo && !elTg.hidden) {
+        return 'Evening classes are off this week. The masterclasses are above.';
+      }
+    }
+    return 'No classes this week.';
+  }
+
   function renderRows(rows) {
     elList.innerHTML = '';
 
     if (!rows.length) {
-      var p0 = el('p', 'sched-empty-line', 'No classes this week.');
+      var p0 = el('p', 'sched-empty-line', emptyWeekText());
       elList.appendChild(p0);
       return;
     }
@@ -655,7 +671,7 @@
     var visible = upcomingRows(rows);
 
     if (!visible.length) {
-      elList.appendChild(el('p', 'sched-empty-line', 'No classes this week.'));
+      elList.appendChild(el('p', 'sched-empty-line', emptyWeekText()));
       return;
     }
 
@@ -822,6 +838,8 @@
           : 'Nothing open to book until the week of ' + shortDateLabel(mondayOf(offset)) + '.');
       }
       currentRows = rows;
+      shownWeekFrom = fromIso;
+      shownWeekTo = toIso_;
       gridReady = true;
       applyBulkMin(all);
       var pruned = pruneCart(all);
@@ -1423,10 +1441,12 @@
   }
 
   // ── Age note (2026-10-30) ──
-  // One soft line under the date of birth when the dancer's age on a cart
-  // class's date falls outside that class's band ("ages 10 and up"), for the
-  // first such class. It never blocks Pay, and it is rewritten whenever the
-  // date or the cart changes. Bands it reads: "ages 5 to 9", "ages 10 and
+  // One line under the date of birth when the dancer's age on a cart class's
+  // date falls outside that class's band ("ages 10 and up"), for the first
+  // such class, with a "Yes, book it anyway" box Pay waits on (Dixon,
+  // 2026-10-31: warn them and make sure they want it; nobody checks at
+  // class). It is rewritten, and the box cleared, whenever the date or the
+  // cart changes. Bands it reads: "ages 5 to 9", "ages 10 and
   // up", "ages 9 and under" (the Thanksgiving seatings). Anything else,
   // "all ages" included, says nothing.
   function parseBand(band) {
@@ -1467,8 +1487,8 @@
       var age = range ? ageOn(dobIso, cart[i].date) : null;
       if (age == null) continue;
       if (age < range.min || (range.max != null && age > range.max)) {
-        return cart[i].name + ' is ' + band.charAt(0).toLowerCase() + band.slice(1) +
-          '. Still want it? Dixon will check at class.';
+        return 'Heads up: ' + cart[i].name + ' is for ' + band.charAt(0).toLowerCase() + band.slice(1) +
+          ', and your dancer will be ' + age + ' that day. Still want it?';
       }
     }
     return '';
@@ -1477,7 +1497,12 @@
   function renderAgeNote() {
     if (!elAgeNote || !elDob) return;
     var text = ageNoteText(readCart(), elDob.value);
-    if (elAgeNote.textContent !== text) elAgeNote.textContent = text;
+    if (elAgeNote.textContent === text) return;
+    elAgeNote.textContent = text;
+    if (elAgeOk) {
+      elAgeOk.hidden = !text;
+      if (elAgeOkBox) elAgeOkBox.checked = false;
+    }
   }
 
   if (elDob) {
@@ -1512,6 +1537,9 @@
       if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
       if (msg && !firstBad) { firstBad = input; firstMsg = msg; }
     });
+    if (!firstBad && elAgeOk && !elAgeOk.hidden && elAgeOkBox && !elAgeOkBox.checked) {
+      firstBad = elAgeOkBox; firstMsg = 'Check "Yes, book it anyway" to keep a class outside the age range.';
+    }
     var waiverEl = document.getElementById('sched-waiver');
     if (!firstBad && !waiverEl.checked) { firstBad = waiverEl; firstMsg = 'Check the waiver box to continue.'; }
     // A cart from before the same-time check, or one another tab filled.

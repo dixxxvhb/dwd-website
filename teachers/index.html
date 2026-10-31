@@ -2747,12 +2747,17 @@
                 <input type="text" id="sched-dancer-name" name="dancer_name" autocomplete="off" required>
               </div>
               <!-- The age note (2026-10-30): js/schedule.js writes it when the
-                   date of birth falls outside a cart class's age band. It never
-                   blocks Pay. Always rendered (empty) so the live region speaks. -->
+                   date of birth falls outside a cart class's age band, and shows
+                   the "Yes, book it anyway" box Pay then waits on (2026-10-31).
+                   Always rendered (empty) so the live region speaks. -->
               <div class="field">
                 <label for="sched-dancer-dob">Dancer's date of birth</label>
                 <input type="date" id="sched-dancer-dob" name="dancer_dob" aria-describedby="sched-dob-note" required>
                 <p class="sched-age-note" id="sched-dob-note" data-sched-age-note aria-live="polite"></p>
+                <label class="sched-waiver sched-age-ok tap-44" data-sched-age-ok hidden>
+                  <input type="checkbox" id="sched-age-ok" name="age_ok">
+                  <span>Yes, book it anyway</span>
+                </label>
               </div>
               <div class="field">
                 <label for="sched-payer-name">Your name</label>
