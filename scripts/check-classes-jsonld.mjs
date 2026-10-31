@@ -12,6 +12,12 @@
  * and compares each #dropin-<slug> node's day, start, end, price and 4+ price.
  * Exit 1 on any drift, missing slot or extra node. Added 2026-09-25.
  * When it fails: fix the node in index.html (then build-routes) and llms.txt.
+ *
+ * Skips the Thanksgiving week 2026 menu classes (one-date morning
+ * masterclasses booked from the card on /schedule/, described by Event nodes,
+ * not weekly Course nodes). Same rule as js/schedule.js isTgRow, read from the
+ * card's markup in index.html: a row on a data-tg-date day that starts before
+ * data-tg-before. Once the card is deleted, nothing is skipped.
  */
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -45,9 +51,16 @@ async function window(from, to) {
   return res.json();
 }
 
+const tgCard = (html.match(/<section\b[^>]*\bdata-tg\b[^>]*>/) || [])[0] || '';
+const tgBefore = (tgCard.match(/\bdata-tg-before="(\d{2}:\d{2})"/) || [])[1];
+const tgDates = tgBefore ? [...html.matchAll(/\bdata-tg-date="(\d{4}-\d{2}-\d{2})"/g)].map((m) => m[1]) : [];
+const isMenuRow = (r) => tgDates.includes(String(r.date).slice(0, 10)) && String(r.start_time) < tgBefore;
+
 const today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0]);
-const rows = [...(await window(today, addDays(today, 20))), ...(await window(addDays(today, 21), addDays(today, 41)))]
+const openRows = [...(await window(today, addDays(today, 20))), ...(await window(addDays(today, 21), addDays(today, 41)))]
   .filter((r) => r.drop_in_open);
+const rows = openRows.filter((r) => !isMenuRow(r));
+const menuSkipped = openRows.length - rows.length;
 
 const live = {};
 for (const r of rows) {
@@ -74,4 +87,5 @@ if (problems.length) {
   console.error('Fix the #dropin-* nodes in index.html (then node scripts/build-routes.mjs) and llms.txt.');
   process.exit(1);
 }
-console.log(`Drop-in JSON-LD matches the live schedule (${nodes.length} classes).`);
+console.log(`Drop-in JSON-LD matches the live schedule (${nodes.length} classes).` +
+  (menuSkipped ? ` Skipped ${menuSkipped} open Thanksgiving menu ${menuSkipped === 1 ? 'class' : 'classes'}.` : ''));
