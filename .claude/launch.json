@@ -6,6 +6,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "8790", "-d", "C:/Users/bowle/Code/dwd-website"],
       "port": 8790
+    },
+    {
+      "name": "dwd-website-personas",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-u", "C:/Users/bowle/Code/dwd-website/scripts/qa/persona-server.py", "8792"],
+      "port": 8792
     }
   ]
 }

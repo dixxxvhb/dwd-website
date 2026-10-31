@@ -15,6 +15,32 @@ python -m http.server 8790 -d C:/Users/bowle/Code/dwd-website
 Every script unregisters the service worker and clears caches before loading, or
 you end up testing the last deploy instead of your working tree.
 
+## persona-server.py
+
+The qa-tester skill's persona pass, without touching real families. Serves the
+site like GitHub Pages (gzip, no cache, no-op service worker) and injects a
+fetch wrapper ahead of supabase-js on every page: reads go to live Supabase,
+every insert and the `drop-in-checkout` call are faked, anything else is
+refused, and each faked write prints `QA-WRITE` in the server log. Pay lands on
+`/__qa/stripe`, which shows what the site would have sent.
+
+```bash
+python -u scripts/qa/persona-server.py 8792
+```
+
+Launch config `dwd-website-personas` (both launch.json files) starts it for the
+browser pane. `/__qa/slow/on` and `/__qa/slow/off` toggle a Fast 3G phone.
+Check `window.__qa` (reads, writes, refused) before trusting a run. Unlike a
+page-level wrapper, it survives reloads and full navigations.
+
+The browser pane works here as long as you know its hidden-pane habits: CSS
+reveal animations freeze mid-way (run
+`document.getAnimations().forEach(a => { try { a.finish() } catch (e) {} })`
+before a screenshot), smooth scrolls and timer-driven settling crawl (wait, then
+re-read), screenshots can lag the DOM, and there are no paint timings. Tap by
+`ref`, not coordinates, and read the DOM for the truth. Record:
+docs/audits/2026-10-31-persona-pass-site.md.
+
 ## shoot.js
 
 Full sweep. Loads every route at 1280 and 390 and fails on console errors,
