@@ -23,11 +23,11 @@ Button states per seating: no class or not open for drop-in = "Reservations open
 
 ## Before this can go live (Dixon)
 1. DONE (2026-10-31): the seven bookable Director classes exist, created as one-date `dance_classes` (program proseries, Warehouse room). `public_site_schedule` returns exactly these seven that week, sorted Tue 10:00 and 12:00, Wed 10:00 and 11:30, Fri 10:00, 11:00 and 12:00, with public names like "Jazz with Tori Ugalde", age labels, and fees $20 or $15 (multi-buy $17.50 or $12.50, the same as the regular drop-ins). They are CLOSED for booking (`drop_in_allowed` false) until Dixon says open, so every seat reads "Reservations open soon" until then.
-2. Prices (Dixon, 2026-10-31, tentative): Tue jazz $20, Tue musical theatre $15, both Wed seatings $20, both Fri jazz funk seatings $15, Fri stretch & strengthen $15. They live on the Director classes, not in this repo.
+2. Prices (Dixon, 2026-10-31): Tue jazz $20, Tue musical theatre $15, both Wed seatings $20, both Fri jazz funk seatings $15, Fri stretch & strengthen $15. They live on the Director classes, not in this repo.
 3. No doubling on family schedules: the families' app doesn't show these classes, so the Director's three MASTERCLASS calendar events (Nov 24, 25 and 27, event_type masterclass, no class_id, set on 10-31 to 10:00 to 13:00 with titles and seating descriptions) stay the family view.
-4. Open the seven classes for drop-in (Dixon's call) when the menu goes live.
+4. Open the seven classes for drop-in (Dixon's call) and merge this branch the same morning, with the menu post. Main has no menu yet: open rows on main would show as plain drop-ins (now.js lists every open row), and `scripts/check-classes-jsonld.mjs`, which reads only open rows, would flag them as weekly classes missing from the JSON-LD, so exclude these one-date classes there (or add Course nodes) in the same change.
 5. DONE (checked 2026-10-30): Dixon cancelled that week's evening classes in the Director; `public_site_schedule` had no rows Nov 23 to 29, so the card's "Evening classes are off" line is true. Monday's rehearsal is internal and stays off the site.
-6. Still open: whether ProSeries families pay for these or get them included. That's a pricing call, not code.
+6. DONE (Dixon, 2026-10-31): everyone pays, ProSeries families included. They book through the same cart as anyone else.
 7. If the lineup changes, edit the course text in index.html (the `tg-course` blocks; keep `data-tg-seat` numbered in time order per morning), update `TG_DEMO` in js/schedule.js to match, and run build-routes.
 
 ## QA
