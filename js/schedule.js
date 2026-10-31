@@ -1166,11 +1166,18 @@
     note.hidden = true;
     if (cartHas(row.class_id, row.occurrence_date)) {
       cartRemove(row.class_id, row.occurrence_date);
-    } else if (cartAdd(row) === 'full') {
-      note.textContent = 'Six classes at a time. Check out, then add more.';
-      note.hidden = false;
-      clearCartBar(note);
-      return;
+    } else {
+      // Same order as the chips and the week grid: the six-class cap, then
+      // the same-time check (persona pass 2026-10-31).
+      var full = readCart().length >= MAX_LINES;
+      var clash = full ? null : cartClash(row);
+      if (full || clash) {
+        note.textContent = full ? 'Six classes at a time. Check out, then add more.' : clashText(clash);
+        note.hidden = false;
+        clearCartBar(note);
+        return;
+      }
+      cartAdd(row);
     }
     renderNotice('');
     syncCart();
@@ -1224,7 +1231,11 @@
 
     Promise.all([fetchWeek(a0, a1), fetchWeek(b0, b1)]).then(function (res) {
       if (seq !== finderSeq) return;
-      var rows = (res[0] || []).concat(res[1] || [], tgDemoRows());
+      var rows = (res[0] || []).concat(res[1] || []);
+      // ?tg=demo stands in for the real menu classes (made closed 2026-10-31),
+      // or the seats would pair the two up.
+      var demo = tgDemoRows();
+      if (demo.length) rows = rows.filter(function (r) { return !isTgRow(r); }).concat(demo);
       applyBulkMin(rows);
       setTgRows(rows);
       var pruned = pruneCart(rows);
