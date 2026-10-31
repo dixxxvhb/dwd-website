@@ -53,11 +53,11 @@
   var EXCHANGE_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=Exchange+Dance+Studio%2C+7409+Chancery+Lane%2C+Orlando%2C+FL+32809';
 
   // Thanksgiving week 2026: the menu at the top of the page. Each morning has
-  // two seatings (10 to 11:30, 11:30 to 1), each its own Director class: the
-  // classes on a date that start before 1pm, earliest first, fill the course's
-  // seats in order. The Director class is the source of truth for price and
-  // spots, so the cart and checkout need nothing new. After TG_LAST the block
-  // hides.
+  // its own number of seatings (Tue 2, Wed 2, Fri 3), each its own Director
+  // class: the classes on a date that start before 1pm, earliest first, fill
+  // that morning's data-tg-seat 0, 1, 2... in order. The Director class is the
+  // source of truth for price and spots, so the cart and checkout need nothing
+  // new. After TG_LAST the block hides.
   var TG_DATES = ['2026-11-24', '2026-11-25', '2026-11-27'];
   var TG_LAST = '2026-11-27';
 
@@ -1130,21 +1130,28 @@
     syncCart();
   });
 
-  // Localhost only: ?tg=demo fills the six seatings with open rows (no price,
-  // so they read Price TBA; Wednesday's second seating is full) to see the
-  // menu without Director classes. Never reaches checkout: these class_ids do
-  // not exist on the server.
+  // Localhost only: ?tg=demo fills the seven seatings with open rows to see
+  // the menu without Director classes. Prices are Dixon's tentative 10-31
+  // numbers (Tuesday's two-hour jazz and the 1.5 hour seatings $20, the
+  // one-hour classes $15) and Wednesday's second seating is full. Each
+  // morning's rows go in latest first so the start-time sort is exercised.
+  // Never reaches checkout: these class_ids do not exist on the server.
+  var TG_DEMO = {
+    '2026-11-24': [['10:00:00', '12:00:00', 'Jazz', null, 2000], ['12:00:00', '13:00:00', 'Musical Theatre', null, 1500]],
+    '2026-11-25': [['10:00:00', '11:30:00', 'Contemporary Fusion', 'ages 9 and under', 2000], ['11:30:00', '13:00:00', 'Contemporary Fusion', 'ages 10 and up', 2000]],
+    '2026-11-27': [['10:00:00', '11:00:00', 'Jazz Funk', 'ages 9 and under', 1500], ['11:00:00', '12:00:00', 'Jazz Funk', 'ages 10 and up', 1500], ['12:00:00', '13:00:00', 'Stretch & Strengthen', null, 1500]]
+  };
   function tgDemoRows() {
     if (!/^(localhost|127\.)/.test(location.hostname)) return [];
     if (new URLSearchParams(location.search).get('tg') !== 'demo') return [];
     var out = [];
     TG_DATES.forEach(function (d) {
-      [['10:00:00', '11:30:00'], ['11:30:00', '13:00:00']].forEach(function (t, i) {
-        out.push({
+      (TG_DEMO[d] || []).forEach(function (s, i) {
+        out.unshift({
           class_id: 'tg-demo-' + d + '-' + i, occurrence_date: d, date: d,
-          start_time: t[0], end_time: t[1], name: 'Thanksgiving masterclass',
-          track_label: null, age_band: null, room: null,
-          drop_in_open: true, drop_in_fee_cents: null, spots_left: (d === '2026-11-25' && i === 1) ? 0 : 20
+          start_time: s[0], end_time: s[1], name: s[2],
+          track_label: null, age_band: s[3], room: null,
+          drop_in_open: true, drop_in_fee_cents: s[4], spots_left: (d === '2026-11-25' && i === 1) ? 0 : 20
         });
       });
     });
