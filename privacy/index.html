@@ -2354,8 +2354,13 @@
                own Director class through the same cart and checkout as the
                chips below; until that class exists with drop-in open, its
                button reads "Reservations open soon". schedule.js hides the
-               whole block after Nov 27. Plan: docs/plans/2026-10-28-thanksgiving-menu.md -->
-          <section class="tg" data-tg aria-labelledby="tg-title">
+               whole block after Nov 27. Plan: docs/plans/2026-10-28-thanksgiving-menu.md
+               This card is also the rule: a class on one of its data-tg-date
+               days that starts before data-tg-before is a menu class, so
+               js/schedule.js (class list, week grid), js/now.js (DROP IN
+               panel) and scripts/check-classes-jsonld.mjs all leave it out of
+               the weekly lists. Delete the card and the rule goes with it. -->
+          <section class="tg" data-tg data-tg-before="13:00" aria-labelledby="tg-title">
             <div class="tg-card">
               <img class="tg-crest" src="/images/logos/v3/dwdPS-compact-transparent.svg" width="84" height="84" alt="dwdPROSERIES" decoding="async">
               <p class="tg-house">Dance With Dixon</p>

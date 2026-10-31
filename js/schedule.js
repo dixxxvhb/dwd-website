@@ -58,8 +58,17 @@
   // that morning's data-tg-seat 0, 1, 2... in order. The Director class is the
   // source of truth for price and spots, so the cart and checkout need nothing
   // new. After TG_LAST the block hides.
-  var TG_DATES = ['2026-11-24', '2026-11-25', '2026-11-27'];
-  var TG_LAST = '2026-11-27';
+  // The dates and the cutoff are read from the card itself (data-tg-date on
+  // each morning, data-tg-before on the section), the one rule js/now.js and
+  // scripts/check-classes-jsonld.mjs read too. No card, no menu rows.
+  var elTg = page.querySelector('[data-tg]');
+  var TG_BEFORE = (elTg && elTg.getAttribute('data-tg-before')) || '';
+  var TG_DATES = elTg && TG_BEFORE
+    ? Array.prototype.map.call(elTg.querySelectorAll('[data-tg-date]'), function (n) {
+        return n.getAttribute('data-tg-date');
+      }).sort()
+    : [];
+  var TG_LAST = TG_DATES.length ? TG_DATES[TG_DATES.length - 1] : '';
 
   var DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
   var DAY_NAMES_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -794,10 +803,15 @@
       if (todayIso > rpcFromIso) rpcFromIso = todayIso;
     }
 
-    fetchWeek(rpcFromIso, toIso_).then(function (rows) {
+    fetchWeek(rpcFromIso, toIso_).then(function (all) {
       // A slower answer for a week the visitor already paged past must not
       // paint its rows under the newer week's label.
       if (seq !== loadSeq) return;
+      // The Thanksgiving menu's classes are booked from the card at the top,
+      // so the week leaves them out (nothing shows twice, and a week holding
+      // only menu classes is not where the first load stops). The cart is
+      // still checked against every row.
+      var rows = all.filter(function (r) { return !isTgRow(r); });
       if (auto && offset < MAX_WEEK_OFFSET && !bookableRows(rows).length) {
         loadWeek(offset + 1, true);
         return;
@@ -809,10 +823,11 @@
       }
       currentRows = rows;
       gridReady = true;
-      applyBulkMin(rows);
-      var pruned = pruneCart(rows);
+      applyBulkMin(all);
+      var pruned = pruneCart(all);
       renderCartBar();
       paintChips();
+      paintTg();
       if (pruned.dropped.length) {
         renderNotice(pruned.dropped[0] + ' closed since you added it, so it left your cart.');
       }
@@ -1043,11 +1058,13 @@
   });
 
   // ── Thanksgiving menu ──
-  var elTg = page.querySelector('[data-tg]');
   var tgRowsByDate = {};
 
+  // A menu class: on one of the card's dates, starting before its cutoff
+  // ("10:00:00" < "13:00"). Kept out of the class list and the week grid.
   function isTgRow(r) {
-    return TG_DATES.indexOf(String(r.date).slice(0, 10)) !== -1 && String(r.start_time) < '13';
+    return !!r && TG_DATES.indexOf(String(r.date).slice(0, 10)) !== -1 &&
+      String(r.start_time) < TG_BEFORE;
   }
 
   function setTgRows(rows) {

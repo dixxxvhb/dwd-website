@@ -5,7 +5,8 @@
 
    Two sources:
      1. DROP IN   — public_site_schedule(today, today+20), rows where
-                    drop_in_open. Every weekly drop-in slot is listed.
+                    drop_in_open. Every weekly drop-in slot is listed
+                    (not the Thanksgiving menu's one-date classes).
                     js/tracks.js reuses the same read
                     (window.__dwd_schedule21) for the track weeks.
      2. CHAIRS    — window.DWD_SEASON (js/season.js owns those numbers).
@@ -129,18 +130,39 @@
     return p.year + '-' + p.month + '-' + p.day + ' ' + (p.hour === '24' ? '00' : p.hour) + ':' + p.minute;
   }
 
+  /* Thanksgiving week 2026: the seven morning masterclasses are one-date
+     classes booked from the menu card on /schedule/, so they are not weekly
+     slots and their ?class= slugs lead nowhere. Same rule as js/schedule.js
+     isTgRow and scripts/check-classes-jsonld.mjs, read from the card itself
+     (every route shell carries it): a class on one of its data-tg-date days
+     that starts before its data-tg-before time. No card, nothing left out. */
+  function menuRule() {
+    var card = document.querySelector('[data-tg]');
+    var before = card && card.getAttribute('data-tg-before');
+    if (!before) return function () { return false; };
+    var dates = Array.prototype.map.call(card.querySelectorAll('[data-tg-date]'), function (n) {
+      return n.getAttribute('data-tg-date');
+    });
+    return function (r) {
+      return dates.indexOf(String(r.date || r.occurrence_date).slice(0, 10)) !== -1 &&
+        String(r.start_time) < before;
+    };
+  }
+
   function renderDropIn(rows) {
     var nowStamp = nyNowStamp();
     var today = nyToday();
+    var isMenuRow = menuRule();
     /* The day a class actually runs is `date`; occurrence_date is the roll's
        key and differs when a class moved. Started and full classes are not
-       for sale, so they never appear. */
+       for sale, so they never appear, and nor do the Thanksgiving menu's. */
     function key(r) {
       return String(r.date || r.occurrence_date).slice(0, 10) + ' ' + String(r.start_time || '').slice(0, 5);
     }
     var open = (rows || []).filter(function (r) {
       if (!r || !r.drop_in_open || !(r.date || r.occurrence_date)) return false;
       if (r.spots_left === 0) return false;
+      if (isMenuRow(r)) return false;
       return !nowStamp || key(r) >= nowStamp;
     });
     if (!open.length) return; // static fallback stands
