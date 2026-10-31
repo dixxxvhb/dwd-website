@@ -16,6 +16,10 @@ log is the proof nothing went out.
 /__qa/slow/on and /__qa/slow/off toggle a slow phone (about Fast 3G: 560 ms per
 request, 180 KB/s, Supabase reads held 1.8 s). Nothing is cached, so every
 persona arrives as a first-time visitor. sw.js is a no-op here.
+
+The page a family lands on after Stripe: put a paid order (drop_in_order_public's
+one-row shape) in sessionStorage.qa_order, then open /schedule/?order=qa&t=qa;
+the fake answers drop_in_order_public with it instead of asking the database.
 """
 import gzip
 import http.server
@@ -56,6 +60,14 @@ FAKE_JS = r"""(function () {
     if (url.indexOf(SB) === -1) return real(input, init);
     var path = url.split(SB)[1].split('?')[0];
     var hold = slow ? 1800 : 0;
+    var cannedOrder = null;
+    try { cannedOrder = sessionStorage.getItem('qa_order'); } catch (e) {}
+    if (cannedOrder && /\/rpc\/drop_in_order_public$/.test(path)) {
+      qa.reads++;
+      return wait(hold + 200).then(function () {
+        return new Response(cannedOrder, { status: 200, headers: { 'Content-Type': 'application/json' } });
+      });
+    }
     if (method === 'GET' || method === 'HEAD' || READ_RPC.test(path)) {
       qa.reads++;
       return wait(hold).then(function () { return real(input, init); });
