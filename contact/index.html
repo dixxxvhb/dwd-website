@@ -2359,8 +2359,8 @@
 
         <div class="sched-main" data-sched-main>
           <!-- Thanksgiving week 2026 (Nov 23 to 27): the menu from the Instagram
-               post, with a seat per morning. Each course books the Director
-               class on its date through the same cart and checkout as the
+               post, seven seatings over three mornings. Each seating books its
+               own Director class through the same cart and checkout as the
                chips below; until that class exists with drop-in open, its
                button reads "Reservations open soon". schedule.js hides the
                whole block after Nov 27. Plan: docs/plans/2026-10-28-thanksgiving-menu.md -->
@@ -2378,45 +2378,58 @@
               <div class="tg-orn" aria-hidden="true"></div>
 
               <ol class="tg-courses">
+                <!-- Seats are numbered per morning in time order (0, 1, 2):
+                     schedule.js fills them with that date's Director classes
+                     that start before 1pm, earliest first. -->
                 <li class="tg-course" data-tg-date="2026-11-24">
                   <p class="tg-no">Tuesday &middot; November 24</p>
-                  <h3 class="tg-dish">Jazz</h3>
-                  <p class="tg-teacher">Ms. Tori</p>
-                  <div class="tg-seats">
-                    <div class="tg-seat" data-tg-seat="0">
-                      <p class="tg-when">10am to 11:30</p>
-                      <p class="tg-what">First seating</p>
-                      <p class="tg-who">ages 9 and under</p>
-                      <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:tue-1" disabled>Reservations open soon</button></div>
-                      <p class="tg-note" data-tg-note role="status" hidden></p>
+                  <div class="tg-classes tg-classes--pair">
+                    <div class="tg-class">
+                      <h3 class="tg-dish">Jazz</h3>
+                      <p class="tg-teacher">Tori Ugalde</p>
+                      <div class="tg-seats">
+                        <div class="tg-seat" data-tg-seat="0">
+                          <p class="tg-when">10:00 to 12:00</p>
+                          <p class="tg-who">all ages</p>
+                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:tue-1" disabled>Reservations open soon</button></div>
+                          <p class="tg-note" data-tg-note role="status" hidden></p>
+                        </div>
+                      </div>
                     </div>
-                    <div class="tg-seat" data-tg-seat="1">
-                      <p class="tg-when">11:30 to 1pm</p>
-                      <p class="tg-what">Second seating</p>
-                      <p class="tg-who">ages 10 and up</p>
-                      <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:tue-2" disabled>Reservations open soon</button></div>
-                      <p class="tg-note" data-tg-note role="status" hidden></p>
+                    <div class="tg-class">
+                      <h3 class="tg-dish">Musical Theatre</h3>
+                      <p class="tg-teacher">Dixon Bowles</p>
+                      <div class="tg-seats">
+                        <div class="tg-seat" data-tg-seat="1">
+                          <p class="tg-when">12:00 to 1:00</p>
+                          <p class="tg-who">all ages</p>
+                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:tue-2" disabled>Reservations open soon</button></div>
+                          <p class="tg-note" data-tg-note role="status" hidden></p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </li>
                 <li class="tg-course" data-tg-date="2026-11-25">
                   <p class="tg-no">Wednesday &middot; November 25</p>
-                  <h3 class="tg-dish">Contemporary Fusion</h3>
-                  <p class="tg-teacher">Megan Montgomery</p>
-                  <div class="tg-seats">
-                    <div class="tg-seat" data-tg-seat="0">
-                      <p class="tg-when">10am to 11:30</p>
-                      <p class="tg-what">First seating</p>
-                      <p class="tg-who">ages 9 and under</p>
-                      <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:wed-1" disabled>Reservations open soon</button></div>
-                      <p class="tg-note" data-tg-note role="status" hidden></p>
-                    </div>
-                    <div class="tg-seat" data-tg-seat="1">
-                      <p class="tg-when">11:30 to 1pm</p>
-                      <p class="tg-what">Second seating</p>
-                      <p class="tg-who">ages 10 and up</p>
-                      <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:wed-2" disabled>Reservations open soon</button></div>
-                      <p class="tg-note" data-tg-note role="status" hidden></p>
+                  <div class="tg-classes">
+                    <div class="tg-class">
+                      <h3 class="tg-dish">Contemporary Fusion</h3>
+                      <p class="tg-teacher">Megan Montgomery</p>
+                      <div class="tg-seats">
+                        <div class="tg-seat" data-tg-seat="0">
+                          <p class="tg-when">10:00 to 11:30</p>
+                          <p class="tg-who">ages 9 and under</p>
+                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:wed-1" disabled>Reservations open soon</button></div>
+                          <p class="tg-note" data-tg-note role="status" hidden></p>
+                        </div>
+                        <div class="tg-seat" data-tg-seat="1">
+                          <p class="tg-when">11:30 to 1:00</p>
+                          <p class="tg-who">ages 10 and up</p>
+                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:wed-2" disabled>Reservations open soon</button></div>
+                          <p class="tg-note" data-tg-note role="status" hidden></p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </li>
@@ -2426,21 +2439,36 @@
                 </li>
                 <li class="tg-course" data-tg-date="2026-11-27">
                   <p class="tg-no">Friday &middot; November 27</p>
-                  <p class="tg-teacher">Dixon Bowles</p>
-                  <div class="tg-seats">
-                    <div class="tg-seat" data-tg-seat="0">
-                      <p class="tg-when">10am to 11:30</p>
-                      <p class="tg-what">Ballet + conditioning</p>
-                      <p class="tg-who">intermediate/advanced<br>ages 10 and up</p>
-                      <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:fri-1" disabled>Reservations open soon</button></div>
-                      <p class="tg-note" data-tg-note role="status" hidden></p>
+                  <div class="tg-classes tg-classes--pair">
+                    <div class="tg-class">
+                      <h3 class="tg-dish">Jazz Funk</h3>
+                      <p class="tg-teacher">Gabriella Vultaggio</p>
+                      <div class="tg-seats">
+                        <div class="tg-seat" data-tg-seat="0">
+                          <p class="tg-when">10:00 to 11:00</p>
+                          <p class="tg-who">ages 9 and under</p>
+                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:fri-1" disabled>Reservations open soon</button></div>
+                          <p class="tg-note" data-tg-note role="status" hidden></p>
+                        </div>
+                        <div class="tg-seat" data-tg-seat="1">
+                          <p class="tg-when">11:00 to 12:00</p>
+                          <p class="tg-who">ages 10 and up</p>
+                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:fri-2" disabled>Reservations open soon</button></div>
+                          <p class="tg-note" data-tg-note role="status" hidden></p>
+                        </div>
+                      </div>
                     </div>
-                    <div class="tg-seat" data-tg-seat="1">
-                      <p class="tg-when">11:30 to 1pm</p>
-                      <p class="tg-what">Musical theatre</p>
-                      <p class="tg-who">open to everyone</p>
-                      <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:fri-2" disabled>Reservations open soon</button></div>
-                      <p class="tg-note" data-tg-note role="status" hidden></p>
+                    <div class="tg-class">
+                      <h3 class="tg-dish">Stretch &amp; Strengthen</h3>
+                      <p class="tg-teacher">Dixon Bowles</p>
+                      <div class="tg-seats">
+                        <div class="tg-seat" data-tg-seat="2">
+                          <p class="tg-when">12:00 to 1:00</p>
+                          <p class="tg-who">all ages</p>
+                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:fri-3" disabled>Reservations open soon</button></div>
+                          <p class="tg-note" data-tg-note role="status" hidden></p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </li>

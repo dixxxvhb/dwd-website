@@ -9873,7 +9873,6 @@ html.menu-open .mob-cta { display: none !important; }
 .tg-house,
 .tg-sub,
 .tg-no,
-.tg-served,
 .tg-sig {
   font-family: var(--font-body);
   text-transform: uppercase;
@@ -9891,7 +9890,6 @@ html.menu-open .mob-cta { display: none !important; }
   margin: 8px 0 0;
 }
 .tg-sub { font-size: 13px; color: var(--tg-terra); letter-spacing: 0.44em; margin-top: 12px; }
-.tg-date,
 .tg-desc {
   font-family: var(--font-display);
   font-style: italic;
@@ -9899,7 +9897,6 @@ html.menu-open .mob-cta { display: none !important; }
   color: var(--tg-text);
   margin: 0;
 }
-.tg-date { font-size: 21px; margin-top: 6px; color: var(--tg-soft); }
 .tg-dek {
   font-family: var(--font-body);
   font-size: 15px;
@@ -9943,7 +9940,14 @@ html.menu-open .mob-cta { display: none !important; }
 .tg-desc { font-size: 21px; line-height: 1.25; max-width: 36ch; }
 .tg-course--rest .tg-no { color: #b9a79b; }
 .tg-teacher { font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--tg-ink); margin: 2px 0 0; }
-/* Two seatings per morning, side by side; stacked on a phone. */
+/* A morning holds one class or a pair (Tuesday, Friday). A pair sits side by
+   side with a hairline between, like the post; on a phone it stacks. */
+.tg-classes { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; max-width: 560px; margin-top: 10px; }
+.tg-class { display: grid; justify-items: center; align-content: start; gap: 6px; min-width: 0; }
+.tg-classes--pair .tg-class + .tg-class { border-top: 1px solid rgba(200, 97, 75, 0.35); padding-top: 24px; margin-top: 4px; }
+.tg-classes--pair .tg-dish { font-size: clamp(30px, 7vw, 36px); }
+/* A class's seatings, any number: stacked on a phone and inside a pair; in a
+   row when one class has the morning to itself. */
 .tg-seats {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -9954,21 +9958,28 @@ html.menu-open .mob-cta { display: none !important; }
 }
 .tg-seat { display: grid; justify-items: center; align-content: start; gap: 4px; padding: 16px 8px; min-width: 0; }
 .tg-seat + .tg-seat { border-top: 1px solid rgba(200, 97, 75, 0.35); }
+/* The time, set like the post: terracotta sans, lowercase "to". */
 .tg-when {
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--tg-terra);
   margin: 0;
 }
-.tg-what { font-family: var(--font-display); font-weight: 600; font-size: 24px; line-height: 1.1; color: var(--tg-ink); margin: 0; }
-.tg-who { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 19px; color: var(--tg-soft); margin: 0; }
+.tg-who { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 20px; color: var(--tg-soft); margin: 0; }
 .tg-seat .tg-act { margin-top: 8px; flex-direction: column; gap: 8px; }
 @media (min-width: 560px) {
-  .tg-seats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tg-seat + .tg-seat { border-top: 0; border-left: 1px solid rgba(200, 97, 75, 0.35); }
+  .tg-classes:not(.tg-classes--pair) .tg-seats { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+  .tg-classes:not(.tg-classes--pair) .tg-seat + .tg-seat { border-top: 0; border-left: 1px solid rgba(200, 97, 75, 0.35); }
+}
+@media (min-width: 700px) {
+  /* Side by side, the two columns share rows (name, teacher, seatings) so a
+     name that wraps ("Stretch & Strengthen") keeps the rules level. */
+  .tg-classes--pair { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto auto; row-gap: 6px; }
+  .tg-classes--pair .tg-class { grid-row: span 3; grid-template-rows: subgrid; padding: 0 12px; }
+  .tg-classes--pair .tg-class + .tg-class { border-top: 0; padding-top: 0; margin-top: 0; border-left: 1px solid rgba(200, 97, 75, 0.35); }
+  .tg-classes--pair .tg-dish { align-self: end; font-size: 34px; }
 }
 .tg-course--rest .tg-dish,
 .tg-course--rest .tg-desc { color: #7d867f; }
@@ -9990,13 +10001,14 @@ html.menu-open .mob-cta { display: none !important; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  /* in a narrow column "Reservations open soon" wraps as two even lines */
+  text-wrap: balance;
 }
 .tg-btn:hover:not(:disabled) { background: var(--tg-terra); border-color: var(--tg-terra); }
 .tg-btn:focus-visible { outline: 2px solid var(--tg-terra); outline-offset: 3px; }
 .tg-btn.is-added { background: transparent; color: var(--tg-ink); }
 .tg-btn:disabled { background: transparent; color: var(--tg-soft); border-color: rgba(12, 31, 23, 0.25); cursor: default; }
 .tg-note { font-family: var(--font-body); font-size: 13px; color: var(--tg-terra); margin: 2px 0 0; }
-.tg-served { font-size: 12px; color: var(--tg-ink); margin-top: 36px; }
 .tg-sig {
   display: flex;
   align-items: center;
@@ -10017,9 +10029,9 @@ html.menu-open .mob-cta { display: none !important; }
   .tg-teacher { font-size: 13px; }
   .tg-house { font-size: 13px; }
   .tg-sub { font-size: 16px; }
-  .tg-date { font-size: 25px; }
   .tg-desc { font-size: 24px; }
   .tg-no { font-size: 12px; }
+  .tg-when { font-size: 16px; }
 }
 
 /* ── The five classes ─────────────────────────────────────────────────── */
