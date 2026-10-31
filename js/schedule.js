@@ -1415,13 +1415,17 @@
   // One soft line under the date of birth when the dancer's age on a cart
   // class's date falls outside that class's band ("ages 10 and up"), for the
   // first such class. It never blocks Pay, and it is rewritten whenever the
-  // date or the cart changes. A band that does not parse says nothing.
+  // date or the cart changes. Bands it reads: "ages 5 to 9", "ages 10 and
+  // up", "ages 9 and under" (the Thanksgiving seatings). Anything else,
+  // "all ages" included, says nothing.
   function parseBand(band) {
     var s = String(band || '').trim().toLowerCase().replace(/[\u2013\u2014]/g, '-');
     var m = s.match(/^ages?\s+(\d{1,2})\s*(?:to|-)\s*(\d{1,2})$/);
     if (m) return Number(m[1]) <= Number(m[2]) ? { min: Number(m[1]), max: Number(m[2]) } : null;
     m = s.match(/^ages?\s+(\d{1,2})\s*(?:\+|and up|and older|and over)$/);
-    return m ? { min: Number(m[1]), max: null } : null;
+    if (m) return { min: Number(m[1]), max: null };
+    m = s.match(/^ages?\s+(\d{1,2})\s*(?:and under|and younger|and below)$/);
+    return m ? { min: 0, max: Number(m[1]) } : null;
   }
 
   // Carts saved before lines carried age_band still have it inside label.
