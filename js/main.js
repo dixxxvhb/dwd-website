@@ -910,6 +910,11 @@
         valid = false;
         return;
       }
+      if (field.type === 'tel' && value.replace(/\D/g, '').length < 10) {
+        setFieldError(field, 'Add the phone number with its area code.');
+        valid = false;
+        return;
+      }
       if (field.type === 'email') {
         var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(value)) {
@@ -918,11 +923,45 @@
         }
       }
     });
+    // Phone is optional on the interest and contact forms, but "abc" is not a
+    // phone number Dixon can call back (persona pass 2026-10-31).
+    form.querySelectorAll('input[type="tel"]:not([required])').forEach(function (field) {
+      clearFieldError(field);
+      var v = field.value.trim();
+      if (v && v.replace(/\D/g, '').length < 10) {
+        setFieldError(field, 'Add the phone number with its area code, or leave it blank.');
+        valid = false;
+      }
+    });
     if (!valid) {
       var firstInvalid = form.querySelector('.invalid');
-      if (firstInvalid && typeof firstInvalid.focus === 'function') firstInvalid.focus();
+      if (firstInvalid && typeof firstInvalid.focus === 'function') revealField(firstInvalid);
     }
     return valid;
+  }
+
+  // focus() alone leaves a field where it is whenever the browser counts it as
+  // on screen, even under the topnav and the ProSeries chapter rail (persona
+  // pass 2026-10-31: Express Interest tapped from mid-screen hid the
+  // Experience error under both bars). Place it below them; scroll-margin-top
+  // on form fields (site.css) is how far below.
+  function revealField(field) {
+    try { field.focus({ preventScroll: true }); } catch (e) { field.focus(); }
+    var r = field.getBoundingClientRect();
+    var below = parseFloat(getComputedStyle(field).scrollMarginTop) || 0;
+    if (r.top < below || r.bottom > window.innerHeight) field.scrollIntoView({ block: 'start' });
+  }
+
+  // A message stays until the visitor edits the form again, instead of
+  // vanishing after five seconds while they are still reading it.
+  function hideOnNextEdit(form, el) {
+    function done() {
+      el.classList.remove('show');
+      form.removeEventListener('input', done);
+      form.removeEventListener('change', done);
+    }
+    form.addEventListener('input', done);
+    form.addEventListener('change', done);
   }
 
   // Clear per-field error the moment the user starts correcting it. 'change'
@@ -953,7 +992,9 @@
       successEl.focus({ preventScroll: true });
       return;
     }
-    setTimeout(function () { successEl.classList.remove('show'); }, 5000);
+    // Stays until they start another message: after five seconds the form
+    // used to sit blank with no word that the last one went (persona pass).
+    hideOnNextEdit(form, successEl);
   }
 
   function showFormError(form, msg) {
@@ -966,7 +1007,7 @@
     }
     errorEl.textContent = msg || 'Something went wrong. Please try again.';
     errorEl.classList.add('show');
-    setTimeout(function () { errorEl.classList.remove('show'); }, 5000);
+    hideOnNextEdit(form, errorEl);
   }
 
   function setSubmitLoading(form, loading) {
@@ -1281,7 +1322,7 @@
         '<div class="ps-if-row">' +
           '<div class="form-group">' +
             '<label for="if-child-name-' + i + '">First name</label>' +
-            '<input type="text" id="if-child-name-' + i + '" data-child="name" required autocomplete="off" autocapitalize="words" placeholder="Dancer’s first name">' +
+            '<input type="text" id="if-child-name-' + i + '" data-child="name" maxlength="120" required autocomplete="off" autocapitalize="words" placeholder="Dancer’s first name">' +
           '</div>' +
           '<div class="form-group">' +
             '<label for="if-child-dob-' + i + '">Date of birth</label>' +

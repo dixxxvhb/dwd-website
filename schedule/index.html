@@ -1804,7 +1804,7 @@
             <div class="ps-if-row">
               <div class="form-group">
                 <label for="if-parent-name">Your name</label>
-                <input type="text" id="if-parent-name" name="parent_name" required autocomplete="name" autocapitalize="words" placeholder="Parent or guardian">
+                <input type="text" id="if-parent-name" name="parent_name" maxlength="120" required autocomplete="name" autocapitalize="words" placeholder="Parent or guardian">
               </div>
               <div class="form-group">
                 <label for="if-parent-email">Email</label>
@@ -1814,7 +1814,7 @@
             <div class="ps-if-row">
               <div class="form-group">
                 <label for="if-parent-phone">Phone <span class="ps-if-opt">(optional)</span></label>
-                <input type="tel" id="if-parent-phone" name="parent_phone" inputmode="tel" autocomplete="tel">
+                <input type="tel" id="if-parent-phone" name="parent_phone" maxlength="60" inputmode="tel" autocomplete="tel">
               </div>
               <div class="form-group">
                 <label for="if-how-heard">How did you hear about us? <span class="ps-if-opt">(optional)</span></label>
@@ -1839,7 +1839,7 @@
                 <div class="ps-if-row">
                   <div class="form-group">
                     <label for="if-child-name-0">First name</label>
-                    <input type="text" id="if-child-name-0" data-child="name" required autocomplete="off" autocapitalize="words" placeholder="Dancer's first name">
+                    <input type="text" id="if-child-name-0" data-child="name" maxlength="120" required autocomplete="off" autocapitalize="words" placeholder="Dancer's first name">
                   </div>
                   <div class="form-group">
                     <label for="if-child-dob-0">Date of birth</label>
@@ -1863,7 +1863,7 @@
 
             <div class="form-group ps-if-note">
               <label for="if-note">Anything you want Dixon to know? <span class="ps-if-opt">(optional)</span></label>
-              <textarea id="if-note" name="family_note" rows="3" placeholder="Schedule, past training, questions, anything."></textarea>
+              <textarea id="if-note" name="family_note" rows="3" maxlength="4000" placeholder="Schedule, past training, questions, anything."></textarea>
             </div>
 
             <input type="text" id="if-website" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -2923,7 +2923,7 @@
           <form data-form="contact" method="post" novalidate>
             <div class="form-group">
               <label for="contact-name">Name</label>
-              <input type="text" id="contact-name" placeholder="Your name" required autocomplete="name" autocapitalize="words">
+              <input type="text" id="contact-name" placeholder="Your name" maxlength="120" required autocomplete="name" autocapitalize="words">
             </div>
             <div class="form-group">
               <label for="contact-email">Email</label>
@@ -2931,7 +2931,7 @@
             </div>
             <div class="form-group">
               <label for="contact-phone">Phone <span class="form-optional">(optional)</span></label>
-              <input type="tel" id="contact-phone" inputmode="tel" autocomplete="tel">
+              <input type="tel" id="contact-phone" maxlength="60" inputmode="tel" autocomplete="tel">
             </div>
             <input type="hidden" id="contact-reason" name="reason" value="general">
             <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -2961,7 +2961,7 @@
             </fieldset>
             <div class="form-group">
               <label for="contact-message">Message</label>
-              <textarea id="contact-message" placeholder="Tell us what's on your mind..." enterkeyhint="send"></textarea>
+              <textarea id="contact-message" maxlength="4000" placeholder="Tell us what's on your mind..." enterkeyhint="send"></textarea>
             </div>
             <button type="submit" class="btn btn-primary" data-track="contact-send-message">Send Message</button>
             <div class="form-success" aria-live="polite">Message sent. Dixon will reply within 48 hours.</div>

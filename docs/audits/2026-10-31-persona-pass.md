@@ -35,6 +35,13 @@ Personas: 1 pickup-line parent (one thumb, skims) · 2 careful payer · 3 slow p
 9. A `storage` listener repaints the open checkout (or closes it if the other tab emptied the cart).
 11. "Request your spot in the DWD family app".
 Not done: 10 (refund policy, Dixon's call) and 12 (an idea, not a defect).
+
+Also folded in, from the parallel run's code-only list (docs/audits/2026-10-31-persona-pass-site.md):
+- validateForm and the drop-in form focus with `preventScroll` and then place the field below the sticky chrome themselves, because focus() leaves a field the browser counts as on screen where it is. Interest form, Express Interest tapped with Experience at y 50: now at 160, error at 215, bars end at 113.
+- Form errors and the Contact "Message sent" line stay until the visitor edits the form, instead of disappearing after 5 s.
+- An optional phone that isn't a phone ("abc") is refused on the interest and contact forms.
+- maxlength matches the database caps: names 120, phones 60, notes and messages 4000 (the interest form's added dancer rows too).
+- Not done from that list: Back to /proseries/ landing at the top instead of at the form (a router change), and every item marked as Dixon's call there.
 Verified on a local copy behind the persona server's injected fake: clash note, a non-overlapping class still adds, Back stays on /schedule/, each field error in view and cleared on fix, busy-server text and "Still working...", a P0001 sentence still passes, two-tab total, clash at Pay, thank-you with room + maps link, interest-form error at y 215 below the bars at 113 (before: field at 0, error at 55, under them). 0 writes left the browser.
 
 ## What held up

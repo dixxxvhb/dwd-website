@@ -1483,7 +1483,13 @@
       elError.textContent = msg;
       elError.setAttribute('data-kind', target.id === 'sched-waiver' ? 'waiver' : 'cart');
     }
-    if (target !== elPayBtn) target.focus();
+    if (target === elPayBtn) return;
+    // focus() leaves a field the browser counts as on screen where it is, even
+    // under the topnav; place it below (scroll-margin-top in site.css).
+    try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+    var r = target.getBoundingClientRect();
+    var below = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    if (r.top < below || r.bottom > window.innerHeight) target.scrollIntoView({ block: 'start' });
   }
 
   // A message goes the moment its field is fixed, not on the next Pay.
