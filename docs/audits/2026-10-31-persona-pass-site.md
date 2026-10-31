@@ -63,8 +63,8 @@ came from cache), the real Stripe page (verified 10-30), what the database does
 with duplicate interest or contact rows, and iOS Safari.
 
 ## Dixon's calls, answered (2026-10-31: "Yes, your picks")
-Built on `claude/persona-copy`, on top of `claude/persona-fixes` (which took
-findings 2 to 4, 6 and 12), not merged: merging this repo is the deploy.
+Shipped as 3b4f547 on Dixon's "Ship it", on top of the persona fixes (2e85765, which
+took findings 2 to 4, 6 and 12). Verified live the same evening.
 - 1, ages: the form's line follows the posted bands (8 and 9 "Prep or Elite",
   12 "Elite or Pro"); under 5 and over 19 it asks for a second look, over 19
   with a link to the Collective. `preferred_track` sent to the Director is
