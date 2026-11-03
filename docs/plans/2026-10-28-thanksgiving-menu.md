@@ -37,6 +37,7 @@ Dixon, 11-03 ~1am: the site opens one morning at a time with the Instagram tease
 - Checks: Desktop scheduled tasks `tg-open-check-fri/-tue/-wed` run at 7:05 each morning, verify the rows and the page, and re-apply a missed flip.
 - Not staged: the JSON-LD Event nodes and llms.txt list all seven from 11-03 (crawler-facing only; the public RPC already returned the names).
 - The Go-live day list below is superseded by this.
+- Change, 11-03 ~2am (Dixon): DWD families see the whole week and can book from 10am Nov 3, via his Wall post linking `/schedule/?early=dwd` (reveals every morning, stored as localStorage `dwd.tg.early.2026`, shows a family line `[data-tg-early]`). pg_cron `tg-open-tue-2026` and `tg-open-wed-2026` moved to 15:00 UTC Nov 3, so all seven are bookable from 10am; the public card still reveals one morning a day. Site 66913b2; Playwright 8/8 (public 9am Friday only, family link all three, return visit keeps it, wrong code does not). Extra check: Desktop task `tg-open-check-family` 10:05 Nov 3.
 
 ## Go-live day
 In this order, the same morning as the menu post:
