@@ -1104,11 +1104,32 @@
     return rows[Number(seat.getAttribute('data-tg-seat'))];
   }
 
+  // Each morning is announced with its Instagram post (Dixon 2026-11-03):
+  // before its data-tg-reveal stamp (NY time) it reads "To be announced" and
+  // its seats stay hidden. A page left open across the minute catches up.
+  function revealTg() {
+    if (!elTg) return true;
+    var now = nyNowStamp();
+    var all = true;
+    Array.prototype.forEach.call(elTg.querySelectorAll('[data-tg-reveal]'), function (li) {
+      var on = now >= li.getAttribute('data-tg-reveal');
+      li.classList.toggle('is-revealed', on);
+      if (!on) all = false;
+    });
+    return all;
+  }
+  if (!revealTg()) {
+    var tgRevealTimer = setInterval(function () {
+      if (revealTg()) clearInterval(tgRevealTimer);
+    }, 30000);
+  }
+
   // One seating: closed until its class is open for drop-in, then Reserve,
   // In your order, or Full. Price comes from the class; none set reads TBA.
   function paintTg() {
     if (!elTg) return;
     if (nyTodayIso() > TG_LAST) { elTg.hidden = true; return; }
+    revealTg();
     var seats = elTg.querySelectorAll('[data-tg-seat]');
     Array.prototype.forEach.call(seats, function (seat) {
       var btn = seat.querySelector('[data-tg-btn]');

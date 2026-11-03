@@ -2535,8 +2535,13 @@
                 <!-- Seats are numbered per morning in time order (0, 1, 2):
                      schedule.js fills them with that date's Director classes
                      that start before 1pm, earliest first. -->
-                <li class="tg-course" data-tg-date="2026-11-24">
+                <!-- Each morning is announced with its Instagram post (Dixon
+                     2026-11-03): until data-tg-reveal (New York time) it reads
+                     "To be announced" and its classes stay hidden. Booking
+                     opens at the same minute (pg_cron jobs tg-open-*-2026). -->
+                <li class="tg-course" data-tg-date="2026-11-24" data-tg-reveal="2026-11-04 07:00">
                   <p class="tg-no">Tuesday &middot; November 24</p>
+                  <p class="tg-desc tg-tba">To be announced Wednesday</p>
                   <div class="tg-classes tg-classes--pair">
                     <div class="tg-class">
                       <h3 class="tg-dish">Jazz</h3>
@@ -2564,8 +2569,9 @@
                     </div>
                   </div>
                 </li>
-                <li class="tg-course" data-tg-date="2026-11-25">
+                <li class="tg-course" data-tg-date="2026-11-25" data-tg-reveal="2026-11-05 07:00">
                   <p class="tg-no">Wednesday &middot; November 25</p>
+                  <p class="tg-desc tg-tba">To be announced Thursday</p>
                   <div class="tg-classes">
                     <div class="tg-class">
                       <h3 class="tg-dish">Contemporary Fusion</h3>
@@ -2591,8 +2597,9 @@
                   <p class="tg-no">Thursday &middot; November 26</p>
                   <p class="tg-desc">Closed for Thanksgiving</p>
                 </li>
-                <li class="tg-course" data-tg-date="2026-11-27">
+                <li class="tg-course" data-tg-date="2026-11-27" data-tg-reveal="2026-11-03 07:00">
                   <p class="tg-no">Friday &middot; November 27</p>
+                  <p class="tg-desc tg-tba">To be announced today</p>
                   <div class="tg-classes tg-classes--pair">
                     <div class="tg-class">
                       <h3 class="tg-dish">Jazz Funk</h3>
