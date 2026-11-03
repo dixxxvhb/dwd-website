@@ -30,6 +30,14 @@ Button states per seating: no class or not open for drop-in = "Reservations open
 6. DONE (Dixon, 2026-10-31): everyone pays, ProSeries families included. They book through the same cart as anyone else.
 7. If the lineup changes, edit the course text in index.html (the `tg-course` blocks; keep `data-tg-seat` numbered in time order per morning), the matching `#thanksgiving-2026-*` Event nodes in the JSON-LD and the Thanksgiving section of llms.txt, update `TG_DEMO` in js/schedule.js to match, and run build-routes.
 
+## What actually happened: a staged launch (2026-11-03)
+Dixon, 11-03 ~1am: the site opens one morning at a time with the Instagram teasers, at 7:00am each day. Merged to main as 8588bb3 at ~1:15am (verified live, IndexNow 200).
+- Website: each morning on the card carries `data-tg-reveal` (New York time): Friday 2026-11-03 07:00, Tuesday 2026-11-04 07:00, Wednesday 2026-11-05 07:00. Before it, the morning reads "To be announced <day>" and its seats are hidden; `revealTg()` in schedule.js re-checks every 30 s so an open page catches up. Fake-clock Playwright run at 390 and 1280: 26/26.
+- Booking: pg_cron jobs `tg-open-fri-2026`, `tg-open-tue-2026`, `tg-open-wed-2026` set `drop_in_allowed = true` on that morning's ids at 12:00 UTC (7:00 EST) and unschedule themselves. Flipping drop_in_allowed fires no family notification (the only notify trigger on dance_classes is for time/day/room changes).
+- Checks: Desktop scheduled tasks `tg-open-check-fri/-tue/-wed` run at 7:05 each morning, verify the rows and the page, and re-apply a missed flip.
+- Not staged: the JSON-LD Event nodes and llms.txt list all seven from 11-03 (crawler-facing only; the public RPC already returned the names).
+- The Go-live day list below is superseded by this.
+
 ## Go-live day
 In this order, the same morning as the menu post:
 1. Director: set `drop_in_allowed = true` on the seven classes (`dance_classes` ids starting ee66b66e, d83fc2b7, 6ed66870, ebaa87d7, f7d12e23, ca4fc6f5, 33f3f867).
