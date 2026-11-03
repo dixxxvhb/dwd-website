@@ -9945,6 +9945,16 @@ html.menu-open .mob-cta { display: none !important; }
 .tg-course[data-tg-reveal]:not(.is-revealed) .tg-classes { display: none; }
 .tg-course.is-revealed .tg-tba { display: none; }
 .tg-tba { color: #7d867f; }
+.tg-early {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--tg-terra);
+  max-width: 40ch;
+  margin: 14px auto 0;
+  text-wrap: balance;
+}
 .tg-teacher { font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--tg-ink); margin: 2px 0 0; }
 /* A morning holds one class or a pair (Tuesday, Friday). A pair sits side by
    side with a hairline between, like the post; on a phone it stacks. */

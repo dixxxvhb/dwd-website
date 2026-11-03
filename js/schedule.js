@@ -1107,12 +1107,27 @@
   // Each morning is announced with its Instagram post (Dixon 2026-11-03):
   // before its data-tg-reveal stamp (NY time) it reads "To be announced" and
   // its seats stay hidden. A page left open across the minute catches up.
+  // DWD families see the whole week early (Dixon 2026-11-03): the Wall post
+  // links /schedule/?early=dwd, which reveals every morning and is
+  // remembered on this browser so a return visit without the link still
+  // shows it. Booking itself is the Director's (all seven open 10am Nov 3).
+  var TG_EARLY_KEY = 'dwd.tg.early.2026';
+  var tgEarly = false;
+  try {
+    if (new URLSearchParams(location.search).get('early') === 'dwd') localStorage.setItem(TG_EARLY_KEY, '1');
+    tgEarly = localStorage.getItem(TG_EARLY_KEY) === '1';
+  } catch (e) {
+    tgEarly = new URLSearchParams(location.search).get('early') === 'dwd';
+  }
+  var elTgEarly = elTg && elTg.querySelector('[data-tg-early]');
+  if (elTgEarly) elTgEarly.hidden = !tgEarly;
+
   function revealTg() {
     if (!elTg) return true;
     var now = nyNowStamp();
     var all = true;
     Array.prototype.forEach.call(elTg.querySelectorAll('[data-tg-reveal]'), function (li) {
-      var on = now >= li.getAttribute('data-tg-reveal');
+      var on = tgEarly || now >= li.getAttribute('data-tg-reveal');
       li.classList.toggle('is-revealed', on);
       if (!on) all = false;
     });
