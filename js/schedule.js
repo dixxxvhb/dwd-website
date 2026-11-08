@@ -1,30 +1,25 @@
 /* ═══════════════════════════════════════════════
    DWD — schedule.js
-   /schedule/ — the drop-in page: five weekly classes with their bookable
-   dates as chips, the drop-in cart, and (behind one toggle) the full
-   ProSeries week grid. Plan: docs/plans/2026-09-24-drop-in-finder.md.
+   /schedule/ — the drop-in page, "D" (Dixon, 2026-11-07; plan
+   docs/plans/2026-11-07-booking-d.md): the campaign band while one runs,
+   one strip of class days, the picked day's classes as one kind of row, and
+   the order (desktop aside, phone bar + sheet). The cart, prices, the 4+
+   discount, the age check and checkout are the same code as before.
 
-   Reads public_site_schedule(p_from, p_to) via window.__dwd_sb.rpc, lets a
-   visitor add open (drop-in) classes to a cart, and checks out through the
-   drop-in-checkout edge function (Stripe Checkout redirect).
+   Reads public_site_schedule(p_from, p_to) via window.__dwd_sb.rpc (two
+   21-day windows, the RPC's cap per call), lets a visitor add open (drop-in)
+   classes to a cart, and checks out through the drop-in-checkout edge
+   function (Stripe Checkout redirect).
 
-   The class list: two 21-day windows (the RPC's cap per call) fetched in
-   parallel, grouped into weekly slots (class_id + weekday + start time). The
-   markup ships a static list of the same five classes; this only replaces it
-   when the feed answers with something truer (same contract as js/now.js).
-   ?class=<slug> scrolls to one class, marks it and opens its later dates.
+   ?day=YYYY-MM-DD (or tg) opens a day; ?class=<slug> opens that class's
+   first open date and marks its row (js/now.js links its rows that way).
+   The full ProSeries week grid is the old page, unchanged in behaviour,
+   collapsed by default and loaded on first open (or straight away for
+   #sched-list / ?week=). Nothing here runs until the schedule route is
+   actually showing: every route shell carries this section.
 
-   The week grid is the old page, unchanged in behaviour, collapsed by
-   default and loaded on first open (or straight away for #sched-list /
-   ?week=). Nothing here runs until the schedule route is actually showing:
-   every route shell carries this section, and Home has no use for the RPC.
-
-   USE_STUB: the app's Phase 1 RPCs (public_site_schedule,
-   drop_in_order_public) and the drop-in-checkout edge function are not live
-   yet (master spec: C:/Users/bowle/Code/dwd/docs/plans/2026-09-12-drop-in-web-checkout.md).
-   While true, the feed and the thank-you return are served from a local stub
-   that mirrors the exact RPC row shape. Fable flips this to false once Phase
-   1 is live on prod — nothing else in this file should need to change.
+   USE_STUB serves the feed and the thank-you return from a local stub that
+   mirrors the exact RPC row shape (QA only; false in production).
    ═══════════════════════════════════════════════ */
 
 (function () {
@@ -52,38 +47,65 @@
   // "What to know" address in index.html carries.
   var EXCHANGE_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=Exchange+Dance+Studio%2C+7409+Chancery+Lane%2C+Orlando%2C+FL+32809';
 
-  // Thanksgiving week 2026: the menu at the top of the page. Each morning has
-  // its own number of seatings (Tue 2, Wed 2, Fri 3), each its own Director
-  // class: the classes on a date that start before 1pm, earliest first, fill
-  // that morning's data-tg-seat 0, 1, 2... in order. The Director class is the
-  // source of truth for price and spots, so the cart and checkout need nothing
-  // new. After TG_LAST the block hides.
-  // The dates and the cutoff are read from the card itself (data-tg-date on
-  // each morning, data-tg-before on the section), the one rule js/now.js and
-  // scripts/check-classes-jsonld.mjs read too. No card, no menu rows.
-  var elTg = page.querySelector('[data-tg]');
-  var TG_BEFORE = (elTg && elTg.getAttribute('data-tg-before')) || '';
-  var TG_DATES = elTg && TG_BEFORE
-    ? Array.prototype.map.call(elTg.querySelectorAll('[data-tg-date]'), function (n) {
-        return n.getAttribute('data-tg-date');
-      }).sort()
-    : [];
+  // The campaign band (D, 2026-11-07). Its markup is the rule: the dates
+  // (data-tg-date), the cutoff (data-tg-before), each morning's color, the
+  // closed day and the teachers' photos. A class on one of those dates that
+  // starts before the cutoff is a campaign class: it lives on the one wide
+  // tile and stays out of the week grid. js/now.js and
+  // scripts/check-classes-jsonld.mjs read the same dates and cutoff.
+  var elBand = page.querySelector('[data-tg]');
+  var TG_BEFORE = (elBand && elBand.getAttribute('data-tg-before')) || '';
+  var TG_DATES = [], TG_TONE = {}, TG_CLOSED = {}, TEACHERS = {};
+  if (elBand && TG_BEFORE) {
+    Array.prototype.forEach.call(elBand.querySelectorAll('[data-tg-date]'), function (n) {
+      var d = n.getAttribute('data-tg-date');
+      if (TG_DATES.indexOf(d) === -1) TG_DATES.push(d);
+      TG_TONE[d] = n.getAttribute('data-tone') || '';
+    });
+    TG_DATES.sort();
+    Array.prototype.forEach.call(elBand.querySelectorAll('[data-tg-closed]'), function (n) {
+      TG_CLOSED[n.getAttribute('data-tg-closed')] = (n.textContent || '').trim() || 'Closed';
+    });
+    Array.prototype.forEach.call(elBand.querySelectorAll('[data-teacher]'), function (n) {
+      var t = { guest: n.hasAttribute('data-guest'), photo: n.getAttribute('data-photo') || '', photos: {} };
+      Array.prototype.forEach.call(n.attributes, function (a) {
+        if (a.name.indexOf('data-photo-') === 0) t.photos[a.name.slice(11)] = a.value;
+      });
+      TEACHERS[n.getAttribute('data-teacher')] = t;
+    });
+  }
   var TG_LAST = TG_DATES.length ? TG_DATES[TG_DATES.length - 1] : '';
+  var TG_LABEL = (elBand && elBand.getAttribute('data-tg-label')) || 'This week';
+  var TG_SHORT = (elBand && elBand.getAttribute('data-tg-short')) || TG_LABEL;
+  var TG_UNIT = (elBand && elBand.getAttribute('data-tg-unit')) || 'classes';
 
   var DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
   var DAY_NAMES_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   var MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  // The class list shows this many dates per class; "More dates" opens the
-  // rest of the window.
-  var FINDER_VISIBLE = 4;
   // Two calls of 21 days each (the RPC caps one call at 21): six weeks out.
   var FINDER_WINDOW = 21;
 
   // ── Elements ──
   var elMain = page.querySelector('[data-sched-main]');
-  var elFinderList = page.querySelector('[data-finder-list]');
+  var elPick = page.querySelector('[data-bk-pick]');
+  var elHead = page.querySelector('[data-bk-head]');
+  var elStripbar = page.querySelector('[data-bk-stripbar]');
+  var elStrip = page.querySelector('[data-bk-strip]');
+  var elNext = page.querySelector('[data-bk-next]');
+  var elPanel = page.querySelector('[data-bk-panel]');
+  var elOrder = page.querySelector('[data-bk-order]');
+  var elOrderSheet = page.querySelector('[data-bk-order-sheet]');
+  var elSheet = page.querySelector('[data-bk-sheet]');
+  var elScrim = page.querySelector('[data-bk-scrim]');
+  var elSheetOpen = page.querySelector('[data-bk-sheet-open]');
+  var elBarMeter = page.querySelector('[data-bk-bar-meter]');
+  var elCoMeter = page.querySelector('[data-bk-co-meter]');
+  var elSumbox = page.querySelector('[data-bk-sumbox]');
+  var elSumShort = page.querySelector('[data-bk-sum-short]');
+  var elTyLede = page.querySelector('[data-bk-ty-lede]');
   var elFull = page.querySelector('[data-sched-full]');
   var elFullToggle = page.querySelector('[data-sched-full-toggle]');
   var elFullBody = page.querySelector('[data-sched-full-body]');
@@ -148,11 +170,7 @@
   var gridLoaded = false;
   var gridReady = false;
 
-  // The class list: rows by class_id|occurrence_date, for the chips.
-  var finderRowsByKey = {};
-  // The feed has answered (or failed) and the list on screen is final, so a
-  // ?class= deep link can be aimed at it.
-  var finderSettled = false;
+  // A ?class= deep link waits for the days to load before it marks its row.
   var deepLinkPending = true;
 
   // ── Date helpers (America/New_York, never the visitor's zone) ──
@@ -620,16 +638,6 @@
     updateJumpLine();
   }
 
-  function renderCartBar() {
-    var cart = readCart();
-    if (!cart.length) { elCartBar.hidden = true; return; }
-    elCartBar.hidden = false;
-    var totalCents = cartTotalCents(cart);
-    elCartCount.innerHTML = cart.length + (cart.length === 1 ? ' class' : ' classes') +
-      ' \u00b7 <span class="sched-cart-amt">' + money(totalCents) + '</span>';
-    renderBulkNote(elCartBulkNote, bulkNoteText(cart));
-  }
-
   function renderLoading() {
     elList.innerHTML = '';
     var wrap = el('div', 'sched-skel');
@@ -652,7 +660,7 @@
   // card, so that week points up at it instead of reading as closed.
   function emptyWeekText() {
     for (var i = 0; i < TG_DATES.length; i++) {
-      if (TG_DATES[i] >= shownWeekFrom && TG_DATES[i] <= shownWeekTo && !elTg.hidden) {
+      if (TG_DATES[i] >= shownWeekFrom && TG_DATES[i] <= shownWeekTo && elBand && !elBand.hidden) {
         return 'Evening classes are off this week. The masterclasses are above.';
       }
     }
@@ -843,9 +851,7 @@
       gridReady = true;
       applyBulkMin(all);
       var pruned = pruneCart(all);
-      renderCartBar();
-      paintChips();
-      paintTg();
+      renderOrder();
       if (pruned.dropped.length) {
         renderNotice(pruned.dropped[0] + ' closed since you added it, so it left your cart.');
       }
@@ -873,351 +879,13 @@
     if (jump >= 0) { renderWeekNotice(''); loadWeek(jump); }
   });
 
-  // ── The class list (the page's focal point) ──
-  // One slot per weekly class: same class_id, same weekday (of `date`, the
-  // day it actually runs), same start time. Only slots with at least one open
-  // date make the list; their chips are the open dates, full ones included.
-  function buildSlots(rows) {
-    var byKey = {}, keys = [];
-    rows.forEach(function (r) {
-      if (!r || !r.class_id || !r.date || !r.start_time) return;
-      if (!r.drop_in_open) return;
-      if (isTgRow(r)) return; // booked from the menu, not listed twice
-      if (isPast(r.date, r.start_time)) return;
-      var dow = localDate(r.date).getDay();
-      var k = r.class_id + '|' + dow + '|' + String(r.start_time).slice(0, 5);
-      if (!byKey[k]) { byKey[k] = { dow: dow, open: [] }; keys.push(k); }
-      byKey[k].open.push(r);
-    });
-
-    var slots = keys.map(function (k) {
-      var s = byKey[k];
-      s.open.sort(function (a, b) { return String(a.date).localeCompare(String(b.date)); });
-      // The public name is the one the open dates carry. A per-date swap
-      // title (a closed "Adv Ballet" week) never reaches here; if the open
-      // dates themselves disagree, the name most of them carry wins.
-      var counts = {}, name = s.open[0].name;
-      s.open.forEach(function (r) {
-        counts[r.name] = (counts[r.name] || 0) + 1;
-        if (counts[r.name] > counts[name]) name = r.name;
-      });
-      s.name = name || 'Drop-in class';
-      s.slug = slugify(s.name);
-      s.ref = s.open.filter(function (r) { return r.name === name; })[0] || s.open[0];
-      return s;
-    });
-
-    // Monday first, then by time; two classes at 4:45 go shorter first.
-    function weekPos(d) { return d === 0 ? 7 : d; }
-    slots.sort(function (a, b) {
-      return (weekPos(a.dow) - weekPos(b.dow)) ||
-        String(a.ref.start_time).localeCompare(String(b.ref.start_time)) ||
-        String(a.ref.end_time || '').localeCompare(String(b.ref.end_time || '')) ||
-        a.name.localeCompare(b.name);
-    });
-    return slots;
-  }
-
-  function chipKey(r) { return r.class_id + '|' + r.occurrence_date; }
-
-  function renderFinder(slots) {
-    if (!elFinderList || !slots.length) return false; // static list stands
-    var soonIso = toIso(addDays(localDate(nyTodayIso()), 6));
-    finderRowsByKey = {};
-    var frag = document.createDocumentFragment();
-
-    slots.forEach(function (s) {
-      var ref = s.ref;
-      var li = el('li', 'finder-class');
-      li.setAttribute('data-class-slug', s.slug);
-
-      var top = el('p', 'finder-top');
-      var when = el('span', 'finder-when', DAY_SHORT[s.dow] + ' ' + fmtTime(ref.start_time));
-      top.appendChild(when);
-      // Not bookable this week: say when it starts, so "Tue 4:45" in late
-      // September is not read as tonight. Same rule as the panel in now.js.
-      var firstIso = String(s.open[0].date).slice(0, 10);
-      if (firstIso > soonIso) {
-        top.appendChild(el('span', 'finder-starts', 'Starts ' + shortDateLabel(localDate(firstIso))));
-      }
-      // The multi-buy price under the single one (2026-10-30), the same line
-      // the week grid prints, so the discount is visible before the cart.
-      var priceCol = el('span', 'finder-price-col');
-      priceCol.appendChild(el('span', 'finder-price', money(ref.drop_in_fee_cents)));
-      var bulkLine = bulkEachLine(ref);
-      if (bulkLine) priceCol.appendChild(el('span', 'finder-bulk', bulkLine));
-      top.appendChild(priceCol);
-      li.appendChild(top);
-
-      li.appendChild(el('h2', 'finder-name', s.name));
-      var meta = [trackWords(ref.track_label), ref.age_band, lengthLabel(ref.start_time, ref.end_time)]
-        .filter(Boolean).join(' · ');
-      if (meta) li.appendChild(el('p', 'finder-meta', meta));
-
-      var dates = el('ul', 'finder-dates');
-      dates.setAttribute('aria-label', 'Dates for ' + s.name);
-      s.open.forEach(function (row, i) {
-        finderRowsByKey[chipKey(row)] = row;
-        var cell = el('li', 'finder-date');
-        if (i >= FINDER_VISIBLE) { cell.className += ' is-extra'; cell.hidden = true; }
-        var chip = el('button', 'finder-chip');
-        chip.type = 'button';
-        chip.setAttribute('data-key', chipKey(row));
-        chip.setAttribute('data-track', 'dropin-chip:' + s.slug);
-        cell.appendChild(chip);
-        cell.appendChild(el('span', 'finder-chip-note'));
-        dates.appendChild(cell);
-      });
-      if (s.open.length > FINDER_VISIBLE) {
-        var moreCell = el('li', 'finder-date finder-date--more');
-        var more = el('button', 'finder-more', 'More dates');
-        more.type = 'button';
-        more.setAttribute('aria-expanded', 'false');
-        moreCell.appendChild(more);
-        dates.appendChild(moreCell);
-      }
-      li.appendChild(dates);
-
-      var note = el('p', 'finder-note');
-      note.hidden = true;
-      note.setAttribute('role', 'status');
-      li.appendChild(note);
-
-      frag.appendChild(li);
-    });
-
-    elFinderList.innerHTML = '';
-    elFinderList.appendChild(frag);
-    paintChips();
-    return true;
-  }
-
-  // Chip state from the cart and the row: available, added, full, n left.
-  function paintChips() {
-    if (!elFinderList) return;
-    var chips = elFinderList.querySelectorAll('.finder-chip');
-    Array.prototype.forEach.call(chips, function (chip) {
-      var row = finderRowsByKey[chip.getAttribute('data-key')];
-      if (!row) return;
-      var d = localDate(row.date);
-      var full = row.spots_left === 0;
-      var added = !full && cartHas(row.class_id, row.occurrence_date);
-      var few = typeof row.spots_left === 'number' && row.spots_left >= 1 && row.spots_left <= 3;
-
-      chip.className = 'finder-chip' + (added ? ' is-added' : '') + (full ? ' is-full' : '');
-      chip.disabled = full;
-      if (full) chip.removeAttribute('aria-pressed');
-      else chip.setAttribute('aria-pressed', added ? 'true' : 'false');
-      chip.innerHTML = '';
-      if (added) {
-        var tick = el('span', 'sched-check');
-        tick.setAttribute('aria-hidden', 'true');
-        chip.appendChild(tick);
-      }
-      chip.appendChild(document.createTextNode(shortDateLabel(d)));
-
-      var noteText = full ? 'Full' : (few ? row.spots_left + ' left' : '');
-      chip.setAttribute('aria-label', DAY_NAMES_LONG[d.getDay()] + ' ' + shortDateLabel(d) +
-        (noteText ? ', ' + (full ? 'full' : row.spots_left + ' spot' + (row.spots_left === 1 ? '' : 's') + ' left') : ''));
-      var note = chip.nextElementSibling;
-      if (note) note.textContent = noteText;
-    });
-  }
-
-  function setBlockNote(block, text) {
-    var note = block && block.querySelector('.finder-note');
-    if (!note) return;
-    note.textContent = text || '';
-    note.hidden = !text;
-  }
-
-  // Reveal the rest of a class's dates. `focus` moves keyboard focus to the
-  // first date it revealed, since the button that had it is gone.
-  function expandDates(block, focus) {
-    var extra = block.querySelectorAll('.finder-date.is-extra');
-    Array.prototype.forEach.call(extra, function (c) { c.hidden = false; });
-    var moreCell = block.querySelector('.finder-date--more');
-    if (moreCell) moreCell.parentNode.removeChild(moreCell);
-    if (focus && extra.length) {
-      var first = extra[0].querySelector('.finder-chip');
-      if (first) first.focus();
-    }
-  }
-
-  if (elFinderList) elFinderList.addEventListener('click', function (e) {
-    var more = e.target.closest && e.target.closest('.finder-more');
-    if (more) {
-      expandDates(more.closest('.finder-class'), true);
-      return;
-    }
-    var chip = e.target.closest && e.target.closest('.finder-chip');
-    if (!chip || chip.disabled) return;
-    var row = finderRowsByKey[chip.getAttribute('data-key')];
-    if (!row || row.spots_left === 0) return;
-    var block = chip.closest('.finder-class');
-    if (cartHas(row.class_id, row.occurrence_date)) {
-      cartRemove(row.class_id, row.occurrence_date);
-      setBlockNote(block, '');
-    } else {
-      if (readCart().length >= MAX_LINES) {
-        setBlockNote(block, 'Six classes at a time. Check out, then add more.');
-        return;
-      }
-      var clash = cartClash(row);
-      if (clash) {
-        setBlockNote(block, clashText(clash));
-        return;
-      }
-      cartAdd(row);
-      setBlockNote(block, '');
-      renderNotice('');
-    }
-    syncCart();
-  });
-
-  // ── Thanksgiving menu ──
-  var tgRowsByDate = {};
-
+  // ── Campaign classes ──
   // A menu class: on one of the card's dates, starting before its cutoff
   // ("10:00:00" < "13:00"). Kept out of the class list and the week grid.
   function isTgRow(r) {
     return !!r && TG_DATES.indexOf(String(r.date).slice(0, 10)) !== -1 &&
       String(r.start_time) < TG_BEFORE;
   }
-
-  function setTgRows(rows) {
-    tgRowsByDate = {};
-    rows.forEach(function (r) {
-      if (!r || !r.class_id || !r.start_time || !isTgRow(r)) return;
-      var d = String(r.date).slice(0, 10);
-      (tgRowsByDate[d] = tgRowsByDate[d] || []).push(r);
-    });
-    Object.keys(tgRowsByDate).forEach(function (d) {
-      tgRowsByDate[d].sort(function (a, b) { return String(a.start_time).localeCompare(String(b.start_time)); });
-    });
-    paintTg();
-  }
-
-  function tgRowFor(seat) {
-    var li = seat.closest('[data-tg-date]');
-    var rows = tgRowsByDate[li.getAttribute('data-tg-date')] || [];
-    return rows[Number(seat.getAttribute('data-tg-seat'))];
-  }
-
-  // Each morning is announced with its Instagram post (Dixon 2026-11-03):
-  // before its data-tg-reveal stamp (NY time) it reads "To be announced" and
-  // its seats stay hidden. A page left open across the minute catches up.
-  // DWD families see the whole week early (Dixon 2026-11-03): the Wall post
-  // links /schedule/?early=dwd, which reveals every morning and is
-  // remembered on this browser so a return visit without the link still
-  // shows it. Booking itself is the Director's (all seven open 10am Nov 3).
-  var TG_EARLY_KEY = 'dwd.tg.early.2026';
-  var tgEarly = false;
-  try {
-    if (new URLSearchParams(location.search).get('early') === 'dwd') localStorage.setItem(TG_EARLY_KEY, '1');
-    tgEarly = localStorage.getItem(TG_EARLY_KEY) === '1';
-  } catch (e) {
-    tgEarly = new URLSearchParams(location.search).get('early') === 'dwd';
-  }
-  var elTgEarly = elTg && elTg.querySelector('[data-tg-early]');
-  if (elTgEarly) elTgEarly.hidden = !tgEarly;
-
-  function revealTg() {
-    if (!elTg) return true;
-    var now = nyNowStamp();
-    var all = true;
-    Array.prototype.forEach.call(elTg.querySelectorAll('[data-tg-reveal]'), function (li) {
-      var on = tgEarly || now >= li.getAttribute('data-tg-reveal');
-      li.classList.toggle('is-revealed', on);
-      if (!on) all = false;
-    });
-    return all;
-  }
-  if (!revealTg()) {
-    var tgRevealTimer = setInterval(function () {
-      if (revealTg()) clearInterval(tgRevealTimer);
-    }, 30000);
-  }
-
-  // One seating: closed until its class is open for drop-in, then Reserve,
-  // In your order, or Full. Price comes from the class; none set reads TBA.
-  function paintTg() {
-    if (!elTg) return;
-    if (nyTodayIso() > TG_LAST) { elTg.hidden = true; return; }
-    revealTg();
-    var seats = elTg.querySelectorAll('[data-tg-seat]');
-    Array.prototype.forEach.call(seats, function (seat) {
-      var btn = seat.querySelector('[data-tg-btn]');
-      var price = seat.querySelector('[data-tg-price]');
-      var row = tgRowFor(seat);
-      var open = row && row.drop_in_open && !isPast(row.date, row.start_time);
-      btn.className = 'tg-btn tap-44';
-      btn.innerHTML = '';
-      if (!open) {
-        btn.disabled = true;
-        btn.removeAttribute('aria-pressed');
-        btn.textContent = row && isPast(row.date, row.start_time) ? 'Served' : 'Reservations open soon';
-        price.textContent = '';
-        return;
-      }
-      price.textContent = typeof row.drop_in_fee_cents === 'number' ? money(row.drop_in_fee_cents) : 'Price TBA';
-      if (row.spots_left === 0) {
-        btn.disabled = true;
-        btn.removeAttribute('aria-pressed');
-        btn.textContent = 'Fully booked';
-        return;
-      }
-      btn.disabled = false;
-      var added = cartHas(row.class_id, row.occurrence_date);
-      btn.setAttribute('aria-pressed', added ? 'true' : 'false');
-      if (added) {
-        btn.className += ' is-added';
-        var tick = el('span', 'sched-check');
-        tick.setAttribute('aria-hidden', 'true');
-        btn.appendChild(tick);
-        btn.appendChild(document.createTextNode('In your order'));
-      } else {
-        btn.textContent = 'Reserve a seat';
-      }
-    });
-  }
-
-  // The cart bar is fixed over the bottom of the screen. On a phone, a seat
-  // tapped low on the screen opens its note right under the bar (QA
-  // 2026-10-31: the six-class note on Friday's last seating was cut off), so
-  // nudge the page up until the note clears it.
-  function clearCartBar(node) {
-    if (!elCartBar || elCartBar.hidden) return;
-    var over = node.getBoundingClientRect().bottom - elCartBar.getBoundingClientRect().top;
-    if (over > 0) window.scrollBy(0, over + 12);
-  }
-
-  if (elTg) elTg.addEventListener('click', function (e) {
-    var btn = e.target.closest && e.target.closest('[data-tg-btn]');
-    if (!btn || btn.disabled) return;
-    var seat = btn.closest('[data-tg-seat]');
-    var row = tgRowFor(seat);
-    var note = seat.querySelector('[data-tg-note]');
-    if (!row) return;
-    note.hidden = true;
-    if (cartHas(row.class_id, row.occurrence_date)) {
-      cartRemove(row.class_id, row.occurrence_date);
-    } else {
-      // Same order as the chips and the week grid: the six-class cap, then
-      // the same-time check (persona pass 2026-10-31).
-      var full = readCart().length >= MAX_LINES;
-      var clash = full ? null : cartClash(row);
-      if (full || clash) {
-        note.textContent = full ? 'Six classes at a time. Check out, then add more.' : clashText(clash);
-        note.hidden = false;
-        clearCartBar(note);
-        return;
-      }
-      cartAdd(row);
-    }
-    renderNotice('');
-    syncCart();
-  });
 
   // Localhost only: ?tg=demo fills the seven seatings with open rows to see
   // the menu without Director classes. Prices are Dixon's tentative 10-31
@@ -1247,69 +915,735 @@
     return out;
   }
 
-  // One cart, four surfaces: the bar, the chips, the menu, and the week grid if open.
+  // ── D: the strip of days, the day, the order (2026-11-07) ──────────────
+  // Every open drop-in date in the two 21-day windows becomes a day on the
+  // strip. A campaign's classes (isTgRow) are ONE wide tile instead of one
+  // tile per morning. The panel shows the picked day; every class is the same
+  // row. The order renders three times from the one cart: the desktop aside,
+  // the phone bar, and the phone sheet.
+
+  var allRows = [];
+  var rowsByKey = {};   // class_id|occurrence_date -> feed row
+  var slotRows = {};    // class_id|weekday|HH:MM -> open rows, by date
+  var dayList = [];
+  var dayKey = null;    // 'tg' or YYYY-MM-DD
+  var daysLoaded = false;
+  var expandedSlots = {};
+  var STATIC_PANEL = elPanel ? elPanel.innerHTML : '';
+
+  var WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+  function word(n) { return WORDS[n] || String(n); }
+  function cap(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
+  function byStart(a, b) {
+    return String(a.date).localeCompare(String(b.date)) || String(a.start_time).localeCompare(String(b.start_time));
+  }
+  function rowKey(r) { return r.class_id + '|' + r.occurrence_date; }
+  function slotKey(r) { return r.class_id + '|' + localDate(r.date).getDay() + '|' + String(r.start_time).slice(0, 5); }
+
+  // "Jazz with Tori Ugalde" -> { cls: 'Jazz', teacher: 'Tori Ugalde' }. The
+  // Director names a campaign class after its teacher; weekly classes have none.
+  function splitName(name) {
+    var m = String(name || '').match(/^(.*\S)\s+with\s+(.+)$/i);
+    return m ? { cls: m[1], teacher: m[2] } : { cls: String(name || ''), teacher: '' };
+  }
+
+  function toneOf(dateIso) { return TG_TONE[String(dateIso).slice(0, 10)] || ''; }
+  function toneVar(dateIso, isTg) {
+    var t = isTg ? toneOf(dateIso) : '';
+    return t ? 'var(--bk-' + t + ')' : 'var(--bk-neutral)';
+  }
+
+  function teacherPhoto(teacher, dateIso) {
+    var t = TEACHERS[teacher];
+    if (!t) return '';
+    var tone = toneOf(dateIso);
+    return (tone && t.photos[tone]) || t.photo || '';
+  }
+
+  // "ages 10 and up" -> "Ages 10 and up"; nothing for a class without a band.
+  function ageLabel(band) { return band ? cap(String(band).trim()) : ''; }
+
+  function timeBits(t) {
+    var s = fmtTime(t); // "4:45 pm"
+    var i = s.lastIndexOf(' ');
+    return i > 0 ? [s.slice(0, i), s.slice(i + 1)] : [s, ''];
+  }
+
+  function shortTime(t) { return fmtTime(t).replace(/:00(?=\s)/, '').replace(/\s+/g, ''); } // "10am", "4:45pm"
+
+  function campaignOn() {
+    if (!elBand || !TG_DATES.length) return false;
+    if (nyTodayIso() > TG_LAST) return false;
+    if (!daysLoaded) return true;
+    return dayList.some(function (d) { return d.tg; });
+  }
+
+  function applyCampaign() {
+    var on = campaignOn();
+    if (elBand) elBand.hidden = !on;
+    if (elPick) elPick.hidden = !on;
+    if (elHead) elHead.hidden = on;
+  }
+
+  function indexRows(rows) {
+    rowsByKey = {};
+    slotRows = {};
+    rows.forEach(function (r) {
+      if (!r || !r.class_id || !r.date || !r.start_time) return;
+      rowsByKey[rowKey(r)] = r;
+      if (!r.drop_in_open || isTgRow(r) || isPast(r.date, r.start_time)) return;
+      var k = slotKey(r);
+      (slotRows[k] = slotRows[k] || []).push(r);
+    });
+    Object.keys(slotRows).forEach(function (k) { slotRows[k].sort(byStart); });
+  }
+
+  function buildDays(rows) {
+    var open = rows.filter(function (r) {
+      return r && r.class_id && r.date && r.start_time && r.drop_in_open && !isPast(r.date, r.start_time);
+    });
+    var byDate = {}, keys = [], tgRows = [];
+    open.forEach(function (r) {
+      if (isTgRow(r)) { tgRows.push(r); return; }
+      var d = String(r.date).slice(0, 10);
+      if (!byDate[d]) { byDate[d] = []; keys.push(d); }
+      byDate[d].push(r);
+    });
+    keys.sort();
+    var days = keys.map(function (d) { return { key: d, date: d, rows: byDate[d].sort(byStart), tg: false }; });
+    if (tgRows.length && nyTodayIso() <= TG_LAST) {
+      tgRows.sort(byStart);
+      var tgDay = { key: 'tg', date: String(tgRows[0].date).slice(0, 10), rows: tgRows, tg: true };
+      var at = 0;
+      while (at < days.length && days[at].date <= tgDay.date) at++;
+      days.splice(at, 0, tgDay);
+    }
+    return days;
+  }
+
+  function currentDay() {
+    for (var i = 0; i < dayList.length; i++) if (dayList[i].key === dayKey) return dayList[i];
+    return null;
+  }
+
+  // ?day=YYYY-MM-DD (or tg), then ?class=<slug>'s first open date, then the
+  // campaign while it runs, then the first day with something to book.
+  function pickInitialDay() {
+    var q = new URLSearchParams(location.search);
+    var want = (q.get('day') || '').trim();
+    var slug = (q.get('class') || '').trim().toLowerCase();
+    var found = null;
+    if (want) dayList.forEach(function (d) { if (!found && (d.key === want || (want !== 'tg' && d.tg && d.rows.some(function (r) { return String(r.date).slice(0, 10) === want; })))) found = d; });
+    if (!found && slug) {
+      dayList.forEach(function (d) {
+        if (found) return;
+        if (d.rows.some(function (r) { return slugify(splitName(r.name).cls) === slug || slugify(r.name) === slug; })) found = d;
+      });
+    }
+    if (!found) dayList.forEach(function (d) { if (!found && d.tg) found = d; });
+    if (!found) found = dayList[0] || null;
+    dayKey = found ? found.key : null;
+  }
+
+  function dayInOrder(day, cart) {
+    return cart.some(function (l) {
+      if (day.tg) return isTgRow(l);
+      return String(l.date).slice(0, 10) === day.date && !isTgRow(l);
+    });
+  }
+
+  function renderSkeleton() {
+    if (!elStrip || elStrip.children.length) return;
+    for (var i = 0; i < 6; i++) elStrip.appendChild(el('span', 'bk-tile is-skel'));
+  }
+
+  function renderStrip() {
+    if (!elStrip) return;
+    elStrip.innerHTML = '';
+    var cart = readCart();
+    var lastMonth = -1, tiles = null;
+    dayList.forEach(function (day) {
+      var d = localDate(day.date);
+      if (d.getMonth() !== lastMonth) {
+        lastMonth = d.getMonth();
+        var grp = el('div', 'bk-grp');
+        grp.appendChild(el('p', 'bk-grp-l', MONTHS_LONG[lastMonth]));
+        tiles = el('div', 'bk-tiles');
+        grp.appendChild(tiles);
+        elStrip.appendChild(grp);
+      }
+      var on = day.key === dayKey;
+      var b = el('button', 'bk-tile' + (day.tg ? ' bk-tile--tg' : '') + (on ? ' is-on' : ''));
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.setAttribute('data-bk-day', day.key);
+      b.setAttribute('data-track', 'bk-day:' + (day.tg ? 'tg' : day.date));
+      var n = day.rows.length;
+      if (day.tg) {
+        b.appendChild(el('span', 'bk-tile-dw', TG_SHORT.toUpperCase()));
+        var nums = el('span', 'bk-tile-dn');
+        TG_DATES.forEach(function (iso) {
+          var s = el('span', '', String(localDate(iso).getDate()));
+          s.style.color = toneVar(iso, true);
+          nums.appendChild(s);
+        });
+        b.appendChild(nums);
+        b.appendChild(el('span', 'bk-tile-ct', n + ' ' + TG_UNIT));
+        b.setAttribute('aria-label', TG_LABEL + ', ' + n + ' ' + TG_UNIT);
+      } else {
+        b.appendChild(el('span', 'bk-tile-dw', DAY_SHORT[d.getDay()].toUpperCase()));
+        b.appendChild(el('span', 'bk-tile-dn', String(d.getDate())));
+        b.appendChild(el('span', 'bk-tile-ct', n + (n === 1 ? ' class' : ' classes')));
+        b.setAttribute('aria-label', DAY_NAMES_LONG[d.getDay()] + ' ' + MONTHS_LONG[d.getMonth()] + ' ' + d.getDate() + ', ' + n + (n === 1 ? ' class' : ' classes'));
+      }
+      if (dayInOrder(day, cart)) {
+        var dot = el('span', 'bk-tile-dot');
+        dot.setAttribute('aria-hidden', 'true');
+        b.appendChild(dot);
+        b.setAttribute('aria-label', b.getAttribute('aria-label') + ', in your order');
+      }
+      tiles.appendChild(b);
+    });
+    updateArrow();
+  }
+
+  function keepTileInView() {
+    var on = elStrip && elStrip.querySelector('.bk-tile.is-on');
+    if (!on) return;
+    var s = elStrip.getBoundingClientRect(), t = on.getBoundingClientRect();
+    if (t.left < s.left + 8 || t.right > s.right - 48) {
+      elStrip.scrollLeft += (t.left - s.left) - 72;
+    }
+    updateArrow();
+  }
+
+  function updateArrow() {
+    if (!elNext || !elStrip) return;
+    elNext.hidden = elStrip.scrollWidth - elStrip.clientWidth - elStrip.scrollLeft < 8;
+  }
+
+  function dealLine() {
+    var pairs = {}, list = [];
+    allRows.forEach(function (r) {
+      if (!r.drop_in_open || typeof r.drop_in_bulk_fee_cents !== 'number' || typeof r.drop_in_fee_cents !== 'number') return;
+      if (isPast(r.date, r.start_time)) return;
+      if (pairs[r.drop_in_fee_cents] == null) { pairs[r.drop_in_fee_cents] = r.drop_in_bulk_fee_cents; list.push(r.drop_in_fee_cents); }
+    });
+    if (!list.length) return null;
+    list.sort(function (a, b) { return b - a; });
+    var p = el('p', 'bk-deal');
+    var pips = el('span', 'bk-pips');
+    pips.setAttribute('aria-hidden', 'true');
+    for (var i = 0; i < DROP_IN_BULK_MIN; i++) pips.appendChild(el('i'));
+    p.appendChild(pips);
+    var t = el('span');
+    t.appendChild(el('b', '', 'Book ' + DROP_IN_BULK_MIN + ' or more in one order'));
+    t.appendChild(document.createTextNode(' and each class costs less: ' + list.map(function (fee, i) {
+      return money(fee) + ' classes ' + (i === 0 ? 'drop to ' : 'to ') + money(pairs[fee]);
+    }).join(', ') + '.'));
+    p.appendChild(t);
+    return p;
+  }
+
+  function rowEl(r, opts) {
+    opts = opts || {};
+    var isTg = isTgRow(r);
+    var nm = splitName(r.name);
+    var full = r.spots_left === 0;
+    var added = !full && cartHas(r.class_id, r.occurrence_date);
+    var li = el('div', 'bk-row' + (added ? ' is-on' : '') + (full ? ' is-full' : ''));
+    li.setAttribute('data-slug', slugify(nm.cls));
+    li.style.setProperty('--tone', toneVar(r.date, isTg));
+
+    var tb = timeBits(r.start_time);
+    var t = el('p', 'bk-t');
+    t.appendChild(el('b', '', tb[0]));
+    t.appendChild(el('i', '', tb[1]));
+    var len = lengthLabel(r.start_time, r.end_time);
+    if (len) t.appendChild(el('small', '', len));
+    li.appendChild(t);
+
+    var photo = nm.teacher ? teacherPhoto(nm.teacher, r.date) : '';
+    if (photo) {
+      var img = el('img', 'bk-av');
+      img.src = photo; img.alt = ''; img.width = 56; img.height = 56;
+      img.loading = 'lazy'; img.decoding = 'async';
+      li.appendChild(img);
+    } else {
+      var mark = el('span', 'bk-av bk-av--mark');
+      var mi = el('img');
+      mi.src = '/images/logos/v3/dwdPS-compact-transparent.svg'; mi.alt = ''; mi.width = 34; mi.height = 34;
+      mark.appendChild(mi);
+      li.appendChild(mark);
+    }
+
+    var main = el('div', 'bk-main-c');
+    main.appendChild(el('h4', 'bk-cls', nm.cls));
+    var by = el('p', 'bk-by');
+    if (nm.teacher) {
+      by.appendChild(el('span', '', nm.teacher));
+      if (TEACHERS[nm.teacher] && TEACHERS[nm.teacher].guest) by.appendChild(el('span', 'bk-guest', 'Guest'));
+    } else if (r.track_label) {
+      by.appendChild(el('span', '', trackWords(r.track_label)));
+    }
+    var age = ageLabel(r.age_band);
+    if (age) by.appendChild(el('span', 'bk-age', age));
+    main.appendChild(by);
+    li.appendChild(main);
+
+    var price = el('p', 'bk-px', money(r.drop_in_fee_cents));
+    if (typeof r.spots_left === 'number' && r.spots_left >= 1 && r.spots_left <= 3) {
+      price.appendChild(el('small', '', r.spots_left + (r.spots_left === 1 ? ' spot left' : ' spots left')));
+    }
+    li.appendChild(price);
+
+    var act = el('div', 'bk-act');
+    var btn = el('button', 'bk-add tap-44' + (added ? ' is-on' : ''));
+    btn.type = 'button';
+    btn.setAttribute('data-bk-add', rowKey(r));
+    btn.setAttribute('data-track', 'dropin_add');
+    if (full) {
+      btn.disabled = true;
+      btn.textContent = 'Full';
+    } else {
+      btn.setAttribute('aria-pressed', added ? 'true' : 'false');
+      btn.setAttribute('aria-label', (added ? 'Remove ' : 'Add ') + nm.cls + ', ' + DAY_NAMES_LONG[localDate(r.date).getDay()] + ' ' + shortDateLabel(localDate(r.date)) + ' at ' + fmtTime(r.start_time));
+      if (added) {
+        btn.innerHTML = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7"/></svg>';
+        btn.appendChild(document.createTextNode('Added'));
+      } else {
+        btn.textContent = 'Add';
+      }
+    }
+    act.appendChild(btn);
+    li.appendChild(act);
+
+    if (opts.chips) {
+      var others = (slotRows[slotKey(r)] || []).filter(function (o) { return rowKey(o) !== rowKey(r); });
+      if (others.length) {
+        var k = slotKey(r);
+        var also = el('div', 'bk-also');
+        also.appendChild(el('span', 'bk-also-l', 'Other ' + DAY_NAMES_LONG[localDate(r.date).getDay()] + 's:'));
+        var show = expandedSlots[k] ? others : others.slice(0, 3);
+        show.forEach(function (o) {
+          var oFull = o.spots_left === 0;
+          var oOn = !oFull && cartHas(o.class_id, o.occurrence_date);
+          var few = typeof o.spots_left === 'number' && o.spots_left >= 1 && o.spots_left <= 3;
+          var c = el('button', 'bk-chip' + (oOn ? ' is-on' : '') + (oFull ? ' is-full' : ''));
+          c.type = 'button';
+          c.setAttribute('data-bk-chip', rowKey(o));
+          c.setAttribute('data-track', 'dropin-chip:' + slugify(nm.cls));
+          var od = localDate(o.date);
+          if (oOn) c.innerHTML = '<span class="sched-check" aria-hidden="true"></span>';
+          c.appendChild(oFull ? el('s', '', shortDateLabel(od)) : document.createTextNode(shortDateLabel(od)));
+          if (oFull) c.appendChild(el('em', '', 'Full'));
+          else if (few) c.appendChild(el('em', '', o.spots_left + ' left'));
+          c.disabled = oFull;
+          if (!oFull) c.setAttribute('aria-pressed', oOn ? 'true' : 'false');
+          c.setAttribute('aria-label', nm.cls + ', ' + DAY_NAMES_LONG[od.getDay()] + ' ' + shortDateLabel(od) + (oFull ? ', full' : (oOn ? ', in your order' : '')));
+          also.appendChild(c);
+        });
+        if (others.length > 3 && !expandedSlots[k]) {
+          var more = el('button', 'bk-chip bk-chip--more', 'More');
+          more.type = 'button';
+          more.setAttribute('data-bk-more', k);
+          also.appendChild(more);
+        }
+        li.appendChild(also);
+      }
+    }
+
+    var note = el('p', 'bk-row-note');
+    note.setAttribute('role', 'status');
+    note.hidden = true;
+    li.appendChild(note);
+    return li;
+  }
+
+  function nextDayButton(label, target) {
+    var b = el('button', 'bk-next');
+    b.type = 'button';
+    b.setAttribute('data-bk-go', target.key);
+    var d = localDate(target.date);
+    b.appendChild(el('span', '', label));
+    b.appendChild(el('b', '', (target.tg ? TG_LABEL : DAY_NAMES_LONG[d.getDay()] + ', ' + shortDateLabel(d)) + ' →'));
+    return b;
+  }
+
+  function renderPanel() {
+    if (!elPanel) return;
+    var day = currentDay();
+    elPanel.innerHTML = '';
+    elPanel.classList.remove('is-loading');
+    if (!day) {
+      var p = el('p', 'bk-empty');
+      p.innerHTML = 'No drop-in spots are open right now. <a href="/contact/?reason=proseries">Ask Dixon &rarr;</a>';
+      elPanel.appendChild(p);
+      return;
+    }
+    var head = el('div', 'bk-ph');
+    if (day.tg) {
+      var mornings = {};
+      day.rows.forEach(function (r) { mornings[String(r.date).slice(0, 10)] = true; });
+      var m = Object.keys(mornings).length;
+      head.appendChild(el('h3', '', TG_LABEL));
+      head.appendChild(el('p', '', cap(word(day.rows.length)) + ' ' + TG_UNIT + ' over ' + word(m) + (TG_BEFORE <= '13:00' ? ' mornings' : ' days')));
+    } else {
+      var d = localDate(day.date);
+      head.appendChild(el('h3', '', DAY_NAMES_LONG[d.getDay()] + ', ' + MONTHS_LONG[d.getMonth()] + ' ' + d.getDate()));
+      head.appendChild(el('p', '', day.rows.length + (day.rows.length === 1 ? ' class' : ' classes') + ' with open spots'));
+    }
+    elPanel.appendChild(head);
+    var deal = dealLine();
+    if (deal) elPanel.appendChild(deal);
+
+    if (day.tg) {
+      var byDate = {};
+      day.rows.forEach(function (r) { var k = String(r.date).slice(0, 10); (byDate[k] = byDate[k] || []).push(r); });
+      var dates = Object.keys(byDate).concat(Object.keys(TG_CLOSED)).filter(function (x, i, a) { return a.indexOf(x) === i; }).sort();
+      var firstD = Object.keys(byDate).sort()[0];
+      dates.forEach(function (iso) {
+        if (iso < firstD) return;
+        var dd = localDate(iso);
+        if (!byDate[iso]) {
+          if (!TG_CLOSED[iso]) return;
+          var rest = el('div', 'bk-rest');
+          rest.appendChild(el('b', '', String(dd.getDate())));
+          rest.appendChild(el('span', '', DAY_NAMES[dd.getDay()]));
+          rest.appendChild(el('em', '', TG_CLOSED[iso]));
+          elPanel.appendChild(rest);
+          return;
+        }
+        var dh = el('div', 'bk-dayh');
+        dh.style.setProperty('--tone', toneVar(iso, true));
+        dh.appendChild(el('b', '', String(dd.getDate())));
+        dh.appendChild(el('span', '', DAY_NAMES[dd.getDay()]));
+        var who = [];
+        byDate[iso].forEach(function (r) { var t = splitName(r.name).teacher; if (t && who.indexOf(t) === -1) who.push(t); });
+        if (who.length) dh.appendChild(el('small', '', who.join(', ')));
+        elPanel.appendChild(dh);
+        byDate[iso].forEach(function (r) { elPanel.appendChild(rowEl(r)); });
+      });
+      var after = null;
+      dayList.forEach(function (x) { if (!after && !x.tg && x.date > TG_LAST) after = x; });
+      if (after) elPanel.appendChild(nextDayButton('Weekly classes pick up again', after));
+    } else {
+      var list = el('div', 'bk-rows');
+      day.rows.forEach(function (r) { list.appendChild(rowEl(r, { chips: true })); });
+      elPanel.appendChild(list);
+      var idx = dayList.indexOf(day);
+      if (idx >= 0 && dayList[idx + 1]) elPanel.appendChild(nextDayButton('Next class day', dayList[idx + 1]));
+    }
+  }
+
+  function selectDay(key) {
+    if (key === dayKey) return;
+    dayKey = key;
+    renderStrip();
+    renderPanel();
+    keepTileInView();
+    // Bring the new day's top up under the strip when it starts above it.
+    var bar = elStripbar && elStripbar.getBoundingClientRect();
+    var top = elPanel.getBoundingClientRect().top;
+    if (bar && top < bar.bottom) {
+      var y = window.pageYOffset + top - bar.height - stickOffset() - 8;
+      try { window.scrollTo({ top: Math.max(0, y), behavior: 'instant' }); } catch (e) { window.scrollTo(0, Math.max(0, y)); }
+    }
+  }
+
+  function toggleRow(r, noteHost) {
+    if (!r) return;
+    if (cartHas(r.class_id, r.occurrence_date)) {
+      cartRemove(r.class_id, r.occurrence_date);
+    } else {
+      if (r.spots_left === 0) return;
+      var full = readCart().length >= MAX_LINES;
+      var clash = full ? null : cartClash(r);
+      if (full || clash) {
+        var note = noteHost && noteHost.querySelector('.bk-row-note');
+        if (note) {
+          note.textContent = full ? 'Six classes at a time. Check out, then add more.' : clashText(clash);
+          note.hidden = false;
+          clearCartBar(note);
+        }
+        return;
+      }
+      cartAdd(r);
+      renderNotice('');
+    }
+    syncCart();
+  }
+
+  // The bar is fixed over the bottom of a phone; a note opened low on the
+  // screen would sit under it (QA 2026-10-31), so nudge the page up.
+  function clearCartBar(node) {
+    if (!elCartBar || elCartBar.hidden || getComputedStyle(elCartBar).display === 'none') return;
+    var over = node.getBoundingClientRect().bottom - elCartBar.getBoundingClientRect().top;
+    if (over > 0) window.scrollBy(0, over + 12);
+  }
+
+  if (elPanel) elPanel.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target : null;
+    if (!t) return;
+    var add = t.closest('[data-bk-add]');
+    if (add && !add.disabled) { toggleRow(rowsByKey[add.getAttribute('data-bk-add')], add.closest('.bk-row')); return; }
+    var chip = t.closest('[data-bk-chip]');
+    if (chip && !chip.disabled) { toggleRow(rowsByKey[chip.getAttribute('data-bk-chip')], chip.closest('.bk-row')); return; }
+    var more = t.closest('[data-bk-more]');
+    if (more) {
+      expandedSlots[more.getAttribute('data-bk-more')] = true;
+      renderPanel();
+      return;
+    }
+    var go = t.closest('[data-bk-go]');
+    if (go) selectDay(go.getAttribute('data-bk-go'));
+  });
+
+  if (elStrip) {
+    elStrip.addEventListener('click', function (e) {
+      var tile = e.target.closest && e.target.closest('[data-bk-day]');
+      if (tile) selectDay(tile.getAttribute('data-bk-day'));
+    });
+    elStrip.addEventListener('scroll', updateArrow, { passive: true });
+  }
+  if (elNext) elNext.addEventListener('click', function () {
+    var by = Math.round(elStrip.clientWidth * 0.7);
+    try { elStrip.scrollBy({ left: by, behavior: 'smooth' }); } catch (e) { elStrip.scrollLeft += by; }
+  });
+  window.addEventListener('resize', function () { updateArrow(); setStick(); });
+
+  // ── The order: one cart, drawn in the aside, the bar and the sheet ──
+  function sortedCart() { return readCart().slice().sort(byStart); }
+
+  function lineEl(line, active) {
+    var isTg = isTgRow(line);
+    var nm = splitName(line.name);
+    var d = localDate(line.date);
+    var li = el('li', 'bk-line');
+    var dt = el('span', 'bk-dt');
+    dt.style.setProperty('--tone', toneVar(line.date, isTg));
+    dt.appendChild(el('b', '', String(d.getDate())));
+    dt.appendChild(el('span', '', DAY_SHORT[d.getDay()].toUpperCase()));
+    li.appendChild(dt);
+    var w = el('span', 'bk-line-w');
+    w.appendChild(el('b', '', nm.cls));
+    w.appendChild(el('small', '', (nm.teacher ? nm.teacher + ' · ' : '') + shortDateLabel(d) + ', ' + shortTime(line.start_time)));
+    li.appendChild(w);
+    var cents = lineCents(line, active);
+    var px = el('span', 'bk-line-px', money(cents));
+    if (cents !== (line.fee_cents || 0)) px.appendChild(el('s', '', money(line.fee_cents)));
+    li.appendChild(px);
+    var x = el('button', 'bk-x');
+    x.type = 'button';
+    x.setAttribute('data-bk-remove', line.class_id + '|' + line.occurrence_date);
+    x.setAttribute('aria-label', 'Remove ' + nm.cls + ', ' + DAY_NAMES_LONG[d.getDay()] + ' ' + shortDateLabel(d));
+    x.innerHTML = '<svg viewBox="0 0 10 10" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l8 8M9 1l-8 8"/></svg>';
+    li.appendChild(x);
+    return li;
+  }
+
+  function meterText(cart) {
+    if (!anyBulk(cart) && cart.length) return '';
+    if (cart.length >= 2) return bulkNoteText(cart);
+    var need = DROP_IN_BULK_MIN - cart.length;
+    var each = cart.length ? sharedBulkCents(cart) : null;
+    if (cart.length === 1 && each != null) return 'Add ' + need + ' more and each date drops to ' + money(each) + '.';
+    return 'Book ' + DROP_IN_BULK_MIN + ' or more in one order and each class costs less.';
+  }
+
+  function meterEl(cart, cls) {
+    var won = cart.length >= DROP_IN_BULK_MIN && anyBulk(cart);
+    var m = el('div', (cls || 'bk-meter') + (won ? ' is-won' : ''));
+    var bars = el('span', 'bk-bars');
+    bars.setAttribute('aria-hidden', 'true');
+    for (var i = 0; i < DROP_IN_BULK_MIN; i++) bars.appendChild(el('i', i < cart.length ? 'is-f' : ''));
+    m.appendChild(bars);
+    var txt = meterText(cart);
+    if (txt) m.appendChild(el('p', '', txt));
+    return m;
+  }
+
+  function fillOrder(host, cart) {
+    if (!host) return;
+    host.innerHTML = '';
+    var h = el('h2', 'bk-order-h', 'Your order');
+    if (cart.length) h.appendChild(el('span', '', cart.length + (cart.length === 1 ? ' class' : ' classes')));
+    host.appendChild(h);
+    if (!cart.length) {
+      var empty = el('div', 'bk-order-empty');
+      empty.appendChild(el('p', '', 'Nothing yet. Pick a day, then tap Add on a class.'));
+      empty.appendChild(meterEl(cart));
+      host.appendChild(empty);
+      return;
+    }
+    var active = bulkActive(cart);
+    var ul = el('ul', 'bk-lines');
+    cart.forEach(function (l) { ul.appendChild(lineEl(l, active)); });
+    host.appendChild(ul);
+    host.appendChild(meterEl(cart));
+    var tot = el('div', 'bk-total');
+    tot.appendChild(el('span', '', 'Total'));
+    tot.appendChild(el('span', '', money(cartTotalCents(cart))));
+    host.appendChild(tot);
+    var go = el('button', 'btn arm-cta bk-go tap-44', 'Check out');
+    go.type = 'button';
+    go.setAttribute('data-bk-checkout', '');
+    go.setAttribute('data-track', 'dropin_checkout_start');
+    host.appendChild(go);
+    var fine = el('p', 'bk-fine');
+    fine.innerHTML = 'One dancer per order. You pay by card on Stripe&rsquo;s secure page. Paying with Step Up? <a href="https://dwd-director.netlify.app/drop-in" target="_blank" rel="noopener">Use the DWD family app</a>.';
+    host.appendChild(fine);
+  }
+
+  function renderOrder() {
+    var cart = sortedCart();
+    fillOrder(elOrder, cart);
+    fillOrder(elOrderSheet, cart);
+    if (!cart.length) {
+      elCartBar.hidden = true;
+      closeSheet();
+      return;
+    }
+    // The checkout and thank-you views hide the bar themselves.
+    if (elCheckout.hidden && elThankyou.hidden) elCartBar.hidden = false;
+    elCartCount.innerHTML = cart.length + (cart.length === 1 ? ' class' : ' classes') +
+      ' · <span class="sched-cart-amt">' + money(cartTotalCents(cart)) + '</span>' +
+      '<svg class="bk-chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 8l4-4 4 4"/></svg>';
+    if (elBarMeter) {
+      elBarMeter.innerHTML = '';
+      elBarMeter.appendChild(meterEl(cart, 'bk-meter bk-meter--bar'));
+    }
+    renderBulkNote(elCartBulkNote, '');
+  }
+
+  function orderClick(e) {
+    var x = e.target.closest && e.target.closest('[data-bk-remove]');
+    if (x) {
+      var k = x.getAttribute('data-bk-remove').split('|');
+      cartRemove(k[0], k[1]);
+      syncCart();
+      return;
+    }
+    if (e.target.closest && e.target.closest('[data-bk-checkout]')) {
+      closeSheet();
+      openCheckout();
+    }
+  }
+  if (elOrder) elOrder.addEventListener('click', orderClick);
+  if (elOrderSheet) elOrderSheet.addEventListener('click', orderClick);
+
+  // ── The phone's order sheet ──
+  var sheetReturn = null;
+  function openSheet() {
+    if (!elSheet || !readCart().length) return;
+    sheetReturn = document.activeElement;
+    elSheet.hidden = false;
+    if (elScrim) elScrim.hidden = false;
+    document.documentElement.classList.add('bk-sheet-open');
+    var h = elSheet.querySelector('[data-bk-sheet-close]');
+    if (h) try { h.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function closeSheet() {
+    if (!elSheet || elSheet.hidden) return;
+    elSheet.hidden = true;
+    if (elScrim) elScrim.hidden = true;
+    document.documentElement.classList.remove('bk-sheet-open');
+    if (sheetReturn && sheetReturn.focus) try { sheetReturn.focus({ preventScroll: true }); } catch (e) {}
+  }
+  if (elSheetOpen) elSheetOpen.addEventListener('click', openSheet);
+  if (elScrim) elScrim.addEventListener('click', closeSheet);
+  if (elSheet) elSheet.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('[data-bk-sheet-close]')) closeSheet();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
+
+  // The strip sticks under the fixed topnav.
+  function stickOffset() {
+    var nav = document.getElementById('topnav');
+    if (!nav) return 0;
+    var pos = getComputedStyle(nav).position;
+    return (pos === 'fixed' || pos === 'sticky') ? nav.offsetHeight : 0;
+  }
+  function setStick() { page.style.setProperty('--bk-stick', stickOffset() + 'px'); }
+
+  // One cart, every surface: the order, the strip's dots, the day, the week grid.
   function syncCart() {
-    renderCartBar();
-    paintChips();
-    paintTg();
+    renderOrder();
+    if (daysLoaded) { renderStrip(); renderPanel(); }
     if (gridReady) renderRows(currentRows);
   }
 
-  var finderSeq = 0;
-  function loadFinder() {
-    var seq = ++finderSeq;
-    if (!USE_STUB && !sb) { settleFinder(false); return; }
-    if (elFinderList) elFinderList.classList.add('is-loading');
+  var daySeq = 0;
+  function loadDays() {
+    var seq = ++daySeq;
+    renderSkeleton();
+    renderOrder();
+    if (!USE_STUB && !sb) { settleDays(false); return; }
+    if (elPanel) elPanel.classList.add('is-loading');
 
     var today = localDate(nyTodayIso());
     var a0 = toIso(today), a1 = toIso(addDays(today, FINDER_WINDOW - 1));
     var b0 = toIso(addDays(today, FINDER_WINDOW)), b1 = toIso(addDays(today, FINDER_WINDOW * 2 - 1));
 
     Promise.all([fetchWeek(a0, a1), fetchWeek(b0, b1)]).then(function (res) {
-      if (seq !== finderSeq) return;
+      if (seq !== daySeq) return;
       var rows = (res[0] || []).concat(res[1] || []);
-      // ?tg=demo stands in for the real menu classes (made closed 2026-10-31),
-      // or the seats would pair the two up.
       var demo = tgDemoRows();
       if (demo.length) rows = rows.filter(function (r) { return !isTgRow(r); }).concat(demo);
       applyBulkMin(rows);
-      setTgRows(rows);
+      allRows = rows;
+      indexRows(rows);
       var pruned = pruneCart(rows);
-      renderCartBar();
       if (pruned.dropped.length) {
         renderNotice(pruned.dropped[0] + ' closed since you added it, so it left your cart.');
       }
-      renderFinder(buildSlots(rows));
-      settleFinder(true);
+      dayList = buildDays(rows);
+      daysLoaded = true;
+      applyCampaign();
+      pickInitialDay();
+      renderStrip();
+      renderPanel();
+      renderOrder();
+      keepTileInView();
+      settleDays(true);
     }).catch(function (err) {
-      if (seq !== finderSeq) return;
+      if (seq !== daySeq) return;
       console.warn('drop-in classes:', err && err.message);
-      settleFinder(false);
+      settleDays(false);
     });
   }
 
-  function settleFinder() {
-    finderSettled = true;
-    if (elFinderList) elFinderList.classList.remove('is-loading');
+  function settleDays(ok) {
+    if (elPanel) elPanel.classList.remove('is-loading');
+    if (!ok) {
+      if (elStrip) elStrip.innerHTML = '';
+      if (elStripbar) elStripbar.hidden = true;
+      if (elPanel) {
+        elPanel.innerHTML = STATIC_PANEL;
+        var p = el('p', 'bk-empty');
+        p.innerHTML = 'The schedule is taking a minute. Refresh, or <a href="/contact/?reason=proseries">reach Dixon &rarr;</a>';
+        elPanel.insertBefore(p, elPanel.firstChild);
+      }
+      return;
+    }
     applyDeepLink();
   }
 
-  // ── ?class=<slug> ──
+  // ── ?class=<slug>: mark the class's row on the day it opened on ──
   function applyDeepLink() {
-    if (!deepLinkPending || !finderSettled || !elFinderList) return;
+    if (!deepLinkPending || !daysLoaded || !elPanel) return;
     deepLinkPending = false;
-    var blocks = elFinderList.querySelectorAll('.finder-class');
-    Array.prototype.forEach.call(blocks, function (b) { b.classList.remove('is-linked'); });
     var slug = (new URLSearchParams(location.search).get('class') || '').trim().toLowerCase();
     if (!slug) return;
-    var target = null;
-    for (var i = 0; i < blocks.length; i++) {
-      if (blocks[i].getAttribute('data-class-slug') === slug) { target = blocks[i]; break; }
+    var rows = elPanel.querySelectorAll('.bk-row');
+    for (var i = 0; i < rows.length; i++) {
+      if (rows[i].getAttribute('data-slug') === slug) {
+        rows[i].classList.add('is-linked');
+        scrollToBlock(rows[i]);
+        return;
+      }
     }
-    if (!target) return; // unknown slug: the normal page
-    target.classList.add('is-linked');
-    expandDates(target, false);
-    scrollToBlock(target);
   }
 
   // Aim a few times: web fonts landing can still move the block after the
@@ -1396,7 +1730,11 @@
     elMain.hidden = true;
     elThankyou.hidden = true;
     elError.hidden = true;
+    closeSheet();
     renderSummary();
+    // The order is the point on a desktop; on a phone it folds to one line
+    // so the form starts on the first screen.
+    if (elSumbox) elSumbox.open = window.matchMedia('(min-width: 900px)').matches;
     // The phone's Back (or a swipe) used to leave /schedule/ from here, which
     // from Instagram meant back to Instagram with the form lost (persona pass
     // 2026-10-31). One history entry for the open checkout; Back closes it.
@@ -1451,41 +1789,39 @@
   function closeCheckout() {
     elCheckout.hidden = true;
     elMain.hidden = false;
-    renderCartBar();
-    paintChips();
+    renderOrder();
+    if (daysLoaded) { renderStrip(); renderPanel(); }
     if (gridLoaded) loadWeek(currentWeekOffset);
     jumpToTop(null);
   }
 
   function renderSummary() {
-    var cart = readCart();
+    var cart = sortedCart();
     var active = bulkActive(cart);
     elSummaryList.innerHTML = '';
-    cart.forEach(function (line) {
-      var d = new Date(String(line.date).slice(0, 10) + 'T00:00:00');
-      var li = el('li', 'sched-summary-line');
-      var left = el('span', '', DAY_NAMES_LONG[d.getDay()] + ' \u00b7 ' + shortDateLabel(d) + ' \u00b7 ' + timeRange(line.start_time, null).split(' ')[0] + ' \u00b7 ' + line.name);
-      li.appendChild(left);
-      var right = el('span', 'sched-summary-line-right');
-      right.appendChild(el('span', '', money(lineCents(line, active))));
-      var rm = el('a', 'sched-remove-link tap-44', 'Remove');
-      rm.href = '#';
-      rm.addEventListener('click', function (e) {
-        e.preventDefault();
-        cartRemove(line.class_id, line.occurrence_date);
-        if (!readCart().length) { leaveCheckout(); return; }
-        renderSummary();
-      });
-      right.appendChild(rm);
-      li.appendChild(right);
-      elSummaryList.appendChild(li);
-    });
+    cart.forEach(function (line) { elSummaryList.appendChild(lineEl(line, active)); });
     var total = cartTotalCents(cart);
-    renderBulkNote(elBulkNote, bulkNoteText(cart));
+    if (elCoMeter) {
+      elCoMeter.innerHTML = '';
+      elCoMeter.appendChild(meterEl(cart));
+    }
+    renderBulkNote(elBulkNote, '');
     elSummaryTotal.textContent = money(total);
+    if (elSumShort) elSumShort.innerHTML = cart.length + (cart.length === 1 ? ' class' : ' classes') + ' · <b>' + money(total) + '</b>';
     elPayBtn.textContent = 'Pay ' + money(total);
     renderAgeNote();
   }
+
+  // The summary's x: same as the order's, but checkout stays open until the
+  // last line goes.
+  elSummaryList.addEventListener('click', function (e) {
+    var x = e.target.closest && e.target.closest('[data-bk-remove]');
+    if (!x) return;
+    var k = x.getAttribute('data-bk-remove').split('|');
+    cartRemove(k[0], k[1]);
+    if (!readCart().length) { leaveCheckout(); return; }
+    renderSummary();
+  });
 
   // ── Age note (2026-10-30) ──
   // One line under the date of birth when the dancer's age on a cart class's
@@ -1541,13 +1877,23 @@
     return '';
   }
 
+  // When the date of birth fits every class that has an age range, say so
+  // (2026-11-07). The warning and its box are unchanged.
   function renderAgeNote() {
     if (!elAgeNote || !elDob) return;
-    var text = ageNoteText(readCart(), elDob.value);
+    var cart = readCart();
+    var warn = ageNoteText(cart, elDob.value);
+    var ok = '';
+    if (!warn && cart.length && ageOn(elDob.value, cart[0].date) != null &&
+        cart.some(function (l) { return parseBand(lineBand(l)); })) {
+      ok = 'Fits every class in this order';
+    }
+    var text = warn || ok;
+    elAgeNote.classList.toggle('is-ok', !warn && !!ok);
     if (elAgeNote.textContent === text) return;
     elAgeNote.textContent = text;
     if (elAgeOk) {
-      elAgeOk.hidden = !text;
+      elAgeOk.hidden = !warn;
       if (elAgeOkBox) elAgeOkBox.checked = false;
     }
   }
@@ -1760,6 +2106,33 @@
     return written ? m : "We couldn't hold your spot just now. Nothing was charged. Try again in a minute.";
   }
 
+  // ── Add to calendar: one .ics per class, studio time (2026-11-07) ──
+  function icsStamp(dateIso, t) {
+    return String(dateIso).slice(0, 10).replace(/-/g, '') + 'T' + String(t || '00:00').slice(0, 5).replace(':', '') + '00';
+  }
+  function icsEscape(s) { return String(s || '').replace(/([,;\\])/g, '\\$1'); }
+  function icsHref(line) {
+    var now = new Date();
+    var stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    var end = line.end_time || (function () {
+      var m = minutesOf(line.start_time) + 60;
+      return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');
+    })();
+    var ics = [
+      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Dance With Dixon//Drop-in//EN', 'CALSCALE:GREGORIAN',
+      'BEGIN:VEVENT',
+      'UID:' + icsStamp(line.date, line.start_time) + '-' + slugify(line.name) + '@dancewithdixon.com',
+      'DTSTAMP:' + stamp,
+      'DTSTART;TZID=America/New_York:' + icsStamp(line.date, line.start_time),
+      'DTEND;TZID=America/New_York:' + icsStamp(line.date, end),
+      'SUMMARY:' + icsEscape(line.name + ' (Dance With Dixon)'),
+      'LOCATION:' + icsEscape('Exchange Dance Studio, 7409 Chancery Lane, Orlando, FL 32809'),
+      'DESCRIPTION:' + icsEscape('Arrive ten minutes early. All black, form-fitting. Bring water.'),
+      'END:VEVENT', 'END:VCALENDAR'
+    ].join('\r\n');
+    return 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+  }
+
   // ── Return from Stripe ──
   // drop_in_order_public answers ONE row per order: status,
   // dancer_first_name, amount_cents (what Stripe charged), bulk_applied, and
@@ -1771,9 +2144,10 @@
     if (elPending) elPending.hidden = true;
     elCheckout.hidden = true;
     elCartBar.hidden = true;
+    closeSheet();
     elThankyou.hidden = false;
 
-    var lines = (order && Array.isArray(order.lines)) ? order.lines : [];
+    var lines = (order && Array.isArray(order.lines)) ? order.lines.slice().sort(byStart) : [];
     var dancerFirstName = (order && order.dancer_first_name) || null;
     var days = {};
     lines.forEach(function (l) { days[String(l.date).slice(0, 10)] = true; });
@@ -1784,12 +2158,30 @@
     } else {
       elTyH1.textContent = 'See you soon.';
     }
+    if (elTyLede) {
+      elTyLede.hidden = !lines.length;
+      elTyLede.textContent = (dancerFirstName || 'Your dancer') + ' is booked for ' + word(lines.length) + (lines.length === 1 ? ' class.' : ' classes.');
+    }
 
     elTyList.innerHTML = '';
     lines.forEach(function (r) {
       var d = localDate(r.date);
-      var li = el('li', 'sched-summary-line');
-      li.appendChild(el('span', '', DAY_NAMES_LONG[d.getDay()] + ' \u00b7 ' + shortDateLabel(d) + ' \u00b7 ' + timeRange(r.start_time, null).split(' ')[0] + ' \u00b7 ' + r.name + (r.room ? ' \u00b7 ' + roomWords(r.room) : '')));
+      var nm = splitName(r.name);
+      var li = el('li', 'bk-tk');
+      li.style.setProperty('--tone', toneVar(r.date, isTgRow(r)));
+      var db = el('span', 'bk-tk-d');
+      db.appendChild(el('b', '', String(d.getDate())));
+      db.appendChild(el('span', '', DAY_SHORT[d.getDay()].toUpperCase() + ' ' + MONTHS_SHORT[d.getMonth()].toUpperCase()));
+      li.appendChild(db);
+      var m = el('span', 'bk-tk-m');
+      m.appendChild(el('b', '', nm.cls));
+      m.appendChild(el('small', '', [nm.teacher ? 'with ' + nm.teacher : '', timeRange(r.start_time, r.end_time), roomWords(r.room)].filter(Boolean).join(' · ')));
+      li.appendChild(m);
+      var cal = el('a', 'bk-cal tap-44', 'Add to calendar');
+      cal.href = icsHref(r);
+      cal.setAttribute('download', 'dwd-' + slugify(nm.cls) + '-' + String(r.date).slice(0, 10) + '.ics');
+      cal.setAttribute('data-track', 'dropin-add-calendar');
+      li.appendChild(cal);
       elTyList.appendChild(li);
     });
     renderBulkNote(elTyBulkNote, (order && order.bulk_applied) ? 'Four or more dates in one order. Each one costs less.' : '');
@@ -1797,6 +2189,7 @@
     elTyTotal.parentNode.hidden = !order;
 
     writeCart([]);
+    jumpToTop(elTyH1);
   }
 
   function pollPending(id, token, attempt) {
@@ -1854,7 +2247,7 @@
 
     if (!order) return false;
 
-    if (elFinderList) elFinderList.classList.add('is-loading');
+    if (elPanel) elPanel.classList.add('is-loading');
     fetchOrder(order, token).then(function (rows) {
       var status = rows.length ? rows[0].status : null;
       if (status === 'paid') {
@@ -1869,11 +2262,11 @@
         if (status === 'expired' || status === 'cancelled') {
           renderNotice('That checkout timed out. Nothing was charged.');
         }
-        loadFinder();
+        loadDays();
       }
     }).catch(function (err) {
       console.warn('order lookup:', err && err.message);
-      loadFinder();
+      loadDays();
     });
     return true;
   }
@@ -1885,13 +2278,15 @@
   function start() {
     if (started) return;
     started = true;
-    paintTg(); // hides the menu after Thanksgiving week even if the feed fails
+    setStick();
+    applyCampaign(); // hides the band after its last day even if the feed fails
+    renderOrder();
     var returning = handleReturn();
     if (new URLSearchParams(location.search).get('order') === 'stub') {
       // QA hook for the thank-you screenshot against the stub, per the brief's
       // verification step (checks thankyou_renders_from_rpc_or_stub).
     } else if (!returning) {
-      loadFinder();
+      loadDays();
     }
     if (wantsFullWeek()) openFullWeek();
   }

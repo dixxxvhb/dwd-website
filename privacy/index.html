@@ -86,8 +86,27 @@
 
   })();
   </script>
-  <!-- The home hero LCP preload is dropped on this route: its hero is not
-       what paints here. See scripts/build-routes.mjs. -->
+  <!-- LCP hero preload (home page first paint). Which image is the LCP is not
+       known until the picker above has run, so the link is written here, in the
+       head and above the stylesheet, exactly where the static one used to sit.
+
+       The inert link at the end of this block never applies (media="not all").
+       It is here because scripts/build-routes.mjs drops this whole block from
+       the six route shells by matching on its last line, and the shells are
+       build output. Do not remove it. -->
+  <script>
+  (function () {
+    var pick = window.__hero;
+    if (!pick) return;
+    var base = '/images/photos/hero/' + pick.l + '-', set = [], k;
+    for (k = 0; k < pick.s.length; k++) set.push(base + pick.s[k][0] + '.webp ' + pick.s[k][1] + 'w');
+    document.write('<link rel="preload" as="image" type="image/webp" href="' + base + pick.s[pick.s.length - 1][0] + '.webp" imagesrcset="' + set.join(', ') + '" imagesizes="(max-width: 768px) 100vw, 60vw" fetchpriority="high">');
+  })();
+  </script>
+  <link rel="preload" as="image" media="not all"
+        href="/images/photos/hero/A-1600.webp"
+        type="image/webp"
+        fetchpriority="high">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Privacy Policy · Dance With Dixon">
@@ -2488,322 +2507,253 @@
       </div>
     </section>
 
-    <!-- ══════════ SCHEDULE = THE DROP-IN PAGE (2026-09-24) ══════════
-         /schedule/ leads with the five weekly drop-in classes, each with its
-         next bookable dates as tap targets (docs/plans/2026-09-24-drop-in-finder.md).
-         Two taps from landing to a filled cart: a date, then Check out.
+    <!-- ══════════ SCHEDULE = THE DROP-IN PAGE (D, 2026-11-07) ══════════
+         Dixon picked "D" from the booking mockups (2026-11-07, review page
+         https://claude.ai/artifact/L4oji5uRh4SQyPTxgDkEQV; plan
+         docs/plans/2026-11-07-booking-d.md). Three layers:
+           1. The campaign band (.bk-band) while a campaign runs: its title,
+              the teachers, the dancer on the pink disc. It hides itself the
+              day after its last date.
+           2. One strip of class days (.bk-strip), the only way around the
+              page. A campaign's mornings are ONE wide tile, picked when the
+              page opens, so the whole week shows at once.
+           3. One row for every class (.bk-row): time, face, class, age,
+              price, Add. Weekly classes carry chips for the same class on
+              other weeks. The order sits on the right on a desktop
+              (.bk-aside) and in the bottom bar + a sheet on a phone.
 
-         js/schedule.js reads public_site_schedule and REPLACES the static
-         class list below with the live one (dates, spots, prices). Same
-         contract as js/now.js: the markup already reads as a finished page, so
-         a dead feed, a blocked CDN or no JS still shows the five classes. Each
-         static Book link opens the full week, where the live grid lives.
-
-         ?class=<slug> (slug of the public class name) scrolls to that class
-         and opens its later dates. The full ProSeries week sits behind one
-         toggle and opens on its own for #sched-list or ?week=. -->
+         js/schedule.js reads public_site_schedule and renders the strip, the
+         day and the order. The static list in the panel stands for no JS, a
+         dead feed or a blocked CDN. ?day=YYYY-MM-DD opens a day,
+         ?class=<slug> opens the class's first open date and marks its row.
+         The full ProSeries week still sits behind one toggle (#sched-list,
+         ?week=). -->
     <section class="page" id="page-schedule" data-arm="ps" aria-label="Drop-in classes">
-      <div class="sched-wrap">
-        <div class="sched-notice" data-sched-notice hidden></div>
+      <div class="bk-noticewrap"><div class="sched-notice" data-sched-notice hidden></div></div>
 
-        <div class="sched-main" data-sched-main>
-          <!-- Thanksgiving week 2026 (Nov 23 to 27): the menu from the Instagram
-               post, seven seatings over three mornings. Each seating books its
-               own Director class through the same cart and checkout as the
-               chips below; until that class exists with drop-in open, its
-               button reads "Reservations open soon". schedule.js hides the
-               whole block after Nov 27. Plan: docs/plans/2026-10-28-thanksgiving-menu.md
-               This card is also the rule: a class on one of its data-tg-date
-               days that starts before data-tg-before is a menu class, so
-               js/schedule.js (class list, week grid), js/now.js (DROP IN
-               panel) and scripts/check-classes-jsonld.mjs all leave it out of
-               the weekly lists. Delete the card and the rule goes with it. -->
-          <section class="tg" data-tg data-tg-before="13:00" aria-labelledby="tg-title">
-            <div class="tg-card">
-              <img class="tg-crest" src="/images/logos/v3/dwdPS-compact-transparent.svg" width="84" height="84" alt="dwdPROSERIES" decoding="async">
-              <p class="tg-house">Dance With Dixon</p>
-              <h2 class="tg-title" id="tg-title">Thanksgiving Week</h2>
-              <p class="tg-sub">Masterclass Menu</p>
-              <div class="tg-ww">
-                <div><p class="tg-ww-lbl">When</p><p class="tg-ww-big">Nov 24, 25 + 27</p><p class="tg-ww-sm">10am to 1pm</p></div>
-                <div><p class="tg-ww-lbl">Where</p><p class="tg-ww-big">Exchange Dance</p><p class="tg-ww-sm">7409 Chancery Lane, Orlando</p></div>
-              </div>
-              <p class="tg-dek">Evening classes are off for the holiday week. Three mornings of masterclasses, open to dancers from every studio.</p>
-              <p class="tg-early" data-tg-early hidden>DWD families, this is your early look. Reserve before anyone else.</p>
-              <div class="tg-orn" aria-hidden="true"></div>
-
-              <ol class="tg-courses">
-                <!-- Seats are numbered per morning in time order (0, 1, 2):
-                     schedule.js fills them with that date's Director classes
-                     that start before 1pm, earliest first. -->
-                <!-- Each morning is announced with its Instagram post (Dixon
-                     2026-11-03): until data-tg-reveal (New York time) it reads
-                     "To be announced" and its classes stay hidden. Booking
-                     opens at the same minute (pg_cron jobs tg-open-*-2026). -->
-                <li class="tg-course" data-tg-date="2026-11-24" data-tg-reveal="2026-11-04 07:00">
-                  <p class="tg-no">Tuesday &middot; November 24</p>
-                  <p class="tg-desc tg-tba">To be announced Wednesday</p>
-                  <div class="tg-classes tg-classes--pair">
-                    <div class="tg-class">
-                      <h3 class="tg-dish">Jazz</h3>
-                      <p class="tg-teacher">Tori Ugalde</p>
-                      <div class="tg-seats">
-                        <div class="tg-seat" data-tg-seat="0">
-                          <p class="tg-when">10:00&nbsp;am to 12:00&nbsp;pm</p>
-                          <p class="tg-who">all ages</p>
-                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:tue-1" disabled>Reservations open soon</button></div>
-                          <p class="tg-note" data-tg-note role="status" hidden></p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="tg-class">
-                      <h3 class="tg-dish">Musical Theatre</h3>
-                      <p class="tg-teacher">Dixon Bowles</p>
-                      <div class="tg-seats">
-                        <div class="tg-seat" data-tg-seat="1">
-                          <p class="tg-when">12:00 to 1:00&nbsp;pm</p>
-                          <p class="tg-who">all ages</p>
-                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:tue-2" disabled>Reservations open soon</button></div>
-                          <p class="tg-note" data-tg-note role="status" hidden></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="tg-course" data-tg-date="2026-11-25" data-tg-reveal="2026-11-05 07:00">
-                  <p class="tg-no">Wednesday &middot; November 25</p>
-                  <p class="tg-desc tg-tba">To be announced Thursday</p>
-                  <div class="tg-classes">
-                    <div class="tg-class">
-                      <h3 class="tg-dish">Contemporary Fusion</h3>
-                      <p class="tg-teacher">Megan Montgomery</p>
-                      <div class="tg-seats">
-                        <div class="tg-seat" data-tg-seat="0">
-                          <p class="tg-when">10:00 to 11:30&nbsp;am</p>
-                          <p class="tg-who">ages 9 and under</p>
-                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:wed-1" disabled>Reservations open soon</button></div>
-                          <p class="tg-note" data-tg-note role="status" hidden></p>
-                        </div>
-                        <div class="tg-seat" data-tg-seat="1">
-                          <p class="tg-when">11:30&nbsp;am to 1:00&nbsp;pm</p>
-                          <p class="tg-who">ages 10 and up</p>
-                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:wed-2" disabled>Reservations open soon</button></div>
-                          <p class="tg-note" data-tg-note role="status" hidden></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="tg-course tg-course--rest">
-                  <p class="tg-no">Thursday &middot; November 26</p>
-                  <p class="tg-desc">Closed for Thanksgiving</p>
-                </li>
-                <li class="tg-course" data-tg-date="2026-11-27" data-tg-reveal="2026-11-03 07:00">
-                  <p class="tg-no">Friday &middot; November 27</p>
-                  <p class="tg-desc tg-tba">To be announced today</p>
-                  <div class="tg-classes tg-classes--pair">
-                    <div class="tg-class">
-                      <h3 class="tg-dish">Jazz Funk</h3>
-                      <p class="tg-teacher">Gabriella Vultaggio</p>
-                      <div class="tg-seats">
-                        <div class="tg-seat" data-tg-seat="0">
-                          <p class="tg-when">10:00 to 11:00&nbsp;am</p>
-                          <p class="tg-who">ages 9 and under</p>
-                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:fri-1" disabled>Reservations open soon</button></div>
-                          <p class="tg-note" data-tg-note role="status" hidden></p>
-                        </div>
-                        <div class="tg-seat" data-tg-seat="1">
-                          <p class="tg-when">11:00&nbsp;am to 12:00&nbsp;pm</p>
-                          <p class="tg-who">ages 10 and up</p>
-                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:fri-2" disabled>Reservations open soon</button></div>
-                          <p class="tg-note" data-tg-note role="status" hidden></p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="tg-class">
-                      <h3 class="tg-dish">Stretch &amp; Strengthen</h3>
-                      <p class="tg-teacher">Dixon Bowles</p>
-                      <div class="tg-seats">
-                        <div class="tg-seat" data-tg-seat="2">
-                          <p class="tg-when">12:00 to 1:00&nbsp;pm</p>
-                          <p class="tg-who">all ages</p>
-                          <div class="tg-act"><span class="tg-price" data-tg-price></span><button class="tg-btn tap-44" type="button" data-tg-btn data-track="tg-reserve:fri-3" disabled>Reservations open soon</button></div>
-                          <p class="tg-note" data-tg-note role="status" hidden></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ol>
-
-              <p class="tg-sig">dwdPROSERIES<!-- Tamara Mark — For Mom --><svg class="tg-mark" viewBox="0 0 44 30" aria-hidden="true"><defs><linearGradient id="tg-tm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9956c"/><stop offset=".5" stop-color="#e8c49a"/><stop offset="1" stop-color="#d4a574"/></linearGradient></defs><circle cx="16" cy="17" r="11" fill="none" stroke="url(#tg-tm)" stroke-width="1.6"/><circle cx="27" cy="13" r="9" fill="none" stroke="url(#tg-tm)" stroke-width="1.6"/></svg></p>
+      <div class="bk-main" data-sched-main>
+        <!-- The campaign band. Also THE RULE for which classes are campaign
+             classes: a class on one of the data-tg-date days below that starts
+             before data-tg-before. js/schedule.js (strip, week grid), js/now.js
+             (DROP IN panel) and scripts/check-classes-jsonld.mjs all read it.
+             The config list carries each morning's color, the closed day, and
+             each teacher's photo (data-photo-<tone> for a teacher on two days).
+             Teachers are matched by the "with <Name>" in the Director's class
+             name. Delete the band and the rule goes with it. -->
+        <section class="bk-band" data-tg data-tg-before="13:00" data-tg-label="Thanksgiving week" data-tg-short="Thanksgiving" data-tg-unit="masterclasses" aria-labelledby="bk-band-title">
+          <div class="bk-band-in">
+            <div class="bk-band-txt">
+              <p class="bk-kicker">Thanksgiving week &middot; Nov 24, 25 + 27</p>
+              <h1 class="bk-band-title" id="bk-band-title"><span>Thanksgiving</span> <em>masterclasses</em></h1>
+              <p class="bk-band-lede"><b>Mornings, 10am to 1pm</b> at Exchange Dance. Open to dancers from every studio.</p>
+              <ul class="bk-lineup" aria-label="The teachers">
+                <li style="--tone:var(--bk-tue)"><img src="/images/photos/opt/tg2026-tori-128.webp" width="56" height="56" alt="" loading="lazy" decoding="async"><span>Tori<small>Tue</small></span></li>
+                <li style="--tone:var(--bk-wed)"><img src="/images/photos/opt/tg2026-megan-128.webp" width="56" height="56" alt="" loading="lazy" decoding="async"><span>Megan<small>Wed</small></span></li>
+                <li style="--tone:var(--bk-fri)"><img src="/images/photos/opt/tg2026-gabriella-128.webp" width="56" height="56" alt="" loading="lazy" decoding="async"><span>Gabriella<small>Fri</small></span></li>
+                <li style="--tone:var(--bk-neutral)"><img src="/images/photos/opt/tg2026-dixon-128.webp" width="56" height="56" alt="" loading="lazy" decoding="async"><span>Dixon<small>Tue + Fri</small></span></li>
+              </ul>
             </div>
-          </section>
-
-          <div class="sched-header">
-            <p class="kicker">DROP IN &middot; NO AUDITION</p>
-            <h1 class="sched-h1">No audition. Just drop in.</h1>
-            <p class="sched-dek">Five dwdPROSERIES team classes a week with open spots, at Exchange Dance in Orlando. Any dancer the right age is welcome. Pick a date, pay online, show up.</p>
+            <div class="bk-band-art" aria-hidden="true">
+              <span class="bk-ring"></span><span class="bk-disc"></span>
+              <img class="bk-cut" src="/images/photos/opt/tg2026-daisy-764.webp" width="308" height="764" alt="" loading="lazy" decoding="async" data-lcp="schedule">
+            </div>
           </div>
-
-          <!-- The room (2026-10-22): four frames from the Oct 21 Wednesday
-               drop-in, all from behind or wide. Real src + lazy since
-               2026-10-30 (data-src made the page's LCP wait for main.js):
-               lazy never fetches inside a hidden section or a display:none
-               photo, so Home and the phone's dropped pair still cost nothing,
-               and build-routes makes the data-lcp one eager in this shell. -->
-          <div class="sched-band" aria-label="Photos from a Wednesday drop-in">
-            <img width="800" height="1422" src="/images/photos/opt/dropin-wod-reach-800.webp" alt="The whole room in a reach, Wednesday drop-in" loading="lazy" decoding="async" data-lcp="schedule" data-lightbox>
-            <img width="800" height="1422" src="/images/photos/opt/dropin-wod-balance-800.webp" alt="A dancer holding a balance in front of the mirror" loading="lazy" decoding="async" data-lightbox>
-            <img width="800" height="1422" src="/images/photos/opt/dropin-wod-lunge-800.webp" alt="Lunge and reach across the floor" loading="lazy" decoding="async" data-lightbox>
-            <img width="800" height="1422" src="/images/photos/opt/dropin-wod-walkover-800.webp" alt="Walkovers at the end of class" loading="lazy" decoding="async" data-lightbox>
-          </div>
-
-          <ul class="finder-list" data-finder-list aria-label="Drop-in classes">
-            <li class="finder-class" data-class-slug="technique-flexibility">
-              <p class="finder-top"><span class="finder-when">Tue 4:45&nbsp;pm</span><span class="finder-price">$15</span></p>
-              <h2 class="finder-name">Technique &amp; Flexibility</h2>
-              <p class="finder-meta">Prep &middot; ages 5 to 9 &middot; 1 hr</p>
-              <a class="finder-book tap-44" href="#sched-list">Book</a>
-            </li>
-            <li class="finder-class" data-class-slug="ballet">
-              <p class="finder-top"><span class="finder-when">Tue 4:45&nbsp;pm</span><span class="finder-price">$20</span></p>
-              <h2 class="finder-name">Ballet</h2>
-              <p class="finder-meta">Elite + Pro &middot; ages 10 and up &middot; 1 hr 15</p>
-              <a class="finder-book tap-44" href="#sched-list">Book</a>
-            </li>
-            <li class="finder-class" data-class-slug="advanced-technique-tricks">
-              <p class="finder-top"><span class="finder-when">Tue 6:00&nbsp;pm</span><span class="finder-price">$20</span></p>
-              <h2 class="finder-name">Advanced Technique &amp; Tricks</h2>
-              <p class="finder-meta">Pro &middot; ages 12 and up &middot; 1 hr</p>
-              <a class="finder-book tap-44" href="#sched-list">Book</a>
-            </li>
-            <li class="finder-class" data-class-slug="contemporary">
-              <p class="finder-top"><span class="finder-when">Tue 7:00&nbsp;pm</span><span class="finder-price">$20</span></p>
-              <h2 class="finder-name">Contemporary</h2>
-              <p class="finder-meta">Elite + Pro &middot; ages 10 and up &middot; 1 hr 30</p>
-              <a class="finder-book tap-44" href="#sched-list">Book</a>
-            </li>
-            <li class="finder-class" data-class-slug="jazz">
-              <p class="finder-top"><span class="finder-when">Wed 4:15&nbsp;pm</span><span class="finder-price">$20</span></p>
-              <h2 class="finder-name">Jazz</h2>
-              <p class="finder-meta">Elite + Pro &middot; ages 10 and up &middot; 1 hr 30</p>
-              <a class="finder-book tap-44" href="#sched-list">Book</a>
-            </li>
+          <ul class="bk-config" hidden>
+            <li data-tg-date="2026-11-24" data-tone="tue"></li>
+            <li data-tg-date="2026-11-25" data-tone="wed"></li>
+            <li data-tg-closed="2026-11-26">Closed for Thanksgiving</li>
+            <li data-tg-date="2026-11-27" data-tone="fri"></li>
+            <li data-teacher="Tori Ugalde" data-guest data-photo="/images/photos/opt/tg2026-tori-128.webp"></li>
+            <li data-teacher="Megan Montgomery" data-guest data-photo="/images/photos/opt/tg2026-megan-128.webp"></li>
+            <li data-teacher="Gabriella Vultaggio" data-guest data-photo="/images/photos/opt/tg2026-gabriella-128.webp"></li>
+            <li data-teacher="Dixon Bowles" data-photo="/images/photos/opt/tg2026-dixon-128.webp" data-photo-tue="/images/photos/opt/tg2026-dixon-tue-128.webp" data-photo-fri="/images/photos/opt/tg2026-dixon-fri-128.webp"></li>
           </ul>
+        </section>
 
-          <div class="sched-know">
-            <h2 class="sched-know-head">What to know</h2>
-            <ul class="sched-know-list">
-              <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Exchange+Dance+Studio%2C+7409+Chancery+Lane%2C+Orlando%2C+FL+32809" target="_blank" rel="noopener">Exchange Dance &middot; 7409 Chancery Lane, Orlando</a></li>
-              <li>All black, form-fitting. Leotard and tights, or a fitted top and leggings. Hair pulled back off the face.</li>
-              <li>Arrive ten minutes early. No street shoes on the floor. Bring water.</li>
-              <li>Can&rsquo;t make it? Email us before class starts and we&rsquo;ll move you to another week.</li>
-            </ul>
-          </div>
-
-          <!-- The full ProSeries week: the pager + grid exactly as before
-               (skip-empty-week first load, the October jump line). Collapsed
-               by default; js/schedule.js loads it on first open. -->
-          <div class="sched-full" data-sched-full>
-            <button type="button" class="sched-full-toggle tap-44" aria-expanded="false" aria-controls="sched-full-body" data-sched-full-toggle data-track="schedule-full-week">See the full ProSeries week<span class="sched-full-chev" aria-hidden="true"></span></button>
-            <div class="sched-full-body" id="sched-full-body" data-sched-full-body hidden>
-              <div class="sched-week-switch" data-sched-week-switch>
-                <button type="button" class="sched-week-btn sched-week-nav" data-sched-week-prev hidden>&lsaquo; Earlier</button>
-                <span class="sched-week-now" data-sched-week-label>This week</span>
-                <button type="button" class="sched-week-btn sched-week-nav" data-sched-week-next hidden>Later &rsaquo;</button>
+        <div class="bk-wrap">
+          <div class="bk-layout">
+            <div class="bk-col">
+              <div class="bk-pick" data-bk-pick>
+                <h2 class="bk-pick-h">Pick a day</h2>
+                <p class="bk-pick-p">No audition. Every class is at Exchange Dance, Orlando.</p>
               </div>
-              <p class="sched-week-jump" data-sched-week-jump hidden>
-                <button type="button" class="sched-week-jump-btn" data-sched-week-jump-btn></button>
-              </p>
-              <div class="sched-notice" data-sched-week-notice hidden></div>
-              <div class="sched-list" id="sched-list" data-sched-list aria-live="polite">
-                <div class="sched-skel">
-                  <div class="sched-skel-row"></div>
-                  <div class="sched-skel-row"></div>
-                  <div class="sched-skel-row"></div>
+              <div class="bk-head" data-bk-head hidden>
+                <p class="bk-kicker">Drop in &middot; No audition</p>
+                <h1 class="bk-h1">No audition. Just drop in.</h1>
+                <p class="bk-dek">Pick a day. Add the classes you want. Pay once.</p>
+              </div>
+
+              <div class="bk-stripbar" data-bk-stripbar>
+                <div class="bk-strip" data-bk-strip role="tablist" aria-label="Class days"></div>
+                <button type="button" class="bk-arrow" data-bk-next aria-label="Later dates" hidden><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 2l5 5-5 5"/></svg></button>
+              </div>
+
+              <div class="bk-panel" data-bk-panel>
+                <!-- No JS or no feed: the five weekly classes as plain rows. -->
+                <ul class="bk-static" aria-label="Weekly drop-in classes">
+                  <li><b>Tuesday 4:45 pm</b> Technique &amp; Flexibility <span>With the Prep team &middot; ages 5 to 9 &middot; $15</span></li>
+                  <li><b>Tuesday 4:45 pm</b> Ballet <span>With the Elite + Pro team &middot; ages 10 and up &middot; $20</span></li>
+                  <li><b>Tuesday 6:00 pm</b> Advanced Technique &amp; Tricks <span>With the Pro team &middot; ages 12 and up &middot; $20</span></li>
+                  <li><b>Tuesday 7:00 pm</b> Contemporary <span>With the Elite + Pro team &middot; ages 10 and up &middot; $20</span></li>
+                  <li><b>Wednesday 4:15 pm</b> Jazz <span>With the Elite + Pro team &middot; ages 10 and up &middot; $20</span></li>
+                </ul>
+              </div>
+
+              <div class="bk-know">
+                <div><h3>Where</h3><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Exchange+Dance+Studio%2C+7409+Chancery+Lane%2C+Orlando%2C+FL+32809" target="_blank" rel="noopener">Exchange Dance &middot; 7409 Chancery Lane, Orlando</a></p></div>
+                <div><h3>Wear</h3><p>All black, form-fitting. Leotard and tights, or a fitted top and leggings. Hair pulled back off the face.</p></div>
+                <div><h3>Arrive</h3><p>Ten minutes early. No street shoes on the floor. Bring water.</p></div>
+                <div><h3>Can&rsquo;t make it?</h3><p>Email us before class starts and we&rsquo;ll move you to another week.</p></div>
+              </div>
+
+              <!-- The full ProSeries week: the pager + grid exactly as before
+                   (skip-empty-week first load, the October jump line). Collapsed
+                   by default; js/schedule.js loads it on first open. -->
+              <div class="sched-full" data-sched-full>
+                <button type="button" class="sched-full-toggle tap-44" aria-expanded="false" aria-controls="sched-full-body" data-sched-full-toggle data-track="schedule-full-week">See the full ProSeries week<span class="sched-full-chev" aria-hidden="true"></span></button>
+                <div class="sched-full-body" id="sched-full-body" data-sched-full-body hidden>
+                  <div class="sched-week-switch" data-sched-week-switch>
+                    <button type="button" class="sched-week-btn sched-week-nav" data-sched-week-prev hidden>&lsaquo; Earlier</button>
+                    <span class="sched-week-now" data-sched-week-label>This week</span>
+                    <button type="button" class="sched-week-btn sched-week-nav" data-sched-week-next hidden>Later &rsaquo;</button>
+                  </div>
+                  <p class="sched-week-jump" data-sched-week-jump hidden>
+                    <button type="button" class="sched-week-jump-btn" data-sched-week-jump-btn></button>
+                  </p>
+                  <div class="sched-notice" data-sched-week-notice hidden></div>
+                  <div class="sched-list" id="sched-list" data-sched-list aria-live="polite">
+                    <div class="sched-skel">
+                      <div class="sched-skel-row"></div>
+                      <div class="sched-skel-row"></div>
+                      <div class="sched-skel-row"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <p class="bk-sig">dwdPROSERIES<!-- Tamara Mark — For Mom --><svg class="bk-mark" viewBox="0 0 44 30" aria-hidden="true"><defs><linearGradient id="bk-tm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9956c"/><stop offset=".5" stop-color="#e8c49a"/><stop offset="1" stop-color="#d4a574"/></linearGradient></defs><circle cx="16" cy="17" r="11" fill="none" stroke="url(#bk-tm)" stroke-width="1.6"/><circle cx="27" cy="13" r="9" fill="none" stroke="url(#bk-tm)" stroke-width="1.6"/></svg></p>
             </div>
-          </div>
-        </div>
 
-        <p class="sched-empty-line" data-sched-pending hidden>Payment received, saving your spot&hellip;</p>
-
-        <div class="sched-checkout" data-sched-checkout hidden>
-          <a href="#" class="sched-back tap-44" data-sched-back>&larr; Back to the schedule</a>
-          <div class="sched-checkout-grid">
-            <div class="sched-summary">
-              <h2 class="sched-h2">Your classes</h2>
-              <ul class="sched-summary-list" data-sched-summary-list></ul>
-              <p class="sched-bulk-note" data-sched-bulk-note hidden></p>
-              <div class="sched-summary-total"><span>Total</span><span data-sched-summary-total>$0</span></div>
-            </div>
-            <form class="sched-form" data-sched-form method="post" novalidate>
-              <p class="sched-form-note">One dancer per order. Booking for two? Check out once for each.</p>
-              <div class="field">
-                <label for="sched-dancer-name">Dancer's name</label>
-                <input type="text" id="sched-dancer-name" name="dancer_name" autocomplete="off" required>
-              </div>
-              <!-- The age note (2026-10-30): js/schedule.js writes it when the
-                   date of birth falls outside a cart class's age band, and shows
-                   the "Yes, book it anyway" box Pay then waits on (2026-10-31).
-                   Always rendered (empty) so the live region speaks. -->
-              <div class="field">
-                <label for="sched-dancer-dob">Dancer's date of birth</label>
-                <input type="date" id="sched-dancer-dob" name="dancer_dob" aria-describedby="sched-dob-note" required>
-                <p class="sched-age-note" id="sched-dob-note" data-sched-age-note aria-live="polite"></p>
-                <label class="sched-waiver sched-age-ok tap-44" data-sched-age-ok hidden>
-                  <input type="checkbox" id="sched-age-ok" name="age_ok">
-                  <span>Yes, book it anyway</span>
-                </label>
-              </div>
-              <div class="field">
-                <label for="sched-payer-name">Your name</label>
-                <input type="text" id="sched-payer-name" name="payer_name" autocomplete="name" required>
-              </div>
-              <div class="field">
-                <label for="sched-payer-email">Email</label>
-                <input type="email" id="sched-payer-email" name="payer_email" autocomplete="email" required>
-              </div>
-              <div class="field">
-                <label for="sched-payer-phone">Phone</label>
-                <input type="tel" id="sched-payer-phone" name="payer_phone" autocomplete="tel" required>
-              </div>
-              <label class="sched-waiver tap-44">
-                <input type="checkbox" id="sched-waiver" name="waiver_accepted" required>
-                <span>I have read and agree to the <a href="/waiver/drop-in/" target="_blank" rel="noopener">Drop-In Class Waiver</a></span>
-              </label>
-              <p class="sched-stepup">Paying with Step Up For Students? <a href="https://dwd-director.netlify.app/drop-in" target="_blank" rel="noopener">Request your spot in the DWD family app &rarr;</a></p>
-              <button type="submit" class="btn arm-cta sched-pay-btn tap-44" data-track="dropin_checkout_start" data-sched-pay-btn>Pay $0</button>
-              <p class="sched-error" data-sched-error role="alert" hidden></p>
-              <p class="sched-fineprint">You'll pay on Stripe's secure page. Can't make it? Email <a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a> before class starts and we'll move you to another week. No refunds after the class has run.</p>
-            </form>
-          </div>
-        </div>
-
-        <div class="sched-thankyou" data-sched-thankyou hidden>
-          <div class="kicker">YOU'RE IN</div>
-          <h1 class="sched-h1" data-sched-ty-h1>See you soon.</h1>
-          <ul class="sched-summary-list" data-sched-ty-list></ul>
-          <p class="sched-bulk-note" data-sched-ty-bulk-note hidden></p>
-          <div class="sched-summary-total"><span>Total</span><span data-sched-ty-total>$0</span></div>
-          <div class="sched-before">
-            <h2 class="sched-h2">Before class</h2>
-            <p data-sched-ty-address>Exchange Dance Studio &middot; 7409 Chancery Lane, Orlando, FL 32809</p>
-            <p>Arrive ten minutes early.</p>
-            <p>All black, form-fitting. Leotard and tights, or a fitted top and leggings. Hair pulled back off the face.</p>
-            <p>No street shoes on the floor. Bring water.</p>
+            <aside class="bk-aside" aria-label="Your order">
+              <div class="bk-order" data-bk-order></div>
+            </aside>
           </div>
         </div>
       </div>
 
-      <div class="sched-cart-bar" data-sched-cart-bar hidden>
-        <span class="sched-cart-left">
-          <span class="sched-bulk-note" data-sched-cart-bulk-note hidden></span>
+      <div class="bk-wrap bk-wrap--flow">
+        <p class="sched-empty-line" data-sched-pending hidden>Payment received, saving your spot&hellip;</p>
+
+        <div class="sched-checkout bk-co" data-sched-checkout hidden>
+          <a href="#" class="sched-back tap-44" data-sched-back>&larr; Back to the schedule</a>
+          <div class="bk-co-grid">
+            <form class="sched-form bk-co-form" data-sched-form method="post" novalidate>
+              <h2 class="bk-co-h">Check out</h2>
+              <p class="bk-co-note">One dancer per order. Booking for two? Check out once for each.</p>
+
+              <fieldset class="bk-step">
+                <legend><i>1</i>The dancer</legend>
+                <div class="bk-fields">
+                  <div class="field">
+                    <label for="sched-dancer-name">Dancer's name</label>
+                    <input type="text" id="sched-dancer-name" name="dancer_name" autocomplete="off" required>
+                  </div>
+                  <!-- The age note (2026-10-30): js/schedule.js writes it when the
+                       date of birth falls outside a cart class's age band, and shows
+                       the "Yes, book it anyway" box Pay then waits on (2026-10-31).
+                       When the date fits every class it says so (2026-11-07).
+                       Always rendered (empty) so the live region speaks. -->
+                  <div class="field">
+                    <label for="sched-dancer-dob">Date of birth</label>
+                    <input type="date" id="sched-dancer-dob" name="dancer_dob" aria-describedby="sched-dob-note" required>
+                    <p class="sched-age-note" id="sched-dob-note" data-sched-age-note aria-live="polite"></p>
+                    <label class="sched-waiver sched-age-ok tap-44" data-sched-age-ok hidden>
+                      <input type="checkbox" id="sched-age-ok" name="age_ok">
+                      <span>Yes, book it anyway</span>
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="bk-step">
+                <legend><i>2</i>You</legend>
+                <div class="bk-fields">
+                  <div class="field bk-field-full">
+                    <label for="sched-payer-name">Your name</label>
+                    <input type="text" id="sched-payer-name" name="payer_name" autocomplete="name" required>
+                  </div>
+                  <div class="field">
+                    <label for="sched-payer-email">Email</label>
+                    <input type="email" id="sched-payer-email" name="payer_email" autocomplete="email" required>
+                  </div>
+                  <div class="field">
+                    <label for="sched-payer-phone">Phone</label>
+                    <input type="tel" id="sched-payer-phone" name="payer_phone" autocomplete="tel" required>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="bk-step">
+                <legend><i>3</i>Pay</legend>
+                <label class="sched-waiver tap-44">
+                  <input type="checkbox" id="sched-waiver" name="waiver_accepted" required>
+                  <span>I have read and agree to the <a href="/waiver/drop-in/" target="_blank" rel="noopener">Drop-In Class Waiver</a></span>
+                </label>
+                <p class="sched-stepup">Paying with Step Up For Students? <a href="https://dwd-director.netlify.app/drop-in" target="_blank" rel="noopener">Request your spot in the DWD family app &rarr;</a></p>
+                <button type="submit" class="btn arm-cta sched-pay-btn tap-44" data-track="dropin_checkout_start" data-sched-pay-btn>Pay $0</button>
+                <p class="bk-lock"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2"/></svg>You finish on Stripe&rsquo;s secure page</p>
+                <p class="sched-error" data-sched-error role="alert" hidden></p>
+                <p class="sched-fineprint">Can't make it? Email <a href="mailto:dancewithdixon@gmail.com">dancewithdixon@gmail.com</a> before class starts and we'll move you to another week. No refunds after the class has run.</p>
+              </fieldset>
+            </form>
+
+            <aside class="bk-co-sum">
+              <details class="bk-sumbox" data-bk-sumbox open>
+                <summary><span class="bk-sum-t">Your order</span><span class="bk-sum-s" data-bk-sum-short></span><span class="bk-sum-tog" aria-hidden="true"></span></summary>
+                <ul class="bk-lines" data-sched-summary-list></ul>
+                <div class="bk-meter" data-bk-co-meter></div>
+                <p class="sched-bulk-note" data-sched-bulk-note hidden></p>
+                <div class="bk-total"><span>Total</span><span data-sched-summary-total>$0</span></div>
+                <p class="bk-where">Exchange Dance &middot; 7409 Chancery Lane, Orlando</p>
+              </details>
+            </aside>
+          </div>
+        </div>
+
+        <div class="sched-thankyou bk-ty" data-sched-thankyou hidden>
+          <p class="bk-kicker">You&rsquo;re in</p>
+          <h1 class="bk-h1" data-sched-ty-h1>See you soon.</h1>
+          <p class="bk-ty-lede" data-bk-ty-lede hidden></p>
+          <ul class="bk-tix" data-sched-ty-list></ul>
+          <p class="sched-bulk-note" data-sched-ty-bulk-note hidden></p>
+          <div class="bk-paid"><span>Paid</span><span data-sched-ty-total>$0</span></div>
+          <div class="bk-before">
+            <h2 class="bk-before-h">Before class</h2>
+            <div class="bk-know bk-know--ty">
+              <div><h3>Where</h3><p data-sched-ty-address>Exchange Dance Studio &middot; 7409 Chancery Lane, Orlando, FL 32809</p></div>
+              <div><h3>When to arrive</h3><p>Ten minutes early.</p></div>
+              <div><h3>Wear</h3><p>All black, form-fitting. Leotard and tights, or a fitted top and leggings. Hair pulled back off the face.</p></div>
+              <div><h3>Bring</h3><p>Water. No street shoes on the floor.</p></div>
+            </div>
+          </div>
+          <a class="btn arm-cta bk-again tap-44" href="/schedule/" data-track="dropin-book-another">Book another dancer</a>
+        </div>
+      </div>
+
+      <!-- Phone and tablet: the order rides at the bottom; tapping its left
+           side opens the order as a sheet. A desktop has .bk-aside instead. -->
+      <div class="sched-cart-bar bk-bar" data-sched-cart-bar hidden>
+        <button type="button" class="bk-bar-open" data-bk-sheet-open aria-haspopup="dialog">
           <span class="sched-cart-count" data-sched-cart-count>0 classes &middot; $0</span>
-        </span>
+          <span class="bk-bar-meter" data-bk-bar-meter></span>
+          <span class="sched-bulk-note" data-sched-cart-bulk-note hidden></span>
+        </button>
         <button type="button" class="btn arm-cta tap-44" data-track="dropin_checkout_start" data-sched-checkout-btn>Check out</button>
+      </div>
+      <div class="bk-scrim" data-bk-scrim hidden></div>
+      <div class="bk-sheet" data-bk-sheet role="dialog" aria-modal="true" aria-label="Your order" hidden>
+        <button type="button" class="bk-handle" data-bk-sheet-close aria-label="Close your order"></button>
+        <div class="bk-order" data-bk-order-sheet></div>
       </div>
     </section>
 
