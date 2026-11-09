@@ -9945,6 +9945,9 @@ html.menu-open .mob-cta { display: none !important; }
 .tg-course[data-tg-reveal]:not(.is-revealed) .tg-classes { display: none; }
 .tg-course.is-revealed .tg-tba { display: none; }
 .tg-tba { color: #7d867f; }
+.tg-skip { margin: 14px auto 0; font-family: var(--font-body); font-size: 14px; }
+.tg-skip a { display: inline-flex; align-items: center; color: var(--tg-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+#sched-weekly { scroll-margin-top: 90px; }
 .tg-early {
   font-family: var(--font-body);
   font-size: 13px;

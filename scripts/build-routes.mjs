@@ -54,7 +54,7 @@ const ROUTES = [
     supabase: true,
     feature: true,
     route: 'proseries',
-    title: 'ProSeries: Season One | DWD',
+    title: 'ProSeries Season One: Orlando competitive dance team | Dance With Dixon',
     description:
       'dwdPROSERIES is elite youth competitive dance training in Orlando, ages 5 to 19, in three ' +
       'tracks: Prep, Elite and Pro. Season One runs August 2026 to May 2027. Placement is rolling ' +
@@ -87,7 +87,7 @@ const ROUTES = [
     supabase: true,
     feature: true,
     route: 'adult-company',
-    title: 'The Collective | DWD',
+    title: 'Adult dance classes in Orlando: The Collective | Dance With Dixon',
     description:
       "dwdCOLLECTIVE is Dance With Dixon's adult modern and contemporary company, 18 and up, at " +
       'Exchange Dance in Orlando. No audition and no experience required.',
@@ -103,7 +103,7 @@ const ROUTES = [
     supabase: true,
     feature: true,
     route: 'teachers',
-    title: 'Teachers | DWD',
+    title: 'Our dance teachers in Orlando | Dance With Dixon',
     description:
       'Every ProSeries class is designed by director Dixon Bowles, with specialist teachers ' +
       'rotating in for tap, acro, hip hop, musical theatre, and strength and stretch.',
@@ -118,7 +118,7 @@ const ROUTES = [
     supabase: true,
     feature: true,
     route: 'gallery',
-    title: 'Gallery | DWD',
+    title: 'Season One photo gallery | Dance With Dixon',
     description:
       'Season One in photos: first overall at JUMP Ft. Lauderdale, then the summer that built ' +
       'the team, plus dwdCOLLECTIVE on stage.',
@@ -132,7 +132,7 @@ const ROUTES = [
     supabase: true,
     feature: true,
     route: 'contact',
-    title: 'Contact | DWD',
+    title: 'Contact Dixon Bowles | Dance With Dixon, Orlando',
     description:
       'Reach Dixon Bowles about ProSeries placement, adult Collective classes, choreography, ' +
       'workshops, guest teaching or competition judging. Exchange Dance Studio, Orlando.',
@@ -148,7 +148,7 @@ const ROUTES = [
     supabase: false,
     feature: false,
     route: 'privacy',
-    title: 'Privacy Policy | DWD',
+    title: 'Privacy Policy | Dance With Dixon',
     description: 'How Dance With Dixon LLC handles the information you share through this site.',
     ogTitle: 'Privacy Policy · Dance With Dixon',
     ogDescription: 'What we collect, why, and what we never do with it.',

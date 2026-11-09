@@ -230,18 +230,18 @@
 
     // Update page title
     var titles = {
-    'privacy': 'Privacy Policy | DWD',
+    'privacy': 'Privacy Policy | Dance With Dixon',
       'home': 'Dance With Dixon | Orlando Dance Company',
-      'adult-company': 'The Collective | DWD',
+      'adult-company': 'Adult dance classes in Orlando: The Collective | Dance With Dixon',
       // Season One is the ProSeries identity for the 2026-27 season, so the
       // route title carries it (audit M3, 2026-08-16 — the season appeared 22
       // times in the page body and zero times in any metadata).
-      'proseries': 'ProSeries: Season One | DWD',
-      'teachers': 'Teachers | DWD',
+      'proseries': 'ProSeries Season One: Orlando competitive dance team | Dance With Dixon',
+      'teachers': 'Our dance teachers in Orlando | Dance With Dixon',
       'schedule': 'Drop-in dance classes in Orlando | Dance With Dixon',
 
-      'gallery': 'Gallery | DWD',
-      'contact': 'Contact | DWD'
+      'gallery': 'Season One photo gallery | Dance With Dixon',
+      'contact': 'Contact Dixon Bowles | Dance With Dixon, Orlando'
     };
     document.title = titles[name] || titles['home'];
 

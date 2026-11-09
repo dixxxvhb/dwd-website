@@ -22,12 +22,12 @@ const probe = () => ({
 
   // ── 1. Direct loads of each shell ──
   const shells = [
-    ['/proseries/', 'page-proseries', 'ProSeries: Season One | DWD'],
-    ['/collective/', 'page-adult-company', 'The Collective | DWD'],
-    ['/teachers/', 'page-teachers', 'Teachers | DWD'],
-    ['/gallery/', 'page-gallery', 'Gallery | DWD'],
-    ['/contact/', 'page-contact', 'Contact | DWD'],
-    ['/privacy/', 'page-privacy', 'Privacy Policy | DWD'],
+    ['/proseries/', 'page-proseries', 'ProSeries Season One: Orlando competitive dance team | Dance With Dixon'],
+    ['/collective/', 'page-adult-company', 'Adult dance classes in Orlando: The Collective | Dance With Dixon'],
+    ['/teachers/', 'page-teachers', 'Our dance teachers in Orlando | Dance With Dixon'],
+    ['/gallery/', 'page-gallery', 'Season One photo gallery | Dance With Dixon'],
+    ['/contact/', 'page-contact', 'Contact Dixon Bowles | Dance With Dixon, Orlando'],
+    ['/privacy/', 'page-privacy', 'Privacy Policy | Dance With Dixon'],
     ['/', 'page-home', 'Dance With Dixon | Orlando Dance Company'],
   ];
   for (const [path, page, title] of shells) {
@@ -69,7 +69,7 @@ const probe = () => ({
     await p.click('.topnav nav a[data-page="proseries"]');
     await new Promise((r) => setTimeout(r, 800));
     check('click nav -> /proseries', await p.evaluate(probe),
-      { page: 'page-proseries', path: '/proseries/', title: 'ProSeries: Season One | DWD' });
+      { page: 'page-proseries', path: '/proseries/', title: 'ProSeries Season One: Orlando competitive dance team | Dance With Dixon' });
 
     await p.click('.topnav nav a[data-page="gallery"]');
     await new Promise((r) => setTimeout(r, 800));
