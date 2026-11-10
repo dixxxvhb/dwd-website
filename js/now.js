@@ -300,7 +300,25 @@
     if (window.DWD_MOB && window.DWD_MOB.repaint) window.DWD_MOB.repaint();
   }
 
+  /* ── Home's Thanksgiving strip (2026-11-09) ───────────────────────────
+     The strip under the hero names a week that ends; once New York time
+     reaches its data-tgh-until ("YYYY-MM-DDTHH:MM") it leaves the page.
+     Same comparable stamp as the drop-in panel and js/schedule.js's
+     data-tg-reveal. No clock (Intl missing) means no removal: the strip
+     staying is the accepted fallback. Needs no network, so it runs first. */
+  function expireTgStrip() {
+    var strips = document.querySelectorAll('[data-tgh-until]');
+    if (!strips.length) return;
+    var now = nyNowStamp();
+    if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(now)) return;
+    Array.prototype.forEach.call(strips, function (el) {
+      var until = String(el.getAttribute('data-tgh-until') || '').replace('T', ' ').slice(0, 16);
+      if (until && now >= until && el.parentNode) el.parentNode.removeChild(el);
+    });
+  }
+
   renderSeason();
+  expireTgStrip();
 
   var sb = window.__dwd_sb;
   if (!sb) return; // supabase-js unavailable — every static line stands
