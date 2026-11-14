@@ -6727,11 +6727,13 @@ footer.site-footer .footer-brand img {
    ============================================================ */
 
 :root {
-  --s1-midnight: #1B2A4A;
-  --s1-sky: #7EC4F8;
+  /* 2026-11-14: the sky blue and midnight navy are retired (Dixon: the
+     Season One blue never held on). The token names stay so every rule
+     below keeps working; they now resolve to house colors: forest ground,
+     ProSeries seafoam accent, ivory title. */
+  --s1-midnight: var(--forest, #0c1f17);
+  --s1-sky: var(--seafoam, #6BAF8A);
   --s1-silver: #C9D4CE;
-  --s1-gloss: linear-gradient(135deg, #4FA8EE, #9AD5FF, #E4F4FF, #7EC4F8, #5FB2F2);
-  --s1-gloss-btn: linear-gradient(135deg, #4FA8EE, #9AD5FF, #7EC4F8);
 }
 
 /* ------------------------------------------------------------
@@ -6744,29 +6746,17 @@ footer.site-footer .footer-brand img {
    weight to the font URL in index.html and re-run scripts/build-routes.mjs. */
 #page-proseries .s1-title {
   margin: 0; /* now an <h1> (2026-08-03 hero fold) — kill the UA block margin */
-  font-family: 'Cinzel', serif;
-  font-weight: 800;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   font-size: clamp(3.5rem, 9vw, 9rem);
   line-height: 1;
-  background: var(--s1-gloss);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: var(--ivory, #FAF3E8); /* fallback paint before @supports below wins */
+  color: var(--ivory, #FAF3E8);
   position: relative;
   display: inline-block;
 }
 
-@supports not (background-clip: text) {
-  #page-proseries .s1-title {
-    -webkit-text-fill-color: initial;
-    color: var(--s1-sky);
-    background: none;
-  }
-}
 
 /* The ambient sweep loop (delay 1.9s, after the entrance's rise/fade
    finishes at 1.5s) is combined with the rise/fade into ONE animation
@@ -6798,8 +6788,8 @@ footer.site-footer .footer-brand img {
      elsewhere in the takeover, so the top of the page reads as a real
      premiere room, not just a dark section. */
   background-image:
-    radial-gradient(ellipse at center, rgba(255,255,255,0.07) 0%, rgba(27,42,74,0) 45%, rgba(6,10,20,0.85) 100%),
-    radial-gradient(ellipse at center, rgba(27,42,74,0) 55%, #05070d 130%);
+    radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, rgba(12,31,23,0) 45%, rgba(4,12,8,0.85) 100%),
+    radial-gradient(ellipse at center, rgba(12,31,23,0) 55%, #040c08 130%);
   padding: clamp(3rem, 8vw, 6rem) 1.5rem;
   text-align: center;
   overflow: hidden;
@@ -7153,7 +7143,7 @@ footer.site-footer .footer-brand img {
   align-items: center;
   gap: 1rem;
   padding: 0.85rem 1.1rem;
-  border: 1px solid rgba(126, 196, 248, 0.25);
+  border: 1px solid rgba(107, 175, 138, 0.25);
   border-radius: 6px;
 }
 
@@ -7223,7 +7213,7 @@ footer.site-footer .footer-brand img {
    ------------------------------------------------------------ */
 #page-proseries.s1-premiere-window {
   background: var(--s1-midnight);
-  background-image: radial-gradient(ellipse at top, rgba(255,255,255,0.05) 0%, rgba(27,42,74,0) 60%);
+  background-image: radial-gradient(ellipse at top, rgba(255,255,255,0.05) 0%, rgba(12,31,23,0) 60%);
 }
 
 /* poster-pages.css locks .content-section (and friends) to ivory/forest with
@@ -7583,8 +7573,8 @@ footer.site-footer .footer-brand img {
 
 /* Week One chip: sky accent for the Season One production, this scene only. */
 #ps-story .ps-chip--sky {
-  color: #7EC4F8 !important;
-  border-color: #7EC4F8 !important;
+  color: var(--seafoam, #6BAF8A) !important;
+  border-color: var(--seafoam, #6BAF8A) !important;
 }
 
 /* ── Title card scene (Auditions) ───────────────────────────────────── */
@@ -7868,7 +7858,7 @@ footer.site-footer .footer-brand img {
 }
 
 /* Scene 7 ghost numeral matches its sky chip */
-#ps-story .scene--s1 { --scene-accent: #7EC4F8; }
+#ps-story .scene--s1 { --scene-accent: #6BAF8A; }
 
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -8950,7 +8940,7 @@ footer.site-footer .footer-brand img {
 
 #page-proseries #ps-calendar .s1-ep {
   background: var(--forest, #0c1f17);
-  border-color: rgba(126, 196, 248, 0.32);
+  border-color: rgba(107, 175, 138, 0.32);
   border-radius: 4px;
 }
 
@@ -8978,8 +8968,8 @@ footer.site-footer .footer-brand img {
 /* "Up next" — the one row that should catch the eye. Sky is the Season One
    accent, and on forest it clears every floor. */
 #page-proseries #ps-calendar .s1-ep--next {
-  border-color: var(--s1-sky, #7EC4F8);
-  box-shadow: inset 0 0 0 1px rgba(126, 196, 248, 0.35);
+  border-color: var(--s1-sky, #6BAF8A);
+  box-shadow: inset 0 0 0 1px rgba(107, 175, 138, 0.35);
 }
 
 #page-proseries #ps-calendar .s1-ep-flag {
@@ -8990,7 +8980,7 @@ footer.site-footer .footer-brand img {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--forest, #0c1f17);
-  background: var(--s1-sky, #7EC4F8);
+  background: var(--s1-sky, #6BAF8A);
   border-radius: 2px;
   padding: 3px 7px;
 }
@@ -9021,7 +9011,7 @@ footer.site-footer .footer-brand img {
 }
 
 #page-proseries #ps-calendar .s1-ep-recap-link {
-  color: var(--s1-sky, #7EC4F8);
+  color: var(--s1-sky, #6BAF8A);
   white-space: nowrap;
 }
 
@@ -13090,3 +13080,3733 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 }
 .video-reel-cta:hover, .video-reel-cta:focus-visible { background: var(--pink, #FF7AA2); color: var(--forest); }
 
+/* ── Thanksgiving week 2026: Home's strip tokens (the menu card it once
+   shared them with is gone; booking D replaced it) ─────────────────── */
+.tgh {
+  --tg-paper: #fbf6ec;
+  --tg-ink: #0c1f17;
+  --tg-text: #25332b;
+  --tg-soft: #4b5a51;
+  --tg-terra: var(--terra, #C8614B);
+}
+
+/* ── Thanksgiving week 2026: Home's strip ─────────────────────────────── */
+/* A slip of the menu's paper under the hero, in the DROP IN panel's column.
+   Names the week only (the menu reveals its classes on its own schedule).
+   The whole card is the link: .tgh-link's ::after covers it. js/now.js
+   removes the section at data-tgh-until. The kicker is ink, not terra:
+   terra on this paper is about 3.7:1, short of 4.5 at 11px. */
+.tgh { margin: 40px 0 0; }
+.tgh-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.tgh-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+  /* the menu card's own paper: --tg-paper warming toward its foot */
+  background: var(--tg-paper) linear-gradient(170deg, #fdf8ef, #f4ead9);
+  color: var(--tg-text);
+  padding: 22px 20px;
+  box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.7);
+}
+/* The terra hairlines, set just inside the paper like the menu's rules. */
+.tgh-card::before {
+  content: '';
+  position: absolute;
+  inset: 8px 0;
+  border-top: 1px solid rgba(200, 97, 75, 0.4);
+  border-bottom: 1px solid rgba(200, 97, 75, 0.4);
+  pointer-events: none;
+}
+.tgh-text { min-width: 0; }
+.tgh-kicker {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  /* tighter on a phone so the whole line fits from 375 up */
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tg-ink);
+  margin: 0;
+}
+/* Two halves that never split: narrower than that, it breaks at the dot. */
+.tgh-kicker span { white-space: nowrap; }
+@media (min-width: 480px) {
+  .tgh-kicker { letter-spacing: 0.34em; }
+}
+.tgh-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 7.4vw, 40px);
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: var(--tg-ink);
+  margin: 6px 0 0;
+}
+.tgh-line {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--tg-soft);
+  max-width: 46ch;
+  margin: 8px auto 0;
+  text-wrap: balance;
+}
+.tgh-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 22px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ivory, #FAF3E8);
+  background: var(--tg-ink);
+  border: 1.5px solid var(--tg-ink);
+}
+.tgh-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.tgh-link:hover,
+.tgh-card:hover .tgh-link {
+  color: var(--ivory, #FAF3E8);
+  background: var(--forest-light, #1a3d2e);
+  border-color: var(--forest-light, #1a3d2e);
+}
+@media (min-width: 720px) {
+  .tgh-card {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    justify-items: start;
+    column-gap: 40px;
+    text-align: left;
+    padding: 26px 36px;
+  }
+  .tgh-line { margin-left: 0; max-width: none; }
+  .tgh-link { width: auto; }
+}
+@media (min-width: 900px) {
+  .tgh { margin-top: 56px; }
+  .tgh-inner { padding: 0 32px; }
+  .tgh-card { padding: 26px 48px; }
+  .tgh-kicker { font-size: 12px; }
+}
+
+/* ============================================================
+   PROSERIES CAST — compact roster (2026-09-04, Phase 2c)
+   The per-dancer photo cards ran 12,000px at 390 and pushed the
+   money and the form off the end of the page. Names and tracks
+   are the information; the photographs live in the gallery.
+   ============================================================ */
+#page-proseries .ps-roster-group { margin: 0 0 28px; }
+#page-proseries .ps-roster-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+#page-proseries .ps-roster-track {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ivory, #FAF3E8);
+}
+#page-proseries .ps-roster-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+#page-proseries .ps-roster-chip {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--forest, #0c1f17);
+  background: var(--ivory, #FAF3E8);
+  padding: 10px 12px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#page-proseries .ps-roster-chip--prep  { background: var(--pink-soft, #FF8FAB); }
+#page-proseries .ps-roster-chip--elite { background: var(--seafoam, #6BAF8A); }
+#page-proseries .ps-roster-chip--pro   { background: var(--terra-dark, #a8503e); color: var(--ivory, #FAF3E8); }
+@media (min-width: 768px) {
+  #page-proseries .ps-roster-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+/* Anchor targets clear the real sticky chrome, measured per breakpoint. */
+#ps-story, #ps-cast, #ps-tracks, #ps-apply, #ps-program,
+#ps-why, #ps-faq, #ps-calendar, #interest {
+  scroll-margin-top: 84px;
+}
+@media (max-width: 1149px) {
+  #ps-story, #ps-cast, #ps-tracks, #ps-apply, #ps-program,
+  #ps-why, #ps-faq, #ps-calendar, #interest {
+    scroll-margin-top: 128px;
+  }
+}
+
+/* ============================================================
+   PROSERIES STORY at phone width (2026-09-04, Phase 2c)
+   Seven scenes of stacked media ran 7,100px on a 390 screen and
+   put the rest of the page out of reach. On a phone each scene
+   keeps its slate, its copy and ONE frame; the full set is still
+   there at tablet and up, and in the gallery.
+   ============================================================ */
+@media (max-width: 767px) {
+  #ps-story .ps-scene-media > *:nth-child(n + 2) { display: none; }
+  #ps-story .ps-scene-media > .ps-scene-video:first-child ~ * { display: none; }
+  #ps-story .ps-scene-media img:not(.span2) { aspect-ratio: 4 / 3; }
+  #ps-story .ps-scene { margin-bottom: 28px; }
+  #ps-story .ps-scenes { gap: 20px; }
+}
+
+/* ============================================================
+   TEACHERS — static photo grid (2026-09-04, Phase 2d)
+   Replaces the 12-slide auto-carousel. Six photographs, no JS.
+   ============================================================ */
+#page-teachers .tch-photo-grid {
+  position: static !important;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 6px;
+  min-width: 0;
+  min-height: 0 !important;
+  height: 100%;
+  overflow: hidden;
+}
+#page-teachers .tch-photo-grid::after { content: none !important; }
+#page-teachers .tch-photo-grid img {
+  position: static !important;
+  opacity: 1 !important;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: 50% 22%;
+  display: block;
+}
+@media (max-width: 980px) {
+  #page-teachers .tch-photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: auto;
+  }
+  #page-teachers .tch-photo-grid img { aspect-ratio: 3 / 4; }
+}
+
+/* Contact: the reason toggle's helper line (Phase 2e). */
+#page-contact .contact-reason-help {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--terra-light, #d4775f);
+  margin: 6px 0 22px;
+}
+
+/* Gallery closing block (Phase 2e) — the page used to end on Instagram. */
+#page-gallery .gallery-outro {
+  text-align: center;
+  padding: 52px 24px 64px;
+}
+#page-gallery .gallery-outro-line {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  color: var(--cream-faint, #c4baa8);
+  margin: 0 0 10px;
+}
+#page-gallery .gallery-outro-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(28px, 5vw, 46px);
+  line-height: 1.1;
+  color: var(--ivory, #FAF3E8);
+  margin: 0 0 22px;
+}
+
+/* Closed phone menu: the nav CTA stays hidden — the sticky bar is the CTA
+   there. It only appears (full width) once the menu is open. */
+@media (max-width: 1149px) {
+  .topnav > .nav-cta { display: none !important; }
+}
+
+/* The Collective is the hushed volume of the house (One House, three volumes,
+   locked 2026-07-18): its buttons stay ghost with a terracotta ring rather
+   than taking the solid house CTA fill. Shape, size and type still match. */
+[data-arm="c"] .btn.btn-primary,
+[data-arm="c"] .btn.btn-blush,
+[data-arm="c"] .btn-primary,
+[data-arm="c"] .btn-blush,
+[data-arm="c"] .cc-cta,
+[data-arm="c"] .ac-cta {
+  background: transparent !important;
+  color: var(--ivory, #FAF3E8) !important;
+  border: 1.5px solid var(--terra, #C8614B) !important;
+}
+[data-arm="c"] .btn.btn-primary:hover,
+[data-arm="c"] .btn.btn-blush:hover,
+[data-arm="c"] .btn-primary:hover,
+[data-arm="c"] .btn-blush:hover,
+[data-arm="c"] .cc-cta:hover,
+[data-arm="c"] .ac-cta:hover {
+  background: rgba(200, 97, 75, 0.16) !important;
+  color: var(--ivory, #FAF3E8) !important;
+  border-color: var(--terra-light, #d4775f) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * PHASE 2 FOLLOW-UP (2026-09-04)
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+/* Story disclosure — phones only. main.js owns the `open` attribute; this
+   only styles the summary and hides it once there is nothing to disclose. */
+.ps-story-more {
+  display: block;
+  margin: 0;
+}
+.ps-story-more > .ps-story-more-body { display: block; }
+.ps-story-more-sum {
+  display: none;
+  list-style: none;
+  cursor: pointer;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pink, #FF7AA2);
+  padding: 16px 0;
+  min-height: 44px;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+.ps-story-more-sum::-webkit-details-marker { display: none; }
+.ps-story-more-sum::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.2s ease;
+}
+.ps-story-more[open] > .ps-story-more-sum::after {
+  transform: rotate(-135deg) translate(-2px, -2px);
+}
+@media (max-width: 767px) {
+  .ps-story-more-sum { display: flex; }
+  .ps-story-more > .ps-story-more-body { padding-top: 32px; }
+}
+
+/* Cast roster chips are neutral. Track colour lives only in the
+   "N of 10 chairs filled" badge beside each track label: three full-chroma
+   accent blocks on one screen was three accents doing one accent's job. */
+#page-proseries .ps-roster-chip,
+#page-proseries .ps-roster-chip--prep,
+#page-proseries .ps-roster-chip--elite,
+#page-proseries .ps-roster-chip--pro {
+  background: #1a3d2e;
+  color: var(--ivory, #FAF3E8);
+}
+
+/* Chapter rail on phones: the first item was clipping against the left edge
+   of the scroller. Leading padding on the flex track (not the box) keeps it
+   fully visible at scrollLeft 0, and a right-edge fade says "scrollable". */
+@media (max-width: 900px) {
+  /* #page-proseries * { padding: 0 } (poster-pages block) out-ranks a plain
+     class selector, so the rail's leading padding has to carry the page id. */
+  #page-proseries nav.chapter-rail,
+  #page-adult-company nav.chapter-rail {
+    scroll-padding-left: 18px;
+    padding-left: 18px;
+    padding-right: 44px;
+    -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 40px), transparent 100%);
+    mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 40px), transparent 100%);
+  }
+  #page-proseries nav.chapter-rail a:first-child,
+  #page-adult-company nav.chapter-rail a:first-child { margin-left: 0; }
+}
+
+/* One pink Express Interest per viewport: the sticky bar steps aside while
+   the phone menu (which ends in its own pink CTA) is open. */
+html.menu-open #mob-cta,
+html.menu-open .mob-cta { display: none !important; }
+
+/* ── schedule + drop-ins ── */
+.tap-44 {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   /schedule/ = the drop-in page (2026-09-24, docs/plans/2026-09-24-drop-in-finder.md)
+
+   On forest now, like the rest of the site. It was the site's one ivory
+   page; Dixon's 2026-09-23 rule is no cream by default, and a paid ad lands
+   here cold. One focal point: the five classes and their date chips. One
+   primary: the cart bar's Check out. Chips are secondary (outline) until a
+   date is in the cart, then Family Pink.
+
+   Type, per component: 15px (labels, meta, chips) and 28px (class name,
+   Bebas price). The chip's "2 left" / "Full" is 13px: a footnote to one
+   chip, not a line of the block. Two weights, 400 and 600.
+   ═══════════════════════════════════════════════════════════════════════ */
+#page-schedule {
+  --sched-ink: var(--ivory, #FAF3E8);
+  --sched-muted: rgba(250, 243, 232, 0.72);
+  --sched-faint: rgba(250, 243, 232, 0.56);
+  --sched-line: rgba(250, 243, 232, 0.14);
+  --sched-ring: rgba(250, 243, 232, 0.4);
+  background: var(--forest, #0c1f17);
+  color: var(--sched-ink);
+}
+
+#page-schedule .sched-wrap {
+  padding: 32px 24px 48px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  #page-schedule .sched-wrap {
+    padding: 56px 48px 64px;
+  }
+}
+
+.sched-header .kicker {
+  display: block;
+  color: var(--pink, #FF7AA2);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+
+.sched-h1 {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: var(--sched-ink);
+  margin: 0 0 16px;
+}
+
+@media (min-width: 900px) {
+  .sched-h1 { font-size: 56px; }
+}
+
+.sched-dek {
+  font-family: var(--font-body);
+  color: var(--sched-muted);
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 46ch;
+  margin: 0;
+}
+@media (min-width: 900px) {
+  .sched-dek { max-width: none; }
+}
+
+/* ── Thanksgiving week 2026: the masterclass menu ─────────────────────── */
+/* The Instagram post as a printed menu card on the forest page. Ivory paper,
+   terracotta double rule, one course per morning. Colors are the card's own,
+   not the page's --sched-* tokens, because the card is paper. */
+/* The card's paper and ink are shared with Home's strip (.tgh, below) so the
+   two read as one campaign. */
+.tg,
+.tgh {
+  --tg-paper: #fbf6ec;
+  --tg-ink: #0c1f17;
+  --tg-text: #25332b;
+  --tg-soft: #4b5a51;
+  --tg-terra: var(--terra, #C8614B);
+}
+.tg { margin: 0 0 48px; }
+.tg-card {
+  position: relative;
+  background: linear-gradient(170deg, #fdf8ef, #f4ead9);
+  color: var(--tg-text);
+  text-align: center;
+  padding: 44px 24px 36px;
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.75), 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+.tg-crest { display: block; width: 72px; height: 72px; margin: 0 auto; }
+.tg-house,
+.tg-sub,
+.tg-no,
+.tg-sig {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-weight: 600;
+  margin: 0;
+}
+.tg-house { font-size: 11px; color: var(--tg-ink); margin-top: 12px; font-weight: 500; }
+.tg-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(40px, 10vw, 62px);
+  line-height: 1;
+  color: var(--tg-ink);
+  margin: 8px 0 0;
+}
+.tg-sub { font-size: 13px; color: var(--tg-terra); letter-spacing: 0.44em; margin-top: 12px; }
+.tg-desc {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--tg-text);
+  margin: 0;
+}
+.tg-dek {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--tg-soft);
+  max-width: 40ch;
+  margin: 18px auto 0;
+  text-wrap: balance;
+}
+.tg-orn { width: 110px; height: 4px; margin: 28px auto; border-top: 1px solid var(--tg-terra); border-bottom: 1px solid var(--tg-terra); opacity: 0.7; }
+/* When and where: the line people write down. Stacked on a phone, side by side wider. */
+.tg-ww {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 560px;
+  margin: 22px auto 0;
+  border-top: 1px solid rgba(200, 97, 75, 0.4);
+  border-bottom: 1px solid rgba(200, 97, 75, 0.4);
+}
+.tg-ww > div { padding: 16px 8px; min-width: 0; }
+.tg-ww > div + div { border-top: 1px solid rgba(200, 97, 75, 0.4); }
+.tg-ww-lbl { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase; color: var(--tg-terra); margin: 0; }
+.tg-ww-big { font-family: var(--font-display); font-weight: 600; font-size: 30px; line-height: 1.1; color: var(--tg-ink); margin: 6px 0 0; }
+.tg-ww-sm { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 19px; color: var(--tg-soft); margin: 2px 0 0; }
+@media (min-width: 560px) {
+  .tg-ww { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tg-ww > div + div { border-top: 0; border-left: 1px solid rgba(200, 97, 75, 0.4); }
+  .tg-ww-big { font-size: 34px; }
+}
+.tg-courses { list-style: none; margin: 0; padding: 0; display: grid; gap: 30px; }
+.tg-course { display: grid; justify-items: center; gap: 6px; }
+.tg-no { font-size: 11px; color: var(--tg-terra); }
+.tg-dish {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(32px, 8vw, 42px);
+  line-height: 1;
+  color: var(--tg-ink);
+  margin: 0;
+}
+.tg-desc { font-size: 21px; line-height: 1.25; max-width: 36ch; }
+.tg-course--rest .tg-no { color: #b9a79b; }
+/* A morning not announced yet: its line reads To be announced and its classes
+   wait (schedule.js adds .is-revealed at data-tg-reveal, New York time). */
+.tg-course[data-tg-reveal]:not(.is-revealed) .tg-classes { display: none; }
+.tg-course.is-revealed .tg-tba { display: none; }
+.tg-tba { color: #7d867f; }
+.tg-skip { margin: 14px auto 0; font-family: var(--font-body); font-size: 14px; }
+.tg-skip a { display: inline-flex; align-items: center; color: var(--tg-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+#sched-weekly { scroll-margin-top: 90px; }
+.tg-early {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--tg-terra);
+  max-width: 40ch;
+  margin: 14px auto 0;
+  text-wrap: balance;
+}
+.tg-teacher { font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--tg-ink); margin: 2px 0 0; }
+/* A morning holds one class or a pair (Tuesday, Friday). A pair sits side by
+   side with a hairline between, like the post; on a phone it stacks. */
+.tg-classes { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; max-width: 560px; margin-top: 10px; }
+.tg-class { display: grid; justify-items: center; align-content: start; gap: 6px; min-width: 0; }
+.tg-classes--pair .tg-class + .tg-class { border-top: 1px solid rgba(200, 97, 75, 0.35); padding-top: 24px; margin-top: 4px; }
+.tg-classes--pair .tg-dish { font-size: clamp(30px, 7vw, 36px); }
+/* A class's seatings, any number: stacked on a phone and inside a pair; in a
+   row when one class has the morning to itself. */
+.tg-seats {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 520px;
+  margin-top: 14px;
+  border-top: 1px solid rgba(200, 97, 75, 0.35);
+}
+.tg-seat { display: grid; justify-items: center; align-content: start; gap: 4px; padding: 16px 8px; min-width: 0; }
+.tg-seat + .tg-seat { border-top: 1px solid rgba(200, 97, 75, 0.35); }
+/* The time, set like the post: terracotta sans, lowercase "to". */
+.tg-when {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--tg-terra);
+  margin: 0;
+}
+.tg-who { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 20px; color: var(--tg-soft); margin: 0; }
+.tg-seat .tg-act { margin-top: 8px; flex-direction: column; gap: 8px; }
+@media (min-width: 560px) {
+  .tg-classes:not(.tg-classes--pair) .tg-seats { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+  .tg-classes:not(.tg-classes--pair) .tg-seat + .tg-seat { border-top: 0; border-left: 1px solid rgba(200, 97, 75, 0.35); }
+}
+@media (min-width: 700px) {
+  /* Side by side, the two columns share rows (name, teacher, seatings) so a
+     name that wraps ("Stretch & Strengthen") keeps the rules level. */
+  .tg-classes--pair { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto auto; row-gap: 6px; }
+  .tg-classes--pair .tg-class { grid-row: span 3; grid-template-rows: subgrid; padding: 0 12px; }
+  .tg-classes--pair .tg-class + .tg-class { border-top: 0; padding-top: 0; margin-top: 0; border-left: 1px solid rgba(200, 97, 75, 0.35); }
+  .tg-classes--pair .tg-dish { align-self: end; font-size: 34px; }
+}
+.tg-course--rest .tg-dish,
+.tg-course--rest .tg-desc { color: #7d867f; }
+.tg-act { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
+.tg-price { font-family: var(--font-body); font-weight: 600; font-size: 15px; color: var(--tg-ink); }
+.tg-price:empty { display: none; }
+.tg-btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--tg-ink);
+  color: var(--ivory, #FAF3E8);
+  border: 1.5px solid var(--tg-ink);
+  padding: 12px 20px;
+  border-radius: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* in a narrow column "Reservations open soon" wraps as two even lines */
+  text-wrap: balance;
+}
+.tg-btn:hover:not(:disabled) { background: var(--tg-terra); border-color: var(--tg-terra); }
+.tg-btn:focus-visible { outline: 2px solid var(--tg-terra); outline-offset: 3px; }
+.tg-btn.is-added { background: transparent; color: var(--tg-ink); }
+.tg-btn:disabled { background: transparent; color: var(--tg-soft); border-color: rgba(12, 31, 23, 0.25); cursor: default; }
+.tg-note { font-family: var(--font-body); font-size: 13px; color: var(--tg-terra); margin: 2px 0 0; text-wrap: balance; }
+.tg-sig {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 10px;
+  letter-spacing: 0.34em;
+  color: var(--tg-ink);
+  margin-top: 20px;
+  /* the stem keeps its lowercase: dwdPROSERIES, never DWDPROSERIES */
+  text-transform: none;
+}
+.tg-mark { width: 32px; height: auto; }
+
+@media (min-width: 900px) {
+  .tg-card { padding: 60px 72px 44px; }
+  .tg-crest { width: 84px; height: 84px; }
+  .tg-teacher { font-size: 13px; }
+  .tg-house { font-size: 13px; }
+  .tg-sub { font-size: 16px; }
+  .tg-desc { font-size: 24px; }
+  .tg-no { font-size: 12px; }
+  .tg-when { font-size: 16px; }
+}
+
+/* ── Thanksgiving week 2026: Home's strip ─────────────────────────────── */
+/* A slip of the menu's paper under the hero, in the DROP IN panel's column.
+   Names the week only (the menu reveals its classes on its own schedule).
+   The whole card is the link: .tgh-link's ::after covers it. js/now.js
+   removes the section at data-tgh-until. The kicker is ink, not terra:
+   terra on this paper is about 3.7:1, short of 4.5 at 11px. */
+.tgh { margin: 40px 0 0; }
+.tgh-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.tgh-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+  /* the menu card's own paper: --tg-paper warming toward its foot */
+  background: var(--tg-paper) linear-gradient(170deg, #fdf8ef, #f4ead9);
+  color: var(--tg-text);
+  padding: 22px 20px;
+  box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.7);
+}
+/* The terra hairlines, set just inside the paper like the menu's rules. */
+.tgh-card::before {
+  content: '';
+  position: absolute;
+  inset: 8px 0;
+  border-top: 1px solid rgba(200, 97, 75, 0.4);
+  border-bottom: 1px solid rgba(200, 97, 75, 0.4);
+  pointer-events: none;
+}
+.tgh-text { min-width: 0; }
+.tgh-kicker {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  /* tighter on a phone so the whole line fits from 375 up */
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tg-ink);
+  margin: 0;
+}
+/* Two halves that never split: narrower than that, it breaks at the dot. */
+.tgh-kicker span { white-space: nowrap; }
+@media (min-width: 480px) {
+  .tgh-kicker { letter-spacing: 0.34em; }
+}
+.tgh-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 7.4vw, 40px);
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: var(--tg-ink);
+  margin: 6px 0 0;
+}
+.tgh-line {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--tg-soft);
+  max-width: 46ch;
+  margin: 8px auto 0;
+  text-wrap: balance;
+}
+.tgh-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 22px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ivory, #FAF3E8);
+  background: var(--tg-ink);
+  border: 1.5px solid var(--tg-ink);
+}
+.tgh-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.tgh-link:hover,
+.tgh-card:hover .tgh-link {
+  color: var(--ivory, #FAF3E8);
+  background: var(--forest-light, #1a3d2e);
+  border-color: var(--forest-light, #1a3d2e);
+}
+@media (min-width: 720px) {
+  .tgh-card {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    justify-items: start;
+    column-gap: 40px;
+    text-align: left;
+    padding: 26px 36px;
+  }
+  .tgh-line { margin-left: 0; max-width: none; }
+  .tgh-link { width: auto; }
+}
+@media (min-width: 900px) {
+  .tgh { margin-top: 56px; }
+  .tgh-inner { padding: 0 32px; }
+  .tgh-card { padding: 26px 48px; }
+  .tgh-kicker { font-size: 12px; }
+}
+
+/* ── The five classes ─────────────────────────────────────────────────── */
+.finder-list {
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+}
+
+/* Space and a hairline between classes. No card: the chips are the only
+   boxes on the page, which keeps nesting at one level. */
+.finder-class {
+  position: relative;
+  padding: 24px 0;
+  border-top: 1px solid var(--sched-line);
+}
+.finder-class:last-child { border-bottom: 1px solid var(--sched-line); }
+
+/* ?class=<slug>: a Family Pink rule in the gutter, nothing louder. */
+.finder-class.is-linked::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 24px;
+  bottom: 24px;
+  width: 2px;
+  background: var(--pink, #FF7AA2);
+}
+@media (min-width: 900px) {
+  .finder-class.is-linked::before { left: -24px; }
+}
+
+.finder-top {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 0;
+}
+
+.finder-when {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--sched-ink);
+}
+
+/* A class not bookable this week says when it starts, beside its time.
+   Muted, not pink: four of five blocks can carry it in late September, and
+   pink on every block would stop meaning anything. */
+.finder-starts {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--sched-muted);
+}
+
+.finder-price {
+  margin-left: auto;
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--sched-ink);
+}
+
+/* Live rows stack the multi-buy price under the single one ("$17.50 each
+   for 4+", 2026-10-30), right-aligned, in the meta line's muted voice at the
+   block's 13px footnote size, so it pushes the class name down as little as
+   it can. The column's baseline is the price's, so the row still lines up
+   with the time. */
+.finder-price-col {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+.finder-price-col .finder-price { margin-left: 0; }
+.finder-bulk {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--sched-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+#page-schedule .finder-name {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: var(--sched-ink);
+  margin: 4px 0 0;
+}
+
+.finder-meta {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--sched-muted);
+  margin: 4px 0 0;
+}
+
+/* Dates: four across on a phone, a row of six from a tablet up. They wrap;
+   nothing scrolls sideways. */
+.finder-dates {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+@media (min-width: 640px) {
+  .finder-dates { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+.finder-date { margin: 0; min-width: 0; }
+.finder-date[hidden] { display: none; }
+
+.finder-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 1px solid var(--sched-ring);
+  border-radius: 0;
+  background: transparent;
+  color: var(--sched-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
+}
+.finder-chip:hover { border-color: var(--sched-ink); }
+.finder-chip:active { transform: scale(0.96); }
+
+.finder-chip.is-added {
+  background: var(--pink, #FF7AA2);
+  border-color: var(--pink, #FF7AA2);
+  color: var(--forest, #0c1f17);
+  font-weight: 600;
+}
+.finder-chip.is-added:hover {
+  background: var(--pink-soft, #FF8FAB);
+  border-color: var(--pink-soft, #FF8FAB);
+}
+
+.finder-chip.is-full,
+.finder-chip:disabled {
+  border-color: var(--sched-line);
+  color: var(--sched-faint);
+  cursor: default;
+  transform: none;
+}
+
+.finder-chip-note {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--pink, #FF7AA2);
+  margin-top: 4px;
+}
+.finder-chip-note:empty { display: none; }
+.finder-chip.is-full + .finder-chip-note { color: var(--sched-faint); }
+
+/* "More dates": a chip-sized text button, so it reads as a way to the rest
+   of the dates rather than a fifth date. */
+.finder-date--more { grid-column: span 2; }
+.finder-more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sched-muted);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: underline;
+  text-decoration-color: var(--sched-ring);
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.finder-more:hover,
+.finder-more:focus-visible { color: var(--sched-ink); }
+
+.finder-note {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--sched-muted);
+  margin: 12px 0 0;
+}
+.finder-note[hidden] { display: none; }
+
+/* The static list's way in when the feed is down: the full week. Hidden
+   (space kept) while the feed is still answering, so it does not flash. */
+.finder-book {
+  justify-content: center;
+  margin-top: 16px;
+  padding: 0 24px;
+  border: 1px solid var(--sched-ring);
+  color: var(--sched-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-decoration: none;
+}
+.finder-book:hover { border-color: var(--sched-ink); color: var(--sched-ink); }
+.finder-list.is-loading .finder-book { visibility: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .finder-chip { transition: none; }
+  .finder-chip:active { transform: none; }
+}
+
+/* ── What to know ─────────────────────────────────────────────────────── */
+.sched-know { margin: 48px 0 0; }
+#page-schedule .sched-know-head {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.45;
+  color: var(--sched-ink);
+  margin: 0 0 8px;
+}
+.sched-know-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sched-know-list li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--sched-muted);
+  margin: 0 0 8px;
+  max-width: 60ch;
+}
+
+/* ── The full ProSeries week (behind one toggle) ──────────────────────── */
+.sched-full {
+  margin: 48px 0 0;
+  border-top: 1px solid var(--sched-line);
+  padding-top: 8px;
+}
+.sched-full-toggle {
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sched-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sched-full-chev {
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.sched-full.is-open .sched-full-chev { transform: translateY(2px) rotate(-135deg); }
+.sched-full-body { padding-top: 16px; }
+.sched-full-body[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .sched-full-chev { transition: none; }
+}
+
+.sched-week-switch {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sched-week-btn {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background: none;
+  border: none;
+  padding: 0.4rem 0;
+  color: var(--sched-muted);
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.sched-week-btn.active {
+  color: var(--sched-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--arm-accent, var(--pink));
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* ── Week pager (2026-09-16) ──────────────────────────────────────────────
+   The three fixed chips became "‹ Earlier · <week> · Later ›" so October is
+   reachable in September. Appended, not restyled: the rules above still
+   describe the same text-link voice, these only re-lay it out. Three grid
+   columns with the label in the middle so the label does not shuffle
+   sideways when an arrow hides at either end of the range. */
+.sched-week-switch {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.sched-week-nav {
+  white-space: nowrap;
+}
+
+/* At either end of the range the arrow goes invisible rather than away, so the
+   week label stays dead centre instead of sliding sideways when you page. */
+.sched-week-nav[hidden] {
+  display: block;
+  visibility: hidden;
+}
+
+.sched-week-nav[data-sched-week-prev] {
+  justify-self: start;
+  text-align: left;
+}
+
+.sched-week-nav[data-sched-week-next] {
+  justify-self: end;
+  text-align: right;
+}
+
+.sched-week-nav:hover,
+.sched-week-nav:focus-visible {
+  color: var(--sched-ink);
+}
+
+/* The current week reads as the old .active chip did — ink over a pink
+   rule — but it is a label now, not a button, so it gets no hover state. */
+.sched-week-now {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--sched-ink);
+  white-space: nowrap;
+  text-align: center;
+  padding: 0.4rem 0;
+  text-decoration: underline;
+  text-decoration-color: var(--arm-accent, var(--pink));
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* One muted line under the pager, in .sched-row-bulk's voice. A sentence that
+   happens to be clickable, not a second button competing with the pager. */
+.sched-week-jump {
+  margin: 0 0 2rem;
+}
+
+.sched-week-jump-btn {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  line-height: 1.35;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  color: var(--pink, #FF7AA2);
+  cursor: pointer;
+  text-underline-offset: 3px;
+}
+
+.sched-week-jump-btn:hover,
+.sched-week-jump-btn:focus-visible {
+  text-decoration: underline;
+}
+
+/* Without the jump line the pager keeps the 2rem of air it always had under
+   it; with it, that air moves below the line instead. */
+.sched-week-switch:has(+ .sched-week-jump[hidden]) {
+  margin-bottom: 2rem;
+}
+
+.sched-notice {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--sched-ink);
+  background: rgba(250, 243, 232, 0.06);
+  border-left: 2px solid var(--pink, #FF7AA2);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.sched-notice[hidden] { display: none; }
+
+.sched-day-head {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--sched-faint);
+  margin: 1.75rem 0 0.5rem;
+}
+
+.sched-day-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.sched-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 72px 96px;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--sched-line);
+}
+
+.sched-row-time {
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+  color: var(--sched-muted);
+}
+
+.sched-row-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--sched-ink);
+}
+
+.sched-row-meta {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--sched-faint);
+}
+
+.sched-row-price {
+  text-align: right;
+}
+
+.sched-row-price-amt {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--sched-ink);
+}
+
+.sched-row-spots {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--pink, #FF7AA2);
+}
+
+/* The class's 4+ price, under its single price. Same muted weight as the
+   row's own meta line: a second fact about the class, not a badge. */
+.sched-row-bulk {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  line-height: 1.3;
+  color: var(--sched-faint);
+}
+
+/* One muted line above the total, in the cart bar, the checkout summary and
+   the thank-you list. Never coloured, never a badge. */
+.sched-bulk-note {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--sched-faint);
+  margin: 0 0 0.5rem;
+}
+
+/* Sits with the list it explains, not floating between list and total. */
+.sched-summary-list + .sched-bulk-note {
+  margin-top: -0.5rem;
+}
+
+.sched-bulk-note[hidden] {
+  display: none;
+}
+
+.sched-cart-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* Balanced, so the price the note names never wraps alone onto its own line
+   ("$17.50." under "Add 2 more and each date drops to", 2026-10-30). */
+.sched-cart-bar .sched-bulk-note {
+  color: var(--sched-muted);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.sched-row-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sched-row-full {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--sched-faint);
+}
+
+/* The grid's Add is secondary now, the same outline as a date chip: the one
+   filled control on the page is Check out. Added = Family Pink, as a chip. */
+.btn-ghost-arm {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid var(--sched-ring, rgba(250, 243, 232, 0.4));
+  color: var(--sched-ink, #FAF3E8);
+  border-radius: 0;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+.btn-ghost-arm:hover { border-color: var(--sched-ink, #FAF3E8); }
+
+.btn-ghost-arm.is-added {
+  background: var(--pink, #FF7AA2);
+  border-color: var(--pink, #FF7AA2);
+  color: var(--forest, #0c1f17);
+}
+
+.sched-check {
+  display: inline-block;
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(-45deg);
+  margin-right: 0.4em;
+}
+
+.sched-empty-line {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--sched-muted);
+  margin: 1.5rem 0;
+}
+.sched-empty-line[hidden] { display: none; }
+
+.sched-empty-line a {
+  color: var(--pink, #FF7AA2);
+}
+
+.sched-skel-row {
+  height: 56px;
+  background: rgba(250, 243, 232, 0.06);
+  margin-bottom: 0.6rem;
+}
+
+.sched-cart-bar[hidden] {
+  display: none;
+}
+
+/* A shade up from the page and a hairline over it, so the bar reads as the
+   page's footing rather than more of the page. */
+.sched-cart-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Auto height, not a fixed 64: the 4+ line rides above the count on a phone
+     and a fixed bar clipped it. Still 64 tall when there is no extra line. */
+  min-height: 64px;
+  background: var(--forest-light, #1a3d2e);
+  border-top: 1px solid var(--sched-line);
+  color: var(--sched-ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 1.25rem;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.6rem);
+  z-index: 40;
+}
+
+.sched-cart-count {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+/* The button keeps its one line; the note beside it wraps instead. */
+.sched-cart-bar > .btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.sched-cart-amt {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+}
+
+.sched-back {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--sched-muted);
+  display: inline-flex;
+  margin-bottom: 1.5rem;
+}
+.sched-back:hover { color: var(--sched-ink); }
+
+.sched-checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+#page-schedule .sched-h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--sched-ink);
+  margin: 0 0 0.75rem;
+}
+
+.sched-summary-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.sched-summary-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--sched-line);
+  gap: 0.75rem;
+}
+
+.sched-summary-line-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sched-remove-link {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--sched-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sched-summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  color: var(--sched-ink);
+  padding-top: 0.5rem;
+}
+
+.sched-form .field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.sched-form label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--sched-muted);
+  margin-bottom: 0.3rem;
+}
+
+/* Fields on forest: a faint fill and a hairline ring, ivory text, the dark
+   colour scheme so the date picker's icon is visible. */
+.sched-form input:not([type="checkbox"]) {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.6rem 0.7rem;
+  background: rgba(250, 243, 232, 0.06);
+  border: 1px solid var(--sched-ring);
+  border-radius: 0;
+  color: var(--sched-ink);
+  color-scheme: dark;
+  min-height: 44px;
+}
+.sched-form input:not([type="checkbox"]):focus {
+  outline: none;
+  border-color: var(--pink, #FF7AA2);
+  box-shadow: 0 0 0 1px var(--pink, #FF7AA2);
+}
+.sched-form input[aria-invalid="true"] { border-color: #d4775f; }
+
+.sched-waiver {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--sched-ink);
+  margin: 1rem 0;
+}
+
+/* The age confirm under the date of birth (2026-10-31): shown only when a
+   cart class falls outside the dancer's age, so [hidden] has to beat flex. */
+.sched-age-ok { margin: 0.6rem 0 0; }
+.sched-age-ok[hidden] { display: none; }
+
+.sched-waiver input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--pink, #FF7AA2);
+  color-scheme: dark;
+}
+
+.sched-waiver a,
+.sched-stepup a,
+.sched-fineprint a {
+  color: var(--sched-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sched-form-note,
+.sched-stepup {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--sched-muted);
+  margin: 0 0 1rem;
+}
+
+/* The soft age note under the date of birth (2026-10-30): ivory, not the
+   error shade, because it never blocks Pay. Empty, it takes no room. */
+.sched-age-note {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--sched-ink);
+  margin: 0;
+}
+.sched-age-note:not(:empty) { margin-top: 0.5rem; }
+
+/* Check out (the cart bar's button) and Pay wear .dropin-btn's look
+   (2026-10-30): the 56px Family Pink rectangle in sentence case that "Book a
+   class" and "Drop in this week" already are, not a 13.6px uppercase pill.
+   These two only; .arm-cta itself is shared and stays as it is. */
+.sched-cart-bar > .btn,
+.sched-pay-btn {
+  justify-content: center;
+  min-height: 56px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 0;
+  background: var(--pink, #FF7AA2);
+  color: var(--forest, #0c1f17);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.12s ease;
+}
+.sched-cart-bar > .btn:hover,
+.sched-cart-bar > .btn:focus-visible,
+.sched-pay-btn:hover,
+.sched-pay-btn:focus-visible {
+  background: var(--pink-soft, #FF8FAB);
+  color: var(--forest, #0c1f17);
+  transform: none;
+  box-shadow: none;
+}
+.sched-cart-bar > .btn:active,
+.sched-pay-btn:active { transform: scale(0.96); }
+@media (prefers-reduced-motion: reduce) {
+  .sched-cart-bar > .btn,
+  .sched-pay-btn { transition: none; }
+  .sched-cart-bar > .btn:active,
+  .sched-pay-btn:active { transform: none; }
+}
+
+.sched-pay-btn { width: 100%; }
+
+.sched-pay-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* Terracotta's dark-ground body shade: an error, not the accent. */
+.sched-error {
+  color: #d4775f;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+/* A field's own message, under that field (persona pass 2026-10-31). Empty,
+   it takes no room. */
+.sched-field-error {
+  color: #d4775f;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  margin: 0.4rem 0 0;
+}
+.sched-field-error:empty { display: none; }
+
+/* The studio address is a tap for directions. */
+.sched-know-list a,
+[data-sched-ty-address] a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sched-fineprint {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--sched-faint);
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+.sched-thankyou .kicker {
+  display: block;
+  color: var(--pink, #FF7AA2);
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.sched-before {
+  margin-top: 1.5rem;
+}
+
+.sched-before p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--sched-muted);
+  margin: 0.3rem 0;
+}
+
+.td-schedule-link {
+  display: inline-flex;
+  gap: 0.35em; /* inline-flex drops the space before the arrow (2026-10-30) */
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--terra);
+  margin-top: 0.5rem;
+}
+
+/* Phone: the time takes its own line over the name (2026-10-30). Beside a
+   90px time column and the 96px button, names had ~140px and broke onto
+   three loose lines. */
+@media (max-width: 640px) {
+  .sched-row {
+    grid-template-columns: minmax(0, 1fr) 96px;
+    row-gap: 2px;
+  }
+  .sched-row-time {
+    grid-column: 1 / -1;
+  }
+  .sched-row-main,
+  .sched-row-price {
+    grid-column: 1;
+  }
+  .sched-row-price {
+    text-align: left;
+  }
+  .sched-row-action {
+    grid-column: 2;
+    grid-row: 2 / span 2;
+  }
+  .sched-row-name {
+    line-height: 1.15;
+  }
+  .sched-checkout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   front-door.css — THIS WEEK + the ProSeries try-first door (2026-09-14)
+
+   One row grammar, used twice. It is deliberately NOT a card: hairlines
+   between rows, nothing around them, so it reads as a ledger of what is
+   happening rather than three more boxes on a page that already has cards
+   below it. Borrowed from .sched-row on /schedule/ (same column idea, same
+   Cormorant title over an Outfit meta line), re-voiced for the forest ground.
+   Two weights, three sizes, no color doing hierarchy's job.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.fd-now,
+.fd-door {
+  max-width: 1100px;
+  margin: 72px auto 0;
+  padding: 0 32px;
+}
+
+.fd-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+}
+
+.fd-row {
+  display: grid;
+  grid-template-columns: 150px 1fr auto;
+  align-items: baseline;
+  column-gap: 24px;
+  row-gap: 4px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+
+.fd-row-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  /* 0.5 ivory on forest measures 3.9:1 at 12px. 0.6 clears AA. */
+  color: rgba(250, 243, 232, 0.6);
+}
+
+.fd-row-main { min-width: 0; }
+
+.fd-row-title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 2.4vw, 28px);
+  line-height: 1.2;
+  color: var(--ivory);
+}
+
+.fd-row-meta {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.45;
+  /* Same reason as the label: 0.55 lands at 4.4:1, one notch under AA. */
+  color: rgba(250, 243, 232, 0.62);
+  margin-top: 4px;
+}
+
+/* A text link, never a second button: the hero already spent this page's one
+   filled CTA. 44px tall so a thumb can hit it. */
+.fd-row-link {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ivory);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.35);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+}
+.fd-row-link:hover { color: var(--pink); border-color: var(--pink); }
+
+/* Phone: the label stops being a column and becomes the row's kicker. Three
+   columns at 390 would leave the title six words wide. */
+@media (max-width: 719px) {
+  .fd-now,
+  .fd-door {
+    margin-top: 48px;
+    padding: 0 24px;
+  }
+  .fd-row {
+    grid-template-columns: 1fr;
+    padding: 18px 0 10px;
+  }
+  .fd-row-label {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+  /* The link stops competing with the meta line for the same 342px and takes
+     its own line. A right-hand column at this width cost the title a wrap and
+     the meta two, to save one line of height. */
+  .fd-row-title { font-size: 21px; }
+  .fd-row-link {
+    justify-self: start;
+    margin-top: 2px;
+  }
+}
+
+/* The Track Record band's numbers, now one muted line under the byline. The
+   pull quote sits on FOREST, not the ivory its comment in index.html claims,
+   so this is ivory ink. It inherits the block's centring because it reads as
+   the second half of the byline, not as body copy. */
+.pull-quote .pq-record {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(250, 243, 232, 0.62);
+  max-width: 34ch;
+  margin: 10px auto 0;
+}
+
+/* The ProSeries chips carry a longer sentence now ("Prep 5 of 10 filled"),
+   so they wrap instead of clipping at 390. */
+.ps-conv-chairs { flex-wrap: wrap; }
+
+/* ProSeries carries a sitewide-looking reset whose selector list runs
+   `#page-proseries *, ... { padding: 0 }` (see "PAGE: #page-proseries" above),
+   so an ID beats any plain class inside that page. The door block has to
+   restate its gutter at that weight or it sits flush against the screen edge
+   at 390. Not fixing the reset itself here: it is load-bearing for the whole
+   poster page and this pass does not own it. */
+#page-proseries .fd-door { padding: 0 32px; }
+@media (max-width: 719px) {
+  #page-proseries .fd-door { padding: 0 24px; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   front-door, pass 2 (2026-09-14)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Phone hero: the first screen has to contain the ask ──────────────
+   At 390x844 the photo band ran 480px and pushed the wordmark and the
+   filled CTA below the fold, which is the exact failure this whole pass
+   exists to fix: a front door you have to scroll to find is not a front
+   door. Under 768 the band is a fraction of the SCREEN (vh) rather than a
+   pixel range, so the identity block and the button both land above the
+   fold on a phone. The caption chip stays. Desktop is untouched: these
+   rules do not exist above 767px. */
+@media (max-width: 767px) {
+  #page-home .hero { padding-top: 56px; }
+  #page-home .hero-photo {
+    height: 42vh;
+    min-height: 0;
+    max-height: none;
+  }
+  #page-home .hero-text { padding: 24px 24px 32px; gap: 16px; }
+  #page-home .hero h1 { font-size: clamp(40px, 9vw, 56px); }
+  #page-home .hero-foot { margin-top: 0; }
+  #page-home .hero-cta-row { margin-top: 8px; gap: 16px; }
+}
+
+/* ── 2. The nav CTA is an outline, not a second filled button ────────────
+   One filled button per view, and on Home the hero's own "Drop in this
+   week" is it. The topnav CTA carried a pink fill AND a pulse animation
+   left over from the audition-era Register pill, which put two identical
+   pink blocks in the same frame pointing at the same page. Hairline,
+   ivory text, transparent fill; pink only on hover. The pile of
+   !important below is not enthusiasm: the fill it overrides is itself
+   declared !important in four earlier blocks (the .btn-blush group, the
+   launch-CTA block, and the rebrand nav rules). */
+.topnav .nav-cta-launch,
+.topnav.is-open nav .nav-cta-launch {
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--ivory, #FAF3E8) !important;
+  border: 1px solid rgba(250, 243, 232, 0.38) !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+.topnav .nav-cta-launch:hover,
+.topnav .nav-cta-launch:focus-visible,
+.topnav.is-open nav .nav-cta-launch:hover {
+  background: transparent !important;
+  color: var(--pink, #FF7AA2) !important;
+  border-color: var(--pink, #FF7AA2) !important;
+  box-shadow: none !important;
+  transform: translateY(-1px);
+}
+
+/* ── 3. The ProSeries door needs air on both sides ───────────────────────
+   24px above the kicker so it is not flush against the fixed topnav, and
+   24px below the last hairline so it is not fused to the tab strip. Both
+   off the 8px scale (spacing.lg in DESIGN.md), not eyeballed. */
+#page-proseries .fd-door {
+  margin-top: 24px;
+  padding: 0 32px 24px;
+}
+/* The same ID-weight reset that eats the gutter (see the note above) also eats
+   the ROW's padding, which left the kicker welded to the top hairline. Restate
+   it here at ID weight: 24px of air above the kicker, 24px below the last
+   hairline, both off the 8px scale. */
+#page-proseries .fd-door .fd-row {
+  padding: 24px 0;
+}
+@media (max-width: 719px) {
+  #page-proseries .fd-door {
+    margin-top: 24px;
+    padding: 0 24px 24px;
+  }
+  #page-proseries .fd-door .fd-row {
+    padding: 24px 0 16px;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   front-door, addendum B — the DROP IN feature panel (2026-09-14)
+
+   Row 1 of the THIS WEEK ledger came out of the ledger and became the page's
+   one focal point: a forest-light band, a Bebas numeral doing the shouting,
+   one filled pink button. Nothing new was added to compete with it. The price
+   is the visual device — it is the cheapest true thing this business can say
+   to a stranger.
+
+   One ambient layer on the page (the pink wash behind the numeral) and one
+   authored reveal (numeral, class line, button). Nothing else loops, nothing
+   else moves, the button does not pulse.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dropin-feature {
+  position: relative;
+  overflow: hidden;
+  background: var(--forest-light, #1a3d2e);
+  margin: 40px 0 0;
+  padding: 40px 0;
+  /* The site's reveal mechanism (js/main.js adds .visible) is the trigger, but
+     the generic .reveal rise would move the whole band AND its children. The
+     band holds still; only the three authored elements travel. */
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.dropin-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* THE ambient layer. A single soft pink wash sitting up and left of the
+   numeral, so the price reads as lit rather than boxed. No border, no card. */
+.dropin-wash {
+  position: absolute;
+  /* Centred on the numeral's upper-left shoulder. Parked further out it was
+     technically present and visually nothing, which is the worst version of an
+     ambient layer: cost without effect. */
+  top: -140px;
+  left: -190px;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 122, 162, 0.14) 0%, rgba(255, 122, 162, 0.08) 45%, rgba(255, 122, 162, 0) 72%);
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Home's is the panel's <h2> since 2026-10-30 (ProSeries keeps a <p>), so
+   the line-height is stated rather than left to the global heading rule. */
+.dropin-kicker {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--pink, #FF7AA2);
+  margin: 0 0 20px;
+}
+
+.dropin-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.dropin-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  min-width: 0;
+}
+
+/* Bebas's one canon job: the big number. 120px at 390, 160px at 1280. */
+.dropin-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 120px;
+  line-height: 0.82;
+  letter-spacing: 0.01em;
+  color: var(--ivory, #FAF3E8);
+  display: block;
+}
+
+.dropin-price-lines {
+  display: block;
+  padding-bottom: 6px;
+}
+
+.dropin-price-line {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.4;
+  color: rgba(250, 243, 232, 0.86);
+}
+.dropin-price-line + .dropin-price-line { color: rgba(250, 243, 232, 0.66); }
+
+.dropin-class {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.15;
+  color: var(--ivory, #FAF3E8);
+  margin: 0;
+}
+
+.dropin-meta {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.45;
+  color: rgba(250, 243, 232, 0.68);
+  margin: 10px 0 0;
+}
+
+/* The one filled element in this band. On Home it and the hero button are the
+   only filled pink things in a 1280 frame, and they are the same action. */
+.dropin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  margin-top: 24px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 0;
+  background: var(--pink, #FF7AA2);
+  color: var(--forest, #0c1f17);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.12s ease;
+}
+.dropin-btn:hover,
+.dropin-btn:focus-visible {
+  background: var(--pink-soft, #FF8FAB);
+  color: var(--forest, #0c1f17);
+}
+/* Krehel press. No pulse, no glow. */
+.dropin-btn:active { transform: scale(0.96); }
+
+.dropin-foot {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(250, 243, 232, 0.55);
+  margin: 12px 0 0;
+  max-width: 46ch;
+}
+
+/* ── Desktop: two columns, vertically centred ─────────────────────────── */
+@media (min-width: 900px) {
+  .dropin-feature { margin-top: 56px; padding: 64px 0; }
+  .dropin-inner { padding: 0 32px; }
+  .dropin-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: 48px;
+  }
+  .dropin-num { font-size: 160px; }
+  /* The two lines sit beside the numeral and must not wrap mid-phrase:
+     "$70 for a month of / Tuesdays" reads as a broken sentence, and the whole
+     point of the line is that it is one easy sentence. */
+  .dropin-price { flex-wrap: nowrap; }
+  .dropin-price-lines { flex-shrink: 0; }
+  .dropin-price-line { white-space: nowrap; }
+  .dropin-btn { width: auto; min-width: 260px; }
+  .dropin-wash { top: -170px; left: -190px; width: 680px; height: 680px; }
+}
+
+/* ── Compact modifier: ProSeries + Schedule ───────────────────────────── */
+.dropin-feature--compact .dropin-num { font-size: 88px; }
+.dropin-feature--compact .dropin-grid {
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 900px) {
+  .dropin-feature--compact { padding: 40px 0; }
+  .dropin-feature--compact .dropin-num { font-size: 88px; }
+  .dropin-feature--compact .dropin-grid { grid-template-columns: 1fr; column-gap: 0; }
+  .dropin-feature--compact .dropin-btn { width: auto; }
+}
+
+/* ProSeries carries an ID-weight reset (`#page-proseries * { padding: 0 }`),
+   so the panel has to restate its padding at that weight or the band collapses
+   onto its own text. Same fix, same reason, as the .fd-door block above. */
+#page-proseries .dropin-feature { margin-top: 24px; padding: 32px 0; }
+#page-proseries .dropin-inner { padding: 0 32px; }
+#page-proseries .dropin-btn { padding: 0 28px; }
+@media (max-width: 719px) {
+  #page-proseries .dropin-inner { padding: 0 24px; }
+}
+
+/* The list of every drop-in (2026-09-22). Ledger grammar: hairlines, no
+   boxes. Time, class, who, price; the class name is the line the eye reads. */
+.dropin-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+}
+.dropin-row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
+  column-gap: 16px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+/* Every row is a link to its class on /schedule/ (?class=<slug>, 2026-09-24).
+   Same look; the name underlines on hover so it reads as tappable. */
+a.dropin-row {
+  color: inherit;
+  text-decoration: none;
+}
+a.dropin-row:hover .dropin-name,
+a.dropin-row:focus-visible .dropin-name {
+  text-decoration: underline;
+  text-decoration-color: rgba(250, 243, 232, 0.4);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.dropin-when,
+.dropin-cost {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ivory, #FAF3E8);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.dropin-cost { text-align: right; }
+.dropin-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--ivory, #FAF3E8);
+}
+.dropin-who {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.4;
+  color: rgba(250, 243, 232, 0.72);
+  margin-top: 2px;
+}
+/* "from Oct 6" sits under the time: when a weekly slot starts is a time fact,
+   and in the meta line it wrapped every phone row to three lines. */
+.dropin-starts {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(250, 243, 232, 0.72);
+  margin-top: 2px;
+}
+/* "pm" after the time (2026-10-31): there so nobody has to guess, quieter
+   than the number so the column still reads as times. */
+.dropin-mer {
+  margin-left: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(250, 243, 232, 0.72);
+}
+@media (max-width: 480px) {
+  .dropin-row { grid-template-columns: 90px minmax(0, 1fr) auto; column-gap: 12px; }
+  .dropin-name { font-size: 20px; }
+  .dropin-who { font-size: 14px; }
+}
+#page-proseries .dropin-list,
+#page-proseries .dropin-row { padding-left: 0; padding-right: 0; }
+#page-proseries .dropin-row { padding-top: 12px; padding-bottom: 12px; }
+
+/* ── Motion: one authored moment, once ────────────────────────────────── */
+.dropin-num,
+.dropin-list,
+.dropin-btn {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.dropin-feature.visible .dropin-num,
+.dropin-feature.visible .dropin-list,
+.dropin-feature.visible .dropin-btn {
+  animation: dropin-rise 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.dropin-feature.visible .dropin-list { animation-delay: 80ms; }
+.dropin-feature.visible .dropin-btn { animation-delay: 160ms; }
+
+@keyframes dropin-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Texture tier: a 6% drift on a 9s loop. The only looping thing on the page. */
+@media (prefers-reduced-motion: no-preference) {
+  .dropin-wash { animation: dropin-drift 9s ease-in-out infinite alternate; }
+}
+@keyframes dropin-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(6%, 4%, 0); }
+}
+
+/* No JS, no observer, no reveal: the band must never be a rectangle of
+   invisible text. */
+.no-js .dropin-num,
+.no-js .dropin-list,
+.no-js .dropin-btn { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dropin-num,
+  .dropin-list,
+  .dropin-btn { opacity: 0; transform: none; }
+  .dropin-feature.visible .dropin-num,
+  .dropin-feature.visible .dropin-list,
+  .dropin-feature.visible .dropin-btn {
+    animation: dropin-fade 200ms linear forwards;
+    animation-delay: 0ms;
+  }
+  .dropin-wash { animation: none; }
+  .dropin-btn { transition: none; }
+  .dropin-btn:active { transform: none; }
+}
+@keyframes dropin-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── The other drop-in surfaces ───────────────────────────────────────── */
+
+/* Hero primary: the same height and weight as the panel's button, so the two
+   copies of the one action read as one action. */
+.hero-cta-row .dropin-hero-btn {
+  min-height: 56px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: none;
+  padding-inline: 28px;
+}
+@media (max-width: 719px) {
+  .hero-cta-row .dropin-hero-btn { width: 100%; }
+}
+.hero-cta-row .dropin-hero-btn:active { transform: scale(0.96); }
+
+/* Sticky bar: 64px of bar, 44px of button, the price in the words. */
+@media (max-width: 1149px) {
+  .mob-cta { min-height: 64px; }
+  .mob-cta-btn { min-height: 44px; }
+  body.mob-cta-on { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+}
+
+/* Schedule rows that are actually open: the price in Bebas, so the open rows
+   read as the offer and the closed ones stay the quiet grid they already were.
+   The Add control is an outline since 2026-09-24 (see .btn-ghost-arm): the
+   page's one filled button is Check out. */
+.sched-row:not(.sched-row--closed) .sched-row-price-amt {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--ivory, #FAF3E8);
+  letter-spacing: 0.01em;
+}
+.sched-row:not(.sched-row--closed) .sched-add-btn {
+  min-height: 44px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
+}
+.sched-row:not(.sched-row--closed) .sched-add-btn:active { transform: scale(0.96); }
+@media (prefers-reduced-motion: reduce) {
+  .sched-row:not(.sched-row--closed) .sched-add-btn { transition: none; }
+  .sched-row:not(.sched-row--closed) .sched-add-btn:active { transform: none; }
+}
+
+
+/* ═════════════════════════════════════════════════
+   2026-09-22 full-site audit, visual pass
+   ═════════════════════════════════════════════════ */
+
+/* Headlines break in balanced lines, no dangling last word ("SO / FAR."). */
+h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
+
+/* "Pick your dates" lands the list below the fixed nav, not under it. */
+#sched-list { scroll-margin-top: 96px; }
+
+/* Contrast: terracotta #C8614B is display-only; small text on ivory takes the
+   light-ground body shade, on forest the dark-ground one. /schedule/ is on
+   forest since 2026-09-24: its closed grid rows take a muted ivory that still
+   clears 4.5:1 there (#949a91 on #0c1f17). */
+#page-schedule .sched-row--closed .sched-row-name { opacity: 1; }
+#page-schedule .sched-row--closed,
+#page-schedule .sched-row--closed * { color: #949a91 !important; }
+.dropin-foot { color: #a9b5a8 !important; }
+#page-home cite > span { color: #d4775f !important; }
+#page-adult-company #col-who h2 { color: #d4775f !important; }
+#page-contact #contact-reason-help { color: #e3907a !important; }
+
+/* Gallery on a phone: two columns, not one 294px column (page was 11,700px). */
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 0 16px;
+  }
+  .gallery-grid img { height: auto; aspect-ratio: 4 / 5; }
+  .gallery-grid img.wide { grid-column: span 2; aspect-ratio: 4 / 3; }
+}
+
+/* Faculty photos: the width/height attributes out-ranked aspect-ratio, so the
+   squares rendered 342x640 (stretched). */
+#page-teachers .rf-photo { height: auto; object-position: 50% 25%; }
+
+
+/* ═══ 2026-09-24 cleanup, lane A: ProSeries ═══
+   ProSeries on one ground (docs/plans/2026-09-24-site-cleanup.md, lane A).
+   The page used to change ground about fifteen times (navy, forest, ivory,
+   Family Pink, terracotta) and ran four heading treatments. Now:
+   - Forest end to end. The Season One title card keeps its own ground and
+     sky type inside the hero; the drop-in panel keeps its raised forest.
+   - One section heading: Cormorant Garamond 600, sentence case, ivory, one
+     size per viewport. One kicker: the drop-in panel's (Outfit 11px, 600,
+     .32em caps, Family Pink).
+   - Pink is the accent: kickers, the one filled button per view, chips.
+   - Ivory only for the money: one inset panel (.ps-money) holding the
+     one-time fees, how deposits work and what a season adds up to.
+   - Sections part by space (32px each side on a phone, 56px from a tablet
+     up) and an inset hairline, never a colour block.
+   Tokens match #page-schedule so the two forest pages read as one site. */
+#page-proseries {
+  --psA-ink: #FAF3E8;
+  --psA-muted: rgba(250, 243, 232, 0.72);
+  --psA-faint: rgba(250, 243, 232, 0.56);
+  --psA-line: rgba(250, 243, 232, 0.14);
+  --psA-ring: rgba(250, 243, 232, 0.4);
+  --psA-gutter: 64px;
+  --psA-pad: 56px;
+  --psA-display: 'Cormorant Garamond', Georgia, serif;
+  --psA-body: 'Outfit', system-ui, sans-serif;
+  background: var(--forest, #0c1f17);
+}
+@media (max-width: 1024px) {
+  #page-proseries { --psA-gutter: 28px; }
+}
+@media (max-width: 720px) {
+  #page-proseries { --psA-gutter: 24px; --psA-pad: 32px; }
+}
+
+/* ── Sections: one ground, space + a hairline between ─────────────────── */
+#page-proseries .track-detail-section {
+  background: var(--forest, #0c1f17) !important;
+  margin: 0 !important;
+}
+/* Id-weight on purpose: older rules pin #proseries-interest and #ps-cast
+   with two ids and !important, and would otherwise keep their own padding
+   and ground at some widths. */
+#page-proseries #proseries-interest,
+#page-proseries #ps-cast,
+#page-proseries #ps-story,
+#page-proseries #ps-program,
+#page-proseries #ps-why,
+#page-proseries #ps-faq,
+#page-proseries #ps-calendar,
+#page-proseries #ep-recaps-ps,
+#page-proseries .cta-banner {
+  background:
+    linear-gradient(var(--psA-line), var(--psA-line)) no-repeat center top / calc(100% - 2 * var(--psA-gutter)) 1px,
+    var(--forest, #0c1f17) !important;
+  color: var(--psA-ink) !important;
+  padding: var(--psA-pad) var(--psA-gutter) !important;
+  margin: 0 !important;
+  max-width: none;
+  border: 0 !important;
+  text-align: left;
+}
+#page-proseries .td-intro {
+  background: none;
+  max-width: none;
+  margin: 0 !important;
+  padding: var(--psA-pad) var(--psA-gutter) 32px !important;
+}
+
+/* ── One section heading ──────────────────────────────────────────────── */
+#page-proseries .td-intro h2,
+#page-proseries .content-section h2,
+#page-proseries .ps-conv-band h3,
+#page-proseries .cta-banner h3 {
+  font-family: var(--psA-display) !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  font-size: clamp(36px, 1.75rem + 1.6vw, 48px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  text-align: left !important;
+  color: var(--psA-ink) !important;
+  margin: 0 0 16px !important;
+  max-width: 22ch;
+}
+#page-proseries .content-section h2::after,
+#page-proseries .td-intro h2::after { content: none; }
+
+/* ── One kicker ───────────────────────────────────────────────────────── */
+#page-proseries .ps-story-eyebrow,
+#page-proseries .content-section .chapter,
+#page-proseries .ep-recaps-eyebrow,
+#page-proseries .conv-step-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--psA-body) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.32em !important;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--pink, #FF7AA2) !important;
+  opacity: 1;
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none;
+}
+#page-proseries .content-section .chapter .no { display: none; }
+#page-proseries .content-section .chapter .lbl {
+  color: inherit !important;
+  padding: 0;
+  border: 0;
+  font-size: inherit;
+  letter-spacing: inherit;
+}
+#page-proseries .ps-story-eyebrow .ps-clapper { color: inherit; width: 18px; }
+
+/* The italic subline ("one season. every episode. no reruns."): Cormorant
+   italic, muted. (Its twin over the tracks intro went 2026-10-30.) */
+#page-proseries #ps-calendar .s1-cormorant-italic.section-lead {
+  font-family: var(--psA-display) !important;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 20px !important;
+  line-height: 1.35 !important;
+  color: var(--psA-muted) !important;
+  opacity: 1;
+  margin: 0 0 16px !important;
+}
+
+/* ── Body on forest ───────────────────────────────────────────────────── */
+/* .td-cast-subline is gone (2026-10-30); the :not() stays for its weight,
+   which is what keeps the placement note ivory. Plain `p` would let the
+   muted rule below win and change that line. */
+#page-proseries .td-intro p:not(.td-cast-subline) {
+  font-size: 15px !important;
+  line-height: 1.65;
+  color: var(--psA-ink);
+  opacity: 1;
+  max-width: 64ch;
+  margin: 0 0 12px;
+}
+#page-proseries .td-intro .td-placement-note { color: var(--psA-muted); }
+#page-proseries .content-section .section-lead { color: var(--psA-ink); }
+
+/* ── The money: the page's one ivory surface ──────────────────────────── */
+#page-proseries .ps-money {
+  --psA-money-ink: var(--forest, #0c1f17);
+  --psA-money-muted: rgba(12, 31, 23, 0.72);
+  --psA-money-line: rgba(12, 31, 23, 0.16);
+  margin: 48px var(--psA-gutter) 0;
+  padding: 0 40px;
+  max-width: 880px;
+  background: var(--ivory, #FAF3E8);
+  color: var(--psA-money-ink);
+}
+#page-proseries .ps-money .pricing-onetime,
+#page-proseries .ps-money .pricing-notes {
+  background: none !important;
+  border: 0 !important;
+  margin: 0 !important;
+  padding: 32px 0 !important;
+  max-width: none;
+  color: var(--psA-money-ink) !important;
+}
+#page-proseries .ps-money > .pricing-notes { border-top: 1px solid var(--psA-money-line) !important; }
+#page-proseries .ps-money h3 {
+  font-family: var(--psA-body) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  letter-spacing: 0.32em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--terra-dark, #a8503e) !important;
+  margin: 0 0 16px !important;
+}
+#page-proseries .ps-money .pricing-onetime-rows {
+  display: block;
+  border: 0;
+}
+#page-proseries .ps-money .pot-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 24px;
+  align-items: center;
+  padding: 0 !important;
+  border: 0 !important;
+}
+#page-proseries .ps-money .pot-name {
+  grid-column: 1;
+  font-family: var(--psA-body) !important;
+  font-size: 17px;
+  font-weight: 600 !important;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--psA-money-ink);
+}
+#page-proseries .ps-money .pot-meta {
+  grid-column: 1;
+  grid-row: 2;
+  font-family: var(--psA-body) !important;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--psA-money-muted);
+  opacity: 1;
+}
+#page-proseries .ps-money .pot-amount {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--psA-money-ink);
+  margin: 0;
+}
+#page-proseries .ps-money .pricing-notes p {
+  font-family: var(--psA-body) !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: var(--psA-money-ink) !important;
+  max-width: 64ch;
+  margin: 0 0 12px !important;
+}
+#page-proseries .ps-money .pricing-notes p:last-child { margin-bottom: 0 !important; }
+#page-proseries .ps-money .pricing-notes strong { color: var(--psA-money-ink); font-weight: 600; }
+#page-proseries .ps-money .pricing-notes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+#page-proseries .ps-money .pricing-notes li {
+  font-family: var(--psA-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--psA-money-ink);
+  padding: 2px 0 2px 16px;
+  margin: 0;
+  border: 0;
+  position: relative;
+}
+#page-proseries .ps-money .pricing-notes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 6px;
+  height: 1px;
+  background: currentColor;
+}
+#page-proseries .ps-money .pricing-notes li strong { color: var(--psA-money-ink); }
+#page-proseries .ps-money .pricing-notes-fine {
+  font-size: 13px !important;
+  font-style: italic;
+  color: var(--psA-money-muted) !important;
+  opacity: 1;
+}
+@media (max-width: 720px) {
+  #page-proseries .ps-money {
+    margin: 32px var(--psA-gutter) 0;
+    padding: 0 20px;
+  }
+  #page-proseries .ps-money .pricing-onetime,
+  #page-proseries .ps-money .pricing-notes { padding: 28px 0 !important; }
+}
+
+/* ── Chairs remain: on the ground, not a band ─────────────────────────── */
+#page-proseries .ps-conv-band {
+  background: none;
+  text-align: left;
+  margin: 0;
+  padding: 48px var(--psA-gutter) var(--psA-pad);
+}
+#page-proseries .ps-conv-chairs {
+  justify-content: flex-start;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+#page-proseries .ps-conv-line,
+#page-proseries .ps-conv-micro {
+  text-align: left;
+  font-family: var(--psA-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--psA-muted);
+  margin: 0 0 24px;
+  max-width: 64ch;
+}
+#page-proseries .ps-conv-micro { font-size: 13px; margin: 12px 0 0; }
+
+/* ── The page's filled buttons: the drop-in panel's shape ─────────────── */
+/* The hero's Express Interest joined 2026-10-30 (it was the one primary still
+   in the old 48px uppercase 13.6px shape). */
+#page-proseries .s1-premiere .s1-cta,
+#page-proseries .ps-conv-band .btn,
+#page-proseries #proseries-interest .ps-if-submit,
+#page-proseries .cta-banner .btn {
+  min-height: 56px !important;
+  padding: 0 28px !important;
+  margin: 0 !important;
+  font-family: var(--psA-body) !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  border-radius: 0;
+}
+#page-proseries .ps-conv-band .btn em,
+#page-proseries #proseries-interest .ps-if-submit em { font-style: normal; }
+@media (max-width: 720px) {
+  #page-proseries .s1-premiere .s1-cta,
+  #page-proseries .ps-conv-band .btn,
+  #page-proseries #proseries-interest .ps-if-submit,
+  #page-proseries .cta-banner .btn { width: 100%; justify-content: center; }
+}
+
+/* ── Now casting: steps ───────────────────────────────────────────────── */
+#page-proseries #proseries-interest .conv-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px 32px;
+  max-width: 960px;
+  margin: 32px 0 0;
+}
+#page-proseries #proseries-interest .conv-step { gap: 4px; }
+#page-proseries #proseries-interest .conv-step-chip { margin: 0 0 4px !important; }
+#page-proseries #proseries-interest .conv-step-title {
+  font-family: var(--psA-display);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--psA-ink);
+}
+#page-proseries #proseries-interest .conv-step-line {
+  font-family: var(--psA-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--psA-muted);
+}
+@media (max-width: 720px) {
+  #page-proseries #proseries-interest .conv-steps { grid-template-columns: 1fr; }
+}
+
+/* ── Now casting: the interest form, on forest ────────────────────────────
+   Fields match the /schedule/ checkout: a faint fill, a 1px ring, ivory text,
+   the dark colour scheme (so the date picker's glyph shows), labels above. */
+#page-proseries #proseries-interest .ps-if {
+  max-width: 620px;
+  margin: 56px 0 0;
+  text-align: left;
+}
+#page-proseries #proseries-interest .ps-if-title {
+  font-family: var(--psA-display);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--psA-ink);
+  margin: 0 0 8px;
+}
+#page-proseries #proseries-interest .ps-if-sub {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  color: var(--psA-muted) !important;
+  max-width: 52ch;
+  margin: 0 0 24px !important;
+}
+#page-proseries #proseries-interest .ps-if .form-group { margin: 0 0 16px; }
+#page-proseries #proseries-interest .ps-if label {
+  display: block;
+  font-family: var(--psA-body);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.4;
+  color: var(--psA-muted);
+  margin: 0 0 6px;
+}
+#page-proseries #proseries-interest .ps-if .ps-if-opt { color: var(--psA-faint); }
+#page-proseries #proseries-interest .ps-if input:not(.hp-field),
+#page-proseries #proseries-interest .ps-if select,
+#page-proseries #proseries-interest .ps-if textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  font-family: var(--psA-body);
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--psA-ink);
+  background-color: rgba(250, 243, 232, 0.06);
+  border: 1px solid var(--psA-ring);
+  border-radius: 0;
+  box-shadow: none;
+  color-scheme: dark;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+#page-proseries #proseries-interest .ps-if input::placeholder,
+#page-proseries #proseries-interest .ps-if textarea::placeholder { color: var(--psA-faint); opacity: 1; }
+#page-proseries #proseries-interest .ps-if input:not(.hp-field):hover,
+#page-proseries #proseries-interest .ps-if select:hover,
+#page-proseries #proseries-interest .ps-if textarea:hover { border-color: rgba(250, 243, 232, 0.6); }
+#page-proseries #proseries-interest .ps-if input:not(.hp-field):focus,
+#page-proseries #proseries-interest .ps-if select:focus,
+#page-proseries #proseries-interest .ps-if textarea:focus {
+  outline: none;
+  border-color: var(--pink, #FF7AA2);
+  box-shadow: 0 0 0 1px var(--pink, #FF7AA2);
+}
+#page-proseries #proseries-interest .ps-if select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FAF3E8' d='M1 4l5 4 5-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+#page-proseries #proseries-interest .ps-if select option { color: var(--forest, #0c1f17); background: var(--ivory, #FAF3E8); }
+#page-proseries #proseries-interest .ps-if textarea { min-height: 96px; resize: vertical; }
+#page-proseries #proseries-interest .ps-if input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.8; cursor: pointer; }
+#page-proseries #proseries-interest .ps-if input.invalid:not(.hp-field),
+#page-proseries #proseries-interest .ps-if select.invalid,
+#page-proseries #proseries-interest .ps-if textarea.invalid {
+  border-color: #d4775f;
+}
+/* An unchosen select reads as a placeholder, not an answer. */
+#page-proseries #proseries-interest .ps-if select:has(option[value=""]:checked) { color: var(--psA-faint); }
+#page-proseries #proseries-interest .ps-if .form-field-error {
+  font-family: var(--psA-body);
+  font-size: 14px;
+  line-height: 1.4;
+  color: #d4775f;
+  margin-top: 6px;
+}
+#page-proseries #proseries-interest .ps-if .form-error {
+  font-family: var(--psA-body);
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: left;
+  color: #d4775f;
+  background: none;
+  border: 0;
+  border-left: 2px solid #d4775f;
+  border-radius: 0;
+  padding: 4px 0 4px 12px;
+  margin: 16px 0 0;
+}
+
+#page-proseries #proseries-interest .ps-if-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+@media (min-width: 721px) {
+  #page-proseries #proseries-interest .ps-if-dancer .ps-if-row { grid-template-columns: 1.3fr 1fr; }
+}
+@media (min-width: 921px) {
+  #page-proseries #proseries-interest .ps-if-dancer {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 0 16px;
+    align-items: start;
+  }
+  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-legend,
+  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-track-note { grid-column: 1 / -1; }
+  #page-proseries #proseries-interest .ps-if-dancer > .ps-if-row { display: contents; }
+}
+@media (max-width: 720px) {
+  #page-proseries #proseries-interest .ps-if { margin-top: 48px; }
+  #page-proseries #proseries-interest .ps-if-row { grid-template-columns: 1fr; }
+}
+
+#page-proseries #proseries-interest .ps-if-dancer {
+  border: 0;
+  border-top: 1px solid var(--psA-line);
+  padding: 24px 0 0;
+  margin: 16px 0 0;
+}
+#page-proseries #proseries-interest .ps-if-legend {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--psA-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--psA-ink);
+  padding: 0;
+  margin: 0 0 16px;
+}
+#page-proseries #proseries-interest .ps-if-remove {
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  font-family: var(--psA-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--psA-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+#page-proseries #proseries-interest .ps-if-remove:hover { color: var(--psA-ink); }
+#page-proseries #proseries-interest .ps-if-track-note {
+  font-family: var(--psA-body);
+  font-size: 14px !important;
+  line-height: 1.5;
+  color: var(--psA-muted) !important;
+  margin: -4px 0 8px !important;
+  padding-left: 12px;
+  border-left: 2px solid var(--pink, #FF7AA2);
+}
+/* Secondary: the outline. Pink ring and label on forest (the site-wide
+   .ps-if-add outline rule supplies the colour). */
+#page-proseries #proseries-interest .ps-if-add {
+  display: inline-flex;
+  padding: 0 20px !important;
+  margin: 8px 0 32px;
+  font-family: var(--psA-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+#page-proseries #proseries-interest .ps-if-submit { margin-top: 8px !important; }
+#page-proseries #proseries-interest .ps-if-submit:active { transform: scale(0.98); }
+#page-proseries #proseries-interest .ps-if-consent {
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  color: var(--psA-muted) !important;
+  max-width: 52ch;
+  margin: 16px 0 0 !important;
+}
+#page-proseries #proseries-interest .ps-if-consent a {
+  color: var(--psA-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+#page-proseries #proseries-interest .ps-if-done .ps-if-title { margin-top: 0; }
+#page-proseries #proseries-interest .ps-if-follow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--psA-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--pink, #FF7AA2);
+  border-bottom: 1px solid rgba(255, 122, 162, 0.5);
+}
+#page-proseries #proseries-interest .conv-ask-first {
+  text-align: left;
+  margin: 32px 0 0 !important;
+}
+/* 44px tap targets, same look (2026-10-30): the box grows by its padding and
+   hands the space back with an equal negative margin (the closing band's
+   link carries that margin in its own rules below), so nothing around it
+   moves. The underline is text-decoration now: a bottom border would ride
+   down with the padding. */
+#page-proseries .conv-ask-first a,
+#page-proseries .cta-banner .conv-ask-first-link {
+  display: inline-block;
+  padding-block: 11px;
+  margin-block: -11px;
+  font-family: var(--psA-body);
+  font-size: 15px;
+  color: var(--psA-ink);
+  border-bottom: 0;
+  text-decoration: underline 1px var(--psA-ring);
+  text-decoration-skip-ink: none;
+  text-underline-offset: 6px;
+}
+#page-proseries .conv-ask-first a:hover,
+#page-proseries .cta-banner .conv-ask-first-link:hover { color: var(--pink, #FF7AA2); text-decoration-color: var(--pink, #FF7AA2); }
+@media (prefers-reduced-motion: reduce) {
+  #page-proseries #proseries-interest .ps-if input,
+  #page-proseries #proseries-interest .ps-if select,
+  #page-proseries #proseries-interest .ps-if textarea { transition: none; }
+  #page-proseries #proseries-interest .ps-if-submit:active { transform: none; }
+}
+
+/* ── The program: stat slate on the spine ─────────────────────────────── */
+#page-proseries #ps-program .s1-slate {
+  justify-content: flex-start;
+  margin: 8px 0 24px;
+}
+#page-proseries #ps-program .s1-slate-item {
+  align-items: flex-start;
+  padding: 0 24px;
+  border-right: 1px solid var(--psA-line);
+}
+#page-proseries #ps-program .s1-slate-item:first-child { padding-left: 0; }
+#page-proseries #ps-program .s1-slate-item:last-child { border-right: 0; }
+#page-proseries #ps-program .s1-slate-num {
+  font-size: 44px;
+  line-height: 1;
+  color: var(--psA-ink);
+}
+#page-proseries #ps-program .s1-slate-lbl {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--psA-muted);
+  margin-top: 6px;
+}
+
+/* ── Why ProSeries: one list, no boxes ────────────────────────────────── */
+#page-proseries .why-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 32px 0 0 !important;
+  background: none;
+  border: 0;
+}
+@media (min-width: 900px) {
+  #page-proseries .why-grid { grid-template-columns: 1fr 1fr; column-gap: 64px; }
+}
+#page-proseries .why-item {
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--psA-line);
+  padding: 24px 0 !important;
+  margin: 0 !important;
+  color: var(--psA-ink) !important;
+}
+/* h3 since 2026-10-30: they sit under the section's h2 (were h4, a skipped
+   level). Same look as before. */
+#page-proseries .why-item h3 {
+  font-family: var(--psA-display);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--psA-ink);
+  margin: 0 0 8px;
+}
+#page-proseries .why-item p {
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: var(--psA-muted) !important;
+  margin: 0 !important;
+  max-width: 60ch;
+}
+#page-proseries .why-item em { font-style: italic; }
+#page-proseries .why-item a { color: var(--pink, #FF7AA2); }
+
+/* ── The Episode Guide: episode cards on forest ───────────────────────── */
+#page-proseries #ps-calendar .s1-season-dates {
+  font-size: 15px;
+  color: var(--psA-muted);
+  margin: 0 0 8px;
+}
+#page-proseries #ps-calendar .s1-episode-list {
+  max-width: 760px;
+  margin: 24px 0 0;
+  gap: 12px;
+}
+#page-proseries #ps-calendar .s1-ep {
+  background: rgba(250, 243, 232, 0.03);
+  border-radius: 0;
+}
+#page-proseries #ps-calendar .s1-ep:not(.s1-ep--next) { border: 1px solid var(--psA-line); }
+#page-proseries #ps-calendar .s1-ep--finale { padding: 0.85rem 1.1rem; }
+@media (min-width: 561px) {
+  #page-proseries #ps-calendar .s1-ep--live .s1-ep-meta { max-width: 32ch; }
+}
+/* Phones: the code chip and the title share a line, the date sits under
+   them. Seven episodes stacked three lines deep were a screen and a half. */
+@media (max-width: 560px) {
+  #page-proseries #ps-calendar .s1-ep { gap: 8px 12px; }
+  #page-proseries #ps-calendar .s1-ep-title { flex: 1 1 0; min-width: 0; }
+  #page-proseries #ps-calendar .s1-ep-meta { flex: 1 1 100%; }
+}
+
+/* On a phone the story ends on its own disclosure bar, which already draws
+   a rule; the program's hairline right under it would be a second one. */
+@media (max-width: 767px) {
+  #page-proseries #ps-story + #ps-program { background: var(--forest, #0c1f17) !important; }
+}
+
+/* ── Episode recaps: a quiet line, its button a secondary ────────────────
+   The closing band's Express Interest is the filled button in this view. */
+#page-proseries .ep-recaps { gap: 16px 48px; }
+#page-proseries .ep-recaps-eyebrow { margin-bottom: 8px !important; }
+#page-proseries .ep-recaps-form input[type="email"] {
+  min-height: 48px;
+  background: rgba(250, 243, 232, 0.06);
+  border: 1px solid var(--psA-ring);
+  border-radius: 0;
+  color: var(--psA-ink);
+}
+#page-proseries .ep-recaps-form .btn-blush {
+  background: transparent !important;
+  color: var(--pink, #FF7AA2) !important;
+  border: 1px solid var(--pink, #FF7AA2) !important;
+  border-radius: 0;
+  font-family: var(--psA-body) !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  padding: 0 20px !important;
+}
+#page-proseries .ep-recaps-form .btn-blush:hover { background: rgba(255, 122, 162, 0.12) !important; }
+
+/* ── Closing band ─────────────────────────────────────────────────────── */
+#page-proseries .cta-banner { padding-bottom: calc(var(--psA-pad) + 16px) !important; }
+#page-proseries .cta-banner p {
+  font-family: var(--psA-body) !important;
+  font-size: 15px !important;
+  line-height: 1.6;
+  color: var(--psA-muted) !important;
+  opacity: 1;
+  max-width: 60ch;
+  margin: 0 0 24px !important;
+}
+/* The -11px block margins return the link's 44px tap padding (2026-10-30). */
+#page-proseries .cta-banner .conv-ask-first-link {
+  display: inline-block;
+  margin: -11px 0 -11px 24px;
+  vertical-align: middle;
+}
+@media (max-width: 720px) {
+  #page-proseries .cta-banner .conv-ask-first-link { display: table; margin: 9px 0 -11px; }
+}
+
+/* ── One accent for links on this page ───────────────────────────────────
+   The cast footer link and the FAQ's "+" and closing link were terracotta
+   next to pink kickers and chips: two accents doing the same job. */
+#page-proseries #ps-cast .ps-cast-footer-link,
+#page-proseries #ps-faq .ps-faq-more a { color: var(--pink, #FF7AA2); }
+#page-proseries #ps-faq .ps-faq-more a { text-decoration-color: rgba(255, 122, 162, 0.5); }
+#page-proseries #ps-faq .ps-faq-q::after,
+#page-proseries #ps-faq .ps-faq-q:hover { color: var(--pink, #FF7AA2); }
+#page-proseries #ps-cast .ps-cast-footer-link:hover,
+#page-proseries #ps-faq .ps-faq-more a:hover { color: var(--psA-ink); }
+
+/* ═══ 2026-09-24 cleanup, lane B: Home, Collective, Teachers, Contact, footer ═══
+   docs/plans/2026-09-24-site-cleanup.md, lane B. Everything this pass adds
+   lives in this block; rules it replaced were deleted where they stood. */
+
+/* ── Home ─────────────────────────────────────────────────────────────── */
+
+/* The credit line sits under its heading, flush left with it, at every
+   width. Right-aligned it hung off on its own at 390 and read as a caption
+   for nothing. */
+#page-home .video-featured .row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+#page-home .video-featured .meta {
+  text-align: left;
+  max-width: none;
+  text-wrap: pretty;
+}
+
+/* .page reserves 60px under every page for a ticker retired in August; the
+   sticky bar clears itself (body.mob-cta-on). Here it only doubled the gap
+   above the footer, on a phone and (since 2026-10-30) at every width. */
+#page-home.page { padding-bottom: 0; }
+
+/* Phone rhythm: sections 48 to 64px apart, not three ~250px empty forest
+   bands (140px paddings plus 32px margins either side of the video and the
+   quote). The zero margins and the quote's one hairline now live on the base
+   rules; desktop keeps the same shape at 80/56. */
+@media (max-width: 768px) {
+  #page-home .entries-lead { margin: 48px auto 24px; }
+  #page-home .video-featured {
+    padding: 56px 0 32px;
+    border-top: 0;
+  }
+  #page-home .video-featured .row { margin-bottom: 24px; }
+  #page-home .pull-quote { padding: 32px 20px 56px; }
+  #page-home .pull-quote .dot { margin-bottom: 24px; }
+  #page-home .pull-quote cite { margin-top: 32px; }
+}
+
+/* ── Collective: one joining screen ───────────────────────────────────── */
+
+#page-adult-company .col-join {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  display: grid;
+  gap: 32px;
+  text-align: left;
+}
+#page-adult-company .col-join-lead {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(250, 243, 232, 0.86);
+  max-width: 60ch;
+  margin: 0 0 32px;
+}
+
+/* What / who / where / cost: the site's ledger grammar (hairlines, no box). */
+#page-adult-company .col-facts {
+  margin: 0;
+  border-top: 1px solid rgba(250, 243, 232, 0.14);
+}
+#page-adult-company .col-fact {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  column-gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+#page-adult-company .col-fact dt {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--terra-light, #d4775f);
+}
+#page-adult-company .col-fact dd { margin: 0; }
+#page-adult-company .col-fact-main {
+  display: block;
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ivory, #FAF3E8);
+}
+#page-adult-company .col-fact-sub {
+  display: block;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(250, 243, 232, 0.72);
+  margin-top: 4px;
+}
+
+/* Next class + the one action. The date is the focal point when there is
+   one; until then the line says so plainly. */
+#page-adult-company .col-join .dnc {
+  border: 0;
+  padding: 0;
+  margin: 0 0 24px;
+}
+#page-adult-company .col-join .dnc-empty,
+#page-adult-company .col-join .dnc-date,
+#page-adult-company .col-join .dnc-time {
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--ivory, #FAF3E8);
+  max-width: none;
+  margin: 0;
+}
+#page-adult-company .col-join .dnc-eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--terra-light, #d4775f);
+  margin: 0 0 4px;
+}
+#page-adult-company .col-join .dnc-title,
+#page-adult-company .col-join .dnc-venue,
+#page-adult-company .col-join .dnc-price {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(250, 243, 232, 0.72);
+  margin: 0;
+}
+#page-adult-company .col-join .dnc-title { margin-top: 8px; color: var(--ivory, #FAF3E8); }
+#page-adult-company .col-join .dnc-more { margin-top: 16px; }
+
+/* The page's one filled button. The Collective carries no Family Pink (the
+   arm remaps it), so the fill is its own terracotta; forest ink on
+   terracotta measures 4.3:1, so the label is set as large text (19px bold,
+   AA needs 3:1 there). Square, like Home's primary buttons. */
+#page-adult-company .col-join-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 24px;
+  background: var(--terra, #C8614B);
+  color: var(--forest, #0c1f17);
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  border: 0;
+  border-radius: 0;
+}
+#page-adult-company .col-join-btn:hover { background: var(--terra-light, #d4775f); }
+#page-adult-company .col-join-btn:focus-visible {
+  outline: 2px solid var(--ivory, #FAF3E8);
+  outline-offset: 3px;
+}
+#page-adult-company .col-join-follow {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(250, 243, 232, 0.72);
+  margin: 16px 0 0;
+}
+#page-adult-company .col-join-follow a {
+  color: var(--terra-soft, #e08d76);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 900px) {
+  /* Flush with the hero's text column (56px), not centred in its own box. */
+  #page-adult-company .col-join {
+    max-width: none;
+    grid-template-columns: minmax(0, 640px) minmax(0, 440px);
+    column-gap: 96px;
+    align-items: start;
+    padding: 64px 56px 72px;
+  }
+  /* Next class + Join span both rows and stay pinned while the facts and
+     "Who This Is For" scroll past on the left (2026-10-30): the column was
+     203px tall beside a 522px one, and from there down the right half was
+     empty with Join ~700px back up. Top clears the 76px top nav. */
+  #page-adult-company .col-join-act {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: 100px;
+    padding-top: 8px;
+  }
+  #page-adult-company .col-join-btn { width: auto; display: inline-flex; }
+}
+
+/* Who it is for: the same list, on the page ground, no box around it. It is
+   the joining screen's third child now; on a phone the 24px top here plus the
+   grid's 32px gap (and .col-join's 48px bottom) keep every line where it was
+   when it sat after the section. */
+#page-adult-company .col-who {
+  padding: 24px 0 0;
+  text-align: left;
+}
+#page-adult-company .col-who h2 {
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  text-align: left;
+}
+#page-adult-company .col-who .audience-list {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  max-width: 60ch;
+}
+#page-adult-company .col-who .audience-list li {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: rgba(250, 243, 232, 0.86);
+  margin: 0 0 12px;
+  padding-left: 20px;
+  text-indent: -20px;
+}
+#page-adult-company .col-who .audience-list li::before {
+  content: "\25B8";
+  display: inline-block;
+  width: 20px;
+  text-indent: 0;
+  margin: 0;
+  color: var(--terra-light, #d4775f);
+}
+#page-adult-company .col-who .audience-list .emphasis {
+  padding-left: 0;
+  text-indent: 0;
+  margin-top: 16px;
+  color: var(--ivory, #FAF3E8);
+  font-weight: 600;
+}
+#page-adult-company .col-who .audience-list .emphasis::before { content: none; }
+@media (min-width: 900px) {
+  #page-adult-company .col-who { grid-column: 1; padding: 40px 0 0; }
+}
+
+/* Past shows: everything about June 2026 and 2025, whole, behind one toggle.
+   The toggle is a hushed ghost button, the arm's secondary style. */
+/* The toggle and its lead sit on the page's 24px gutter; the shows inside
+   keep the paddings they always had, so they render exactly as before. */
+#page-adult-company .col-past { margin: 0; padding: 0 0 48px; }
+#page-adult-company .col-past > .col-past-toggle { margin: 0 24px; }
+#page-adult-company .col-past-lead { padding: 0 24px; }
+#page-adult-company .col-past-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1.5px solid var(--terra, #C8614B);
+  color: var(--ivory, #FAF3E8);
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+#page-adult-company .col-past-toggle::-webkit-details-marker { display: none; }
+#page-adult-company .col-past-toggle::marker { content: ""; }
+/* Open / closed, said by a chevron that turns. */
+#page-adult-company .col-past-toggle::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+#page-adult-company .col-past[open] > .col-past-toggle::after {
+  transform: translateY(2px) rotate(-135deg);
+}
+#page-adult-company .col-past-toggle:hover { background: rgba(200, 97, 75, 0.14); }
+#page-adult-company .col-past-toggle:focus-visible {
+  outline: 2px solid var(--terra-light, #d4775f);
+  outline-offset: 3px;
+}
+#page-adult-company .col-past-body { padding-top: 32px; }
+#page-adult-company.page { padding-bottom: 0; }
+#page-adult-company .col-past-lead {
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(250, 243, 232, 0.86);
+  max-width: 60ch;
+  margin: 0 0 32px;
+}
+#page-adult-company .col-past-lead a {
+  color: var(--terra-soft, #e08d76);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Body copy flush left in the history too (it was centred). */
+#page-adult-company .col-past .ac-hero,
+#page-adult-company .col-past .cc-intro,
+#page-adult-company .col-past .cc-intro h2,
+#page-adult-company .col-past .cc-caption,
+#page-adult-company .col-past .gallery-section-label {
+  text-align: left;
+}
+#page-adult-company .col-past .cc-intro { margin-left: 0; }
+#page-adult-company .col-past .cc-caption { margin-top: 12px; }
+/* The "No.03" chapter mark between the show's band and "The Show" went with
+   the long page (2026-10-30); this keeps the room it left, so the heading
+   does not sit 12px under the band. */
+#page-adult-company .col-past .ac-hero + .collective-card { margin-top: 40px !important; }
+@media (min-width: 900px) {
+  #page-adult-company .col-past { padding-bottom: 72px; }
+  #page-adult-company .col-past > .col-past-toggle { margin: 0 56px; }
+  #page-adult-company .col-past-lead { padding: 0 56px; }
+}
+
+/* Phone hero: with the "What's Next" button gone the hero is shorter, and
+   the dwdC mark (bottom right) sat on the tagline. Top right is clear of
+   every line of the text stack. */
+@media (max-width: 720px) {
+  #page-adult-company .ac-hero--photo-forward .hero-logo-big {
+    top: 16px;
+    right: 16px;
+    bottom: auto;
+    height: auto;
+    width: 88px;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+  #page-adult-company .ac-hero--photo-forward .hero-logo-big img {
+    width: 88px !important;
+    height: 88px !important;
+  }
+}
+
+/* The phone sticky bar on the Collective carries its Join action in the
+   arm's terracotta, set as large text for the same 4.3:1 reason. */
+#mob-cta[data-route="adult-company"] .mob-cta-btn {
+  background: var(--terra, #C8614B) !important;
+  color: var(--forest, #0c1f17) !important;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+/* The next-class line takes two short lines beside the wider button rather
+   than an ellipsis mid-date. */
+#mob-cta[data-route="adult-company"] .mob-cta-label {
+  white-space: normal;
+  line-height: 1.35;
+}
+
+/* ── Teachers: assistants without photos are text entries ────────────── */
+#page-teachers .rf-card--text { gap: 4px; }
+/* The role on its own line under the name (no "·" to strand at a wrap). */
+#page-teachers .rf-card--text .rf-role { margin: 0; line-height: 1.5; }
+#page-teachers .rf-grid--assist {
+  gap: 24px 48px;
+  padding-top: 12px;
+}
+
+/* ── Contact: the /schedule/ checkout's field treatment ───────────────── */
+#page-contact .form-group { margin-bottom: 16px; }
+#page-contact .form-group label,
+#page-contact .contact-reason legend {
+  display: block;
+  font-family: var(--font-body), 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(250, 243, 232, 0.78);
+  margin: 0 0 0.3rem;
+  padding: 0;
+}
+#page-contact .form-optional { color: rgba(250, 243, 232, 0.78); }
+#page-contact .form-group input,
+#page-contact .form-group textarea {
+  padding: 0.6rem 0.7rem;
+  background: rgba(250, 243, 232, 0.06);
+  border: 1px solid rgba(250, 243, 232, 0.4);
+  border-radius: 0;
+  color: var(--ivory, #FAF3E8);
+  color-scheme: dark;
+  min-height: 44px;
+  box-shadow: none;
+}
+#page-contact .form-group textarea { min-height: 140px; }
+#page-contact .form-group input::placeholder,
+#page-contact .form-group textarea::placeholder { color: rgba(250, 243, 232, 0.5); }
+#page-contact .form-group input:focus,
+#page-contact .form-group textarea:focus,
+#page-contact .form-group input:focus-visible,
+#page-contact .form-group textarea:focus-visible {
+  outline: none;
+  border-color: var(--pink, #FF7AA2);
+  box-shadow: 0 0 0 1px var(--pink, #FF7AA2);
+  background: rgba(250, 243, 232, 0.06);
+}
+#page-contact .form-group input.invalid,
+#page-contact .form-group textarea.invalid,
+#page-contact .form-group [aria-invalid="true"] { border-color: #d4775f; }
+/* The reason pills: 24px of air before the Message label. */
+#page-contact .contact-reason {
+  border: 0;
+  padding: 0;
+  margin: 0 0 24px;
+  min-width: 0;
+}
+#page-contact .contact-reason legend { margin-bottom: 0.5rem; }
+/* Both Instagram handles at the value size (the second was 0.85rem). */
+#page-contact .contact-ig-next { margin-top: 8px; }
+
+/* ── Footer: the "|" never starts a line of its own ───────────────────── */
+@media (max-width: 720px) {
+  footer.site-footer .footer-bottom .footer-sep { display: none; }
+  footer.site-footer .footer-bottom .footer-copy { flex-basis: 100%; text-align: center; text-wrap: balance; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SEASON ONE ON HOME (2026-10-30, November refresh; replaced FRESH FROM
+   JUMP and the midnight S1 strip). A seven-stop rail, the last episode as
+   proof (results in the drop-in panel's ledger grammar), the next one as
+   the reason to drop in now. Forest ground so Home stays one house. The
+   rail's pink line runs to the next stop: --sh-progress (0 to 1) is set in
+   the markup and rewritten by js/episodes.js.
+   ═══════════════════════════════════════════════════════════════════════ */
+.season-home { background: var(--forest); padding: 56px 0; }
+.sh-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.sh-kicker {
+  font-family: var(--font-body); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--pink, #FF7AA2); margin: 0;
+}
+.sh-rail {
+  list-style: none; margin: 22px 0 40px; padding: 0; position: relative;
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+/* The line runs centre of the first stop to centre of the last. */
+.sh-rail::before,
+.sh-rail::after {
+  content: ''; position: absolute; top: 7px; height: 1px; left: calc(100% / 14);
+}
+.sh-rail::before { right: calc(100% / 14); background: rgba(250, 243, 232, 0.22); }
+.sh-rail::after { width: calc((100% - 100% / 7) * var(--sh-progress, 0)); background: var(--pink, #FF7AA2); }
+.sh-ep { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 9px; min-width: 0; text-align: center; }
+.sh-dot {
+  width: 15px; height: 15px; box-sizing: border-box; border-radius: 50%;
+  border: 1px solid rgba(250, 243, 232, 0.4); background: var(--forest);
+}
+.sh-ep.is-aired .sh-dot { background: var(--pink, #FF7AA2); border-color: var(--pink, #FF7AA2); }
+.sh-ep.is-next .sh-dot { border: 2px solid var(--pink, #FF7AA2); box-shadow: 0 0 0 5px rgba(255, 122, 162, 0.16); }
+.sh-code {
+  font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; line-height: 1; color: rgba(250, 243, 232, 0.45);
+}
+.sh-ep.is-aired .sh-code { color: var(--ivory); }
+.sh-ep.is-next .sh-code { color: var(--pink, #FF7AA2); }
+.sh-name { font-family: var(--font-body); font-size: 12px; line-height: 1.25; color: rgba(250, 243, 232, 0.55); overflow-wrap: anywhere; }
+.sh-ep.is-next .sh-name { color: var(--ivory); }
+/* Seven names do not fit a phone: the codes carry the rail there, the names
+   stay for screen readers. */
+@media (max-width: 699px) {
+  .sh-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+.sh-label {
+  font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; line-height: 1.6; color: rgba(250, 243, 232, 0.6); margin: 0 0 12px;
+}
+.sh-label b { font-weight: 600; color: var(--pink, #FF7AA2); }
+.sh-last-title {
+  font-family: var(--font-display); font-weight: 400; font-size: 40px; line-height: 1.08;
+  color: var(--ivory); margin: 0 0 24px;
+}
+.sh-last-title em { font-style: italic; color: var(--pink, #FF7AA2); }
+.sh-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; margin: 0 0 24px; }
+.jump-results { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(250, 243, 232, 0.14); }
+.jump-results li {
+  display: grid; grid-template-columns: 72px minmax(0, 1fr); column-gap: 16px; align-items: baseline;
+  padding: 12px 0; border-bottom: 1px solid rgba(250, 243, 232, 0.14);
+}
+.jump-res-big { font-family: 'Bebas Neue', sans-serif; font-size: 34px; line-height: 1; color: var(--ivory); }
+.jump-res-what { font-family: var(--font-body); font-size: 16px; line-height: 1.45; color: rgba(250, 243, 232, 0.82); }
+.jump-res-what em { font-family: var(--font-display); font-size: 1.12em; color: var(--ivory); }
+.sh-next { margin-top: 44px; padding: 28px 22px 26px; border: 1px solid rgba(250, 243, 232, 0.16); }
+.sh-next-name { font-family: var(--font-display); font-weight: 400; font-size: 34px; line-height: 1.1; color: var(--ivory); margin: 0 0 8px; }
+.sh-next-meta { font-family: var(--font-body); font-size: 15px; line-height: 1.4; color: rgba(250, 243, 232, 0.7); margin: 0 0 18px; }
+.sh-next-line { font-family: var(--font-body); font-size: 17px; line-height: 1.5; color: rgba(250, 243, 232, 0.86); margin: 0 0 22px; }
+.sh-keep { white-space: nowrap; }
+.jump-btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px;
+  border: 1px solid var(--pink, #FF7AA2); color: var(--pink, #FF7AA2); background: transparent;
+  font-family: var(--font-body); font-size: 17px; font-weight: 600; letter-spacing: 0.6px; text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.12s ease;
+}
+.jump-btn:hover, .jump-btn:focus-visible { background: var(--pink, #FF7AA2); color: var(--forest); }
+.jump-btn:active { transform: scale(0.96); }
+.sh-next .jump-btn { display: flex; width: 100%; padding: 12px 18px; line-height: 1.3; text-align: center; }
+/* A 44px tap target that still looks like a 27px underlined line
+   (2026-10-30): the box grows, the rule moved from border-bottom to an
+   offset underline so it stays under the words, and the margin gives back
+   what the taller box added so the text sits where it did. */
+.sh-more {
+  display: inline-flex; align-items: center; min-height: 44px; margin: 10px 0 -7px;
+  font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--ivory);
+  text-decoration: underline; text-decoration-color: rgba(250, 243, 232, 0.4);
+  text-decoration-thickness: 1px; text-underline-offset: 7px; text-decoration-skip-ink: none;
+}
+.sh-more:hover, .sh-more:focus-visible { color: var(--pink, #FF7AA2); text-decoration-color: var(--pink, #FF7AA2); }
+@media (min-width: 900px) {
+  .season-home { padding: 80px 0; }
+  .sh-inner { padding: 0 32px; }
+  .sh-rail { margin: 28px 0 56px; }
+  .sh-body { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); column-gap: 56px; align-items: start; }
+  .sh-last-title { font-size: 56px; }
+  /* The results column runs long; the door stays in view beside it. */
+  .sh-next { position: sticky; top: 96px; margin-top: 31px; padding: 34px 32px 32px; }
+  .sh-next .jump-btn { padding: 12px 14px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   OCTOBER REFRESH (2026-10-22): the drop-in loop on Home, the reel that
+   replaced Tokyo Sunrise, and the photo band on /schedule/.
+   ═══════════════════════════════════════════════════════════════════════ */
+.dropin-side { min-width: 0; }
+.dropin-loop { margin: 24px 0 0; max-width: 340px; }
+.dropin-loop video {
+  display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
+  background: var(--forest) center / cover no-repeat;
+}
+/* A caption in sentence case (2026-10-30): set in the panel's tracked caps it
+   read as the heading of the class list next to it, and .55 was 4.45:1 on
+   the panel's lighter forest (.66 is 5.7:1). */
+.dropin-loop figcaption {
+  font-family: var(--font-body); font-size: 13px; line-height: 1.5;
+  color: rgba(250, 243, 232, 0.66); margin-top: 10px;
+}
+@media (max-width: 899px) {
+  /* On a phone the loop sits between the price and the list: a short band, not
+     a second full screen of scroll before the classes. */
+  .dropin-loop { max-width: none; }
+  .dropin-loop video { aspect-ratio: 16 / 10; }
+}
+
+.video-reel { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.video-reel video {
+  display: block; width: 100%; max-width: 360px; height: auto; aspect-ratio: 9 / 16;
+  background: var(--forest); object-fit: cover;
+}
+.video-reel-cta {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
+  border: 1px solid var(--pink, #FF7AA2); color: var(--pink, #FF7AA2);
+  font-family: var(--font-body); font-size: 16px; font-weight: 600; letter-spacing: 0.6px; text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.video-reel-cta:hover, .video-reel-cta:focus-visible { background: var(--pink, #FF7AA2); color: var(--forest); }
+
+/* Air above it too (2026-10-30): it sat flush on the intro line. */
+.sched-band {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 24px 0 32px;
+}
+@media (min-width: 768px) {
+  .sched-band { margin-top: 32px; }
+}
+.sched-band img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; background: var(--forest); cursor: zoom-in; }
+@media (max-width: 599px) {
+  /* Two across on a phone, the second pair dropped: four 3:4 crops at 85px
+     wide read as thumbnails, two at 175px read as the room. */
+  .sched-band { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sched-band img:nth-child(n+3) { display: none; }
+}
+
+/* ============================================================
+   PROSERIES CAST — headshot wall (2026-11-14)
+   The 2026-11-12 headshots, by track. Small cards on purpose: three
+   across on a phone keeps the whole wall near 1,000px (the September
+   photo cards ran 12,000px and pushed the form off the page). Each card
+   holds a serious take and a silly one; hover or tap swaps them.
+   ============================================================ */
+#page-proseries .ps-face-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px 10px;
+}
+@media (min-width: 768px) {
+  #page-proseries .ps-face-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px 14px; }
+}
+#page-proseries .ps-face { min-width: 0; }
+#page-proseries .ps-face-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+#page-proseries .ps-face-frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #1a3d2e;
+}
+#page-proseries .ps-face-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+#page-proseries .ps-face-img--silly { opacity: 0; transition: opacity .18s ease; }
+#page-proseries .ps-face-btn.is-silly .ps-face-img--silly { opacity: 1; }
+@media (hover: hover) {
+  #page-proseries .ps-face-btn:hover .ps-face-img--silly { opacity: 1; }
+}
+#page-proseries .ps-face-btn:focus-visible { outline: 2px solid var(--pink, #FF7AA2); outline-offset: 3px; }
+#page-proseries .ps-face--none .ps-face-frame { display: grid; place-items: center; }
+#page-proseries .ps-face-mark { width: 44%; height: auto; opacity: .5; }
+#page-proseries .ps-face-name {
+  display: block;
+  margin-top: 8px;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ivory, #FAF3E8);
+  overflow-wrap: anywhere;
+}
+@media (prefers-reduced-motion: reduce) {
+  #page-proseries .ps-face-img--silly { transition: none; }
+}

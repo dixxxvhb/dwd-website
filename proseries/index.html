@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0c1f17">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>ProSeries: Season One | DWD</title>
+  <title>ProSeries Season One: Orlando competitive dance team | Dance With Dixon</title>
   <!-- Description/OG carry Season One for the 2026-27 season (audit M3,
        2026-08-16). Update or retire this line when the season wraps in
        May 2027 — it is season-bound copy sitting in a static tag, which is
@@ -86,27 +86,8 @@
 
   })();
   </script>
-  <!-- LCP hero preload (home page first paint). Which image is the LCP is not
-       known until the picker above has run, so the link is written here, in the
-       head and above the stylesheet, exactly where the static one used to sit.
-
-       The inert link at the end of this block never applies (media="not all").
-       It is here because scripts/build-routes.mjs drops this whole block from
-       the six route shells by matching on its last line, and the shells are
-       build output. Do not remove it. -->
-  <script>
-  (function () {
-    var pick = window.__hero;
-    if (!pick) return;
-    var base = '/images/photos/hero/' + pick.l + '-', set = [], k;
-    for (k = 0; k < pick.s.length; k++) set.push(base + pick.s[k][0] + '.webp ' + pick.s[k][1] + 'w');
-    document.write('<link rel="preload" as="image" type="image/webp" href="' + base + pick.s[pick.s.length - 1][0] + '.webp" imagesrcset="' + set.join(', ') + '" imagesizes="(max-width: 768px) 100vw, 60vw" fetchpriority="high">');
-  })();
-  </script>
-  <link rel="preload" as="image" media="not all"
-        href="/images/photos/hero/A-1600.webp"
-        type="image/webp"
-        fetchpriority="high">
+  <!-- The home hero LCP preload is dropped on this route: its hero is not
+       what paints here. See scripts/build-routes.mjs. -->
 
   <!-- Open Graph -->
   <meta property="og:title" content="dwdPROSERIES · Season One">
@@ -1066,6 +1047,24 @@
           <img src="/images/logos/v3/DWD-hero-transparent.svg" alt="Dance With Dixon" width="400" height="400" loading="eager" decoding="async">
         </div>
       </div>
+
+      <!-- Thanksgiving week strip (2026-11-09). One card under the hero that
+           names the week and sends families to the menu on /schedule/. It
+           names no class, teacher or time (the menu reveals those on its own
+           schedule). js/now.js removes it at data-tgh-until, New York time;
+           without JS it simply stays. -->
+      <section class="tgh" data-tgh data-tgh-until="2026-11-27T13:00" aria-labelledby="tgh-title">
+        <div class="tgh-inner">
+          <div class="tgh-card">
+            <div class="tgh-text">
+              <p class="tgh-kicker"><span>Thanksgiving Week &middot;</span> <span>Nov 24, 25 + 27</span></p>
+              <h2 class="tgh-title" id="tgh-title">Three mornings of masterclasses.</h2>
+              <p class="tgh-line">Open to dancers from every studio. $15 to $20 a class at Exchange Dance.</p>
+            </div>
+            <a class="tgh-link" href="/schedule/" data-ref="home-tg-strip" data-track="home-tg-strip">See the menu <em>&rarr;</em></a>
+          </div>
+        </div>
+      </section>
 
       <!-- DROP IN feature panel (2026-09-14, addendum B). Row 1 of THIS WEEK
            was a hairline in a ledger; the drop-in is the push, so it is now the
@@ -2078,19 +2077,19 @@
           <span>The Cast</span>
         </div>
         <h2>Seventeen dancers. One company.</h2>
-        <p class="section-lead">The Season One company, by track.</p>
+        <p class="section-lead">The Season One company, by track. Tap a face for the silly one.</p>
 
         <div class="ps-roster-group">
           <div class="ps-roster-head">
             <span class="ps-roster-track">Prep</span>
             <span class="ps-cast-chip ps-cast-chip--prep" data-chairs="filled" data-chairs-track="prep">5 of 10 chairs filled</span>
           </div>
-          <ul class="ps-roster-grid" role="list">
-            <li class="ps-roster-chip ps-roster-chip--prep">Athena</li>
-            <li class="ps-roster-chip ps-roster-chip--prep">Finnie</li>
-            <li class="ps-roster-chip ps-roster-chip--prep">Ki'Marie</li>
-            <li class="ps-roster-chip ps-roster-chip--prep">Marilynn</li>
-            <li class="ps-roster-chip ps-roster-chip--prep">Piper</li>
+          <ul class="ps-face-grid" role="list">
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Athena. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-athena-serious-480.webp" alt="Athena in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-athena-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Athena</span></button></li>
+            <li class="ps-face"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-finnie-serious-480.webp" alt="Finnie in the team jacket" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Finnie</span></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Ki'Marie. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-kimarie-serious-480.webp" alt="Ki'Marie in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-kimarie-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Ki'Marie</span></button></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Marilynn. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-marilynn-serious-480.webp" alt="Marilynn in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-marilynn-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Marilynn</span></button></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Piper. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-piper-serious-480.webp" alt="Piper in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-piper-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Piper</span></button></li>
           </ul>
         </div>
         <div class="ps-roster-group">
@@ -2098,13 +2097,13 @@
             <span class="ps-roster-track">Elite</span>
             <span class="ps-cast-chip ps-cast-chip--elite" data-chairs="filled" data-chairs-track="elite">6 of 10 chairs filled</span>
           </div>
-          <ul class="ps-roster-grid" role="list">
-            <li class="ps-roster-chip ps-roster-chip--elite">Audrey</li>
-            <li class="ps-roster-chip ps-roster-chip--elite">Beatriz</li>
-            <li class="ps-roster-chip ps-roster-chip--elite">Belle</li>
-            <li class="ps-roster-chip ps-roster-chip--elite">Haylie</li>
-            <li class="ps-roster-chip ps-roster-chip--elite">Keeley</li>
-            <li class="ps-roster-chip ps-roster-chip--elite">Laylianna</li>
+          <ul class="ps-face-grid" role="list">
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Audrey. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-audrey-serious-480.webp" alt="Audrey in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-audrey-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Audrey</span></button></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Beatriz. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-beatriz-serious-480.webp" alt="Beatriz in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-beatriz-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Beatriz</span></button></li>
+            <li class="ps-face ps-face--none"><span class="ps-face-frame"><img class="ps-face-mark" src="/images/logos/v3/dwdPS-glyph-transparent.svg" alt="" width="56" height="56" loading="lazy"></span><span class="ps-face-name">Belle</span></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Haylie. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-haylie-serious-480.webp" alt="Haylie in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-haylie-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Haylie</span></button></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Keeley. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-keeley-serious-480.webp" alt="Keeley in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-keeley-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Keeley</span></button></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Laylianna. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-laylianna-serious-480.webp" alt="Laylianna in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-laylianna-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Laylianna</span></button></li>
           </ul>
         </div>
         <div class="ps-roster-group">
@@ -2112,13 +2111,13 @@
             <span class="ps-roster-track">Pro</span>
             <span class="ps-cast-chip ps-cast-chip--pro" data-chairs="filled" data-chairs-track="pro">6 of 10 chairs filled</span>
           </div>
-          <ul class="ps-roster-grid" role="list">
-            <li class="ps-roster-chip ps-roster-chip--pro">Adelyn</li>
-            <li class="ps-roster-chip ps-roster-chip--pro">Daisy</li>
-            <li class="ps-roster-chip ps-roster-chip--pro">Evie</li>
-            <li class="ps-roster-chip ps-roster-chip--pro">John</li>
-            <li class="ps-roster-chip ps-roster-chip--pro">Remi</li>
-            <li class="ps-roster-chip ps-roster-chip--pro">Yessa</li>
+          <ul class="ps-face-grid" role="list">
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Adelyn. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-adelyn-serious-480.webp" alt="Adelyn in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-adelyn-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Adelyn</span></button></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Daisy. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-daisy-serious-480.webp" alt="Daisy in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-daisy-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Daisy</span></button></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Evie. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-evie-serious-480.webp" alt="Evie in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-evie-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Evie</span></button></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="John. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-john-serious-480.webp" alt="John in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-john-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">John</span></button></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Remi. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-remi-serious-480.webp" alt="Remi in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-remi-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Remi</span></button></li>
+            <li class="ps-face"><button type="button" class="ps-face-btn" aria-pressed="false" aria-label="Yessa. Show the silly one"><span class="ps-face-frame"><img class="ps-face-img" src="/images/photos/opt/s1-yessa-serious-480.webp" alt="Yessa in the team jacket" width="480" height="600" loading="lazy" decoding="async"><img class="ps-face-img ps-face-img--silly" src="/images/photos/opt/s1-yessa-silly-480.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></span><span class="ps-face-name">Yessa</span></button></li>
           </ul>
         </div>
 
@@ -2804,11 +2803,11 @@
           <p class="tch-bio">DWD is what happens when the person who built your program decides to build their own. Two programs, one standard. An entire season designed, directed, and choreographed by one artistic director. dwdPROSERIES for young competitive dancers ages 5 to 19 who want real training. dwdCOLLECTIVE for adults 18 and up who want real choreography and real stage time. Come find out what it means to Dance With Dixon.</p>
         </div>
         <div class="tch-director-photo tch-photo-grid">
-          <img width="1600" height="2390" src="/images/photos/opt/bw-headshot-1600.webp" srcset="/images/photos/opt/bw-headshot-800.webp 800w, /images/photos/opt/bw-headshot-1600.webp 1600w" sizes="(max-width: 980px) 33vw, 15vw" alt="Dixon Bowles headshot · black and white" loading="lazy" decoding="async">
-          <img width="1600" height="2134" src="/images/photos/opt/img_2919-800.webp" srcset="/images/photos/opt/img_2919-800.webp 800w, /images/photos/opt/img_2919-1600.webp 1600w" sizes="(max-width: 980px) 33vw, 15vw" alt="A team of young dancers holding Top Score awards in front of the StarQuest backdrop" loading="lazy" decoding="async">
-          <img width="960" height="1280" src="/images/photos/opt/dixon-award-groove-solo-800.webp" srcset="/images/photos/opt/dixon-award-groove-solo-800.webp 800w, /images/photos/opt/dixon-award-groove-solo-1600.webp 1600w" sizes="(max-width: 980px) 33vw, 15vw" alt="Dixon on stage receiving an award at GROOVE" loading="lazy" decoding="async">
-          <img width="1600" height="2134" src="/images/photos/opt/dixon-adcc-excellence-banner-800.webp" srcset="/images/photos/opt/dixon-adcc-excellence-banner-800.webp 800w, /images/photos/opt/dixon-adcc-excellence-banner-1600.webp 1600w" sizes="(max-width: 980px) 33vw, 15vw" alt="Dixon with a young dancer in costume in front of the Inferno Dance Competition backdrop" loading="lazy" decoding="async">
-          <img width="960" height="1280" src="/images/photos/opt/dixon-groove-stage-plaque-800.webp" srcset="/images/photos/opt/dixon-groove-stage-plaque-800.webp 800w, /images/photos/opt/dixon-groove-stage-plaque-1600.webp 1600w" sizes="(max-width: 980px) 33vw, 15vw" alt="Dixon on the GROOVE stage with an award plaque" loading="lazy" decoding="async">
+          <img width="1600" height="1999" src="/images/photos/opt/dixon-headshot-2943-800.webp" srcset="/images/photos/opt/dixon-headshot-2943-800.webp 800w, /images/photos/opt/dixon-headshot-2943-1600.webp 1600w" sizes="(max-width: 980px) 50vw, 15vw" alt="Dixon Bowles smiling in a white DWD cap and green team jacket" loading="lazy" decoding="async">
+          <img width="1600" height="2000" src="/images/photos/opt/dixon-headshot-2934-800.webp" srcset="/images/photos/opt/dixon-headshot-2934-800.webp 800w, /images/photos/opt/dixon-headshot-2934-1600.webp 1600w" sizes="(max-width: 980px) 50vw, 15vw" alt="Dixon laughing with the collar of his team jacket pulled up" loading="lazy" decoding="async">
+          <img width="1600" height="2000" src="/images/photos/opt/dixon-headshot-2922-800.webp" srcset="/images/photos/opt/dixon-headshot-2922-800.webp 800w, /images/photos/opt/dixon-headshot-2922-1600.webp 1600w" sizes="(max-width: 980px) 50vw, 15vw" alt="Dixon Bowles in his green team jacket with Mr Dixon stitched on the chest" loading="lazy" decoding="async">
+          <img width="1600" height="2000" src="/images/photos/opt/dixon-headshot-2957-800.webp" srcset="/images/photos/opt/dixon-headshot-2957-800.webp 800w, /images/photos/opt/dixon-headshot-2957-1600.webp 1600w" sizes="(max-width: 980px) 50vw, 15vw" alt="Dixon laughing, leaning forward in his DWD cap and team jacket" loading="lazy" decoding="async">
+          <img width="960" height="1280" src="/images/photos/opt/dixon-groove-stage-plaque-800.webp" srcset="/images/photos/opt/dixon-groove-stage-plaque-800.webp 800w, /images/photos/opt/dixon-groove-stage-plaque-1600.webp 1600w" sizes="(max-width: 980px) 50vw, 15vw" alt="Dixon on the GROOVE stage with an award plaque" loading="lazy" decoding="async">
           <img width="1600" height="1066" src="/images/photos/opt/dixon-mom-1-800.webp" srcset="/images/photos/opt/dixon-mom-1-800.webp 800w, /images/photos/opt/dixon-mom-1-1600.webp 1600w" sizes="(max-width: 980px) 33vw, 15vw" alt="Dixon and his mom Tamara at his wedding" loading="lazy" decoding="async">
         </div>
       </div>
@@ -2847,22 +2846,19 @@
         <div class="rf-assist-head">
           <span class="tch-rotation-eyebrow">Company Assistants</span>
         </div>
-        <!-- Text entries until their professional photos arrive (2026-09-24):
-             the initials tiles read as empty boxes. When a photo lands, add
-             its line from the comment inside the card as the card's first
-             child and drop the rf-card--text class. The role is its own line
-             here (2026-10-30): in a 222px column "Name · Role" broke after the
-             dot and left it dangling. -->
+        <!-- Photos from the 2026-11-12 headshot day (square 640 crops). The role
+             stays on its own line: in a narrow column "Name · Role" broke
+             after the dot and left it dangling. -->
         <div class="rf-grid rf-grid--assist">
-          <article class="rf-card rf-card--assist rf-card--text" data-teacher="tori">
-            <!-- PHOTO (rename to the real file): <img class="rf-photo" src="/images/photos/opt/teacher-tori-640.webp" alt="Tori Ugalde" loading="lazy" width="640" height="640"> -->
+          <article class="rf-card rf-card--assist" data-teacher="tori">
+            <img class="rf-photo" src="/images/photos/opt/teacher-tori-640.webp" alt="Tori Ugalde" loading="lazy" width="640" height="640">
             <h3 class="rf-name">Tori Ugalde</h3>
             <p class="rf-disc rf-role">Strength and Stretch</p>
             <p class="rf-line">Conditioning, flexibility, and warm-up leadership.</p>
           </article>
 
-          <article class="rf-card rf-card--assist rf-card--text" data-teacher="john">
-            <!-- PHOTO (rename to the real file): <img class="rf-photo" src="/images/photos/opt/teacher-john-640.webp" alt="John Nuzzi" loading="lazy" width="640" height="640"> -->
+          <article class="rf-card rf-card--assist" data-teacher="john">
+            <img class="rf-photo" src="/images/photos/opt/teacher-john-640.webp" alt="John Nuzzi" loading="lazy" width="640" height="640">
             <h3 class="rf-name">John Nuzzi</h3>
             <p class="rf-disc rf-role">Rehearsal Assistant</p>
             <p class="rf-line">Pro track dancer and rehearsal assistant.</p>
@@ -3232,8 +3228,8 @@
                rather than a second object stacked above it. -->
           <div class="contact-portrait">
             <picture>
-              <source type="image/webp" srcset="/images/photos/opt/bw-headshot-800.webp 800w, /images/photos/opt/bw-headshot-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 380px">
-              <img width="1600" height="2390" src="/images/photos/opt/bw-headshot-1600.webp" alt="Dixon Bowles" loading="lazy" decoding="async">
+              <source type="image/webp" srcset="/images/photos/opt/dixon-headshot-2943-800.webp 800w, /images/photos/opt/dixon-headshot-2943-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 380px">
+              <img width="1600" height="1999" src="/images/photos/opt/dixon-headshot-2943-1600.webp" alt="Dixon Bowles" loading="lazy" decoding="async">
             </picture>
           </div>
           <div class="contact-brandline">
