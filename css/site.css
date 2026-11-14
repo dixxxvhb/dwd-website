@@ -6727,11 +6727,13 @@ footer.site-footer .footer-brand img {
    ============================================================ */
 
 :root {
-  --s1-midnight: #1B2A4A;
-  --s1-sky: #7EC4F8;
+  /* 2026-11-14: the sky blue and midnight navy are retired (Dixon: the
+     Season One blue never held on). The token names stay so every rule
+     below keeps working; they now resolve to house colors: forest ground,
+     ProSeries seafoam accent, ivory title. */
+  --s1-midnight: var(--forest, #0c1f17);
+  --s1-sky: var(--seafoam, #6BAF8A);
   --s1-silver: #C9D4CE;
-  --s1-gloss: linear-gradient(135deg, #4FA8EE, #9AD5FF, #E4F4FF, #7EC4F8, #5FB2F2);
-  --s1-gloss-btn: linear-gradient(135deg, #4FA8EE, #9AD5FF, #7EC4F8);
 }
 
 /* ------------------------------------------------------------
@@ -6744,29 +6746,17 @@ footer.site-footer .footer-brand img {
    weight to the font URL in index.html and re-run scripts/build-routes.mjs. */
 #page-proseries .s1-title {
   margin: 0; /* now an <h1> (2026-08-03 hero fold) — kill the UA block margin */
-  font-family: 'Cinzel', serif;
-  font-weight: 800;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   font-size: clamp(3.5rem, 9vw, 9rem);
   line-height: 1;
-  background: var(--s1-gloss);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: var(--ivory, #FAF3E8); /* fallback paint before @supports below wins */
+  color: var(--ivory, #FAF3E8);
   position: relative;
   display: inline-block;
 }
 
-@supports not (background-clip: text) {
-  #page-proseries .s1-title {
-    -webkit-text-fill-color: initial;
-    color: var(--s1-sky);
-    background: none;
-  }
-}
 
 /* The ambient sweep loop (delay 1.9s, after the entrance's rise/fade
    finishes at 1.5s) is combined with the rise/fade into ONE animation
@@ -6798,8 +6788,8 @@ footer.site-footer .footer-brand img {
      elsewhere in the takeover, so the top of the page reads as a real
      premiere room, not just a dark section. */
   background-image:
-    radial-gradient(ellipse at center, rgba(255,255,255,0.07) 0%, rgba(27,42,74,0) 45%, rgba(6,10,20,0.85) 100%),
-    radial-gradient(ellipse at center, rgba(27,42,74,0) 55%, #05070d 130%);
+    radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, rgba(12,31,23,0) 45%, rgba(4,12,8,0.85) 100%),
+    radial-gradient(ellipse at center, rgba(12,31,23,0) 55%, #040c08 130%);
   padding: clamp(3rem, 8vw, 6rem) 1.5rem;
   text-align: center;
   overflow: hidden;
@@ -7153,7 +7143,7 @@ footer.site-footer .footer-brand img {
   align-items: center;
   gap: 1rem;
   padding: 0.85rem 1.1rem;
-  border: 1px solid rgba(126, 196, 248, 0.25);
+  border: 1px solid rgba(107, 175, 138, 0.25);
   border-radius: 6px;
 }
 
@@ -7223,7 +7213,7 @@ footer.site-footer .footer-brand img {
    ------------------------------------------------------------ */
 #page-proseries.s1-premiere-window {
   background: var(--s1-midnight);
-  background-image: radial-gradient(ellipse at top, rgba(255,255,255,0.05) 0%, rgba(27,42,74,0) 60%);
+  background-image: radial-gradient(ellipse at top, rgba(255,255,255,0.05) 0%, rgba(12,31,23,0) 60%);
 }
 
 /* poster-pages.css locks .content-section (and friends) to ivory/forest with
@@ -7583,8 +7573,8 @@ footer.site-footer .footer-brand img {
 
 /* Week One chip: sky accent for the Season One production, this scene only. */
 #ps-story .ps-chip--sky {
-  color: #7EC4F8 !important;
-  border-color: #7EC4F8 !important;
+  color: var(--seafoam, #6BAF8A) !important;
+  border-color: var(--seafoam, #6BAF8A) !important;
 }
 
 /* ── Title card scene (Auditions) ───────────────────────────────────── */
@@ -7868,7 +7858,7 @@ footer.site-footer .footer-brand img {
 }
 
 /* Scene 7 ghost numeral matches its sky chip */
-#ps-story .scene--s1 { --scene-accent: #7EC4F8; }
+#ps-story .scene--s1 { --scene-accent: #6BAF8A; }
 
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -8950,7 +8940,7 @@ footer.site-footer .footer-brand img {
 
 #page-proseries #ps-calendar .s1-ep {
   background: var(--forest, #0c1f17);
-  border-color: rgba(126, 196, 248, 0.32);
+  border-color: rgba(107, 175, 138, 0.32);
   border-radius: 4px;
 }
 
@@ -8978,8 +8968,8 @@ footer.site-footer .footer-brand img {
 /* "Up next" — the one row that should catch the eye. Sky is the Season One
    accent, and on forest it clears every floor. */
 #page-proseries #ps-calendar .s1-ep--next {
-  border-color: var(--s1-sky, #7EC4F8);
-  box-shadow: inset 0 0 0 1px rgba(126, 196, 248, 0.35);
+  border-color: var(--s1-sky, #6BAF8A);
+  box-shadow: inset 0 0 0 1px rgba(107, 175, 138, 0.35);
 }
 
 #page-proseries #ps-calendar .s1-ep-flag {
@@ -8990,7 +8980,7 @@ footer.site-footer .footer-brand img {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--forest, #0c1f17);
-  background: var(--s1-sky, #7EC4F8);
+  background: var(--s1-sky, #6BAF8A);
   border-radius: 2px;
   padding: 3px 7px;
 }
@@ -9021,7 +9011,7 @@ footer.site-footer .footer-brand img {
 }
 
 #page-proseries #ps-calendar .s1-ep-recap-link {
-  color: var(--s1-sky, #7EC4F8);
+  color: var(--s1-sky, #6BAF8A);
   white-space: nowrap;
 }
 
