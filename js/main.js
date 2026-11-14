@@ -731,6 +731,15 @@
     swapLightboxImage((lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length);
   }
 
+  // Season One cast wall: a tap swaps a dancer's serious take for the silly
+  // one and back (hover does the same on a desk, in CSS).
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.ps-face-btn');
+    if (!btn) return;
+    var on = btn.classList.toggle('is-silly');
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+
   // Bind gallery image clicks + keyboard
   Array.from(document.querySelectorAll('[data-lightbox]')).forEach(function (img) {
     img.setAttribute('tabindex', '0');
