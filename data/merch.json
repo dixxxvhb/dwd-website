@@ -1,0 +1,827 @@
+{
+ "store": {
+  "name": "Coastal Threads",
+  "url": "https://shop.coastal-threads.com",
+  "collection": "https://shop.coastal-threads.com/collections/dwd-shop"
+ },
+ "hoodies": [
+  {
+   "handle": "26-27-proseries-tour-hoody-pro-addy",
+   "label": "Addy",
+   "group": "pro",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada06cc2eec8.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada06cc33f16.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada06cc35741.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada06cc372d6.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada06cc31e18.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-pro-daisy",
+   "label": "Daisy",
+   "group": "pro",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ad9ede64af87.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ad9ede64f156.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ad9ede6506ae.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ad9ede652291.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ad9ede64d99a.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-pro-evie",
+   "label": "Evie",
+   "group": "pro",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada0859bbb1c.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada0859c00b4.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada0859c1353.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada0859c2c12.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada0859be0eb.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-pro-john-dwd-logo",
+   "label": "John",
+   "group": "pro",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6afb49b6e1daf.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6afb49b6e483f.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6afb49b6e6d20.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6afb49b6e9ee8.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6afb49b6e387a.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-pro-remi",
+   "label": "Remi",
+   "group": "pro",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada096374652.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada096378e72.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada09637a1e3.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada09637bb6d.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada096376eb7.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-pro-yessa",
+   "label": "Yessa",
+   "group": "pro",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada0a5741166.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada0a574644c.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada0a574856e.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada0a574a08b.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada0a5743d05.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-elite-audrey",
+   "label": "Audrey",
+   "group": "elite",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada0b45cc94e.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada0b45d1ea4.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada0b45d36db.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada0b45d511f.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada0b45cf509.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-elite-beatriz",
+   "label": "Beatriz",
+   "group": "elite",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ad9ee6fde2ef.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ad9ee6fe0d82.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ad9ee6fe1e27.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ad9ee6fe3378.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ad9ee6fdfa6c.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-belle",
+   "label": "Belle",
+   "group": "elite",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ad9e4715a2b4.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ad9e4715bc3b.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ad9e4715c9a1.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ad9e4715dd52.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ad9e4715b283.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-elite-haylie",
+   "label": "Haylie",
+   "group": "elite",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada0c2b273e5.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada0c2b2b8d8.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada0c2b2d8cd.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada0c2b30537.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada0c2b296d1.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-elite-keke",
+   "label": "Keke",
+   "group": "elite",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ad9e810cde25.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ad9e810d04d7.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ad9e810d190f.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ad9e810d2b04.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ad9e810cea1d.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-elite-laylianna",
+   "label": "Laylianna",
+   "group": "elite",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada0d02b1b5f.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada0d02b64bc.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada0d02b786b.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada0d02b9233.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada0d02b42b8.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-prep-athena",
+   "label": "Athena",
+   "group": "prep",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada0de0b03f3.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada0de0b3274.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada0de0b4174.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada0de0b56c4.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada0de0b1dab.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-prep-finnie",
+   "label": "Finnie",
+   "group": "prep",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada0ec234219.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada0ec236821.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada0ec237730.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada0ec238cf8.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada0ec2355ca.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-prep-kimarie",
+   "label": "Ki'Marie",
+   "group": "prep",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ad9ed21a35b1.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ad9ed21a66e5.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ad9ed21a79ac.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ad9ed21a94ef.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ad9ed21a4e7c.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-prep-marilynn",
+   "label": "Marilynn",
+   "group": "prep",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada0fa46ee83.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada0fa472030.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada0fa473738.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada0fa475492.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada0fa470658.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-prep-piper",
+   "label": "Piper",
+   "group": "prep",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ad9ed7bb3a1a.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ad9ed7bb7cb6.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ad9ed7bb902b.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ad9ed7bba8aa.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ad9ed7bb5d2d.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-elite-audrey-haylie-prep-marilynn",
+   "label": "Audrey, Haylie & Marilynn",
+   "group": "family",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ae8e9a72156a.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ae8e9a723da9.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ae8e9a725251.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ae8e9a727677.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ae8e9a723780.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-pro-john",
+   "label": "John's Mom",
+   "group": "family",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6afb45d5b47d7.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6afb45d5b7564.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6afb45d5b9fb7.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6afb45d5bd059.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6afb45d5b6635.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-elite-keke-prep-finnie",
+   "label": "Keke & Finnie",
+   "group": "family",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada26fe33199.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada26fe35874.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada26fe3672f.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada26fe37dfc.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada26fe345c3.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-elite-laylianna-prep-athena",
+   "label": "Laylianna & Athena",
+   "group": "family",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada2835ded7c.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada2835e3556.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada2835e542c.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada2835e74cf.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada2835e1144.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-director-mr-dixon",
+   "label": "Mr Dixon",
+   "group": "staff",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada249ac8581.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada249acac60.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada249acbdba.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada249acd3a0.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada249ac991f.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-ms-madi",
+   "label": "Ms Madi",
+   "group": "staff",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada239ee47bb.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada239ee9892.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada239eeac10.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada239eec8bb.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada239ee7422.jpg",
+   "available": true
+  },
+  {
+   "handle": "26-27-proseries-tour-hoody-ms-tori",
+   "label": "Ms Tori",
+   "group": "staff",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ad9e23a1c6d1.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ad9e23a1e04b.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ad9e23a1ecdf.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ad9e23a1ffda.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ad9e4715b747.jpg",
+   "available": true
+  }
+ ],
+ "gear": [
+  {
+   "handle": "all-over-print-bandana",
+   "name": "Chicha Bandana",
+   "line": "Headband, necktie or armband. The small size fits a dog.",
+   "price": "20",
+   "sizes": "S to L",
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-bandana-white-s-front-6ada24604e5fb.jpg",
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-bandana-white-m-front-6ada24604ed4d.jpg"
+   ],
+   "available": true
+  },
+  {
+   "handle": "sports-bra",
+   "name": "ProSeries Sports Bra",
+   "line": "Forest green, the ProSeries mark on the back.",
+   "price": "38",
+   "sizes": "XS to 2XL",
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-sports-bra-white-back-6ad7921ae5569.jpg",
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-sports-bra-white-front-6ad7921ae30c3.jpg"
+   ],
+   "available": true
+  },
+  {
+   "handle": "unisex-cotton-shorts",
+   "name": "Amore Short, Pink",
+   "line": "Soft cotton, relaxed fit.",
+   "price": "35",
+   "sizes": "XS to 3XL",
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-unisex-cotton-shorts-white-front-6ad7aaf712de0.jpg",
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-unisex-cotton-shorts-white-back-6ad7aaf7138e2.jpg"
+   ],
+   "available": true
+  },
+  {
+   "handle": "unisex-cotton-long-short",
+   "name": "Hey, Hi Long Short",
+   "line": "Heavier cotton with a longer cut.",
+   "price": "45",
+   "sizes": "2XS to 6XL",
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-unisex-cotton-long-shorts-white-front-6ad7ac6e654ff.jpg",
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-unisex-cotton-long-shorts-white-front-6ad7ac6e643c2.jpg"
+   ],
+   "available": true
+  },
+  {
+   "handle": "unisex-cotton-shorts-1",
+   "name": "Amore Short, Green",
+   "line": "Soft cotton, relaxed fit.",
+   "price": "35",
+   "sizes": "XS to 3XL",
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-unisex-cotton-shorts-white-back-6ad89cd33c81f.jpg",
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-unisex-cotton-shorts-white-front-6ad89cd33cf79.jpg"
+   ],
+   "available": true
+  },
+  {
+   "handle": "headband",
+   "name": "ProSeries Headband",
+   "line": "Soft, stretchy and moisture-wicking.",
+   "price": "15",
+   "sizes": "M to L",
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-headband-white-left-front-6ad7bdddebaf0.jpg",
+    "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/all-over-print-headband-white-right-back-6ad7bdddec6a8.jpg"
+   ],
+   "available": true
+  }
+ ]
+}

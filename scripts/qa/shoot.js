@@ -7,7 +7,7 @@ const puppeteer = require('C:/Users/bowle/Code/DWDC-Instagram-Posts/node_modules
 
 const BASE = process.env.QA_BASE || 'http://localhost:8790';
 const OUT = process.argv[2] || path.join(__dirname, 'out');
-const ROUTES = (process.argv[3] || 'home,proseries,adult-company,teachers,gallery,contact,privacy').split(',');
+const ROUTES = (process.argv[3] || 'home,proseries,adult-company,teachers,gallery,merch,contact,privacy').split(',');
 const TILES = process.argv.includes('--tiles');
 const WIDTHS = [{ w: 1280, h: 900, tag: 'd' }, { w: 390, h: 844, tag: 'm' }];
 
@@ -83,7 +83,7 @@ const FREEZE = `
           // Social, maps, and the third-party legal links the privacy page is
           // required to carry are expected. Anything else off-domain on this
           // site is a CTA that escaped, which is what item 1.1 was about.
-          .filter(h => !/instagram\.com|youtube\.com|youtu\.be|facebook\.com|maps\.|google\.com\/maps|stripe\.com|plaid\.com|dwd-director\.netlify\.app|checkout\.stripe\.com/.test(h))
+          .filter(h => !/instagram\.com|youtube\.com|youtu\.be|facebook\.com|maps\.|google\.com\/maps|stripe\.com|plaid\.com|dwd-director\.netlify\.app|checkout\.stripe\.com|shop\.coastal-threads\.com/.test(h))
           .filter((v, i, arr) => arr.indexOf(v) === i);
         return {
           activeId: active ? active.id : null,

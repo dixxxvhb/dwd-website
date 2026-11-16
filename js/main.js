@@ -241,6 +241,7 @@
       'schedule': 'Drop-in dance classes in Orlando | Dance With Dixon',
 
       'gallery': 'Season One photo gallery | Dance With Dixon',
+      'merch': 'Merch: the ProSeries Tour Hoodie | Dance With Dixon',
       'contact': 'Contact Dixon Bowles | Dance With Dixon, Orlando'
     };
     document.title = titles[name] || titles['home'];
@@ -320,6 +321,16 @@
       text: 'Join the Collective',
       track: 'mobile-sticky-collective',
       lead: 'a[href="/contact/?reason=adult"]'
+    },
+    /* Merch (2026-11-16): the page's action is picking a hoodie, so the bar
+       carries that to the on-page picker. The stage's own buy button and the
+       closing shop button are [data-mob-twin], so the bar steps aside for them. */
+    merch: {
+      label: 'Tour hoodies, $60',
+      href: '#merch-find',
+      text: 'Find yours',
+      track: 'mobile-sticky-merch',
+      lead: 'a[href="#merch-find"]'
     },
     proseries: {
       label: 'Season One is casting',

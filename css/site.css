@@ -16778,3 +16778,393 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 @media (prefers-reduced-motion: reduce) {
   #page-proseries .ps-face-img--silly { transition: none; }
 }
+
+/* ══════════ MERCH (2026-11-16) ══════════
+   /merch/ is the front door to the DWD shop on Coastal Threads. Its one
+   graphic idea is the tour hoodie's own: a black tour poster and three
+   stripes. Pink stays the single filled action (the buy button); a picked
+   name turns ivory, not pink. Product photos keep the store's white ground
+   as clean tiles on the forest page. */
+#page-merch { background: var(--forest, #0c1f17); color: var(--ivory, #FAF3E8); }
+#page-merch h1,
+#page-merch h2 {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--ivory, #FAF3E8);
+  text-transform: none;
+  margin: 0;
+}
+#page-merch h2 { font-weight: 600; font-size: clamp(34px, 4vw, 52px); line-height: 1.05; letter-spacing: -0.01em; }
+#page-merch p { margin: 0; }
+
+/* Hero */
+#page-merch .mrch-hero {
+  display: grid;
+  grid-template-columns: 11fr 9fr;
+  min-height: min(80vh, 780px);
+}
+#page-merch .mrch-hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 72px 64px;
+  min-width: 0;
+}
+#page-merch .mrch-kicker {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--seafoam, #6BAF8A);
+  margin-bottom: 20px;
+}
+#page-merch h1 {
+  font-weight: 500;
+  font-size: clamp(46px, 6.4vw, 96px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  max-width: 7.4em;
+}
+#page-merch .mrch-hero-sub {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ivory-dim, #e8ddd0);
+  max-width: 44ch;
+  margin-top: 24px;
+}
+#page-merch .mrch-facts {
+  display: flex;
+  gap: 48px;
+  margin: 36px 0 0;
+}
+#page-merch .mrch-facts > div { display: flex; flex-direction: column-reverse; }
+#page-merch .mrch-facts dd {
+  font-family: 'Bebas Neue', 'Outfit', sans-serif;
+  font-size: 46px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  margin: 0;
+  color: var(--ivory, #FAF3E8);
+}
+#page-merch .mrch-facts dt {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rb-ivory-low, #a9a196);
+  margin-top: 6px;
+}
+#page-merch .mrch-hero-actions,
+#page-merch .mrch-how-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 40px;
+}
+#page-merch .btn.btn-primary { padding: 0 28px; border-radius: 0; font-size: 15px; letter-spacing: 0.04em; }
+#page-merch .mrch-out {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ivory, #FAF3E8);
+  text-decoration: underline;
+  text-decoration-color: rgba(250, 243, 232, 0.4);
+  text-underline-offset: 5px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+#page-merch .mrch-out:hover { text-decoration-color: var(--pink, #FF7AA2); }
+#page-merch a:focus-visible,
+#page-merch button:focus-visible { outline: 2px solid var(--pink, #FF7AA2); outline-offset: 3px; }
+
+#page-merch .mrch-hero-poster {
+  /* The fabric's own black, so the photo has no visible edge. */
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  min-width: 0;
+}
+#page-merch .mrch-hero-poster img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(72vh, 700px);
+  -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 62%, transparent 100%);
+}
+
+#page-merch .mrch-stripes i { display: block; height: 6px; }
+#page-merch .mrch-stripes i:nth-child(1) { background: var(--pink, #FF7AA2); }
+#page-merch .mrch-stripes i:nth-child(2) { background: var(--seafoam, #6BAF8A); }
+#page-merch .mrch-stripes i:nth-child(3) { background: #2c5e45; }
+
+/* Find yours */
+#page-merch .mrch-find,
+#page-merch .mrch-gear,
+#page-merch .mrch-how { padding: 96px 64px; max-width: 1360px; margin: 0 auto; }
+#page-merch .mrch-find-head p,
+#page-merch .mrch-tour-head p {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ivory-dim, #e8ddd0);
+  max-width: 56ch;
+  margin-top: 16px;
+}
+#page-merch .mrch-find-body {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 64px;
+  align-items: start;
+  margin-top: 48px;
+}
+#page-merch .mrch-stage { position: sticky; top: 96px; }
+#page-merch .mrch-stage-photo {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+#page-merch .mrch-stage-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+#page-merch .mrch-stage-info { margin-top: 24px; }
+#page-merch .mrch-stage-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ivory, #FAF3E8);
+}
+#page-merch .mrch-swatches { display: flex; align-items: center; gap: 10px; margin-top: 16px; min-height: 44px; }
+#page-merch .mrch-swatch {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  margin-left: -6px;
+}
+#page-merch .mrch-swatch::before {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sw, #888);
+  box-shadow: 0 0 0 1px rgba(250, 243, 232, 0.35);
+}
+#page-merch .mrch-swatch.is-on::before { box-shadow: 0 0 0 2px var(--forest, #0c1f17), 0 0 0 4px var(--ivory, #FAF3E8); }
+#page-merch .mrch-swatch-name,
+#page-merch .mrch-stage-meta {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 15px;
+  color: var(--ivory-dim, #e8ddd0);
+}
+#page-merch .mrch-swatch-name { margin-left: 6px; }
+#page-merch .mrch-stage-meta { margin-top: 8px; }
+#page-merch .mrch-stage-info .btn { margin-top: 24px; }
+#page-merch .mrch-stage-note {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--rb-ivory-low, #a9a196);
+  margin-top: 12px;
+}
+
+#page-merch .mrch-group + .mrch-group { margin-top: 32px; }
+#page-merch .mrch-group-title {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rb-ivory-low, #a9a196);
+  margin: 0 0 12px;
+}
+#page-merch .mrch-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+#page-merch .mrch-name {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(250, 243, 232, 0.26);
+  background: transparent;
+  color: var(--ivory, #FAF3E8);
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+#page-merch .mrch-name:hover { border-color: var(--ivory, #FAF3E8); }
+#page-merch .mrch-name.is-on { background: var(--ivory, #FAF3E8); color: var(--forest, #0c1f17); border-color: var(--ivory, #FAF3E8); }
+#page-merch .mrch-fallback {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 16px;
+  color: var(--ivory-dim, #e8ddd0);
+  list-style: none;
+}
+#page-merch .mrch-fallback a { color: var(--ivory, #FAF3E8); text-underline-offset: 4px; }
+/* Until the product list lands the stage has nothing to show. */
+#page-merch:not(.mrch-live) .mrch-stage { display: none; }
+#page-merch:not(.mrch-live) .mrch-find-body { grid-template-columns: 1fr; }
+
+/* On the back */
+#page-merch .mrch-tour {
+  background: var(--rb-bg-deep, #091a13);
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 64px;
+  align-items: center;
+  padding: 96px max(64px, calc((100vw - 1232px) / 2));
+}
+#page-merch .mrch-tour-head .mrch-out { margin-top: 20px; }
+#page-merch .mrch-stops { list-style: none; margin: 0; padding: 0; }
+#page-merch .mrch-stops li {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 20px;
+  padding: 18px 0;
+  border-top: 1px solid var(--rb-rule, rgba(250, 243, 232, 0.16));
+}
+#page-merch .mrch-stops li:last-child { border-bottom: 1px solid var(--rb-rule, rgba(250, 243, 232, 0.16)); }
+#page-merch .mrch-stop-date {
+  font-family: 'Bebas Neue', 'Outfit', sans-serif;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--ivory, #FAF3E8);
+}
+#page-merch .mrch-stop-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+#page-merch .mrch-stop-city {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--seafoam, #6BAF8A);
+  text-align: right;
+}
+
+/* The rest of the drop */
+#page-merch .mrch-grid {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px 28px;
+}
+#page-merch .mrch-grid .mrch-fallback { grid-column: 1 / -1; }
+#page-merch .mrch-card-link { display: block; text-decoration: none; color: inherit; }
+#page-merch .mrch-card-photo {
+  display: block;
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+#page-merch .mrch-card-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+#page-merch .mrch-card-alt { opacity: 0; transition: opacity 0.2s ease; background: #fff; }
+@media (hover: hover) {
+  #page-merch .mrch-card-link:hover .mrch-card-alt { opacity: 1; }
+}
+#page-merch .mrch-card-text {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 16px;
+  margin-top: 16px;
+  font-family: 'Outfit', system-ui, sans-serif;
+}
+#page-merch .mrch-card-name { font-size: 18px; font-weight: 600; line-height: 1.25; color: var(--ivory, #FAF3E8); }
+#page-merch .mrch-card-link:hover .mrch-card-name { text-decoration: underline; text-decoration-color: var(--pink, #FF7AA2); text-underline-offset: 4px; }
+#page-merch .mrch-card-price {
+  font-family: 'Bebas Neue', 'Outfit', sans-serif;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--ivory, #FAF3E8);
+}
+#page-merch .mrch-card-line,
+#page-merch .mrch-card-sizes { grid-column: 1 / -1; font-size: 14px; line-height: 1.45; }
+#page-merch .mrch-card-line { color: var(--ivory-dim, #e8ddd0); }
+#page-merch .mrch-card-sizes { color: var(--rb-ivory-low, #a9a196); }
+
+/* How it works */
+#page-merch .mrch-how { border-top: 1px solid var(--rb-rule-soft, rgba(250, 243, 232, 0.08)); }
+#page-merch .mrch-how-list {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+}
+#page-merch .mrch-how-list h3 {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ivory, #FAF3E8);
+  margin: 0 0 8px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+#page-merch .mrch-how-list p {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ivory-dim, #e8ddd0);
+  max-width: 36ch;
+}
+
+@media (max-width: 900px) {
+  #page-merch .mrch-hero { grid-template-columns: 1fr; min-height: 0; }
+  #page-merch .mrch-hero-text { padding: 40px 22px 44px; }
+  #page-merch .mrch-hero-sub { font-size: 17px; }
+  #page-merch .mrch-facts { gap: 32px; margin-top: 28px; }
+  #page-merch .mrch-facts dd { font-size: 38px; }
+  #page-merch .mrch-hero-actions { margin-top: 32px; }
+  #page-merch .mrch-hero-poster { padding: 28px 22px 36px; }
+  #page-merch .mrch-hero-poster img { max-height: none; width: min(78vw, 420px); }
+  #page-merch .mrch-find,
+  #page-merch .mrch-gear,
+  #page-merch .mrch-how { padding: 64px 22px; }
+  #page-merch .mrch-find-body { grid-template-columns: 1fr; gap: 40px; margin-top: 32px; }
+  #page-merch .mrch-stage { position: static; }
+  #page-merch .mrch-tour { grid-template-columns: 1fr; gap: 32px; padding: 64px 22px; }
+  #page-merch .mrch-stops li { grid-template-columns: 96px minmax(0, 1fr); gap: 4px 14px; padding: 16px 0; }
+  #page-merch .mrch-stop-date { font-size: 30px; }
+  #page-merch .mrch-stop-name { font-size: 26px; }
+  #page-merch .mrch-stop-city { grid-column: 2; text-align: left; }
+  #page-merch .mrch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 16px; margin-top: 28px; }
+  #page-merch .mrch-card-text { grid-template-columns: 1fr; }
+  #page-merch .mrch-card-name { font-size: 16px; }
+  #page-merch .mrch-card-price { font-size: 22px; }
+  #page-merch .mrch-how-list { grid-template-columns: 1fr; gap: 28px; margin-top: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #page-merch .mrch-name,
+  #page-merch .mrch-card-alt { transition: none; }
+}

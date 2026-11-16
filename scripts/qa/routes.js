@@ -26,6 +26,7 @@ const probe = () => ({
     ['/collective/', 'page-adult-company', 'Adult dance classes in Orlando: The Collective | Dance With Dixon'],
     ['/teachers/', 'page-teachers', 'Our dance teachers in Orlando | Dance With Dixon'],
     ['/gallery/', 'page-gallery', 'Season One photo gallery | Dance With Dixon'],
+    ['/merch/', 'page-merch', 'Merch: the ProSeries Tour Hoodie | Dance With Dixon'],
     ['/contact/', 'page-contact', 'Contact Dixon Bowles | Dance With Dixon, Orlando'],
     ['/privacy/', 'page-privacy', 'Privacy Policy | Dance With Dixon'],
     ['/', 'page-home', 'Dance With Dixon | Orlando Dance Company'],
@@ -109,14 +110,15 @@ const probe = () => ({
     await p.close();
   }
 
-  // ── 4. #shop was removed (2026-09-04); an unknown hash falls back to Home ──
+  // ── 4. #shop (the old merch poll, removed 2026-09-04) now lands on /merch/,
+  //       the real store's page (2026-11-16) ──
   {
     const p = await b.newPage();
     await p.setViewport({ width: 1280, height: 900 });
     await p.goto(BASE + '/#shop', { waitUntil: 'networkidle2' });
     await new Promise((r) => setTimeout(r, 1200));
-    check('retired #shop hash falls back to Home', await p.evaluate(probe),
-      { page: 'page-home', path: '/', hash: '#shop' });
+    check('old #shop hash lands on /merch/', await p.evaluate(probe),
+      { page: 'page-merch', path: '/merch/', hash: '' });
     await p.close();
   }
 
