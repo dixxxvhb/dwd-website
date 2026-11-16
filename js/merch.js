@@ -18,6 +18,7 @@
   if (!page) return;
 
   var GROUPS = [
+    ['everyone', 'For everyone'],
     ['pro', 'Pro'],
     ['elite', 'Elite'],
     ['prep', 'Prep'],
@@ -48,6 +49,12 @@
     return /s$/i.test(label) ? label + "'" : label + "'s";
   }
 
+  // The director's hoodie is the one for everyone (Dixon, 2026-11-16): it is
+  // "The tour hoodie", and every other one is named for who is on its sleeve.
+  function stageName(h) {
+    return h.group === 'everyone' ? 'The tour hoodie' : possessive(h.label) + ' tour hoodie';
+  }
+
   /* ── The stage: one hoodie, its colours, its link ── */
 
   function paintStage() {
@@ -64,11 +71,12 @@
       img.src = sized(c.img, 900);
       img.srcset = sized(c.img, 600) + ' 600w, ' + sized(c.img, 900) + ' 900w, ' + sized(c.img, 1400) + ' 1400w';
       img.sizes = '(max-width: 900px) 100vw, 42vw';
-      img.alt = possessive(h.label) + ' tour hoodie in ' + c.name.toLowerCase() + ', front';
+      img.alt = stageName(h) + ' in ' + c.name.toLowerCase() + ', front';
     }
-    if (name) name.textContent = possessive(h.label) + ' tour hoodie';
+    if (name) name.textContent = stageName(h);
     if (meta) {
-      meta.textContent = '$' + h.price + ' · ' + h.sizes + (h.available ? '' : ' · sold out right now');
+      meta.textContent = (h.group === 'everyone' ? h.label + ' on the sleeve · ' : '') +
+        '$' + h.price + ' · ' + h.sizes + (h.available ? '' : ' · sold out right now');
     }
     if (buy) {
       buy.href = productUrl(h.handle);
@@ -135,9 +143,8 @@
           }
         });
         row.appendChild(b);
-        // Open on the director's own hoodie: it shows the idea without
-        // putting one dancer ahead of the rest.
-        if (!first || h.label === 'Mr Dixon') { first = h; firstBtn = b; }
+        // Open on the hoodie for everyone (GROUPS lists it first).
+        if (!first) { first = h; firstBtn = b; }
       });
       wrap.appendChild(row);
       box.appendChild(wrap);

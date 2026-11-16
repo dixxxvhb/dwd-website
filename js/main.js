@@ -328,7 +328,7 @@
     merch: {
       label: 'Tour hoodies, $60',
       href: '#merch-find',
-      text: 'Find yours',
+      text: 'Get yours',
       track: 'mobile-sticky-merch',
       lead: 'a[href="#merch-find"]'
     },

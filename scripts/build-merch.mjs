@@ -85,13 +85,15 @@ function readHoodie(p) {
   }
   let group;
   if (names.length > 1) group = 'family';
+  // The director's hoodie is the one for everyone (Dixon, 2026-11-16).
+  else if (/^director\b/i.test(tail)) group = 'everyone';
   else if (/^(director\s+)?(mr|ms|mrs|miss)\b/i.test(tail)) group = 'staff';
   else if (tracks[0] && TRACKS.includes(tracks[0])) group = tracks[0].toLowerCase();
   else group = 'family'; // "John's Mom" and anything else personal
 
   let label = names.join(' & ');
   if (names.length > 2) label = names.slice(0, -1).join(', ') + ' & ' + names[names.length - 1];
-  if (group === 'staff') label = label.replace(/^director\s+/i, '');
+  if (group === 'staff' || group === 'everyone') label = label.replace(/^director\s+/i, '');
 
   const colors = [];
   for (const name of option(p, 'color')) {
@@ -145,7 +147,7 @@ for (const p of products) {
   else gear.push(readGear(p));
 }
 
-const order = { pro: 0, elite: 1, prep: 2, family: 3, staff: 4 };
+const order = { everyone: -1, pro: 0, elite: 1, prep: 2, family: 3, staff: 4 };
 hoodies.sort((a, b) => order[a.group] - order[b.group] || a.label.localeCompare(b.label));
 
 const data = {

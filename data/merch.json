@@ -6,6 +6,37 @@
  },
  "hoodies": [
   {
+   "handle": "26-27-proseries-tour-hoody-director-mr-dixon",
+   "label": "Mr Dixon",
+   "group": "everyone",
+   "price": "60",
+   "sizes": "S to 5XL",
+   "colors": [
+    {
+     "name": "Black",
+     "hex": "#0b0b0b",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada249ac8581.jpg"
+    },
+    {
+     "name": "Forest Green",
+     "hex": "#1f3a2a",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada249acac60.jpg"
+    },
+    {
+     "name": "Dark Heather",
+     "hex": "#4a4d52",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada249acbdba.jpg"
+    },
+    {
+     "name": "Sport Grey",
+     "hex": "#c4c6c8",
+     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada249acd3a0.jpg"
+    }
+   ],
+   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada249ac991f.jpg",
+   "available": true
+  },
+  {
    "handle": "26-27-proseries-tour-hoody-pro-addy",
    "label": "Addy",
    "group": "pro",
@@ -654,37 +685,6 @@
     }
    ],
    "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada2835e1144.jpg",
-   "available": true
-  },
-  {
-   "handle": "26-27-proseries-tour-hoody-director-mr-dixon",
-   "label": "Mr Dixon",
-   "group": "staff",
-   "price": "60",
-   "sizes": "S to 5XL",
-   "colors": [
-    {
-     "name": "Black",
-     "hex": "#0b0b0b",
-     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-front-6ada249ac8581.jpg"
-    },
-    {
-     "name": "Forest Green",
-     "hex": "#1f3a2a",
-     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-forest-green-front-6ada249acac60.jpg"
-    },
-    {
-     "name": "Dark Heather",
-     "hex": "#4a4d52",
-     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-dark-heather-front-6ada249acbdba.jpg"
-    },
-    {
-     "name": "Sport Grey",
-     "hex": "#c4c6c8",
-     "img": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-sport-grey-front-6ada249acd3a0.jpg"
-    }
-   ],
-   "back": "https://cdn.shopify.com/s/files/1/0845/3278/9310/files/unisex-heavy-blend-hoodie-black-back-6ada249ac991f.jpg",
    "available": true
   },
   {
