@@ -469,15 +469,18 @@ a:hover {
 
 /* HERO ANIMATION */
 
+/* 2026-11-16: sections no longer fade and rise as you scroll. The same
+   entrance on every block was the page performing instead of showing the
+   work. main.js still adds .visible, which the pieces with their own
+   entrance (the drop-in panel, the ProSeries story scenes) key off. */
 .reveal {
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
+  transform: none;
 }
 
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: none;
 }
 
 /* BUTTONS */
@@ -3672,7 +3675,7 @@ body.has-topnav main.main > .page.active:not(#page-home) {
 }
 #page-home .entries .entry .facts { display: flex; gap: 32px; flex-wrap: wrap; }
 #page-home .entries .entry .f .k {
-  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--rb-ivory-dim); margin-bottom: 4px;
 }
 #page-home .entries .entry .f .v {
@@ -3948,12 +3951,9 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
    main.js adds .visible when a .reveal crosses into the viewport.
    Match that class name; also keep .in as a fallback for the preview-only
    inline script in index-rebrand-preview.html. */
-#page-home .reveal {
-  opacity: 0; transform: translateY(30px);
-  transition: all 1s cubic-bezier(.2,.8,.2,1);
-}
+#page-home .reveal,
 #page-home .reveal.visible,
-#page-home .reveal.in { opacity: 1; transform: translateY(0); }
+#page-home .reveal.in { opacity: 1; transform: none; }
 /* Safety net: never trap content invisible if the observer/JS fails, and show
    reveals without animation for reduced-motion users. */
 @media (prefers-reduced-motion: reduce) {
@@ -4891,17 +4891,6 @@ footer.site-footer .footer-bottom .tamara-mark--footer {
   text-transform: uppercase;
   margin: 0 0 12px !important;
   color: var(--oh-cream-warm) !important;
-}
-#page-contact .contact-form-side::before {
-  content: "Reach out";
-  display: block;
-  font-family: 'Outfit', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--oh-coral);
-  margin-bottom: 14px;
 }
 #page-contact .contact-info-side h3 {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
@@ -7778,15 +7767,8 @@ footer.site-footer .footer-brand img {
 
 @media (prefers-reduced-motion: no-preference) {
 
-  /* Ambient float for the floating ps mark, the one intentionally-looping
-     exception to the "runs once" rule. */
-  #ps-story .ps-story-mark {
-    animation: ps-mark-float 7s ease-in-out infinite;
-  }
-  @keyframes ps-mark-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
+  /* The ps mark's ambient float was removed 2026-11-16: nothing on the
+     site loops any more. */
 
   /* Clapper clap: the hinged top-bar swings shut once the story section
      has fully revealed. */
@@ -11644,14 +11626,7 @@ a.dropin-row:focus-visible .dropin-name {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Texture tier: a 6% drift on a 9s loop. The only looping thing on the page. */
-@media (prefers-reduced-motion: no-preference) {
-  .dropin-wash { animation: dropin-drift 9s ease-in-out infinite alternate; }
-}
-@keyframes dropin-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(6%, 4%, 0); }
-}
+/* The wash's 9s drift loop was removed 2026-11-16: the wash holds still. */
 
 /* No JS, no observer, no reveal: the band must never be a rectangle of
    invisible text. */
@@ -15292,14 +15267,7 @@ a.dropin-row:focus-visible .dropin-name {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Texture tier: a 6% drift on a 9s loop. The only looping thing on the page. */
-@media (prefers-reduced-motion: no-preference) {
-  .dropin-wash { animation: dropin-drift 9s ease-in-out infinite alternate; }
-}
-@keyframes dropin-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(6%, 4%, 0); }
-}
+/* The wash's 9s drift loop was removed 2026-11-16: the wash holds still. */
 
 /* No JS, no observer, no reveal: the band must never be a rectangle of
    invisible text. */

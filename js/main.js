@@ -317,14 +317,14 @@
       label: 'Next class: date coming soon.',
       labelAttr: 'data-mob-collective',
       href: '/contact/?reason=adult',
-      text: 'Join the Collective →',
+      text: 'Join the Collective',
       track: 'mobile-sticky-collective',
       lead: 'a[href="/contact/?reason=adult"]'
     },
     proseries: {
       label: 'Season One is casting',
       href: '#interest',
-      text: 'Express interest →',
+      text: 'Express interest',
       track: 'mobile-sticky-proseries',
       lead: 'a[href="#interest"]'
     }
@@ -335,7 +335,7 @@
     /* The bar quotes the price (addendum B). js/now.js sets
        window.DWD_DROPIN_PRICE from the feed; $15 is the standing offer and the
        correct answer when the feed is down. */
-    text: function () { return 'Drop in · ' + (window.DWD_DROPIN_PRICE || 'from $15') + ' →'; },
+    text: function () { return 'Drop in · ' + (window.DWD_DROPIN_PRICE || 'from $15'); },
     track: 'mobile-sticky-dropin'
   };
 

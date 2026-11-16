@@ -170,8 +170,8 @@
     if (heroCta) {
       heroCta.href = '#interest';
       heroCta.innerHTML = isEraActuallyLive(interestForm)
-        ? 'Express Interest <span class="btn-arrow" aria-hidden="true">&rarr;</span>'
-        : 'Tell me about your dancer <span class="btn-arrow" aria-hidden="true">&rarr;</span>';
+        ? 'Express Interest'
+        : 'Tell me about your dancer';
     }
   };
 
