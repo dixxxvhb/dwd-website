@@ -135,11 +135,11 @@ const ROUTES = [
     title: 'Merch: the ProSeries Tour Hoodie | Dance With Dixon',
     description:
       'Dance With Dixon merch. The 2026 to 27 ProSeries Tour Hoodie has the season on the back ' +
-      'and Mr Dixon down the sleeve, $60. Made by Coastal Threads; all profits are ' +
+      'and comes in four colors, $60. Made by Coastal Threads; all profits are ' +
       'donated to DWD.',
     ogTitle: 'The ProSeries Tour Hoodie',
     ogDescription:
-      'Five tour stops on the back, Mr Dixon down the sleeve. All profits are donated to DWD.',
+      'Every stop of the season on the back. All profits are donated to DWD.',
     image: '/images/og/merch.jpg',
     imageAlt: 'The black ProSeries Tour Hoodie, back and front.',
   },

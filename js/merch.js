@@ -75,8 +75,8 @@
     }
     if (name) name.textContent = stageName(h);
     if (meta) {
-      meta.textContent = (h.group === 'everyone' ? h.label + ' on the sleeve · ' : '') +
-        '$' + h.price + ' · ' + h.sizes + (h.available ? '' : ' · sold out right now');
+      // No line about whose name is on the sleeve (Dixon, 2026-11-16).
+      meta.textContent = '$' + h.price + ' · ' + h.sizes + (h.available ? '' : ' · sold out right now');
     }
     if (buy) {
       buy.href = productUrl(h.handle);
@@ -134,7 +134,7 @@
     var box = el('div', 'mrch-team-list');
     box.id = 'merch-team-list';
     box.hidden = true;
-    box.appendChild(el('p', 'mrch-team-note', "Pick a name and it goes down the sleeve in place of Mr Dixon's, with the dancer's track. Families with more than one dancer get every name on one hoodie."));
+    box.appendChild(el('p', 'mrch-team-note', "Pick a name and it goes down the sleeve, with the dancer's track. Families with more than one dancer get every name on one hoodie."));
     team.appendChild(box);
     holder.appendChild(team);
 
