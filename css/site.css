@@ -16923,6 +16923,15 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   max-width: 44ch;
   margin-top: 26px;
 }
+#page-merch .mrch-hero-sub a {
+  color: var(--t-cream);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--t-pink);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+#page-merch .mrch-hero-sub a:hover { color: var(--t-pink); }
 #page-merch .mrch-facts {
   display: flex;
   gap: 44px;
