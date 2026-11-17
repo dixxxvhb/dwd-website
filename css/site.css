@@ -17043,31 +17043,42 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   max-width: 56ch;
   margin-top: 20px;
 }
+/* One hoodie for the public: its photo on the left, its colours and button on
+   the right, and under those the "On the team?" door to the named hoodies.
+   .mrch-stage has no box of its own so its photo and text can sit in the
+   section's grid. */
 #page-merch .mrch-find-body {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: 72px;
+  grid-template-areas: "photo info" "photo names";
+  grid-template-rows: auto 1fr;
+  column-gap: 72px;
   align-items: start;
   margin-top: 48px;
 }
-#page-merch .mrch-stage { position: sticky; top: 96px; }
+#page-merch .mrch-stage { display: contents; }
+#page-merch .mrch-stage-info { grid-area: info; }
+#page-merch .mrch-names { grid-area: names; min-width: 0; }
 /* The reel's photo card: a cream edge with pink and sage stacked behind. */
 #page-merch .mrch-stage-photo {
   background: #fff;
   border-radius: 18px;
   overflow: hidden;
   aspect-ratio: 1 / 1;
-  margin: 4px 24px 0 4px;
+  grid-area: photo;
+  position: sticky;
+  top: 96px;
+  margin: 4px 24px 24px 4px;
   box-shadow:
     0 0 0 4px var(--t-cream),
     10px 11px 0 4px var(--t-pink),
     19px 21px 0 4px var(--t-sage);
 }
 #page-merch .mrch-stage-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
-#page-merch .mrch-stage-info { margin-top: 48px; }
+#page-merch .mrch-stage-info { margin-top: 8px; }
 #page-merch .mrch-stage-name {
   font-family: var(--t-bubble);
-  font-size: 30px;
+  font-size: 36px;
   line-height: 1.15;
   color: var(--t-cream);
   text-shadow: 0.05em 0.06em 0 var(--t-green);
@@ -17109,6 +17120,55 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   margin-top: 16px;
 }
 
+/* On the team? */
+#page-merch .mrch-team {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--t-rule);
+}
+#page-merch .mrch-team-q {
+  font-family: var(--t-print);
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--t-sage);
+}
+#page-merch .mrch-team-btn {
+  margin-top: 14px;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  min-height: 46px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: 1.5px solid var(--t-cream);
+  background: transparent;
+  color: var(--t-cream);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+#page-merch .mrch-team-btn::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+#page-merch .mrch-team-btn[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
+#page-merch .mrch-team-btn:hover { background: rgba(239, 232, 214, 0.08); }
+#page-merch .mrch-team-list { margin-top: 28px; }
+#page-merch .mrch-team-note {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--t-cream-dim);
+  max-width: 50ch;
+  margin-bottom: 28px;
+}
 #page-merch .mrch-group + .mrch-group { margin-top: 32px; }
 #page-merch .mrch-group-title {
   font-family: var(--t-print);
@@ -17150,7 +17210,7 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
 #page-merch .mrch-fallback a { color: var(--t-cream); text-underline-offset: 4px; }
 /* Until the product list lands the stage has nothing to show. */
 #page-merch:not(.mrch-live) .mrch-stage { display: none; }
-#page-merch:not(.mrch-live) .mrch-find-body { grid-template-columns: 1fr; }
+#page-merch:not(.mrch-live) .mrch-find-body { grid-template-columns: 1fr; grid-template-areas: "names"; }
 
 /* On the back: set like the print. Date pink, stop cream, city mint. */
 #page-merch .mrch-tour {
@@ -17354,9 +17414,9 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
   #page-merch .mrch-find,
   #page-merch .mrch-gear,
   #page-merch .mrch-how { padding: 64px 22px; }
-  #page-merch .mrch-find-body { grid-template-columns: 1fr; gap: 40px; margin-top: 32px; }
-  #page-merch .mrch-stage { position: static; }
+  #page-merch .mrch-find-body { grid-template-columns: 1fr; grid-template-areas: "photo" "info" "names"; grid-template-rows: auto; margin-top: 32px; }
   #page-merch .mrch-stage-photo {
+    position: static;
     margin: 3px 19px 0 3px;
     box-shadow:
       0 0 0 3px var(--t-cream),
@@ -17364,6 +17424,8 @@ h1, h2, h3, .s1-title, .dropin-title { text-wrap: balance; }
       15px 17px 0 3px var(--t-sage);
   }
   #page-merch .mrch-stage-info { margin-top: 40px; }
+  #page-merch .mrch-stage-name { font-size: 30px; }
+  #page-merch .mrch-team { margin-top: 36px; padding-top: 28px; }
   #page-merch .mrch-tour { grid-template-columns: 1fr; gap: 32px; padding: 64px 22px; }
   #page-merch .mrch-stops li { grid-template-columns: 104px minmax(0, 1fr); gap: 4px 14px; padding: 16px 0; }
   #page-merch .mrch-stop-date,

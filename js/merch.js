@@ -115,11 +115,42 @@
     if (window.__dwd_track) { try { window.__dwd_track('merch-pick'); } catch (e) {} }
   }
 
+  // The public sees one hoodie, the one for everyone. The hoodies with a
+  // dancer's, family's or teacher's name sit behind "On the team?" (Dixon,
+  // 2026-11-16). /merch/?team opens the list straight away, for a link sent
+  // to team families.
   function renderNames() {
-    var box = document.getElementById('merch-names');
-    if (!box) return;
-    box.textContent = '';
+    var holder = document.getElementById('merch-names');
+    if (!holder) return;
+    holder.textContent = '';
+
+    var team = el('div', 'mrch-team');
+    team.appendChild(el('p', 'mrch-team-q', 'On the team?'));
+    var toggle = el('button', 'mrch-team-btn', "Find your dancer's hoodie");
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', 'merch-team-list');
+    team.appendChild(toggle);
+    var box = el('div', 'mrch-team-list');
+    box.id = 'merch-team-list';
+    box.hidden = true;
+    box.appendChild(el('p', 'mrch-team-note', "Pick a name and it goes down the sleeve in place of Mr Dixon's, with the dancer's track. Families with more than one dancer get every name on one hoodie."));
+    team.appendChild(box);
+    holder.appendChild(team);
+
     var first = null, firstBtn = null;
+    function setOpen(open) {
+      box.hidden = !open;
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.textContent = open ? 'Hide the names' : "Find your dancer's hoodie";
+      // Closed, the page is back to the one hoodie for everyone.
+      if (!open && first && current !== first) pick(first, firstBtn);
+    }
+    toggle.addEventListener('click', function () {
+      var open = box.hidden;
+      setOpen(open);
+      if (open && window.__dwd_track) { try { window.__dwd_track('merch-team-open'); } catch (e) {} }
+    });
     GROUPS.forEach(function (g) {
       var list = data.hoodies.filter(function (h) { return h.group === g[0]; });
       if (!list.length) return;
@@ -134,7 +165,9 @@
           pick(h, b);
           // On a phone the stage sits above the names: bring it back into
           // view so the tap visibly did something.
-          var stage = document.getElementById('merch-stage');
+          // (#merch-stage itself has no box: its photo and its text are
+          // placed straight into the section's grid.)
+          var stage = page.querySelector('.mrch-stage-photo');
           if (stage && window.matchMedia('(max-width: 900px)').matches) {
             var top = stage.getBoundingClientRect().top;
             if (top < 60 || top > window.innerHeight * 0.5) {
@@ -150,6 +183,7 @@
       box.appendChild(wrap);
     });
     if (first) pick(first, firstBtn);
+    if (/[?&]team(=|&|$)/.test(window.location.search)) setOpen(true);
   }
 
   /* ── The rest of the drop ── */
