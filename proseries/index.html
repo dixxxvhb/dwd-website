@@ -880,8 +880,8 @@
        in the fallback face until the web font is ready (no FOIT). -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Outfit:wght@300;400;500;600;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caprasimo&family=Cinzel:wght@800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=Pacifico&family=Righteous&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caprasimo&family=Cinzel:wght@800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=Pacifico&family=Righteous&display=swap" rel="stylesheet">
 
   <!-- Styles. One file since 2026-09-03 (item 3.2d): the twelve stylesheets
        this used to list are concatenated into site.css in exactly the order
@@ -3114,7 +3114,7 @@
     <section class="page" id="page-merch" data-arm="house" aria-label="Merch">
       <div class="mrch-hero">
         <div class="mrch-hero-text">
-          <p class="mrch-kicker">Merch, drop one</p>
+          <p class="mrch-kicker"><svg class="mrch-spark mrch-spark--pink" viewBox="-10 -10 20 20" aria-hidden="true" focusable="false"><path d="M0-10Q0 0 10 0 0 0 0 10 0 0-10 0 0 0 0-10Z"/></svg>Merch, drop one</p>
           <h1>The ProSeries Tour Hoodie</h1>
           <p class="mrch-hero-sub">Five tour stops on the back and Mr Dixon down the sleeve. On the team? Get your dancer's name there instead. All profits are donated to DWD.</p>
           <dl class="mrch-facts">
@@ -3128,10 +3128,15 @@
           </div>
         </div>
         <div class="mrch-hero-poster">
+          <span class="mrch-ribbon mrch-ribbon--b" aria-hidden="true"></span>
+          <svg class="mrch-spark mrch-spark--1" viewBox="-10 -10 20 20" aria-hidden="true" focusable="false"><path d="M0-10Q0 0 10 0 0 0 0 10 0 0-10 0 0 0 0-10Z"/></svg>
+          <svg class="mrch-spark mrch-spark--2 mrch-spark--pink" viewBox="-10 -10 20 20" aria-hidden="true" focusable="false"><path d="M0-10Q0 0 10 0 0 0 0 10 0 0-10 0 0 0 0-10Z"/></svg>
+          <svg class="mrch-spark mrch-spark--3 mrch-spark--mint" viewBox="-10 -10 20 20" aria-hidden="true" focusable="false"><path d="M0-10Q0 0 10 0 0 0 0 10 0 0-10 0 0 0 0-10Z"/></svg>
           <img src="/images/merch/tour-back-640.webp" srcset="/images/merch/tour-back-640.webp 640w, /images/merch/tour-back-1040.webp 1040w" sizes="(max-width: 900px) 78vw, 36vw" alt="The back of the black tour hoodie: a retro TV with the DWD dancer on screen, DWD ProSeries Tour, the five stops of the 2026 to 27 season, and the cast listed by track." width="640" height="912" loading="lazy" decoding="async" data-lcp="merch">
         </div>
+        <span class="mrch-ribbon mrch-ribbon--a" aria-hidden="true"></span>
       </div>
-      <div class="mrch-stripes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="mrch-stripes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
       <!-- FIND YOURS -->
       <div class="mrch-find" id="merch-find">
@@ -3165,6 +3170,7 @@
           <p>Every stop of Season One, printed like a tour. Under the dates is the cast by track, with Mr Dixon, Ms Tori and Ms Madi.</p>
           <a href="/proseries/" class="mrch-out mrch-out--in" data-track="merch-tour-season">Follow the season</a>
         </div>
+        <div class="mrch-tour-list">
         <ol class="mrch-stops">
           <li><span class="mrch-stop-date">9.20</span><span class="mrch-stop-name">Titans of Dance</span><span class="mrch-stop-city">Kissimmee, FL</span></li>
           <li><span class="mrch-stop-date">10.16-18</span><span class="mrch-stop-name">JUMP</span><span class="mrch-stop-city">Ft. Lauderdale, FL</span></li>
@@ -3172,6 +3178,22 @@
           <li><span class="mrch-stop-date">3.5-7</span><span class="mrch-stop-name">DreamMaker</span><span class="mrch-stop-city">Longwood, FL</span></li>
           <li><span class="mrch-stop-date">4.16-18</span><span class="mrch-stop-name">Showstopper</span><span class="mrch-stop-city">Lakeland, FL</span></li>
         </ol>
+        <p class="mrch-script">stay tuned...</p>
+        </div>
+      </div>
+
+      <!-- BROUGHT TO YOU BY: the same thank-you as the tour hoodie reel. -->
+      <div class="mrch-thanks">
+        <span class="mrch-ribbon mrch-ribbon--d" aria-hidden="true"></span>
+        <span class="mrch-ribbon mrch-ribbon--e" aria-hidden="true"></span>
+        <svg class="mrch-spark mrch-spark--4" viewBox="-10 -10 20 20" aria-hidden="true" focusable="false"><path d="M0-10Q0 0 10 0 0 0 0 10 0 0-10 0 0 0 0-10Z"/></svg>
+        <svg class="mrch-spark mrch-spark--5 mrch-spark--pink" viewBox="-10 -10 20 20" aria-hidden="true" focusable="false"><path d="M0-10Q0 0 10 0 0 0 0 10 0 0-10 0 0 0 0-10Z"/></svg>
+        <div class="mrch-thanks-in">
+          <p class="mrch-thanks-lab">This tour is brought to you by</p>
+          <a href="https://shop.coastal-threads.com/collections/dwd-shop" class="mrch-thanks-logo" target="_blank" rel="noopener" data-track="merch-thanks-shop"><img src="/images/merch/coastal-threads-white.webp" alt="Coastal Threads" width="880" height="305" loading="lazy" decoding="async"><span class="sr-only"> (opens the DWD shop in a new tab)</span></a>
+          <p class="mrch-thanks-line">They make every piece and donate all profits to DWD.</p>
+          <p class="mrch-script">thank you!</p>
+        </div>
       </div>
 
       <!-- THE REST OF THE DROP -->
