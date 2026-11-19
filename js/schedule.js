@@ -78,6 +78,9 @@
   var TG_LABEL = (elBand && elBand.getAttribute('data-tg-label')) || 'This week';
   var TG_SHORT = (elBand && elBand.getAttribute('data-tg-short')) || TG_LABEL;
   var TG_UNIT = (elBand && elBand.getAttribute('data-tg-unit')) || 'classes';
+  // What families read for a campaign class's room (Dixon, 2026-11-18). The
+  // Director's room row stays "Warehouse"; only these words change.
+  var TG_ROOM = 'Exchange Dance Academy in the Warehouse';
 
   var DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
   var DAY_NAMES_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -306,7 +309,7 @@
       occurrence_date: row.occurrence_date,
       date: row.date,
       name: row.name,
-      label: [row.track_label, row.age_band, row.room].filter(Boolean).join(' \u00b7 '),
+      label: [row.track_label, row.age_band, isTgRow(row) ? TG_ROOM : row.room].filter(Boolean).join(' \u00b7 '),
       age_band: row.age_band || null,
       start_time: row.start_time,
       end_time: row.end_time || null,
@@ -1498,6 +1501,7 @@
 
   function renderOrder() {
     var cart = sortedCart();
+    syncMoveLine();
     fillOrder(elOrder, cart);
     fillOrder(elOrderSheet, cart);
     if (!cart.length) {
@@ -1515,6 +1519,15 @@
       elBarMeter.appendChild(meterEl(cart, 'bk-meter bk-meter--bar'));
     }
     renderBulkNote(elCartBulkNote, '');
+  }
+
+  // "We'll move you to another week" is a weekly-class promise. A cart of
+  // only campaign classes (one morning each, no other week) hides it, in the
+  // page's know-before-you-go block and under Pay (Dixon, 2026-11-18).
+  function syncMoveLine() {
+    var cart = readCart();
+    var only = cart.length > 0 && cart.every(isTgRow);
+    Array.prototype.forEach.call(page.querySelectorAll('[data-sched-move]'), function (n) { n.hidden = only; });
   }
 
   function orderClick(e) {
@@ -1809,6 +1822,7 @@
     elSummaryTotal.textContent = money(total);
     if (elSumShort) elSumShort.innerHTML = cart.length + (cart.length === 1 ? ' class' : ' classes') + ' · <b>' + money(total) + '</b>';
     elPayBtn.textContent = 'Pay ' + money(total);
+    syncMoveLine();
     renderAgeNote();
   }
 
@@ -2175,7 +2189,7 @@
       li.appendChild(db);
       var m = el('span', 'bk-tk-m');
       m.appendChild(el('b', '', nm.cls));
-      m.appendChild(el('small', '', [nm.teacher ? 'with ' + nm.teacher : '', timeRange(r.start_time, r.end_time), roomWords(r.room)].filter(Boolean).join(' · ')));
+      m.appendChild(el('small', '', [nm.teacher ? 'with ' + nm.teacher : '', timeRange(r.start_time, r.end_time), isTgRow(r) ? TG_ROOM : roomWords(r.room)].filter(Boolean).join(' · ')));
       li.appendChild(m);
       var cal = el('a', 'bk-cal tap-44', 'Add to calendar');
       cal.href = icsHref(r);
