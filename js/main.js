@@ -841,18 +841,30 @@
   window.__dwd_sb = supabase; // expose for analytics.js (the tracker)
 
   // ── LIVE PRICING FROM PROSERIES CONFIG ──
-  // Fetches active config from proseries_config table (anon RLS allows read)
+  // Reads the active season's public fields through the public_proseries_config()
+  // function (Director mig 678). A signed-out visitor cannot read the
+  // proseries_config table itself (mig 679), so never select from it here.
   // Updates pricing on the page. Falls back silently to hardcoded HTML values on error.
   (function loadLivePricing() {
     if (!supabase) return; // CDN unavailable — keep the hardcoded HTML prices
     supabase
-      .from('proseries_config')
-      .select('track_prep_price_cents, track_elite_price_cents, track_pro_price_cents, track_prep_ages, track_elite_ages, track_pro_ages')
-      .eq('is_active', true)
-      .single()
+      .rpc('public_proseries_config')
       .then(function (result) {
-        if (result.error || !result.data) return; // silent fallback to hardcoded HTML
-        var c = result.data;
+        // PGRST202 = the function is not in the database yet (this build went
+        // live before mig 678). The table is still readable then.
+        if (result.error && result.error.code === 'PGRST202') {
+          return supabase
+            .from('proseries_config')
+            .select('track_prep_price_cents, track_elite_price_cents, track_pro_price_cents, track_prep_ages, track_elite_ages, track_pro_ages')
+            .eq('is_active', true)
+            .limit(1);
+        }
+        return result;
+      })
+      .then(function (result) {
+        if (!result || result.error || !result.data) return; // silent fallback to hardcoded HTML
+        var c = Array.isArray(result.data) ? result.data[0] : result.data;
+        if (!c || c.track_pro_price_cents == null || c.track_elite_price_cents == null || c.track_prep_price_cents == null) return;
         var proDollars = Math.round(c.track_pro_price_cents / 100);
         var eliteDollars = Math.round(c.track_elite_price_cents / 100);
         var prepDollars = Math.round(c.track_prep_price_cents / 100);
