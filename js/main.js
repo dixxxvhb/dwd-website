@@ -843,7 +843,7 @@
   // ── LIVE PRICING FROM PROSERIES CONFIG ──
   // Reads the active season's public fields through the public_proseries_config()
   // function (Director mig 678). A signed-out visitor cannot read the
-  // proseries_config table itself (mig 679), so never select from it here.
+  // proseries_config table itself (mig 680), so never select from it here.
   // Updates pricing on the page. Falls back silently to hardcoded HTML values on error.
   (function loadLivePricing() {
     if (!supabase) return; // CDN unavailable — keep the hardcoded HTML prices
