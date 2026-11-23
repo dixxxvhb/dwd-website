@@ -850,18 +850,6 @@
     supabase
       .rpc('public_proseries_config')
       .then(function (result) {
-        // PGRST202 = the function is not in the database yet (this build went
-        // live before mig 678). The table is still readable then.
-        if (result.error && result.error.code === 'PGRST202') {
-          return supabase
-            .from('proseries_config')
-            .select('track_prep_price_cents, track_elite_price_cents, track_pro_price_cents, track_prep_ages, track_elite_ages, track_pro_ages')
-            .eq('is_active', true)
-            .limit(1);
-        }
-        return result;
-      })
-      .then(function (result) {
         if (!result || result.error || !result.data) return; // silent fallback to hardcoded HTML
         var c = Array.isArray(result.data) ? result.data[0] : result.data;
         if (!c || c.track_pro_price_cents == null || c.track_elite_price_cents == null || c.track_prep_price_cents == null) return;
