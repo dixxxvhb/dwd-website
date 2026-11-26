@@ -1291,7 +1291,8 @@
       day.rows.forEach(function (r) { mornings[String(r.date).slice(0, 10)] = true; });
       var m = Object.keys(mornings).length;
       head.appendChild(el('h3', '', TG_LABEL));
-      head.appendChild(el('p', '', cap(word(day.rows.length)) + ' ' + TG_UNIT + ' over ' + word(m) + (TG_BEFORE <= '13:00' ? ' mornings' : ' days')));
+      var span = TG_BEFORE <= '13:00' ? (m === 1 ? 'one morning' : word(m) + ' mornings') : (m === 1 ? 'one day' : word(m) + ' days');
+      head.appendChild(el('p', '', cap(word(day.rows.length)) + ' ' + TG_UNIT + (m === 1 ? ', ' : ' over ') + span));
     } else {
       var d = localDate(day.date);
       head.appendChild(el('h3', '', DAY_NAMES_LONG[d.getDay()] + ', ' + MONTHS_LONG[d.getMonth()] + ' ' + d.getDate()));
