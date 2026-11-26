@@ -300,20 +300,25 @@
     if (window.DWD_MOB && window.DWD_MOB.repaint) window.DWD_MOB.repaint();
   }
 
-  /* ── Home's Thanksgiving strip (2026-11-09) ───────────────────────────
-     The strip under the hero names a week that ends; once New York time
-     reaches its data-tgh-until ("YYYY-MM-DDTHH:MM") it leaves the page.
-     Same comparable stamp as the drop-in panel and js/schedule.js's
-     data-tg-reveal. No clock (Intl missing) means no removal: the strip
-     staying is the accepted fallback. Needs no network, so it runs first. */
+  /* ── Home's season strip (Thanksgiving 2026-11-09, December 2026-11-26) ──
+     Each card under the hero names a stretch of the calendar. Once New York
+     time reaches its data-tgh-until ("YYYY-MM-DDTHH:MM") it leaves the page;
+     a card with data-tgh-from ships hidden and shows from that stamp on.
+     Same comparable stamp as the drop-in panel and js/schedule.js. Any
+     element can carry these (the /schedule/ holiday note does too). No clock
+     (Intl missing) means nothing changes: the markup's own state stands.
+     Needs no network, so it runs first. */
   function expireTgStrip() {
-    var strips = document.querySelectorAll('[data-tgh-until]');
+    var strips = document.querySelectorAll('[data-tgh-until], [data-tgh-from]');
     if (!strips.length) return;
     var now = nyNowStamp();
     if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(now)) return;
+    function stamp(el, name) { return String(el.getAttribute(name) || '').replace('T', ' ').slice(0, 16); }
     Array.prototype.forEach.call(strips, function (el) {
-      var until = String(el.getAttribute('data-tgh-until') || '').replace('T', ' ').slice(0, 16);
-      if (until && now >= until && el.parentNode) el.parentNode.removeChild(el);
+      var from = stamp(el, 'data-tgh-from');
+      var until = stamp(el, 'data-tgh-until');
+      if (until && now >= until) { if (el.parentNode) el.parentNode.removeChild(el); return; }
+      if (from) el.hidden = now < from;
     });
   }
 
