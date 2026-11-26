@@ -899,7 +899,7 @@
   var TG_DEMO = {
     '2026-11-24': [['10:00:00', '12:00:00', 'Jazz', null, 2000], ['12:00:00', '13:00:00', 'Musical Theatre', null, 1500]],
     '2026-11-25': [['10:00:00', '11:30:00', 'Contemporary Fusion', 'ages 9 and under', 2000], ['11:30:00', '13:00:00', 'Contemporary Fusion', 'ages 10 and up', 2000]],
-    '2026-11-27': [['10:00:00', '11:00:00', 'Jazz Funk', 'ages 9 and under', 1500], ['11:00:00', '12:00:00', 'Jazz Funk', 'ages 10 and up', 1500], ['12:00:00', '13:00:00', 'Stretch & Strengthen', null, 1500]]
+    '2026-11-27': [['11:00:00', '12:00:00', 'Jazz Funk', 'all ages', 1500], ['12:00:00', '13:00:00', 'Stretch & Strengthen', null, 1500]]
   };
   function tgDemoRows() {
     if (!/^(localhost|127\.)/.test(location.hostname)) return [];
