@@ -57,4 +57,4 @@ QA helpers live in `scripts/qa/`.
 cd ~/Code/dwd-website && git add <explicit paths> && git commit -m "message" && git push
 ```
 GitHub Pages auto-deploys from `main` (CNAME dancewithdixon.com). Free — no Netlify,
-no deploy approval needed.
+but pushing main IS the deploy of a public DWD site. Small fixes ship on Claude's own call (typos, broken links and schedule facts); new copy, prices and new pages wait for Dixon's yes (wall 2, exception added 2026-11-26).
