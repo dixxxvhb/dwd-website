@@ -1,4 +1,6 @@
 # dwd-website — running status
+
+- 2026-11-27: Thanksgiving week over. /schedule band and the two Friday masterclass JSON-LD Event nodes removed (route shells rebuilt); the page opens on the regular drop-in head again. The generic campaign code in schedule.js / now.js / check-classes-jsonld stays (it switches off with no band; copy the band markup from 2939782 for the next campaign). All seven masterclass rows closed to drop-ins in the Director (drop_in_allowed false). check-classes-jsonld: in sync, 5 classes.
 (one file, three lists; newest first; commit hashes are the receipts)
 
 ## Open

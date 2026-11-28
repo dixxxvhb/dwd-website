@@ -707,50 +707,6 @@
         }
       },
       {
-        "@type": "Event",
-        "@id": "https://dancewithdixon.com/#thanksgiving-2026-fri-jazz-funk",
-        "name": "Thanksgiving Week Masterclass: Jazz Funk with Gabriella Vultaggio, all ages",
-        "description": "A Thanksgiving week morning masterclass at Exchange Dance, Orlando, open to anyone. All ages. $15, booked and paid online.",
-        "url": "https://dancewithdixon.com/schedule/",
-        "image": "https://dancewithdixon.com/images/photos/hero-og-1200x630.jpg",
-        "startDate": "2026-11-27T11:00:00-05:00",
-        "endDate": "2026-11-27T12:00:00-05:00",
-        "eventStatus": "https://schema.org/EventScheduled",
-        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-        "location": { "@id": "https://dancewithdixon.com/#studio" },
-        "organizer": { "@id": "https://dancewithdixon.com/#organization" },
-        "performer": { "@type": "Person", "name": "Gabriella Vultaggio" },
-        "offers": {
-          "@type": "Offer",
-          "price": "15.00",
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://dancewithdixon.com/schedule/"
-        }
-      },
-      {
-        "@type": "Event",
-        "@id": "https://dancewithdixon.com/#thanksgiving-2026-fri-stretch-strengthen",
-        "name": "Thanksgiving Week Masterclass: Stretch & Strengthen with Dixon Bowles",
-        "description": "A Thanksgiving week morning masterclass at Exchange Dance, Orlando, open to anyone. All ages. $15, booked and paid online.",
-        "url": "https://dancewithdixon.com/schedule/",
-        "image": "https://dancewithdixon.com/images/photos/hero-og-1200x630.jpg",
-        "startDate": "2026-11-27T12:00:00-05:00",
-        "endDate": "2026-11-27T13:00:00-05:00",
-        "eventStatus": "https://schema.org/EventScheduled",
-        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-        "location": { "@id": "https://dancewithdixon.com/#studio" },
-        "organizer": { "@id": "https://dancewithdixon.com/#organization" },
-        "performer": { "@type": "Person", "name": "Dixon Bowles", "url": "https://dancewithdixon.com/teachers/" },
-        "offers": {
-          "@type": "Offer",
-          "price": "15.00",
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://dancewithdixon.com/schedule/"
-        }
-      },
-      {
         "@type": "WebSite",
         "@id": "https://dancewithdixon.com/#website",
         "url": "https://dancewithdixon.com",
@@ -2441,45 +2397,20 @@
       <div class="bk-noticewrap"><div class="sched-notice" data-sched-notice hidden></div></div>
 
       <div class="bk-main" data-sched-main>
-        <!-- The campaign band. Also THE RULE for which classes are campaign
-             classes: a class on one of the data-tg-date days below that starts
-             before data-tg-before. js/schedule.js (strip, week grid), js/now.js
-             (DROP IN panel) and scripts/check-classes-jsonld.mjs all read it.
-             The config list carries each morning's color, the closed day, and
-             each teacher's photo (data-photo-<tone> for a teacher on two days).
-             Teachers are matched by the "with <Name>" in the Director's class
-             name. Delete the band and the rule goes with it. -->
-        <section class="bk-band" data-tg data-tg-before="13:00" data-tg-label="Friday masterclasses" data-tg-short="Friday" data-tg-unit="masterclasses" aria-labelledby="bk-band-title">
-          <div class="bk-band-in">
-            <div class="bk-band-txt">
-              <p class="bk-kicker">Thanksgiving week &middot; Friday, Nov 27</p>
-              <h1 class="bk-band-title" id="bk-band-title"><span>One more</span> <em>morning</em></h1>
-              <p class="bk-band-lede"><b>Jazz funk with Ms. Gabby at 11, then stretch with Dixon at 12.</b> Both all ages, at Exchange Dance Academy in the Warehouse. Open to anyone.</p>
-              <ul class="bk-lineup" aria-label="The teachers">
-                <li style="--tone:var(--bk-fri)"><img src="/images/photos/opt/tg2026-gabriella-128.webp" width="56" height="56" alt="" loading="lazy" decoding="async"><span>Gabriella<small>Jazz funk</small></span></li>
-                <li style="--tone:var(--bk-neutral)"><img src="/images/photos/opt/tg2026-dixon-fri-128.webp" width="56" height="56" alt="" loading="lazy" decoding="async"><span>Dixon<small>Stretch</small></span></li>
-              </ul>
-            </div>
-            <div class="bk-band-art" aria-hidden="true">
-              <span class="bk-ring"></span><span class="bk-disc"></span>
-              <img class="bk-cut" src="/images/photos/opt/tg2026-daisy-764.webp" width="308" height="764" alt="" loading="lazy" decoding="async" data-lcp="schedule">
-            </div>
-          </div>
-          <ul class="bk-config" hidden>
-            <li data-tg-date="2026-11-27" data-tone="fri"></li>
-            <li data-teacher="Gabriella Vultaggio" data-guest data-photo="/images/photos/opt/tg2026-gabriella-128.webp"></li>
-            <li data-teacher="Dixon Bowles" data-photo="/images/photos/opt/tg2026-dixon-128.webp" data-photo-tue="/images/photos/opt/tg2026-dixon-tue-128.webp" data-photo-fri="/images/photos/opt/tg2026-dixon-fri-128.webp"></li>
-          </ul>
-        </section>
+        <!-- The campaign band (.bk-band, data-tg) lives here while a campaign
+             runs; js/schedule.js, js/now.js and check-classes-jsonld read its
+             rule, and with no band nothing is treated as a campaign class.
+             Thanksgiving 2026's band was removed 2026-11-27 (git show 2939782
+             for the markup to copy next time). -->
 
         <div class="bk-wrap">
           <div class="bk-layout">
             <div class="bk-col">
-              <div class="bk-pick" data-bk-pick>
+              <div class="bk-pick" data-bk-pick hidden>
                 <h2 class="bk-pick-h">Pick a day</h2>
                 <p class="bk-pick-p">No audition. Every class is at Exchange Dance, Orlando.</p>
               </div>
-              <div class="bk-head" data-bk-head hidden>
+              <div class="bk-head" data-bk-head>
                 <p class="bk-kicker">Drop in &middot; No audition</p>
                 <h1 class="bk-h1">No audition. Just drop in.</h1>
                 <p class="bk-dek">Pick a day. Add the classes you want. Pay once.</p>
